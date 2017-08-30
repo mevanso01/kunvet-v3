@@ -4,7 +4,40 @@ import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 
 import Client from '@/apollo/client';
+
 import Index from '@/pages/Index';
+
+// no login
+import Login from '@/pages/Login';
+import SignUp from '@/pages/SignUp';
+import JobPost from '@/pages/JobPost';
+import JobDetail from '@/pages/JobDetail';
+
+// employee pages
+import Employee from '@/pages/Employee';
+import AppliedJobs from '@/pages/AppliedJobs';
+import SavedJobs from '@/pages/SavedJobs';
+import Messages from '@/pages/Messages'; // does sharing one page for employee and business conflict with UI
+import AccountSettings from '@/pages/AccountSettings';
+import Resume from '@/pages/Resume';
+import CreateResume from '@/pages/CreateResume';
+
+// individual job pages
+import Personalhp from '@/pages/Personalhp';
+import CreateNewJobI from '@/pages/CreateNewJob_i';
+import JobPostsI from '@/pages/JobPosts_i';
+import ApplicantsI from '@/pages/Applicants_i';
+
+// Business pages
+import Business from '@/pages/Business';
+import PhotoGallery from '@/pages/PhotoGallery';
+
+// Business job pages
+import Businesshp from '@/pages/Businesshp';
+import CreateNewJobB from '@/pages/CreateNewJob_b';
+import JobPostsB from '@/pages/JobPosts_b';
+import ApplicantsB from '@/pages/Applicants_b';
+
 import App from '@/App';
 
 Vue.use(Vuetify);
@@ -20,6 +53,90 @@ const router = new VueRouter({
     {
       path: '/',
       component: Index,
+    },
+    {
+      path: '/employee',
+      component: Employee,
+    },
+    {
+      path: '/login',
+      component: Login,
+    },
+    {
+      path: '/signup',
+      component: SignUp,
+    },
+    {
+      path: '/jobposts',
+      component: JobPost,
+    },
+    { // Changes to be made for job posts specific id
+      path: '/jobdetail',
+      component: JobDetail,
+    },
+    {
+      path: '/resume',
+      component: Resume,
+    },
+    {
+      path: '/createresume',
+      component: CreateResume,
+    },
+    {
+      path: '/appliedjobs',
+      component: AppliedJobs,
+    },
+    {
+      path: '/savedjobs',
+      component: SavedJobs,
+    },
+    {
+      path: '/messages',
+      component: Messages,
+    },
+    {
+      path: '/accountsettings',
+      component: AccountSettings,
+    },
+    {
+      path: '/personalhp',
+      component: Personalhp,
+    },
+    {
+      path: '/jobposts_i',
+      component: JobPostsI,
+    },
+    {
+      path: '/createnewjob_i',
+      component: CreateNewJobI,
+    },
+    {
+      path: '/applicants_i',
+      component: ApplicantsI,
+    },
+    {
+      path: '/business',
+      component: Business,
+    },
+    {
+      path: '/photogallery',
+      component: PhotoGallery,
+    },
+    {
+      path: '/businesshp',
+      component: Businesshp,
+    },
+    {
+      path: '/createnewjob_b',
+      component: CreateNewJobB,
+    },
+    {
+      path: '/jobposts_b',
+      component: JobPostsB,
+    },
+    {
+      path: '/applicants_b',
+      component: ApplicantsB,
     },
   ],
 });

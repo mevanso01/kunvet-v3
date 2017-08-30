@@ -1,6 +1,8 @@
 <template>
   <v-container fluid>
-    <h2>Jobs</h2>
+    <h2>Search for All Jobs</h2>
+    <router-link to="/login">Login</router-link>
+    <router-link to="/jobposts">All Job Posts</router-link>
     <v-layout row wrap>
       <v-flex xs12 md6>
         <v-card v-for="(job, index) in jobs" :key="index" xs12>

@@ -49,6 +49,7 @@
     "apollo-client": "^1.9.1",
     "apollo-server-koa": "^1.1.0",
     "babel-polyfill": "^6.26.0",
+    "build": "^0.1.4",
     "graphql": "^0.10.5",
     "graphql-compose": "^2.3.2",
     "graphql-compose-mongoose": "^1.8.0",
