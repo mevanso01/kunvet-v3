@@ -36,7 +36,7 @@
     </v-layout>
   </v-container>
 </template>
-<script>
+<!-- <script>
 import gql from 'graphql-tag';
 
 export default {
@@ -59,4 +59,5 @@ export default {
     };
   },
 };
-</script>
+</script> -->
+<script src="../Component.js"></script>
