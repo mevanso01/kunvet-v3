@@ -1,5 +1,63 @@
+<style>
+.general-dropdown-items select, .general-dropdown-items label {
+  width: 100%;
+  height: 100%;
+  padding: 5px 20px;
+}
+</style>
 <template>
   <v-container fluid>
+      <div class="main-cont-large">
+            <div id="banner">
+            </div>
+            <form method="get" action="https://www.kunvet.com/job/posts">
+                <section id="search">
+
+                    <h1>Jobs For Students</h1>
+
+                    <div id="select-city">
+                        <div class="general-input general-input-for-dropdown">
+                            <div id="city-dropdown" class="general-dropdown">
+                                <div class="general-dropdown-icon">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                                <div class="general-dropdown-items">
+                                  <select v-model="selectedCity">
+                                    <option disabled>Please select city</option>
+                                    <option>Irvine</option>
+                                    <option>B</option>
+                                    <option>C</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="select-type">
+                        <div class="general-input general-input-for-dropdown">
+                            <div id="type-dropdown" class="general-dropdown">
+                                <div class="general-dropdown-icon">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                                <div class="general-dropdown-items">
+                                  <select v-model="selectedType">
+                                    <option>Latest Jobs</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <input class="hidden-input" id="submit" type="submit" value="GO">
+                <div id="general-submit">
+                    <div id="general-submit-default">
+                        <span>GO</span>
+                    </div>
+                    <div id="general-submit-error">
+                        <span id="general-submit-error-msg"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
     <h2>Search for All Jobs</h2>
     <router-link to="/login">Login</router-link>
     <router-link to="/jobposts">All Job Posts</router-link>
@@ -36,7 +94,7 @@
     </v-layout>
   </v-container>
 </template>
-<!-- <script>
+<script>
 import gql from 'graphql-tag';
 
 export default {
@@ -56,8 +114,10 @@ export default {
   data() {
     return {
       jobs: [],
+      selectedCity: 'Please select city',
+      selectedType: 'Latest Jobs',
     };
   },
 };
-</script> -->
-<script src="../Component.js"></script>
+</script>
+<!--<script src="../Component.js"></script>-->
