@@ -36,13 +36,13 @@
                 </div>
                 <div id="bottom-columns">
                     <div id="bottom-left">
-                        <div><a href="/">Home</a></div>
-                        <div><a href="/about_us">About us</a></div>
+                        <div><router-link to="/">Home</router-link></div>
+                        <div><router-link to="/AboutUs">About us</router-link></div>
                         <div><a href="/terms_and_condition">Terms &amp; Policy</a></div>
                     </div>
                     <div id="bottom-right">
-                        <div><a href="/post_job">Post your job</a></div>
-                        <div><a href="/login">Login</a></div>
+                        <div><router-link to="/createnewjob_i">Post your job</router-link></div>
+                        <div><router-link to="/login">Login</router-link></div>
                         <div><a href="/signup">Sign up</a></div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ export default {
 
 <style lang="scss">
 @import 'app.css';
-@import 'postsAndSearch.css'; 
+@import 'postsAndSearch.css';
 body, html {
   height: 100%;
   width: 100%;
