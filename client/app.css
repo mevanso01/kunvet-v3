@@ -1,19 +1,47 @@
-
 @import url("font-awesome-4.7.0/css/font-awesome.min.css");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 a {
-    color: unset;
-    text-decoration: none;
+  color: unset;
+  text-decoration: none;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #616161;
+}
+h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  height: 1.2em;
+  line-height: 1.2;
+}
+.icon--checkbox {
+  color: #ef5350 !important;
 }
 .disabled {
   color: rgb(224, 224, 224);
 }
-input,
+.chip--select-multi {
+  border: none;
+  font-size: 16px;
+  padding-left: 0;
+  padding-right: 12px;
+  background-color: #fff;
+  box-shadow: none !important;
+}
+.chip__close i.icon {
+  font-size: 18px;
+}
+/* input,
 textarea {
     outline: none;
     color: #4d4d4d;
-}
+} */
 .hidden-input {
     display: none;
 }
@@ -196,12 +224,21 @@ nav {
 .main-cont-large {
     position: relative;
     width: 960px;
-    margin: 64px auto;
+    margin: 40px auto; /* previously: 50px auto */
     left: 0;
     right: 0;
     padding: 0;
     background-color: #fff;
     border: 1px solid #eeeeee;
+    box-sizing: border-box;
+}
+.main-cont-large-clear {
+    position: relative;
+    width: 960px;
+    margin: 40px auto; /* previously: 50px auto */
+    left: 0;
+    right: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 .main-cont-small {
@@ -214,18 +251,6 @@ nav {
     background-color: #fff;
     border: 1px solid #eeeeee;
     box-sizing: border-box;
-}
-section {
-    position: relative;
-    width: 100%;
-    padding: 24px 48px;
-    box-sizing: border-box;
-}
-section:first-of-type {
-    padding-top: 48px;
-}
-section:last-of-type {
-    padding-bottom: 48px;
 }
 .general-stripes {
     padding: 0;
@@ -570,11 +595,42 @@ section:last-of-type {
 #bottom-footer {
     opacity: 0.5;
 }
-@media (max-width: 992px) {
+@media (min-width: 961px) {
+  .flex {
+    padding: 10px 15px;
+  }
+  section {
+      position: relative;
+      width: 100%;
+      padding: 24px 48px;
+      box-sizing: border-box;
+  }
+  section:first-of-type {
+      padding-top: 48px;
+  }
+  section:last-of-type {
+      padding-bottom: 48px;
+  }
+  /*
+  section {
+      padding: 16px;
+  }
+  section:first-of-type {
+      padding-top: 32px;
+  }
+  section:last-of-type {
+      padding-bottom: 32px;
+  }*/
+}
+@media (max-width: 960px) {
+  .flex {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
     #nav-contents {
         width: 100%;
     }
-    .main-cont-large {
+    .main-cont-large, .main-cont-large-clear {
         width: 100%;
         margin: 0;
         border: none;
@@ -618,15 +674,6 @@ section:last-of-type {
     }
     .main-cont-small #general-submit {
         border-bottom: 1px solid #fff;
-    }
-    section {
-        padding: 16px;
-    }
-    section:first-of-type {
-        padding-top: 32px;
-    }
-    section:last-of-type {
-        padding-bottom: 32px;
     }
     .general-stripe .general-stripe-cont {
         padding: 16px;

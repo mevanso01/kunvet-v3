@@ -8,10 +8,47 @@
   margin: 0;
   max-width: 100%;
 }
-.search label {
-  padding: 8px 280px 8px 5px;
+.search .flex {
+  padding: 10px 15px;
+}
+.input-group--select {
+  height: 66px;
+}
+.search .input-group__details{
+  display: none !important;
+}
+.search .input-group--select .input-group__input {
+  padding: 0 16px;
+  height: 48px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.list__tile__action .checkbox .input-group__input {
+  padding-top: 6px;
+}
+.list__tile__title {
+  color: #616161 !important;
+}
+.search .input-group--select i.icon {
+  padding: 8px 0;
+}
+.search .input-group__selections {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  overflow: auto !important;
+}
+.search .input-group--select label {
+  top: 26px;
+  left: 16px;
+}
+.input-group--text-field.input-group--dirty.input-group--select label,
+.input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
+      transform: translate3d(0,-28px,0) scale(.75);
+}
+.chip--select-multi {
+  margin: 5px 5px 5px 0;
 }
 </style>
+
 <template>
   <v-container fluid>
       <div class="main-cont-large">
@@ -20,40 +57,45 @@
             <form>
                 <section v-if="firstSearch" class="search">
 
-                    <h1>Jobs For Students</h1>
-                    <!--<v-expansion-panel popout>
-                        <div id="select-city">
-                          <v-expansion-panel-content v-bind:value="item === 1">
-                            <div slot="header" v-if="!selectedCities[0]">
-                              Select City
-                            </div>
-                            <div slot="header" v-else>
-                              {{ selectedCities[0] }}
-                            </div>
-                            <v-card v-for="item in availableCities">
-                              <v-card-text class="lighten-3">
-                                <input type="checkbox" :value="item.name" v-model="selectedCities">
-                                {{ item.name }}
-                              </input>
-                              </v-card-text>
-                            </v-card>
-                          </v-expansion-panel-content>
-                        </div>
-                        <div id="select-type">
-                          <v-expansion-panel-content v-bind:value="item === 2">
-                            <div slot="header">
-                              Latest Jobs
-                            </div>
-                            <v-card>
-                              <v-card-text class="lighten-3">
-                                <input type="checkbox" value="Latest Jobs" >
-                                Latest Jobs
-                              </v-card-text>
-                            </v-card>
-                          </v-expansion-panel-content>
-                        </div>
-                      </v-expansion-panel>-->
-                    <div id="select-city">
+                  <h1>Jobs For Students</h1>
+                  <div id="select-city">
+                    <v-select
+                      label="Please select city"
+                      v-bind:items="availableCities"
+                      v-model="selectedCities"
+                      multiple
+                      autocomplete
+                      chips
+                      single-line
+                      hide-details>
+                    </v-select>
+                  </div>
+                  <div id="select-type">
+                    <v-select
+                      label="Type of jobs"
+                      v-bind:items="firstSearchTypes"
+                      v-model="firstSearchType"
+                      single-line
+                      hide-details>
+                    </v-select>
+                  </div>
+                    <!--<v-layout>
+                      <v-flex xs12 sm6 :key="1">
+
+                      </v-flex>
+
+                      <v-flex :key="2">
+                              <v-select
+                                label="Latest Jobs"
+                                v-bind:items="firstSearchTypes"
+                                v-model="firstSearchType"
+                                chips>
+                              </v-select>
+                      </v-flex>
+                    </v-layout>-->
+
+                    <!--<div id="select-city">
+
                         <div class="general-input general-input-for-dropdown">
                             <div id="city-dropdown" class="general-dropdown">
                                 <div class="general-dropdown-icon">
@@ -81,90 +123,70 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </section>
 
                 <section v-if="!firstSearch" class="search">
-
-                  <v-expansion-panel popout>
-                    <div class="search-block">
-                      <v-expansion-panel-content v-bind:value="item === 1" :key="1">
-                        <div slot="header" v-if="!selectedCities[0]">
-                          Select City
-                        </div>
-                        <div slot="header" v-else-if="selectedCities.length > 1">
-                          {{ selectedCities.length }} cities selected
-                        </div>
-                        <div slot="header" v-else>
-                          {{ selectedCities[0] }}
-                        </div>
-                        <v-card v-for="(item, index) in availableCities">
-                          <v-card-text class="lighten-3">
-                            <input v-bind:id="'c'+index"type="checkbox" :value="item.name" v-model="selectedCities">
-                            <label v-bind:for="'c'+index">{{ item.name }}</label>
-                          </v-card-text>
-                        </v-card>
-                      </v-expansion-panel-content>
-                    </div>
-                    <div class="search-block">
-                      <v-expansion-panel-content v-bind:value="item === 2" :key="2">
-                        <div slot="header" v-if="!selectedTypes[0]">
-                          Select type
-                        </div>
-                        <div slot="header" v-else-if="selectedTypes.length > 1">
-                          {{ selectedTypes.length }} types selected
-                        </div>
-                        <div slot="header" v-else>
-                          {{ selectedTypes[0] }}
-                        </div>
-                        <v-card v-for="(item, index) in availableTypes">
-                          <v-card-text class="lighten-3">
-                            <input v-bind:id="'t'+index" type="checkbox" :value="item.name" v-model="selectedTypes">
-                            <label v-bind:for="'t'+index">{{ item.name }}</label>
-                          </v-card-text>
-                        </v-card>
-                      </v-expansion-panel-content>
-                    </div>
-                    <div class="search-block">
-                      <v-expansion-panel-content v-bind:value="item === 3" :key="3">
-                        <div slot="header" v-if="!selectedPositions[0]">
-                          Select positions
-                        </div>
-                        <div slot="header" v-else-if="selectedPositions.length > 1">
-                          {{ selectedPositions.length }} positions selected
-                        </div>
-                        <div slot="header" v-else>
-                          {{ selectedPositions[0] }}
-                        </div>
-                        <v-card v-for="(item, index) in availablePositions">
-                          <v-card-text class="lighten-3">
-                            <input v-bind:id="'p'+index" type="checkbox" :value="item.name" v-model="selectedPositions">
-                            <label v-bind:for="'p'+index">{{ item.name }}</label>
-                          </v-card-text>
-                        </v-card>
-                      </v-expansion-panel-content>
-                    </div>
-                    <div class="search-block">
-                      <v-expansion-panel-content v-bind:value="item === 4" :key="4">
-                        <div slot="header" v-if="!selectedShifts[0]">
-                          Select shifts
-                        </div>
-                        <div slot="header" v-else-if="selectedShifts.length > 1">
-                          {{ selectedShifts.length }} shifts selected
-                        </div>
-                        <div slot="header" v-else>
-                          {{ selectedShifts[0] }}
-                        </div>
-                        <v-card v-for="(item, index) in availableShifts">
-                          <v-card-text class="lighten-3">
-                            <input v-bind:id="'s'+index" type="checkbox" :value="item.name" v-model="selectedShifts">
-                            <label v-bind:for="'s'+index">{{ item.name }}</label>
-                          </v-card-text>
-                        </v-card>
-                      </v-expansion-panel-content>
-                    </div>
-                  </v-expansion-panel>
-
+                  <v-layout row wrap>
+                    <v-flex xs12 sm6 :key="1">
+                      <v-select
+                        label="Select city"
+                        v-bind:items="availableCities"
+                        v-model="selectedCities"
+                        chips
+                        autocomplete
+                        multiple>
+                      </v-select>
+                    </v-flex>
+                    <v-flex xs12 sm6 :key="2">
+                      <v-select
+                        label="Select types"
+                        v-bind:items="availableTypes"
+                        v-model="selectedTypes"
+                        chips
+                        autocomplete
+                        multiple>
+                      </v-select>
+                    </v-flex>
+                    <v-flex xs12 sm6 :key="3">
+                      <v-select
+                        label="Select positions"
+                        v-bind:items="availablePositions"
+                        v-model="selectedPositions"
+                        chips
+                        autocomplete
+                        multiple>
+                      </v-select>
+                    </v-flex>
+                    <v-flex xs12 sm6 :key="4">
+                      <v-select
+                        label="Select shifts"
+                        v-bind:items="availableShifts"
+                        v-model="selectedShifts"
+                        chips
+                        autocomplete
+                        multiple>
+                      </v-select>
+                    </v-flex>
+                  </v-layout>
+                  <!--<div class="search-block">
+                    <v-select
+                      label="Select city"
+                      v-bind:items="availableCities"
+                      v-model="selectedCities"
+                      chips
+                      multiple>
+                    </v-select>
+                  </div>
+                  <div class="search-block">
+                    <v-select
+                      label="Select types"
+                      v-bind:items="availableTypes"
+                      v-model="selectedTypes"
+                      chips
+                      multiple>
+                    </v-select>
+                  </div>-->
                 </section>
 
                 <input class="hidden-input" id="submit" type="submit" value="GO">
@@ -177,13 +199,8 @@
                     </div>
                 </div>
             </form>
-
         </div>
 
-    <h2>Search for All Jobs</h2>
-    <button >Test</button>
-    <router-link to="/login">Login</router-link>
-    <router-link to="/jobposts">All Job Posts</router-link>
     <v-layout row wrap>
       <v-flex xs12 md6>
         <v-card v-for="(job, index) in jobs" :key="index" xs12>
@@ -217,6 +234,7 @@
     </v-layout>
   </v-container>
 </template>
+
 <script>
 import gql from 'graphql-tag';
 import Vue from 'vue';
@@ -243,35 +261,38 @@ export default {
   data() {
     return {
       jobs: [],
+      firstSearchTypes: [
+        'Latest jobs',
+      ],
       availableCities: [
-        { name: 'Irvine, CA' },
-        { name: 'Los Angeles, CA' },
+        'Irvine, CA',
+        'Los Angeles, CA',
         // load from database
       ],
       availablePositions: [
-        { name: 'Frontend developer' },
-        { name: 'Vue.js developer' },
+        'Frontend developer',
+        'Vue.js developer',
         // load from database
       ],
       availableTypes: [
-        { name: 'Full time' },
-        { name: 'Part time' },
-        { name: 'Internship' },
-        { name: 'Freelance' },
-        { name: 'Contract' },
-        { name: 'Temporary' },
-        { name: 'Seasonal' },
+        'Full time',
+        'Part time',
+        'Internship',
+        'Freelance',
+        'Contract',
+        'Temporary',
+        'Seasonal',
       ],
       availableShifts: [
-        { name: 'Morning' },
-        { name: 'Noon' },
-        { name: 'Afternoon' },
-        { name: 'Evening' },
-        { name: 'Mid-night' },
+        'Morning',
+        'Noon',
+        'Afternoon',
+        'Evening',
+        'Mid-night',
       ],
       firstSearch: true,
       firstSearchType: 'Latest Jobs',
-      selectedCities: ['Please select city'],
+      selectedCities: [],
       selectedTypes: [],
       selectedPositions: [],
       selectedShifts: [],
@@ -279,7 +300,7 @@ export default {
   },
   methods: {
     searchGo() {
-      if (this.selectedCities !== []) {
+      if (this.selectedCities[0]) {
         this.firstSearch = false;
       }
     },
