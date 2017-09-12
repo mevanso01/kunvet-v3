@@ -79,6 +79,10 @@
                     label="Create password"
                     v-model="password"
                     :rules="passwordRules"
+                    min="8"
+                    :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                    :append-icon-cb="() => (e1 = !e1)"
+                    :type="e1 ? 'password' : 'text'"
                     required
                   ></v-text-field>
                   <div class="text-xs-center">
@@ -101,14 +105,12 @@
               <v-card-text>
                 <h2>Lets get started</h2>
                 <v-form v-model="valid" ref="form">
-
                   <v-text-field
                     label="E-mail"
                     v-model="email"
                     :rules="emailRules"
                     required
                   ></v-text-field>
-
                   <v-text-field
                     label="Create password"
                     v-model="password"
@@ -119,7 +121,6 @@
                     :type="e1 ? 'password' : 'text'"
                     required
                   ></v-text-field>
-
                   <div class="text-xs-center">
                     <v-btn error dark @click="submit">Create business account</v-btn>
                   </div>
