@@ -38,6 +38,8 @@ import CreateNewJobB from '@/pages/CreateNewJob_b';
 import JobPostsB from '@/pages/JobPosts_b';
 import ApplicantsB from '@/pages/Applicants_b';
 
+import Terms from '@/pages/Terms';
+
 import App from '@/App';
 
 Vue.use(Vuetify);
@@ -138,6 +140,11 @@ const router = new VueRouter({
       path: '/applicants_b',
       component: ApplicantsB,
     },
+    {
+      path: '/terms',
+      component: Terms,
+    },
+
   ],
 });
 
