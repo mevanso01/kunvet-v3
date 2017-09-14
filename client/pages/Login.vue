@@ -54,7 +54,7 @@
                 <!-- submit button -->
 
                 <input class="hidden-input" id="submit" type="submit" value="Login">
-                <div id="general-submit">
+                <div id="general-submit" @click="submit()">
                     <div id="general-submit-default">
                         <span>LOGIN</span>
                     </div>
@@ -67,4 +67,16 @@
   </v-container>
 </template>
 <script>
+import App from '@/App';
+// import Vue from 'vue';
+
+
+export default {
+  methods: {
+    submit() {
+      // console.log(App);
+      App.methods.login_b();
+    },
+  },
+};
 </script>
