@@ -20,6 +20,10 @@ h3 {
   height: 1.2em;
   line-height: 1.2;
 }
+.toolbar__content {
+  max-width: 960px;
+  margin: auto;
+}
 .icon--checkbox {
   color: #ef5350 !important;
 }
@@ -133,9 +137,6 @@ nav {
     box-sizing: border-box;
 }
 #nav-logo {
-    position: absolute;
-    top: 0;
-    left: 48px;
     height: 100%;
 }
 #nav-logo-svg {
@@ -646,9 +647,15 @@ nav {
         width: 100%;
     }
 }
-@media (max-width: 544px) {
+@media (max-width: 600px) {
+    .hidden-xs {
+      display: none;
+    }
+    body, .application {
+      background-color: #fff;
+    }
     nav {
-        height: 48px;
+        height: 56px;
     }
     #nav-logo {
         left: 16px;

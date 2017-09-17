@@ -6,6 +6,8 @@ import VueApollo from 'vue-apollo';
 import Client from '@/apollo/client';
 
 import Index from '@/pages/Index';
+import AboutUs from '@/pages/AboutUs';
+import Terms from '@/pages/Terms';
 
 // no login
 import Login from '@/pages/Login';
@@ -37,8 +39,6 @@ import Businesshp from '@/pages/Businesshp';
 import CreateNewJobB from '@/pages/CreateNewJob_b';
 import JobPostsB from '@/pages/JobPosts_b';
 import ApplicantsB from '@/pages/Applicants_b';
-
-import Terms from '@/pages/Terms';
 
 import App from '@/App';
 
@@ -141,14 +141,18 @@ const router = new VueRouter({
       component: ApplicantsB,
     },
     {
-      path: '/terms',
+      path: '/AboutUs',
+      component: AboutUs,
+    },
+    {
+      path: '/Terms',
       component: Terms,
     },
-
   ],
 });
 
 /* eslint-disable no-new */
+
 new Vue({
   apolloProvider,
   el: '#app',

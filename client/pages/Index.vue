@@ -47,6 +47,20 @@
 .chip--select-multi {
   margin: 5px 5px 5px 0;
 }
+.firstSearch {
+  padding: 32px;
+}
+.no-padding {
+  padding: 0;
+}
+@media (max-width: 600px) {
+  .firstSearch {
+    padding: 32px 0px;
+  }
+  #banner {
+    display: none;
+  }
+}
 </style>
 
 <template>
@@ -55,7 +69,7 @@
             <div v-if="firstSearch" id="banner">
             </div>
             <form>
-                <section v-if="firstSearch" class="search">
+                <section v-if="firstSearch" class="search firstSearch">
 
                   <h1>Jobs For Students</h1>
                   <div id="select-city">
@@ -79,51 +93,6 @@
                       hide-details>
                     </v-select>
                   </div>
-                    <!--<v-layout>
-                      <v-flex xs12 sm6 :key="1">
-
-                      </v-flex>
-
-                      <v-flex :key="2">
-                              <v-select
-                                label="Latest Jobs"
-                                v-bind:items="firstSearchTypes"
-                                v-model="firstSearchType"
-                                chips>
-                              </v-select>
-                      </v-flex>
-                    </v-layout>-->
-
-                    <!--<div id="select-city">
-
-                        <div class="general-input general-input-for-dropdown">
-                            <div id="city-dropdown" class="general-dropdown">
-                                <div class="general-dropdown-icon">
-                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                </div>
-                                <div class="general-dropdown-items">
-                                  <select v-model="selectedCities[0]">
-                                    <option disabled>Please select city</option>
-                                    <option v-for="item in availableCities">{{item.name}}</option>
-                                  </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="select-type">
-                        <div class="general-input general-input-for-dropdown">
-                            <div id="type-dropdown" class="general-dropdown">
-                                <div class="general-dropdown-icon">
-                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                </div>
-                                <div class="general-dropdown-items">
-                                  <select v-model="firstSearchType">
-                                    <option>Latest Jobs</option>
-                                  </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                 </section>
 
                 <section v-if="!firstSearch" class="search">
@@ -169,24 +138,6 @@
                       </v-select>
                     </v-flex>
                   </v-layout>
-                  <!--<div class="search-block">
-                    <v-select
-                      label="Select city"
-                      v-bind:items="availableCities"
-                      v-model="selectedCities"
-                      chips
-                      multiple>
-                    </v-select>
-                  </div>
-                  <div class="search-block">
-                    <v-select
-                      label="Select types"
-                      v-bind:items="availableTypes"
-                      v-model="selectedTypes"
-                      chips
-                      multiple>
-                    </v-select>
-                  </div>-->
                 </section>
 
                 <input class="hidden-input" id="submit" type="submit" value="GO">
@@ -199,39 +150,36 @@
                     </div>
                 </div>
             </form>
-        </div>
 
-    <v-layout row wrap>
-      <v-flex xs12 md6>
-        <v-card v-for="(job, index) in jobs" :key="index" xs12>
-          <v-card-title>
-            <div class="headline">{{ job.name }}</div>
-          </v-card-title>
-          <v-card-text class="pt-0">
-            <v-layout row wrap>
-              <!-- Job type -->
-              <v-chip v-if="job.type === 'fulltime'" class="green lighten-2">
-                Full time
-              </v-chip>
-              <v-chip v-else-if="job.type === 'parttime'" class="indigo lighten-2">
-                Part time
-              </v-chip>
-              <v-chip v-else>
-                Other
-              </v-chip>
-
-              <!-- Document ID -->
-              <v-chip>
-                {{ job._id }}
-              </v-chip>
+      <v-layout row wrap v-if="!firstSearch">
+          <div class="post-card" v-for="(job, index) in jobs" :key="index" xs12>
+            <v-layout align-center row spacer slot="header" style="padding-bottom: 10px;">
+              <v-flex xs2 class="no-padding">
+                <v-avatar size="36px" slot="activator">
+                  <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+                </v-avatar>
+              </v-flex>
+              <v-flex no-wrap class="grey--text no-padding" ellipsis>
+                <strong>John Leider inc</strong>
+              </v-flex>
             </v-layout>
-            {{ job.description }}
-            <v-subheader></v-subheader>
-            {{ job.address }}
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
+            <div>
+              <h1 style="font-weight: normal;">{{ job.name }}</h1>
+            </div>
+            <p class="post-intro">{{ job.description }}</p>
+            <v-layout row wrap class="image-row">
+              <v-flex xs6 style="padding-left: 0;">
+                <p class="post-address">{{ job.address }}</p>
+              </v-flex>
+              <v-flex xs6 style="padding-right: 0;">
+                <!-- insert gallary here -->
+                <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
+              </v-flex>
+            </v-layout>
+          </div>
+      </v-layout>
+
+    </div>
   </v-container>
 </template>
 
@@ -260,7 +208,6 @@ export default {
   },
   data() {
     return {
-      jobs: [],
       firstSearchTypes: [
         'Latest jobs',
       ],
@@ -302,6 +249,7 @@ export default {
     searchGo() {
       if (this.selectedCities[0]) {
         this.firstSearch = false;
+        console.log(this.jobs);
       }
     },
   },

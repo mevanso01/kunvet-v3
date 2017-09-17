@@ -20,7 +20,7 @@
         </a>
         <v-spacer></v-spacer>
         <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-items class="hidden-xs-and-down">
+        <v-toolbar-items class="hidden-xs">
           <v-btn v-for="item in items[acct]" :href="item.href" flat>{{ item.title }}</v-btn>
         </v-toolbar-items>
     </v-toolbar>
