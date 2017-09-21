@@ -153,6 +153,11 @@
   </v-container>
 </template>
 <script>
+/* import Vue from 'vue';
+import VueResource from 'vue-resource';
+
+Vue.use(VueResource); */
+
 export default {
   data() {
     return {
@@ -178,7 +183,12 @@ export default {
       this.submitClicked = true;
       if (this.valid) {
         this.chosenForm = 'submitted';
-        // send email, password, and account type to server
+
+        Vue.http.get('http://jsonplaceholder.typicode.com/users').then((res) => {
+          console.log(res);
+        }, (error) => {
+          console.log(error);
+        });
       }
     },
     chooseFormI() {

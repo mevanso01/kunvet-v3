@@ -3,6 +3,7 @@ import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 
+
 import Client from '@/apollo/client';
 
 import Index from '@/pages/Index';

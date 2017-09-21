@@ -22,6 +22,14 @@ const app = new Koa();
 
 app.use(KoaMount('/srv', GraphQLApp));
 
+const ef = new Koa();
+
+ef.use((ctx) => {
+  ctx.body = 'Test';
+});
+
+app.use(KoaMount('/sendemail', ef));
+
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
   Logger.info('Running in development mode');
@@ -46,4 +54,3 @@ Db.connect()
 http.createServer(app.callback()).listen(port, () => {
   Logger.info(`Up and running! Listening on port ${port}`);
 });
-

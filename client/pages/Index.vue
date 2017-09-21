@@ -1,4 +1,7 @@
 <style>
+.container {
+  background-color: #fff;
+}
 .general-dropdown-items select, .general-dropdown-items label {
   width: 100%;
   height: 100%;
@@ -14,7 +17,7 @@
 .input-group--select {
   height: 66px;
 }
-.search .input-group__details{
+.search .input-group__details, .firstSearch .input-group__details{
   display: none !important;
 }
 .search .input-group--select .input-group__input {
@@ -48,14 +51,48 @@
   margin: 5px 5px 5px 0;
 }
 .firstSearch {
-  padding: 32px;
+  padding: 64px;
+}
+.fsGoBtn {
+  height: 48px;
+  background-color: #ef5350;
+  text-align: center;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+}
+.fsSelect {
+  height: 48px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  border-left: 1px solid #eee;
+  border-radius: 6px 0 0 6px;
+  margin-left: 1px;
+}
+.firstSearch .fsSelect input {
+  margin-top: 1px !important;
+  margin-left: 16px !important;
+}
+.firstSearch .fsSelect label {
+  top: 7px;
+  left: 16px;
+}
+.firstSearch .fsSelect i {
+  padding: 8px;
+}
+.firstSearch h1 {
+  font-weight: 400;
 }
 .no-padding {
   padding: 0;
 }
+@media (min-width: 601px) {
+  .firstSearch h1 {
+    font-size: 32px;
+  }
+}
 @media (max-width: 600px) {
   .firstSearch {
-    padding: 32px 0px;
+    padding: 32px 10px;
   }
   #banner {
     display: none;
@@ -66,18 +103,36 @@
 <template>
   <v-container fluid>
       <div class="main-cont-large">
-            <div v-if="firstSearch" id="banner">
-            </div>
             <form>
-                <section v-if="firstSearch" class="search firstSearch">
-
-                  <h1>Jobs For Students</h1>
+              <section class="firstSearch" v-if="firstSearch">
+                <div style="padding: 30px 0; text-align: right;">
+                  <h1 style="color: #ef5350;">Kunvet</h1>
+                  <h1 style="color: #333;">Nearby jobs for students like you</h1>
+                </div>
+                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
+                  <v-flex xs8 sm6 offset-sm4
+                  no-wrap class="grey--text no-padding" ellipsis>
+                      <v-select class="no-padding fsSelect"
+                        label="Please select city"
+                        v-bind:items="availableCities"
+                        v-model="selectedCities"
+                        autocomplete
+                        chips
+                        single-line
+                        hide-details>
+                      </v-select>
+                  </v-flex>
+                  <v-flex xs4 sm2 class="no-padding fsGoBtn" @click="searchGo">
+                    <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>
+                  </v-flex>
+                </v-layout>
+              </section>
+                <!--<section v-if="firstSearch" class="search firstSearch">
                   <div id="select-city">
                     <v-select
                       label="Please select city"
                       v-bind:items="availableCities"
                       v-model="selectedCities"
-                      multiple
                       autocomplete
                       chips
                       single-line
@@ -93,7 +148,7 @@
                       hide-details>
                     </v-select>
                   </div>
-                </section>
+                </section>-->
 
                 <section v-if="!firstSearch" class="search">
                   <v-layout row wrap>
@@ -104,7 +159,7 @@
                         v-model="selectedCities"
                         chips
                         autocomplete
-                        multiple>
+                        >
                       </v-select>
                     </v-flex>
                     <v-flex xs12 sm6 :key="2">
@@ -140,8 +195,8 @@
                   </v-layout>
                 </section>
 
-                <input class="hidden-input" id="submit" type="submit" value="GO">
-                <div id="general-submit" @click="searchGo">
+                <input v-if="!firstSearch" class="hidden-input" id="submit" type="submit" value="GO">
+                <div v-if="!firstSearch" id="general-submit" @click="searchGo">
                     <div id="general-submit-default">
                         <span>GO</span>
                     </div>
@@ -166,16 +221,12 @@
             <div>
               <h1 style="font-weight: normal;">{{ job.name }}</h1>
             </div>
+            <p class="post-address">{{ job.address }}</p>
             <p class="post-intro">{{ job.description }}</p>
-            <v-layout row wrap class="image-row">
-              <v-flex xs6 style="padding-left: 0;">
-                <p class="post-address">{{ job.address }}</p>
-              </v-flex>
-              <v-flex xs6 style="padding-right: 0;">
+            <div class="image-row">
                 <!-- insert gallary here -->
                 <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
-              </v-flex>
-            </v-layout>
+            </div>
           </div>
       </v-layout>
 

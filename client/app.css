@@ -230,7 +230,7 @@ nav {
     right: 0;
     padding: 0;
     background-color: #fff;
-    border: 1px solid #eeeeee;
+    /* border: 1px solid #eeeeee; */
     box-sizing: border-box;
 }
 .main-cont-large-clear {
