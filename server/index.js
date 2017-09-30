@@ -1,6 +1,6 @@
 // Source map support
 import 'source-map-support/register';
-
+// const fs = require("fs")
 // Koa
 import http from 'http';
 import Koa from 'koa';
@@ -17,9 +17,19 @@ import Logger from './utils/Logger';
 
 Logger.info('Kunvet server');
 
+// const path = require('path');
+// let historyApiFallback = require('koa-history-api-fallback');
+
 const port = process.env.PORT || 3000;
 const app = new Koa();
 
+/* const indexPage = path.join(__dirname, '/../client/index.html');
+
+historyApiFallback({
+  index: indexPage,
+}); */
+
+// app.use(historyApiFallback());
 app.use(KoaMount('/srv', GraphQLApp));
 
 const ef = new Koa();
@@ -27,6 +37,7 @@ const ef = new Koa();
 ef.use((ctx) => {
   ctx.body = 'Test';
 });
+
 
 app.use(KoaMount('/sendemail', ef));
 

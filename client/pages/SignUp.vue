@@ -183,8 +183,8 @@ export default {
       this.submitClicked = true;
       if (this.valid) {
         this.chosenForm = 'submitted';
-
-        Vue.http.get('http://jsonplaceholder.typicode.com/users').then((res) => {
+        const data = { email: 'test@gmail.com' };
+        Vue.http.get('http://localhost:3000/test', data).then((res) => {
           console.log(res);
         }, (error) => {
           console.log(error);

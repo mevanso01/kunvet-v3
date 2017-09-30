@@ -1,12 +1,15 @@
 // Koa
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
+import KCors from 'kcors';
 
 // GraphiQL
 import { graphiqlKoa } from 'apollo-server-koa';
 
 const app = new Koa();
 const router = new KoaRouter();
+
+app.use(KCors());
 
 // Help info
 router.get('/', (ctx) => {
@@ -33,6 +36,11 @@ router.get('/', (ctx) => {
 router.get('/graphiql', graphiqlKoa({
   endpointURL: '/srv/graphql',
 }));
+
+router.get('/test', (ctx) => {
+  ctx.body = "hello";
+  console.log(ctx.request);
+});
 
 app.use(router.routes());
 app.use(router.allowedMethods());

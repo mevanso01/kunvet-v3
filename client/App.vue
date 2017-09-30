@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar fixed class="white" light>
+    <v-toolbar fixed class="white main-nav" light>
       <a href="/">
             <div id="nav-logo">
                 <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">
@@ -19,9 +19,13 @@
             </div>
         </a>
         <v-spacer></v-spacer>
-        <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <div class="hidden-sm-and-up" style="padding-bottom: 6px;">
+          <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        </div>
         <v-toolbar-items class="hidden-xs">
-          <v-btn v-for="item in items[acct]" :href="item.href" flat>{{ item.title }}</v-btn>
+          <router-link v-for="item in items[acct]" :to="item.href" class="toolbar__items">
+            <v-btn flat>{{ item.title }}</v-btn>
+          </router-link>
         </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer absolute temporary right light v-model="drawer" overflow>
@@ -87,28 +91,33 @@ const Bus = new Vue();
 export default {
   data() {
     return {
+      firstS: true,
       acct: 0,
       drawer: false,
       items: [
         [
-          { title: 'Login', icon: 'dashboard', href: '/#/login' },
-          { title: 'Sign up', icon: 'question_answer', href: '/#/signup' },
+          { title: 'Login', icon: 'dashboard', href: '/login' },
+          { title: 'Sign up', icon: 'question_answer', href: '/signup' },
         ],
         [
-          { title: 'My Jobs', icon: 'dashboard', href: '/#/login' },
-          { title: 'Messages', icon: 'question_answer', href: '/#/signup' },
-          { title: 'Profile', icon: 'question_answer', href: '/#/profile' },
+          { title: 'My Jobs', icon: 'dashboard', href: '/login' },
+          { title: 'Messages', icon: 'question_answer', href: '/signup' },
+          { title: 'Profile', icon: 'question_answer', href: '/profile' },
         ],
         [
-          { title: 'Post a job', icon: 'dashboard', href: '/#/login' },
-          { title: 'Applicants', icon: 'question_answer', href: '/#/signup' },
-          { title: 'Account', icon: 'question_answer', href: '/#/profile' },
+          { title: 'Post a job', icon: 'dashboard', href: '/login' },
+          { title: 'Applicants', icon: 'question_answer', href: '/signup' },
+          { title: 'Account', icon: 'question_answer', href: '/profile' },
         ],
       ],
       right: true,
     };
   },
   methods: {
+    firstSearch() {
+      Bus.$emit('firstSearch');
+      this.firstS = false;
+    },
     logout() {
       this.acct = 0;
     },
@@ -126,10 +135,15 @@ export default {
       this.acct = 2;
       console.log(this.acct);
     },
+    fs1() {
+      this.firstS = false;
+      console.log('test');
+    },
   },
   created() {
     Bus.$on('individual', this.l1);
     Bus.$on('business', this.l1);
+    Bus.$on('firstSearch', this.fs1);
   },
 };
 </script>
@@ -146,5 +160,8 @@ h1 {
    -webkit-margin-before: 0.83em;
    -webkit-margin-after: 0.83em;
    font-weight: bold;
+}
+@media only screen and (min-width:600px) {
+  .hidden-sm-and-up { display:none !important; }
 }
 </style>

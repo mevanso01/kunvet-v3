@@ -23,6 +23,11 @@
 .search .input-group--select .input-group__input {
   padding: 0 16px;
   height: 48px;
+  flex: 1 0 100%;
+}
+.search .input-group--select {
+  padding-top: 0;
+  height: 48px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 .list__tile__action .checkbox .input-group__input {
@@ -39,10 +44,15 @@
   padding-bottom: 3px;
   overflow: auto !important;
 }
-.search .input-group--select label {
-  top: 26px;
+.search .input-group--select.input-group--single-line label {
+  top: 8px;
   left: 16px;
 }
+/* .input-group--multiple .input-group__selections > div {
+  position: absolute;
+  top: 4px;
+} */
+
 .input-group--text-field.input-group--dirty.input-group--select label,
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
       transform: translate3d(0,-28px,0) scale(.75);
@@ -51,7 +61,7 @@
   margin: 5px 5px 5px 0;
 }
 .firstSearch {
-  padding: 64px;
+  padding: 32px 64px;
 }
 .fsGoBtn {
   height: 48px;
@@ -68,16 +78,15 @@
   border-radius: 6px 0 0 6px;
   margin-left: 1px;
 }
-.firstSearch .fsSelect input {
-  margin-top: 1px !important;
-  margin-left: 16px !important;
+.firstSearch .fsSelect .input-group__input {
+  padding-left: 16px !important;
 }
 .firstSearch .fsSelect label {
   top: 7px;
   left: 16px;
 }
 .firstSearch .fsSelect i {
-  padding: 8px;
+  padding: 8px !important;
 }
 .firstSearch h1 {
   font-weight: 400;
@@ -105,7 +114,7 @@
       <div class="main-cont-large">
             <form>
               <section class="firstSearch" v-if="firstSearch">
-                <div style="padding: 30px 0; text-align: right;">
+                <div style="padding-bottom: 30px; text-align: right;">
                   <h1 style="color: #ef5350;">Kunvet</h1>
                   <h1 style="color: #333;">Nearby jobs for students like you</h1>
                 </div>
@@ -117,7 +126,6 @@
                         v-bind:items="availableCities"
                         v-model="selectedCities"
                         autocomplete
-                        chips
                         single-line
                         hide-details>
                       </v-select>
@@ -127,28 +135,6 @@
                   </v-flex>
                 </v-layout>
               </section>
-                <!--<section v-if="firstSearch" class="search firstSearch">
-                  <div id="select-city">
-                    <v-select
-                      label="Please select city"
-                      v-bind:items="availableCities"
-                      v-model="selectedCities"
-                      autocomplete
-                      chips
-                      single-line
-                      hide-details>
-                    </v-select>
-                  </div>
-                  <div id="select-type">
-                    <v-select
-                      label="Type of jobs"
-                      v-bind:items="firstSearchTypes"
-                      v-model="firstSearchType"
-                      single-line
-                      hide-details>
-                    </v-select>
-                  </div>
-                </section>-->
 
                 <section v-if="!firstSearch" class="search">
                   <v-layout row wrap>
@@ -157,9 +143,8 @@
                         label="Select city"
                         v-bind:items="availableCities"
                         v-model="selectedCities"
-                        chips
-                        autocomplete
-                        >
+                        single-line
+                        autocomplete>
                       </v-select>
                     </v-flex>
                     <v-flex xs12 sm6 :key="2">
@@ -169,6 +154,7 @@
                         v-model="selectedTypes"
                         chips
                         autocomplete
+                        single-line
                         multiple>
                       </v-select>
                     </v-flex>
@@ -179,6 +165,7 @@
                         v-model="selectedPositions"
                         chips
                         autocomplete
+                        single-line
                         multiple>
                       </v-select>
                     </v-flex>
@@ -189,6 +176,7 @@
                         v-model="selectedShifts"
                         chips
                         autocomplete
+                        single-line
                         multiple>
                       </v-select>
                     </v-flex>
@@ -207,7 +195,8 @@
             </form>
 
       <v-layout row wrap v-if="!firstSearch">
-          <div class="post-card" v-for="(job, index) in jobs" :key="index" xs12>
+          <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
+            <router-link :to="'JobDetail/'+job._id">
             <v-layout align-center row spacer slot="header" style="padding-bottom: 10px;">
               <v-flex xs2 class="no-padding">
                 <v-avatar size="36px" slot="activator">
@@ -227,9 +216,9 @@
                 <!-- insert gallary here -->
                 <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
             </div>
+            </router-link>
           </div>
       </v-layout>
-
     </div>
   </v-container>
 </template>
@@ -239,26 +228,31 @@ import gql from 'graphql-tag';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueApollo from 'vue-apollo';
+import Vuex from 'vuex';
+import Store from '../store';
 
 Vue.use(Vuetify);
 Vue.use(VueApollo);
+Vue.use(Vuex);
+
+/* const store = new Vuex.Store({
+}); */
 
 export default {
   apollo: {
-    jobs: gql`
-      {
-        jobs {
+    findJobs: gql`{
+      findJobs {
           _id
           name
           description
           type
           address
-        }
       }
-    `,
+    }`,
   },
   data() {
     return {
+      jobs: [],
       firstSearchTypes: [
         'Latest jobs',
       ],
@@ -288,21 +282,34 @@ export default {
         'Evening',
         'Mid-night',
       ],
-      firstSearch: true,
+      firstSearch: Store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
-      selectedCities: [],
-      selectedTypes: [],
-      selectedPositions: [],
-      selectedShifts: [],
+      selectedCities: Store.state.selectedCities,
+      selectedTypes: Store.state.selectedTypes,
+      selectedPositions: Store.state.selectedPositions,
+      selectedShifts: Store.state.selectedShifts,
+      vuextest: Store.state.count,
     };
   },
   methods: {
     searchGo() {
       if (this.selectedCities[0]) {
         this.firstSearch = false;
-        console.log(this.jobs);
+        Store.commit('go');
       }
     },
+    openJob(id) {
+      console.log(id);
+    },
+  },
+  beforeDestroy() {
+    Store.commit({
+      type: 'keepSearch',
+      sCities: this.selectedCities,
+      sTypes: this.selectedTypes,
+      sPositions: this.selectedPositions,
+      sShifts: this.selectedShifts,
+    });
   },
 };
 

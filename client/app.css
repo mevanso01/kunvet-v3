@@ -20,6 +20,18 @@ h3 {
   height: 1.2em;
   line-height: 1.2;
 }
+.center {
+  text-align: center;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+.container {
+  padding-top: 80px;
+}
 .toolbar__content {
   max-width: 960px;
   margin: auto;
@@ -35,7 +47,7 @@ h3 {
   font-size: 16px;
   padding-left: 0;
   padding-right: 12px;
-  background-color: #fff;
+  background-color: #fff !important;
   box-shadow: none !important;
 }
 .chip__close i.icon {
@@ -224,7 +236,8 @@ nav {
 }
 .main-cont-large {
     position: relative;
-    width: 960px;
+    width: 100%;
+    max-width: 960px;
     margin: 40px auto; /* previously: 50px auto */
     left: 0;
     right: 0;
@@ -648,13 +661,18 @@ nav {
     }
 }
 @media (max-width: 600px) {
+    .container {
+      padding-top: 72px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
     .hidden-xs {
       display: none;
     }
     body, .application {
       background-color: #fff;
     }
-    nav {
+    .main-nav {
         height: 56px;
     }
     #nav-logo {

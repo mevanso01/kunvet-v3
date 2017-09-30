@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
-
+import Vuex from 'vuex';
 
 import Client from '@/apollo/client';
 
@@ -46,12 +46,14 @@ import App from '@/App';
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
+Vue.use(Vuex);
 
 const apolloProvider = new VueApollo({
   defaultClient: Client,
 });
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -73,9 +75,10 @@ const router = new VueRouter({
       path: '/jobposts',
       component: JobPost,
     },
-    { // Changes to be made for job posts specific id
-      path: '/jobdetail',
+    {
+      path: '/jobdetail/:id',
       component: JobDetail,
+      props: true,
     },
     {
       path: '/resume',
@@ -153,7 +156,7 @@ const router = new VueRouter({
 });
 
 /* eslint-disable no-new */
-
+Vue.prototype.$firstS = true;
 new Vue({
   apolloProvider,
   el: '#app',
