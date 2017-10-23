@@ -183,8 +183,9 @@ export default {
       this.submitClicked = true;
       if (this.valid) {
         this.chosenForm = 'submitted';
-        const data = { email: 'test@gmail.com' };
-        Vue.http.get('http://localhost:3000/test', data).then((res) => {
+        const headers = { emulateJSON: true };
+        const data = { email: this.email, reqtype: 'validate' };
+        Vue.http.post('http://localhost:3000/sendemail', data, headers).then((res) => {
           console.log(res);
         }, (error) => {
           console.log(error);

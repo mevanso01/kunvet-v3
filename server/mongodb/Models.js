@@ -1,5 +1,20 @@
 import Mongoose from 'mongoose';
 
+const TempAccountSchema = Mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  vcode: {
+    type: String,
+    required: true,
+  },
+});
+
 const JobSchema = Mongoose.Schema({
   name: {
     // Name of the job
@@ -209,7 +224,6 @@ const ResumeSchema = Mongoose.Schema({
 
 const AccountSchema = Mongoose.Schema({
   username: {
-    index: { unique: true },
     type: String,
     required: true,
   },
@@ -246,6 +260,7 @@ export default {
   Job: Mongoose.model('Job', JobSchema),
   Resume: Mongoose.model('Resume', ResumeSchema),
   Account: Mongoose.model('Account', AccountSchema),
+  TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
   BusinessProfile: Mongoose.model('BusinessProfile', BusinessProfileSchema),
   EmployeeProfile: Mongoose.model('EmployeeProfile', EmployeeProfileSchema),
 };

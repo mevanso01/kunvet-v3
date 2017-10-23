@@ -270,20 +270,21 @@ export default {
     this.getData();
   },
   props: ['id'],
-  apollo: {
+  /* apollo: {
     findJob: {
 
     },
-  },
+  }, */
   data() {
     return {
+      // id: this.$route.params.id,
       findJob: '',
     };
   },
   methods: {
     getData() {
       this.$apollo.query({
-        query: gql`query ($JobId: MongoID) {
+        query: (gql`query ($JobId: MongoID) {
           findJob (filter: {
             _id: $JobId
           }) {
@@ -293,7 +294,7 @@ export default {
               type
               address
           }
-        }`,
+        }`),
         variables: {
           JobId: this.id,
         },

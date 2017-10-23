@@ -3,6 +3,7 @@ import { GQC } from 'graphql-compose';
 import Models from '../mongodb/Models';
 
 // GraphQL types
+const Ta = composeWithMongoose(Models.TempAccount);
 const Job = composeWithMongoose(Models.Job);
 const Resume = composeWithMongoose(Models.Resume);
 const Account = composeWithMongoose(Models.Account);
@@ -26,6 +27,8 @@ GQC.rootQuery().addFields({
   // Employee Profile
   findEmployeeProfile: EmployeeProfile.get('$findOne'),
   findEmployeeProfiles: EmployeeProfile.get('$findMany'),
+  //
+  findVCode: Ta.get('$findOne'),
 });
 
 // Root mutation fields

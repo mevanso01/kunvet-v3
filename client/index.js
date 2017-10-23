@@ -24,6 +24,7 @@ import Messages from '@/pages/Messages'; // does sharing one page for employee a
 import Account from '@/pages/Account';
 import Resume from '@/pages/Resume';
 import CreateResume from '@/pages/CreateResume';
+import Validate from '@/pages/Validate';
 
 // individual job pages
 import Personalhp from '@/pages/Personalhp';
@@ -85,6 +86,11 @@ const router = new VueRouter({
     {
       path: '/jobdetail/:id',
       component: JobDetail,
+      props: true,
+    },
+    {
+      path: '/validate/:code',
+      component: Validate,
       props: true,
     },
     {
