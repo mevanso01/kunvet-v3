@@ -1,81 +1,142 @@
-<style>
-.main-cont-small {
-    text-align: center;
-}
-#login {
-    height: 360px;
-}
-#forgot-password,
-#ask-sign-up {
-    padding-top: 20px;
-    margin-bottom: 0;
+<style scoped>
+.link{
     color: #ef5350;
+    cursor:pointer;
+    text-align:center;
 }
-#error-msg {
-    padding: 6px 8px;
-    border-radius: 2px;
-    display: inline-block;
-    margin: 16px auto 0 auto;
-    left: 0;
-    right: 0;
-    color: #fff;
-    background-color: #ffa726;
+a:hover{
+    cursor:pointer;
 }
-@media (max-width: 544px) {
-    #login {
-        height: auto;
-    }
+.login-section {
+  padding: 16px 0;
+}
+@media (min-width: 600px) {
+  .login-section {
+    padding: 16px 32px;
+  }
 }
 </style>
 <template>
-  <v-container fluid>
+<v-container>
     <div class="main-cont-small">
 
-            <form method="post">
+        <div v-show="forgetpwd==0">
+            <section class="login-section">
+                <h2>Welcome Back!</h2>
+                <v-form v-model="valid" ref="form">
+                    <v-text-field
+                        label="E-mail"
+                        v-model="email"
+                        :rules="emailRules"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        label="Password"
+                        v-model="password"
+                        :rules="passwordRules"
+                        min="8"
+                        :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                        :append-icon-cb="() => (e1 = !e1)"
+                        :type="e1 ? 'password' : 'text'"
+                        required
+                    ></v-text-field>
+                </v-form>
 
-                <section id="login">
-                    <div class="general-input">
-                        <input id="email" type="email" name="email" placeholder="Email" value="">
-                    </div>
-                    <div class="general-input">
-                        <input id="password" type="password" name="pwd" placeholder="Password">
-                    </div>
-                    <a href="https://www.kunvet.com/user/signup">
-                        <p id="ask-sign-up">New user? Sign up <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></p>
-                    </a>
-                    <a href="https://www.kunvet.com/user/forgot_password">
-                        <p id="forgot-password">Forgot your password?</p>
-                    </a>
+                <router-link to="/signup" class="link">
+                    <p id="ask-sign-up">Create an account<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></p>
+                </router-link>
+                <a @click="forgetpwd=1">
+                    <p id="forgot-password" class="link">Forgot your password?<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></p>
+                </a>
+            </section>
 
-                    <!-- messages -->
-
-                </section>
-
-                <!-- submit button -->
-
-                <input class="hidden-input" id="submit" type="submit" value="Login">
-                <div id="general-submit" @click="submit()">
-                    <div id="general-submit-default">
-                        <span>LOGIN</span>
-                    </div>
-                    <div id="general-submit-error">
-                        <span id="general-submit-error-msg"></span>
-                    </div>
+            <div v-show="logging==0" id="general-submit" @click="submit()">
+                <div id="general-submit-default">
+                    <span>LOGIN</span>
                 </div>
-            </form>
+            </div>
+
+            <v-alert
+                color="warning"
+                icon="priority_high"
+                :value="logging"
+                transition="slide-x-transition"
+            >
+                This is a success alert.
+            </v-alert>
         </div>
-  </v-container>
+
+
+        <div v-show="forgetpwd==1">
+            <section>
+                <h2>Forget Password?</h2>
+                    <p>No worries! We can help you find it back. Simply fill out the email of you account.</p>
+                    <v-form v-model="valid" ref="form2">
+                        <v-text-field
+                            label="E-mail"
+                            v-model="email"
+                            :rules="emailRules"
+                            required
+                        ></v-text-field>
+                    </v-form>
+
+                    <a @click="forgetpwd=0" class="link">
+                        <p id="forgot-password">Back to log in<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></p>
+                    </a>
+                    <router-link to="/signup" class="link">
+                        <p id="ask-sign-up">Create an account<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></p>
+                    </router-link>
+            </section>
+
+            <div v-show="sent==0" id="general-submit" @click="send()">
+                <div id="general-submit-default">
+                    <span>Send Message</span>
+                </div>
+            </div>
+
+            <v-alert
+                color="success"
+                icon="check_circle"
+                :value="sent"
+                transition="slide-x-transition"
+            >
+                Sending Message.
+            </v-alert>
+
+        </div>
+    </div>
+</v-container>
+
 </template>
 <script>
 import App from '@/App';
-// import Vue from 'vue';
 
-
-export default {
+export default{
+  data() {
+    return {
+      e1: true,
+      valid: false,
+      forgetpwd: 0,
+      logging: 0,
+      sent: 0,
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+      ],
+      password: '',
+      passwordRules: [
+        v => !!v || 'Required',
+      ],
+    };
+  },
   methods: {
     submit() {
-      // console.log(App);
+      this.logging = true;
       App.methods.login_b();
+    },
+    send() {
+      this.sent = true;
     },
   },
 };
