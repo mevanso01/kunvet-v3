@@ -5,8 +5,12 @@ a {
   color: unset;
   text-decoration: none;
 }
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
   color: #616161;
+}
+h1 {
+  color: #333;
+  font-weight: 400;
 }
 h2 {
   font-size: 1.5em;
@@ -14,20 +18,16 @@ h2 {
 }
 h3 {
   font-size: 1.2em;
-  font-weight: bold;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   height: 1.2em;
   line-height: 1.2;
 }
-.center {
-  text-align: center;
-}
-.float-right {
-  float: right;
-}
-.float-left {
-  float: left;
+
+/*  ---- Styles to globally override Vuetify ----  */
+.radio-group .radio label,
+.input-group.checkbox.input-group--selection-controls label {
+  line-height: 24px;
 }
 .container {
   padding-top: 80px;
@@ -35,6 +35,9 @@ h3 {
 .toolbar__content {
   max-width: 960px;
   margin: auto;
+}
+.tabs__item {
+  text-transform: none;
 }
 .icon--checkbox {
   color: #ef5350 !important;
@@ -53,11 +56,19 @@ h3 {
 .chip__close i.icon {
   font-size: 18px;
 }
-/* input,
-textarea {
-    outline: none;
-    color: #4d4d4d;
-} */
+/*  ---- End of Styles to globally override Vuetify ----  */
+.no-padding {
+  padding: 0 !important;
+}
+.center {
+  text-align: center;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
 .hidden-input {
     display: none;
 }
@@ -625,22 +636,15 @@ nav {
   section:last-of-type {
       padding-bottom: 48px;
   }
-  /*
-  section {
-      padding: 16px;
-  }
-  section:first-of-type {
-      padding-top: 32px;
-  }
-  section:last-of-type {
-      padding-bottom: 32px;
-  }*/
 }
 @media (max-width: 960px) {
-  .flex {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
+    .flex {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    section {
+        padding: 16px 16px;
+    }
     #nav-contents {
         width: 100%;
     }
@@ -660,7 +664,16 @@ nav {
         width: 100%;
     }
 }
+@media (min-width: 601px) {
+  h1 {
+    font-size: 32px;
+  }
+}
 @media (max-width: 600px) {
+    h1 {
+      font-size: 1.5em;
+      -webkit-margin-after: 0.83em;
+    }
     .container {
       padding-top: 72px;
       padding-left: 16px;

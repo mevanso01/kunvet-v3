@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-toolbar fixed class="white main-nav" light>
-      <a href="/">
+      <router-link to="/">
             <div id="nav-logo">
                 <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">
                     <path d="M506.16,577.25c-46.35,0-92.71.29-139.05-.42-5.78-.09-14.6-4.23-16.72-8.9-20.71-45.61-37.64-92.35-37.34-143.58.29-50,19-91.57,62.15-117.12,76.17-45.1,158.71-61.61,246-41.22,45,10.51,70.88,42.05,79.76,86.87C711.62,406.7,699.19,458.25,682.9,509c-6.12,19.06-14.73,37.32-21.06,56.32-3.23,9.7-8.61,12.17-18.16,12.09C597.84,577,552,577.27,506.16,577.25Z"
@@ -17,9 +17,9 @@
                     <path d="M2059.6,376.87v17h-69.33V577.12H1941.2V393.89h-69.33v-17Z" />
                 </svg>
             </div>
-        </a>
+        </router-link>
         <v-spacer></v-spacer>
-        <div class="hidden-sm-and-up" style="padding-bottom: 6px;">
+        <div class="hidden-sm-and-up">
           <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </div>
         <v-toolbar-items class="hidden-xs">
@@ -43,14 +43,16 @@
       </v-toolbar>
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
-        <v-list-tile v-for="item in items[0]" :key="item.title" @click="">
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+        <router-link :to="item.href" v-for="item in items[0]" :key="item.title">
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
     <main>
@@ -102,12 +104,12 @@ export default {
         [
           { title: 'My Jobs', icon: 'dashboard', href: '/login' },
           { title: 'Messages', icon: 'question_answer', href: '/signup' },
-          { title: 'Profile', icon: 'question_answer', href: '/profile' },
+          { title: 'Account', icon: 'question_answer', href: '/account' },
         ],
         [
           { title: 'Post a job', icon: 'dashboard', href: '/login' },
           { title: 'Applicants', icon: 'question_answer', href: '/signup' },
-          { title: 'Account', icon: 'question_answer', href: '/profile' },
+          { title: 'Account', icon: 'question_answer', href: '/account' },
         ],
       ],
       right: true,
@@ -155,12 +157,12 @@ body, html {
   height: 100%;
   width: 100%;
 }
-h1 {
+/* h1 {
    font-size: 1.5em;
    -webkit-margin-before: 0.83em;
    -webkit-margin-after: 0.83em;
    font-weight: bold;
-}
+} */
 @media only screen and (min-width:600px) {
   .hidden-sm-and-up { display:none !important; }
 }

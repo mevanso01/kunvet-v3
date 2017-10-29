@@ -62,6 +62,8 @@
     "koa-router": "^7.2.1",
     "koa-static": "^4.0.1",
     "mongoose": "^4.11.7",
+    "nodemailer": "^4.1.1",
+    "sha1": "^1.1.1",
     "simple-node-logger": "^0.93.28",
     "source-map-support": "^0.4.16",
     "vue": "^2.4.4",

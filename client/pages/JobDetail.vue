@@ -2,9 +2,6 @@
   .sub-container {
     padding: 10px 15px;
   }
-  #job-heading {
-    margin-bottom: 48px;
-  }
   #job-company-logo img {
     border-radius: 50%;
   }
@@ -124,7 +121,31 @@
 .job-image img:hover {
     transform: scale(1.0625);
 }
-  @media (max-width: 600px) {
+.post-title-cont {
+  margin-top: 16px;
+  height: 48px;
+  width: auto;
+}
+.post-title {
+  font-size: 30px;
+  line-height: 1.2;
+  float: left;
+  width: 100%;
+  margin-bottom: 0;
+  position: absolute;
+}
+.top-container {
+  margin-bottom: 8px;
+}
+@media (max-width: 600px) {
+    .post-title-cont {
+      height: 32px;
+      margin-top: 8px;
+    }
+    .post-title {
+      font-size: 24px;
+      line-height: 1.2;
+    }
     #job-shifts {
         padding: 16px 16px;
         background-color: #fafafa;
@@ -161,14 +182,14 @@
     height: 48px;
   }
   .blue-row {
-    color: white;
-    background-color: rgba(0, 152, 227, 0.25);
+    /* color: white;
+    background-color: rgba(0, 152, 227, 0.25); */
     padding: 4px;
     margin-bottom: 5px;
   }
   .orange-row {
-    color: white;
-    background-color: rgba(227, 148, 0, 0.25);
+    /* color: white;
+    background-color: rgba(227, 148, 0, 0.25); */
     padding: 4px;
     margin-bottom: 5px;
   }
@@ -186,8 +207,7 @@
   <v-container fluid style="padding-left: 0; padding-right: 0;">
     <div class="main-cont-large job-detail-container">
       <div class="sub-container">
-          <router-link to="/">Back</router-link>
-          <br>
+          <!--<router-link to="/">Back</router-link>-->
           <div class="top-container">
             <div class="float-left">
               <p style="line-height: 48px; color: #666">Trump, Inc.</p>
@@ -199,7 +219,10 @@
               <v-btn round outline class="red--text darken-1">Apply</v-btn>
             </div>
           </div>
-          <h1>{{ findJob.name }}</h1>
+          <v-divider></v-divider>
+          <div class="post-title-cont">
+            <h2 class="post-title">{{ findJob.name }}</h2>
+          </div>
           <p class="post-address">{{ findJob.address }}</p>
           <div class="blue-row">Blue Icons</div>
           <div class="orange-row">Orange Icons</div>
@@ -252,7 +275,7 @@
           </div>
       </div>
     </div>
-    <p class="center">ID for testing: {{ id }}</p>
+
   </v-container>
 </template>
 <script>
@@ -270,20 +293,21 @@ export default {
     this.getData();
   },
   props: ['id'],
-  apollo: {
+  /* apollo: {
     findJob: {
 
     },
-  },
+  }, */
   data() {
     return {
+      // id: this.$route.params.id,
       findJob: '',
     };
   },
   methods: {
     getData() {
       this.$apollo.query({
-        query: gql`query ($JobId: MongoID) {
+        query: (gql`query ($JobId: MongoID) {
           findJob (filter: {
             _id: $JobId
           }) {
@@ -293,7 +317,7 @@ export default {
               type
               address
           }
-        }`,
+        }`),
         variables: {
           JobId: this.id,
         },

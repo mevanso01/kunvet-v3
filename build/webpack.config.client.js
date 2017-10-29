@@ -23,6 +23,7 @@ module.exports = {
   output: {
     filename: '[name].[hash].js',
     path: utils.resolve('dist/client'),
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

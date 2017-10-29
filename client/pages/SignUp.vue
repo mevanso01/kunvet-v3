@@ -5,7 +5,9 @@
   bottom: 16px;
 }
 .bottom-text {
-  margin: 4px 0; color: #999;
+  margin: 6px 0;
+  color: #999;
+  text-align: center;
 }
 .bottom-text a {
   cursor: pointer;
@@ -92,7 +94,7 @@
               </v-card-text>
             </v-card>
             <div class="bottom-text">
-              <a @click="back">Back</a>
+              <router-link to="/login">Already have an account? Log in</router-link>
             </div>
           </v-flex>
         </v-layout>
@@ -163,7 +165,7 @@ export default {
     return {
       e1: true,
       valid: false,
-      chosenForm: '',
+      chosenForm: 'individual',
       submitClicked: false,
       email: '',
       emailRules: [
@@ -183,8 +185,9 @@ export default {
       this.submitClicked = true;
       if (this.valid) {
         this.chosenForm = 'submitted';
-        const data = { email: 'test@gmail.com' };
-        Vue.http.get('http://localhost:3000/test', data).then((res) => {
+        const headers = { emulateJSON: true };
+        const data = { email: this.email, reqtype: 'validate' };
+        Vue.http.post('http://localhost:3000/sendemail', data, headers).then((res) => {
           console.log(res);
         }, (error) => {
           console.log(error);

@@ -33,7 +33,7 @@
 .list__tile__action .checkbox .input-group__input {
   padding-top: 6px;
 }
-.list__tile__title {
+.home-page-cont .list__tile__title {
   color: #616161 !important;
 }
 .search .input-group--select i.icon {
@@ -110,7 +110,7 @@
 </style>
 
 <template>
-  <v-container fluid>
+  <v-container fluid class="home-page-cont">
       <div class="main-cont-large">
             <form>
               <section class="firstSearch" v-if="firstSearch">

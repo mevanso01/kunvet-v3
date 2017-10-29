@@ -21,9 +21,11 @@ import Employee from '@/pages/Employee';
 import AppliedJobs from '@/pages/AppliedJobs';
 import SavedJobs from '@/pages/SavedJobs';
 import Messages from '@/pages/Messages'; // does sharing one page for employee and business conflict with UI
-import AccountSettings from '@/pages/AccountSettings';
+import Account from '@/pages/Account';
 import Resume from '@/pages/Resume';
 import CreateResume from '@/pages/CreateResume';
+import Validate from '@/pages/Validate';
+import CreateNewJob from '@/pages/CreateNewJob';
 
 // individual job pages
 import Personalhp from '@/pages/Personalhp';
@@ -54,9 +56,16 @@ const apolloProvider = new VueApollo({
 
 const router = new VueRouter({
   mode: 'history',
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   routes: [
     {
       path: '/',
+      component: Index,
+    },
+    {
+      path: '*',
       component: Index,
     },
     {
@@ -81,6 +90,11 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/validate/:code',
+      component: Validate,
+      props: true,
+    },
+    {
       path: '/resume',
       component: Resume,
     },
@@ -101,12 +115,16 @@ const router = new VueRouter({
       component: Messages,
     },
     {
-      path: '/accountsettings',
-      component: AccountSettings,
+      path: '/account',
+      component: Account,
     },
     {
       path: '/personalhp',
       component: Personalhp,
+    },
+    {
+      path: '/createnewjob',
+      component: CreateNewJob,
     },
     {
       path: '/jobposts_i',

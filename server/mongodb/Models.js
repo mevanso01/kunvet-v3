@@ -1,5 +1,20 @@
 import Mongoose from 'mongoose';
 
+const TempAccountSchema = Mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  vcode: {
+    type: String,
+    required: true,
+  },
+});
+
 const JobSchema = Mongoose.Schema({
   name: {
     // Name of the job
@@ -18,7 +33,7 @@ const JobSchema = Mongoose.Schema({
     // Type of the job
     type: String,
     required: true,
-    enum: ['fulltime', 'parttime', 'other'],
+    enum: ['fulltime', 'parttime', 'internship', 'contract', 'other'],
     default: 'other',
   },
   address: {
@@ -34,7 +49,7 @@ const JobSchema = Mongoose.Schema({
   shift: {
     type: String,
     required: true,
-    enum: ['morning', 'afternoon', 'night'],
+    enum: ['morning', 'noon', 'afternoon', 'evening', 'night'],
   },
   age: {
     type: Number,
@@ -49,8 +64,7 @@ const JobSchema = Mongoose.Schema({
   },
   language: {
     type: String,
-    enum: ['English', 'Other'],
-    default: 'Other',
+    default: 'English',
   },
   overview: {
     type: String,
@@ -209,7 +223,6 @@ const ResumeSchema = Mongoose.Schema({
 
 const AccountSchema = Mongoose.Schema({
   username: {
-    index: { unique: true },
     type: String,
     required: true,
   },
@@ -246,6 +259,7 @@ export default {
   Job: Mongoose.model('Job', JobSchema),
   Resume: Mongoose.model('Resume', ResumeSchema),
   Account: Mongoose.model('Account', AccountSchema),
+  TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
   BusinessProfile: Mongoose.model('BusinessProfile', BusinessProfileSchema),
   EmployeeProfile: Mongoose.model('EmployeeProfile', EmployeeProfileSchema),
 };

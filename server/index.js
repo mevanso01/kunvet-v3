@@ -32,15 +32,6 @@ historyApiFallback({
 // app.use(historyApiFallback());
 app.use(KoaMount('/srv', GraphQLApp));
 
-const ef = new Koa();
-
-ef.use((ctx) => {
-  ctx.body = 'Test';
-});
-
-
-app.use(KoaMount('/sendemail', ef));
-
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
   Logger.info('Running in development mode');
