@@ -64,6 +64,10 @@
   top: 25px;
   right: 15px; */
 }
+.acct-page-container .dialog .btn__content {
+  padding: 0 !important;
+}
+.profile-tabs > .tabs__wrapper { margin: 0 !important; }
 @media (min-width: 961px) {
   .cust-tile-2 {
     margin-bottom: 8px;
@@ -222,11 +226,25 @@
               </v-flex>
               <v-flex xs12 sm6>
                 <h3 style="text-align: right">Organizations</h3>
+
                 <div class="float-right">
-                  <v-btn outline small fab class="grey--text lighten-2">
+                  <v-btn outline small fab @click.native.stop="addorg = true" class="grey--text lighten-2">
                     <v-icon>add</v-icon>
                   </v-btn>
                 </div>
+
+                <v-dialog v-model="addorg">
+                  <v-card>
+                    <v-card-title class="headline">Create or join existing organization</v-card-title>
+                    <v-card-actions>
+                      <!--<v-spacer></v-spacer>-->
+                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Create</v-btn>
+                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Join</v-btn>
+                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Cancel</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
               </v-flex>
             </v-layout>
             </section>
@@ -242,7 +260,7 @@
             <v-layout>
               <v-flex xs4 md3 dark class="no-padding">
                 <!--<v-card width="100%" height="100%">-->
-                  <v-navigation-drawer permanent dark style="position: relative; width: 100%;">
+                  <v-navigation-drawer permanent dark style="position: relative; width: 100%; z-index: 1;">
                     <v-list dense class="pt-0">
                       <v-list-tile v-for="item in items" :key="item.title" @click="">
                         <v-list-tile-action>
@@ -260,7 +278,15 @@
 
               <v-flex xs8 md9 style="max-height:70vh; overflow:auto">
                   <h2 center>Saved Jobs<v-icon>bookmark</v-icon></h2>
-                  <v-flex v-for="card in cards" :key="card" pa-3>
+                  <div xs12="" class="post-card">
+                    <a href="/JobDetail/59be0c0f3077d224476ba3cd" class="">
+                    <div><h1 style="font-weight: normal;">hi</h1></div>
+                    <p class="post-address">123 sesame street</p>
+                    <p class="post-intro">desc</p> <div class="image-row">
+                      <img src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png" style="max-width: 100%;"></div>
+                    </a>
+                  </div>
+                  <!--<v-flex v-for="card in cards" :key="card" pa-3>
                     <v-card color="grey lighten-4">
                       <v-card-text>
                         <v-avatar size="50px">
@@ -279,7 +305,7 @@
                         <img style="width:200px;height:200px;background-color:white" ult="img"></img>
                       </v-flex>
                     </v-card>
-                  </v-flex>
+                  </v-flex>-->
 
               </v-flex>
             </v-layout>
@@ -327,6 +353,7 @@
           { title: 'Jobs Posted', icon: '' },
         ],
         settingsoption1: '',
+        addorg: false,
       };
     },
     methods: {

@@ -2,6 +2,16 @@
 .color-red {
   color: red;
 }
+.createnewjob-container .ql-editor {
+    min-height: 120px;
+}
+/* .quillWrapper {
+  clear: both;
+  padding-top: 15px;
+} */
+.ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
+  margin-bottom: 0;
+}
 .createnewjob-container h3 {
   margin-bottom: 1.3em;
 }
@@ -34,14 +44,15 @@
   padding-top: 0;
 }
 .createnewjob-container .cust-radio-box .input-group.input-group--selection-controls.radio,
-.createnewjob-container .multi-checkbox > div {
+.createnewjob-container .multi-checkbox .input-group.input-group--selection-controls {
   padding-top: 4px;
-  width: 120px;
+  max-width: 120px;
   height: 34px;
   float: left;
   background-color: #f8f8f8;
   margin: 2px 2px;
   border-radius: 3px;
+  display: block !important;
 }
 .createnewjob-container .cust-radio-box .input-group.input-group--selection-controls label,
 .createnewjob-container .multi-checkbox .input-group.input-group--selection-controls label {
@@ -65,14 +76,38 @@
 .createnewjob-container .multi-checkbox .input-group.checkbox.input-group--active label {
   color: #fff;
 }
+.createnewjob-container .multi-checkbox {
+  width: auto;
+  min-height: 38px;
+}
 .createnewjob-container .cust-radio-box .input-group--active,
 .createnewjob-container .multi-checkbox .input-group--active {
   background-color: #555 !important; /* #ef5350 */
+}
+.requirements .flex {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 @media (min-width: 600px) {
   .createnewjob-container .cust-radio-box,
   .createnewjob-container .multi-checkbox {
     margin-left: 15px;
+  }
+}
+@media (max-width: 960px) {
+  .requirements .flex {
+    padding: 0 15px;
+  }
+}
+@media (max-width: 700px) {
+  /* doing this is really bad practice, but I'm not sure how to avoid it */
+  .createnewjob-container .multi-checkbox {
+    min-height: 76px;
+  }
+}
+@media (max-width: 435px) {
+  .createnewjob-container .multi-checkbox {
+    min-height: 114px;
   }
 }
 </style>
@@ -82,6 +117,7 @@
       <section>
         <h2>Create a job</h2>
         <br>
+
         <h3>Title and Address<span class="color-red">*</span></h3>
         <v-text-field
           v-model="name"
@@ -96,6 +132,7 @@
 
         <br>
         <h3>Catagories<span class="color-red">*</span></h3>
+
         <div class="cust-radio-box">
           <p>Select one:</p>
           <v-radio-group v-model="type" row color="red" required>
@@ -106,6 +143,7 @@
             <v-radio label="other" value="other"></v-radio>
           </v-radio-group>
         </div>
+
         <div class="cust-radio-box">
           <p>Select one:</p>
           <v-radio-group v-model="studentfriendly" row color="red" required>
@@ -115,89 +153,111 @@
         </div>
 
         <br>
+        <h3>Salary<span class="color-red">*</span></h3>
+        <v-layout row wrap>
+          <v-flex xs12 sm12 md6 class="no-padding">
+            <div class="cust-radio-box">
+              <p>Select one:</p>
+              <v-radio-group v-model="salary_select" row color="red" required>
+                <v-radio label="Paid" value=""></v-radio>
+                <v-radio label="Unpaid" value="unpaid"></v-radio>
+                <v-radio label="Negotiable" value="negotiable"></v-radio>
+              </v-radio-group>
+            </div>
+          </v-flex>
+          <v-flex v-if="salary_select == ''" xs6 sm3 md2 class="no-padding" style="padding-right: 15px !important;">
+            <v-text-field
+            v-model="salary"
+            style="margin-top: 5px;"
+            prefix="$"
+            required
+            :rules="[() => !!(salary/1) || 'Required, must be a number']"
+            single-line
+            ></v-text-field>
+          </v-flex>
+          <v-flex v-if="salary_select == ''" xs6 sm3 md2 class="no-padding" style="padding-left: 15px !important;">
+            <v-select
+              value="per hour"
+              :items="[ 'per hour', 'per month', 'annually' ]"
+              style="margin-top: 5px;">
+            </v-select>
+          </v-flex>
+        </v-layout>
+
+        <br>
         <h3>Shifts (optional)</h3>
+
         <div class="multi-checkbox">
-          <v-checkbox label="morning" v-model="shift" value="morning"></v-checkbox>
-          <v-checkbox label="noon" v-model="shift" value="noon"></v-checkbox>
-          <v-checkbox label="afternoon" v-model="shift" value="afternoon"></v-checkbox>
-          <v-checkbox label="evening" v-model="shift" value="evening"></v-checkbox>
-          <v-checkbox label="night" v-model="shift" value="night"></v-checkbox>
+            <v-checkbox label="morning" v-model="shift" value="morning"></v-checkbox>
+            <v-checkbox label="noon" v-model="shift" value="noon"></v-checkbox>
+            <v-checkbox label="afternoon" v-model="shift" value="afternoon"></v-checkbox>
+            <v-checkbox label="evening" v-model="shift" value="evening"></v-checkbox>
+            <v-checkbox label="night" v-model="shift" value="night"></v-checkbox>
         </div>
-        <!--<v-radio-group v-model="shift" row>
 
-            <v-radio label="morning" value="morning"></v-radio>
-            <v-radio label="noon" value="noon"></v-radio>
-            <v-radio label="afternoon" value="afternoon"></v-radio>
-            <v-radio label="evening" value="evening" ></v-radio>
-            <v-radio label="night" value="night"></v-radio>
-        </v-radio-group>-->
+        <br>
+        <h3>Requirements (optional)</h3>
+        <v-layout class="requirements" row wrap>
+          <v-flex xs12 sm6 md5>
+            <v-select
+              v-model="education"
+              label="Education"
+              v-bind:items="educationOptions">
+            </v-select>
+          </v-flex>
+          <v-flex xs12 sm6 md5>
+            <v-text-field
+              name="preferred-degree"
+              v-model="degree"
+              label="Preferred degree"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm6 md5>
+            <v-text-field
+              name="language"
+              v-model="language"
+              label="Language"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs4 sm2>
+            <v-text-field
+            v-model="age"
+            label="Age"
+            :rules="[() => !!(age/1) || 'Must be a number']">
+          </v-text-field>
+          </v-flex>
+        </v-layout>
 
+        <br>
+        <h3>Description</h3>
+        <vue-editor id="description" v-model="description" :editorToolbar="customEditorToolbar"></vue-editor>
 
-       <!--<v-text-field
-          v-model="age"
-          label="Age"
-        ></v-text-field>
+        <br>
+        <h3>Responsibilities</h3>
+        <vue-editor id="responsibilities" v-model="responsibilities" :editorToolbar="customEditorToolbar"></vue-editor>
 
-        <v-text-field
-          v-model="salary"
-          label="Salary"
-        ></v-text-field>
-
-        <v-radio-group v-model="education" row>
-            <v-radio label="Associate" value="Associate" ></v-radio>
-            <v-radio label="Bachelor" value="Bachelor"></v-radio>
-            <v-radio label="Master" value="Master"></v-radio>
-            <v-radio label="None" value="None" ></v-radio>
-        </v-radio-group>-->
-
-
-        <!--<v-text-field
-          v-model="overview"
-          label="Overview"
-        ></v-text-field>-->
-
-        <v-text-field
-          v-model="description"
-          label="Job description"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="responsibilities"
-          label="Responsibilities"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="experience"
-          label="Experience/Qualifications"
-        ></v-text-field>
+        <br>
+        <h3>Experience/Qualifications</h3>
+        <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <!--<v-text-field
-          v-model="qualifications"
-          label="Qualifications"
-        ></v-text-field>-->
-
-        <v-text-field
-          name="language"
-          v-model="language"
-          label="language"
-          value="English"
-          single-line
-        ></v-text-field>
-
-        <v-text-field
           v-model="notes"
           label="Notes"
-        ></v-text-field>
+        ></v-text-field>-->
 
-        <v-btn @click="save">Save</v-btn>
-        <p>{{ message }}</p>
+        <br>
+        <v-layout>
+          <v-btn @click="save">Save</v-btn>
+          <v-btn @click="saveAndPost">Save and Post</v-btn>
+        </v-layout>
+        <!--<p>{{ message }}</p>-->
       </section>
     </div>
   </v-container>
 </template>
 <script>
 import gql from 'graphql-tag';
+import { VueEditor } from 'vue2-editor';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -215,6 +275,7 @@ const createJobMutation = gql`
         education
         language
         experience
+        responsibilities
         notes
       }
     }
@@ -222,15 +283,51 @@ const createJobMutation = gql`
 `;
 
 export default {
+  components: {
+    VueEditor,
+  },
   data() {
     return {
-      studentfriendly: true,
-      language: 'English',
+      name: '',
+      description: '',
+      address: '',
+      type: '',
+      category: '',
       shift: [],
+      age: '',
+      salary: '',
+      education: '',
+      responsibilities: '',
+      experience: '',
+      notes: '',
+      studentfriendly: true,
+      language: '',
+      degree: '',
+
+      educationOptions: [
+        'None (recommended)',
+        'High School', 'Bachelor Degree',
+        'Masters Degree', 'Doctorate/PHD',
+      ],
+      salary_select: '',
+
+      customEditorToolbar: [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        // ['blockquote', 'code-block'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscriptn
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'align': [] }],
+        ['clean'],
+      ],
     };
   },
   methods: {
     save() {
+
+    },
+    saveAndPost() {
       const job = {
         user_name: 'test',
         name: this.name,
@@ -240,10 +337,11 @@ export default {
         category: this.category,
         shift: this.shift,
         age: this.age,
-        salary: this.salary,
+        salary: this.salary_select || this.salary,
         education: this.education,
         language: this.language,
         experience: this.experience,
+        responsibilities: this.responsibilities,
         notes: this.notes,
       };
       this.$apollo.mutate({

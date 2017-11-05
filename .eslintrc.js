@@ -16,7 +16,9 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
-    'no-console':0,
+    'no-console': 0,
+    'no-multi-spaces': 0,
+    'quote-props': 0,
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never',

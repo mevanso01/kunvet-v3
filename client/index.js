@@ -174,6 +174,7 @@ const router = new VueRouter({
 });
 
 /* eslint-disable no-new */
+
 Vue.prototype.$firstS = true;
 new Vue({
   apolloProvider,
