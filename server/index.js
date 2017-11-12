@@ -1,3 +1,7 @@
+// ===========
+// | Imports |
+// ===========
+
 // Source map support
 import 'source-map-support/register';
 // const fs = require("fs")
@@ -5,6 +9,12 @@ import 'source-map-support/register';
 import http from 'http';
 import Koa from 'koa';
 import KoaMount from 'koa-mount';
+import KoaBodyParser from 'koa-bodyparser';
+import KoaSession from 'koa-session';
+import KoaPassport from 'koa-passport';
+
+// Passport
+import './auth';
 
 // Sub apps
 import GraphQLApp from './apps/graphql';
@@ -15,6 +25,11 @@ import ClientApp from './apps/client';
 import Db from './mongodb/Db';
 import Logger from './utils/Logger';
 
+
+// ========
+// | Main |
+// ========
+
 Logger.info('Kunvet server');
 
 // const path = require('path');
@@ -23,13 +38,18 @@ Logger.info('Kunvet server');
 const port = process.env.PORT || 3000;
 const app = new Koa();
 
-/* const indexPage = path.join(__dirname, '/../client/index.html');
+// Body parser
+app.use(KoaBodyParser());
 
-historyApiFallback({
-  index: indexPage,
-}); */
+// Session
+app.keys = ['rua'];
+app.use(KoaSession({}, app));
 
-// app.use(historyApiFallback());
+// Passport
+app.use(KoaPassport.initialize());
+app.use(KoaPassport.session());
+
+// Mount sub apps
 app.use(KoaMount('/srv', GraphQLApp));
 
 if (process.env.NODE_ENV !== 'production') {
