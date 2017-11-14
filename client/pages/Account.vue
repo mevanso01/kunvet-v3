@@ -328,15 +328,17 @@
 </template>
 
 <script>
+  import Store from '../store';
+
   export default {
     data() {
       return {
         tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
         active: null,
         userdata: {
-          school: null,
-          degree: null,
-          email: null,
+          school: Store.state.userdata.school,
+          degree: Store.state.userdata.degree,
+          email: Store.state.userdata.email,
         },
         updateSchool: '',
         updateEmail: '',
@@ -372,6 +374,14 @@
         this.userdata.email = this.updateEmail;
         this.updateEmail = '';
       },
+    },
+    beforeDestroy() {
+      Store.commit({
+        type: 'saveUserdata',
+        school: this.userdata.school,
+        degree: this.userdata.degree,
+        email: this.userdata.email,
+      });
     },
   };
 </script>

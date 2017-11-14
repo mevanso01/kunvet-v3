@@ -11,6 +11,11 @@ export default new Vuex.Store({
     selectedTypes: [],
     selectedPositions: [],
     selectedShifts: [],
+    userdata: {
+      school: null,
+      degree: null,
+      email: null,
+    },
   },
   mutations: {
     increment(state) {
@@ -24,6 +29,11 @@ export default new Vuex.Store({
       state.selectedTypes = payload.sTypes;
       state.selectedPositions = payload.sPositions;
       state.selectedShifts = payload.sShifts;
+    },
+    saveUserdata(state, payload) {
+      state.userdata.school = payload.school;
+      state.userdata.degree = payload.degree;
+      state.userdata.email = payload.email;
     },
   },
 });
