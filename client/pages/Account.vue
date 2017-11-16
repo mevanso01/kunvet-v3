@@ -286,27 +286,6 @@
                       <img src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png" style="max-width: 100%;"></div>
                     </a>
                   </div>
-                  <!--<v-flex v-for="card in cards" :key="card" pa-3>
-                    <v-card color="grey lighten-4">
-                      <v-card-text>
-                        <v-avatar size="50px">
-                          <img :src="card.avatarsrc" alt="avatar" style="background-color:red">
-                        </v-avatar>  {{card.poster}}
-                        <v-chip v-for="tag in card.tags" :key="tag" style="float:right" label>{{tag}}</v-chip>
-                      </v-card-text>
-
-                      <h2>{{card.title}}</h2>
-                      <div>{{card.time}} ago</div>
-                      <v-card-text><v-icon>fa-building-o</v-icon>{{card.location}}</v-card-text>
-                      <v-card-text><v-icon>fa-comments</v-icon>Average Reviews</v-card-text>
-                      <v-card-text><v-icon>fa-exclamation-circle</v-icon>{{card.shift}}</v-card-text>
-                      <v-card-text><v-icon>fa-group</v-icon></v-card-text>
-                      <v-flex pa-3 >
-                        <img style="width:200px;height:200px;background-color:white" ult="img"></img>
-                      </v-flex>
-                    </v-card>
-                  </v-flex>-->
-
               </v-flex>
             </v-layout>
           </v-tabs-content>

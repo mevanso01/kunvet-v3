@@ -665,11 +665,17 @@ nav {
     }
 }
 @media (min-width: 601px) {
-  h1 {
-    font-size: 32px;
-  }
+    h1 {
+      font-size: 32px;
+    }
+    .padding-15px-right {
+      padding: 0 15px 0 0;
+    }
 }
 @media (max-width: 600px) {
+    .no-padding-xs {
+      padding: 0 !important;
+    }
     h1 {
       font-size: 1.5em;
       -webkit-margin-after: 0.83em;

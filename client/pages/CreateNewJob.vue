@@ -88,12 +88,12 @@
   padding-top: 0;
   padding-bottom: 0;
 }
-@media (min-width: 600px) {
+/* @media (min-width: 600px) {
   .createnewjob-container .cust-radio-box,
   .createnewjob-container .multi-checkbox {
     margin-left: 15px;
   }
-}
+} */
 @media (max-width: 960px) {
   .requirements .flex {
     padding: 0 15px;
@@ -114,7 +114,7 @@
 <template>
   <v-container fluid class="createnewjob-container">
     <div class="main-cont-large">
-      <section>
+      <section class="no-padding-xs">
         <h2>Create a job</h2>
         <br>
 
@@ -124,11 +124,29 @@
           label="Job Title"
           required
         ></v-text-field>
-        <v-text-field
-          v-model="address"
-          label="Address"
-          required
-        ></v-text-field>
+        <v-layout row wrap>
+          <v-flex xs12 sm4 class="padding-15px-right">
+            <v-text-field
+              v-model="address"
+              label="Address"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm4 class="padding-15px-right">
+            <v-text-field
+              v-model="city_and_state"
+              label="City, State"
+              required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs8 sm2 class="no-padding">
+            <v-text-field
+              v-model="zip"
+              label="Zip"
+              required
+            ></v-text-field>
+          </v-flex>
+        </v-layout>
 
         <br>
         <h3>Catagories<span class="color-red">*</span></h3>
@@ -165,7 +183,7 @@
               </v-radio-group>
             </div>
           </v-flex>
-          <v-flex v-if="salary_select == ''" xs6 sm3 md2 class="no-padding" style="padding-right: 15px !important;">
+          <v-flex v-if="salary_select == ''" xs6 sm3 md2 class="no-padding">
             <v-text-field
             v-model="salary"
             style="margin-top: 5px;"
@@ -291,6 +309,8 @@ export default {
       name: '',
       description: '',
       address: '',
+      city_and_state: '',
+      zip: '',
       type: '',
       category: '',
       shift: [],
@@ -332,7 +352,7 @@ export default {
         user_name: 'test',
         name: this.name,
         description: this.description,
-        address: this.address,
+        address: `${this.address} ${this.city_and_state} ${this.zip}`,
         type: this.type,
         category: this.category,
         shift: this.shift,
