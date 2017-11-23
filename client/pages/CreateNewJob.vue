@@ -274,8 +274,11 @@
   </v-container>
 </template>
 <script>
-import gql from 'graphql-tag';
 import { VueEditor } from 'vue2-editor';
+import gql from 'graphql-tag';
+import Store from '../store';
+
+const State = Store.state;
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -304,6 +307,10 @@ export default {
   components: {
     VueEditor,
   },
+  created() {
+    this.checkUserInfo();
+  },
+
   data() {
     return {
       name: '',
@@ -343,13 +350,23 @@ export default {
       ],
     };
   },
+
   methods: {
     save() {
 
     },
     saveAndPost() {
+      const job = this.createJobArray();
+      this.$apollo.mutate({
+        mutation: createJobMutation,
+        variables: {
+          job,
+        },
+      });
+    },
+    createJobArray() {
       const job = {
-        user_name: 'test',
+        user_name: State.userdata.username,
         name: this.name,
         description: this.description,
         address: `${this.address} ${this.city_and_state} ${this.zip}`,
@@ -364,12 +381,12 @@ export default {
         responsibilities: this.responsibilities,
         notes: this.notes,
       };
-      this.$apollo.mutate({
-        mutation: createJobMutation,
-        variables: {
-          job,
-        },
-      });
+      return job;
+    },
+    checkUserInfo() {
+      if (!State.loggedin) {
+        alert('not logged in');
+      }
     },
   },
 };

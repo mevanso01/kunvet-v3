@@ -98,11 +98,11 @@ export default {
               e: email,
               p: password,
             },
+          }).then(() => {
+            this.deleteTempAcct(email);
           }).catch((error) => {
             console.error(error);
-          }); /* .then((data) => {
-            // console.log(data);
-          }); */
+          });
         }
       }
     },
@@ -123,6 +123,20 @@ export default {
           return true;
         }
         return false;
+      });
+    },
+    deleteTempAcct(email) {
+      this.$apollo.mutate({
+        mutation: (gql`mutation ($e: String) {
+          removeTempAccount(filter: {
+            email: $e
+          })
+        }`),
+        variables: {
+          e: email,
+        },
+      }).catch((error) => {
+        console.error(error);
       });
     },
   },

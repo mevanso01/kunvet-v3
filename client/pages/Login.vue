@@ -110,6 +110,9 @@ a:hover{
 </template>
 <script>
 import App from '@/App';
+import Store from '../store';
+
+const State = Store.state;
 
 export default{
   data() {
@@ -134,6 +137,7 @@ export default{
     submit() {
       this.logging = true;
       App.methods.login_b();
+      State.loggedin = true;
     },
     send() {
       this.sent = true;

@@ -187,7 +187,7 @@
                                 v-model="updateEmail"
                                 class="no-padding no-underline"
                                 name="input-3"
-                                label="Add personal email"
+                                label="Add email to display"
                                 single-line
                               ></v-text-field>
                             </v-flex>

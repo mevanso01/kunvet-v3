@@ -228,15 +228,11 @@ import gql from 'graphql-tag';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueApollo from 'vue-apollo';
-import Vuex from 'vuex';
 import Store from '../store';
+import VuexLS from '../store/persist';
 
 Vue.use(Vuetify);
 Vue.use(VueApollo);
-Vue.use(Vuex);
-
-/* const store = new Vuex.Store({
-}); */
 
 export default {
   apollo: {
@@ -309,6 +305,14 @@ export default {
       sTypes: this.selectedTypes,
       sPositions: this.selectedPositions,
       sShifts: this.selectedShifts,
+    });
+  },
+  created() {
+    VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
+      if (data) {
+        this.firstSearch = data.firstSearch;
+        this.selectedCities = data.selectedCities;
+      }
     });
   },
 };

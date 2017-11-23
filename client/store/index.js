@@ -1,16 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VuexLS from './persist';
+// import Cookies from 'js-cookie';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+
+const Store = new Vuex.Store({
   state: {
     count: 0,
+    acct: 0,
     firstSearch: true,
     selectedCities: [],
     selectedTypes: [],
     selectedPositions: [],
     selectedShifts: [],
+    loggedin: false,
     userdata: {
       school: null,
       degree: null,
@@ -24,6 +29,9 @@ export default new Vuex.Store({
     go(state) {
       state.firstSearch = false;
     },
+    setAcct(state, payload) {
+      state.acct = payload.acct;
+    },
     keepSearch(state, payload) {
       state.selectedCities = payload.sCities;
       state.selectedTypes = payload.sTypes;
@@ -36,4 +44,12 @@ export default new Vuex.Store({
       state.userdata.email = payload.email;
     },
   },
+  plugins: [VuexLS.plugin],
+  getters: {
+    test(state) {
+      return state;
+    },
+  },
 });
+
+export default Store;

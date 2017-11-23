@@ -53,6 +53,8 @@ GQC.rootMutation().addFields({
   createEmployeeProfile: EmployeeProfile.get('$createOne'),
   updateEmployeeProfile: EmployeeProfile.get('$updateOne'),
   removeEmployeeProfile: EmployeeProfile.get('$removeOne'),
+
+  removeTempAccount: Ta.get('$removeOne'),
 });
 
 export default GQC.buildSchema();

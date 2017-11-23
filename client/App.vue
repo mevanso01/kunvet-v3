@@ -87,14 +87,21 @@
 <script>
 import 'vuetify/dist/vuetify.min.css';
 import Vue from 'vue';
+import Store from './store';
+import VuexLS from './store/persist';
+
+console.log('test 999', VuexLS);
+
+console.log('test', Store.state);
+console.log('acct', Store.state.acct);
+console.log('test2', Store.state.firstSearch);
 
 const Bus = new Vue();
 
 export default {
   data() {
     return {
-      firstS: true,
-      acct: 0,
+      acct: Store.state.acct,
       drawer: false,
       items: [
         [
@@ -102,8 +109,8 @@ export default {
           { title: 'Sign up', icon: 'question_answer', href: '/signup' },
         ],
         [
-          { title: 'My Jobs', icon: 'dashboard', href: '/login' },
-          { title: 'Messages', icon: 'question_answer', href: '/signup' },
+          { title: 'Jobs Dashboard', icon: 'dashboard', href: '/Applicants_b' },
+          { title: 'Messages', icon: 'question_answer', href: '/messages' },
           { title: 'Account', icon: 'question_answer', href: '/account' },
         ],
         [
@@ -122,6 +129,10 @@ export default {
     },
     logout() {
       this.acct = 0;
+      Store.commit({
+        type: 'setAcct',
+        acct: 0,
+      });
     },
     login_i() {
       Bus.$emit('individual');
@@ -131,21 +142,30 @@ export default {
     },
     l1() {
       this.acct = 1;
+      Store.commit({
+        type: 'setAcct',
+        acct: 1,
+      });
       console.log(this.acct);
     },
     l2() {
       this.acct = 2;
+      Store.commit({
+        type: 'setAcct',
+        acct: 2,
+      });
       console.log(this.acct);
-    },
-    fs1() {
-      this.firstS = false;
-      console.log('test');
     },
   },
   created() {
     Bus.$on('individual', this.l1);
     Bus.$on('business', this.l1);
     Bus.$on('firstSearch', this.fs1);
+    VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
+      if (data) {
+        this.acct = data.acct;
+      }
+    });
   },
 };
 </script>
