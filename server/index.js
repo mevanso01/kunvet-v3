@@ -13,6 +13,8 @@ import KoaBodyParser from 'koa-bodyparser';
 import KoaSession from 'koa-session';
 import KoaPassport from 'koa-passport';
 
+import REPL from 'repl';
+
 // Passport
 import './auth';
 
@@ -23,6 +25,7 @@ import ClientApp from './apps/client';
 
 // Our stuff
 import Db from './mongodb/Db';
+import Models from './mongodb/Models';
 import Logger from './utils/Logger';
 
 
@@ -66,6 +69,12 @@ if (process.env.NODE_ENV !== 'production') {
 Db.connect()
   .then(() => {
     Logger.info('Connected to MongoDB!');
+
+    // Expose an interactive REPL
+    if (process.env.NODE_ENV !== 'production') {
+      const r = REPL.start('kunvet> ');
+      r.context.Models = Models;
+    }
   })
   .catch((reason) => {
     // We could not connect to the database, and the server won't be useful
