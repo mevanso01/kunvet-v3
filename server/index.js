@@ -19,6 +19,7 @@ import REPL from 'repl';
 import './auth';
 
 // Sub apps
+import AuthApp from './apps/auth';
 import GraphQLApp from './apps/graphql';
 import DevToolsApp from './apps/devtools';
 import ClientApp from './apps/client';
@@ -54,6 +55,7 @@ app.use(KoaPassport.session());
 
 // Mount sub apps
 app.use(KoaMount('/srv', GraphQLApp));
+app.use(KoaMount('/auth', AuthApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies

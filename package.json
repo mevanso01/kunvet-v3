@@ -66,6 +66,7 @@
     "koa-static": "^4.0.1",
     "mongoose": "^4.11.7",
     "nodemailer": "^4.1.1",
+    "passport-local-mongoose": "^4.4.0",
     "sha1": "^1.1.1",
     "simple-node-logger": "^0.93.28",
     "source-map-support": "^0.4.16",
