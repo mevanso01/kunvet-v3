@@ -1,4 +1,5 @@
 import Mongoose from 'mongoose';
+import PassportLocalMongoose from 'passport-local-mongoose';
 
 const TempAccountSchema = Mongoose.Schema({
   email: {
@@ -222,24 +223,18 @@ const ResumeSchema = Mongoose.Schema({
 });
 
 const AccountSchema = Mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
+  /*
+  Added by passport-local-mongoose:
+
+  username: {...},
+  hash: {...},
+  salt: {...},
+  */
   firstname: {
     type: String,
     required: true,
   },
   lastname: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    index: { unique: true },
-  },
-  password: {
     type: String,
     required: true,
   },
@@ -254,6 +249,7 @@ const AccountSchema = Mongoose.Schema({
     resume: Mongoose.model('Resume', ResumeSchema),
   },
 });
+AccountSchema.plugin(PassportLocalMongoose);
 
 export default {
   Job: Mongoose.model('Job', JobSchema),

@@ -77,6 +77,37 @@ router.get('/graphiql', graphiqlKoa({
   endpointURL: '/srv/graphql',
 }));
 
+// Login form
+// FIXME: Debug purposes only - Please remove me
+router.get('/loginform', (ctx) => {
+  const loginStatus = ctx.isAuthenticated() ? 'logged in' : 'not logged in';
+  ctx.body = `
+<!doctype html>
+<html>
+  <head>
+    <title>Log in</title>
+  </head>
+  <body>
+    <pre>
+Login Interface
+
+You find yourself staring at a sketchy login interface. It's
+totally unstyled, complete with misspelt labels and a plaintext password field.
+
+You say to yourself, "Eww! I probably shouldn't type in a valuable password.
+Also, whoever spent time writing this should be fired."
+    </pre>
+    <p>You are ${loginStatus}. <a href='/auth/logout'>Log out?</a></p>
+    <form action='/auth/login' method='post'>
+      <input name='username' placeholder='Usename'>
+      <input name='password' placeholder='Pass word'>
+      <button type='submit'>Log in</button>
+    </form>
+  </body>
+</html>
+  `;
+});
+
 router.post('/sendemail', (ctx) => {
   ctx.body = 'hello!';
   const emailaddress = (ctx.request.body.email);
