@@ -40,6 +40,23 @@ router.get('/logout', (ctx) => {
   ctx.body = '{"success":true}';
 });
 
+router.get('/status', (ctx) => {
+  if (ctx.isAuthenticated()) {
+    const response = {
+      success: true,
+      status: true,
+      user: ctx.state.user,
+    };
+    ctx.body = JSON.stringify(response);
+  } else {
+    const response = {
+      success: true,
+      status: false,
+    };
+    ctx.body = JSON.stringify(response);
+  }
+});
+
 app.use(KCors());
 app.use(router.routes());
 app.use(router.allowedMethods());
