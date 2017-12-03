@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import 'font-awesome/scss/font-awesome.scss';
 import 'vuetify/dist/vuetify.min.css';
 import Vue from 'vue';
 import Store from './store';
