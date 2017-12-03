@@ -18,7 +18,7 @@ import JobDetail from '@/pages/JobDetail';
 
 // employee pages
 import Employee from '@/pages/Employee';
-import AppliedJobs from '@/pages/AppliedJobs';
+import MyJobs from '@/pages/MyJobs';
 import SavedJobs from '@/pages/SavedJobs';
 import Messages from '@/pages/Messages'; // does sharing one page for employee and business conflict with UI
 import Account from '@/pages/Account';
@@ -32,6 +32,7 @@ import Personalhp from '@/pages/Personalhp';
 import CreateNewJobI from '@/pages/CreateNewJob_i';
 import JobPostsI from '@/pages/JobPosts_i';
 import ApplicantsI from '@/pages/Applicants_i';
+import Settings from '@/pages/Settings';
 
 // Business pages
 import Business from '@/pages/Business';
@@ -103,8 +104,8 @@ const router = new VueRouter({
       component: CreateResume,
     },
     {
-      path: '/appliedjobs',
-      component: AppliedJobs,
+      path: '/myjobs',
+      component: MyJobs,
     },
     {
       path: '/savedjobs',
@@ -117,6 +118,10 @@ const router = new VueRouter({
     {
       path: '/account',
       component: Account,
+    },
+    {
+      path: '/settings',
+      component: Settings,
     },
     {
       path: '/personalhp',

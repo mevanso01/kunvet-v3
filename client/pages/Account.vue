@@ -55,11 +55,11 @@
 .profile-pic-cont {
   background-color: white;
   z-index: 90;
-  width: 250px;
-  height: 250px;
+  width: 210px;
+  height: 210px;
   float: right;
-  transform: translateY(-45px);
   border: 1px solid grey;
+  transform: translateY(-10px);
   /* position: absolute;
   top: 25px;
   right: 15px; */
@@ -75,9 +75,14 @@
 }
 @media (max-width: 960px) {
   .profile-pic-cont {
-    width: 200px;
-    height: 200px;
+    width: 185px;
+    height: 185px;
     margin-right: 15px;
+  }
+}
+@media (min-width: 601px) {
+  .acct-page-container > .main-cont-large {
+    padding-top: 15px;
   }
 }
 @media (max-width: 600px) {
@@ -90,19 +95,7 @@
 <template>
   <v-container fluid class="acct-page-container">
     <div class="main-cont-large">
-      <v-tabs dark v-model="active">
-
-        <v-tabs-bar class="grey lighten-2 profile-tabs">
-          <v-tabs-item v-for="tab in tabs" :key="tab" :href="'#' + tab" ripple>
-            {{ tab }}
-          </v-tabs-item>
-          <v-tabs-slider class="red"></v-tabs-slider>
-        </v-tabs-bar>
-
-        <v-tabs-items>
-
-          <v-tabs-content :key="'Profile'" :id="'Profile'">
-            <section style="padding: 0; margin: 15px; width: auto;">
+          <section style="padding: 0; margin: 15px; width: auto;">
             <v-layout>
               <v-flex xs12 sm8>
                 <h1>Firstname Lastname</h1>
@@ -121,7 +114,7 @@
                               v-model="updateSchool"
                               class="no-padding no-underline"
                               name="input-1-3"
-                              label="Add school info"
+                              label="Add school"
                               single-line
                             ></v-text-field>
                           </v-flex>
@@ -212,7 +205,7 @@
                 </v-layout>
               </v-flex>
               <v-flex sm4 class="hidden-xs-only">
-                <div v-if="active === 'Profile'" class="profile-pic-cont hidden-xs-only">
+                <div class="profile-pic-cont hidden-xs-only">
                 </div>
               </v-flex>
             </v-layout>
@@ -247,69 +240,32 @@
 
               </v-flex>
             </v-layout>
-            </section>
-          </v-tabs-content>
-
-          <v-tabs-content :key="'Resume'" :id="'Resume'">
-            <v-card flat>
-              <v-card-text>Hello</v-card-text>
-            </v-card>
-          </v-tabs-content>
-
-          <v-tabs-content :key="'Jobs'" :id="'Jobs'">
-            <v-layout>
-              <v-flex xs4 md3 dark class="no-padding">
-                <!--<v-card width="100%" height="100%">-->
-                  <v-navigation-drawer permanent dark style="position: relative; width: 100%; z-index: 1;">
-                    <v-list dense class="pt-0">
-                      <v-list-tile v-for="item in items" :key="item.title" @click="">
-                        <v-list-tile-action>
-                          <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                  </v-navigation-drawer>
-                <!--</v-card>-->
-              </v-flex>
-
-
-              <v-flex xs8 md9 style="max-height:70vh; overflow:auto">
-                  <h2 center>Saved Jobs<v-icon>bookmark</v-icon></h2>
-                  <div xs12="" class="post-card">
-                    <a href="/JobDetail/59be0c0f3077d224476ba3cd" class="">
-                    <div><h1 style="font-weight: normal;">hi</h1></div>
-                    <p class="post-address">123 sesame street</p>
-                    <p class="post-intro">desc</p> <div class="image-row">
-                      <img src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png" style="max-width: 100%;"></div>
-                    </a>
-                  </div>
-              </v-flex>
-            </v-layout>
-          </v-tabs-content>
-
-          <v-tabs-content :key="'Settings'" :id="'Settings'">
-            <section>
-              <h1>Settings Option 1</h1>
-              <v-radio-group v-model="settingsoption1" column>
-                  <v-radio color="red" label="Option 1" value="one" ></v-radio>
-                  <v-radio color="red" label="Option 2" value="two"></v-radio>
-              </v-radio-group>
-            </section>
-          </v-tabs-content>
-
-        </v-tabs-items>
-      </v-tabs>
+          </section>
     </div>
   </v-container>
 </template>
 
 <script>
+  import App from '@/App';
+  import Vue from 'vue';
+  import gql from 'graphql-tag';
+  import VueApollo from 'vue-apollo';
   import Store from '../store';
 
+  Vue.use(VueApollo);
+
   export default {
+    apollo: {
+      findJobs: gql`{
+        findJobs {
+            _id
+            name
+            description
+            type
+            address
+        }
+      }`,
+    },
     data() {
       return {
         tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
@@ -340,6 +296,9 @@
     methods: {
       next() {
         this.active = this.tabs[(this.tabs.indexOf(this.active) + 1) % this.tabs.length];
+      },
+      logout() {
+        App.methods.logout();
       },
       saveSchool() {
         this.userdata.school = this.updateSchool;

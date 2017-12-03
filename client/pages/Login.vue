@@ -136,7 +136,7 @@ export default{
   methods: {
     submit() {
       this.logging = true;
-      App.methods.login_b();
+      App.methods.login_i();
       State.loggedin = true;
     },
     send() {

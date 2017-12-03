@@ -292,26 +292,28 @@ export default {
       if (this.selectedCities[0]) {
         this.firstSearch = false;
         Store.commit('go');
+        this.commitData();
       }
     },
-    openJob(id) {
-      console.log(id);
+    commitData() {
+      Store.commit({
+        type: 'keepSearch',
+        sCities: this.selectedCities,
+        sTypes: this.selectedTypes,
+        sPositions: this.selectedPositions,
+        sShifts: this.selectedShifts,
+      });
     },
   },
   beforeDestroy() {
-    Store.commit({
-      type: 'keepSearch',
-      sCities: this.selectedCities,
-      sTypes: this.selectedTypes,
-      sPositions: this.selectedPositions,
-      sShifts: this.selectedShifts,
-    });
+    this.commitData();
   },
   created() {
     VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
       if (data) {
         this.firstSearch = data.firstSearch;
         this.selectedCities = data.selectedCities;
+        this.selectedPositions = data.selectedPositions;
       }
     });
   },

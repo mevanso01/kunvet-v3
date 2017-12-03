@@ -43,7 +43,7 @@
       </v-toolbar>
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
-        <router-link :to="item.href" v-for="item in items[0]" :key="item.title">
+        <router-link :to="item.href" v-for="item in items[acct]" :key="item.title">
           <v-list-tile>
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
@@ -90,11 +90,6 @@ import Vue from 'vue';
 import Store from './store';
 import VuexLS from './store/persist';
 
-console.log('test 999', VuexLS);
-
-console.log('test', Store.state);
-console.log('acct', Store.state.acct);
-console.log('test2', Store.state.firstSearch);
 
 const Bus = new Vue();
 
@@ -109,14 +104,16 @@ export default {
           { title: 'Sign up', icon: 'question_answer', href: '/signup' },
         ],
         [
-          { title: 'Jobs Dashboard', icon: 'dashboard', href: '/Applicants_b' },
+          { title: 'My Jobs', icon: 'dashboard', href: '/myjobs' },
           { title: 'Messages', icon: 'question_answer', href: '/messages' },
           { title: 'Account', icon: 'question_answer', href: '/account' },
+          { title: 'Settings', icon: 'question_answer', href: '/settings' },
         ],
         [
           { title: 'Post a job', icon: 'dashboard', href: '/login' },
           { title: 'Applicants', icon: 'question_answer', href: '/signup' },
           { title: 'Account', icon: 'question_answer', href: '/account' },
+          { title: 'Settings', icon: 'question_answer', href: '/settings' },
         ],
       ],
       right: true,
@@ -127,12 +124,16 @@ export default {
       Bus.$emit('firstSearch');
       this.firstS = false;
     },
-    logout() {
+    lo() {
       this.acct = 0;
       Store.commit({
         type: 'setAcct',
         acct: 0,
       });
+      Store.state.firstSearch = true;
+    },
+    logout() {
+      Bus.$emit('logout');
     },
     login_i() {
       Bus.$emit('individual');
@@ -158,8 +159,9 @@ export default {
     },
   },
   created() {
+    Bus.$on('logout', this.lo);
     Bus.$on('individual', this.l1);
-    Bus.$on('business', this.l1);
+    Bus.$on('business', this.l2);
     Bus.$on('firstSearch', this.fs1);
     VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
       if (data) {

@@ -57,6 +57,9 @@ h3 {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+.white-bg {
+  background-color: #fff;
+}
 .no-padding {
   padding: 0 !important;
 }
@@ -249,7 +252,7 @@ nav {
     position: relative;
     width: 100%;
     max-width: 960px;
-    margin: 40px auto; /* previously: 50px auto */
+    margin: 30px auto; /* previously: 50px auto */
     left: 0;
     right: 0;
     padding: 0;
@@ -260,7 +263,7 @@ nav {
 .main-cont-large-clear {
     position: relative;
     width: 960px;
-    margin: 40px auto; /* previously: 50px auto */
+    margin: 30px auto; /* previously: 50px auto */
     left: 0;
     right: 0;
     padding: 0;
