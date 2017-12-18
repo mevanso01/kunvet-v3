@@ -108,6 +108,21 @@
                 <h2>Lets get started</h2>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
+                    label="First name"
+                    v-model="fname"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="Last name"
+                    v-model="lname"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="Name of organization / business"
+                    v-model="business_name"
+                    required
+                  ></v-text-field>
+                  <v-text-field
                     label="E-mail"
                     v-model="email"
                     :rules="emailRules"
@@ -165,9 +180,12 @@ export default {
     return {
       e1: true,
       valid: false,
-      chosenForm: 'individual',
+      chosenForm: '',
       submitClicked: false,
       email: '',
+      business_name: '',
+      fname: '',
+      lname: '',
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
@@ -186,7 +204,13 @@ export default {
       if (this.valid) {
         this.chosenForm = 'submitted';
         const headers = { emulateJSON: true };
-        const data = { email: this.email, reqtype: 'validate' };
+        const data = {
+          email: this.email,
+          bname: this.business_name,
+          fname: this.fname,
+          lname: this.lname,
+          reqtype: 'validate',
+        };
         Vue.http.post('http://localhost:3000/sendemail', data, headers).then((res) => {
           console.log(res);
         }, (error) => {

@@ -19,6 +19,11 @@ module.exports = {
     'no-console': 0,
     'no-multi-spaces': 0,
     'quote-props': 0,
+    'no-underscore-dangle': 0,
+    'arrow-parens': 0,
+    'no-var': 0,
+    'vars-on-top': 0,
+    'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never',

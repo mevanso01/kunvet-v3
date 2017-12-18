@@ -35,7 +35,7 @@ import ApplicantsI from '@/pages/Applicants_i';
 import Settings from '@/pages/Settings';
 
 // Business pages
-import Business from '@/pages/Business';
+import MyOrg from '@/pages/MyOrg';
 import PhotoGallery from '@/pages/PhotoGallery';
 
 // Business job pages
@@ -45,6 +45,7 @@ import JobPostsB from '@/pages/JobPosts_b';
 import ApplicantsB from '@/pages/Applicants_b';
 
 import App from '@/App';
+import store from '@/store';
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
@@ -144,8 +145,8 @@ const router = new VueRouter({
       component: ApplicantsI,
     },
     {
-      path: '/business',
-      component: Business,
+      path: '/myorg',
+      component: MyOrg,
     },
     {
       path: '/photogallery',
@@ -185,5 +186,6 @@ new Vue({
   apolloProvider,
   el: '#app',
   router,
+  store,
   render: h => h(App),
 });

@@ -14,6 +14,15 @@ const TempAccountSchema = Mongoose.Schema({
     type: String,
     required: true,
   },
+  firstname: {
+    type: String,
+  },
+  lastname: {
+    type: String,
+  },
+  business_name: {
+    type: String,
+  },
 });
 
 const JobSchema = Mongoose.Schema({
@@ -89,33 +98,27 @@ const JobSchema = Mongoose.Schema({
 });
 
 const BusinessProfileSchema = Mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   biography: {
     type: String,
   },
   business_name: {
     type: String,
+    required: true,
+    index: { unique: true },
   },
   img: {
     data: Buffer,
     contentType: String,
   },
-  username: {
-    index: { unique: true },
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
-    required: true,
-    index: { unique: true },
+  },
+  display_email: {
+    type: String,
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
   industry: {
     type: String,
@@ -134,6 +137,7 @@ const BusinessProfileSchema = Mongoose.Schema({
   },
 });
 
+// remove me maybe?
 const EmployeeProfileSchema = Mongoose.Schema({
   about_me: {
     type: String,
@@ -142,7 +146,7 @@ const EmployeeProfileSchema = Mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
   },
   email: {
     type: String,
@@ -222,6 +226,52 @@ const ResumeSchema = Mongoose.Schema({
   },
 });
 
+const OrganizationSchema = Mongoose.Schema({
+  business_name: {
+    type: String,
+    required: true,
+    index: { unique: true },
+  },
+  biography: {
+    type: String,
+  },
+  img: {
+    data: Buffer,
+    contentType: String,
+  },
+  email: {
+    type: String,
+  },
+  display_email: {
+    type: String,
+  },
+  phone_number: {
+    type: String,
+  },
+  website: {
+    type: String,
+  },
+  password: {
+    type: String,
+    // required: true,
+  },
+  industry: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  community: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  zip_code: {
+    type: String,
+  },
+});
+
 const AccountSchema = Mongoose.Schema({
   /*
   Added by passport-local-mongoose:
@@ -238,18 +288,43 @@ const AccountSchema = Mongoose.Schema({
     type: String,
     required: true,
   },
-  is_business: {
-    type: Boolean,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  business_info: {
+  password: {
+    type: String,
+    // required: true,
+  },
+  default_org: {
+    type: String,
+  },
+  profile_img: {
+    data: Buffer,
+    contentType: String,
+  },
+  created_date: {
+    type: { Date, default: Date.now },
+  },
+  school: {
+    type: String,
+  },
+  degree: {
+    type: String,
+  },
+  display_email: {
     type: String,
   },
   employee_info: {
     type: String,
     resume: Mongoose.model('Resume', ResumeSchema),
   },
+  org_list: {  // list of mongoIDs
+    type: { default: [] },
+  },
 });
-AccountSchema.plugin(PassportLocalMongoose);
+AccountSchema.plugin(PassportLocalMongoose, { usernameField: 'email' });
 
 export default {
   Job: Mongoose.model('Job', JobSchema),
@@ -258,4 +333,5 @@ export default {
   TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
   BusinessProfile: Mongoose.model('BusinessProfile', BusinessProfileSchema),
   EmployeeProfile: Mongoose.model('EmployeeProfile', EmployeeProfileSchema),
+  Organization: Mongoose.model('Organization', OrganizationSchema),
 };

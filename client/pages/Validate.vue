@@ -32,30 +32,21 @@ import VueApollo from 'vue-apollo';
 Vue.use(Vuetify);
 Vue.use(VueApollo);
 
-/* import Vue from 'vue';
-import VueResource from 'vue-resource';
-
-Vue.use(VueResource); */
-
-
 export default {
   created() {
     this.validateCode();
   },
   props: ['code'],
-  /* apollo: {
-    findJob: {
-    },
-  }, */
   data() {
     return {
       // id: this.$route.params.id,
       checked: false,
       isvalid: false,
+      dne: null,
     };
   },
   methods: {
-    validateCode() {
+    async validateCode() {
       this.$apollo.query({
         query: (gql`query ($c: String) {
           findVCode (filter: {
@@ -64,6 +55,9 @@ export default {
               email
               password
               vcode
+              firstname
+              lastname
+              business_name
           }
         }`),
         variables: {
@@ -72,24 +66,77 @@ export default {
       }).then((data) => {
         this.checked = true;
         if (data.data.findVCode) {
-          this.isvalid = true;
-          this.uploadAcctData(data.data.findVCode.email, data.data.findVCode.password);
-        } else {
-          this.isvalid = false;
+          this.doesNotExist(data.data.findVCode.email).then(() => {
+            if (this.dne !== null) {
+              this.isvalid = true;
+              if (data.data.findVCode.business_name === '') {
+                this.uploadAcctData(data.data.findVCode.email, data.data.findVCode.password);
+              } else {
+                this.uploadBusinessAcctData(
+                  data.data.findVCode.email,
+                  data.data.findVCode.password,
+                  data.data.findVCode.firstname,
+                  data.data.findVCode.lastname,
+                  data.data.findVCode.business_name,
+                );
+              }
+            }
+          });
         }
       });
     },
     uploadAcctData(email, password) {
-      if (this.isvalid) {
-        if (this.doesNotExist(email)) {
+      if (this.isvalid && this.dne) {
+        this.$apollo.mutate({
+          mutation: (gql`mutation ($e: String, $p: String) {
+            createAccount(record: {
+              password: $p,
+              email: $e,
+              firstname: "firstname",
+              lastname: "lastname",
+            }) {
+              recordId
+            }
+          }`),
+          variables: {
+            e: email,
+            p: password,
+          },
+        }).then(() => {
+          this.deleteTempAcct(email);
+        }).catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    uploadBusinessAcctData(email, password, fname, lname, bname) {
+      if (this.isvalid && this.dne) {
+        // create business record
+        this.$apollo.mutate({
+          mutation: (gql`mutation ($e: String, $bn: String) {
+            createOrganization(record: {
+              business_name: $bn,
+              email: $e,
+            }) {
+              recordId
+            }
+          }`),
+          variables: {
+            bn: bname,
+            e: email,
+          },
+        }).then((data) => {
+          // create user record
+          const businessID = data.data.createOrganization.recordId;
           this.$apollo.mutate({
-            mutation: (gql`mutation ($e: String, $p: String) {
+            mutation: (gql`mutation ($e: String, $p: String, $fn: String, $ln: String, $bID: String, $olist: Object) {
               createAccount(record: {
-                username: "username",
                 password: $p,
                 email: $e,
-                firstname: "firstname",
-                lastname: "lastname",
+                firstname: $fn,
+                lastname: $ln,
+                default_org: $bID
+                org_list: $olist
               }) {
                 recordId
               }
@@ -97,32 +144,42 @@ export default {
             variables: {
               e: email,
               p: password,
+              fn: fname,
+              ln: lname,
+              bID: businessID,
+              olist: [businessID],
             },
           }).then(() => {
             this.deleteTempAcct(email);
           }).catch((error) => {
             console.error(error);
           });
-        }
+        }).catch((error) => {
+          console.error(error);
+        });
       }
     },
     doesNotExist(email) {
-      this.$apollo.query({
-        query: (gql`query ($e: String) {
-          findAccount(filter: {
-            email: $e
-          }) {
-            email
+      return new Promise(resolve => {
+        this.$apollo.query({
+          query: (gql`query ($e: String) {
+            findAccount(filter: {
+              email: $e
+            }) {
+              email
+            }
+          }`),
+          variables: {
+            e: email,
+          },
+        }).then((data) => {
+          if (!data.data.findAccount) {
+            this.dne = true;
+          } else {
+            this.dne = false;
           }
-        }`),
-        variables: {
-          e: email,
-        },
-      }).then((data) => {
-        if (!data.data.findAccount) {
-          return true;
-        }
-        return false;
+          resolve(this.dne);
+        });
       });
     },
     deleteTempAcct(email) {

@@ -125,14 +125,14 @@
           required
         ></v-text-field>
         <v-layout row wrap>
-          <v-flex xs12 sm4 class="padding-15px-right">
+          <v-flex xs12 sm4 class="padding-15px-right-sm-up">
             <v-text-field
               v-model="address"
               label="Address"
               required
             ></v-text-field>
           </v-flex>
-          <v-flex xs12 sm4 class="padding-15px-right">
+          <v-flex xs12 sm4 class="padding-15px-right-sm-ups">
             <v-text-field
               v-model="city_and_state"
               label="City, State"

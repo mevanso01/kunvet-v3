@@ -126,9 +126,11 @@ router.post('/sendemail', (ctx) => {
       email: emailaddress,
       password: 'test1234',
       vcode: validationCode,
+      firstname: ctx.request.body.fname,
+      lastname: ctx.request.body.lname,
+      business_name: ctx.request.body.bname,
     });
     x.save();
-    console.log(x.username);
   }
 });
 

@@ -8,29 +8,36 @@ Vue.use(Vuex);
 
 const Store = new Vuex.Store({
   state: {
-    count: 0,
+    userID: null,
+    businessID: null,
     acct: 0,
     firstSearch: true,
     selectedCities: [],
     selectedTypes: [],
     selectedPositions: [],
     selectedShifts: [],
-    loggedin: false,
+    bdata: null,
     userdata: {
+      firstname: null,
+      lastname: null,
       school: null,
       degree: null,
-      email: null,
+      display_email: null,
+      org_list: [],
     },
   },
   mutations: {
-    increment(state) {
-      state.count += 1;
-    },
     go(state) {
       state.firstSearch = false;
     },
     setAcct(state, payload) {
       state.acct = payload.acct;
+    },
+    setAcctID(state, payload) {
+      state.userID = payload.id;
+    },
+    setBusinessID(state, payload) {
+      state.businessID = payload.id;
     },
     keepSearch(state, payload) {
       state.selectedCities = payload.sCities;
@@ -38,16 +45,34 @@ const Store = new Vuex.Store({
       state.selectedPositions = payload.sPositions;
       state.selectedShifts = payload.sShifts;
     },
-    saveUserdata(state, payload) {
-      state.userdata.school = payload.school;
-      state.userdata.degree = payload.degree;
-      state.userdata.email = payload.email;
+    keepUserdata(state, payload) {
+      state.userdata = payload.userdata;
+    },
+    keepBdata(state, payload) {
+      state.bdata = payload.bdata;
+    },
+    resetState(state) {
+      state.userID = null;
+      state.acct = 0;
+      state.firstSearch = true;
+      state.selectedCities = [];
+      state.selectedTypes = [];
+      state.selectedPositions = [];
+      state.selectedShifts = [];
+      state.bdata = null;
+      state.userdata = {
+        firstname: null,
+        lastname: null,
+        school: null,
+        degree: null,
+        display_email: null,
+      };
     },
   },
   plugins: [VuexLS.plugin],
   getters: {
-    test(state) {
-      return state;
+    userdata(state) {
+      return state.userdata;
     },
   },
 });

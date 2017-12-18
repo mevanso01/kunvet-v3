@@ -23,6 +23,10 @@
     methods: {
       logout() {
         App.methods.logout();
+        this.$store.commit({
+          type: 'resetState',
+        });
+        this.$router.push('/');
       },
     },
   };

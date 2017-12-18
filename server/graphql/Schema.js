@@ -8,7 +8,8 @@ const Job = composeWithMongoose(Models.Job);
 const Resume = composeWithMongoose(Models.Resume);
 const Account = composeWithMongoose(Models.Account);
 const BusinessProfile = composeWithMongoose(Models.BusinessProfile);
-const EmployeeProfile = composeWithMongoose(Models.EmployeeProfile);
+// const EmployeeProfile = composeWithMongoose(Models.EmployeeProfile);
+const Organization = composeWithMongoose(Models.Organization);
 
 // Root query fields
 GQC.rootQuery().addFields({
@@ -25,8 +26,8 @@ GQC.rootQuery().addFields({
   findBusinessProfile: BusinessProfile.get('$findOne'),
   findBusinessProfiles: BusinessProfile.get('$findMany'),
   // Employee Profile
-  findEmployeeProfile: EmployeeProfile.get('$findOne'),
-  findEmployeeProfiles: EmployeeProfile.get('$findMany'),
+  findOrganization: Organization.get('$findOne'),
+  findOrganizations: Organization.get('$findMany'),
   //
   findVCode: Ta.get('$findOne'),
 });
@@ -49,10 +50,10 @@ GQC.rootMutation().addFields({
   createBusinessProfile: BusinessProfile.get('$createOne'),
   updateBusinessProfile: BusinessProfile.get('$updateOne'),
   removeBusinessProfile: BusinessProfile.get('$removeOne'),
-  // Employee Profile
-  createEmployeeProfile: EmployeeProfile.get('$createOne'),
-  updateEmployeeProfile: EmployeeProfile.get('$updateOne'),
-  removeEmployeeProfile: EmployeeProfile.get('$removeOne'),
+  // Organization
+  createOrganization: Organization.get('$createOne'),
+  updateOrganization: Organization.get('$updateOne'),
+  removeOrganization: Organization.get('$removeOne'),
 
   removeTempAccount: Ta.get('$removeOne'),
 });

@@ -17,11 +17,20 @@ h2 {
   font-weight: bold;
 }
 h3 {
-  font-size: 1.2em;
+  font-size: 1.25em;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   height: 1.2em;
   line-height: 1.2;
+}
+/*  ---- Navbar ----  */
+
+.black {
+  background-color: #222 !important;
+  border-color: #222 !important;
+}
+.black .btn__content {
+  color: #fff;
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
@@ -139,7 +148,7 @@ form {
 body {
     margin: 0;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
 }
 nav {
     position: fixed;
@@ -623,6 +632,14 @@ nav {
 #bottom-footer {
     opacity: 0.5;
 }
+@media (max-width: 960px) and (min-width: 601px) {
+  .padding-sm-right {
+    padding-right: 15px;
+  }
+  .padding-sm-left {
+    padding-left: 15px;
+  }
+}
 @media (min-width: 961px) {
   .flex {
     padding: 10px 15px;
@@ -671,8 +688,14 @@ nav {
     h1 {
       font-size: 32px;
     }
-    .padding-15px-right {
+    .padding-15px-right-sm-up {
       padding: 0 15px 0 0;
+    }
+    .float-right-sm-up {
+      float: right;
+    }
+    .align-right-sm-up {
+      text-align: right;
     }
 }
 @media (max-width: 600px) {

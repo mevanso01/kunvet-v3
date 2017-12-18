@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar fixed class="white main-nav" light>
+    <v-toolbar fixed class="main-nav" light v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
       <router-link to="/">
             <div id="nav-logo">
                 <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">
@@ -23,7 +23,7 @@
           <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </div>
         <v-toolbar-items class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" class="toolbar__items">
+          <router-link v-for="item in items[acct]" :to="item.href"  :key="item.title" class="toolbar__items">
             <v-btn flat>{{ item.title }}</v-btn>
           </router-link>
         </v-toolbar-items>
@@ -110,9 +110,9 @@ export default {
           { title: 'Settings', icon: 'question_answer', href: '/settings' },
         ],
         [
-          { title: 'Post a job', icon: 'dashboard', href: '/login' },
-          { title: 'Applicants', icon: 'question_answer', href: '/signup' },
-          { title: 'Account', icon: 'question_answer', href: '/account' },
+          { title: 'Post a job', icon: 'dashboard', href: '/createnewjob' },
+          { title: 'Applicants', icon: 'question_answer', href: '/applicants_b' },
+          { title: 'Account', icon: 'question_answer', href: '/myorg' },
           { title: 'Settings', icon: 'question_answer', href: '/settings' },
         ],
       ],
@@ -174,6 +174,7 @@ export default {
 
 <style lang="scss">
 @import 'app.css';
+@import 'account.css';
 @import 'postsAndSearch.css';
 body, html {
   height: 100%;

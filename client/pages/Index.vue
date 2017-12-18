@@ -17,7 +17,7 @@
 .input-group--select {
   height: 66px;
 }
-.search .input-group__details, .firstSearch .input-group__details{
+.firstSearch .input-group__details{
   display: none !important;
 }
 .search .input-group--select .input-group__input {
@@ -127,7 +127,8 @@
                         v-model="selectedCities"
                         autocomplete
                         single-line
-                        hide-details>
+                        hide-details
+                      >
                       </v-select>
                   </v-flex>
                   <v-flex xs4 sm2 class="no-padding fsGoBtn" @click="searchGo">
@@ -144,6 +145,7 @@
                         v-bind:items="availableCities"
                         v-model="selectedCities"
                         single-line
+                        hide-details
                         autocomplete>
                       </v-select>
                     </v-flex>
@@ -155,6 +157,7 @@
                         chips
                         autocomplete
                         single-line
+                        hide-details
                         multiple>
                       </v-select>
                     </v-flex>
@@ -166,6 +169,7 @@
                         chips
                         autocomplete
                         single-line
+                        hide-details
                         multiple>
                       </v-select>
                     </v-flex>
@@ -177,6 +181,7 @@
                         chips
                         autocomplete
                         single-line
+                        hide-details
                         multiple>
                       </v-select>
                     </v-flex>

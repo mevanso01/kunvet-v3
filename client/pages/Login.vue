@@ -17,7 +17,7 @@ a:hover{
 }
 </style>
 <template>
-<v-container>
+<v-container fluid class="white-bg">
     <div class="main-cont-small">
 
         <div v-show="forgetpwd==0">
@@ -110,11 +110,9 @@ a:hover{
 </template>
 <script>
 import App from '@/App';
-import Store from '../store';
+import gql from 'graphql-tag';
 
-const State = Store.state;
-
-export default{
+export default {
   data() {
     return {
       e1: true,
@@ -135,12 +133,80 @@ export default{
   },
   methods: {
     submit() {
-      this.logging = true;
-      App.methods.login_i();
-      State.loggedin = true;
+      // THIS IS A FAKE LOGIN, PLEASE REPLACE
+      this.$apollo.query({
+        query: (gql`query ($e: String) {
+          findAccount(filter: {
+            email: $e
+          }) {
+            _id
+          }
+        }`),
+        variables: {
+          e: this.email,
+        },
+      }).then((data) => {
+        if (data.data.findAccount) {
+          this.logging = true;
+          this.fetchData();
+        }
+      });
     },
     send() {
       this.sent = true;
+    },
+    fetchData() {
+      this.$apollo.query({
+        query: (gql`query ($e: String) {
+          findAccount (filter: {
+            email: $e
+          }) {
+              _id
+              firstname
+              lastname
+              school
+              degree
+              display_email
+              org_list
+              default_org
+          }
+        }`),
+        variables: {
+          e: this.email,
+        },
+      }).then((data) => {
+        const udata = data.data.findAccount;
+        console.log('result', udata);
+        this.commitUserdata(udata);
+        this.commitID(udata._id);
+
+        if (udata.default_org == null) {
+          // login individual
+          App.methods.login_i();
+        } else {
+          // login business
+          this.$store.commit({
+            type: 'setBusinessID',
+            id: udata.default_org,
+          });
+          App.methods.login_b();
+          this.$router.push('/myorg');
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+    commitUserdata(udata) {
+      this.$store.commit({
+        type: 'keepUserdata',
+        userdata: udata,
+      });
+    },
+    commitID(_id) {
+      this.$store.commit({
+        type: 'setAcctID',
+        id: _id,
+      });
     },
   },
 };
