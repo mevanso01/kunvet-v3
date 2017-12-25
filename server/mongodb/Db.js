@@ -11,4 +11,7 @@ export default class Db {
       useMongoClient: true,
     });
   }
+  static get mongoose() {
+    return Mongoose;
+  }
 }

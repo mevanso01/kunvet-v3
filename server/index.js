@@ -75,6 +75,7 @@ Db.connect()
     if (process.env.NODE_ENV !== 'production') {
       const r = REPL.start('kunvet> ');
       r.context.Models = Models;
+      r.context.mongoose = Db.mongoose;
     }
   })
   .catch((reason) => {
