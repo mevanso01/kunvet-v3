@@ -8,7 +8,6 @@ const TempAccountSchema = Mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   vcode: {
     type: String,
@@ -26,7 +25,11 @@ const TempAccountSchema = Mongoose.Schema({
 });
 
 const JobSchema = Mongoose.Schema({
-  name: {
+  posted_by: {
+    type: String,
+    required: true,
+  },
+  title: {
     // Name of the job
     type: String,
     required: true,
@@ -272,6 +275,12 @@ const OrganizationSchema = Mongoose.Schema({
   },
 });
 
+/* const ResumeItem = {
+  name: String,
+  filename: String,
+  resumeid: String,
+}; */
+
 const AccountSchema = Mongoose.Schema({
   /*
   Added by passport-local-mongoose:
@@ -288,10 +297,12 @@ const AccountSchema = Mongoose.Schema({
     type: String,
     required: true,
   },
+  email_verified: {
+    type: { Boolean, default: false },
+  },
   email: {
     type: String,
     required: true,
-    unique: true,
   },
   password: {
     type: String,
@@ -316,6 +327,11 @@ const AccountSchema = Mongoose.Schema({
   display_email: {
     type: String,
   },
+  resumes: [{
+    name: String,
+    filename: String,
+    resumeid: String,
+  }],
   employee_info: {
     type: String,
     resume: Mongoose.model('Resume', ResumeSchema),
@@ -324,7 +340,9 @@ const AccountSchema = Mongoose.Schema({
     type: { default: [] },
   },
 });
-AccountSchema.plugin(PassportLocalMongoose, { usernameField: 'email' });
+AccountSchema.plugin(PassportLocalMongoose, {
+  usernameField: 'email',
+});
 
 export default {
   Job: Mongoose.model('Job', JobSchema),

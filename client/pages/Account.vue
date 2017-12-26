@@ -1,5 +1,29 @@
 <style>
-
+  .dropbox {
+    outline: 2px dashed grey; /* the dash box */
+    /* outline-offset: -8px; */
+    background: #f8f8f8;
+    color: dimgray;
+    /* padding: 10px 10px; */
+    min-height: 100px; /* minimum height */
+    position: relative;
+    cursor: pointer;
+  }
+  .dropbox .input-file {
+    opacity: 0;
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    cursor: pointer;
+  }
+  .dropbox:hover {
+    background: lightblue; /* when mouse over to the drop zone, change color */
+  }
+  .dropbox p {
+    font-size: 1.2em;
+    text-align: center;
+    padding: 20px 0;
+  }
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
@@ -16,7 +40,7 @@
                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
-                          <!--<v-list-tile-title>Add school info</v-list-tile-title>-->
+
                           <v-layout style="width: 100%">
                           <v-flex xs10 class="no-padding">
                             <v-text-field
@@ -140,11 +164,11 @@
 
             <v-layout row wrap>
               <v-flex xs12 sm6 md5 class="padding-sm-right">
-                <h3 class="acct-h3" v-bind:class="{ pink_color: resumes }">My Resumes</h3>
-                <v-list two-line class="acct-list">
-                  <template v-for="(resume, index) in resumes">
+                <h3 class="acct-h3" v-bind:class="{ pink_color: userdata.resumes }">My Resumes</h3>
+                <v-list two-line class="acct-list" v-if="userdata.resumes">
+                  <template v-for="(resume, index) in userdata.resumes">
                     <v-list-tile
-                      :key="resume._id"
+                      :key="index"
                     >
                       <v-list-tile-content>
                         <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
@@ -154,16 +178,20 @@
                           <v-icon color="grey lighten-1">edit</v-icon>
                         </v-btn>
                       </v-list-tile-action>
-                      <v-list-tile-action>
+                      <v-list-tile-action @click="
+                        deleteResumeIndex=index;
+                        deleteResumeName=resume.name;
+                        showDeleteResumeDialog=true"
+                      >
                         <v-btn icon ripple>
                           <v-icon color="grey lighten-1">delete</v-icon>
                         </v-btn>
                       </v-list-tile-action>
                     </v-list-tile>
-                    <v-divider v-if="index + 1 < resumes.length" :key="resume._id"></v-divider>
+                    <v-divider v-if="index + 1 < userdata.resumes.length" :key="index"></v-divider>
                   </template>
                 </v-list>
-                <v-btn small flat class="acct-btn" @click="next">
+                <v-btn small flat class="acct-btn" @click="showFileModal = true">
                   Add Resume
                 </v-btn>
               </v-flex>
@@ -197,36 +225,89 @@
                   <v-card>
                     <v-card-title class="headline">Create organization / business profile</v-card-title>
                     <v-card-actions>
-                      <!--<v-spacer></v-spacer>-->
+
                       <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Create</v-btn>
                       <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Cancel</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
-
-                <v-dialog v-model="editModal.show">
-                  <v-card>
-                    <v-card-title>
-                      <div class="headline">Edit {{ editModal.title }}</div>
-                      <div class="edit-modal-input-cont">
-                        <v-text-field
-                          v-model="editModal.text"
-                          style="padding: 0 2px;"
-                          name="edit-modal-input"
-                          hide-details
-                          single-line
-                        ></v-text-field>
-                      </div>
-                    </v-card-title>
-                    <v-card-actions>
-                      <v-btn color="green darken-1" flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
-                      <v-btn color="green darken-1" flat="flat" @click.native="saveFromEditModal">Save</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-
               </v-flex>
             </v-layout>
+
+            <v-dialog v-model="showFileModal">
+              <v-card>
+                <v-card-title>
+                <form enctype="multipart/form-data" novalidate style="width: 100%;"
+                    v-if="currentStatus === 'INITIAL' || currentStatus === 'SAVING'">
+                  <h1>Upload Resume</h1>
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      :name="uploadFieldName"
+                      :disabled="currentStatus === 'SAVING'"
+                      @change="filesChange($event.target.name, $event.target.files)"
+                      accept="application/*"
+                      class="input-file"
+                    >
+                      <p v-if="currentStatus === 'INITIAL'">
+                        Drag your file here<br> or click to browse
+                      </p>
+                      <p v-if="currentStatus === 'SAVING'">
+                        Uploading files...
+                      </p>
+                  </div>
+                  <div style="min-height: 21px; margin: 10px 0;">
+                    <p style="margin: 0;">{{ chosenFile }}</p>
+                  </div>
+                </form>
+                <v-text-field
+                  v-model="resumeName"
+                  style="padding: 0 2px;"
+                  name="edit-modal-input"
+                  hide-details
+                  single-line
+                  placeholder="Resume name"
+                ></v-text-field>
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn flat="flat" @click="closeFileModal">Cancel</v-btn>
+                  <v-btn :disabled="!formData || !resumeName" flat="flat" @click="saveFile">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="showDeleteResumeDialog">
+              <v-card>
+                <v-card-title>
+                  <h2>Delete {{ deleteResumeName }}?</h2>
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn color="green darken-1" flat="flat" @click="showDeleteResumeDialog=false;">Cancel</v-btn>
+                  <v-btn error flat="flat" @click="deleteResume(deleteResumeIndex)">Delete</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="editModal.show">
+              <v-card>
+                <v-card-title>
+                  <div class="headline">Edit {{ editModal.title }}</div>
+                  <div class="edit-modal-input-cont">
+                    <v-text-field
+                      v-model="editModal.text"
+                      style="padding: 0 2px;"
+                      name="edit-modal-input"
+                      hide-details
+                      single-line
+                    ></v-text-field>
+                  </div>
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn color="green darken-1" flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
+                  <v-btn color="green darken-1" flat="flat" @click.native="saveFromEditModal">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </section>
     </div>
   </v-container>
@@ -236,14 +317,12 @@
   import App from '@/App';
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
+  import axios from 'axios';
 
   export default {
     data() {
       return {
-        resumes: [
-          { name: 'Resume 1', _id: 1 },
-          { name: 'Resume 2', _id: 2 },
-        ],
+        resumes: [],
         org_list: [],
         tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
         active: null,
@@ -263,14 +342,94 @@
           degree: null,
           display_email: null,
           org_list: [],
+          resumes: [],
         },
         settingsoption1: '',
         addorg: false,
+        uploadFieldName: 'file',
+        showFileModal: false,
+        currentStatus: 'INITIAL',
+        chosenFile: '',
+        formData: null,
+        resumeName: null,
+        deleteResumeIndex: null,
+        deleteResumeName: null,
+        showDeleteResumeDialog: false,
       };
     },
     methods: {
-      next() {
-        this.active = this.tabs[(this.tabs.indexOf(this.active) + 1) % this.tabs.length];
+      filesChange(fieldName, fileList) {
+        // handle file changes
+        const formData = new FormData();
+        if (!fileList.length) return;
+        // append the files to FormData
+        formData.append('userid', this.$store.state.userID);
+        formData.append(fieldName, fileList[0], fileList[0].name);
+        /* Array
+          .from(Array(fileList.length).keys())
+          .map(x => {
+            formData.append(fieldName, fileList[x], fileList[x].name);
+            return null;
+          }); */
+        // save it
+        this.chosenFile = fileList[0].name;
+        this.formData = formData;
+      },
+      saveFile() {
+        // upload data to the server
+        if (this.formData) {
+          this.currentStatus = 'SAVING';
+          const headers = { emulateJSON: true };
+          const data = this.formData;
+          axios.post('http://localhost:3000/uploadfile', data, headers).then((res) => {
+            const _filename = res.data;
+            if (this.userdata.resumes) {
+              this.userdata.resumes.push({
+                name: this.resumeName,
+                filename: _filename,
+                resumeid: null,
+              });
+            } else {
+              this.userdata.resumes = [{
+                name: this.resumeName,
+                filename: _filename,
+                resumeid: null,
+              }];
+            }
+            this.formData = null;
+            this.saveUserdata();
+            this.closeFileModal();
+          }, (error) => {
+            console.error(error);
+            this.currentStatus = 'FAILED';
+          });
+        }
+      },
+      closeFileModal() {
+        this.showFileModal = false;
+        this.formData = null;
+        this.resumeName = null;
+        this.chosenFile = '';
+        this.currentStatus = 'INITIAL';
+      },
+      deleteResume(index) {
+        this.showDeleteResumeDialog = false;
+        this.deleteResumeIndex = null;
+        this.deleteResumeName = null;
+        if (this.userdata.resumes[index].filename) {
+          const headers = { emulateJSON: true };
+          const data = { filename: this.userdata.resumes[index].filename };
+          console.log(data);
+          this.$http.post('http://localhost:3000/removefile', data, headers).then(() => {
+            this.userdata.resumes.splice(index, 1);
+            this.saveUserdata();
+          }, (error) => {
+            console.error(error);
+          });
+        } else {
+          this.userdata.resumes.splice(index, 1);
+          this.saveUserdata();
+        }
       },
       logout() {
         App.methods.logout();
@@ -305,10 +464,6 @@
         const text = this.editModal.text;
         const property = this.editModal.property;
         this.userdata[property] = text;
-        /* Object.defineProperty(this.userdata, property, {
-          value: text,
-          writable: true,
-        }); */
         this.saveUserdata();
         this.destroyEditModal();
       },
@@ -323,25 +478,23 @@
         });
       },
       updateAccount() {
+        // this is weird. Not sure why it adds the property '__typename' if I dont do this
+        var _resumes = [];
+        for (var i = 0; i < this.userdata.resumes.length; i++) {
+          _resumes.push({
+            name: this.userdata.resumes[i].name,
+            filename: this.userdata.resumes[i].filename,
+            resumeid: this.userdata.resumes[i].resumeid,
+          });
+        }
+
         this.$apollo.mutate({
           mutation: (gql`
-            mutation (
-              $uid: MongoID,
-              $fname: String,
-              $lname: String,
-              $school: String,
-              $degree: String,
-              $de: String)
+            mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
           {
             updateAccount (
               filter: { _id: $uid },
-              record: {
-                firstname: $fname,
-                lastname: $lname,
-                school: $school,
-                degree: $degree,
-                display_email: $de,
-              }
+              record: $record,
             ) {
               recordId
             }
@@ -349,11 +502,14 @@
           variables: {
             // find a more secure way to run query
             uid: this.$store.state.userID,
-            fname: this.userdata.firstname,
-            lname: this.userdata.lastname,
-            school: this.userdata.school,
-            degree: this.userdata.degree,
-            de: this.userdata.display_email,
+            record: {
+              firstname: this.userdata.firstname,
+              lastname: this.userdata.lastname,
+              school: this.userdata.school,
+              degree: this.userdata.degree,
+              display_email: this.userdata.display_email,
+              resumes: _resumes,
+            },
           },
         }).catch((error) => {
           console.error(error);
@@ -400,6 +556,11 @@
                 degree
                 display_email
                 org_list
+                resumes {
+                  name
+                  filename
+                  resumeid
+                }
             }
           }`),
           variables: {
@@ -413,7 +574,7 @@
           this.userdata.degree = res.degree;
           this.userdata.display_email = res.display_email;
           this.userdata.org_list = res.org_list;
-          console.log(res.org_list);
+          this.userdata.resumes = res.resumes;
           this.commitUserdata();
           if (res.org_list) {
             this.populateOrgList();

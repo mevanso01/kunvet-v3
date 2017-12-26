@@ -168,6 +168,11 @@ export default {
               degree
               display_email
               org_list
+              resumes {
+                name
+                filename
+                resumeid
+              }
               default_org
           }
         }`),

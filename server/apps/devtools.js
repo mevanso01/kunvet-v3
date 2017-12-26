@@ -11,11 +11,24 @@ import Models from '../mongodb/Models';
 const nodemailer = require('nodemailer');
 const bodyParser = require('koa-bodyparser');
 const sha1 = require('sha1');
+const multer = require('koa-multer');
+const path = require('path');
+const fs = require('fs');
 
 const app = new Koa();
 const router = new KoaRouter();
 
-// const TAS = Models.TempAccount;
+var _storage = multer.diskStorage({
+  destination: function destination(req, file, cb) {
+    cb(null, 'server/uploads/');
+  },
+  filename: function filename(req, file, cb) {
+    cb(null, `${req.body.userid}-${Date.now()}${path.extname(file.originalname)}`);
+  },
+});
+
+var upload = multer({ storage: _storage });
+// var upload = multer({ dest: 'uploads/' });
 
 app.use(KCors());
 app.use(bodyParser());
@@ -110,37 +123,68 @@ Also, whoever spent time writing this should be fired."
 
 router.post('/sendemail', (ctx) => {
   ctx.body = 'hello!';
-  const emailaddress = (ctx.request.body.email);
-  const reqType = (ctx.request.body.reqtype);
-  console.log(reqType);
-  if (reqType === 'validate') {
+  const req = ctx.request.body;
+  console.log(req);
+  if (req.reqtype === 'validate') {
     console.log('test');
     const randomString = `abc, ${Math.floor(Math.random() * 500)}, ${Math.floor(Math.random() * 500)}`;
     const validationCode = sha1(randomString);
-    // emailsToValidate.push([emailaddress, validationCode]);
 
-    const emailbody = `<p>Please click this link to validate your email: <a href="localhost:8080/validate/${validationCode}">localhost:8080/validate/${validationCode}</a></p>`;
-    activateNodemailer(emailaddress, emailbody);
     const TAS = Models.TempAccount;
     const x = new TAS({
-      email: emailaddress,
-      password: 'test1234',
+      email: req.email,
       vcode: validationCode,
-      firstname: ctx.request.body.fname,
+      /* firstname: ctx.request.body.fname,
       lastname: ctx.request.body.lname,
-      business_name: ctx.request.body.bname,
+      business_name: ctx.request.body.bname, */
     });
     x.save();
+
+    Models.Account.register(
+      {
+        email: req.email,
+        firstname: req.fname,
+        lastname: req.lname,
+        default_org: req.default_org,
+      },
+      req.pwd,
+      (err, user) => {
+        if (!err) {
+          console.log(user);
+        } else {
+          console.error(err);
+        }
+      },
+    );
+    const emailbody = `<p>Please click this link to validate your email: <a href="localhost:8080/validate/${validationCode}">localhost:8080/validate/${validationCode}</a></p>`;
+    activateNodemailer(req.email, emailbody);
   }
 });
 
-/* router.post('/validatecode', (ctx) => {
-   const code = (ctx.request.body.code);
-  for (let i = 0; i < emailsToValidate.length; i += 1) {
-    if (emailsToValidate[i][1] === code) {
-      console.log(emailsToValidate[i]);
-    }
+router.post('/uploadfile', upload.single('file'), async (ctx) => {
+  const { file } = ctx.req;
+  // Do stuff with the file here
+  ctx.body = file.filename;
+  ctx.status = 200;
+});
+
+router.post('/removefile', (ctx) => {
+  const filename = ctx.request.body.filename;
+  if (filename) {
+    fs.unlinkSync(`server/uploads/${filename}`);
+    ctx.status = 200;
   }
+});
+/* router.post('/uploadfile', (ctx) => {
+  fs.writeFile('uploads/testfilename.pdf', ctx.request.body.file, 'utf8', (error) => {
+    if (error) {
+      console.log('error', error);
+    } else {
+      console.log('success');
+    }
+  });
+  ctx.body = 'hello';
+  console.log(ctx.request.body);
 }); */
 
 

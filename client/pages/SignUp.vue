@@ -172,6 +172,8 @@
 <script>
 import Vue from 'vue';
 import VueResource from 'vue-resource';
+import gql from 'graphql-tag';
+// import Models from '../../server/mongodb/Models';
 
 Vue.use(VueResource);
 
@@ -203,19 +205,11 @@ export default {
       this.submitClicked = true;
       if (this.valid) {
         this.chosenForm = 'submitted';
-        const headers = { emulateJSON: true };
-        const data = {
-          email: this.email,
-          bname: this.business_name,
-          fname: this.fname,
-          lname: this.lname,
-          reqtype: 'validate',
-        };
-        Vue.http.post('http://localhost:3000/sendemail', data, headers).then((res) => {
-          console.log(res);
-        }, (error) => {
-          console.log(error);
-        });
+        if (this.business_name && this.business_name !== '') {
+          this.createBusinessAcct();
+        } else {
+          this.createIndividualAcct();
+        }
       }
     },
     chooseFormI() {
@@ -226,6 +220,54 @@ export default {
     },
     back() {
       this.chosenForm = '';
+    },
+    createIndividualAcct() {
+      const headers = { emulateJSON: true };
+      const data = {
+        email: this.email,
+        default_org: null,
+        fname: 'Firstname', // this.fname,
+        lname: 'Lastname', // this.lname,
+        pwd: this.password,
+        reqtype: 'validate',
+      };
+      Vue.http.post('http://localhost:3000/sendemail', data, headers).then(() => {
+      }, (error) => {
+        console.error(error);
+      });
+    },
+    createBusinessAcct() {
+      this.$apollo.mutate({
+        mutation: (gql`mutation ($e: String, $bn: String) {
+          createOrganization(record: {
+            business_name: $bn,
+            email: $e,
+          }) {
+            recordId
+          }
+        }`),
+        variables: {
+          bn: this.business_name,
+          e: this.email,
+        },
+      }).then((data) => {
+        const businessID = data.data.createOrganization.recordId;
+        const headers = { emulateJSON: true };
+        const bdata = {
+          email: this.email,
+          default_org: businessID,
+          fname: this.fname,
+          lname: this.lname,
+          pwd: this.password,
+          reqtype: 'validate',
+        };
+        Vue.http.post('http://localhost:3000/sendemail', bdata, headers).then(() => {
+        }, (error) => {
+          console.error(error);
+        });
+      }).catch((error) => {
+        console.error(error);
+      });
     },
   },
 };

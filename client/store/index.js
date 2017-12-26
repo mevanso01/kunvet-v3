@@ -24,6 +24,7 @@ const Store = new Vuex.Store({
       degree: null,
       display_email: null,
       org_list: [],
+      resumes: [],
     },
   },
   mutations: {

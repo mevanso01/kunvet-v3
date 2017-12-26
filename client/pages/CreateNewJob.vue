@@ -114,13 +114,22 @@
 <template>
   <v-container fluid class="createnewjob-container">
     <div class="main-cont-large">
-      <section class="no-padding-xs">
-        <h2>Create a job</h2>
+      <section class="no-padding-xs" style="padding-top: 10px;">
+        <div style="width: 100%; height: 50px;">
+          <div class="float-left">
+            <h2 style="margin-bottom: 0; line-height:48px;">Create a job</h2>
+          </div>
+          <div class="float-right">
+            <v-btn @click="save">Save for later</v-btn>
+          </div>
+        </div>
+        <v-divider></v-divider>
         <br>
-
+        <h2>Posting as {{ posted_by }}</h2>
+        <br>
         <h3>Title and Address<span class="color-red">*</span></h3>
         <v-text-field
-          v-model="name"
+          v-model="title"
           label="Job Title"
           required
         ></v-text-field>
@@ -132,7 +141,7 @@
               required
             ></v-text-field>
           </v-flex>
-          <v-flex xs12 sm4 class="padding-15px-right-sm-ups">
+          <v-flex xs12 sm4 class="padding-15px-right-sm-up">
             <v-text-field
               v-model="city_and_state"
               label="City, State"
@@ -265,7 +274,7 @@
 
         <br>
         <v-layout>
-          <v-btn @click="save">Save</v-btn>
+          <v-btn @click="save">Save for later</v-btn>
           <v-btn @click="saveAndPost">Save and Post</v-btn>
         </v-layout>
         <!--<p>{{ message }}</p>-->
@@ -276,9 +285,8 @@
 <script>
 import { VueEditor } from 'vue2-editor';
 import gql from 'graphql-tag';
-import Store from '../store';
+import VuexLS from '@/store/persist';
 
-const State = Store.state;
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -307,13 +315,10 @@ export default {
   components: {
     VueEditor,
   },
-  created() {
-    this.checkUserInfo();
-  },
-
   data() {
     return {
-      name: '',
+      posted_by: '',
+      title: '',
       description: '',
       address: '',
       city_and_state: '',
@@ -350,7 +355,6 @@ export default {
       ],
     };
   },
-
   methods: {
     save() {
 
@@ -366,8 +370,9 @@ export default {
     },
     createJobArray() {
       const job = {
-        user_name: State.userdata.username,
-        name: this.name,
+        // user_name: State.userdata.username,
+        posted_by: this.posted_by,
+        title: this.title,
         description: this.description,
         address: `${this.address} ${this.city_and_state} ${this.zip}`,
         type: this.type,
@@ -383,11 +388,24 @@ export default {
       };
       return job;
     },
-    checkUserInfo() {
-      if (!State.loggedin) {
-        alert('not logged in');
-      }
-    },
+  },
+  created() {
+    if (this.$store.state.acct === 2) {
+      this.posted_by = this.$store.state.bdata.business_name;
+    } else if (this.$store.state.acct === 1) {
+      this.posted_by = `${this.$store.state.userdata.firstname} ${this.$store.state.userdata.lastname}`;
+    } else {
+      VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
+        if (data.acct === 2) {
+          this.posted_by = data.bdata.business_name;
+        } else if (data.acct === 1) {
+          this.posted_by = `${data.userdata.firstname} ${data.userdata.lastname}`;
+        } else {
+          // not logged in
+          this.$router.push('/login');
+        }
+      });
+    }
   },
 };
 </script>

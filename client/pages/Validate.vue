@@ -7,13 +7,13 @@
 <template>
   <v-container fluid style="padding-left: 0; padding-right: 0;">
     <div style="padding: 60px 0;">
-      <p v-if="!checked" class="center val-c-p">Validating. This should take just a few seconds.</p>
-      <p v-if="checked && !isvalid" class="center val-c-p">
+      <p v-if="loading" class="center val-c-p">Validating. This should take just a few seconds.</p>
+      <p v-if="!loading && !isvalid" class="center val-c-p">
         Validation unsuccessful, please check that you
         entered the link correctly and try again
       </p>
-      <div style="max-width: 600px; margin: auto;">
-        <v-card v-if="checked && isvalid" style="margin: 15px;">
+      <div v-if="!loading && isvalid" style="max-width: 600px; margin: auto;">
+        <v-card style="margin: 15px;">
           <v-card-text>
               You're all set! Now you can log in with the email and password
               you provided, and finish creating your account
@@ -32,6 +32,13 @@ import VueApollo from 'vue-apollo';
 Vue.use(Vuetify);
 Vue.use(VueApollo);
 
+/*
+password
+firstname
+lastname
+business_name
+*/
+
 export default {
   created() {
     this.validateCode();
@@ -40,7 +47,7 @@ export default {
   data() {
     return {
       // id: this.$route.params.id,
-      checked: false,
+      loading: true,
       isvalid: false,
       dne: null,
     };
@@ -53,20 +60,18 @@ export default {
             vcode: $c
           }) {
               email
-              password
               vcode
-              firstname
-              lastname
-              business_name
           }
         }`),
         variables: {
           c: this.code,
         },
       }).then((data) => {
-        this.checked = true;
         if (data.data.findVCode) {
-          this.doesNotExist(data.data.findVCode.email).then(() => {
+          this.isvalid = true;
+          // instead, set account to valid
+          this.validateAcct(data.data.findVCode.email);
+          /* this.doesNotExist(data.data.findVCode.email).then(() => {
             if (this.dne !== null) {
               this.isvalid = true;
               if (data.data.findVCode.business_name === '') {
@@ -81,9 +86,37 @@ export default {
                 );
               }
             }
-          });
+          }); */
+        } else {
+          this.isvalid = true;
+          this.loading = false;
         }
       });
+    },
+    validateAcct(email) {
+      if (this.isvalid) {
+        this.$apollo.mutate({
+          mutation: (gql`
+            mutation ($e: String) {
+              updateAccount (filter: { email: $e },
+                record: {
+                  email_verified: true,
+                }
+              )
+            {
+              recordId
+            }
+          }`),
+          variables: {
+            e: email,
+          },
+        }).then(() => {
+          this.deleteTempAcct(email);
+          this.loading = false;
+        }).catch((error) => {
+          console.error(error);
+        });
+      }
     },
     uploadAcctData(email, password) {
       if (this.isvalid && this.dne) {
@@ -185,9 +218,9 @@ export default {
     deleteTempAcct(email) {
       this.$apollo.mutate({
         mutation: (gql`mutation ($e: String) {
-          removeTempAccount(filter: {
-            email: $e
-          })
+          removeTempAccount(filter: { email: $e }) {
+            recordId
+          }
         }`),
         variables: {
           e: email,
