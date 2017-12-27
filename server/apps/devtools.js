@@ -3,10 +3,13 @@ import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import KCors from 'kcors';
 
+// Utils
+import Mailer from '@/utils/Mailer';
+import Models from '@/mongodb/Models';
+
 // GraphiQL
 import { graphiqlKoa } from 'apollo-server-koa';
 
-import Models from '../mongodb/Models';
 
 const nodemailer = require('nodemailer');
 const bodyParser = require('koa-bodyparser');
@@ -89,6 +92,20 @@ function activateNodemailer(emailaddress, emailbody) {
 router.get('/graphiql', graphiqlKoa({
   endpointURL: '/srv/graphql',
 }));
+
+// Mailer test
+router.get('/test-mailer', (ctx) => {
+  const mailer = new Mailer();
+  mailer.sendTemplate(
+    'Zhaofeng Li <hello@zhaofeng.li>',
+    'welcome',
+    {
+      firstname: 'Zhaofeng',
+      lastname: 'Li',
+    }
+  );
+  ctx.body = 'Check your mailbox!';
+});
 
 router.post('/sendemail', (ctx) => {
   ctx.body = 'hello!';
