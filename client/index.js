@@ -42,7 +42,7 @@ import PhotoGallery from '@/pages/PhotoGallery';
 import Businesshp from '@/pages/Businesshp';
 import CreateNewJobB from '@/pages/CreateNewJob_b';
 import JobPostsB from '@/pages/JobPosts_b';
-import ApplicantsB from '@/pages/Applicants_b';
+import Applicants from '@/pages/Applicants';
 
 import App from '@/App';
 import store from '@/store';
@@ -165,8 +165,8 @@ const router = new VueRouter({
       component: JobPostsB,
     },
     {
-      path: '/applicants_b',
-      component: ApplicantsB,
+      path: '/applicants',
+      component: Applicants,
     },
     {
       path: '/AboutUs',

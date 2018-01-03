@@ -120,7 +120,7 @@
             <h2 style="margin-bottom: 0; line-height:48px;">Create a job</h2>
           </div>
           <div class="float-right">
-            <v-btn @click="save">Save for later</v-btn>
+            <v-btn flat @click="save">Save for later</v-btn>
           </div>
         </div>
         <v-divider></v-divider>

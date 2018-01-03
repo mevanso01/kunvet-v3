@@ -50,6 +50,45 @@
                         </v-list-tile-content>
                       </v-list-tile>
 
+                      <v-list-tile v-if="!bdata.phone_number" class="cust-tile-2 grey-color">
+                        <v-list-tile class="cust-tile-1">
+                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        </v-list-tile>
+                        <v-list-tile-content>
+                          <v-layout style="width: 100%">
+                            <v-flex xs10 class="no-padding">
+                              <v-text-field
+                                v-model="updatePhoneNumber"
+                                class="no-padding no-underline"
+                                name="input-3"
+                                label="Add phone number"
+                                single-line
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs2 v-show="updatePhoneNumber" class="no-padding">
+                              <v-btn small  center class="cust-btn-1" @click="saveProperty('phone_number', updatePhoneNumber)">
+                                Save
+                              </v-btn>
+                            </v-flex>
+                          </v-layout>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile v-if="bdata.phone_number" class="cust-tile-2">
+                        <v-list-tile class="cust-tile-1">
+                           <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        </v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>
+                            {{ bdata.phone_number }}
+                            <v-icon
+                              class = "edit-icon"
+                              @click="createEditModal('phone number', bdata.phone_number, 'phone_number')">
+                              edit
+                            </v-icon>
+                          </v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+
                       <v-list-tile v-if="!bdata.display_email" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
                             <i class="fa fa-plus-square-o" aria-hidden="true"></i>
@@ -61,7 +100,7 @@
                                 v-model="updateEmail"
                                 class="no-padding no-underline"
                                 name="input-3"
-                                label="Add email to display"
+                                label="Add display email"
                                 single-line
                               ></v-text-field>
                             </v-flex>
@@ -214,6 +253,7 @@
                           v-model="editModal.text"
                           style="padding: 0 2px;"
                           name="edit-modal-input"
+                          placeholder="A description of your business or organization"
                           hide-details
                           multi-line
                           rows=3
@@ -249,6 +289,7 @@
         updateAddress: '',
         updateEmail: '',
         updateWebsite: '',
+        updatePhoneNumber: '',
         jobs_list: [],
         photos_list: [],
         editModal: {

@@ -111,7 +111,7 @@ export default {
         ],
         [
           { title: 'Post a job', icon: 'dashboard', href: '/createnewjob' },
-          { title: 'Applicants', icon: 'question_answer', href: '/applicants_b' },
+          { title: 'Applicants', icon: 'question_answer', href: '/applicants' },
           { title: 'Account', icon: 'question_answer', href: '/myorg' },
           { title: 'Settings', icon: 'question_answer', href: '/settings' },
         ],
