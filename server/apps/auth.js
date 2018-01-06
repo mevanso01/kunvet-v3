@@ -57,7 +57,9 @@ router.get('/status', (ctx) => {
   }
 });
 
-app.use(KCors());
+app.use(KCors({
+  credentials: true,
+}));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
