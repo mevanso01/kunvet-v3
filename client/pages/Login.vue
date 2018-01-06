@@ -50,7 +50,7 @@ a:hover{
                 </a>
             </section>
 
-            <div v-show="logging==0" id="general-submit" @click="submit()">
+            <div v-show="loggedIn==0" id="general-submit" @click="submit()">
                 <div id="general-submit-default">
                     <span>LOGIN</span>
                 </div>
@@ -59,7 +59,7 @@ a:hover{
             <v-alert
                 style="background-color: green"
                 icon="priority_high"
-                :value="logging"
+                :value="loggedIn"
                 transition="slide-x-transition"
             >
                 This is a success alert.
@@ -110,7 +110,8 @@ a:hover{
 </template>
 <script>
 import App from '@/App';
-import gql from 'graphql-tag';
+import Config from 'config';
+import Axios from 'axios';
 
 export default {
   data() {
@@ -118,7 +119,7 @@ export default {
       e1: true,
       valid: false,
       forgetpwd: 0,
-      logging: false,
+      loggedIn: false,
       sent: 0,
       email: '',
       emailRules: [
@@ -133,21 +134,13 @@ export default {
   },
   methods: {
     submit() {
-      // THIS IS A FAKE LOGIN, PLEASE REPLACE
-      this.$apollo.query({
-        query: (gql`query ($e: String) {
-          findAccount(filter: {
-            email: $e
-          }) {
-            _id
-          }
-        }`),
-        variables: {
-          e: this.email,
-        },
-      }).then((data) => {
-        if (data.data.findAccount) {
-          this.logging = true;
+      Axios.post(`${Config.serverUrl}/auth/login`, {
+        email: this.email,
+        password: this.password,
+      }).then((response) => {
+        console.log(response.data);
+        if (response.data.success) {
+          this.loggedIn = true;
           this.fetchData();
         }
       });
@@ -156,50 +149,40 @@ export default {
       this.sent = true;
     },
     fetchData() {
-      this.$apollo.query({
-        query: (gql`query ($e: String) {
-          findAccount (filter: {
-            email: $e
-          }) {
-              _id
-              firstname
-              lastname
-              school
-              degree
-              display_email
-              org_list
-              resumes {
-                name
-                filename
-                resumeid
-              }
-              default_org
+      Axios.get(`${Config.serverUrl}/auth/status`)
+        .then((response) => {
+          if (!response.data.success) {
+            // Unsuccessful
+            console.error('Server error', response.data);
+            return;
           }
-        }`),
-        variables: {
-          e: this.email,
-        },
-      }).then((data) => {
-        const udata = data.data.findAccount;
-        console.log('result', udata);
-        this.commitUserdata(udata);
-        this.commitID(udata._id);
+          if (!response.data.status) {
+            // Logged out
+            console.error('Logged out', response.data);
+            return;
+          }
 
-        if (udata.default_org == null) {
-          // login individual
-          App.methods.login_i();
-        } else {
-          // login business
-          this.$store.commit({
-            type: 'setBusinessID',
-            id: udata.default_org,
-          });
-          App.methods.login_b();
-          this.$router.push('/myorg');
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
+          const udata = response.data;
+          this.commitUserdata(udata.user);
+          this.commitID(udata._id);
+
+          if (udata.default_org == null) {
+            // login individual
+            App.methods.login_i();
+          } else {
+            // login business
+            this.$store.commit({
+              type: 'setBusinessID',
+              id: udata.default_org,
+            });
+            App.methods.login_b();
+            this.$router.push('/myorg');
+          }
+        })
+        .catch((error) => {
+          // Network error
+          console.error(error);
+        });
     },
     commitUserdata(udata) {
       this.$store.commit({
