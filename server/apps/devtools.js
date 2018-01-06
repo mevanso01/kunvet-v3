@@ -102,7 +102,7 @@ router.get('/test-mailer', (ctx) => {
     {
       firstname: 'Zhaofeng',
       lastname: 'Li',
-    }
+    },
   );
   ctx.body = 'Check your mailbox!';
 });
