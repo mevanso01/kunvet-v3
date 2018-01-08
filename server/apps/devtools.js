@@ -3,10 +3,13 @@ import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import KCors from 'kcors';
 
+// Utils
+import Mailer from '@/utils/Mailer';
+import Models from '@/mongodb/Models';
+
 // GraphiQL
 import { graphiqlKoa } from 'apollo-server-koa';
 
-import Models from '../mongodb/Models';
 
 const nodemailer = require('nodemailer');
 const bodyParser = require('koa-bodyparser');
@@ -90,35 +93,18 @@ router.get('/graphiql', graphiqlKoa({
   endpointURL: '/srv/graphql',
 }));
 
-// Login form
-// FIXME: Debug purposes only - Please remove me
-router.get('/loginform', (ctx) => {
-  const loginStatus = ctx.isAuthenticated() ? 'logged in' : 'not logged in';
-  ctx.body = `
-<!doctype html>
-<html>
-  <head>
-    <title>Log in</title>
-  </head>
-  <body>
-    <pre>
-Login Interface
-
-You find yourself staring at a sketchy login interface. It's
-totally unstyled, complete with misspelt labels and a plaintext password field.
-
-You say to yourself, "Eww! I probably shouldn't type in a valuable password.
-Also, whoever spent time writing this should be fired."
-    </pre>
-    <p>You are ${loginStatus}. <a href='/auth/logout'>Log out?</a></p>
-    <form action='/auth/login' method='post'>
-      <input name='username' placeholder='Usename'>
-      <input name='password' placeholder='Pass word'>
-      <button type='submit'>Log in</button>
-    </form>
-  </body>
-</html>
-  `;
+// Mailer test
+router.get('/test-mailer', (ctx) => {
+  const mailer = new Mailer();
+  mailer.sendTemplate(
+    'Zhaofeng Li <hello@zhaofeng.li>',
+    'welcome',
+    {
+      firstname: 'Zhaofeng',
+      lastname: 'Li',
+    },
+  );
+  ctx.body = 'Check your mailbox!';
 });
 
 router.post('/sendemail', (ctx) => {

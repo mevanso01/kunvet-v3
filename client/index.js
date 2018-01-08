@@ -4,6 +4,8 @@ import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
 
+import Axios from 'axios';
+
 import Client from '@/apollo/client';
 
 import Index from '@/pages/Index';
@@ -178,6 +180,8 @@ const router = new VueRouter({
     },
   ],
 });
+
+Axios.defaults.withCredentials = true;
 
 /* eslint-disable no-new */
 

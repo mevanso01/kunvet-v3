@@ -1,14 +1,16 @@
 const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
 const utils = require('./utils');
+const nodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   // Server
   target: 'node',
   entry: './server/index.js',
+  externals: [nodeExternals()],
   output: {
-    filename: 'index.js',
-    path: utils.resolve('dist/server'),
+    filename: 'server-dist.js',
   },
   resolve: {
     extensions: ['.js', '.json'],
