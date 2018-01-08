@@ -149,40 +149,35 @@ export default {
       this.sent = true;
     },
     fetchData() {
-      Axios.get(`${Config.serverUrl}/auth/status`)
-        .then((response) => {
-          if (!response.data.success) {
-            // Unsuccessful
-            console.error('Server error', response.data);
-            return;
-          }
-          if (!response.data.status) {
-            // Logged out
-            console.error('Logged out', response.data);
-            return;
-          }
+      Axios.get(`${Config.serverUrl}/auth/status`).then((response) => {
+        if (!response.data.success) {
+          // Unsuccessful
+          console.error('Server error', response.data);
+          return;
+        }
+        if (!response.data.status) {
+          // Logged out
+          console.error('Logged out', response.data);
+          return;
+        }
+        const udata = response.data;
+        console.log(udata);
+        this.commitUserdata(udata.user);
+        this.commitID(udata._id);
 
-          const udata = response.data;
-          this.commitUserdata(udata.user);
-          this.commitID(udata._id);
-
-          if (udata.default_org == null) {
-            // login individual
-            App.methods.login_i();
-          } else {
-            // login business
-            this.$store.commit({
-              type: 'setBusinessID',
-              id: udata.default_org,
-            });
-            App.methods.login_b();
-            this.$router.push('/myorg');
-          }
-        })
-        .catch((error) => {
-          // Network error
-          console.error(error);
-        });
+        if (udata.user.default_org == null || !udata.user.default_org) {
+          // login individual
+          App.methods.login_i();
+        } else {
+          // login business
+          this.commitBusinessID(udata.user.default_org);
+          App.methods.login_b();
+          this.$router.push('/myorg');
+        }
+      }).catch((error) => {
+        // Network error
+        console.error(error);
+      });
     },
     commitUserdata(udata) {
       this.$store.commit({
@@ -193,6 +188,12 @@ export default {
     commitID(_id) {
       this.$store.commit({
         type: 'setAcctID',
+        id: _id,
+      });
+    },
+    commitBusinessID(_id) {
+      this.$store.commit({
+        type: 'setBusinessID',
         id: _id,
       });
     },
