@@ -11,6 +11,14 @@ import KCors from 'kcors';
 // Passport
 import KoaPassport from 'koa-passport';
 
+// Utils
+import Mailer from '@/utils/Mailer';
+import Models from '@/mongodb/Models';
+
+// Other
+import promisify from 'es6-promisify';
+import sha1 from 'sha1';
+
 const app = new Koa();
 const router = new KoaRouter();
 
@@ -38,6 +46,77 @@ router.post('/login', ctx => KoaPassport.authenticate('local', (_, user) => {
 router.get('/logout', (ctx) => {
   ctx.logout();
   ctx.body = '{"success":true}';
+});
+
+router.post('/register', async (ctx) => {
+  // FIXME: Input sanitization
+  if (ctx.isAuthenticated()) {
+    const response = {
+      success: false,
+      message: 'Cannot register new account while logged in',
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+  const req = ctx.request.body;
+  const promiseRegister = promisify(Models.Account.register, Models.Account);
+
+  try {
+    await promiseRegister(
+      {
+        email: req.email,
+        firstname: req.fname,
+        lastname: req.lname,
+        default_org: req.default_org,
+      },
+      req.pwd,
+    );
+  } catch (err) {
+    const response = {
+      success: false,
+      message: 'Account creation failed',
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+
+  const randomString = `abc, ${Math.floor(Math.random() * 500)}, ${Math.floor(Math.random() * 500)}`;
+  const validationCode = sha1(randomString);
+
+  const TAS = Models.TempAccount;
+  const x = new TAS({
+    email: req.email,
+    vcode: validationCode,
+  });
+  x.save();
+
+  const mailer = new Mailer();
+
+  try {
+    await mailer.sendTemplate(
+      req.email,
+      'email-verification',
+      {
+        firstname: req.fname,
+        lastname: req.lname,
+        email: req.email,
+        code: validationCode,
+      },
+    );
+  } catch (err) {
+    const response = {
+      success: false,
+      message: 'Email could not be sent',
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+
+  const response = {
+    success: true,
+    message: 'Check your mailbox!',
+  };
+  ctx.body = JSON.stringify(response);
 });
 
 router.get('/status', (ctx) => {
