@@ -1,6 +1,7 @@
 import Config from 'config';
 import Nodemailer from 'nodemailer';
 import Email from 'email-templates';
+import path from 'path';
 
 export default class Mailer {
   constructor() {
@@ -12,6 +13,7 @@ export default class Mailer {
         from: Config.mailFrom,
       },
       views: {
+        root: path.resolve('email-templates'),
         options: {
           extension: 'handlebars',
         },
