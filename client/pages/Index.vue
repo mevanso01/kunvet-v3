@@ -1,4 +1,13 @@
 <style>
+.post-card {
+  border-left: 3px solid #59e884;
+
+}
+.carditem {
+  height: 50%;
+  margin: 0;
+  font-size: 11px
+}
 .container {
   background-color: #fff;
 }
@@ -62,6 +71,7 @@
 }
 .firstSearch {
   padding: 32px 64px;
+
 }
 .fsGoBtn {
   height: 48px;
@@ -73,10 +83,12 @@
 .fsSelect {
   height: 48px;
   border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
   border-left: 1px solid #eee;
-  border-radius: 6px 0 0 6px;
-  margin-left: 1px;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-radius: 6px 6px 6px 6px;
+
 }
 .firstSearch .fsSelect .input-group__input {
   padding-left: 16px !important;
@@ -89,7 +101,7 @@
   padding: 8px !important;
 }
 .firstSearch h1 {
-  font-weight: 400;
+  font-weight: 300;
 }
 .no-padding {
   padding: 0;
@@ -107,6 +119,14 @@
     display: none;
   }
 }
+
+  .top-container {
+    width: 100%;
+    height: 48px;
+  }
+  .top-container {
+  margin-bottom: 8px;
+}
 </style>
 
 <template>
@@ -115,26 +135,110 @@
             <form>
               <section class="firstSearch" v-if="firstSearch">
                 <div style="padding-bottom: 30px; text-align: right;">
-                  <h1 style="color: #ef5350;">Kunvet</h1>
-                  <h1 style="color: #333;">Nearby jobs for students like you</h1>
+                  <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
+                  <h2 style="color: #333;">Find a job that match your search and is actually nearby</h2>
                 </div>
-                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
-                  <v-flex xs8 sm6 offset-sm4
-                  no-wrap class="grey--text no-padding" ellipsis>
-                      <v-select class="no-padding fsSelect"
-                        label="Please select city"
-                        v-bind:items="availableCities"
-                        v-model="selectedCities"
-                        autocomplete
-                        single-line
-                        hide-details
-                      >
-                      </v-select>
+                <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
+
+
+
+                  <v-flex xs10 sm10 offset-sm1 md8 offset-md3
+                  no-wrap class="grey--text no-padding fsSelect" ellipsis>
+
+                    <v-select class="no-padding" style="width: 50%; display: inline-block; border-right: 1px solid #eee;"
+                      label="City or School"
+                      v-bind:items="availableCities"
+                      v-model="selectedCities"
+                      autocomplete
+                      single-line
+                      hide-details
+                    >
+                    </v-select>
+                    <v-select class="no-padding" style="width: 50%; display: inline-block;"
+                      label="Positions"
+                      v-bind:items="availablePositions"
+                      v-model="selectedPositions"
+                      autocomplete
+                      single-line
+                      hide-details
+                    >
+                    </v-select>
+
                   </v-flex>
-                  <v-flex xs4 sm2 class="no-padding fsGoBtn" @click="searchGo">
+
+                  <v-flex xs2 sm1 class="no-padding fsGoBtn" @click="searchGo">
                     <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>
                   </v-flex>
                 </v-layout>
+
+                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
+                <v-flex md15>
+                  <img style="max-width: 100%;" :src="cityImage"></img>
+                </v-flex>
+                </v-layout>
+
+                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
+                  <v-flex xs12 md4>
+                      <v-icon>keyboard_arrow_left</v-icon>
+                  </v-flex>
+                  <v-flex xs12 md8>
+
+                  </v-flex>
+                  <v-flex xs12 md8>
+
+                  </v-flex>
+                  <v-flex xs12 md4>
+                      <v-icon>keyboard_arrow_right</v-icon>
+                  </v-flex>
+
+
+                </v-layout>
+
+
+                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
+                  <v-flex xs12 md8>
+                      <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
+                  </v-flex>
+                  <v-flex xs12 md8>
+                      <v-card-title><div class="headline">Who is Elder?</div></v-card-title>
+                      <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
+
+                  </v-flex>
+
+
+                </v-layout>
+
+                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
+
+                  <v-flex xs12 md8>
+                      <v-card-title><div class="headline">Who is Elder?</div></v-card-title>
+                      <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
+
+
+                  </v-flex>
+                  <v-flex xs12 md8>
+                      <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
+                  </v-flex>
+
+
+                </v-layout>
+
+                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
+                  <v-flex xs12 md8>
+                      <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
+                  </v-flex>
+                  <v-flex xs12 md8>
+                      <v-card-title>
+                      <div class="headline">Who is Elder?</div>
+                      </v-card-title>
+                      <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
+
+                  </v-flex>
+
+
+                </v-layout>
+
+
               </section>
 
                 <section v-if="!firstSearch" class="search">
@@ -200,51 +304,44 @@
             </form>
 
       <v-layout row wrap v-if="!firstSearch">
-        <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
-          <v-layout align-center row spacer slot="header" style="padding-bottom: 10px;">
-            <v-flex xs2 class="no-padding">
-              <v-avatar size="36px" slot="activator">
-                <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
-              </v-avatar>
-            </v-flex>
-            <v-flex no-wrap class="grey--text no-padding" ellipsis>
-              <strong>{{ job.posted_by }}</strong>
-            </v-flex>
-          </v-layout>
+          <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
+            <v-layout align-center row spacer slot="header" style="padding-bottom: 10px;">
+              <v-flex xs12 sm2>
+                <v-avatar size="36px" slot="activator">
+                  <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+                </v-avatar>
+              </v-flex>
+              <v-flex xs12 sm4>
+                <strong>A certain inc</strong>
+              </v-flex>
+              <v-flex xs12 sm6>
+              <div class="float-right">
+                <v-avatar size="36px" slot="activator">
+                  <v-icon class="whatshot">whatshot</v-icon>
+                </v-avatar>
+                <v-avatar size="36px" slot="activator">
+                  <v-icon class="bookmark-icon">bookmark_border</v-icon>
+                </v-avatar>
+              </div>
+              </v-flex>
+            </v-layout>
 
-          <router-link :to="'JobDetail/'+job._id">
-          <div class="top-container">
-          <div class="float-left">
-            <h1 style="font-weight: normal;">{{ job.title }}</h1>
-          </div>
-          <div class="float-right">
-            <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-              <v-icon class="bookmark-icon">bookmark_border</v-icon>
-            </v-btn>
-          </div>
-        </div>
-          <v-layout align-center row spacer slot="header" style="padding-bottom: 10px;">
-            <v-flex xs2 class="no-padding">
-              <v-avatar size="36px" slot="activator">
-                <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
-              </v-avatar>
+            <router-link :to="'JobDetail/'+job._id">
+            <v-flex xs12>
+              <h1>{{ job.title }}</h1>
+              <p class="carditem">X mins ago</p>
+              <p class="carditem"><v-icon>location_city</v-icon> {{ job.address }}</p>
+              <p class="carditem"><v-icon>sms</v-icon> Average review</p>
+              <p class="carditem"><v-icon>info</v-icon> Part time / Full time ~Internship ~ 10.50 per hour</p>
+              <p class="carditem"><v-icon>account_circle</v-icon> Not student friendly ~ experience required</p>
             </v-flex>
-            <v-flex no-wrap class="grey--text no-padding" ellipsis>
-              <strong>John Leider inc</strong>
-            </v-flex>
-          </v-layout>
 
-
-          <p class="post-address"><v-icon>location_city</v-icon> {{ job.address }}</p>
-          <p class="post-intro"><v-icon>sms</v-icon> {{ job.description }}</p>
-          <p class="post-intro"><v-icon>info</v-icon> {{ job.description }}</p>
-          <p class="post-intro"><v-icon>account_circle</v-icon> {{ job.description }}</p>
-          <div class="image-row">
-              <!-- insert gallary here -->
-              <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
+            <div class="image-row">
+                <!-- insert gallary here -->
+                <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
+            </div>
+            </router-link>
           </div>
-          </router-link>
-        </div>
       </v-layout>
     </div>
   </v-container>
@@ -255,8 +352,9 @@ import gql from 'graphql-tag';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueApollo from 'vue-apollo';
-import Store from '../store';
-import VuexLS from '../store/persist';
+import Store from '@/store';
+import VuexLS from '@/store/persist';
+import CitySvg from '@/assets/vc.svg';
 
 Vue.use(Vuetify);
 Vue.use(VueApollo);
@@ -266,7 +364,6 @@ export default {
     findJobs: gql`{
       findJobs {
           _id
-          posted_by
           title
           description
           type
@@ -313,6 +410,7 @@ export default {
       selectedPositions: Store.state.selectedPositions,
       selectedShifts: Store.state.selectedShifts,
       vuextest: Store.state.count,
+      cityImage: CitySvg,
     };
   },
   methods: {
@@ -348,3 +446,4 @@ export default {
 };
 
 </script>
+<!--<script src="../Component.js"></script>--></v-avatar>
