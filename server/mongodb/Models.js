@@ -59,13 +59,16 @@ const JobSchema = Mongoose.Schema({
     enum: ['business', 'individual', 'club'],
     default: 'individual',
   },
-  shift: {
+  shift: [{
     type: String,
-    required: true,
     enum: ['morning', 'noon', 'afternoon', 'evening', 'night'],
-  },
+  }],
   age: {
     type: Number,
+  },
+  pay_type: {
+    type: String,
+    enum: ['paid', 'unpaid', 'negotiable'],
   },
   salary: {
     type: Number,
@@ -73,7 +76,6 @@ const JobSchema = Mongoose.Schema({
   education: {
     type: String,
     enum: ['Associate', 'Bachelor', 'Master', 'None'],
-    default: 'None',
   },
   language: {
     type: String,
@@ -99,7 +101,17 @@ const JobSchema = Mongoose.Schema({
     contentType: String,
   },
 });
-
+const ApplicantSchema = Mongoose.Schema({
+  name: String,
+  email: String,
+  school: String,
+  degree: String,
+  resume: {
+    filename: String,
+    resumeid: String,
+  },
+  job_id: String,
+});
 const BusinessProfileSchema = Mongoose.Schema({
   biography: {
     type: String,
@@ -348,6 +360,7 @@ export default {
   Job: Mongoose.model('Job', JobSchema),
   Resume: Mongoose.model('Resume', ResumeSchema),
   Account: Mongoose.model('Account', AccountSchema),
+  Applicant: Mongoose.model('Applicant', ApplicantSchema),
   TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
   BusinessProfile: Mongoose.model('BusinessProfile', BusinessProfileSchema),
   EmployeeProfile: Mongoose.model('EmployeeProfile', EmployeeProfileSchema),

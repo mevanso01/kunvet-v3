@@ -1,12 +1,17 @@
-<style>
+<style lang="scss">
+.card {
+  box-shadow: none;
+}
 .post-card {
-  border-left: 3px solid #59e884;
-
+  /* padding-top: 6px;
+  padding-left: 10px; */
+  /* border-left: 5px solid #C6EDA1; */
 }
 .carditem {
   height: 50%;
   margin: 0;
-  font-size: 11px
+  font-size: 10px;
+  padding-top: 2px;
 }
 .container {
   background-color: #fff;
@@ -127,6 +132,19 @@
   .top-container {
   margin-bottom: 8px;
 }
+#rua {
+  width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  justify-content: center;
+  background: #FCFCFC;
+
+  .card {
+    flex: 0 0 auto;
+    width: 200px;
+    margin: 10px;
+  }
+}
 </style>
 
 <template>
@@ -173,25 +191,26 @@
 
                 <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
                 <v-flex md15>
-                  <img style="max-width: 100%;" :src="cityImage"></img>
+                  <img style="width: 100%;" :src="cityImage"></img>
                 </v-flex>
                 </v-layout>
 
-                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
-                  <v-flex xs12 md4>
-                      <v-icon>keyboard_arrow_left</v-icon>
-                  </v-flex>
-                  <v-flex xs12 md8>
+                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px; ">
+                    <v-layout id="rua">
+                      <v-card v-for="n in 2">
+                        <v-card-text>
+                          <v-layout>
+                            <v-avatar size="50px" slot="activator" style="display: block; margin: 0 auto;">
+		              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Jiang_Zemin1.png/220px-Jiang_Zemin1.png" alt="">
+		             </v-avatar>
+                           </v-layout>
+                          <div style="margin-top: 10px;">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, qui
+                          </div>
+                         </v-card-text>
+                      </v-card>
 
-                  </v-flex>
-                  <v-flex xs12 md8>
-
-                  </v-flex>
-                  <v-flex xs12 md4>
-                      <v-icon>keyboard_arrow_right</v-icon>
-                  </v-flex>
-
-
+                    </v-layout>
                 </v-layout>
 
 
@@ -305,16 +324,14 @@
 
       <v-layout row wrap v-if="!firstSearch">
           <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
-            <v-layout align-center row spacer slot="header" style="padding-bottom: 10px;">
-              <v-flex xs12 sm2>
-                <v-avatar size="36px" slot="activator">
+            <v-layout align-center row spacer slot="header">
+              <v-flex xs8>
+                <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
                   <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
                 </v-avatar>
+                <div style="color: #A7A7A7; width: calc(100% - 46px); padding-top: 7px;">A certain inc</div>
               </v-flex>
-              <v-flex xs12 sm4>
-                <strong>A certain inc</strong>
-              </v-flex>
-              <v-flex xs12 sm6>
+              <v-flex xs4>
               <div class="float-right">
                 <v-avatar size="36px" slot="activator">
                   <v-icon class="whatshot">whatshot</v-icon>
@@ -327,19 +344,21 @@
             </v-layout>
 
             <router-link :to="'JobDetail/'+job._id">
-            <v-flex xs12>
-              <h1>{{ job.title }}</h1>
-              <p class="carditem">X mins ago</p>
-              <p class="carditem"><v-icon>location_city</v-icon> {{ job.address }}</p>
-              <p class="carditem"><v-icon>sms</v-icon> Average review</p>
-              <p class="carditem"><v-icon>info</v-icon> Part time / Full time ~Internship ~ 10.50 per hour</p>
-              <p class="carditem"><v-icon>account_circle</v-icon> Not student friendly ~ experience required</p>
-            </v-flex>
+            <v-flex xs12 style="padding-top: 0px;">
+              <div><p style="font-size: 150%;">{{ job.title }}</p></div>
+              <div class="carditem" style="color: #A7A7A7;"><timeago since="February 14, 2005"></timeago></div>
+              <div class="carditem" style="color: #A7A7A7; text-decoration: underline;"><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ job.address }}</div>
+              <div class="carditem"><v-icon style="font-size: 17px; padding-right: 10px;">sms</v-icon> Average review</div>
+              <div class="carditem"><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> Part time / Full time ~Internship ~ 10.50 per hour</div>
+              <div class="carditem"><v-icon style="font-size: 17px; padding-right: 10px;">account_circle</v-icon> Not student friendly ~ experience required</div>
 
-            <div class="image-row">
+              <div class="image-row">
                 <!-- insert gallary here -->
                 <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
-            </div>
+              </div>
+            </v-flex>
+
+
             </router-link>
           </div>
       </v-layout>
@@ -446,4 +465,3 @@ export default {
 };
 
 </script>
-<!--<script src="../Component.js"></script>--></v-avatar>

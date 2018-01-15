@@ -210,7 +210,7 @@
           <!--<router-link to="/">Back</router-link>-->
           <div class="top-container">
             <div class="float-left">
-              <p style="line-height: 48px; color: #666">Trump, Inc.</p>
+              <p style="line-height: 48px; color: #666">{{ findJob.posted_by }}</p>
             </div>
             <div class="float-right">
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
@@ -221,7 +221,7 @@
           </div>
           <v-divider></v-divider>
           <div class="post-title-cont">
-            <h2 class="post-title">{{ findJob.name }}</h2>
+            <h2 class="post-title">{{ findJob.title }}</h2>
           </div>
           <p class="post-address">{{ findJob.address }}</p>
           <div class="blue-row">Blue Icons</div>
@@ -253,7 +253,7 @@
       </div>
       <div class="sub-container">
           <h2>Description</h2>
-          <p>{{ findJob.description }}</p>
+          <div v-html="findJob.description"></div>
           <h2>Requirements</h2>
           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
@@ -312,7 +312,8 @@ export default {
             _id: $JobId
           }) {
               _id
-              name
+              posted_by
+              title
               description
               type
               address

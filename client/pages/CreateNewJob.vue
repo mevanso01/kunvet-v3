@@ -293,13 +293,14 @@ const createJobMutation = gql`
     createJob (record: $job) {
       recordId
       record {
-        name
+        posted_by
+        title
         description
         address
         type
-        category
         shift
         age
+        pay_type
         salary
         education
         language
@@ -324,7 +325,7 @@ export default {
       city_and_state: '',
       zip: '',
       type: '',
-      category: '',
+      // category: '',
       shift: [],
       age: '',
       salary: '',
@@ -376,11 +377,12 @@ export default {
         description: this.description,
         address: `${this.address} ${this.city_and_state} ${this.zip}`,
         type: this.type,
-        category: this.category,
-        shift: this.shift,
-        age: this.age,
-        salary: this.salary_select || this.salary,
-        education: this.education,
+        // category: this.category,
+        shift: this.shift === [] ? null : this.shift,
+        age: this.age === '' ? null : parseInt(this.age, 10),
+        pay_type: this.salary_select,
+        salary: this.salary === '' ? null : parseInt(this.salary, 10),
+        education: 'None',
         language: this.language,
         experience: this.experience,
         responsibilities: this.responsibilities,

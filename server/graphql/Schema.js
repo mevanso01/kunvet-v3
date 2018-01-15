@@ -7,8 +7,8 @@ const Ta = composeWithMongoose(Models.TempAccount);
 const Job = composeWithMongoose(Models.Job);
 const Resume = composeWithMongoose(Models.Resume);
 const Account = composeWithMongoose(Models.Account);
+const Applicant = composeWithMongoose(Models.Applicant);
 const BusinessProfile = composeWithMongoose(Models.BusinessProfile);
-// const EmployeeProfile = composeWithMongoose(Models.EmployeeProfile);
 const Organization = composeWithMongoose(Models.Organization);
 
 // Root query fields
@@ -22,6 +22,9 @@ GQC.rootQuery().addFields({
   // Account
   findAccount: Account.get('$findOne'),
   findAccounts: Account.get('$findMany'),
+  // Applicants
+  findApplicant: Applicant.get('$findOne'),
+  findApplicants: Applicant.get('$findMany'),
   // Business Profile
   findBusinessProfile: BusinessProfile.get('$findOne'),
   findBusinessProfiles: BusinessProfile.get('$findMany'),
