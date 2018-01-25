@@ -4,13 +4,14 @@ import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
 
-import Axios from 'axios';
-
 import Client from '@/apollo/client';
 
 import Index from '@/pages/Index';
 import AboutUs from '@/pages/AboutUs';
 import Terms from '@/pages/Terms';
+
+// Axios config
+import '@/axios';
 
 // no login
 import Login from '@/pages/Login';
@@ -186,8 +187,6 @@ const router = new VueRouter({
     },
   ],
 });
-
-Axios.defaults.withCredentials = true;
 
 /* eslint-disable no-new */
 
