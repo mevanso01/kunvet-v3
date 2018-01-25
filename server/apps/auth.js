@@ -17,7 +17,7 @@ import Models from '@/mongodb/Models';
 
 // Other
 import promisify from 'es6-promisify';
-import sha1 from 'sha1';
+import uuidv1 from 'uuid/v1';
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -80,8 +80,7 @@ router.post('/register', async (ctx) => {
     return;
   }
 
-  const randomString = `abc, ${Math.floor(Math.random() * 500)}, ${Math.floor(Math.random() * 500)}`;
-  const validationCode = sha1(randomString);
+  const validationCode = uuidv1();
 
   const TAS = Models.TempAccount;
   const x = new TAS({

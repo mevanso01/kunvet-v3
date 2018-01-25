@@ -5,7 +5,6 @@ import KCors from 'kcors';
 
 // Utils
 import Mailer from '@/utils/Mailer';
-import Models from '@/mongodb/Models';
 
 // GraphiQL
 import { graphiqlKoa } from 'apollo-server-koa';
@@ -13,7 +12,6 @@ import { graphiqlKoa } from 'apollo-server-koa';
 
 const nodemailer = require('nodemailer');
 const bodyParser = require('koa-bodyparser');
-const sha1 = require('sha1');
 const multer = require('koa-multer');
 const path = require('path');
 const fs = require('fs');
@@ -105,46 +103,6 @@ router.get('/test-mailer', (ctx) => {
     },
   );
   ctx.body = 'Check your mailbox!';
-});
-
-router.post('/sendemail', (ctx) => {
-  ctx.body = 'hello!';
-  const req = ctx.request.body;
-  console.log(req);
-  if (req.reqtype === 'validate') {
-    console.log('test');
-    const randomString = `abc, ${Math.floor(Math.random() * 500)}, ${Math.floor(Math.random() * 500)}`;
-    const validationCode = sha1(randomString);
-
-    const TAS = Models.TempAccount;
-    const x = new TAS({
-      email: req.email,
-      vcode: validationCode,
-      /* firstname: ctx.request.body.fname,
-      lastname: ctx.request.body.lname,
-      business_name: ctx.request.body.bname, */
-    });
-    x.save();
-
-    Models.Account.register(
-      {
-        email: req.email,
-        firstname: req.fname,
-        lastname: req.lname,
-        default_org: req.default_org,
-      },
-      req.pwd,
-      (err, user) => {
-        if (!err) {
-          console.log(user);
-        } else {
-          console.error(err);
-        }
-      },
-    );
-    const emailbody = `<p>Please click this link to validate your email: <a href="localhost:8080/validate/${validationCode}">localhost:8080/validate/${validationCode}</a></p>`;
-    activateNodemailer(req.email, emailbody);
-  }
 });
 
 router.post('/uploadfile', upload.single('file'), async (ctx) => {
