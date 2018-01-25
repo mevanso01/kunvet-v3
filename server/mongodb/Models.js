@@ -294,6 +294,38 @@ const OrganizationSchema = Mongoose.Schema({
   resumeid: String,
 }; */
 
+const FileSchema = Mongoose.Schema({
+  owner: {
+    type: Mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  filename: {
+    type: String,
+    required: true,
+  },
+  uploadPath: {
+    type: String,
+  },
+  mimeType: {
+    type: String,
+  },
+  uploadOnce: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  readOnly: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  employerOnly: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+});
+
 const AccountSchema = Mongoose.Schema({
   /*
   Added by passport-local-mongoose:
@@ -366,4 +398,5 @@ export default {
   BusinessProfile: Mongoose.model('BusinessProfile', BusinessProfileSchema),
   EmployeeProfile: Mongoose.model('EmployeeProfile', EmployeeProfileSchema),
   Organization: Mongoose.model('Organization', OrganizationSchema),
+  File: Mongoose.model('File', FileSchema),
 };
