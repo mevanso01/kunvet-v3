@@ -45,6 +45,7 @@ import Businesshp from '@/pages/Businesshp';
 import CreateNewJobB from '@/pages/CreateNewJob_b';
 import JobPostsB from '@/pages/JobPosts_b';
 import Applicants from '@/pages/Applicants';
+import ViewApplicant from '@/pages/ViewApplicant';
 
 import App from '@/App';
 import store from '@/store';
@@ -145,6 +146,11 @@ const router = new VueRouter({
     {
       path: '/applicants_i',
       component: ApplicantsI,
+    },
+    {
+      path: '/view-applicant/:id',
+      component: ViewApplicant,
+      props: true,
     },
     {
       path: '/myorg',

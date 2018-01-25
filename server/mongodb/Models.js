@@ -106,6 +106,7 @@ const ApplicantSchema = Mongoose.Schema({
   email: String,
   school: String,
   degree: String,
+  notes: String,
   resume: {
     filename: String,
     resumeid: String,

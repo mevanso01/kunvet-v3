@@ -22,6 +22,7 @@ module.exports = {
     'no-underscore-dangle': 0,
     'arrow-parens': 0,
     'no-var': 0,
+    'no-loop-func': 0,
     'vars-on-top': 0,
     'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
     // don't require .vue extension when importing

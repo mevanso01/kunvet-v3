@@ -142,6 +142,8 @@ export default {
         if (response.data.success) {
           this.loggedIn = true;
           this.fetchData();
+        } else {
+          // forgot password
         }
       });
     },

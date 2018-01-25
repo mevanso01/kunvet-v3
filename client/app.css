@@ -149,7 +149,7 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     /* background-color: #fafafa; */
 }
-nav {
+/* nav {
     position: fixed;
     top: 0;
     left: 0;
@@ -159,7 +159,7 @@ nav {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     z-index: 3;
     transition: all 0.2s ease;
-}
+} */
 #nav-contents {
     position: absolute;
     top: 0;

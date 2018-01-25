@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <!--<div>
-      <h2>All Applicants</h2>
+      <h2>All Applicants</h2> 
     </div>-->
     <div class="main-cont-large">
       <pdf

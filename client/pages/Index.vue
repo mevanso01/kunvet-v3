@@ -346,7 +346,7 @@
             <router-link :to="'JobDetail/'+job._id">
             <v-flex xs12 style="padding-top: 0px;">
               <div><p style="font-size: 150%;">{{ job.title }}</p></div>
-              <div class="carditem" style="color: #A7A7A7;"><timeago since="February 14, 2005"></timeago></div>
+              <!--<div class="carditem" style="color: #A7A7A7;"><timeago since="February 14, 2005"></timeago></div>-->
               <div class="carditem" style="color: #A7A7A7; text-decoration: underline;"><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ job.address }}</div>
               <div class="carditem"><v-icon style="font-size: 17px; padding-right: 10px;">sms</v-icon> Average review</div>
               <div class="carditem"><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> Part time / Full time ~Internship ~ 10.50 per hour</div>

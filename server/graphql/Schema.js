@@ -49,6 +49,10 @@ GQC.rootMutation().addFields({
   createAccount: Account.get('$createOne'),
   updateAccount: Account.get('$updateOne'),
   removeAccount: Account.get('$removeOne'),
+  // Applicant
+  createApplication: Applicant.get('$createOne'),
+  updateApplication: Applicant.get('$updateOne'),
+  removeApplication: Applicant.get('$removeOne'),
   // Business Profile
   createBusinessProfile: BusinessProfile.get('$createOne'),
   updateBusinessProfile: BusinessProfile.get('$updateOne'),
