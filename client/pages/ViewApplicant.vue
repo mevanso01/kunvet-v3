@@ -164,6 +164,24 @@
             aplId: this.id,
             notes: text,
           },
+          refetchQueries: [{
+            query: gql`query ($aplId: MongoID) {
+              findApplicant (filter: {
+                _id: $aplId
+              }) {
+                  _id
+                  name
+                  email
+                  school
+                  notes
+                  resume {
+                    filename
+                    resumeid
+                  }
+              }
+            }`,
+            variables: { aplId: this.id },
+          }],
         }).then((data) => {
           console.log(data);
         }).catch((error) => {
@@ -192,6 +210,7 @@
           },
         }).then((data) => {
           const res = data.data.findApplicant;
+          console.log('RES', res);
           this.data.name = res.name;
           this.data.school = res.school;
           this.data.email = res.email;
