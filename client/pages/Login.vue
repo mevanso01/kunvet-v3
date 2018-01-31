@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     submit() {
-      Axios.post(`${Config.serverUrl}/auth/login`, {
+      Axios.post('/auth/login', {
         email: this.email,
         password: this.password,
       }).then((response) => {
