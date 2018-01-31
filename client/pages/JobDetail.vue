@@ -253,7 +253,7 @@
       </div>
       <div class="sub-container">
           <h2>Description</h2>
-          <div v-html="findJob.description"></div>
+          <div v-html="sanitizedDescription"></div>
           <h2>Requirements</h2>
           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
@@ -283,6 +283,7 @@ import gql from 'graphql-tag';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueApollo from 'vue-apollo';
+import sanitizeHtml from 'sanitize-html';
 
 Vue.use(Vuetify);
 Vue.use(VueApollo);
@@ -303,6 +304,11 @@ export default {
       // id: this.$route.params.id,
       findJob: '',
     };
+  },
+  computed: {
+    sanitizedDescription() {
+      return sanitizeHtml(this.findJob.description);
+    },
   },
   methods: {
     getData() {
