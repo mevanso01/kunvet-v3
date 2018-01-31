@@ -10,7 +10,6 @@ import Mailer from '@/utils/Mailer';
 import { graphiqlKoa } from 'apollo-server-koa';
 
 
-const nodemailer = require('nodemailer');
 const bodyParser = require('koa-bodyparser');
 const multer = require('koa-multer');
 const path = require('path');
@@ -54,37 +53,6 @@ router.get('/', (ctx) => {
     </html>
   `;
 });
-
-function activateNodemailer(emailaddress, emailbody) {
-  nodemailer.createTestAccount((err, account) => {
-    // create reusable transporter object using the default SMTP transport
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: account.user, // generated ethereal user
-        pass: account.pass, // generated ethereal password
-      },
-    });
-    const mailOptions = {
-      from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
-      to: emailaddress, // list of receivers
-      subject: 'Hello ✔', // Subject line
-      // text: validationCode, // plain text body
-      html: emailbody, // html body
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      // for testing
-      console.log('Message sent: %s', info.messageId);
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-      return 'success';
-    });
-  });
-}
 
 // Interactive GraphiQL interface
 router.get('/graphiql', graphiqlKoa({
