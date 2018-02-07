@@ -1,5 +1,4 @@
 <style>
-
   .applicant-page .job-title {
       z-index: 1;
   }
@@ -161,7 +160,7 @@
         console.log('GETTING DATA for', this.user);
         this.$apollo.query({
           query: (gql`query ($user: String) {
-            findJobs (filter: { posted_by: $user }){
+            findJobs (filter: { posted_by: $user, active: true }){
               _id
               posted_by
               title

@@ -229,7 +229,7 @@
           <p class="post-intro" style="margin-top: 10px;">Catagories:</p>
       </div>
       <!-- <v-divider></v-divider> -->
-      <div class="general-stripe">
+      <!--<div class="general-stripe">
           <div id="job-shifts" class="general-stripe-cont">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 64">
                         <rect id="job-shift-morning" x="0" width="192" height="64" style="opacity: 1;"></rect>
@@ -250,7 +250,7 @@
                 <span class="general-tag" name="job-shift">Afternoon</span>
                 <span class="general-tag" name="job-shift">Evening</span>
           </div>
-      </div>
+      </div>-->
       <div class="sub-container">
           <h2>Description</h2>
           <div v-html="sanitizedDescription"></div>
@@ -330,6 +330,7 @@ export default {
         },
       }).then((data) => {
         this.findJob = data.data.findJob;
+        console.log(this.findJob);
       });
     },
   },

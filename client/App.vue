@@ -88,9 +88,18 @@
 import 'font-awesome/scss/font-awesome.scss';
 import 'vuetify/dist/vuetify.min.css';
 import Vue from 'vue';
-import Store from './store';
-import VuexLS from './store/persist';
+import Store from '@/store';
+import VuexLS from '@/store/persist';
+import Vuetify from 'vuetify';
 
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#3f51b5',
+    secondary: '#b0bec5',
+    accent: '#8c9eff',
+    error: '#b71c1c',
+  },
+});
 
 const Bus = new Vue();
 
@@ -105,7 +114,7 @@ export default {
           { title: 'Sign up', icon: 'question_answer', href: '/signup' },
         ],
         [
-          { title: 'My Jobs', icon: 'dashboard', href: '/myjobs' },
+          { title: 'My Jobs', icon: 'dashboard', href: '/savedjobs' },
           { title: 'Messages', icon: 'question_answer', href: '/messages' },
           { title: 'Account', icon: 'question_answer', href: '/account' },
           { title: 'Settings', icon: 'question_answer', href: '/settings' },
@@ -113,6 +122,7 @@ export default {
         [
           { title: 'Post a job', icon: 'dashboard', href: '/createnewjob' },
           { title: 'Applicants', icon: 'question_answer', href: '/applicants' },
+          { title: 'My Jobs', icon: 'dashboard', href: '/myjobs' },
           { title: 'Account', icon: 'question_answer', href: '/myorg' },
           { title: 'Settings', icon: 'question_answer', href: '/settings' },
         ],

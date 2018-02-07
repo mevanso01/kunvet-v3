@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 a {
-  color: unset;
+  color: unset !important;
   text-decoration: none;
 }
 h2, h3, h4, h5, h6 {
@@ -31,8 +31,19 @@ h3 {
 .black .btn__content {
   color: #fff;
 }
-
+.kunvet-red {
+  color: #ef5350;
+}
 /*  ---- Styles to globally override Vuetify ----  */
+.application--light .input-group--selection-controls .input-group__input,
+.input-group--selection-control .input-group__input,
+.application--light .input-group:not(.input-group--error) .input-group--selection-controls label,
+.accent--text {
+  color: #4d4d4d;
+}
+.input-group--disabled .input-group__selections__comma:not(.input-group__selections__comma--active) {
+  color: rgba(0,0,0,.38) !important;
+}
 .radio-group .radio label,
 .input-group.checkbox.input-group--selection-controls label {
   line-height: 24px;
@@ -46,9 +57,6 @@ h3 {
 }
 .tabs__item {
   text-transform: none;
-}
-.icon--checkbox {
-  color: #ef5350 !important;
 }
 .disabled {
   color: rgb(224, 224, 224);

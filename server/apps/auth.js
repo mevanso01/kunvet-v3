@@ -31,7 +31,7 @@ router.post('/login', ctx => KoaPassport.authenticate('local', (_, user) => {
       message: 'Authentication failure',
     };
     ctx.body = JSON.stringify(response);
-    ctx.status = 401;
+    // ctx.status = 401;
     return false;
   }
   // Success

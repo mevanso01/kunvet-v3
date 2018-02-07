@@ -29,6 +29,10 @@ const JobSchema = Mongoose.Schema({
     type: String,
     required: true,
   },
+  active: {
+    type: { Boolean, default: false },
+    required: true,
+  },
   title: {
     // Name of the job
     type: String,
@@ -40,15 +44,15 @@ const JobSchema = Mongoose.Schema({
   description: {
     // Short description
     type: String,
-    required: true,
   },
-  type: {
-    // Type of the job
+  type: [{
     type: String,
-    required: true,
     enum: ['fulltime', 'parttime', 'internship', 'contract', 'other'],
-    default: 'other',
-  },
+  }],
+  type2: [{
+    type: String,
+    enum: ['internship', 'contract', 'other'],
+  }],
   address: {
     // Address
     type: String,
@@ -61,18 +65,23 @@ const JobSchema = Mongoose.Schema({
   },
   shift: [{
     type: String,
-    enum: ['morning', 'noon', 'afternoon', 'evening', 'night'],
+    enum: ['morning', 'noon', 'afternoon', 'evening', 'night', 'flexible'],
   }],
+  studentfriendly: {
+    type: Boolean,
+  },
   age: {
     type: Number,
   },
   pay_type: {
     type: String,
-    enum: ['paid', 'unpaid', 'negotiable'],
+    enum: ['paid', 'unpaid', 'negotiable', 'none'],
+    default: 'none',
   },
   salary: {
     type: Number,
   },
+  pay_denomination: String,
   education: {
     type: String,
     enum: ['Associate', 'Bachelor', 'Master', 'None'],

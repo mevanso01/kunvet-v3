@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify';
+// import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
@@ -34,7 +34,6 @@ import CreateNewJob from '@/pages/CreateNewJob';
 import Personalhp from '@/pages/Personalhp';
 import CreateNewJobI from '@/pages/CreateNewJob_i';
 import JobPostsI from '@/pages/JobPosts_i';
-import ApplicantsI from '@/pages/Applicants_i';
 import Settings from '@/pages/Settings';
 
 // Business pages
@@ -51,7 +50,8 @@ import ViewApplicant from '@/pages/ViewApplicant';
 import App from '@/App';
 import store from '@/store';
 
-Vue.use(Vuetify);
+
+// Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(Vuex);
@@ -133,6 +133,11 @@ const router = new VueRouter({
       component: Personalhp,
     },
     {
+      path: '/createnewjob/:id',
+      component: CreateNewJob,
+      props: { id: null },
+    },
+    {
       path: '/createnewjob',
       component: CreateNewJob,
     },
@@ -143,10 +148,6 @@ const router = new VueRouter({
     {
       path: '/createnewjob_i',
       component: CreateNewJobI,
-    },
-    {
-      path: '/applicants_i',
-      component: ApplicantsI,
     },
     {
       path: '/view-applicant/:id',
@@ -190,7 +191,6 @@ const router = new VueRouter({
 
 /* eslint-disable no-new */
 
-Vue.prototype.$firstS = true;
 new Vue({
   apolloProvider,
   el: '#app',

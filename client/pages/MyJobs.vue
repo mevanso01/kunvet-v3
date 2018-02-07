@@ -1,68 +1,62 @@
+<style>
+  .myjobs-container ul {
+    border: 1px solid rgba(0,0,0,.12);
+    padding: 0;
+  }
+  .myjobs-container .no-jobs-tile .list__tile,
+  .myjobs-container .no-jobs-tile .list__tile__content {
+    height: 54px;
+  }
+</style>
 <template>
-  <v-container fluid class="white-bg">
+  <v-container fluid class="white-bg myjobs-container">
     <div class="main-cont-large">
     <v-layout>
 
-      <v-flex xs3 md2 dark style="z-index: 1; padding-right: 10px;">
-        <v-card>
-          <v-navigation-drawer permanent dark style="position: relative; width: 100%;">
-            <v-list dense dark class="pt-0">
-              <v-list-tile active @click="selectTab(0)">
-                <v-list-tile-content>
-                  <v-list-tile-title>Saved Jobs</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
 
-              <v-list-tile active @click="selectTab(1)">
-                <v-list-tile-content>
-                  <v-list-tile-title>Jobs Posted</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-
-              <v-list-tile active @click="selectTab(2)">
-                <v-list-tile-content>
-                  <v-list-tile-title>Applied Jobs</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-navigation-drawer>
-        </v-card>
-      </v-flex>
-
-
-      <v-flex xs9 md9 style="max-height:70vh; overflow: auto">
-        <v-card v-if="tab === 0">
-          <v-toolbar dark style="background-color: #ef5350; z-index: 0;">
-            <v-toolbar-title>Saved Jobs</v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
-        <v-list two-line>
-          <template v-for="(job, index) in findJobs">
-            <v-list-tile
-              avatar
-              ripple
-              @click="toggle(index)"
-              :key="job._id"
-            >
+      <v-flex xs12 md8 offset-md2>
+        <v-card flat>
+        <v-list two-line subheader v-if="unposted_jobs.length > 0">
+          <v-subheader><h3>Unposted jobs</h3></v-subheader>
+          <template v-for="(job, index) in unposted_jobs" v-if="!job.active">
+            <v-list-tile :key="index">
               <v-list-tile-content>
-                <v-list-tile-title>{{ job.name }}</v-list-tile-title>
-                <v-list-tile-sub-title class="grey--text text--darken-4">Poster's name</v-list-tile-sub-title>
-                <v-list-tile-sub-title>{{ job.address }}</v-list-tile-sub-title>
+                <v-list-tile-title>{{ job.title }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ job.date }}</v-list-tile-sub-title>
               </v-list-tile-content>
-              <!--<v-list-tile-action>
-                <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
-                <v-icon
-                  color="grey lighten-1"
-                  v-if="selected.indexOf(index) < 0"
-                >star_border</v-icon>
-                <v-icon
-                  color="yellow darken-2"
-                  v-else
-                >star</v-icon>
-              </v-list-tile-action>-->
+              <v-list-tile-action>
+                <v-btn flat style="color: green" @click="editJob(job._id)">Continue editing</v-btn>
+              </v-list-tile-action>
+              <v-list-tile-action>
+                <v-btn flat error>Delete</v-btn>
+              </v-list-tile-action>
             </v-list-tile>
-            <v-divider v-if="index + 1 < findJobs.length" :key="job._id"></v-divider>
+            <v-divider v-if="index + 1 < unposted_jobs.length" :key="job._id"></v-divider>
           </template>
+        </v-list>
+        <br>
+        <v-list two-line subheader>
+          <v-subheader><h3>Active jobs</h3></v-subheader>
+          <template v-for="(job, index) in active_jobs" v-if="job.active">
+            <v-list-tile :key="index">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ job.title }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ job.date }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn flat>View</v-btn>
+              </v-list-tile-action>
+              <v-list-tile-action>
+                <v-btn flat>Edit</v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-divider v-if="index + 1 < active_jobs.length" :key="job._id"></v-divider>
+          </template>
+          <v-list-tile v-if="active_jobs.length == 0" class="no-jobs-tile">
+            <v-list-tile-content>
+              <v-list-tile-title>You have no active jobs</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
         </v-list>
         </v-card>
       </v-flex>
@@ -73,27 +67,70 @@
 </template>
 <script>
   import gql from 'graphql-tag';
+  import VuexLS from '@/store/persist';
 
   export default {
-    apollo: {
-      findJobs: gql`{
-        findJobs {
-            _id
-            name
-            description
-            type
-            address
-        }
-      }`,
+    created() {
+      if (!this.$store.state.acct) {
+        console.log('restore state');
+        VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
+          if (data.bdata && data.acct === 2) {
+            this.user = data.bdata.business_name;
+            this.getData();
+          } else if (data.userdata && data.acct === 1) {
+            this.user = `${data.userdata.firstname} ${data.userdata.lastname}`;
+            this.getData();
+          } else {
+            this.$router.push('/login');
+          }
+        });
+      } else if (this.$store.state.acct === 2) {
+        this.user = this.$store.state.bdata.business_name;
+        this.getData();
+      } else if (this.$store.state.acct === 1) {
+        this.user = this.$store.state.userdata.firstname + this.$store.state.userdata.lastname;
+        this.getData();
+      } else {
+        this.$router.push('/login');
+      }
     },
     data() {
       return {
         tab: 0,
+        user: null,
+        unposted_jobs: [],
+        active_jobs: [],
+        expired_jobs: [],
       };
     },
     methods: {
-      selectTab(t) {
-        this.tab = t;
+      editJob(id) {
+        this.$router.push({ path: `/createnewjob/${id}` });
+      },
+      getData() {
+        this.$apollo.query({
+          query: (gql`query ($user: String) {
+            findJobs (filter: { posted_by: $user }){
+              _id
+              posted_by
+              title
+              active
+              date
+            }
+          }`),
+          variables: {
+            user: this.user,
+          },
+        }).then((data) => {
+          const jobs = data.data.findJobs;
+          for (var i in jobs) {
+            if (jobs[i].active) {
+              this.active_jobs.push(jobs[i]);
+            } else if (!jobs[i].active) {
+              this.unposted_jobs.push(jobs[i]);
+            }
+          }
+        });
       },
     },
   };
