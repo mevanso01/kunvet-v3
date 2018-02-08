@@ -24,6 +24,7 @@ import GraphQLApp from './apps/graphql';
 import DevToolsApp from './apps/devtools';
 import ClientApp from './apps/client';
 import FileServerApp from './apps/fileserver';
+import ApplicationApp from './apps/application';
 
 // Our stuff
 import Db from './mongodb/Db';
@@ -57,6 +58,7 @@ app.use(KoaPassport.session());
 app.use(KoaMount('/srv', GraphQLApp));
 app.use(KoaMount('/auth', AuthApp));
 app.use(KoaMount('/file', FileServerApp));
+app.use(KoaMount('/application', ApplicationApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
