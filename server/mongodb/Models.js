@@ -172,6 +172,12 @@ const BusinessProfileSchema = Mongoose.Schema({
   zip_code: {
     type: String,
   },
+  latitude: {
+    type: Number,
+  },
+  longitude: {
+    type: Number,
+  },
 });
 
 // remove me maybe?
