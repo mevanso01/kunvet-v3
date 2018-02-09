@@ -67,11 +67,21 @@ router.post('/register', async (ctx) => {
         email: req.email,
         firstname: req.fname,
         lastname: req.lname,
+        password: req.pwd,
         default_org: req.default_org,
       },
       req.pwd,
     );
   } catch (err) {
+    console.log(err);
+    if (err.name === 'UserExistsError') {
+      const response = {
+        success: false,
+        message: 'User already exists',
+      };
+      ctx.body = JSON.stringify(response);
+      return;
+    }
     const response = {
       success: false,
       message: 'Account creation failed',
@@ -88,9 +98,10 @@ router.post('/register', async (ctx) => {
     vcode: validationCode,
   });
   x.save();
-
+  // Remove me when email is complete
+  console.log(`Go to localhost:8080/validate/${validationCode}`);
   const mailer = new Mailer();
-
+  console.log('Trying to mail');
   try {
     await mailer.sendTemplate(
       req.email,
@@ -110,7 +121,6 @@ router.post('/register', async (ctx) => {
     ctx.body = JSON.stringify(response);
     return;
   }
-
   const response = {
     success: true,
     message: 'Check your mailbox!',

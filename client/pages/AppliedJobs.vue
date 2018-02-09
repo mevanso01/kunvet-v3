@@ -6,9 +6,9 @@
     <div class="main-cont-large">
     <v-layout>
 
-      <v-flex xs12 class="no-padding">
+      <v-flex xs12 style="" class="no-padding">
         <v-toolbar card>
-         <v-toolbar-title>Saved Jobs</v-toolbar-title>
+         <v-toolbar-title>Applied Jobs</v-toolbar-title>
         </v-toolbar>
         <div style="max-height: 68vh; overflow: auto;">
           <div class="post-card">
@@ -29,11 +29,6 @@
   export default {
     data() {
       return {
-        items: [
-          { title: 'Applied Jobs', icon: '' },
-          { title: 'Saved Jobs', icon: '' },
-          { title: 'Jobs Posted', icon: '' },
-        ],
         settingsoption1: '',
         addorg: false,
       };

@@ -114,8 +114,9 @@ export default {
           { title: 'Sign up', icon: 'question_answer', href: '/signup' },
         ],
         [
-          { title: 'My Jobs', icon: 'dashboard', href: '/savedjobs' },
-          { title: 'Messages', icon: 'question_answer', href: '/messages' },
+          { title: 'Saved Jobs', icon: 'dashboard', href: '/savedjobs' },
+          { title: 'Applied Jobs', icon: 'dashboard', href: '/appliedjobs' },
+          // { title: 'Messages', icon: 'question_answer', href: '/messages' },
           { title: 'Account', icon: 'question_answer', href: '/account' },
           { title: 'Settings', icon: 'question_answer', href: '/settings' },
         ],

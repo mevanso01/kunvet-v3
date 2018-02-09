@@ -16,36 +16,31 @@ import '@/axios';
 // no login
 import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
-import JobPost from '@/pages/JobPost';
+
+// general pages
 import JobDetail from '@/pages/JobDetail';
-
-// employee pages
 import Employee from '@/pages/Employee';
-import MyJobs from '@/pages/MyJobs';
-import SavedJobs from '@/pages/SavedJobs';
 import Messages from '@/pages/Messages'; // does sharing one page for employee and business conflict with UI
-import Account from '@/pages/Account';
 import Resume from '@/pages/Resume';
-import CreateResume from '@/pages/CreateResume';
 import Validate from '@/pages/Validate';
+
+// both types of acct pages
+import Account from '@/pages/Account';
 import CreateNewJob from '@/pages/CreateNewJob';
-
-// individual job pages
-import Personalhp from '@/pages/Personalhp';
-import CreateNewJobI from '@/pages/CreateNewJob_i';
-import JobPostsI from '@/pages/JobPosts_i';
 import Settings from '@/pages/Settings';
+import MyJobs from '@/pages/MyJobs';
+import Applicants from '@/pages/Applicants';
+import ViewApplicant from '@/pages/ViewApplicant';
 
-// Business pages
+// individual acct pages
+import SavedJobs from '@/pages/SavedJobs';
+import AppliedJobs from '@/pages/AppliedJobs';
+import CreateResume from '@/pages/CreateResume';
+
+// Business acct pages
 import MyOrg from '@/pages/MyOrg';
 import PhotoGallery from '@/pages/PhotoGallery';
 
-// Business job pages
-import Businesshp from '@/pages/Businesshp';
-import CreateNewJobB from '@/pages/CreateNewJob_b';
-import JobPostsB from '@/pages/JobPosts_b';
-import Applicants from '@/pages/Applicants';
-import ViewApplicant from '@/pages/ViewApplicant';
 
 import App from '@/App';
 import store from '@/store';
@@ -87,10 +82,6 @@ const router = new VueRouter({
       component: SignUp,
     },
     {
-      path: '/jobposts',
-      component: JobPost,
-    },
-    {
       path: '/jobdetail/:id',
       component: JobDetail,
       props: true,
@@ -117,6 +108,10 @@ const router = new VueRouter({
       component: SavedJobs,
     },
     {
+      path: '/appliedjobs',
+      component: AppliedJobs,
+    },
+    {
       path: '/messages',
       component: Messages,
     },
@@ -129,10 +124,6 @@ const router = new VueRouter({
       component: Settings,
     },
     {
-      path: '/personalhp',
-      component: Personalhp,
-    },
-    {
       path: '/createnewjob/:id',
       component: CreateNewJob,
       props: { id: null },
@@ -140,14 +131,6 @@ const router = new VueRouter({
     {
       path: '/createnewjob',
       component: CreateNewJob,
-    },
-    {
-      path: '/jobposts_i',
-      component: JobPostsI,
-    },
-    {
-      path: '/createnewjob_i',
-      component: CreateNewJobI,
     },
     {
       path: '/view-applicant/:id',
@@ -161,18 +144,6 @@ const router = new VueRouter({
     {
       path: '/photogallery',
       component: PhotoGallery,
-    },
-    {
-      path: '/businesshp',
-      component: Businesshp,
-    },
-    {
-      path: '/createnewjob_b',
-      component: CreateNewJobB,
-    },
-    {
-      path: '/jobposts_b',
-      component: JobPostsB,
     },
     {
       path: '/applicants',

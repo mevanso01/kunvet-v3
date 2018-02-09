@@ -3,6 +3,7 @@ import Nodemailer from 'nodemailer';
 import Email from 'email-templates';
 import path from 'path';
 
+
 export default class Mailer {
   constructor() {
     this.transport = Nodemailer.createTransport(Config.mailTransport);

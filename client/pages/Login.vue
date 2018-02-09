@@ -60,12 +60,11 @@ a:hover{
 
 
             <v-alert
-                style="background-color: green"
-                icon="priority_high"
-                :value="loggedIn"
-                transition="slide-x-transition"
-            >
-                Success
+              style="background-color: green"
+              icon="priority_high"
+              :value="loggedIn"
+              transition="slide-x-transition">
+                Logged in successfully!
             </v-alert>
           </v-form>
         </div>
@@ -179,6 +178,7 @@ export default {
         if (udata.user.default_org == null || !udata.user.default_org) {
           // login individual
           App.methods.login_i();
+          this.$router.push('/');
         } else {
           // login business
           this.commitBusinessID(udata.user.default_org);

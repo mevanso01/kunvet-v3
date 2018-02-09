@@ -111,6 +111,19 @@ const JobSchema = Mongoose.Schema({
   },
 });
 const ApplicantSchema = Mongoose.Schema({
+  user_id: {
+    type: Mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  job_id: {
+    type: Mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['submitted', 'processing', 'processed', 'accepted', 'rejected', 'withdrawn'],
+    default: 'submitted',
+  },
   name: String,
   email: String,
   school: String,
@@ -120,7 +133,6 @@ const ApplicantSchema = Mongoose.Schema({
     filename: String,
     resumeid: String,
   },
-  job_id: String,
 });
 const BusinessProfileSchema = Mongoose.Schema({
   biography: {
@@ -389,6 +401,9 @@ const AccountSchema = Mongoose.Schema({
   employee_info: {
     type: String,
     resume: Mongoose.model('Resume', ResumeSchema),
+  },
+  saved_jobs: {  // list of mongoIDs
+    type: { default: [] },
   },
   org_list: {  // list of mongoIDs
     type: { default: [] },

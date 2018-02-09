@@ -88,15 +88,18 @@
 .fsSelect {
   height: 48px;
   border-top: 1px solid #eee;
-  border-right: 1px solid #eee;
+  /* border-right: 1px solid #eee; */
   border-left: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  border-right: 1px solid #eee;
-  border-radius: 6px 6px 6px 6px;
+  border-radius: 6px 0 0 6px;
 
 }
 .firstSearch .fsSelect .input-group__input {
   padding-left: 16px !important;
+  padding-top: 2px;
+}
+.firstSearch .fsSelect .input-group__input .input-group__selections {
+  padding-top: 2px;
 }
 .firstSearch .fsSelect label {
   top: 7px;
@@ -154,7 +157,7 @@
               <section class="firstSearch" v-if="firstSearch">
                 <div style="padding-bottom: 30px; text-align: right;">
                   <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
-                  <h2 style="color: #333;">Find a job that match your search and is actually nearby</h2>
+                  <h2 style="color: #333;">Find a job for you, near you</h2>
                 </div>
                 <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
 
@@ -173,7 +176,7 @@
                     >
                     </v-select>
                     <v-select class="no-padding" style="width: 50%; display: inline-block;"
-                      label="Positions"
+                      label="Positions (all)"
                       v-bind:items="availablePositions"
                       v-model="selectedPositions"
                       autocomplete
@@ -323,6 +326,7 @@
             </form>
 
       <v-layout row wrap v-if="!firstSearch">
+
           <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
             <v-layout align-center row spacer slot="header">
               <v-flex xs8>
@@ -342,7 +346,6 @@
               </div>
               </v-flex>
             </v-layout>
-
             <router-link :to="'JobDetail/'+job._id">
             <v-flex xs12 style="padding-top: 0px;">
               <div><p style="font-size: 150%;">{{ job.title }}</p></div>
@@ -357,10 +360,9 @@
                 <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
               </div>
             </v-flex>
-
-
             </router-link>
           </div>
+          
       </v-layout>
     </div>
   </v-container>
@@ -398,10 +400,13 @@ export default {
       ],
       availableCities: [
         'Irvine, CA',
+        'UC Irvine',
         'Los Angeles, CA',
+        'UCLA',
         // load from database
       ],
       availablePositions: [
+        'All / Any',
         'Frontend developer',
         'Vue.js developer',
         // load from database
@@ -447,6 +452,27 @@ export default {
         sTypes: this.selectedTypes,
         sPositions: this.selectedPositions,
         sShifts: this.selectedShifts,
+      });
+    },
+    addToSavedJobs(id) {
+      this.$apollo.mutate({
+        mutation: (gql`
+          mutation ($uid: MongoID, $sj: [MongoID])
+        {
+          updateAccount (
+            filter: { _id: $uid },
+            record: { saved_jobs: $sj },
+          ) {
+            recordId
+          }
+        }`),
+        variables: {
+          // find a more secure way to run query
+          uid: this.$store.state.userID,
+          sj: [id],
+        },
+      }).catch((error) => {
+        console.error(error);
       });
     },
   },

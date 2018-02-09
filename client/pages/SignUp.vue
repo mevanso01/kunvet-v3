@@ -17,6 +17,10 @@
 .bio .input-group__input {
   padding-bottom: 4px;
 }
+#signup .btn--disabled {
+  background-color: rgba(239,83,80,0.4) !important;
+  color: #fff;
+}
 </style>
 
 <template>
@@ -69,8 +73,23 @@
           <v-flex xs12 sm8 offset-sm2>
             <v-card>
               <v-card-text>
-                <h2>Just enter your email to get started</h2>
+                <h2>Just enter your name and email to get started</h2>
+                <p v-if="error === 'UserExistsError'" style="color: #f00">
+                  Someone is using this email already. Would you like to <router-link to="/login" style="text-decoration: underline;">login?</router-link>
+                </p>
                 <v-form v-model="valid" ref="form">
+                  <v-text-field
+                    label="First name"
+                    v-model="fname"
+                    :rules="requiredRules"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="Last name"
+                    v-model="lname"
+                    :rules="requiredRules"
+                    required
+                  ></v-text-field>
                   <v-text-field
                     label="E-mail"
                     v-model="email"
@@ -88,7 +107,7 @@
                     required
                   ></v-text-field>
                   <div class="text-xs-center">
-                    <v-btn error dark @click="submit">Sign up!</v-btn>
+                    <v-btn error :disabled="loading" dark @click="submit">Sign up!</v-btn>
                   </div>
                 </v-form>
               </v-card-text>
@@ -110,16 +129,19 @@
                   <v-text-field
                     label="First name"
                     v-model="fname"
+                    :rules="requiredRules"
                     required
                   ></v-text-field>
                   <v-text-field
                     label="Last name"
                     v-model="lname"
+                    :rules="requiredRules"
                     required
                   ></v-text-field>
                   <v-text-field
                     label="Name of organization / business"
                     v-model="business_name"
+                    :rules="requiredRules"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -139,7 +161,7 @@
                     required
                   ></v-text-field>
                   <div class="text-xs-center">
-                    <v-btn error dark @click="submit">Create business account</v-btn>
+                    <v-btn error :disabled="loading" dark @click="submit">Create business account</v-btn>
                   </div>
                 </v-form>
               </v-card-text>
@@ -151,7 +173,7 @@
         </v-layout>
       </section>
 
-      <section v-if="chosenForm === 'submitted'">
+      <section v-if="chosenForm === 'success'">
         <v-layout>
           <v-flex xs12 sm8 offset-sm2>
             <v-card>
@@ -173,7 +195,7 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 import gql from 'graphql-tag';
-// import Models from '../../server/mongodb/Models';
+import Config from 'config';
 
 Vue.use(VueResource);
 
@@ -188,6 +210,9 @@ export default {
       business_name: '',
       fname: '',
       lname: '',
+      requiredRules: [
+        v => !!v || 'Required',
+      ],
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
@@ -197,6 +222,8 @@ export default {
         v => !!v || 'Required',
         v => (v && v.length >= 8) || 'Password must be at least 8 characters',
       ],
+      loading: false,
+      error: null,
     };
   },
   methods: {
@@ -204,7 +231,7 @@ export default {
       this.$refs.form.validate();
       this.submitClicked = true;
       if (this.valid) {
-        this.chosenForm = 'submitted';
+        this.loading = true;
         if (this.business_name && this.business_name !== '') {
           this.createBusinessAcct();
         } else {
@@ -226,12 +253,19 @@ export default {
       const data = {
         email: this.email,
         default_org: null,
-        fname: 'Firstname', // this.fname,
-        lname: 'Lastname', // this.lname,
+        fname: this.fname,
+        lname: this.lname,
         pwd: this.password,
         reqtype: 'validate',
       };
-      Vue.http.post('http://localhost:3000/sendemail', data, headers).then(() => {
+      Vue.http.post(`${Config.serverUrl}/auth/register`, data, headers).then((res) => {
+        this.loading = false;
+        if (res.body.message === 'User already exists') {
+          this.error = 'UserExistsError';
+        } else {
+          console.log(res);
+          this.chosenForm = 'success';
+        }
       }, (error) => {
         console.error(error);
       });
@@ -261,7 +295,8 @@ export default {
           pwd: this.password,
           reqtype: 'validate',
         };
-        Vue.http.post('http://localhost:3000/sendemail', bdata, headers).then(() => {
+        Vue.http.post(`${Config.serverUrl}/auth/register`, bdata, headers).then(() => {
+          this.loading = false;
         }, (error) => {
           console.error(error);
         });

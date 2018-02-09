@@ -69,24 +69,8 @@ export default {
       }).then((data) => {
         if (data.data.findVCode) {
           this.isvalid = true;
-          // instead, set account to valid
+          // set account to valid
           this.validateAcct(data.data.findVCode.email);
-          /* this.doesNotExist(data.data.findVCode.email).then(() => {
-            if (this.dne !== null) {
-              this.isvalid = true;
-              if (data.data.findVCode.business_name === '') {
-                this.uploadAcctData(data.data.findVCode.email, data.data.findVCode.password);
-              } else {
-                this.uploadBusinessAcctData(
-                  data.data.findVCode.email,
-                  data.data.findVCode.password,
-                  data.data.findVCode.firstname,
-                  data.data.findVCode.lastname,
-                  data.data.findVCode.business_name,
-                );
-              }
-            }
-          }); */
         } else {
           this.isvalid = true;
           this.loading = false;
@@ -118,6 +102,7 @@ export default {
         });
       }
     },
+    // unused
     uploadAcctData(email, password) {
       if (this.isvalid && this.dne) {
         this.$apollo.mutate({
@@ -142,6 +127,7 @@ export default {
         });
       }
     },
+    // unused
     uploadBusinessAcctData(email, password, fname, lname, bname) {
       if (this.isvalid && this.dne) {
         // create business record
