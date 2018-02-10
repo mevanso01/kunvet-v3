@@ -157,29 +157,23 @@
           required
         ></v-text-field>
         <v-layout row wrap>
-          <v-flex xs12 sm4 class="padding-15px-right-sm-up">
+          <v-flex xs12 class="padding-15px-right-sm-up">
             <v-text-field
               v-model="address"
               label="Address"
-              :rules="[(v) => !!(v) || 'Required']"
               required
+              disabled
             ></v-text-field>
           </v-flex>
-          <v-flex xs12 sm4 class="padding-15px-right-sm-up">
-            <v-text-field
-              v-model="city_and_state"
-              label="City, State"
-              :rules="[(v) => !!(v) || 'Required']"
-              required
-            ></v-text-field>
+
+          <v-flex xs12 md6 class="padding-15px-right-sm-up">
+            Search for a location:
+            <GmapAutocomplete @place_changed="setPlace">
+            </GmapAutocomplete>
           </v-flex>
-          <v-flex xs8 sm2 class="no-padding">
-            <v-text-field
-              v-model="zip"
-              label="Zip"
-              :rules="[(v) => !!(v) || 'Required']"
-              required
-            ></v-text-field>
+
+          <v-flex xs12 md6 class="padding-15px-right-sm-up">
+            Coordinates: {{ latitude }}, {{ longitude }}
           </v-flex>
         </v-layout>
 
@@ -403,8 +397,8 @@ export default {
       posted_by: null,
       title: '',
       address: '',
-      city_and_state: '',
-      zip: '',
+      latitude: 0,
+      longitude: 0,
       type: null,
       type_current: null,
       type2: null,
@@ -448,6 +442,12 @@ export default {
   methods: {
     test() {
       console.log('TEST');
+    },
+    setPlace(place) {
+      console.log(place);
+      this.address = place.formatted_address;
+      this.latitude = place.geometry.location.lat();
+      this.longitude = place.geometry.location.lng();
     },
     sanitizeQuillInput(property) {
       const text = this[property].replace(/<p>|<\/p>|<br>|<h1>|<\/h1>/g, '');
@@ -524,7 +524,9 @@ export default {
         active: this.active,
         title: this.title,
         description: this.description,
-        address: `${this.address} ${this.city_and_state} ${this.zip}`,
+        address: this.address,
+        latitude: this.latitude,
+        longitude: this.longitude,
         type: this.type,
         studentfriendly: this.studentfriendly,
         type2: this.type2,

@@ -12,6 +12,7 @@ import Terms from '@/pages/Terms';
 
 // Axios config
 import '@/axios';
+import '@/googleMaps';
 
 // no login
 import Login from '@/pages/Login';

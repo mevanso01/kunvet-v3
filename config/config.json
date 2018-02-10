@@ -3,6 +3,7 @@
 		"common": {
 		},
 		"client": {
+			"googleMapsKey": "AIzaSyC7AGOmjudyG6MwSsiKV8118wGmE9XvugY"
 		},
 		"server": {
 			"mailTransport": {
