@@ -170,12 +170,11 @@ export default {
           console.error('Logged out', response.data);
           return;
         }
-        const udata = response.data;
-        console.log(udata);
-        this.commitUserdata(udata.user);
+        const udata = response.data.user;
+        this.commitUserdata(udata);
         this.commitID(udata._id);
 
-        if (udata.user.default_org == null || !udata.user.default_org) {
+        if (udata.default_org === '' || !udata.default_org) {
           // login individual
           App.methods.login_i();
           this.$router.push('/');

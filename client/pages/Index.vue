@@ -1,4 +1,7 @@
 <style lang="scss">
+.saved {
+  color: #ffcc00 !important;
+}
 .card {
   box-shadow: none;
 }
@@ -340,8 +343,8 @@
                 <v-avatar size="36px" slot="activator">
                   <v-icon class="whatshot">whatshot</v-icon>
                 </v-avatar>
-                <v-avatar size="36px" slot="activator">
-                  <v-icon class="bookmark-icon">bookmark_border</v-icon>
+                <v-avatar size="36px" slot="activator" @click="saveJob(job._id)">
+                  <v-icon class="bookmark-icon" v-bind:class="{ saved: saved_jobs.indexOf(job._id) !== -1 }">bookmark_border</v-icon>
                 </v-avatar>
               </div>
               </v-flex>
@@ -362,7 +365,7 @@
             </v-flex>
             </router-link>
           </div>
-          
+
       </v-layout>
     </div>
   </v-container>
@@ -394,6 +397,8 @@ export default {
   },
   data() {
     return {
+      uid: null,
+      saved_jobs: [],
       jobs: [],
       firstSearchTypes: [
         'Latest jobs',
@@ -454,23 +459,55 @@ export default {
         sShifts: this.selectedShifts,
       });
     },
-    addToSavedJobs(id) {
+    saveJob(id) {
+      if (this.saved_jobs.indexOf(id) === -1) {
+        this.saved_jobs.push(id);
+      } else {
+        const index = this.saved_jobs.indexOf(id);
+        if (index !== -1) {
+          this.saved_jobs.splice(index, 1);
+        }
+      }
+      console.log(this.saved_jobs);
       this.$apollo.mutate({
         mutation: (gql`
-          mutation ($uid: MongoID, $sj: [MongoID])
+          mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
         {
           updateAccount (
             filter: { _id: $uid },
-            record: { saved_jobs: $sj },
+            record: $record,
           ) {
             recordId
           }
         }`),
         variables: {
-          // find a more secure way to run query
-          uid: this.$store.state.userID,
-          sj: [id],
+          uid: this.uid,
+          record: {
+            saved_jobs: this.saved_jobs,
+          },
         },
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+    getSavedJobs() {
+      this.$apollo.query({
+        query: (gql`query ($uid: MongoID) {
+          findAccount (filter: {
+            _id: $uid
+          }) {
+              saved_jobs
+          }
+        }`),
+        variables: {
+          uid: this.uid,
+        },
+      }).then((data) => {
+        const res = data.data.findAccount;
+        if (res.saved_jobs) {
+          const x = this.saved_jobs.concat(res.saved_jobs);
+          this.saved_jobs = x;
+        }
       }).catch((error) => {
         console.error(error);
       });
@@ -485,6 +522,10 @@ export default {
         this.firstSearch = data.firstSearch;
         this.selectedCities = data.selectedCities;
         this.selectedPositions = data.selectedPositions;
+        if (data.userID) {
+          this.uid = data.userID;
+          this.getSavedJobs();
+        }
       }
     });
   },
