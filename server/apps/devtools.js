@@ -76,6 +76,8 @@ router.get('/test-mailer', (ctx) => {
 router.post('/uploadfile', upload.single('file'), async (ctx) => {
   const { file } = ctx.req;
   // Do stuff with the file here
+  // create new fileobject
+  // if successful: return id to store in client
   ctx.body = file.filename;
   ctx.status = 200;
 });

@@ -381,6 +381,9 @@
           this.currentStatus = 'SAVING';
           const headers = { emulateJSON: true };
           const data = this.formData;
+          // graphql query:
+          // .then(
+          // )
           axios.post('http://localhost:3000/uploadfile', data, headers).then((res) => {
             const _filename = res.data;
             if (this.userdata.resumes) {

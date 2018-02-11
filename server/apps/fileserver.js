@@ -142,7 +142,7 @@ router.put('/upload/:id', upload.single('file'), async (ctx) => {
   ctx.body = JSON.stringify(response);
 });
 
-router.get('/download/:id', async (ctx) => {
+router.get('/get/:id', async (ctx) => {
   if (!ctx.isAuthenticated()) {
     // Unauthenticated
 
@@ -196,4 +196,3 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 export default app;
-

@@ -216,6 +216,7 @@
           this.data.email = res.email;
           this.data.notes = res.notes;
           if (res.resume.filename) {
+            // const p = this.$http.get(downloadpath)
             const loadingTask = pdf.createLoadingTask(`../../server/uploads/${res.resume.filename}`);
             this.src = loadingTask;
             this.src.then(_pdf => {

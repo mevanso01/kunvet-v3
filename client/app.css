@@ -16,6 +16,7 @@ h2 {
   font-weight: bold;
 }
 h3 {
+  color: #b0b0b0;
   font-size: 1.25em;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -35,6 +36,10 @@ h3 {
   color: #ef5350;
 }
 /*  ---- Styles to globally override Vuetify ----  */
+.application,
+.container {
+  background-color: #fff;
+}
 .application--light .input-group--selection-controls .input-group__input,
 .input-group--selection-control .input-group__input,
 .application--light .input-group:not(.input-group--error) .input-group--selection-controls label,
