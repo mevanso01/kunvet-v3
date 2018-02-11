@@ -157,18 +157,17 @@
           required
         ></v-text-field>
         <v-layout row wrap>
-          <v-flex xs12 class="padding-15px-right-sm-up">
+          <!--<v-flex xs12 class="padding-15px-right-sm-up">
             <v-text-field
               v-model="address"
               label="Address"
               required
               disabled
             ></v-text-field>
-          </v-flex>
+          </v-flex>-->
 
-          <v-flex xs12 md6 class="padding-15px-right-sm-up">
-            Search for a location:
-            <GmapAutocomplete @place_changed="setPlace">
+          <v-flex xs12 class="padding-15px-right-sm-up">
+            <GmapAutocomplete @place_changed="setPlace" class="addr-field">
             </GmapAutocomplete>
           </v-flex>
 
@@ -342,6 +341,8 @@ const createJobMutation = gql`
         title
         description
         address
+        latitude
+        longitude
         type
         studentfriendly
         type2
@@ -368,6 +369,8 @@ const updateJobMutation = gql`
         title
         description
         address
+        latitude
+        longitude
         type
         studentfriendly
         type2
@@ -397,8 +400,8 @@ export default {
       posted_by: null,
       title: '',
       address: '',
-      latitude: 0,
-      longitude: 0,
+      latitude: null,
+      longitude: null,
       type: null,
       type_current: null,
       type2: null,
@@ -503,6 +506,7 @@ export default {
       if (!this.sanitizeQuillInput('responsibilities')) { this.valid = false; }
       if (!this.sanitizeQuillInput('experience')) { this.valid = false; }
       if (this.shift.length <= 0) { this.valid = false; }
+      if (this.longitude == null || this.latitude == null) { this.valid = false; }
       if (this.valid) {
         this.active = true;
         this._save();

@@ -171,6 +171,7 @@ export default {
           return;
         }
         const udata = response.data.user;
+        console.log('UDATA', udata);
         this.commitUserdata(udata);
         this.commitID(udata._id);
 
@@ -180,7 +181,7 @@ export default {
           this.$router.push('/');
         } else {
           // login business
-          this.commitBusinessID(udata.user.default_org);
+          this.commitBusinessID(udata.default_org);
           App.methods.login_b();
           this.$router.push('/myorg');
         }

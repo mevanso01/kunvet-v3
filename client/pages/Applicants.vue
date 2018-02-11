@@ -187,7 +187,7 @@
       addApplicants(jobId) {
         this.applicants[jobId] = null;
         this.$apollo.query({
-          query: (gql`query ($JobId: String) {
+          query: (gql`query ($JobId: MongoID) {
             findApplicants (filter: {
               job_id: $JobId
             }) {
