@@ -22,12 +22,22 @@
         <div class="hidden-sm-and-up">
           <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </div>
+
         <v-toolbar-items class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href"  :key="item.title" class="toolbar__items">
+          <!--<router-link v-for="item in items[acct]" :to="item.href"  :key="item.title" class="toolbar__items">
             <v-btn flat>{{ item.title }}</v-btn>
+          </router-link>-->
+          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
+            <v-btn flat style="width: 10px;">
+              <img class="nav-img notranslate" :src="item.icon"></img>
+              <div class="nav-text" style="color:#818181">{{ item.title }}</div>
+            </v-btn>
           </router-link>
         </v-toolbar-items>
+
+
     </v-toolbar>
+
     <v-navigation-drawer absolute temporary right light v-model="drawer" overflow>
       <v-toolbar flat class="transparent">
         <v-list class="pa-0">
@@ -45,9 +55,9 @@
         <v-divider></v-divider>
         <router-link :to="item.href" v-for="item in items[acct]" :key="item.title">
           <v-list-tile>
-            <v-list-tile-action>
+            <!--<v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
+            </v-list-tile-action>-->
             <v-list-tile-content>
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile-content>
@@ -55,11 +65,13 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
+
     <main>
       <transition name="slide-y-transition">
         <router-view></router-view>
       </transition>
     </main>
+
     <div id="bottom">
             <div id="bottom-content">
                 <div id="bottom-brand">
@@ -91,6 +103,11 @@ import Vue from 'vue';
 import Store from '@/store';
 import VuexLS from '@/store/persist';
 import Vuetify from 'vuetify';
+// svgs
+import afw from './assets/navbar/applicant_full_white.svg';
+import sfw from './assets/navbar/suitcase_full_white.svg';
+// import settingIconFull from './assets/navbar/setting_full_white.svg';
+import bellIconFull from './assets/navbar/bell_full_white.svg';
 
 Vue.use(Vuetify, {
   theme: {
@@ -121,11 +138,12 @@ export default {
           { title: 'Settings', icon: 'question_answer', href: '/settings' },
         ],
         [
-          { title: 'Post a job', icon: 'dashboard', href: '/createnewjob' },
-          { title: 'Applicants', icon: 'question_answer', href: '/applicants' },
-          { title: 'My Jobs', icon: 'dashboard', href: '/myjobs' },
-          { title: 'Account', icon: 'question_answer', href: '/myorg' },
-          { title: 'Settings', icon: 'question_answer', href: '/settings' },
+          { title: 'Create job', icon: null, href: '/createnewjob' },
+          { title: 'Applicants', icon: afw, href: '/applicants' },
+          { title: 'My Jobs', icon: sfw, href: '/myjobs' },
+          { title: 'Notifications', icon: bellIconFull, href: '/myorg' },
+          { title: 'Account', icon: null, href: '/myorg' },
+          /* { title: 'Settings', icon: settingIconFull, href: '/settings' }, */
         ],
       ],
       right: true,

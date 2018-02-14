@@ -1,104 +1,104 @@
 <style>
-  .sub-container {
+.sub-container {
     padding: 10px 15px;
-  }
-  #job-company-logo img {
+}
+#job-company-logo img {
     border-radius: 50%;
-  }
-  #job-star {
+}
+#job-star {
     font-size: 16pt;
     padding: 0 0 0 8px;
     float: right;
-  }
-  .job-star-icon {
+}
+.job-star-icon {
     color: #e0e0e0;
     cursor: pointer;
     transition: all 0.2s ease;
-  }
-  .job-star-icon-starred {
+}
+.job-star-icon-starred {
     color: #ef5350;
-  }
-  .job-time,
-  .job-address,
-  .job-desc {
+}
+.job-time,
+.job-address,
+.job-desc {
     font-size: 9pt;
     color: #9e9e9e;
-  }
-  #job-shifts .general-tag {
+}
+#job-shifts .general-tag {
     display: none;
-  }
-  #job-shifts svg {
+}
+#job-shifts svg {
     width: 100%;
-  }
-  #job-shifts svg text {
+}
+#job-shifts svg text {
     fill: #fff;
     opacity: 0;
-  }
-  #job-shift-morning {
+}
+#job-shift-morning {
     fill: #29b6f6;
     opacity: 0.0625;
-  }
-  #job-shift-noon {
+}
+#job-shift-noon {
     fill: #fbc02d;
     opacity: 0.0625;
-  }
-  #job-shift-afternoon {
+}
+#job-shift-afternoon {
     fill: #f57c00;
     opacity: 0.0625;
-  }
-  #job-shift-evening {
+}
+#job-shift-evening {
     fill: #0d47a1;
     opacity: 0.0625;
-  }
-  #job-shift-midnight {
+}
+#job-shift-midnight {
     fill: #1a237e;
     opacity: 0.0625;
-  }
-  #job-shift-moon {
+}
+#job-shift-moon {
     fill: #ffeb3b;
     opacity: 0;
-  }
-  #job-shift-curve {
+}
+#job-shift-curve {
     fill: none;
     stroke: #fff;
     stroke-miterlimit: 10;
     stroke-width: 2px;
     opacity: 0.2;
-  }
-  #job-threes {
+}
+#job-threes {
     position: relative;
     height: 256px;
-  }
-  #job-education,
-  #job-age,
-  #job-language {
+}
+#job-education,
+#job-age,
+#job-language {
     position: absolute;
     width: calc(100% / 3);
     height: calc(100% - 96px);
     padding: 16px;
     box-sizing: border-box;
     text-align: center;
-  }
-  #job-education i,
-  #job-age i,
-  #job-language i {
+}
+#job-education i,
+#job-age i,
+#job-language i {
     font-size: 48pt;
-  }
-  #job-education {
+}
+#job-education {
     left: 0;
-  }
-  #job-age {
+}
+#job-age {
     left: calc(100% / 3);
     border-left: 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
-  }
-  #job-language {
+}
+#job-language {
     left: calc(100% / 3 * 2);
-  }
-  #job-images {
+}
+#job-images {
     padding: 0;
-  }
-  .job-image {
+}
+.job-image {
     background-size: 8px 8px;
     background-position: center center;
     overflow: hidden;
@@ -138,10 +138,13 @@
   margin-bottom: 8px;
 }
 @media (max-width: 600px) {
-    .post-title-cont {
-      height: 32px;
-      margin-top: 8px;
-    }
+  .flex {
+    padding: 10px 1px;
+  }
+  .post-title-cont {
+    height: 32px;
+    margin-top: 8px;
+  }
     .post-title {
       font-size: 24px;
       line-height: 1.2;
@@ -165,14 +168,14 @@
         height: calc(100% - 32px);
         font-size: 9pt;
     }
-  }
-  @media (min-width: 961px) {
-    .job-detail-container {
-      /* -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.2), 0 2px 2px rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+}
+@media (min-width: 961px) {
+  .job-detail-container {
+    /* -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.2), 0 2px 2px rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
       box-shadow: 0 1px 5px rgba(0,0,0,.2), 0 2px 2px rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12); */
-      border: 1px solid #e0e0e0;
-    }
+    border: 1px solid #e0e0e0;
   }
+}
   .top-container {
     width: 100%;
     height: 48px;
@@ -210,22 +213,39 @@
           <!--<router-link to="/">Back</router-link>-->
           <div class="top-container">
             <div class="float-left">
-              <p style="line-height: 48px; color: #666">{{ findJob.posted_by }}</p>
+            <v-layout align-center row spacer slot="header">
+              <v-flex xs8>
+                <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
+                  <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+                </v-avatar>
+              </v-flex>
+              <v-flex xs8>
+      		<div style="color: #A7A7A7; margin-right: 1px;">{{ findJob.posted_by }}</div>
+              </v-flex>
+            </v-layout>
+
             </div>
-            <div class="float-right">
-              <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-                <v-icon class="bookmark-icon">bookmark_border</v-icon>
-              </v-btn>
-              <v-btn round outline class="red--text darken-1">Apply</v-btn>
-            </div>
+
           </div>
           <v-divider></v-divider>
           <div class="post-title-cont">
             <h2 class="post-title">{{ findJob.title }}</h2>
           </div>
-          <p class="post-address">{{ findJob.address }}</p>
-          <div class="blue-row">Blue Icons</div>
-          <div class="orange-row">Orange Icons</div>
+          <div class="post-address" style="color: #A7A7A7; padding: -10px 1px;">time position</div>
+          <div class="carditem" style="color: #A7A7A7; text-decoration: underline;"><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ findJob.address }}</div>
+
+          <div class="blue-row">
+          <img style="width: 15px;" :src="Internship"></img> Blue Icons
+          <img style="width: 15px;" :src="Internship"></img> Blue Icons
+          <img style="width: 15px;" :src="Internship"></img> Blue Icons
+          <img style="width: 15px;" :src="Internship"></img> Blue Icons</div>
+          <div class="orange-row">
+          <img style="width: 15px;" :src="Internship"></img> Green Icons
+      </div>
+          <div class="orange-row">
+          <img style="width: 15px;" :src="Internship"></img> Orange Icons
+          <img style="width: 15px;" :src="Internship"></img> Orange Icons
+          <img style="width: 15px;" :src="Internship"></img> Orange Icons</div>
           <p class="post-intro" style="margin-top: 10px;">Catagories:</p>
       </div>
       <!-- <v-divider></v-divider> -->
@@ -241,7 +261,7 @@
                         <rect id="job-shift-evening" x="576" width="192" height="64" style="opacity: 1;"></rect>
                         <text x="672" y="48" text-anchor="middle" style="opacity: 1;">Evening</text>
                         <rect id="job-shift-midnight" x="768" width="192" height="64"></rect>
-                        <text x="864" y="48" text-anchor="middle">Mid-night</text>
+                        <text x="864" y="48" text-anchor="middle" width="192" height="64" style="opacity: 1;">>Mid-night</text>
                         <circle id="job-shift-moon" cx="944" cy="16" r="8"></circle>
                     <path id="job-shift-curve" d="M0,32A1588.55,1588.55,0,0,1,288,8c105.5.84,169.85,11.9,288,24,90.91,9.31,222,20.09,384,24"></path>
                 </svg>
@@ -253,19 +273,20 @@
       </div>-->
       <div class="sub-container">
           <h2>Description</h2>
-          <div v-html="sanitizedDescription"></div>
+          <div v-html="findJob.description"></div>
+
           <h2>Requirements</h2>
           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
             when an unknown printer took a galley of type and scrambled it to make a type
             specimen book.</p>
           <div class="bottom-container">
-            <div style="margin: auto;">
+            <div style="margin: hidden;">
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-                <v-icon class="bookmark-icon"></v-icon>
+                <img style="width: 90%;" :src="ffull"></img>
               </v-btn>
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-                <v-icon class="bookmark-icon"></v-icon>
+                <img style="width: 90%;" :src="fstroke"></img>
               </v-btn>
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
                 <v-icon class="bookmark-icon">bookmark_border</v-icon>
@@ -283,6 +304,9 @@ import gql from 'graphql-tag';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueApollo from 'vue-apollo';
+import InternshipSvg from '@/assets/jobdetail/internship.svg';
+import ffullSvg from '@/assets/jobdetail/facebook_full.svg';
+import fstrokeSvg from '@/assets/jobdetail/facebook_stroke.svg';
 import sanitizeHtml from 'sanitize-html';
 
 Vue.use(Vuetify);
@@ -303,6 +327,9 @@ export default {
     return {
       // id: this.$route.params.id,
       findJob: '',
+      Internship: InternshipSvg,
+      ffull: ffullSvg,
+      fstroke: fstrokeSvg,
     };
   },
   computed: {
