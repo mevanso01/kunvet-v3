@@ -143,17 +143,9 @@ router.put('/upload/:id', upload.single('file'), async (ctx) => {
 });
 
 router.get('/get/:id', async (ctx) => {
-  if (!ctx.isAuthenticated()) {
-    // Unauthenticated
-
-    const response = {
-      success: false,
-      message: 'Authentication required',
-    };
-    ctx.status = 401;
-    ctx.body = JSON.stringify(response);
-
-    return;
+  let userId = -1;
+  if (ctx.isAuthenticated()) {
+    userId = ctx.state.user._id;
   }
 
   const fileId = ctx.params.id;
@@ -175,7 +167,7 @@ router.get('/get/:id', async (ctx) => {
     return;
   }
 
-  if (fileSlot.employerOnly && fileSlot.owner !== ctx.state.user._id) {
+  if (fileSlot.employerOnly && fileSlot.owner !== userId) {
     // Restricted file
 
     const response = {
