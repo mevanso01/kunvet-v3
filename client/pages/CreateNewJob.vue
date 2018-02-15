@@ -447,6 +447,9 @@ export default {
       console.log('TEST');
     },
     setPlace(place) {
+      if (!place.geometry) {
+        return;
+      }
       console.log(place);
       this.address = place.formatted_address;
       this.latitude = place.geometry.location.lat();
