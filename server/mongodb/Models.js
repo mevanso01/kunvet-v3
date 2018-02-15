@@ -63,9 +63,6 @@ const JobSchema = Mongoose.Schema({
   longitude: {
     type: Number,
   },
-  age: {
-    type: Number,
-  },
   category: {
     type: String,
     required: true,
