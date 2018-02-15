@@ -157,15 +157,16 @@
           required
         ></v-text-field>
         <v-layout row wrap>
-          <!--<v-flex xs12 class="padding-15px-right-sm-up">
+          <v-flex xs12 class="padding-15px-right-sm-up">
             <v-text-field
               v-model="address"
+              ref="addressField"
               label="Address"
               required
-              disabled
             ></v-text-field>
-          </v-flex>-->
+          </v-flex>
 
+          <!--
           <v-flex xs12 class="padding-15px-right-sm-up">
             <GmapAutocomplete @place_changed="setPlace" class="addr-field">
             </GmapAutocomplete>
@@ -174,6 +175,7 @@
           <v-flex xs12 md6 class="padding-15px-right-sm-up">
             Coordinates: {{ latitude }}, {{ longitude }}
           </v-flex>
+          -->
         </v-layout>
 
         <br>
@@ -330,6 +332,7 @@
 import { VueEditor } from 'vue2-editor';
 import gql from 'graphql-tag';
 import VuexLS from '@/store/persist';
+import * as VueGoogleMaps from 'vue2-google-maps';
 
 
 const createJobMutation = gql`
@@ -400,6 +403,7 @@ export default {
       posted_by: null,
       title: '',
       address: '',
+      autocomplete: null,
       latitude: null,
       longitude: null,
       type: null,
@@ -631,6 +635,16 @@ export default {
         }
       });
     }
+
+    VueGoogleMaps.loaded.then(() => {
+      // HACK
+      const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
+      input.setAttribute('placeholder', '');
+      this.autocomplete = new window.google.maps.places.Autocomplete(input);
+      this.autocomplete.addListener('place_changed', () => {
+        this.setPlace(this.autocomplete.getPlace());
+      });
+    });
   },
 };
 </script>
