@@ -146,7 +146,7 @@
     margin-top: 8px;
   }
     .post-title {
-      font-size: 24px;
+      font-size: 240px;
       line-height: 1.2;
     }
     #job-shifts {
@@ -225,7 +225,6 @@
             </v-layout>
 
             </div>
-
           </div>
           <v-divider></v-divider>
           <div class="post-title-cont">
@@ -246,7 +245,7 @@
           <img style="width: 15px;" :src="Internship"></img> Orange Icons
           <img style="width: 15px;" :src="Internship"></img> Orange Icons
           <img style="width: 15px;" :src="Internship"></img> Orange Icons</div>
-          <p class="post-intro" style="margin-top: 10px;">Catagories:</p>
+          <p class="post-intro" style="margin-top: 10px;">Categories:</p>
       </div>
       <!-- <v-divider></v-divider> -->
       <!--<div class="general-stripe">

@@ -3,6 +3,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
+import VueTimeago from 'vue-timeago';
+import TimeagoLocale from 'vue-timeago/locales/en-US.json';
 
 import Client from '@/apollo/client';
 
@@ -51,6 +53,12 @@ import store from '@/store';
 Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(Vuex);
+Vue.use(VueTimeago, {
+  locale: 'en-US',
+  locales: {
+    'en-US': TimeagoLocale,
+  },
+});
 
 const apolloProvider = new VueApollo({
   defaultClient: Client,

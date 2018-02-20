@@ -6,7 +6,6 @@
 import 'source-map-support/register';
 // const fs = require("fs")
 // Koa
-import http from 'http';
 import Koa from 'koa';
 import KoaMount from 'koa-mount';
 import KoaBodyParser from 'koa-bodyparser';
@@ -88,6 +87,6 @@ Db.connect()
     process.exit(1);
   });
 
-http.createServer(app.callback()).listen(port, () => {
+app.listen(port, () => {
   Logger.info(`Up and running! Listening on port ${port}`);
 });

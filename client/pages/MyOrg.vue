@@ -1,4 +1,18 @@
 <style>
+/* argh duplicate code between this and Account.vue */
+.acct-header img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.acct-header h3 {
+  display: inline-block;
+}
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+  .right-account-column {
+    text-align: right;
+  }
+}
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
@@ -22,8 +36,9 @@
                               v-model="updateAddress"
                               class="no-padding no-underline"
                               name="input-1-3"
-                              label="Add address"
+                              label="Add Address"
                               single-line
+                              @keyup.enter="saveProperty('address', updateAddress)"
                             ></v-text-field>
                           </v-flex>
                           <v-flex xs2 v-show="updateAddress" class="no-padding">
@@ -50,6 +65,41 @@
                         </v-list-tile-content>
                       </v-list-tile>
 
+                      <v-list-tile v-if="!bdata.display_email" class="cust-tile-2 grey-color">
+                        <v-list-tile class="cust-tile-1">
+                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        </v-list-tile>
+                        <v-list-tile-content>
+                          <v-layout style="width: 100%">
+                            <v-flex xs10 class="no-padding">
+                              <v-text-field
+                                v-model="updateEmail"
+                                class="no-padding no-underline"
+                                name="input-3"
+                                label="Add Contact Email"
+                                single-line
+                                @keyup.enter="saveProperty('display_email', updateEmail)"
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs2 v-show="updateEmail" class="no-padding">
+                              <v-btn small  center class="cust-btn-1" @click="saveProperty('display_email', updateEmail)">
+                                Save
+                              </v-btn>
+                            </v-flex>
+                          </v-layout>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile v-if="bdata.display_email" class="cust-tile-2">
+                        <v-list-tile class="cust-tile-1">
+                           <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        </v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>
+                            {{ bdata.display_email }}
+                          </v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+
                       <v-list-tile v-if="!bdata.phone_number" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
                             <i class="fa fa-plus-square-o" aria-hidden="true"></i>
@@ -61,8 +111,9 @@
                                 v-model="updatePhoneNumber"
                                 class="no-padding no-underline"
                                 name="input-3"
-                                label="Add phone number"
+                                label="Add Phone"
                                 single-line
+                                @keyup.enter="saveProperty('phone_number', updatePhoneNumber)"
                               ></v-text-field>
                             </v-flex>
                             <v-flex xs2 v-show="updatePhoneNumber" class="no-padding">
@@ -89,45 +140,6 @@
                         </v-list-tile-content>
                       </v-list-tile>
 
-                      <v-list-tile v-if="!bdata.display_email" class="cust-tile-2 grey-color">
-                        <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-layout style="width: 100%">
-                            <v-flex xs10 class="no-padding">
-                              <v-text-field
-                                v-model="updateEmail"
-                                class="no-padding no-underline"
-                                name="input-3"
-                                label="Add display email"
-                                single-line
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs2 v-show="updateEmail" class="no-padding">
-                              <v-btn small  center class="cust-btn-1" @click="saveProperty('display_email', updateEmail)">
-                                Save
-                              </v-btn>
-                            </v-flex>
-                          </v-layout>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="bdata.display_email" class="cust-tile-2">
-                        <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ bdata.display_email }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('display email', bdata.display_email, 'display_email')">
-                              edit
-                            </v-icon>
-                          </v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-
                       <v-list-tile v-if="!bdata.website" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
                             <i class="fa fa-plus-square-o" aria-hidden="true"></i>
@@ -139,8 +151,9 @@
                                 v-model="updateWebsite"
                                 class="no-padding no-underline"
                                 name="input-3"
-                                label="Add website"
+                                label="Add Website"
                                 single-line
+                                @keyup.enter="saveProperty('website', updateWebsite)"
                               ></v-text-field>
                             </v-flex>
                             <v-flex xs2 v-show="updateWebsite" class="no-padding">
@@ -157,7 +170,7 @@
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            {{ bdata.website }}
+                            <a :href="bdata.website" target="_blank">{{ bdata.website }}</a>
                             <v-icon
                               class = "edit-icon"
                               @click="createEditModal('website url', bdata.website, 'website')">
@@ -181,49 +194,38 @@
 
             <v-layout row wrap>
               <v-flex xs12 sm6 md5 class="padding-sm-right">
-                <h3 class="acct-h3" v-bind:class="{ red_color: bdata.biography }">
-                  About Us
-                  <v-icon
-                    v-if="bdata.biography"
-                    class = "edit-icon"
-                    @click="createEditModal('biography', bdata.biography, 'biography')">
-                    edit
-                  </v-icon>
-                </h3>
-                <p>{{ bdata.biography }}</p>
-                <v-btn v-if="!bdata.biography" small flat class="acct-btn" @click="createEditModal('biography', '', 'biography')">
-                  Edit bio
-                </v-btn>
+                <div class="acct-header">
+                  <img :src="svgs.people" />
+                  <h3 class="acct-h3">
+                    About Us
+                    <v-icon
+                      v-if="bdata.biography"
+                      class = "edit-icon"
+                      @click="createEditModal('biography', bdata.biography, 'biography')">
+                      edit
+                    </v-icon>
+                  </h3>
+                </div>
+                <p v-if="bdata.biography">{{ bdata.biography }}</p>
+                <account-button
+                  v-else
+                  :text="'Add a Description'"
+                  :onClick="() => createEditModal('biography', '', 'biography')"
+                />
               </v-flex>
 
-              <v-flex xs12 sm6 offset-md1 class="padding-sm-left">
-                <h3 class="acct-h3" style="text-align: right;">Jobs Posted</h3>
-                <v-list two-line class="acct-list" v-if="jobs_list[0]">
-                  <template v-for="(item, index) in jobs_list">
-                    <v-list-tile
-                      :key="resume._id"
-                    >
-                      <v-list-tile-content>
-                        <v-list-tile-title>{{ item.name }}</v-list-tile-title>
-                      </v-list-tile-content>
-                      <v-list-tile-action>
-                        <v-btn icon ripple>
-                          <v-icon color="grey lighten-1">edit</v-icon>
-                        </v-btn>
-                      </v-list-tile-action>
-                      <v-list-tile-action>
-                        <v-btn icon ripple>
-                          <v-icon color="grey lighten-1">delete</v-icon>
-                        </v-btn>
-                      </v-list-tile-action>
-                    </v-list-tile>
-                    <v-divider v-if="index + 1 < item.length" :key="item._id"></v-divider>
-                  </template>
-                </v-list>
+              <v-flex xs12 sm6 offset-md1 class="right-account-column padding-sm-left">
+                <div class="acct-header">
+                  <img :src="svgs.suitcase" />
+                  <h3 class="acct-h3">Posted Jobs and Applicants</h3>
+                </div>
                 <div class="float-right-sm-up">
-                  <v-btn small flat class="acct-btn" @click.native.stop="addorg = true">
-                    Post new job
-                  </v-btn>
+                  <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
+                  <div>
+                    <router-link to="/createnewjob">
+                      <account-button :text="'Post a Job'" />
+                    </router-link>
+                  </div>
                 </div>
 
                 <v-dialog v-model="addorg">
@@ -279,9 +281,19 @@
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
 
-  // Vue.use(VueApollo);
+  import AccountButton from '@/components/AccountButton';
+  import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
+
+  import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
+
+  import PeopleFullWhite from '@/assets/navbar/people_full_white.svg';
+  import SuitcaseFullGray from '@/assets/navbar/suitcase_full_gray.svg';
 
   export default {
+    components: {
+      JobsAndApplicationsCounters,
+      AccountButton,
+    },
     data() {
       return {
         tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
@@ -308,6 +320,12 @@
         },
         settingsoption1: '',
         addorg: false,
+        jobs: [],
+        applications: [],
+        svgs: {
+          people: PeopleFullWhite,
+          suitcase: SuitcaseFullGray,
+        },
       };
     },
     methods: {
@@ -386,6 +404,8 @@
         });
       },
       fetchBusinessData() {
+        console.log('fetching business data');
+        console.log(this.$store.state.businessID);
         this.$apollo.query({
           query: (gql`query ($bid: MongoID) {
             findOrganization (filter: {
@@ -416,13 +436,58 @@
           console.error(error);
         });
       },
+      async fillUpJobs() {
+        const { business_name: businessName } = this.bdata;
+        const { data: { findJobs: jobs } } = await this.$apollo.query({
+          // this.$store.state.businessID
+          query: (gql`query ($businessName: String) {
+            findJobs (filter: { posted_by: $businessName}){
+              _id
+              active
+            }
+          }`),
+          variables: {
+            businessName, // this.$store.state.businessID,
+          },
+        });
+        this.jobs = this.jobs.concat(jobs.slice());
+        this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
+          .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
+      },
+      /* Returns applicants as an array from a specified job id. Trying to avoid side-effects here. */
+      async getApplicationsFromJobs({ _id: jobId }) {
+        const { data: { findApplicants: applications } } = await this.$apollo.query({
+          query: (gql`query ($JobId: MongoID) {
+            findApplicants (filter: {
+              job_id: $JobId
+            }) {
+                status
+            }
+          }`),
+          variables: {
+            JobId: jobId,
+          },
+        });
+
+        return applications;
+      },
+    },
+    computed: {
+      getJobsAndApplicationsCount() {
+        const { jobs, applications } = this;
+        return getCountersFromJobsAndApplications(jobs, applications);
+      },
     },
     created() {
-      VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-        if (data.bdata && data.acct === 2) {
-          this.bdata = data.bdata;
-        } else if (this.$store.state.businessID && data.acct === 2) {
-          this.fetchBusinessData();
+      VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
+        if (data.acct === 2) {
+          if (data.bdata) {
+            this.bdata = data.bdata;
+            console.log(data.bdata);
+          } else if (this.$store.state.businessID) {
+            this.fetchBusinessData();
+          }
+          await this.fillUpJobs(); // Depends on this.b_data being filled.
         } else if (data.acct === 1) {
           this.$router.push('/account');
         } else {

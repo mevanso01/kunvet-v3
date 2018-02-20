@@ -179,7 +179,7 @@
         </v-layout>
 
         <br>
-        <h3>Catagories</h3>
+        <h3>Categories</h3>
         <v-flex xs12 sm10 md8 class="no-padding">
           <div class="cust-radio-box">
             <v-radio-group v-model="type"

@@ -24,6 +24,22 @@
     text-align: center;
     padding: 20px 0;
   }
+  .acct-header img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+  }
+  .acct-header h3 {
+    display: inline-block;
+  }
+  .profile-pic-cont {
+    z-index: 1;
+  }
+  @media only screen and (min-width: 768px) and (orientation: landscape) {
+    .right-account-column {
+      text-align: right;
+    }
+  }
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
@@ -49,6 +65,7 @@
                               name="input-1-3"
                               label="Add school"
                               single-line
+                              @keyup.enter="saveSchool"
                             ></v-text-field>
                           </v-flex>
                           <v-flex xs2 v-show="updateSchool" class="no-padding">
@@ -87,10 +104,11 @@
                                 name="input-2"
                                 label="Add degree"
                                 single-line
+                                @keyup.enter="saveDegree"
                               ></v-text-field>
                             </v-flex>
                             <v-flex xs2 v-show="updateDegree" class="no-padding">
-                              <v-btn small  center class="cust-btn-1" @click="saveDegree">
+                              <v-btn small center class="cust-btn-1" @click="saveDegree">
                                 Save
                               </v-btn>
                             </v-flex>
@@ -125,6 +143,7 @@
                                 name="input-3"
                                 label="Add email to display"
                                 single-line
+                                @keyup.enter="saveEmail"
                               ></v-text-field>
                             </v-flex>
                             <v-flex xs2 v-show="updateEmail" class="no-padding">
@@ -142,11 +161,6 @@
                         <v-list-tile-content>
                           <v-list-tile-title>
                             {{ userdata.display_email }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('display email', userdata.display_email, 'display_email')">
-                              edit
-                            </v-icon>
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
@@ -164,8 +178,14 @@
 
             <v-layout row wrap>
               <v-flex xs12 sm6 md5 class="padding-sm-right">
-                <h3 class="acct-h3" v-bind:class="{ pink_color: userdata.resumes }">My Resumes</h3>
-                <v-list two-line class="acct-list" v-if="userdata.resumes">
+                <div class="acct-header">
+                  <img :src="svgs.resumeFull" />
+                  <h3 class="acct-h3">My Resumes</h3>
+                </div>
+                <p v-if="userdata.resumes.length === 0">
+                  Create a kunvet resume or upload your own. Use it to apply for any jobs on kunvet.
+                </p>
+                <v-list two-line class="acct-list" v-else>
                   <template v-for="(resume, index) in userdata.resumes">
                     <v-list-tile
                       :key="index"
@@ -191,14 +211,20 @@
                     <v-divider v-if="index + 1 < userdata.resumes.length" :key="index"></v-divider>
                   </template>
                 </v-list>
-                <v-btn small flat class="acct-btn" @click="showFileModal = true">
-                  Add Resume
-                </v-btn>
+                <account-button
+                  :text="'Add Resume'"
+                  :onClick="() => showFileModal = true"
+                />
               </v-flex>
-              <v-flex xs12 sm6 md5 offset-md2 class="padding-sm-left">
-                <h3 class="acct-h3 align-right-sm-up" v-bind:class="{ green_color: userdata.org_list }">My Organizations</h3>
-                <p style="text-align: right; color: #b0b0b0;" v-if="userdata.org_list == []">Create a profile for a business or organization</p>
-                <v-list two-line class="acct-list">
+              <v-flex xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
+                <div class="acct-header">
+                  <img :src="svgs.building" />
+                  <h3 class="acct-h3">My Organization</h3>
+                </div>
+                <p v-if="userdata.org_list && userdata.org_list.length === 0">
+                  If you own a business, school club, or other type of organization, then post your job here.
+                </p>
+                <v-list two-line class="acct-list" v-else>
                   <template v-for="(org, index) in org_list">
                     <v-list-tile
                       :key="org._id"
@@ -215,22 +241,41 @@
                     <v-divider v-if="index + 1 < org_list.length" :key="org._id"></v-divider>
                   </template>
                 </v-list>
-                <div class="float-right-sm-up">
-                  <v-btn small flat class="acct-btn" @click.native.stop="addorg = true">
-                    Create Organization
+                <div> 
+                  <v-btn
+                    style="text-transform: none; border: 1px solid black;"
+                    @click.native.stop="addorg = true">
+                      Create an Organization
                   </v-btn>
                 </div>
-
                 <v-dialog v-model="addorg">
                   <v-card>
                     <v-card-title class="headline">Create organization / business profile</v-card-title>
                     <v-card-actions>
-
                       <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Create</v-btn>
                       <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Cancel</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
+              </v-flex> 
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs12 sm6 offset-sm6 md5 offset-md7 class="right-account-column padding-sm-left">
+                <div class="acct-header">
+                  <img :src="svgs.suitCaseFullGray" />
+                  <h3 class="acct-h3">Posted Personal Jobs & Applicants</h3>
+                </div>
+                <p v-if="doesNotHaveJobs">
+                  Personal jobs are jobs that you offer as an individual
+                  If you are posting on behalf of a business,
+                  please create an organization from the menu bar.
+                </p>
+                <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
+                <div>
+                  <router-link to="/createnewjob">
+                    <account-button :text="'Post Personal Jobs'" />
+                  </router-link>
+                </div>
               </v-flex>
             </v-layout>
 
@@ -319,6 +364,15 @@
   import VuexLS from '@/store/persist';
   import axios from 'axios';
 
+  import AccountButton from '@/components/AccountButton';
+  import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
+
+  import ResumeSvg from '@/assets/navbar/resume_full.svg';
+  import SuitCaseFullGraySvg from '@/assets/navbar/suitcase_full_gray.svg';
+  import BuildingSvg from '@/assets/job_posts/building_1.svg';
+
+  import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
+
   export default {
     data() {
       return {
@@ -355,9 +409,93 @@
         deleteResumeIndex: null,
         deleteResumeName: null,
         showDeleteResumeDialog: false,
+        // TODO: Temporary mock data since I'm getting random graphQL errors from create-a-job.
+        jobs: [
+          /*
+          {
+            id: 0,
+            active: true,
+          },
+          {
+            id: 1,
+            active: false,
+          },
+          {
+            id: 2,
+            active: true,
+          },
+          */
+        ],
+        applications: [],
+        svgs: {
+          resumeFull: ResumeSvg,
+          suitCaseFullGray: SuitCaseFullGraySvg,
+          building: BuildingSvg,
+        },
       };
     },
+    components: {
+      JobsAndApplicationsCounters,
+      AccountButton,
+    },
+    computed: {
+      // TODO
+      // All this stuffs might be over-coding, but it's an experiment.
+      // My idea is that I want to keep the state as simple as possible
+      // (just a simple `jobs` and `applicants` property.
+      // I want to try to not break it up into multiple arrays because
+      // that increases the surface area for bugs.
+      // Furthermore I can use computed properties to cache the lengths
+      // of these arrays which should improve performance.
+      // Let me know what you think (if this is bad practice etc).
+      doesNotHaveJobs() {
+        const { jobs } = this;
+        return jobs.length === 0;
+      },
+      getJobsAndApplicationsCount() {
+        const { jobs, applications } = this;
+        return getCountersFromJobsAndApplications(jobs, applications);
+      },
+    },
     methods: {
+      async fillUpJobs() {
+        const { data: { findJobs: jobs } } = await this.$apollo.query({
+          query: (gql`query ($user: String) {
+            findJobs (filter: { posted_by: $user }){
+              _id
+              active
+            }
+          }`),
+          variables: {
+            user: this.user,
+          },
+        });
+        // TODO: Temporary concat for testing with base jobs state.
+        // This doesn't do any parsing at the moment since I don't know the complete object state yet.
+        this.jobs = this.jobs.concat(jobs.slice());
+        this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
+          .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
+
+        console.log(`Found jobs: ${this.jobs}`);
+        console.log(`Found applicants: ${this.applications}`);
+      },
+      /* Returns applicants as an array from a specified job id. Trying to avoid side-effects here. */
+      async getApplicationsFromJobs({ _id: jobId }) {
+        const { data: { findApplicants: applications } } = await this.$apollo.query({
+          query: (gql`query ($JobId: MongoID) {
+            findApplicants (filter: {
+              job_id: $JobId
+            }) {
+                status
+            }
+          }`),
+          variables: {
+            JobId: jobId,
+          },
+        });
+
+        return applications;
+      },
       filesChange(fieldName, fileList) {
         // handle file changes
         const formData = new FormData();
@@ -588,12 +726,15 @@
       },
     },
     created() {
-      VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
+      VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
+        console.log('Fetching data!', data);
         if (data.userdata.firstname && data.acct !== 0) {
-          console.log('Loading saved data');
           this.userdata = data.userdata;
           if (data.userdata.org_list) {
             this.populateOrgList();
+          }
+          if (data.acct === 1) { // Regular user. Should probably use constants soon.
+            await this.fillUpJobs();
           }
         } else if (data.acct !== 0) {
           console.log('Fetching from db');
@@ -601,6 +742,7 @@
         } else {
           this.$router.push('/login');
         }
+        console.log(this.jobs);
       });
     },
     /* beforeDestroy() {

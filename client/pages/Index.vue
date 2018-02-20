@@ -1,20 +1,26 @@
 <style lang="scss">
-.saved {
-  color: #ffcc00 !important;
-}
 .card {
   box-shadow: none;
 }
+
 .post-card {
-  /* padding-top: 6px;
-  padding-left: 10px; */
-  /* border-left: 5px solid #C6EDA1; */
+
+  padding-top: 6px;
+  padding-left: 10px;
+  border-left: 5px solid #C6EDA1;
+
+
+.saved {
+  color: #ffcc00 !important;
+}
+
 }
 .carditem {
   /* height: 50%; */
   margin-bottom: 5px;
   font-size: 10px;
   padding-top: 2px;
+
 }
 .carditem p {
   margin: 0;
@@ -94,10 +100,12 @@
 .fsSelect {
   height: 48px;
   border-top: 1px solid #eee;
-  /* border-right: 1px solid #eee; */
+  border-right: 1px solid #eee;
   border-left: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  border-radius: 6px 0 0 6px;
+  border-right: 1px solid #eee;
+  border-radius: 6px 6px 6px 6px;
+
 
 }
 .firstSearch .fsSelect .input-group__input {
@@ -163,7 +171,8 @@
               <section class="firstSearch" v-if="firstSearch">
                 <div style="padding-bottom: 30px; text-align: right;">
                   <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
-                  <h2 style="color: #333;">Find a job for you, near you</h2>
+                  <h2 style="color: #333;">Find a job that match your search and is actually nearby</h2>
+
                 </div>
                 <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
 
@@ -182,6 +191,7 @@
                     >
                     </v-select>
                     <v-select class="no-padding" style="width: 50%; display: inline-block;"
+
                       label="Positions (all)"
                       v-bind:items="availablePositions"
                       v-model="selectedPositions"
@@ -335,23 +345,30 @@
 
           <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
             <v-layout align-center row spacer slot="header">
+
               <v-flex xs8>
                 <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
                   <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
                 </v-avatar>
                 <div style="color: #A7A7A7; width: calc(100% - 46px); padding-top: 7px;">A certain inc</div>
               </v-flex>
-              <v-flex xs4>
+              <v-flex style="padding-left: 1px;">
+                <div style="color: #A7A7A7;">A certain inc</div>
+              </v-flex>
+              <v-flex xs12 sm6>
+
               <div class="float-right">
                 <v-avatar size="36px" slot="activator">
                   <v-icon class="whatshot">whatshot</v-icon>
                 </v-avatar>
+
                 <v-avatar size="36px" slot="activator" @click="saveJob(job._id)">
                   <v-icon class="bookmark-icon" v-bind:class="{ saved: saved_jobs.indexOf(job._id) !== -1 }">bookmark_border</v-icon>
                 </v-avatar>
               </div>
               </v-flex>
             </v-layout>
+
             <router-link :to="'JobDetail/'+job._id">
             <v-flex xs12 style="padding-top: 0px;">
               <div><p style="font-size: 150%;">{{ job.title }}</p></div>
@@ -374,6 +391,7 @@
                 <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
               </div>
             </v-flex>
+
             </router-link>
           </div>
 

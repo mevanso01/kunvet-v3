@@ -31,7 +31,8 @@ router.post('/login', ctx => KoaPassport.authenticate('local', (_, user) => {
       message: 'Authentication failure',
     };
     ctx.body = JSON.stringify(response);
-    // ctx.status = 401;
+
+    ctx.status = 401;
     return false;
   }
   // Success
@@ -46,6 +47,23 @@ router.post('/login', ctx => KoaPassport.authenticate('local', (_, user) => {
 router.get('/logout', (ctx) => {
   ctx.logout();
   ctx.body = '{"success":true}';
+});
+
+router.get('/status', (ctx) => {
+  if (ctx.isAuthenticated()) {
+    const response = {
+      success: true,
+      status: true,
+      user: ctx.state.user,
+    };
+    ctx.body = JSON.stringify(response);
+  } else {
+    const response = {
+      success: true,
+      status: false,
+    };
+    ctx.body = JSON.stringify(response);
+  }
 });
 
 router.post('/register', async (ctx) => {

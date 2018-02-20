@@ -117,9 +117,7 @@ Vue.use(Vuetify, {
     error: '#b71c1c',
   },
 });
-
 const Bus = new Vue();
-
 export default {
   data() {
     return {

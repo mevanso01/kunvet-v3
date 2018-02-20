@@ -172,7 +172,7 @@
         }).then((data) => {
           const jobs = data.data.findJobs;
           // console.log(this.jobs);
-          if (jobs[0]._id) {
+          if (jobs && jobs.length > 0 && jobs[0]._id) {
             this.selectedJob = { title: jobs[0].title, id: jobs[0]._id };
           }
           for (var i in jobs) {
@@ -207,7 +207,6 @@
           var applicants = d.data.findApplicants;
           this.applicants[jobId] = applicants;
           this.loading = false;
-          console.log(this.applicants);
         });
       },
     },

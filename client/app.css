@@ -655,6 +655,19 @@ body {
 #bottom-footer {
     opacity: 0.5;
 }
+#nav-bot {
+    font-size: 10px;
+    position: absolute;
+    text-align: center;
+    top: 40px;
+
+}
+#nav-img {
+    position: absolute;
+    left: 35px;
+    top: 12px;
+    width: 20px;
+}
 @media (max-width: 960px) and (min-width: 601px) {
   .padding-sm-right {
     padding-right: 15px;

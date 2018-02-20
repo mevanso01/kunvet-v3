@@ -9,4 +9,3 @@ import Models from '@/mongodb/Models';
 KoaPassport.use(Models.Account.createStrategy());
 KoaPassport.serializeUser(Models.Account.serializeUser());
 KoaPassport.deserializeUser(Models.Account.deserializeUser());
-
