@@ -4,7 +4,7 @@
   <div class="acct-header">
     <img class="acct-icon" :src="svg">
     <h3 class="acct-h3">
-        {{ text }}
+      {{ text }}
     </h3>
   </div>
 </template>
