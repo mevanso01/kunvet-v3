@@ -1,45 +1,29 @@
 <style>
-  .dropbox {
-    outline: 2px dashed grey; /* the dash box */
-    /* outline-offset: -8px; */
-    background: #f8f8f8;
-    color: dimgray;
-    /* padding: 10px 10px; */
-    min-height: 100px; /* minimum height */
-    position: relative;
-    cursor: pointer;
-  }
-  .dropbox .input-file {
-    opacity: 0;
-    width: 100%;
-    height: 100px;
-    position: absolute;
-    cursor: pointer;
-  }
-  .dropbox:hover {
-    background: lightblue; /* when mouse over to the drop zone, change color */
-  }
-  .dropbox p {
-    font-size: 1.2em;
-    text-align: center;
-    padding: 20px 0;
-  }
-  .acct-header img {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-  }
-  .acct-header h3 {
-    display: inline-block;
-  }
-  .profile-pic-cont {
-    z-index: 1;
-  }
-  @media only screen and (min-width: 768px) and (orientation: landscape) {
-    .right-account-column {
-      text-align: right;
-    }
-  }
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  /* outline-offset: -8px; */
+  background: #f8f8f8;
+  color: dimgray;
+  /* padding: 10px 10px; */
+  min-height: 100px; /* minimum height */
+  position: relative;
+  cursor: pointer;
+}
+.dropbox .input-file {
+  opacity: 0;
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  cursor: pointer;
+}
+.dropbox:hover {
+  background: lightblue; /* when mouse over to the drop zone, change color */
+}
+.dropbox p {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 20px 0;
+}
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
@@ -178,18 +162,16 @@
 
             <v-layout row wrap>
               <v-flex xs12 sm6 md5 class="padding-sm-right">
-                <div class="acct-header">
-                  <img :src="svgs.resumeFull" />
-                  <h3 class="acct-h3">My Resumes</h3>
-                </div>
+                <account-header
+                  :svg="svgs.resume"
+                  :text="'My Resumes'"
+                />
                 <p v-if="userdata.resumes.length === 0">
                   Create a kunvet resume or upload your own. Use it to apply for any jobs on kunvet.
                 </p>
                 <v-list two-line class="acct-list" v-else>
                   <template v-for="(resume, index) in userdata.resumes">
-                    <v-list-tile
-                      :key="index"
-                    >
+                    <v-list-tile :key="index">
                       <v-list-tile-content>
                         <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
                       </v-list-tile-content>
@@ -211,24 +193,24 @@
                     <v-divider v-if="index + 1 < userdata.resumes.length" :key="index"></v-divider>
                   </template>
                 </v-list>
-                <account-button
-                  :text="'Add Resume'"
-                  :onClick="() => showFileModal = true"
-                />
+                <v-btn
+                  class="acct-btn"
+                  @click="showFileModal = true"
+                >
+                  Add Resume
+                </v-btn>
               </v-flex>
               <v-flex xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
-                <div class="acct-header">
-                  <img :src="svgs.building" />
-                  <h3 class="acct-h3">My Organization</h3>
-                </div>
-                <p v-if="userdata.org_list && userdata.org_list.length === 0">
+                <account-header
+                  :svg="svgs.building"
+                  :text="'My Organization'"
+                />
+                <p v-if="org_list && org_list.length === 0">
                   If you own a business, school club, or other type of organization, then post your job here.
                 </p>
                 <v-list two-line class="acct-list" v-else>
                   <template v-for="(org, index) in org_list">
-                    <v-list-tile
-                      :key="org._id"
-                    >
+                    <v-list-tile :key="org._id">
                       <v-list-tile-content>
                         <v-list-tile-title>{{ org.name }}</v-list-tile-title>
                       </v-list-tile-content>
@@ -243,14 +225,15 @@
                 </v-list>
                 <div>
                   <v-btn
-                    style="text-transform: none; border: 1px solid black;"
-                    @click.native.stop="addorg = true">
-                      Create an Organization
+                    class="acct-btn"
+                    @click.native.stop="addorg = true"
+                  >
+                    Create an Organization
                   </v-btn>
                 </div>
                 <v-dialog v-model="addorg">
                   <v-card>
-                    <v-card-title class="headline">Create organization / business profile</v-card-title>
+                    <v-card-title class="headline">Create Organization / Business Profile</v-card-title>
                     <v-card-actions>
                       <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Create</v-btn>
                       <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Cancel</v-btn>
@@ -261,10 +244,10 @@
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12 sm6 offset-sm6 md5 offset-md7 class="right-account-column padding-sm-left">
-                <div class="acct-header">
-                  <img :src="svgs.suitCaseFullGray" />
-                  <h3 class="acct-h3">Posted Personal Jobs & Applicants</h3>
-                </div>
+                <account-header
+                  :svg="svgs.suitcase"
+                  :text="'Posted Personal Jobs & Applicants'"
+                />
                 <p v-if="doesNotHaveJobs">
                   Personal jobs are jobs that you offer as an individual
                   If you are posting on behalf of a business,
@@ -273,7 +256,9 @@
                 <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
                 <div>
                   <router-link to="/createnewjob">
-                    <account-button :text="'Post Personal Jobs'" />
+                    <v-btn class="acct-btn">
+                      Post Personal Jobs
+                    </v-btn>
                   </router-link>
                 </div>
               </v-flex>
@@ -364,12 +349,12 @@
   import VuexLS from '@/store/persist';
   import axios from 'axios';
 
-  import AccountButton from '@/components/AccountButton';
+  import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
 
-  import ResumeSvg from '@/assets/navbar/resume_full.svg';
-  import SuitCaseFullGraySvg from '@/assets/navbar/suitcase_full_gray.svg';
-  import BuildingSvg from '@/assets/job_posts/building_1.svg';
+  import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
+  import SuitcaseSvg from '@/assets/navbar/suitcase_full_black.svg';
+  import BuildingSvg from '@/assets/account/org_building_full_black.svg';
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
 
@@ -428,15 +413,15 @@
         ],
         applications: [],
         svgs: {
-          resumeFull: ResumeSvg,
-          suitCaseFullGray: SuitCaseFullGraySvg,
+          resume: ResumeSvg,
+          suitcase: SuitcaseSvg,
           building: BuildingSvg,
         },
       };
     },
     components: {
+      AccountHeader,
       JobsAndApplicationsCounters,
-      AccountButton,
     },
     computed: {
       // TODO
