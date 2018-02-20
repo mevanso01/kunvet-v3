@@ -176,7 +176,7 @@
         </v-card-title>
         <v-card-actions>
           <v-btn color="green darken-1" flat="flat" @click.native="onAccept">
-            Accept
+            Confirm
           </v-btn>
           <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showAccept= false">
             Cancel
@@ -191,7 +191,7 @@
         </v-card-title>
         <v-card-actions>
           <v-btn color="green darken-1" flat="flat" @click.native="onReject">
-            Rejcet
+            Confirm
           </v-btn>
           <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showReject = false">
             Cancel
