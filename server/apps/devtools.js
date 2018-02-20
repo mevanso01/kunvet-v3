@@ -73,7 +73,7 @@ router.get('/test-mailer', (ctx) => {
   ctx.body = 'Check your mailbox!';
 });
 
-router.post('/uploadfile', upload.single('file'), async (ctx) => {
+router.put('/uploadfile', upload.single('file'), async (ctx) => {
   const { file } = ctx.req;
   // Do stuff with the file here
   // create new fileobject

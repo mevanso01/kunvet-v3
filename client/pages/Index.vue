@@ -2,25 +2,19 @@
 .card {
   box-shadow: none;
 }
-
 .post-card {
-
   padding-top: 6px;
   padding-left: 10px;
-  border-left: 5px solid #C6EDA1;
-
-
+  /* border-left: 5px solid #C6EDA1; */
+}
 .saved {
   color: #ffcc00 !important;
-}
-
 }
 .carditem {
   /* height: 50%; */
   margin-bottom: 5px;
   font-size: 10px;
   padding-top: 2px;
-
 }
 .carditem p {
   margin: 0;
@@ -40,9 +34,9 @@
 .search .flex {
   padding: 10px 15px;
 }
-.input-group--select {
+/* .input-group--select {
   height: 66px;
-}
+} */
 .firstSearch .input-group__details{
   display: none !important;
 }

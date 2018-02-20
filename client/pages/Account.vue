@@ -241,7 +241,7 @@
                     <v-divider v-if="index + 1 < org_list.length" :key="org._id"></v-divider>
                   </template>
                 </v-list>
-                <div> 
+                <div>
                   <v-btn
                     style="text-transform: none; border: 1px solid black;"
                     @click.native.stop="addorg = true">
@@ -257,7 +257,7 @@
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
-              </v-flex> 
+              </v-flex>
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12 sm6 offset-sm6 md5 offset-md7 class="right-account-column padding-sm-left">

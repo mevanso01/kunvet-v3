@@ -238,7 +238,7 @@
               <v-radio-group
               v-model="salary_select"
               row
-              :rules="[v => !!(v) || 'Required']"
+              :rules="[v => !!(v) || !submitted || 'Required']"
               hide-details
               required>
                 <v-radio style="max-width: 95px;" label="Paid" value="paid"></v-radio>
@@ -507,8 +507,8 @@ export default {
       }
     },
     saveAndPost() {
-      this.$refs.form.validate();
       this.submitted = true;
+      this.$refs.form.validate();
       if (!this.sanitizeQuillInput('description')) { this.valid = false; }
       if (!this.sanitizeQuillInput('responsibilities')) { this.valid = false; }
       if (!this.sanitizeQuillInput('experience')) { this.valid = false; }
@@ -564,6 +564,8 @@ export default {
             title
             description
             address
+            latitude
+            longitude
             type
             studentfriendly
             type2
@@ -588,6 +590,9 @@ export default {
         if (job) {
           this.title = job.title;
           this.active = job.active;
+          this.address = job.address;
+          this.latitude = job.latitude;
+          this.longitude = job.latitude;
           this.type = job.type;
           this.studentfriendly = job.studentfriendly;
           this.type2 = job.type2;

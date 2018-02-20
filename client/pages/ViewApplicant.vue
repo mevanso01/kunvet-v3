@@ -159,16 +159,12 @@
 <script>
   import gql from 'graphql-tag';
   import pdf from 'vue-pdf';
-
   import ViewApplicantToolbarButton from '@/components/ViewApplicantToolbarButton';
-
   // This is the correct icon (over the font-awesome alternative). Leaving this here for later.
   import MajorPreferredSvg from '@/assets/jobdetail/major_preferred.svg';
   import ResumeFullSvg from '@/assets/navbar/resume_full.svg';
-
   // const loadingTask =
   // pdf.createLoadingTask('../../server/uploads/5a4081c6aafda36afb0bc423-1514266624436.pdf');
-
   export default {
     props: ['id'],
     components: {

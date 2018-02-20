@@ -1493,13 +1493,8 @@ chokidar@^1.7.0:
     fsevents "^1.0.0"
 
 chokidar@^2.0.0:
-<<<<<<< HEAD
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.0.1.tgz#6e67e9998fe10e8f651e975ca62460456ff8e297"
-=======
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.0.2.tgz#4dc65139eeb2714977735b6a35d06e97b494dfd7"
->>>>>>> 088cf217b854f435569c54f9df05d69db035b092
   dependencies:
     anymatch "^2.0.0"
     async-each "^1.0.0"
@@ -1511,11 +1506,7 @@ chokidar@^2.0.0:
     normalize-path "^2.1.1"
     path-is-absolute "^1.0.0"
     readdirp "^2.0.0"
-<<<<<<< HEAD
-    upath "1.0.0"
-=======
     upath "^1.0.0"
->>>>>>> 088cf217b854f435569c54f9df05d69db035b092
   optionalDependencies:
     fsevents "^1.0.0"
 
@@ -3432,26 +3423,15 @@ graphql-anywhere@^3.0.1:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-3.1.0.tgz#3ea0d8e8646b5cee68035016a9a7557c15c21e96"
 
-<<<<<<< HEAD
-graphql-compose-connection@>=2.5.3:
-  version "2.5.6"
-  resolved "https://registry.yarnpkg.com/graphql-compose-connection/-/graphql-compose-connection-2.5.6.tgz#6043253c836424ee33c08ff5f2cb369ca3a84198"
-=======
 graphql-compose-connection@>=2.5.7:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/graphql-compose-connection/-/graphql-compose-connection-2.5.7.tgz#09179730de1183e20edc768a5a8eae157f516d4b"
->>>>>>> 088cf217b854f435569c54f9df05d69db035b092
   dependencies:
     babel-runtime "^6.26.0"
 
 graphql-compose-mongoose@^1.8.0:
-<<<<<<< HEAD
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/graphql-compose-mongoose/-/graphql-compose-mongoose-1.11.2.tgz#921535f2bd68a9b83cab066daa5943478f0f35f4"
-=======
   version "1.11.3"
   resolved "https://registry.yarnpkg.com/graphql-compose-mongoose/-/graphql-compose-mongoose-1.11.3.tgz#1320cc0e2e9305652558837b193c963e0a67c8bb"
->>>>>>> 088cf217b854f435569c54f9df05d69db035b092
   dependencies:
     babel-runtime "^6.26.0"
     object-path "^0.11.4"
@@ -3459,15 +3439,9 @@ graphql-compose-mongoose@^1.8.0:
     graphql-compose-connection ">=2.5.7"
     graphql-compose-pagination ">=1.1.5"
 
-<<<<<<< HEAD
-graphql-compose-pagination@>=1.1.1:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/graphql-compose-pagination/-/graphql-compose-pagination-1.1.4.tgz#7bb0c2174c307d81ba32fa8ba3b9ff754e900f96"
-=======
 graphql-compose-pagination@>=1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/graphql-compose-pagination/-/graphql-compose-pagination-1.1.5.tgz#770f8f8c2ee56d613a26dcd28f87736879e305a0"
->>>>>>> 088cf217b854f435569c54f9df05d69db035b092
   dependencies:
     babel-runtime "^6.26.0"
 
@@ -4877,10 +4851,6 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@3.x:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
-
 lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.4:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
@@ -5912,13 +5882,8 @@ pbkdf2@^3.0.3:
     sha.js "^2.4.8"
 
 pdfjs-dist@^2.0.303:
-<<<<<<< HEAD
-  version "2.0.354"
-  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-2.0.354.tgz#1651c1687b2a84c266108d6913f47dbba5721706"
-=======
   version "2.0.374"
   resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-2.0.374.tgz#692fd42e5813f6266331a28b8f74428f4987cc01"
->>>>>>> 088cf217b854f435569c54f9df05d69db035b092
   dependencies:
     node-ensure "^0.0.0"
     worker-loader "^1.1.0"
@@ -7929,10 +7894,6 @@ underscore.deep@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/underscore.deep/-/underscore.deep-0.5.1.tgz#072671f48d68735c34223fcfef63e69e5276cc2b"
 
-underscore.string@2.3.x:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/underscore.string/-/underscore.string-2.3.3.tgz#71c08bf6b428b1133f37e78fa3a21c82f7329b0d"
-
 underscore.string@^3.2.3, underscore.string@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/underscore.string/-/underscore.string-3.3.4.tgz#2c2a3f9f83e64762fdc45e6ceac65142864213db"
@@ -8008,14 +7969,6 @@ unzip-response@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/unzip-response/-/unzip-response-2.0.1.tgz#d2f0f737d16b0615e72a6935ed04214572d56f97"
 
-<<<<<<< HEAD
-upath@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/upath/-/upath-1.0.0.tgz#b4706b9461ca8473adf89133d235689ca17f3656"
-  dependencies:
-    lodash "3.x"
-    underscore.string "2.3.x"
-=======
 upath@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.0.2.tgz#80aaae5395abc5fd402933ae2f58694f0860204c"
@@ -8024,7 +7977,6 @@ upath@^1.0.0:
     lodash.isfunction "^3.0.8"
     lodash.isstring "^4.0.1"
     lodash.startswith "^4.2.1"
->>>>>>> 088cf217b854f435569c54f9df05d69db035b092
 
 update-notifier@^2.3.0:
   version "2.3.0"
@@ -8238,9 +8190,9 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
 
-vue-timeago@^3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/vue-timeago/-/vue-timeago-3.4.2.tgz#291c99370975b0a6f7b65f8745fba878fb545fd8"
+vue-timeago@^3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/vue-timeago/-/vue-timeago-3.4.4.tgz#a878c9ba5840816939a89659451902f84ebdf23f"
 
 vue2-editor@^2.0.26:
   version "2.4.2"

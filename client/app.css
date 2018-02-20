@@ -46,6 +46,9 @@ h3 {
 .kunvet-red {
   color: #ef5350;
 }
+.kunvet-red-bg {
+  background-color: #ef5350 !important;
+}
 /*  ---- Styles to globally override Vuetify ----  */
 .application,
 .container {

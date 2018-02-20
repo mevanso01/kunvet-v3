@@ -137,6 +137,11 @@
 .top-container {
   margin-bottom: 8px;
 }
+.small-p {
+  font-size: 10pt;
+  color: #9e9e9e;
+  margin-bottom: 3px;
+}
 @media (max-width: 600px) {
   .flex {
     padding: 10px 1px;
@@ -178,7 +183,7 @@
 }
   .top-container {
     width: 100%;
-    height: 48px;
+    height: 40px;
   }
   .bottom-container {
     display: flex;
@@ -213,17 +218,12 @@
           <!--<router-link to="/">Back</router-link>-->
           <div class="top-container">
             <div class="float-left">
-            <v-layout align-center row spacer slot="header">
-              <v-flex xs8>
-                <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
-                  <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
-                </v-avatar>
-              </v-flex>
-              <v-flex xs8>
-      		<div style="color: #A7A7A7; margin-right: 1px;">{{ findJob.posted_by }}</div>
-              </v-flex>
-            </v-layout>
-
+              <v-avatar size="38px" slot="activator" style="float: left; margin-right: 10px;">
+                <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+              </v-avatar>
+            </div>
+      		  <div class="float-left" style="color: #A7A7A7; margin-right: 1px;">
+              <h3>{{ findJob.posted_by }}</h3>
             </div>
           </div>
           <v-divider></v-divider>
@@ -247,29 +247,6 @@
           <img style="width: 15px;" :src="Internship"></img> Orange Icons</div>
           <p class="post-intro" style="margin-top: 10px;">Categories:</p>
       </div>
-      <!-- <v-divider></v-divider> -->
-      <!--<div class="general-stripe">
-          <div id="job-shifts" class="general-stripe-cont">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 64">
-                        <rect id="job-shift-morning" x="0" width="192" height="64" style="opacity: 1;"></rect>
-                        <text x="96" y="48" text-anchor="middle" style="opacity: 1;">Morning</text>
-                        <rect id="job-shift-noon" x="192" width="192" height="64" style="opacity: 1;"></rect>
-                        <text x="288" y="48" text-anchor="middle" style="opacity: 1;">Noon</text>
-                        <rect id="job-shift-afternoon" x="384" width="192" height="64" style="opacity: 1;"></rect>
-                        <text x="480" y="48" text-anchor="middle" style="opacity: 1;">Afternoon</text>
-                        <rect id="job-shift-evening" x="576" width="192" height="64" style="opacity: 1;"></rect>
-                        <text x="672" y="48" text-anchor="middle" style="opacity: 1;">Evening</text>
-                        <rect id="job-shift-midnight" x="768" width="192" height="64"></rect>
-                        <text x="864" y="48" text-anchor="middle" width="192" height="64" style="opacity: 1;">>Mid-night</text>
-                        <circle id="job-shift-moon" cx="944" cy="16" r="8"></circle>
-                    <path id="job-shift-curve" d="M0,32A1588.55,1588.55,0,0,1,288,8c105.5.84,169.85,11.9,288,24,90.91,9.31,222,20.09,384,24"></path>
-                </svg>
-                <span class="general-tag" name="job-shift">Morning</span>
-                <span class="general-tag" name="job-shift">Noon</span>
-                <span class="general-tag" name="job-shift">Afternoon</span>
-                <span class="general-tag" name="job-shift">Evening</span>
-          </div>
-      </div>-->
       <div class="sub-container">
           <h2>Description</h2>
           <div v-html="findJob.description"></div>
@@ -290,11 +267,34 @@
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
                 <v-icon class="bookmark-icon">bookmark_border</v-icon>
               </v-btn>
-              <v-btn round outline class="red--text darken-1">Apply</v-btn>
+              <v-btn round outline class="red--text darken-1" @click="apply">Apply</v-btn>
             </div>
           </div>
       </div>
     </div>
+
+    <v-dialog v-model="applydialog">
+      <v-card style="padding: 20px;">
+        <h3>Select resume to send</h3>
+        <v-select style="padding-top: 0;"
+          v-bind:items="resumenames"
+          v-model="selectedResume"
+          single-line
+          hide-details
+        >
+        </v-select>
+        <br>
+        <p style="margin-bottom: 8px;">My info:</p>
+        <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
+        <p class="small-p">{{ userdata.display_email }}</p>
+        <p class="small-p">{{ userdata.school }}</p>
+        <p class="small-p">{{ userdata.degree }}</p>
+        <br>
+        <v-card-actions style="padding-bottom: 0;">
+          <v-btn flat style="margin: auto;" class="kunvet-red-bg white--text" @click="createApplication">Apply</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
   </v-container>
 </template>
@@ -307,21 +307,14 @@ import InternshipSvg from '@/assets/jobdetail/internship.svg';
 import ffullSvg from '@/assets/jobdetail/facebook_full.svg';
 import fstrokeSvg from '@/assets/jobdetail/facebook_stroke.svg';
 import sanitizeHtml from 'sanitize-html';
+import VuexLS from '@/store/persist';
 
 Vue.use(Vuetify);
 Vue.use(VueApollo);
 
 
 export default {
-  created() {
-    this.getData();
-  },
   props: ['id'],
-  /* apollo: {
-    findJob: {
-
-    },
-  }, */
   data() {
     return {
       // id: this.$route.params.id,
@@ -329,6 +322,19 @@ export default {
       Internship: InternshipSvg,
       ffull: ffullSvg,
       fstroke: fstrokeSvg,
+      uid: null,
+      applydialog: false,
+      userdata: {
+        firstname: null,
+        lastname: null,
+        school: null,
+        degree: null,
+        display_email: null,
+      },
+      resumes: [],
+      resumenames: [],
+      selectedResume: null,
+      userdatafetched: false,
     };
   },
   computed: {
@@ -359,6 +365,105 @@ export default {
         console.log(this.findJob);
       });
     },
+    apply() {
+      this.applydialog = true;
+      if (!this.userdatafetched) {
+        this._getUserData();
+      }
+    },
+    _getUserData() {
+      this.$apollo.query({
+        query: (gql`query ($uid: MongoID) {
+          findAccount (filter: {
+            _id: $uid
+          }) {
+            firstname
+            lastname
+            school
+            degree
+            display_email
+            resumes {
+              name
+              filename
+              resumeid
+            }
+          }
+        }`),
+        variables: {
+          uid: this.uid,
+        },
+      }).then((data) => {
+        const res = data.data.findAccount;
+        console.log(res);
+        this.userdata.firstname = res.firstname;
+        this.userdata.lastname = res.lastname;
+        this.userdata.school = res.school;
+        this.userdata.degree = res.degree;
+        this.userdata.display_email = res.display_email;
+        this.resumes = res.resumes;
+        for (var r in res.resumes) {
+          if (res.resumes[r].name) {
+            this.resumenames.push(res.resumes[r].name);
+          }
+        }
+        if (this.resumenames.length > 0) {
+          this.selectedResume = this.resumenames[0];
+        }
+        console.log(this.resumenames);
+        this.userdatafetched = true;
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+    createApplication() {
+      // validate
+      if (this.uid && this.userdata) {
+        const index = this.resumenames.indexOf(this.selectedResume);
+        const application = {
+          user_id: this.uid,
+          job_id: this.id,
+          name: `${this.userdata.firstname} ${this.userdata.lastname}`,
+          school: this.userdata.school,
+          degree: this.userdata.degree,
+          email: this.userdata.display_email,
+          resume: {
+            filename: this.resumes[index].filename,
+            resumeid: this.resumes[index].resumeid,
+          },
+        };
+        this.$apollo.mutate({
+          mutation: (gql`mutation ($application: CreateOneApplicantInput!) {
+            createApplication (record: $application) {
+              recordId
+              record {
+                user_id
+                job_id
+                school
+                degree
+                email
+              }
+            }
+          }`),
+          variables: { application },
+        }).then((data) => {
+          console.log(data);
+        }).catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+  },
+  created() {
+    this.getData();
+    if (this.$store.state.userID) {
+      this.uid = this.$store.state.userID;
+    } else {
+      VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
+        if (data.userID) {
+          this.uid = data.userID;
+        }
+      });
+    }
   },
 };
 </script>
