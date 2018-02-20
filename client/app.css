@@ -671,7 +671,7 @@ body {
     top: 12px;
     width: 20px;
 }
-@media (max-width: 960px) and (min-width: 601px) {
+@media (min-width: 601px) and (max-width: 960px) {
   .padding-sm-right {
     padding-right: 15px;
   }
@@ -681,7 +681,7 @@ body {
 }
 @media (min-width: 961px) {
   .flex {
-    padding: 10px 15px;
+    padding: 10px 0;
   }
   section {
       position: relative;

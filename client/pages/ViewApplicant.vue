@@ -150,7 +150,7 @@
 
             </v-layout>
 
-            <v-divider style="margin: 0 15px; width: auto; border-bottom: 1px solid black;"></v-divider>
+            <v-divider class="acct-divider" />
 
             <v-layout row wrap>
               <v-flex>
