@@ -206,15 +206,13 @@
                   :svg="svgs.suitcase"
                   :text="'Posted Jobs and Applicants'"
                 />
-                <div class="float-right-sm-up">
-                  <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
-                  <div>
-                    <router-link to="/createnewjob">
-                      <v-btn class="acct-btn">
-                        Post a Job
-                      </v-btn>
-                    </router-link>
-                  </div>
+                <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
+                <div>
+                  <router-link to="/createnewjob">
+                    <v-btn class="acct-btn">
+                      Post a Job
+                    </v-btn>
+                  </router-link>
                 </div>
 
                 <v-dialog v-model="addorg">
