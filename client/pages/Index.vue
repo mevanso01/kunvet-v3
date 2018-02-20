@@ -166,15 +166,10 @@
                 <div style="padding-bottom: 30px; text-align: right;">
                   <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
                   <h2 style="color: #333;">Find a job that match your search and is actually nearby</h2>
-
                 </div>
                 <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
-
-
-
                   <v-flex xs10 sm10 offset-sm1 md8 offset-md3
-                  no-wrap class="grey--text no-padding fsSelect" ellipsis>
-
+                    no-wrap class="grey--text no-padding fsSelect" ellipsis>
                     <v-select class="no-padding" style="width: 50%; display: inline-block; border-right: 1px solid #eee;"
                       label="City or School"
                       v-bind:items="availableCities"
@@ -185,7 +180,6 @@
                     >
                     </v-select>
                     <v-select class="no-padding" style="width: 50%; display: inline-block;"
-
                       label="Positions (all)"
                       v-bind:items="availablePositions"
                       v-model="selectedPositions"
@@ -194,39 +188,32 @@
                       hide-details
                     >
                     </v-select>
-
                   </v-flex>
-
                   <v-flex xs2 sm1 class="no-padding fsGoBtn" @click="searchGo">
                     <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>
                   </v-flex>
                 </v-layout>
-
                 <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
-                <v-flex md15>
-                  <img style="width: 100%;" :src="cityImage"></img>
-                </v-flex>
+                  <v-flex md15>
+                    <img style="width: 100%;" :src="cityImage"></img>
+                  </v-flex>
                 </v-layout>
-
                 <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px; ">
                     <v-layout id="rua">
                       <v-card v-for="n in 2">
                         <v-card-text>
                           <v-layout>
-                            <v-avatar size="50px" slot="activator" style="display: block; margin: 0 auto;">
-		              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Jiang_Zemin1.png/220px-Jiang_Zemin1.png" alt="">
-		             </v-avatar>
+                              <v-avatar size="50px" slot="activator" style="display: block; margin: 0 auto;">
+		                           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Jiang_Zemin1.png/220px-Jiang_Zemin1.png" alt="">
+		                         </v-avatar>
                            </v-layout>
                           <div style="margin-top: 10px;">
                           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, qui
                           </div>
                          </v-card-text>
                       </v-card>
-
                     </v-layout>
                 </v-layout>
-
-
                 <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
                   <v-flex xs12 md8>
                       <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
@@ -234,27 +221,17 @@
                   <v-flex xs12 md8>
                       <v-card-title><div class="headline">Who is Elder?</div></v-card-title>
                       <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
-
                   </v-flex>
-
-
                 </v-layout>
-
                 <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
-
                   <v-flex xs12 md8>
                       <v-card-title><div class="headline">Who is Elder?</div></v-card-title>
                       <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
-
-
                   </v-flex>
                   <v-flex xs12 md8>
                       <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
                   </v-flex>
-
-
                 </v-layout>
-
                 <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
                   <v-flex xs12 md8>
                       <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
@@ -264,13 +241,8 @@
                       <div class="headline">Who is Elder?</div>
                       </v-card-title>
                       <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
-
                   </v-flex>
-
-
                 </v-layout>
-
-
               </section>
 
                 <section v-if="!firstSearch" class="search">

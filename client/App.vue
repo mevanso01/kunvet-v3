@@ -34,8 +34,6 @@
             </v-btn>
           </router-link>
         </v-toolbar-items>
-
-
     </v-toolbar>
 
     <v-navigation-drawer absolute temporary right light v-model="drawer" overflow>
