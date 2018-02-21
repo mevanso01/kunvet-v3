@@ -358,6 +358,14 @@ const FileSchema = Mongoose.Schema({
     required: true,
     default: false,
   },
+  protected: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  accessList: [
+    Mongoose.Schema.Types.ObjectId,
+  ],
 });
 
 const AccountSchema = Mongoose.Schema({
