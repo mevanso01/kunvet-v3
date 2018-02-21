@@ -138,9 +138,9 @@
   margin-bottom: 8px;
 }
 .small-p {
-  font-size: 10pt;
+  font-size: 12px;
   color: #9e9e9e;
-  margin-bottom: 3px;
+  margin-bottom: 0px;
 }
 @media (max-width: 600px) {
   .flex {
@@ -276,13 +276,20 @@
     <v-dialog v-model="applydialog">
       <v-card style="padding: 20px;">
         <h3>Select resume to send</h3>
-        <v-select style="padding-top: 0;"
+        <!--<v-select style="padding-top: 0;"
           v-bind:items="resumenames"
           v-model="selectedResume"
           single-line
           hide-details
         >
-        </v-select>
+        </v-select>-->
+        <v-radio-group v-model="selectedResume" hide-details class="kunvet-red">
+          <v-radio v-for="resume in resumes"
+            :key="resume.name"
+            :label="resume.name"
+            :value="resume.name">
+          </v-radio>
+        </v-radio-group>
         <br>
         <p style="margin-bottom: 8px;">My info:</p>
         <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
@@ -441,6 +448,10 @@ export default {
                 school
                 degree
                 email
+                resume {
+                  filename
+                  resumeid
+                }
               }
             }
           }`),

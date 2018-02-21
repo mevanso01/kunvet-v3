@@ -3,7 +3,7 @@
   color: red;
 }
 .createnewjob-container .ql-editor {
-    min-height: 120px;
+  min-height: 120px;
 }
 .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
   margin-bottom: 0;

@@ -82,7 +82,7 @@ router.put('/uploadfile', upload.single('file'), async (ctx) => {
   ctx.status = 200;
 });
 
-router.post('/removefile', (ctx) => {
+router.put('/removefile', (ctx) => {
   const filename = ctx.request.body.filename;
   if (filename) {
     fs.unlinkSync(`server/uploads/${filename}`);

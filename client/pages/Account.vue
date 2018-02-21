@@ -282,8 +282,8 @@
             <v-dialog v-model="showFileModal">
               <v-card>
                 <v-card-title>
-                <form enctype="multipart/form-data" novalidate style="width: 100%;"
-                    v-if="currentStatus === 'INITIAL' || currentStatus === 'SAVING'">
+                <div v-if="currentStatus === 'INITIAL' || currentStatus === 'SAVING'">
+                <form enctype="multipart/form-data" novalidate style="width: 100%;">
                   <h1>Upload Resume</h1>
                   <div class="dropbox">
                     <input
@@ -313,6 +313,12 @@
                   single-line
                   placeholder="Resume name"
                 ></v-text-field>
+                </div>
+                <div style="min-height: 40px;" v-if="currentStatus === 'FAILED'">
+                  <h3 style="display: inline-block;">
+                    Oops! Something went wrong on our end. Please try again later
+                  </h3>
+                </div>
                 </v-card-title>
                 <v-card-actions>
                   <v-btn flat="flat" @click="closeFileModal">Cancel</v-btn>
@@ -473,6 +479,7 @@
         // TODO: Temporary concat for testing with base jobs state.
         // This doesn't do any parsing at the moment since I don't know the complete object state yet.
         this.jobs = this.jobs.concat(jobs.slice());
+        console.log('JOBS', this.jobs);
         this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
           .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
 
@@ -522,7 +529,7 @@
           // graphql query:
           // .then(
           // )
-          axios.post('http://localhost:3000/uploadfile', data, headers).then((res) => {
+          axios.put('http://localhost:3000/uploadfile', data, headers).then((res) => {
             const _filename = res.data;
             if (this.userdata.resumes) {
               this.userdata.resumes.push({
@@ -561,7 +568,7 @@
           const headers = { emulateJSON: true };
           const data = { filename: this.userdata.resumes[index].filename };
           console.log(data);
-          this.$http.post('http://localhost:3000/removefile', data, headers).then(() => {
+          this.$http.put('http://localhost:3000/removefile', data, headers).then(() => {
             this.userdata.resumes.splice(index, 1);
             this.saveUserdata();
           }, (error) => {
