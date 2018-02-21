@@ -460,9 +460,6 @@
         this.jobs = this.jobs.concat(jobs.slice());
         this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
           .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
-
-        console.log(`Found jobs: ${this.jobs}`);
-        console.log(`Found applicants: ${this.applications}`);
       },
       /* Returns applicants as an array from a specified job id. Trying to avoid side-effects here. */
       async getApplicationsFromJobs({ _id: jobId }) {
@@ -471,7 +468,7 @@
             findApplicants (filter: {
               job_id: $JobId
             }) {
-                status
+              status
             }
           }`),
           variables: {
@@ -712,7 +709,6 @@
     },
     created() {
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
-        console.log('Fetching data!', data);
         if (data.userdata.firstname && data.acct !== 0) {
           this.userdata = data.userdata;
           if (data.userdata.org_list) {
@@ -722,12 +718,10 @@
             await this.fillUpJobs();
           }
         } else if (data.acct !== 0) {
-          console.log('Fetching from db');
           this.fetchData();
         } else {
           this.$router.push('/login');
         }
-        console.log(this.jobs);
       });
     },
     /* beforeDestroy() {

@@ -147,7 +147,6 @@
                   </v-flex>
                 </v-layout>
               </v-flex>
-
             </v-layout>
 
             <v-divider class="acct-divider" />
@@ -222,12 +221,11 @@
         // TODO: Temporary!!
         // Remove when necessary. Mock data because I hate seeding databases manually D:.
         data: {
-          name: 'Chau',
-          school: 'Bolsa Grande High School',
-          degree: 'Computer Science and Engineering',
-          email: 'chautnguyen96@gmail.com',
+          name: null,
+          school: null,
+          email: null,
           notes: null,
-          status: 'submitted',
+          status: null,
         },
         src: undefined,
         numPages: undefined,
@@ -344,20 +342,22 @@
           console.error(error);
         });
       },
-      async onAccept() {
-        const { findApplicant: { status } } = this.$apollo.mutate({
-          mutation: (gql`mutation ($applicantId: MongoID, $status: EnumApplicantStatus) {
+      async updateApplicantStatus(newStatus) {
+        const { findApplicant: { status } } = await this.$apollo.mutate({
+          mutation: (gql`mutation ($applicantId: MongoID, $record: UpdateOneApplicantInput!) {
            updateApplication (filter: {
              _id: $applicantId
-           }, record: {
-             status: $status
-           }) {
-             status
+           }, record: $record) {
+             record {
+               status
+             }
            }
           }`),
           variables: {
             applicantId: this.id,
-            status: 'accepted',
+            record: {
+              status: newStatus,
+            },
           },
           refetchQueries: [{
             query: gql`query ($aplId: MongoID) {
@@ -370,35 +370,14 @@
             variables: { aplId: this.id },
           }],
         });
+
         this.data.status = status;
       },
+      async onAccept() {
+        await this.updateApplicantStatus('accepted');
+      },
       async onReject() {
-        const { findApplicant: { status } } = await this.$apollo.mutate({
-          mutation: (gql`mutation ($applicantId: MongoID, $status: EnumApplicantStatus) {
-            updateApplication (filter: {
-              _id: $applicantId
-            }, record: {
-              status: $status
-            }) {
-              status
-            }
-          }`),
-          variables: {
-            applicantId: this.id,
-            status: 'rejected',
-          },
-          refetchQueries: [{
-            query: gql`query ($aplId: MongoID) {
-              findApplicant (filter: {
-                _id: $aplId
-              }) {
-                status
-              }
-            }`,
-            variables: { aplId: this.id },
-          }],
-        });
-        this.data.status = status;
+        await this.updateApplicantStatus('rejected');
       },
     },
     computed: {

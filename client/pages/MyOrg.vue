@@ -448,7 +448,7 @@
             findApplicants (filter: {
               job_id: $JobId
             }) {
-                status
+              status
             }
           }`),
           variables: {
