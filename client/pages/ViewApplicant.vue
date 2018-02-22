@@ -370,7 +370,7 @@
             variables: { aplId: this.id },
           }],
         });
-
+        console.log('STATUS', status);
         this.data.status = status;
       },
       async onAccept() {

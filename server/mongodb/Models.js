@@ -127,7 +127,7 @@ const ApplicantSchema = Mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['submitted', 'processing', 'processed', 'accepted', 'rejected', 'withdrawn'],
+    enum: ['submitted', 'opened', 'processing', 'processed', 'accepted', 'rejected', 'withdrawn'],
     default: 'submitted',
   },
   name: String,
@@ -420,6 +420,15 @@ const AccountSchema = Mongoose.Schema({
   org_list: {  // list of mongoIDs
     type: { default: [] },
   },
+  notifications: [{
+    text: String,
+    link: String,
+    type: Number,
+    date: {
+      type: { Date },
+      default: Date.now,
+    },
+  }],
 });
 AccountSchema.plugin(PassportLocalMongoose, {
   usernameField: 'email',

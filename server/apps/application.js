@@ -95,7 +95,7 @@ router.post('/:id/setStatus/:status', async (ctx) => {
   }
 
   // Send notification to applicant
-  if (['processed', 'accepted', 'rejected'].includes(ctx.params.status)) {
+  if (['opened', 'accepted', 'rejected'].includes(ctx.params.status)) {
     const mailer = new Mailer();
     try {
       await mailer.sendTemplate(
@@ -127,4 +127,3 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 export default app;
-
