@@ -35,7 +35,6 @@ import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import KoaMulter from 'koa-multer';
 import KoaSend from 'koa-send';
-import KCors from 'kcors';
 
 // Utils
 import Models from '@/mongodb/Models';
@@ -183,7 +182,6 @@ router.get('/get/:id', async (ctx) => {
   await KoaSend(ctx, fileSlot.uploadPath);
 });
 
-app.use(KCors());
 app.use(router.routes());
 app.use(router.allowedMethods());
 

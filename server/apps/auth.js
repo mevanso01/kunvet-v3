@@ -6,7 +6,6 @@
 // Koa
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
-import KCors from 'kcors';
 
 // Passport
 import KoaPassport from 'koa-passport';
@@ -163,9 +162,6 @@ router.get('/status', (ctx) => {
   }
 });
 
-app.use(KCors({
-  credentials: true,
-}));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
