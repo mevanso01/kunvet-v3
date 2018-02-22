@@ -2,16 +2,10 @@
 .card {
   box-shadow: none;
 }
-.post-card {
-  padding-top: 6px;
-  padding-left: 10px;
-  /* border-left: 5px solid #C6EDA1; */
-}
 .saved {
   color: #ffcc00 !important;
 }
 .carditem {
-  /* height: 50%; */
   margin-bottom: 5px;
   font-size: 10px;
   padding-top: 2px;
@@ -99,8 +93,6 @@
   border-bottom: 1px solid #eee;
   border-right: 1px solid #eee;
   border-radius: 6px 6px 6px 6px;
-
-
 }
 .firstSearch .fsSelect .input-group__input {
   padding-left: 16px !important;
@@ -135,12 +127,11 @@
     display: none;
   }
 }
-
-  .top-container {
-    width: 100%;
-    height: 48px;
-  }
-  .top-container {
+.top-container {
+  width: 100%;
+  height: 48px;
+}
+.top-container {
   margin-bottom: 8px;
 }
 #rua {
@@ -149,7 +140,6 @@
   overflow-x: hidden;
   justify-content: center;
   background: #FCFCFC;
-
   .card {
     flex: 0 0 auto;
     width: 200px;
@@ -309,7 +299,7 @@
 
       <v-layout row wrap v-if="!firstSearch">
 
-          <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
+        <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
             <v-layout align-center row spacer slot="header">
 
               <v-flex xs8>
@@ -335,31 +325,32 @@
               </v-flex>
             </v-layout>
 
-            <router-link :to="'JobDetail/'+job._id">
-            <v-flex xs12 style="padding-top: 0px;">
-              <div><p style="font-size: 150%;">{{ job.title }}</p></div>
-              <!--<div class="carditem" style="color: #A7A7A7;"><timeago since="February 14, 2005"></timeago></div>-->
-              <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
-                <p><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ job.address }}</p>
-              </div>
-              <!--<div class="carditem">
-                <p><v-icon style="font-size: 17px; padding-right: 10px;">sms</v-icon> Average review</p>
-              </div>-->
-              <div class="carditem">
-                <p><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> Part time / Full time ~Internship ~ 10.50 per hour</p>
-              </div>
-              <div class="carditem">
-                <p><v-icon style="font-size: 17px; padding-right: 10px;">account_circle</v-icon> Not student friendly ~ experience required</p>
-              </div>
+          <router-link :to="'JobDetail/'+job._id">
+            <v-layout>
+              <v-flex xs12 style="padding-top: 0px;">
+                <div><p style="font-size: 150%;">{{ job.title }}</p></div>
+                <!--<div class="carditem" style="color: #A7A7A7;"><timeago since="February 14, 2005"></timeago></div>-->
+                <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
+                  <p><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ job.address }}</p>
+                </div>
+                <!--<div class="carditem">
+                  <p><v-icon style="font-size: 17px; padding-right: 10px;">sms</v-icon> Average review</p>
+                </div>-->
+                <div class="carditem">
+                  <p><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> Part time / Full time ~Internship ~ 10.50 per hour</p>
+                </div>
+                <div class="carditem">
+                  <p><v-icon style="font-size: 17px; padding-right: 10px;">account_circle</v-icon> Not student friendly ~ experience required</p>
+                </div>
 
-              <div class="image-row">
-                <!-- insert gallary here -->
-                <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
-              </div>
-            </v-flex>
-
-            </router-link>
-          </div>
+                <div class="image-row">
+                  <!-- insert gallary here -->
+                  <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
+                </div>
+              </v-flex>
+            </v-layout>
+          </router-link>
+        </div>
 
       </v-layout>
     </div>
