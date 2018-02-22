@@ -267,7 +267,7 @@
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
                 <v-icon class="bookmark-icon">bookmark_border</v-icon>
               </v-btn>
-              <v-btn round outline class="red--text darken-1" @click="apply">Apply</v-btn>
+              <v-btn v-bind:class="{ 'kunvet-red-bg': applied }" round outline class="red--text darken-1" @click="apply">Apply</v-btn>
             </div>
           </div>
       </div>
@@ -342,6 +342,7 @@ export default {
       resumenames: [],
       selectedResume: null,
       userdatafetched: false,
+      applied: false,
     };
   },
   computed: {
@@ -422,6 +423,28 @@ export default {
         console.error(error);
       });
     },
+    _checkIsApplied() {
+      this.$apollo.query({
+        query: (gql`query ($uid: MongoID, $id: MongoID) {
+          findApplicant (filter: {
+            user_id: $uid,
+            job_id: $id
+          }) {
+            _id
+          }
+        }`),
+        variables: {
+          uid: this.uid,
+          id: this.id,
+        },
+      }).then((data) => {
+        if (data.data.findApplicant) {
+          this.applied = true;
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
     createApplication() {
       // validate
       if (this.uid && this.userdata) {
@@ -468,10 +491,12 @@ export default {
     this.getData();
     if (this.$store.state.userID) {
       this.uid = this.$store.state.userID;
+      this._checkIsApplied();
     } else {
       VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
         if (data.userID) {
           this.uid = data.userID;
+          this._checkIsApplied();
         }
       });
     }
