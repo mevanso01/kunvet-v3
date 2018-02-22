@@ -1,18 +1,4 @@
 <style>
-/* argh duplicate code between this and Account.vue */
-.acct-header img {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-}
-.acct-header h3 {
-  display: inline-block;
-}
-@media only screen and (min-width: 768px) and (orientation: landscape) {
-  .right-account-column {
-    text-align: right;
-  }
-}
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
@@ -179,7 +165,6 @@
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
-
                     </v-list>
                   </v-flex>
                 </v-layout>
@@ -190,12 +175,12 @@
               </v-flex>
             </v-layout>
 
-            <v-divider style="margin: 0 15px; width: auto;"></v-divider>
+            <v-divider class="acct-divider" />
 
             <v-layout row wrap>
               <v-flex xs12 sm6 md5 class="padding-sm-right">
                 <div class="acct-header">
-                  <img :src="svgs.people" />
+                  <img :src="svgs.people" class="acct-icon" />
                   <h3 class="acct-h3">
                     About Us
                     <v-icon
@@ -207,25 +192,27 @@
                   </h3>
                 </div>
                 <p v-if="bdata.biography">{{ bdata.biography }}</p>
-                <account-button
+                <v-btn
                   v-else
-                  :text="'Add a Description'"
-                  :onClick="() => createEditModal('biography', '', 'biography')"
-                />
+                  class="acct-btn"
+                  @click="createEditModal('biography', '', 'biography')"
+                >
+                  Add a Description
+                </v-btn>
               </v-flex>
 
               <v-flex xs12 sm6 offset-md1 class="right-account-column padding-sm-left">
-                <div class="acct-header">
-                  <img :src="svgs.suitcase" />
-                  <h3 class="acct-h3">Posted Jobs and Applicants</h3>
-                </div>
-                <div class="float-right-sm-up">
-                  <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
-                  <div>
-                    <router-link to="/createnewjob">
-                      <account-button :text="'Post a Job'" />
-                    </router-link>
-                  </div>
+                <account-header
+                  :svg="svgs.suitcase"
+                  :text="'Posted Jobs and Applicants'"
+                />
+                <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
+                <div>
+                  <router-link to="/createnewjob">
+                    <v-btn class="acct-btn">
+                      Post a Job
+                    </v-btn>
+                  </router-link>
                 </div>
 
                 <v-dialog v-model="addorg">
@@ -281,18 +268,18 @@
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
 
-  import AccountButton from '@/components/AccountButton';
+  import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
 
-  import PeopleFullWhite from '@/assets/navbar/people_full_white.svg';
-  import SuitcaseFullGray from '@/assets/navbar/suitcase_full_gray.svg';
+  import PeopleSvg from '@/assets/account/people_full_black.svg';
+  import SuitcaseSvg from '@/assets/navbar/suitcase_full_black.svg';
 
   export default {
     components: {
+      AccountHeader,
       JobsAndApplicationsCounters,
-      AccountButton,
     },
     data() {
       return {
@@ -323,8 +310,8 @@
         jobs: [],
         applications: [],
         svgs: {
-          people: PeopleFullWhite,
-          suitcase: SuitcaseFullGray,
+          people: PeopleSvg,
+          suitcase: SuitcaseSvg,
         },
       };
     },
@@ -461,7 +448,7 @@
             findApplicants (filter: {
               job_id: $JobId
             }) {
-                status
+              status
             }
           }`),
           variables: {

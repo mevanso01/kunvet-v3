@@ -1,31 +1,38 @@
 <style>
-  .view-applicant-page .notes {
-    width: 100%;
-    background: #fafafa;
-    padding: 1px 10px 5px 10px;
-  }
-  .view-applicant-page .saveNotesDiv {
-    width: 100%;
-    background: #fafafa;
-    padding: 3px 10px 5px 10px;
-  }
-  .view-applicant-page .saveNotes {
-    cursor: pointer;
-    padding-right: 10px;
-    text-decoration: underline;
-  }
-  .view-applicant-page .list__tile__title {
-    user-select: text;
-  }
-  .resume-header img {
-    display: inline-block;
-  }
-  .resume-header h2 {
-    display: inline-block;
-  }
-  .profile-pic-cont {
-    z-index: 0;
-  }
+.view-applicant-page .notes {
+  width: 100%;
+  background: #fafafa;
+  padding: 1px 10px 5px 10px;
+}
+.view-applicant-page .saveNotesDiv {
+  width: 100%;
+  background: #fafafa;
+  padding: 3px 10px 5px 10px;
+}
+.view-applicant-page .saveNotes {
+  cursor: pointer;
+  padding-right: 10px;
+  text-decoration: underline;
+}
+.view-applicant-page .list__tile__title {
+  user-select: text;
+}
+.resume-header img {
+  display: inline-block;
+}
+.resume-header h2 {
+  display: inline-block;
+}
+.view-applicant-profile-pic-cont {
+  float: none;
+}
+.view-applicant-btn {
+  height: 36px !important;
+  margin: 15px 5px !important;
+  text-transform: none;
+  border-width: 1px;
+  border-style: solid;
+}
 </style>
 <template>
   <v-container fluid class="view-applicant-page white-bg">
@@ -34,25 +41,30 @@
             <v-toolbar card style="z-index: 1; border-bottom: 1px solid black;">
               <v-toolbar-items style="width: 100%; display: block;">
                 <div class="float-left">
-                  <view-applicant-toolbar-button
-                    :onClick="() => updateNotes(data.notes)"
-                    :text="`${!data.notes ? 'Make' : 'Edit'} Note`"
-                  />
+                  <v-btn
+                    class="view-applicant-btn"
+                    style="border-color: black;"
+                    @click="updateNotes(data.notes)"
+                  >
+                    {{ `${!data.notes ? 'Make' : 'Edit' } Note` }}
+                  </v-btn>
                 </div>
                 <div class="float-right">
                   <span v-if="!isAcceptedOrRejected">
-                    <view-applicant-toolbar-button
-                      :onClick="onAccept"
-                      :text="!buttons.acceptClicked ? 'Accept' : 'Confirm'"
-                      :color="'#FF9800'"
-                      :isFilled="buttons.acceptClicked"
-                    />
-                    <view-applicant-toolbar-button
-                      :onClick="onReject"
-                    :text="!buttons.rejectClicked ? 'Reject' : 'Confirm'"
-                    :color="'#F44336'"
-                    :isFilled="buttons.rejectClicked"
-                    />
+                    <v-btn
+                      class="view-applicant-btn"
+                      style="border-color: #FF9800; color: #FF9800;"
+                      @click.native.stop="dialogs.showAccept = true"
+                    >
+                      Accept
+                    </v-btn>
+                    <v-btn
+                      class="view-applicant-btn"
+                      style="border-color: #F44336; color: #F44336;"
+                      @click.native.stop="dialogs.showReject = true"
+                    >
+                      Reject
+                    </v-btn>
                   </span>
                   <span
                     v-else
@@ -61,11 +73,12 @@
                     {{ getAcceptedOrRejectedText }}
                   </span>
                   <router-link :to="'/applicants'">
-                    <view-applicant-toolbar-button
-                      :onClick="() => {}"
-                      :text="'Back'"
-                      :color="'black'"
-                    />
+                    <v-btn
+                      class="view-applicant-btn"
+                      style="border-color: black;"
+                    >
+                      Back
+                    </v-btn>
                   </router-link>
                 </div>
               </v-toolbar-items>
@@ -92,7 +105,7 @@
             </div>
             <v-layout style="padding-top: 30px;">
               <v-flex sm4 class="hidden-xs-only">
-                <div class="profile-pic-cont hidden-xs-only">
+                <div class="view-applicant-profile-pic-cont profile-pic-cont hidden-xs-only">
                 </div>
               </v-flex>
               <v-flex xs12 sm8>
@@ -134,14 +147,16 @@
                   </v-flex>
                 </v-layout>
               </v-flex>
-
             </v-layout>
 
-            <v-divider style="margin: 0 15px; width: auto; border-bottom: 1px solid black;"></v-divider>
+            <v-divider class="acct-divider" />
 
             <v-layout row wrap>
               <v-flex>
-                <div class="resume-header"><img :src="svgs.resume" width="25" height="25" /> <h2>Resume</h2></div>
+                <account-header
+                  :svg="svgs.resume"
+                  :text="'Resume'"
+                />
                 <pdf
                   v-if="src"
                   v-for="i in numPages"
@@ -153,35 +168,64 @@
             </v-layout>
           </section>
     </div>
+    <v-dialog v-model="dialogs.showAccept">
+      <v-card>
+        <v-card-title class="headline">
+          Accept Applicant
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="green darken-1" flat="flat" @click.native="onAccept">
+            Confirm
+          </v-btn>
+          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showAccept= false">
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialogs.showReject">
+      <v-card>
+        <v-card-title class="headline">
+          Reject Applicant
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="green darken-1" flat="flat" @click.native="onReject">
+            Confirm
+          </v-btn>
+          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showReject = false">
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
-
 <script>
   import gql from 'graphql-tag';
   import pdf from 'vue-pdf';
-  import ViewApplicantToolbarButton from '@/components/ViewApplicantToolbarButton';
-  // This is the correct icon (over the font-awesome alternative). Leaving this here for later.
+
+  import AccountHeader from '@/components/AccountHeader';
+
   import MajorPreferredSvg from '@/assets/jobdetail/major_preferred.svg';
-  import ResumeFullSvg from '@/assets/navbar/resume_full.svg';
+  import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
   // const loadingTask =
   // pdf.createLoadingTask('../../server/uploads/5a4081c6aafda36afb0bc423-1514266624436.pdf');
   export default {
     props: ['id'],
     components: {
+      AccountHeader,
       pdf,
-      ViewApplicantToolbarButton,
     },
     data() {
       return {
         // TODO: Temporary!!
         // Remove when necessary. Mock data because I hate seeding databases manually D:.
         data: {
-          name: 'Chau',
-          school: 'Bolsa Grande High School',
-          degree: 'Computer Science and Engineering',
-          email: 'chautnguyen96@gmail.com',
+          name: null,
+          school: null,
+          email: null,
           notes: null,
-          status: 'submitted',
+          status: null,
         },
         src: undefined,
         numPages: undefined,
@@ -190,11 +234,11 @@
         // mock data end
         svgs: {
           majorPreferred: MajorPreferredSvg,
-          resume: ResumeFullSvg,
+          resume: ResumeSvg,
         },
-        buttons: {
-          acceptClicked: false,
-          rejectClicked: false,
+        dialogs: {
+          showAccept: false,
+          showReject: false,
         },
         /*
         data: {
@@ -298,81 +342,42 @@
           console.error(error);
         });
       },
-      async onAccept() {
-        const { buttons: { acceptClicked, rejectClicked } } = this;
-        if (!acceptClicked) {
-          this.buttons.acceptClicked = true;
-          if (rejectClicked) this.buttons.rejectClicked = false;
-        } else {
-          this.resetButtonsState();
-          // handle mutation
-          const { findApplicant: { status } } = this.$apollo.mutate({
-            mutation: (gql`mutation ($applicantId: MongoID, $status: EnumApplicantStatus) {
-             updateApplication (filter: {
-               _id: $applicantId
-             }, record: {
-               status: $status
-             }) {
+      async updateApplicantStatus(newStatus) {
+        const { findApplicant: { status } } = await this.$apollo.mutate({
+          mutation: (gql`mutation ($applicantId: MongoID, $record: UpdateOneApplicantInput!) {
+           updateApplication (filter: {
+             _id: $applicantId
+           }, record: $record) {
+             record {
                status
              }
-            }`),
-            variables: {
-              applicantId: this.id,
-              status: 'accepted',
+           }
+          }`),
+          variables: {
+            applicantId: this.id,
+            record: {
+              status: newStatus,
             },
-            refetchQueries: [{
-              query: gql`query ($aplId: MongoID) {
-                findApplicant (filter: {
-                  _id: $aplId
-                }) {
-                  status
-                }
-              }`,
-              variables: { aplId: this.id },
-            }],
-          });
-          this.data.status = status;
-        }
-      },
-      async onReject() {
-        const { buttons: { acceptClicked, rejectClicked } } = this;
-        if (!rejectClicked) {
-          this.buttons.rejectClicked = true;
-          if (acceptClicked) this.buttons.acceptClicked = false;
-        } else {
-          this.resetButtonsState();
-          // handle mutation
-          const { findApplicant: { status } } = await this.$apollo.mutate({
-            mutation: (gql`mutation ($applicantId: MongoID, $status: EnumApplicantStatus) {
-              updateApplication (filter: {
-                _id: $applicantId
-              }, record: {
-                status: $status
+          },
+          refetchQueries: [{
+            query: gql`query ($aplId: MongoID) {
+              findApplicant (filter: {
+                _id: $aplId
               }) {
                 status
               }
-            }`),
-            variables: {
-              applicantId: this.id,
-              status: 'rejected',
-            },
-            refetchQueries: [{
-              query: gql`query ($aplId: MongoID) {
-                findApplicant (filter: {
-                  _id: $aplId
-                }) {
-                  status
-                }
-              }`,
-              variables: { aplId: this.id },
-            }],
-          });
-          this.data.status = status;
-        }
+            }`,
+            variables: { aplId: this.id },
+          }],
+        });
+
+        this.data.status = status;
       },
-      resetButtonsState() { // Not really necessary, but helps code-wise.
-        this.buttons.acceptClicked = false;
-        this.buttons.rejectClicked = false;
+      async onAccept() {
+        await this.updateApplicantStatus('accepted');
+      },
+      async onReject() {
+        await this.updateApplicantStatus('rejected');
       },
     },
     computed: {
