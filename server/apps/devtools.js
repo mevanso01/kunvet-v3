@@ -73,7 +73,7 @@ router.get('/test-mailer', (ctx) => {
   ctx.body = 'Check your mailbox!';
 });
 
-router.put('/uploadfile', upload.single('file'), async (ctx) => {
+router.post('/uploadfile', upload.single('file'), async (ctx) => {
   const { file } = ctx.req;
   // Do stuff with the file here
   // create new fileobject
@@ -82,7 +82,7 @@ router.put('/uploadfile', upload.single('file'), async (ctx) => {
   ctx.status = 200;
 });
 
-router.put('/removefile', (ctx) => {
+router.post('/removefile', (ctx) => {
   const filename = ctx.request.body.filename;
   if (filename) {
     fs.unlinkSync(`server/uploads/${filename}`);
@@ -101,7 +101,9 @@ router.put('/removefile', (ctx) => {
   console.log(ctx.request.body);
 }); */
 
-
+app.use(KCors({
+  credentials: true,
+}));
 app.use(router.routes());
 app.use(router.allowedMethods());
 

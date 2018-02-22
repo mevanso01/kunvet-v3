@@ -186,10 +186,8 @@
                   Create a kunvet resume or upload your own. Use it to apply for any jobs on kunvet.
                 </p>
                 <v-list two-line class="acct-list" v-else>
-                  <template v-for="(resume, index) in userdata.resumes">
-                    <v-list-tile
-                      :key="index"
-                    >
+                  <div v-for="(resume, index) in userdata.resumes" :key="index">
+                    <v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
                       </v-list-tile-content>
@@ -208,8 +206,8 @@
                         </v-btn>
                       </v-list-tile-action>
                     </v-list-tile>
-                    <v-divider v-if="index + 1 < userdata.resumes.length" :key="index"></v-divider>
-                  </template>
+                    <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
+                  </div>
                 </v-list>
                 <account-button
                   :text="'Add Resume'"
@@ -529,7 +527,7 @@
           // graphql query:
           // .then(
           // )
-          axios.put('http://localhost:3000/uploadfile', data, headers).then((res) => {
+          axios.post('http://localhost:3000/uploadfile', data, headers).then((res) => {
             const _filename = res.data;
             if (this.userdata.resumes) {
               this.userdata.resumes.push({
@@ -568,7 +566,7 @@
           const headers = { emulateJSON: true };
           const data = { filename: this.userdata.resumes[index].filename };
           console.log(data);
-          this.$http.put('http://localhost:3000/removefile', data, headers).then(() => {
+          this.$http.post('http://localhost:3000/removefile', data, headers).then(() => {
             this.userdata.resumes.splice(index, 1);
             this.saveUserdata();
           }, (error) => {
