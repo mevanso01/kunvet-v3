@@ -49,7 +49,6 @@ import App from '@/App';
 import store from '@/store';
 
 
-// Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(Vuex);

@@ -361,13 +361,11 @@
 <script>
 import gql from 'graphql-tag';
 import Vue from 'vue';
-import Vuetify from 'vuetify';
 import VueApollo from 'vue-apollo';
 import Store from '@/store';
 import VuexLS from '@/store/persist';
 import CitySvg from '@/assets/vc.svg';
 
-Vue.use(Vuetify);
 Vue.use(VueApollo);
 
 export default {

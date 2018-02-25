@@ -51,13 +51,20 @@ h3 {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.dialog {
+  max-width: 420px;
+}
 .application,
 .container {
   background-color: #fff;
 }
+.application.theme--light,
+.theme--light,
 .application--light .input-group--selection-controls .input-group__input,
 .input-group--selection-control .input-group__input,
 .application--light .input-group:not(.input-group--error) .input-group--selection-controls label,
+.theme--light .input-group:not(.input-group--error) label,
+.theme--light .input-group--selection-controls .icon--selection-control,
 .accent--text {
   color: #4d4d4d;
 }
@@ -93,8 +100,8 @@ h3 {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
-.kunvet-red {
-  color: #ef5350;
+.kunvet-red, .kunvet-red.input-group--active label {
+  color: #ef5350 !important;
 }
 .kunvet-red-bg {
   background-color: #ef5350 !important;
@@ -756,8 +763,8 @@ body {
     body, .application {
       background-color: #fff;
     }
-    .main-navbar {
-        height: 56px;
+    .main-navbar, .main-navbar .toolbar__content {
+      height: 56px !important;
     }
     #nav-logo {
         left: 16px;

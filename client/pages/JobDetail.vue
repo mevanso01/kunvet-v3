@@ -192,7 +192,7 @@
     <v-dialog v-model="applydialog">
       <v-card style="padding: 20px;">
         <h3>Select resume to send</h3>
-        <v-radio-group v-model="selectedResume">
+        <v-radio-group v-model="selectedResume" hide-details>
           <v-radio v-for="(resume, index) in resumes"
             class="kunvet-red"
             :key="index"
@@ -201,7 +201,7 @@
           </v-radio>
         </v-radio-group>
         <br>
-        <p style="margin-bottom: 8px;">My info:</p>
+        <p style="margin-bottom: 2px;">My info:</p>
         <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
         <p class="small-p">{{ userdata.display_email }}</p>
         <p class="small-p">{{ userdata.school }}</p>
@@ -385,10 +385,9 @@ export default {
             this.resumes.push(res.resumes[r]);
           }
         }
-        /* if (this.resumenames.length > 0) {
-          this.selectedResume = this.resumenames[0];
-        } */
-        console.log(this.resumenames);
+        if (this.resumes.length > 0) {
+          this.selectedResume = this.resumes[0].name;
+        }
         this.userdatafetched = true;
       }).catch((error) => {
         console.error(error);

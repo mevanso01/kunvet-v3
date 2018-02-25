@@ -111,7 +111,7 @@
 .optional_p {
   margin-bottom: 5px;
 }
-@media (max-width: 960px) {
+@media (min-width: 600px) {
   .requirements .flex {
     padding: 0 15px;
   }
@@ -187,9 +187,12 @@
               hide-details
               :rules="[(type) => !!(type) || 'Required']"
               requred>
-              <v-radio label="full time" :value="['fulltime']"></v-radio>
-              <v-radio label="part time" :value="['parttime']"></v-radio>
-              <v-radio label="both" :value="['fulltime', 'parttime']"></v-radio>
+              <v-radio label="Full time" value="fulltime"></v-radio>
+              <v-radio label="Part time" value="parttime"></v-radio>
+              <v-radio label="Both" value="both"></v-radio>
+              <!--<v-radio label="Full time" value="['fulltime']"></v-radio>
+              <v-radio label="Part time" value="['parttime']"></v-radio>
+              <v-radio label="Both" value="['fulltime', 'parttime']"></v-radio>-->
             </v-radio-group>
           </div>
         </v-flex>
@@ -406,6 +409,7 @@ export default {
       autocomplete: null,
       latitude: null,
       longitude: null,
+      type_str: null,
       type: null,
       type_current: null,
       type2: null,
@@ -472,13 +476,22 @@ export default {
     changeRadio(property) {
       const properties = ['type2'];
       const p = properties[property];
-      console.log(property, p);
       if (this[p] === this[`${p}_current`]) {
         this[p] = null;
         this[`${p}_current`] = null;
       } else {
         this[p] = this[`${p}_current`];
       }
+    },
+    jobTypeStrToType(s) {
+      if (s === 'fulltime') {
+        return ['fulltime'];
+      } else if (s === 'parttime') {
+        return ['parttime'];
+      } else if (s === 'both') {
+        return ['fulltime', 'parttime'];
+      }
+      return null;
     },
     saveForLater() {
       this.active = false;
@@ -538,7 +551,7 @@ export default {
         address: this.address,
         latitude: this.latitude,
         longitude: this.longitude,
-        type: this.type,
+        type: this.jobTypeStrToType(this.type),
         studentfriendly: this.studentfriendly,
         type2: this.type2,
         shift: this.shift === [] ? null : this.shift,
@@ -593,7 +606,11 @@ export default {
           this.address = job.address;
           this.latitude = job.latitude;
           this.longitude = job.latitude;
-          this.type = job.type;
+          if (job.type.lenght > 1) {
+            this.type = 'both';
+          } else if (job.type) {
+            this.type = job.type[0];
+          }
           this.studentfriendly = job.studentfriendly;
           this.type2 = job.type2;
           this.type2_current = job.type2;

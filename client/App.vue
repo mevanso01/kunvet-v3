@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar fixed class="main-navbar" light v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
+    <v-toolbar fixed class="main-navbar" height="64px" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
       <router-link to="/">
             <div id="nav-logo">
                 <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">
@@ -101,11 +101,12 @@
 
 <script>
 import 'font-awesome/scss/font-awesome.scss';
-import 'vuetify/dist/vuetify.min.css';
+// import 'vuetify/dist/vuetify.min.css';
+import 'vuetify/src/stylus/main.styl';
 import Vue from 'vue';
+import Vuetify from 'vuetify';
 import Store from '@/store';
 import VuexLS from '@/store/persist';
-import Vuetify from 'vuetify';
 // svgs
 import afw from './assets/navbar/applicant_full_white.svg';
 import sfw from './assets/navbar/suitcase_full_white.svg';
@@ -114,12 +115,18 @@ import bellIconFull from './assets/navbar/bell_full_white.svg';
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#3f51b5',
+    primary: '#616161',
     secondary: '#b0bec5',
-    accent: '#8c9eff',
+    accent: '#4d4d4d',
     error: '#b71c1c',
   },
+  options: {
+    minifyTheme(val) {
+      return process.env.NODE_ENV === 'production' ? val.replace(/[\s|\r\n|\r|\n]/g, '') : null;
+    },
+  },
 });
+
 const Bus = new Vue();
 export default {
   data() {
@@ -204,6 +211,7 @@ export default {
 </script>
 
 <style lang="scss">
+// @import 'vuetify/src/stylus/main';
 @import 'app.css';
 @import 'account.css';
 @import 'postsAndSearch.css';

@@ -38,7 +38,7 @@
   <v-container fluid class="view-applicant-page white-bg">
     <div class="main-cont-large">
           <section style="padding: 0; margin: 15px; width: auto;">
-            <v-toolbar card style="z-index: 1; border-bottom: 1px solid black;">
+            <v-toolbar height="64px" card style="z-index: 1; border-bottom: 1px solid black; padding: 0 12px;">
               <v-toolbar-items style="width: 100%; display: block;">
                 <div class="float-left">
                   <v-btn
