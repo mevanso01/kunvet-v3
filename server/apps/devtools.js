@@ -87,21 +87,7 @@ router.post('/removefile', (ctx) => {
     ctx.status = 200;
   }
 });
-/* router.post('/uploadfile', (ctx) => {
-  fs.writeFile('uploads/testfilename.pdf', ctx.request.body.file, 'utf8', (error) => {
-    if (error) {
-      console.log('error', error);
-    } else {
-      console.log('success');
-    }
-  });
-  ctx.body = 'hello';
-  console.log(ctx.request.body);
-}); */
 
-app.use(KCors({
-  credentials: true,
-}));
 app.use(router.routes());
 app.use(router.allowedMethods());
 

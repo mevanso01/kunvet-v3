@@ -329,7 +329,7 @@
             <v-layout>
               <v-flex xs12 style="padding-top: 0px;">
                 <div><p style="font-size: 150%;">{{ job.title }}</p></div>
-                <!--<div class="carditem" style="color: #A7A7A7;"><timeago since="February 14, 2005"></timeago></div>-->
+                <div class="carditem" style="color: #A7A7A7;"><timeago since="February 14, 2018"></timeago></div>
                 <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
                   <p><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ job.address }}</p>
                 </div>

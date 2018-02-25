@@ -24,80 +24,6 @@
     font-size: 9pt;
     color: #9e9e9e;
 }
-#job-shifts .general-tag {
-    display: none;
-}
-#job-shifts svg {
-    width: 100%;
-}
-#job-shifts svg text {
-    fill: #fff;
-    opacity: 0;
-}
-#job-shift-morning {
-    fill: #29b6f6;
-    opacity: 0.0625;
-}
-#job-shift-noon {
-    fill: #fbc02d;
-    opacity: 0.0625;
-}
-#job-shift-afternoon {
-    fill: #f57c00;
-    opacity: 0.0625;
-}
-#job-shift-evening {
-    fill: #0d47a1;
-    opacity: 0.0625;
-}
-#job-shift-midnight {
-    fill: #1a237e;
-    opacity: 0.0625;
-}
-#job-shift-moon {
-    fill: #ffeb3b;
-    opacity: 0;
-}
-#job-shift-curve {
-    fill: none;
-    stroke: #fff;
-    stroke-miterlimit: 10;
-    stroke-width: 2px;
-    opacity: 0.2;
-}
-#job-threes {
-    position: relative;
-    height: 256px;
-}
-#job-education,
-#job-age,
-#job-language {
-    position: absolute;
-    width: calc(100% / 3);
-    height: calc(100% - 96px);
-    padding: 16px;
-    box-sizing: border-box;
-    text-align: center;
-}
-#job-education i,
-#job-age i,
-#job-language i {
-    font-size: 48pt;
-}
-#job-education {
-    left: 0;
-}
-#job-age {
-    left: calc(100% / 3);
-    border-left: 1px solid #e6e6e6;
-    border-right: 1px solid #e6e6e6;
-}
-#job-language {
-    left: calc(100% / 3 * 2);
-}
-#job-images {
-    padding: 0;
-}
 .job-image {
     background-size: 8px 8px;
     background-position: center center;
@@ -121,26 +47,52 @@
 .job-image img:hover {
     transform: scale(1.0625);
 }
-.post-title-cont {
-  margin-top: 16px;
-  height: 48px;
-  width: auto;
-}
 .post-title {
   font-size: 30px;
   line-height: 1.2;
-  float: left;
-  width: 100%;
-  margin-bottom: 0;
-  position: absolute;
+  margin-top: 12px;
+  margin-bottom: 2px;
 }
-.top-container {
-  margin-bottom: 8px;
+.job-info-icon {
+  height: 15px;
+  margin: 0 1px;
+  transform: translateY(1px);
+}
+.blue-row {
+  font-size: 15px;
+  color: #666;
 }
 .small-p {
   font-size: 12px;
   color: #9e9e9e;
   margin-bottom: 0px;
+}
+.pr-8 {
+  padding-right: 8px;
+}
+.top-container {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 8px;
+}
+.bottom-container {
+  display: flex;
+  height: 48px;
+}
+.orange-row {
+  /* color: white;
+  background-color: rgba(227, 148, 0, 0.25); */
+  padding: 4px;
+  margin-bottom: 5px;
+}
+.bookmark-btn .icon {
+  font-size: 24px !important;
+  height: 24px !important;
+  width: 24px !important;
+}
+.bookmark-btn {
+  height: 36px !important;
+  width: 36px !important;
 }
 @media (max-width: 600px) {
   .flex {
@@ -150,29 +102,10 @@
     height: 32px;
     margin-top: 8px;
   }
-    .post-title {
-      font-size: 240px;
-      line-height: 1.2;
-    }
-    #job-shifts {
-        padding: 16px 16px;
-        background-color: #fafafa;
-    }
-    #job-shifts svg {
-        display: none;
-    }
-    #job-shifts .general-tag {
-        display: inline;
-    }
-    #job-threes {
-        height: 192px;
-    }
-    #job-education,
-    #job-age,
-    #job-language {
-        height: calc(100% - 32px);
-        font-size: 9pt;
-    }
+  .post-title {
+    font-size: 24px;
+    line-height: 1.2;
+  }
 }
 @media (min-width: 961px) {
   .job-detail-container {
@@ -181,35 +114,6 @@
     border: 1px solid #e0e0e0;
   }
 }
-  .top-container {
-    width: 100%;
-    height: 40px;
-  }
-  .bottom-container {
-    display: flex;
-    height: 48px;
-  }
-  .blue-row {
-    /* color: white;
-    background-color: rgba(0, 152, 227, 0.25); */
-    padding: 4px;
-    margin-bottom: 5px;
-  }
-  .orange-row {
-    /* color: white;
-    background-color: rgba(227, 148, 0, 0.25); */
-    padding: 4px;
-    margin-bottom: 5px;
-  }
-  .bookmark-btn .icon {
-    font-size: 24px !important;
-    height: 24px !important;
-    width: 24px !important;
-  }
-  .bookmark-btn {
-    height: 36px !important;
-    width: 36px !important;
-  }
 </style>
 <template>
   <v-container fluid style="padding-left: 0; padding-right: 0;">
@@ -223,46 +127,57 @@
               </v-avatar>
             </div>
       		  <div class="float-left" style="color: #A7A7A7; margin-right: 1px;">
-              <h3>{{ findJob.posted_by }}</h3>
+              <h3 style="color: #616161;">{{ findJob.posted_by }}</h3>
             </div>
           </div>
           <v-divider></v-divider>
-          <div class="post-title-cont">
-            <h2 class="post-title">{{ findJob.title }}</h2>
+          <h2 class="post-title">{{ findJob.title }}</h2>
+          <div class="carditem" style="color: #A7A7A7; margin-bottom: 10px; font-size: 11px;"><timeago :since="findJob.date"></timeago></div>
+          <div class="carditem" style="color: #A7A7A7;">
+            <p class="small-p">
+              <v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon><span style="padding-top: 2px; text-decoration: underline;">{{ findJob.address }}</span>
+            </p>
           </div>
-          <div class="post-address" style="color: #A7A7A7; padding: -10px 1px;">time position</div>
-          <div class="carditem" style="color: #A7A7A7; text-decoration: underline;"><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ findJob.address }}</div>
-
-          <div class="blue-row">
-          <img style="width: 15px;" :src="Internship"></img> Blue Icons
-          <img style="width: 15px;" :src="Internship"></img> Blue Icons
-          <img style="width: 15px;" :src="Internship"></img> Blue Icons
-          <img style="width: 15px;" :src="Internship"></img> Blue Icons</div>
-          <div class="orange-row">
-          <img style="width: 15px;" :src="Internship"></img> Green Icons
-      </div>
-          <div class="orange-row">
-          <img style="width: 15px;" :src="Internship"></img> Orange Icons
-          <img style="width: 15px;" :src="Internship"></img> Orange Icons
-          <img style="width: 15px;" :src="Internship"></img> Orange Icons</div>
-          <p class="post-intro" style="margin-top: 10px;">Categories:</p>
+          <div class="blue-row" style="margin-top: 8px;">
+            <span v-if="findJob.type2" class="pr-8">
+              <img class="job-info-icon" :src="Internship"></img>
+              <span v-for="type in findJob.type2"> {{ type }}</span>
+            </span>
+            <span v-if="findJob.studentfriendly" class="pr-8">
+              <img class="job-info-icon" :src="sfSvg"></img> student friendly
+            </span>
+            <span class="pr-8">
+              <img class="job-info-icon" :src="Clock"></img>
+              <span v-for="(type, index) in jobType"> {{ type }}<span v-if="index + 1 < jobType.length">,</span></span>
+            </span>
+            <span>
+              <img class="job-info-icon" :src="sSvg"></img> {{ salary }}
+            </span>
+          </div>
+          <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
+          <div class="blue-row" style="margin-bottom: 16px;">
+            <img class="job-info-icon" :src="Clock"></img>
+            <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></span>
+          </div>
+          <v-divider></v-divider>
       </div>
       <div class="sub-container">
-          <h2>Description</h2>
+          <h2 style="margin-bottom: 8px;">Job Overview</h2>
           <div v-html="findJob.description"></div>
 
-          <h2>Requirements</h2>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-            when an unknown printer took a galley of type and scrambled it to make a type
-            specimen book.</p>
+          <h2 style="margin-bottom: 8px;">Experience</h2>
+          <div v-html="findJob.experience"></div>
+
+          <h2 style="margin-bottom: 8px;">Responsibilities</h2>
+          <div v-html="findJob.responsibilities"></div>
+
           <div class="bottom-container">
             <div style="margin: hidden;">
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-                <img style="width: 90%;" :src="ffull"></img>
+                <img style="width: 90%;" :src="FBfull"></img>
               </v-btn>
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-                <img style="width: 90%;" :src="fstroke"></img>
+                <img style="width: 90%;" :src="FBstroke"></img>
               </v-btn>
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
                 <v-icon class="bookmark-icon">bookmark_border</v-icon>
@@ -276,16 +191,10 @@
     <v-dialog v-model="applydialog">
       <v-card style="padding: 20px;">
         <h3>Select resume to send</h3>
-        <!--<v-select style="padding-top: 0;"
-          v-bind:items="resumenames"
-          v-model="selectedResume"
-          single-line
-          hide-details
-        >
-        </v-select>-->
-        <v-radio-group v-model="selectedResume" hide-details class="kunvet-red">
-          <v-radio v-for="resume in resumes"
-            :key="resume.name"
+        <v-radio-group v-model="selectedResume">
+          <v-radio v-for="(resume, index) in resumes"
+            class="kunvet-red"
+            :key="index"
             :label="resume.name"
             :value="resume.name">
           </v-radio>
@@ -310,9 +219,12 @@ import gql from 'graphql-tag';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueApollo from 'vue-apollo';
-import InternshipSvg from '@/assets/jobdetail/internship.svg';
-import ffullSvg from '@/assets/jobdetail/facebook_full.svg';
-import fstrokeSvg from '@/assets/jobdetail/facebook_stroke.svg';
+import InternshipSvg from '@/assets/job_detail/internship.svg';
+import StudentFriendlySvg from '@/assets/job_detail/student_friendly.svg';
+import SalarySvg from '@/assets/job_detail/salary.svg';
+import ClockSvg from '@/assets/job_detail/clock.svg';
+import FBfullSvg from '@/assets/job_detail/facebook_full.svg';
+import FBstrokeSvg from '@/assets/job_detail/facebook_stroke.svg';
 import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
 
@@ -324,11 +236,15 @@ export default {
   props: ['id'],
   data() {
     return {
-      // id: this.$route.params.id,
-      findJob: '',
+      findJob: [],
+      jobType: [],
+      salary: null,
       Internship: InternshipSvg,
-      ffull: ffullSvg,
-      fstroke: fstrokeSvg,
+      Clock: ClockSvg,
+      sfSvg: StudentFriendlySvg,
+      sSvg: SalarySvg,
+      FBfull: FBfullSvg,
+      FBstroke: FBstrokeSvg,
       uid: null,
       applydialog: false,
       userdata: {
@@ -361,8 +277,23 @@ export default {
               posted_by
               title
               description
-              type
               address
+              latitude
+              longitude
+              type
+              studentfriendly
+              type2
+              shift
+              age
+              pay_type
+              salary
+              pay_denomination
+              date
+              education
+              language
+              experience
+              responsibilities
+              notes
           }
         }`),
         variables: {
@@ -370,13 +301,52 @@ export default {
         },
       }).then((data) => {
         this.findJob = data.data.findJob;
+        for (const i in this.findJob.type) {
+          if (typeof this.findJob.type[i] === 'string') {
+            const type = this.findJob.type[i];
+            if (type === 'fulltime') {
+              this.jobType.push('full time');
+            } else if (type === 'parttime') {
+              this.jobType.push('part time');
+            } else {
+              this.jobType.push(type);
+            }
+          }
+        }
+        if (this.findJob.pay_type === 'paid') {
+          const sal = this.findJob.salary.toFixed(2);
+          let pdenom = '';
+          if (this.findJob.pay_denomination === 'per hour') {
+            pdenom = '/hour';
+          } else if (this.findJob.pay_denomination === 'per month') {
+            pdenom = '/month';
+          }
+          this.salary = `${sal.toString()}${pdenom}`;
+        } else if (this.findJob.pay_type === 'negotiable') {
+          this.salary = 'pay negotiable';
+        } else {
+          this.salary = this.findJob.pay_type;
+        }
         console.log(this.findJob);
+        /* if (this.findJob.type2) {
+          for (const i in this.findJob.type2) {
+            if (typeof this.findJob.type2[i] === 'string') {
+              const type = this.findJob.type2[i];
+              const t = type.charAt(0).toUpperCase() + type.slice(1);
+              this.jobType2.push(t);
+            }
+          }
+        } */
       });
     },
     apply() {
       this.applydialog = true;
-      if (!this.userdatafetched) {
-        this._getUserData();
+      if (this.uid) {
+        if (!this.userdatafetched) {
+          this._getUserData();
+        }
+      } else {
+        this.$router.push('/login');
       }
     },
     _getUserData() {
@@ -408,15 +378,15 @@ export default {
         this.userdata.school = res.school;
         this.userdata.degree = res.degree;
         this.userdata.display_email = res.display_email;
-        this.resumes = res.resumes;
+        // this.resumes = res.resumes;
         for (var r in res.resumes) {
           if (res.resumes[r].name) {
-            this.resumenames.push(res.resumes[r].name);
+            this.resumes.push(res.resumes[r]);
           }
         }
-        if (this.resumenames.length > 0) {
+        /* if (this.resumenames.length > 0) {
           this.selectedResume = this.resumenames[0];
-        }
+        } */
         console.log(this.resumenames);
         this.userdatafetched = true;
       }).catch((error) => {
