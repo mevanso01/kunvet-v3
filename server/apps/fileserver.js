@@ -36,6 +36,9 @@ import KoaRouter from 'koa-router';
 import KoaMulter from 'koa-multer';
 import KoaSend from 'koa-send';
 
+// Mongoose
+import Mongoose from 'mongoose';
+
 // Utils
 import Models from '@/mongodb/Models';
 import uuidv1 from 'uuid/v1';
@@ -87,13 +90,18 @@ router.put('/upload/:id', upload.single('file'), async (ctx) => {
 
   const fileId = ctx.params.id;
   let fileSlot = null;
+  let granted = true;
   try {
     fileSlot = await Models.File.findOne({
       _id: fileId,
-      owner: ctx.state.user._id,
+      owner: Mongoose.Types.ObjectId(ctx.state.user._id),
     });
   } catch (e) {
     // Invalid slot
+    granted = false;
+  }
+
+  if (!fileSlot || !granted) {
     fs.unlink(file.path);
 
     const response = {
@@ -144,7 +152,7 @@ router.put('/upload/:id', upload.single('file'), async (ctx) => {
 router.get('/get/:id', async (ctx) => {
   let userId = -1;
   if (ctx.isAuthenticated()) {
-    userId = ctx.state.user._id;
+    userId = Mongoose.Types.ObjectId(ctx.state.user._id);
   }
 
   const fileId = ctx.params.id;
@@ -166,7 +174,17 @@ router.get('/get/:id', async (ctx) => {
     return;
   }
 
-  if (fileSlot.employerOnly && fileSlot.owner !== userId) {
+  let granted = false;
+
+  if (fileSlot.owner.equals(userId)) {
+    granted = true;
+  } else if (fileSlot.protected) {
+    granted = fileSlot.accessList.includes(userId);
+  } else {
+    granted = !fileSlot.employerOnly || ctx.state.user.default_org;
+  }
+
+  if (!granted) {
     // Restricted file
 
     const response = {
