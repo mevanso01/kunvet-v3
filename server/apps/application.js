@@ -20,7 +20,6 @@
 // Koa
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
-import KCors from 'kcors';
 
 // Utils
 import Models from '@/mongodb/Models';
@@ -122,7 +121,6 @@ router.post('/:id/setStatus/:status', async (ctx) => {
   ctx.body = JSON.stringify(response);
 });
 
-app.use(KCors());
 app.use(router.routes());
 app.use(router.allowedMethods());
 

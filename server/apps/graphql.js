@@ -2,7 +2,6 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import KoaBody from 'koa-bodyparser';
-import KCors from 'kcors';
 
 // GraphQL and Apollo
 import { graphqlKoa } from 'apollo-server-koa';
@@ -21,7 +20,6 @@ router.get('/graphql', graphqlKoa({
   schema: Schema,
 }));
 
-app.use(KCors());
 app.use(router.routes());
 app.use(router.allowedMethods());
 

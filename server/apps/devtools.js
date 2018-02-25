@@ -1,7 +1,6 @@
 // Koa
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
-import KCors from 'kcors';
 
 // Utils
 import Mailer from '@/utils/Mailer';
@@ -30,7 +29,6 @@ var _storage = multer.diskStorage({
 var upload = multer({ storage: _storage });
 // var upload = multer({ dest: 'uploads/' });
 
-app.use(KCors());
 app.use(bodyParser());
 
 // Help info

@@ -14,6 +14,9 @@ import KoaPassport from 'koa-passport';
 
 import REPL from 'repl';
 
+// CORS
+import cors from './cors';
+
 // Passport
 import './auth';
 
@@ -48,6 +51,9 @@ app.use(KoaBodyParser());
 // Session
 app.keys = ['rua'];
 app.use(KoaSession({}, app));
+
+// CORS
+app.use(cors);
 
 // Passport
 app.use(KoaPassport.initialize());
