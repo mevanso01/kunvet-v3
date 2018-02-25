@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar fixed class="main-nav" light v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
+    <v-toolbar fixed class="main-navbar" light v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
       <router-link to="/">
             <div id="nav-logo">
                 <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">
@@ -24,11 +24,19 @@
         </div>
 
         <v-toolbar-items class="hidden-xs">
-          <!--<router-link v-for="item in items[acct]" :to="item.href"  :key="item.title" class="toolbar__items">
-            <v-btn flat>{{ item.title }}</v-btn>
-          </router-link>-->
           <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
-            <v-btn flat style="width: 10px;">
+            <v-menu offset-y v-if="item.subItems" open-on-hover>
+              <v-btn flat style="width: 10px;" slot="activator">
+                <img class="nav-img notranslate" :src="item.icon"></img>
+                <div class="nav-text" style="color:#818181">{{ item.title }}</div>
+              </v-btn>
+              <v-list>
+                <v-list-tile v-for="subitem in item.subItems" :key="item.title" @click="">
+                  <v-list-tile-title>{{ subitem.title }}</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+            <v-btn v-else flat style="width: 10px;">
               <img class="nav-img notranslate" :src="item.icon"></img>
               <div class="nav-text" style="color:#818181">{{ item.title }}</div>
             </v-btn>
@@ -53,9 +61,6 @@
         <v-divider></v-divider>
         <router-link :to="item.href" v-for="item in items[acct]" :key="item.title">
           <v-list-tile>
-            <!--<v-list-tile-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>-->
             <v-list-tile-content>
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile-content>
@@ -104,7 +109,7 @@ import Vuetify from 'vuetify';
 // svgs
 import afw from './assets/navbar/applicant_full_white.svg';
 import sfw from './assets/navbar/suitcase_full_white.svg';
-// import settingIconFull from './assets/navbar/setting_full_white.svg';
+import settingIconFull from './assets/navbar/setting_full_white.svg';
 import bellIconFull from './assets/navbar/bell_full_white.svg';
 
 Vue.use(Vuetify, {
@@ -123,22 +128,22 @@ export default {
       drawer: false,
       items: [
         [
-          { title: 'Login', icon: 'dashboard', href: '/login' },
-          { title: 'Sign up', icon: 'question_answer', href: '/signup' },
+          { title: 'Login', icon: null, href: '/login' },
+          { title: 'Sign up', icon: null, href: '/signup' },
         ],
         [
           { title: 'Saved Jobs', icon: 'dashboard', href: '/savedjobs' },
           { title: 'Applied Jobs', icon: 'dashboard', href: '/appliedjobs' },
           // { title: 'Messages', icon: 'question_answer', href: '/messages' },
-          { title: 'Account', icon: 'question_answer', href: '/account' },
-          { title: 'Settings', icon: 'question_answer', href: '/settings' },
+          { title: 'Account', icon: null, href: '/account' },
+          { title: 'Settings', icon: settingIconFull, href: '/settings' },
         ],
         [
           { title: 'Create job', icon: null, href: '/createnewjob' },
           { title: 'Applicants', icon: afw, href: '/applicants' },
           { title: 'My Jobs', icon: sfw, href: '/myjobs' },
           { title: 'Notifications', icon: bellIconFull, href: '/myorg' },
-          { title: 'Account', icon: null, href: '/myorg' },
+          { title: 'Account', icon: null, href: '/myorg', subItems: [{ title: 'Settings', route: '/settings' }] },
           /* { title: 'Settings', icon: settingIconFull, href: '/settings' }, */
         ],
       ],

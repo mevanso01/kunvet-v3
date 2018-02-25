@@ -79,20 +79,18 @@
 
 }
 .fsGoBtn {
-  height: 48px;
+  height: 44px;
   background-color: #ef5350;
   text-align: center;
   border-radius: 0 6px 6px 0;
   cursor: pointer;
 }
 .fsSelect {
-  height: 48px;
+  /* height: 48px; */
   border-top: 1px solid #eee;
-  border-right: 1px solid #eee;
   border-left: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  border-right: 1px solid #eee;
-  border-radius: 6px 6px 6px 6px;
+  border-radius: 6px 0px 0px 6px;
 }
 .firstSearch .fsSelect .input-group__input {
   padding-left: 16px !important;
@@ -113,6 +111,9 @@
 }
 .no-padding {
   padding: 0;
+}
+.search .input-group__details {
+  display: none;
 }
 @media (min-width: 601px) {
   .firstSearch h1 {
@@ -180,7 +181,7 @@
                     </v-select>
                   </v-flex>
                   <v-flex xs2 sm1 class="no-padding fsGoBtn" @click="searchGo">
-                    <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>
+                    <p style="color: white; line-height: 44px; font-size: 16px;">Go</p>
                   </v-flex>
                 </v-layout>
                 <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">

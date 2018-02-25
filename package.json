@@ -86,7 +86,7 @@
     "vue-timeago": "^3.4.4",
     "vue2-editor": "^2.0.26",
     "vue2-google-maps": "^0.8.4",
-    "vuetify": "^0.15.7",
+    "vuetify": "^1.0.3",
     "vuex": "^2.4.1",
     "vuex-persist": "^0.6.0",
     "webpack-material-design-icons": "^0.1.0"

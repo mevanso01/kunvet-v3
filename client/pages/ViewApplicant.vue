@@ -206,7 +206,7 @@
 
   import AccountHeader from '@/components/AccountHeader';
 
-  import MajorPreferredSvg from '@/assets/jobdetail/major_preferred.svg';
+  import MajorPreferredSvg from '@/assets/job_detail/major_preferred.svg';
   import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
   // const loadingTask =
   // pdf.createLoadingTask('../../server/uploads/5a4081c6aafda36afb0bc423-1514266624436.pdf');

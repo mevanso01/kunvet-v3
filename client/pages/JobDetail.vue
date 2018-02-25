@@ -55,7 +55,8 @@
 }
 .job-info-icon {
   height: 15px;
-  margin: 0 1px;
+  margin-left: 1px;
+  margin-right: 3px;
   transform: translateY(1px);
 }
 .blue-row {
