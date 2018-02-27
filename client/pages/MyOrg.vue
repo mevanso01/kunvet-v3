@@ -112,7 +112,7 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.phone_number" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                           <i class="fa fa-phone" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>

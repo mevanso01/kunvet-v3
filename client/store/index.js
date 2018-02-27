@@ -22,6 +22,7 @@ const Store = new Vuex.Store({
       lastname: null,
       school: null,
       degree: null,
+      email: null,
       display_email: null,
       org_list: [],
       resumes: [],

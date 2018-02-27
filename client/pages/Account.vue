@@ -42,7 +42,7 @@
                         <v-list-tile-content>
 
                           <v-layout style="width: 100%">
-                          <v-flex xs10 class="no-padding">
+                          <v-flex xs9 class="no-padding">
                             <v-text-field
                               v-model="updateSchool"
                               class="no-padding no-underline"
@@ -52,7 +52,7 @@
                               @keyup.enter="saveSchool"
                             ></v-text-field>
                           </v-flex>
-                          <v-flex xs2 v-show="updateSchool" class="no-padding">
+                          <v-flex xs3 v-show="updateSchool" class="no-padding">
                             <v-btn small center class="cust-btn-1" @click="saveSchool">
                               Save
                             </v-btn>
@@ -81,7 +81,7 @@
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
-                            <v-flex xs10 class="no-padding">
+                            <v-flex xs9 class="no-padding">
                               <v-text-field
                                 v-model="updateDegree"
                                 class="no-padding no-underline"
@@ -91,7 +91,7 @@
                                 @keyup.enter="saveDegree"
                               ></v-text-field>
                             </v-flex>
-                            <v-flex xs2 v-show="updateDegree" class="no-padding">
+                            <v-flex xs3 v-show="updateDegree" class="no-padding">
                               <v-btn small center class="cust-btn-1" @click="saveDegree">
                                 Save
                               </v-btn>
@@ -114,7 +114,7 @@
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
-                      <v-list-tile v-if="!userdata.display_email" class="cust-tile-2 grey-color">
+                      <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
                             <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                         </v-list-tile>
@@ -138,13 +138,13 @@
                           </v-layout>
                         </v-list-tile-content>
                       </v-list-tile>
-                      <v-list-tile v-if="userdata.display_email" class="cust-tile-2">
+                      <v-list-tile v-if="userdata.email" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            {{ userdata.display_email }}
+                            {{ userdata.email }}
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
@@ -264,7 +264,7 @@
               </v-flex>
             </v-layout>
 
-            <v-dialog v-model="showFileModal">
+            <v-dialog v-model="showFileModal" class="auto-dialog">
               <v-card>
                 <v-card-title>
                 <div v-if="currentStatus === 'INITIAL' || currentStatus === 'SAVING'">
@@ -385,6 +385,7 @@
           lastname: null,
           school: null,
           degree: null,
+          email: null,
           display_email: null,
           org_list: [],
           resumes: [],
@@ -400,23 +401,7 @@
         deleteResumeIndex: null,
         deleteResumeName: null,
         showDeleteResumeDialog: false,
-        // TODO: Temporary mock data since I'm getting random graphQL errors from create-a-job.
-        jobs: [
-          /*
-          {
-            id: 0,
-            active: true,
-          },
-          {
-            id: 1,
-            active: false,
-          },
-          {
-            id: 2,
-            active: true,
-          },
-          */
-        ],
+        jobs: [],
         applications: [],
         svgs: {
           resume: ResumeSvg,
@@ -638,7 +623,7 @@
               lastname: this.userdata.lastname,
               school: this.userdata.school,
               degree: this.userdata.degree,
-              display_email: this.userdata.display_email,
+              // display_email: this.userdata.display_email,
               resumes: _resumes,
             },
           },
@@ -685,7 +670,7 @@
                 lastname
                 school
                 degree
-                display_email
+                email
                 org_list
                 resumes {
                   name
@@ -703,7 +688,7 @@
           this.userdata.lastname = res.lastname;
           this.userdata.school = res.school;
           this.userdata.degree = res.degree;
-          this.userdata.display_email = res.display_email;
+          this.userdata.email = res.email;
           this.userdata.org_list = res.org_list;
           this.userdata.resumes = res.resumes;
           this.commitUserdata();

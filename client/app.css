@@ -51,8 +51,15 @@ h3 {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.input-group__details {
+  color: #1976D2;
+}
+.input-group--error .input-group__details {
+  color: #f00;
+}
 .dialog {
   max-width: 420px;
+  width: auto;
 }
 .application,
 .container {

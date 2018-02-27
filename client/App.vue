@@ -31,7 +31,7 @@
                 <div class="nav-text" style="color:#818181">{{ item.title }}</div>
               </v-btn>
               <v-list>
-                <v-list-tile v-for="subitem in item.subItems" :key="item.title" @click="">
+                <v-list-tile v-for="subitem in item.subItems" :key="item.title" @click="routeTo(subitem.href)">
                   <v-list-tile-title>{{ subitem.title }}</v-list-tile-title>
                 </v-list-tile>
               </v-list>
@@ -115,10 +115,10 @@ import bellIconFull from './assets/navbar/bell_full_white.svg';
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#616161',
+    primary: '#1976D2', // '#616161',
     secondary: '#b0bec5',
     accent: '#4d4d4d',
-    error: '#b71c1c',
+    error: '#ff0000',
   },
   options: {
     minifyTheme(val) {
@@ -131,7 +131,7 @@ const Bus = new Vue();
 export default {
   data() {
     return {
-      acct: Store.state.acct,
+      acct: 0,
       drawer: false,
       items: [
         [
@@ -150,7 +150,7 @@ export default {
           { title: 'Applicants', icon: afw, href: '/applicants' },
           { title: 'My Jobs', icon: sfw, href: '/myjobs' },
           { title: 'Notifications', icon: bellIconFull, href: '/myorg' },
-          { title: 'Account', icon: null, href: '/myorg', subItems: [{ title: 'Settings', route: '/settings' }] },
+          { title: 'Account', icon: null, href: '/myorg', subItems: [{ title: 'Settings', href: '/settings' }] },
           /* { title: 'Settings', icon: settingIconFull, href: '/settings' }, */
         ],
       ],
@@ -194,6 +194,9 @@ export default {
         acct: 2,
       });
       console.log(this.acct);
+    },
+    routeTo(route) {
+      this.$router.push(route);
     },
   },
   created() {
