@@ -13,7 +13,6 @@ import KoaSession from 'koa-session';
 import KoaPassport from 'koa-passport';
 
 import REPL from 'repl';
-
 // CORS
 import cors from './cors';
 
@@ -27,6 +26,7 @@ import DevToolsApp from './apps/devtools';
 import ClientApp from './apps/client';
 import FileServerApp from './apps/fileserver';
 import ApplicationApp from './apps/application';
+import RuaApp from './apps/rua';
 
 // Our stuff
 import Db from './mongodb/Db';
@@ -64,6 +64,7 @@ app.use(KoaMount('/srv', GraphQLApp));
 app.use(KoaMount('/auth', AuthApp));
 app.use(KoaMount('/file', FileServerApp));
 app.use(KoaMount('/application', ApplicationApp));
+app.use(KoaMount('/rua', RuaApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
@@ -74,7 +75,6 @@ if (process.env.NODE_ENV !== 'production') {
   Logger.info('Running in production mode');
   app.use(KoaMount('/', ClientApp));
 }
-
 // Let's get started!
 Db.connect()
   .then(() => {

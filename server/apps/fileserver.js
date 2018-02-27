@@ -60,6 +60,67 @@ const upload = KoaMulter({
   }),
 });
 
+/* function uploadFile(file, fileSlot) {
+  if (!file) {
+    const response = {
+      success: false,
+      message: 'File not supplied',
+    };
+    return response;
+  }
+  if (fileSlot.readOnly) {
+    // Read only file :(
+    fs.unlink(file.path);
+    const response = {
+      success: false,
+      message: 'Read-only file',
+    };
+    return response;
+  }
+  const response = {
+    success: true,
+    message: fileSlot._id,
+  };
+  if (fileSlot.uploadPath) {
+    response.updated = true;
+    fs.unlink(fileSlot.uploadPath);
+  } else {
+    response.updated = false;
+  }
+  if (fileSlot.uploadOnce) {
+    fileSlot.readOnly = true;
+  }
+  fileSlot.uploadPath = file.path;
+  fileSlot.save();
+  return response;
+} */
+
+router.post('/newfile', async (ctx) => {
+  // const formData = ctx.req.body;
+  // console.log('Request', ctx.req);
+  if (!ctx.isAuthenticated()) {
+    ctx.status = 403;
+    ctx.body = 'You have to authenticate first!';
+    return;
+  }
+  const fileSlot = new Models.File({
+    owner: ctx.state.user._id,
+    // TODO: How do I get the formData for the extention of the file?
+    filename: `${uuidv1()}.pdf`, // ${path.extname(formData.originalname)}
+  });
+
+  try {
+    await fileSlot.save();
+  } catch (e) {
+    ctx.status = 500;
+    ctx.body = 'An error occured';
+    return;
+  }
+  // const response = uploadFile(formData, fileSlot);
+  // ctx.body = response;
+  ctx.redirect(`upload/${fileSlot._id}`, ctx);
+});
+
 router.put('/upload/:id', upload.single('file'), async (ctx) => {
   const { file } = ctx.req;
 
@@ -148,6 +209,7 @@ router.put('/upload/:id', upload.single('file'), async (ctx) => {
 
   ctx.body = JSON.stringify(response);
 });
+
 
 router.get('/get/:id', async (ctx) => {
   let userId = -1;

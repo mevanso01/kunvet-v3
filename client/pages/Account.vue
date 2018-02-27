@@ -506,13 +506,14 @@
         // upload data to the server
         if (this.formData) {
           this.currentStatus = 'SAVING';
-          const headers = { emulateJSON: true };
+          const headers = { 'Content-type': 'application/x-www-form-urlencoded' };
           const data = this.formData;
           // graphql query:
           // .then(
           // )
-          axios.post('http://localhost:3000/uploadfile', data, headers).then((res) => {
-            const _filename = res.data;
+          axios.post('file/newfile', data, headers).then((res) => {
+            console.log(res);
+            /* const _filename = res.data;
             if (this.userdata.resumes) {
               this.userdata.resumes.push({
                 name: this.resumeName,
@@ -525,9 +526,9 @@
                 filename: _filename,
                 resumeid: null,
               }];
-            }
+            } */
             this.formData = null;
-            this.saveUserdata();
+            // this.saveUserdata();
             this.closeFileModal();
           }, (error) => {
             console.error(error);
