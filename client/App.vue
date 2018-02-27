@@ -102,7 +102,8 @@
 <script>
 import 'font-awesome/scss/font-awesome.scss';
 // import 'vuetify/dist/vuetify.min.css';
-import 'vuetify/src/stylus/main.styl';
+// import 'vuetify/src/stylus/main.styl';
+import '@/stylus/main.styl';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import Store from '@/store';
@@ -212,9 +213,7 @@ export default {
   },
 };
 </script>
-
 <style lang="scss">
-// @import 'vuetify/src/stylus/main';
 @import 'app.css';
 @import 'account.css';
 @import 'postsAndSearch.css';
@@ -222,12 +221,6 @@ body, html {
   height: 100%;
   width: 100%;
 }
-/* h1 {
-   font-size: 1.5em;
-   -webkit-margin-before: 0.83em;
-   -webkit-margin-after: 0.83em;
-   font-weight: bold;
-} */
 @media only screen and (min-width:600px) {
   .hidden-sm-and-up { display:none !important; }
 }

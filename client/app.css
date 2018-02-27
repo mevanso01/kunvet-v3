@@ -709,6 +709,9 @@ body {
   section:last-of-type {
       padding-bottom: 48px;
   }
+  section.search {
+    padding: 24px 48px 48px 48px;
+  }
 }
 @media (max-width: 960px) {
     .flex {

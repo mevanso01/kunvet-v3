@@ -25,9 +25,6 @@
   margin: 0;
   max-width: 100%;
 }
-.search .flex {
-  padding: 10px 15px;
-}
 /* .input-group--select {
   height: 66px;
 } */
@@ -76,10 +73,10 @@
 }
 .firstSearch {
   padding: 32px 64px;
-
+  position: relative;
 }
 .fsGoBtn {
-  height: 44px;
+  height: 48px;
   background-color: #ef5350;
   text-align: center;
   border-radius: 0 6px 6px 0;
@@ -94,13 +91,13 @@
 }
 .firstSearch .fsSelect .input-group__input {
   padding-left: 16px !important;
-  padding-top: 2px;
+  padding-top: 3px;
 }
 .firstSearch .fsSelect .input-group__input .input-group__selections {
   padding-top: 2px;
 }
 .firstSearch .fsSelect label {
-  top: 7px;
+  top: 9px;
   left: 16px;
 }
 .firstSearch .fsSelect i {
@@ -108,6 +105,16 @@
 }
 .firstSearch h1 {
   font-weight: 300;
+  font-size: 32px;
+  margin-bottom: 0;
+}
+.fs-select-positions {
+  width: 50%;
+  display: inline-block;
+}
+.firstSearch .input-group--select {
+  height: 46px;
+  overflow: auto !important;
 }
 .no-padding {
   padding: 0;
@@ -115,19 +122,40 @@
 .search .input-group__details {
   display: none;
 }
+.city-img-holder {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 @media (min-width: 601px) {
-  .firstSearch h1 {
-    font-size: 32px;
+  .search .flex {
+    padding: 10px 15px;
   }
 }
 @media (max-width: 600px) {
   .firstSearch {
     padding: 32px 10px;
+    height: calc(100vh - 65px);
   }
   #banner {
     display: none;
   }
 }
+@media (min-width: 961px) {
+  .firstSearch {
+    height: calc(100vh - 105px);
+  }
+  .city-img-holder {
+    padding: 0 48px;
+  }
+}
+@media (min-width: 601px) and (max-width: 960px) {
+  .firstSearch {
+    height: calc(100vh - 75px);
+  }
+}
+
 .top-container {
   width: 100%;
   height: 48px;
@@ -156,11 +184,11 @@
               <section class="firstSearch" v-if="firstSearch">
                 <div style="padding-bottom: 30px; text-align: right;">
                   <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
-                  <h2 style="color: #333;">Find a job that match your search and is actually nearby</h2>
+                  <h2 style="color: #333;">Find nearby jobs for students like you</h2>
                 </div>
                 <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
-                  <v-flex xs10 sm10 offset-sm1 md8 offset-md3
-                    no-wrap class="grey--text no-padding fsSelect" ellipsis>
+                  <v-flex xs11 sm10 md9 offset-md2 style="height: 48px;"
+                    no-wrap class="grey--text no-padding fsSelect">
                     <v-select class="no-padding" style="width: 50%; display: inline-block; border-right: 1px solid #eee;"
                       label="City or School"
                       v-bind:items="availableCities"
@@ -170,75 +198,34 @@
                       hide-details
                     >
                     </v-select>
-                    <v-select class="no-padding" style="width: 50%; display: inline-block;"
+                    <v-select class="no-padding fs-select-positions"
                       label="Positions (all)"
-                      v-bind:items="availablePositions"
+                      :items="availablePositions"
                       v-model="selectedPositions"
                       autocomplete
                       single-line
                       hide-details
-                    >
+                      multiple>
                     </v-select>
                   </v-flex>
-                  <v-flex xs2 sm1 class="no-padding fsGoBtn" @click="searchGo">
-                    <p style="color: white; line-height: 44px; font-size: 16px;">Go</p>
+                  <v-flex xs2 sm2 md1 class="no-padding fsGoBtn" @click="searchGo">
+                    <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>
                   </v-flex>
                 </v-layout>
-                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
-                  <v-flex md15>
-                    <img style="width: 100%;" :src="cityImage"></img>
-                  </v-flex>
-                </v-layout>
-                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px; ">
-                    <v-layout id="rua">
-                      <v-card v-for="n in 2">
-                        <v-card-text>
-                          <v-layout>
-                              <v-avatar size="50px" slot="activator" style="display: block; margin: 0 auto;">
-		                           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Jiang_Zemin1.png/220px-Jiang_Zemin1.png" alt="">
-		                         </v-avatar>
-                           </v-layout>
-                          <div style="margin-top: 10px;">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, qui
-                          </div>
-                         </v-card-text>
-                      </v-card>
-                    </v-layout>
-                </v-layout>
-                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
-                  <v-flex xs12 md8>
-                      <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
-                  </v-flex>
-                  <v-flex xs12 md8>
-                      <v-card-title><div class="headline">Who is Elder?</div></v-card-title>
-                      <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
-                  </v-flex>
-                </v-layout>
-                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
-                  <v-flex xs12 md8>
-                      <v-card-title><div class="headline">Who is Elder?</div></v-card-title>
-                      <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
-                  </v-flex>
-                  <v-flex xs12 md8>
-                      <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
-                  </v-flex>
-                </v-layout>
-                <v-layout v-if="firstSearch" align-center row spacer slot="header" style="padding-bottom: 10px;">
-                  <v-flex xs12 md8>
-                      <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
-                  </v-flex>
-                  <v-flex xs12 md8>
-                      <v-card-title>
-                      <div class="headline">Who is Elder?</div>
-                      </v-card-title>
-                      <v-card-text>Jiang Zemin (born 17 August 1926) is a retired Chinese politician who served as General Secretary of the Communist Party of China from 1989 to 2002, as Chairman of the Central Military Commission from 1989 to 2004, and as President of the People's Republic of China from 1993 to 2003. Jiang has been described as ...</v-card-text>
-                  </v-flex>
-                </v-layout>
+                <div class="city-img-holder">
+                  <img style="width: 100%;" :src="cityImage"></img>
+                </div>
               </section>
+              <div v-if="firstSearch">
+                  <FirstViewCard1/>
+                  <FirstViewCardRText/>
+                  <FirstViewCardLText/>
+                  <FirstViewCardRText/>
+              </div>
 
                 <section v-if="!firstSearch" class="search">
                   <v-layout row wrap>
-                    <v-flex xs12 sm6 :key="1">
+                    <v-flex xs12 sm6>
                       <v-select
                         label="Select city"
                         v-bind:items="availableCities"
@@ -248,7 +235,7 @@
                         autocomplete>
                       </v-select>
                     </v-flex>
-                    <v-flex xs12 sm6 :key="2">
+                    <v-flex xs12 sm6>
                       <v-select
                         label="Select types"
                         v-bind:items="availableTypes"
@@ -260,10 +247,10 @@
                         multiple>
                       </v-select>
                     </v-flex>
-                    <v-flex xs12 sm6 :key="3">
+                    <v-flex xs12 sm6>
                       <v-select
                         label="Select positions"
-                        v-bind:items="availablePositions"
+                        :items="availablePositions"
                         v-model="selectedPositions"
                         chips
                         autocomplete
@@ -272,10 +259,10 @@
                         multiple>
                       </v-select>
                     </v-flex>
-                    <v-flex xs12 sm6 :key="4">
+                    <v-flex xs12 sm6>
                       <v-select
                         label="Select shifts"
-                        v-bind:items="availableShifts"
+                        :items="availableShifts"
                         v-model="selectedShifts"
                         chips
                         autocomplete
@@ -365,6 +352,9 @@ import VueApollo from 'vue-apollo';
 import Store from '@/store';
 import VuexLS from '@/store/persist';
 import CitySvg from '@/assets/vc.svg';
+import FirstViewCard1 from '@/components/FirstViewCard1';
+import FirstViewCardRText from '@/components/FirstViewCardRText';
+import FirstViewCardLText from '@/components/FirstViewCardLText';
 
 Vue.use(VueApollo);
 
@@ -380,6 +370,11 @@ export default {
       }
     }`,
   },
+  components: {
+    FirstViewCard1,
+    FirstViewCardRText,
+    FirstViewCardLText,
+  },
   data() {
     return {
       uid: null,
@@ -393,13 +388,12 @@ export default {
         'UC Irvine',
         'Los Angeles, CA',
         'UCLA',
-        // load from database
       ],
       availablePositions: [
         'All / Any',
         'Frontend developer',
         'Vue.js developer',
-        // load from database
+        'Something else',
       ],
       availableTypes: [
         'Full time',
@@ -425,11 +419,12 @@ export default {
       selectedShifts: Store.state.selectedShifts,
       vuextest: Store.state.count,
       cityImage: CitySvg,
+      selectedPositionsInital: 'All / Any',
     };
   },
   methods: {
     searchGo() {
-      if (this.selectedCities[0]) {
+      if (this.selectedCities && this.selectedCities[0]) {
         this.firstSearch = false;
         Store.commit('go');
         this.commitData();
@@ -505,8 +500,12 @@ export default {
     VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
       if (data) {
         this.firstSearch = data.firstSearch;
-        this.selectedCities = data.selectedCities;
-        this.selectedPositions = data.selectedPositions;
+        if (data.selectedCities && data.selectedCities[0]) {
+          this.selectedCities = data.selectedCities;
+        }
+        if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
+          this.selectedPositions = data.selectedPositions;
+        }
         if (data.userID) {
           this.uid = data.userID;
           this.getSavedJobs();

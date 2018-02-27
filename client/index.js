@@ -48,7 +48,20 @@ import PhotoGallery from '@/pages/PhotoGallery';
 import App from '@/App';
 import store from '@/store';
 
-
+/* Vue.use(Vuetify, {
+  theme: {
+    primary: '#616161', // '#1976D2'
+    secondary: '#b0bec5',
+    accent: '#4d4d4d',
+    error: '#ff0000',
+  },
+  options: {
+    minifyTheme(val) {
+      return process.env.NODE_ENV === 'production' ? val.replace(/[\s|\r\n|\r|\n]/g, '') : null;
+    },
+  },
+}); */
+// Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(Vuex);
