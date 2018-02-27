@@ -2,9 +2,6 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
 
-// Utils
-import Mailer from '@/utils/Mailer';
-
 // GraphiQL
 import { graphiqlKoa } from 'apollo-server-koa';
 
@@ -57,20 +54,6 @@ router.get('/', (ctx) => {
 router.get('/graphiql', graphiqlKoa({
   endpointURL: '/srv/graphql',
 }));
-
-// Mailer test
-router.get('/test-mailer', (ctx) => {
-  const mailer = new Mailer();
-  mailer.sendTemplate(
-    'Zhaofeng Li <hello@zhaofeng.li>',
-    'welcome',
-    {
-      firstname: 'Zhaofeng',
-      lastname: 'Li',
-    },
-  );
-  ctx.body = 'Check your mailbox!';
-});
 
 // Login form
 router.get('/login', (ctx) => {
