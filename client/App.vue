@@ -36,8 +36,8 @@
                 </v-list-tile>
               </v-list>
             </v-menu>
-            <v-btn v-else flat style="width: 10px;">
-              <img class="nav-img notranslate" :src="item.icon"></img>
+            <v-btn v-else flat>
+              <img class="nav-img" :src="item.icon"></img>
               <div class="nav-text" style="color:#818181">{{ item.title }}</div>
             </v-btn>
           </router-link>
