@@ -438,6 +438,11 @@ const AccountSchema = Mongoose.Schema({
       default: Date.now,
     },
   }],
+  is_developer: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 AccountSchema.plugin(PassportLocalMongoose, {
   usernameField: 'email',

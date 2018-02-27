@@ -11,6 +11,14 @@ export default {
     }
     return next(req);
   },
+  DeveloperAccount: (req, next) => {
+    if (process.env.NODE_ENV !== 'development') {
+      throw Error('This action is disabled.');
+    } else if (!req.context.user.is_developer) {
+      throw Error('You must be a developer to perform this action.');
+    }
+    return next(req);
+  },
   Forbidden: () => {
     throw Error('This action is disabled.');
   },
