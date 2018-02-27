@@ -45,10 +45,6 @@ GQC.rootQuery().addFields({
 GQC.rootMutation().addFields({
   // All mutations require logging in
   ...wrapResolvers(Restrictions.LoggedIn, {
-    // Job
-    createJob: Job.get('$createOne'),
-    updateJob: Job.get('$updateOne'),
-    removeJob: Job.get('$removeOne'),
     // Resume
     createResume: Resume.get('$createOne'),
     updateResume: Resume.get('$updateOne'),
@@ -59,14 +55,22 @@ GQC.rootMutation().addFields({
     createApplication: Applicant.get('$createOne'),
     updateApplication: Applicant.get('$updateOne'),
     removeApplication: Applicant.get('$removeOne'),
-    // Business Profile
-    createBusinessProfile: BusinessProfile.get('$createOne'),
-    updateBusinessProfile: BusinessProfile.get('$updateOne'),
-    removeBusinessProfile: BusinessProfile.get('$removeOne'),
-    // Organization
-    createOrganization: Organization.get('$createOne'),
-    updateOrganization: Organization.get('$updateOne'),
-    removeOrganization: Organization.get('$removeOne'),
+
+    // Employer-only mutations
+    ...wrapResolvers(Restrictions.BusinessAccount, {
+      // Job
+      createJob: Job.get('$createOne'),
+      updateJob: Job.get('$updateOne'),
+      removeJob: Job.get('$removeOne'),
+      // Business Profile
+      createBusinessProfile: BusinessProfile.get('$createOne'),
+      updateBusinessProfile: BusinessProfile.get('$updateOne'),
+      removeBusinessProfile: BusinessProfile.get('$removeOne'),
+      // Organization
+      createOrganization: Organization.get('$createOne'),
+      updateOrganization: Organization.get('$updateOne'),
+      removeOrganization: Organization.get('$removeOne'),
+    }),
   }),
 });
 
