@@ -2,7 +2,7 @@
 	"serverUrl": "http://localhost:3000",
 	"googleMapsKey": "AIzaSyC7AGOmjudyG6MwSsiKV8118wGmE9XvugY",
 	"private": {
-		"FIXCONFIG": "!!!This is not supposed to appear in production!!!",
+		"FIXCONFIG": "!!!This is not supposed to appear in clients!!!",
 		"database": "mongodb://localhost/kunvet-dev",
 		"mail": {
 			"mailFrom": "Kunvet Notifications <notifications@kunvet.com>",
