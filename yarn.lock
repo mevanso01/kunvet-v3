@@ -3261,6 +3261,10 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
+generate-package-json-webpack-plugin@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/generate-package-json-webpack-plugin/-/generate-package-json-webpack-plugin-0.4.2.tgz#a87c26964c2cbd809589776fddb953a526167d61"
+
 generaterr@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/generaterr/-/generaterr-1.5.0.tgz#b0ceb6cc5164df2a061338cc340a8615395c52fc"
@@ -8379,10 +8383,6 @@ webpack-material-design-icons@^0.1.0:
   resolved "https://registry.yarnpkg.com/webpack-material-design-icons/-/webpack-material-design-icons-0.1.0.tgz#2b48399f14817f733d99143c97b8008f342d2fd4"
   dependencies:
     material-design-icons "^3.0.1"
-
-webpack-node-externals@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-1.6.0.tgz#232c62ec6092b100635a3d29d83c1747128df9bd"
 
 webpack-sources@^1.0.1:
   version "1.1.0"
