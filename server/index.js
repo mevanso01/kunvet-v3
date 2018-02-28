@@ -23,7 +23,6 @@ import './auth';
 import AuthApp from './apps/auth';
 import GraphQLApp from './apps/graphql';
 import DevToolsApp from './apps/devtools';
-import ClientApp from './apps/client';
 import FileServerApp from './apps/fileserver';
 import ApplicationApp from './apps/application';
 import RuaApp from './apps/rua';
@@ -73,7 +72,6 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   // Production mode
   Logger.info('Running in production mode');
-  app.use(KoaMount('/', ClientApp));
 }
 // Let's get started!
 Db.connect()

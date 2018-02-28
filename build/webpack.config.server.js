@@ -44,9 +44,6 @@ module.exports = {
   },
   plugins: [
     new webpack.IgnorePlugin(/vertx/),
-    new webpack.DefinePlugin({
-      'process.env.CLIENT_PATH': "require('path').join(require('path').dirname(require.main.filename), '..', 'client')",
-    }),
   ],
   devtool: 'cheap-module-eval-source-map',
 };
