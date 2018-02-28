@@ -23,7 +23,6 @@ const wpconf = {
     unsafeCache: /data/,
     alias: {
       '@': utils.resolve('server'),
-      config: utils.resolve('config/server'),
     },
   },
   node: {
