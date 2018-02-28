@@ -1,5 +1,5 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
-import { GQC } from 'graphql-compose';
+import { GQC, Resolver } from 'graphql-compose';
 import Models from '../mongodb/Models';
 import Restrictions from './Restrictions';
 
@@ -39,6 +39,14 @@ GQC.rootQuery().addFields({
   // Employee Profile
   findOrganization: Organization.get('$findOne'),
   findOrganizations: Organization.get('$findMany'),
+  // Developer-only
+  ...wrapResolvers(Restrictions.DeveloperAccount, {
+    getDirtyLittleSecrets: new Resolver({
+      name: 'getDirtyLittleSecrets',
+      type: 'String',
+      resolve: () => 'Shh...',
+    }),
+  }),
 });
 
 // Root mutation fields
