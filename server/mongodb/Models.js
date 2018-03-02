@@ -25,9 +25,17 @@ const TempAccountSchema = Mongoose.Schema({
 });
 
 const JobSchema = Mongoose.Schema({
+  user_id: {
+    type: Mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
   posted_by: {
     type: String,
     required: true,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
   },
   active: {
     type: { Boolean, default: false },
@@ -125,6 +133,10 @@ const ApplicantSchema = Mongoose.Schema({
   job_id: {
     type: Mongoose.Schema.Types.ObjectId,
     required: true,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
   },
   status: {
     type: String,
@@ -358,14 +370,6 @@ const FileSchema = Mongoose.Schema({
     required: true,
     default: false,
   },
-  protected: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  accessList: [
-    Mongoose.Schema.Types.ObjectId,
-  ],
 });
 
 const AccountSchema = Mongoose.Schema({
@@ -438,11 +442,6 @@ const AccountSchema = Mongoose.Schema({
       default: Date.now,
     },
   }],
-  is_developer: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
 });
 AccountSchema.plugin(PassportLocalMongoose, {
   usernameField: 'email',

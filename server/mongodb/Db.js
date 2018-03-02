@@ -6,9 +6,8 @@ Mongoose.Promise = global.Promise;
 
 export default class Db {
   static connect() {
-    const db = Config.get('private.database');
-    Logger.info(`Using database ${db}`);
-    return Mongoose.connect(db, {
+    Logger.info(`Using database ${Config.database}`);
+    return Mongoose.connect(Config.database, {
       useMongoClient: true,
     });
   }

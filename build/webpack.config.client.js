@@ -1,6 +1,3 @@
-const Config = require('config');
-const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -19,11 +16,7 @@ function styleLoaders(options) {
   return output;
 }
 
-// Build static config
-delete Config.private;
-fs.writeFileSync(path.resolve(__dirname, '../dist/staticConfig.json'), JSON.stringify(Config));
-
-const wpconf = {
+module.exports = {
   entry: {
     index: ['babel-polyfill', './client/index.js'],
   },
@@ -37,8 +30,7 @@ const wpconf = {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
       '@': utils.resolve('client'),
-      config$: path.resolve(__dirname, '../client/StaticConfigProvider.js'),
-      static_config$: path.resolve(__dirname, '../dist/staticConfig.json'),
+      config: utils.resolve('config/client'),
     },
     unsafeCache: /data/,
   },
@@ -104,5 +96,3 @@ const wpconf = {
     }),
   ],
 };
-
-module.exports = wpconf;

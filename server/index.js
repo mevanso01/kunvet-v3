@@ -8,11 +8,12 @@ import 'source-map-support/register';
 // Koa
 import Koa from 'koa';
 import KoaMount from 'koa-mount';
-// import KoaBodyParser from 'koa-bodyparser';
+import KoaBodyParser from 'koa-bodyparser';
 import KoaSession from 'koa-session';
 import KoaPassport from 'koa-passport';
 
 import REPL from 'repl';
+
 // CORS
 import cors from './cors';
 
@@ -23,9 +24,9 @@ import './auth';
 import AuthApp from './apps/auth';
 import GraphQLApp from './apps/graphql';
 import DevToolsApp from './apps/devtools';
+import ClientApp from './apps/client';
 import FileServerApp from './apps/fileserver';
 import ApplicationApp from './apps/application';
-import RuaApp from './apps/rua';
 
 // Our stuff
 import Db from './mongodb/Db';
@@ -45,9 +46,7 @@ const port = process.env.PORT || 3000;
 const app = new Koa();
 
 // Body parser
-/* app.use(KoaBodyParser({
-  enableTypes: ['json', 'form', 'multipart'],
-})); */
+app.use(KoaBodyParser());
 
 // Session
 app.keys = ['rua'];
@@ -65,7 +64,6 @@ app.use(KoaMount('/srv', GraphQLApp));
 app.use(KoaMount('/auth', AuthApp));
 app.use(KoaMount('/file', FileServerApp));
 app.use(KoaMount('/application', ApplicationApp));
-app.use(KoaMount('/rua', RuaApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
@@ -74,7 +72,9 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   // Production mode
   Logger.info('Running in production mode');
+  app.use(KoaMount('/', ClientApp));
 }
+
 // Let's get started!
 Db.connect()
   .then(() => {

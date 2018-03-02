@@ -65,7 +65,7 @@ router.post('/:id/setStatus/:status', async (ctx) => {
     return;
   }
 
-  if (ctx.state.user._id !== job.posted_by) {
+  if (!ctx.state.user._id.equals(job.user_id)) {
     // Not the employer
 
     const response = {

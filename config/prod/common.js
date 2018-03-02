@@ -1,0 +1,4 @@
+// Production
+export default {
+  serverUrl: '',
+};
