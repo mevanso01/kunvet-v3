@@ -130,7 +130,7 @@ const ApplicantSchema = Mongoose.Schema({
     type: Mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  created_at: {
+  date: {
     type: Date,
     default: Date.now,
   },

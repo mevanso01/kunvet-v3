@@ -37,7 +37,7 @@
                         :src="svgs.kunvetCharacter"
                       />
                       <figurecaption style="font-size: 0.6em; color: grey; padding-left: 5px;">
-                        <timeago :since="item.created_at" />
+                        <timeago :since="item.date" />
                       </figurecaption>
                     </figure>
                   </div>
@@ -222,7 +222,7 @@
                 notes
                 job_id
                 status
-                created_at
+                date
             }
           }`),
           variables: {

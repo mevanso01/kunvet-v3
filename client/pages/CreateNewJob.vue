@@ -407,6 +407,7 @@ export default {
       submitted: false,
       posted_by: null,
       title: '',
+      date: null,
       address: '',
       autocomplete: null,
       latitude: null,
@@ -541,6 +542,11 @@ export default {
       });
     },
     createJobArray() {
+      // Note: this.active is always true at this point if you're clicking Save Post,
+      // whether it's a already-existing job or not.
+      // It's important to use both `this.active` and `this.date` to determine that this is an
+      // already-existing job.
+      const doesJobActivelyExist = this.active && this.date;
       const job = {
         // user_name: State.userdata.username,
         // TODO: Make sure this user_id line is correct.
@@ -551,6 +557,7 @@ export default {
         posted_by: this.posted_by,
         active: this.active,
         title: this.title,
+        date: doesJobActivelyExist ? this.date : Date.now(),
         description: this.description,
         address: this.address,
         latitude: this.latitude,
@@ -579,6 +586,7 @@ export default {
             posted_by
             active
             title
+            date
             description
             address
             latitude
@@ -607,6 +615,7 @@ export default {
         if (job) {
           this.title = job.title;
           this.active = job.active;
+          this.date = job.date;
           this.address = job.address;
           this.latitude = job.latitude;
           this.longitude = job.latitude;

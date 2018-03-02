@@ -444,7 +444,7 @@ export default {
     sanitizeTypes(jobTypes) {
       const types = [];
       for (const i in jobTypes) {
-        if (typeof jobTypes[i] === 'string') {
+        if (typeof i === 'number' && typeof jobTypes[i] === 'string') {
           const type = jobTypes[i];
           if (type === 'fulltime') {
             types.push('Full-Time');
