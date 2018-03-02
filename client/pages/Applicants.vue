@@ -37,7 +37,7 @@
                         :src="svgs.kunvetCharacter"
                       />
                       <figurecaption style="font-size: 0.6em; color: grey; padding-left: 5px;">
-                        <timeago :since="item.created_at" />
+                        <timeago :since="item.date" />
                       </figurecaption>
                     </figure>
                   </div>
@@ -192,7 +192,7 @@
               posted_by
               title
               address
-              created_at
+              date
             }
           }`),
           variables: {
@@ -222,7 +222,7 @@
                 notes
                 job_id
                 status
-                created_at
+                date
             }
           }`),
           variables: {
@@ -283,7 +283,7 @@
         return status.charAt(0).toUpperCase() + status.substring(1, status.length);
       },
       getApplicantExpiringText(applicant) {
-        const { created_at: date } = applicant;
+        const { date } = applicant;
         const expiryDate = DateHelper.getExpiryDate(date);
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return daysDiff <= 5 ? `Application expiring in ${daysDiff} days` : '';
