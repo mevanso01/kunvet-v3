@@ -111,7 +111,7 @@
                 </h2>
               </router-link>
             <div class="new-applicant-card__time-ago">
-              <timeago :since="job.created_at" />
+              <timeago :since="job.date" />
             </div>
             <p class="post-intro">
               <span class="new-applicant-card__address">
@@ -319,7 +319,7 @@
       },
       expiredJobs() {
         return this.jobs.filter(job => {
-          const { created_at: date } = job;
+          const { date: date } = job;
           const expiryDate = DateHelper.getExpiryDate(date);
           const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
           const expired = daysDiff <= 0; // daysDiff can be negative so this is good.
