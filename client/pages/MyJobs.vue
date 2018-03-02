@@ -319,7 +319,7 @@
       },
       expiredJobs() {
         return this.jobs.filter(job => {
-          const { date: date } = job;
+          const { date } = job;
           const expiryDate = DateHelper.getExpiryDate(date);
           const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
           const expired = daysDiff <= 0; // daysDiff can be negative so this is good.

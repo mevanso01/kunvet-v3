@@ -41,18 +41,18 @@
                       </figurecaption>
                     </figure>
                   </div>
-                  <router-link :to="'view-applicant/'+item._id"> 
-                    <h2 class="new-applicant-card__title">{{ item.name }}</h2> 
+                  <router-link :to="'view-applicant/'+item._id">
+                    <h2 class="new-applicant-card__title">{{ item.name }}</h2>
                     <p style="overflow: hidden;">
                       <i class="fa fa-graduation-cap new-applicant-card__blue-ico" aria-hidden="true"></i>{{ item.school || 'Did Not Provide' }}<br />
                       <span style="color: grey;" v-if="item.degree">{{ item.degree }}<br /></span>
                       <span style="color: grey;">{{ getApplicantNotesDisplayText(item) }}</span>
-                    </p> 
+                    </p>
                     <p style="margin-left: 28px;" class="post-intro">
-                    </p> 
+                    </p>
                   </router-link>
                 </div>
-                <div class="btn-holder"> 
+                <div class="btn-holder">
                   <div class="btn-holder__right-elements">
                     <span v-if="isAcceptedOrRejected(item)">
                       <span style="color: grey;">
@@ -84,7 +84,7 @@
                       </v-btn>
                     </span>
                   </div>
-                </div> 
+                </div>
               </div>
             </div>
           </v-flex>
@@ -192,7 +192,7 @@
               posted_by
               title
               address
-              created_at
+              date
             }
           }`),
           variables: {
