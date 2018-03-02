@@ -309,22 +309,24 @@
       getJobCountString(jobType, length) {
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
       },
+      isJobExpired(date) {
+        const expiryDate = DateHelper.getExpiryDate(date);
+        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
+        const expired = daysDiff <= 0; // daysDiff can be negative so this is goo
+        return expired;
+      },
     },
     computed: {
-      activeJobs() {
-        return this.jobs.filter(job => job.active);
+      activeJobs() { // and unexpired
+        const { jobs, isJobExpired } = this;
+        return jobs.filter(({ date, active }) => !isJobExpired(date) && active);
       },
       unpostedJobs() {
-        return this.jobs.filter(job => !job.active);
+        return this.jobs.filter(({ active }) => !active);
       },
       expiredJobs() {
-        return this.jobs.filter(job => {
-          const { date: date } = job;
-          const expiryDate = DateHelper.getExpiryDate(date);
-          const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
-          const expired = daysDiff <= 0; // daysDiff can be negative so this is good.
-          return expired && job.active;
-        });
+        const { jobs, isJobExpired } = this;
+        return jobs.filter(({ date, active }) => isJobExpired(date) && active);
       },
       getUnpostedJobsString() {
         return this.getJobCountString('Unposted', this.unpostedJobs.length);
