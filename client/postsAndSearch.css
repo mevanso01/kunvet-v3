@@ -2,21 +2,6 @@
   color: #616161;
   font-size: 16px;
 }
-.search-block {
-  padding: 0 0 16px 0;
-  width: 50%;
-  float: left;
-  /* box-sizing: border-box; */
-}
-.search-block:nth-child(2n-1) {
-  padding-right: 16px;
-}
-.search-block:nth-child(2n) {
-  padding-left: 16px;
-}
-.search-block .general-input {
-  width: 100%;
-}
 .post-card {
   position: relative;
   width: 50%;
