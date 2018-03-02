@@ -33,10 +33,6 @@ const JobSchema = Mongoose.Schema({
     type: String,
     required: true,
   },
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
   active: {
     type: { Boolean, default: false },
     required: true,

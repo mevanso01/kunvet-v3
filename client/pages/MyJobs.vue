@@ -60,7 +60,7 @@
                 </h2>
               </router-link>
               <div class="new-applicant-card__time-ago">
-                <timeago :since="job.created_at" />
+                <timeago :since="job.date" />
               </div>
               <p class="post-intro">
                 <span class="new-applicant-card__address">
@@ -82,7 +82,7 @@
             <div class="btn-holder">
               <div class="btn-holder__right-elements">
                 <span style="color: grey">
-                  Repost in {{ getRepostDaysString(job.created_at) }}
+                  Repost in {{ getRepostDaysString(job.date) }}
                 </span>
                 <router-link :to="`/createnewjob/${job._id}`">
                   <v-icon>edit</v-icon>
@@ -184,7 +184,7 @@
           posted_by
           title
           active
-          created_at
+          date
           address
           type
           type2
