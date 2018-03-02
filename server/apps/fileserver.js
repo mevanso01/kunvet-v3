@@ -95,15 +95,15 @@ const upload = KoaMulter({
   return response;
 } */
 
-router.post('/newfile', async (ctx) => {
-  // const formData = ctx.req.body;
-  // console.log('Request', ctx.req);
+router.post('/newfile', upload.none(), async (ctx) => {
+  const formData = ctx.request.body;
+  console.log('Request', formData);
   if (!ctx.isAuthenticated()) {
     ctx.status = 403;
     ctx.body = 'You have to authenticate first!';
     return;
   }
-  const fileSlot = new Models.File({
+  /* const fileSlot = new Models.File({
     owner: ctx.state.user._id,
     // TODO: How do I get the formData for the extention of the file?
     filename: `${uuidv1()}.pdf`, // ${path.extname(formData.originalname)}
@@ -115,10 +115,10 @@ router.post('/newfile', async (ctx) => {
     ctx.status = 500;
     ctx.body = 'An error occured';
     return;
-  }
+  } */
   // const response = uploadFile(formData, fileSlot);
-  // ctx.body = response;
-  ctx.redirect(`upload/${fileSlot._id}`, ctx);
+  ctx.body = 'test'; // fileSlot._id;
+  //  ctx.redirect(`upload/${fileSlot._id}`, ctx);
 });
 
 router.put('/upload/:id', upload.single('file'), async (ctx) => {

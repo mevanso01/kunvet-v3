@@ -476,7 +476,9 @@
         if (!fileList.length) return;
         // append the files to FormData
         formData.append('userid', this.$store.state.userID);
+        console.log('FORMDATA 1', formData);
         formData.append(fieldName, fileList[0], fileList[0].name);
+        formData.append('a', 'b');
         /* Array
           .from(Array(fileList.length).keys())
           .map(x => {
@@ -484,6 +486,7 @@
             return null;
           }); */
         // save it
+        console.log('FORMDATA 2', formData);
         this.chosenFile = fileList[0].name;
         this.formData = formData;
       },
@@ -493,6 +496,7 @@
           this.currentStatus = 'SAVING';
           const headers = { 'Content-type': 'application/x-www-form-urlencoded' };
           const data = this.formData;
+          console.log('SENT DATA', data);
           // graphql query:
           // .then(
           // )

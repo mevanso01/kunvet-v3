@@ -43,7 +43,7 @@
                     <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Your information is mobile optimized, view them or edit them on any devices without interruptions</p>
                     </div>
                     <div class="text-xs-center pos-bottom">
-                      <v-btn error dark @click="chooseFormI()">Sign up as individual</v-btn>
+                      <v-btn class="kunvet-red-bg" dark @click="chooseFormI()">Sign up as individual</v-btn>
                     </div>
                 </v-card-text>
               </v-card>
@@ -60,7 +60,7 @@
                         <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Manage your account, view or edit your jobs on mobile devices without any interruptions</p>
                   </div>
                     <div class="text-xs-center pos-bottom">
-                      <v-btn error dark @click="chooseFormB()">Sign up as business</v-btn>
+                      <v-btn class="kunvet-red-bg" dark @click="chooseFormB()">Sign up as business</v-btn>
                     </div>
                 </v-card-text>
               </v-card>

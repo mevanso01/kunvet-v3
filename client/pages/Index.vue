@@ -112,8 +112,8 @@
   width: 50%;
   display: inline-block;
 }
-.firstSearch .input-group--select {
-  height: 46px;
+.fs-select-positions .input-group__selections {
+  height: 38px;
   overflow: auto !important;
 }
 .no-padding {
@@ -240,7 +240,6 @@
                         label="Select types"
                         v-bind:items="availableTypes"
                         v-model="selectedTypes"
-                        chips
                         autocomplete
                         single-line
                         hide-details
@@ -252,7 +251,6 @@
                         label="Select positions"
                         :items="availablePositions"
                         v-model="selectedPositions"
-                        chips
                         autocomplete
                         single-line
                         hide-details
@@ -264,7 +262,6 @@
                         label="Select shifts"
                         :items="availableShifts"
                         v-model="selectedShifts"
-                        chips
                         autocomplete
                         single-line
                         hide-details
@@ -297,7 +294,7 @@
                 <div style="color: #A7A7A7; width: calc(100% - 46px); padding-top: 7px;">A certain inc</div>
               </v-flex>
               <v-flex style="padding-left: 1px;">
-                <div style="color: #A7A7A7;">A certain inc</div>
+                <div style="color: #A7A7A7;">{{ job.posted_by }}</div>
               </v-flex>
               <v-flex xs12 sm6>
 
@@ -317,7 +314,7 @@
             <v-layout>
               <v-flex xs12 style="padding-top: 0px;">
                 <div><p style="font-size: 150%;">{{ job.title }}</p></div>
-                <div class="carditem" style="color: #A7A7A7;"><timeago since="February 14, 2018"></timeago></div>
+                <div class="carditem" style="color: #A7A7A7;"><timeago :since="job.date"></timeago></div>
                 <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
                   <p><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ job.address }}</p>
                 </div>
@@ -325,7 +322,7 @@
                   <p><v-icon style="font-size: 17px; padding-right: 10px;">sms</v-icon> Average review</p>
                 </div>-->
                 <div class="carditem">
-                  <p><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> Part time / Full time ~Internship ~ 10.50 per hour</p>
+                  <p><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> {{ sanitizeTypes(job.type) }} ~ {{ job.type2 }} ~ {{ sanitizeSalary(job.salary) }} {{ job.pay_denomination }}</p>
                 </div>
                 <div class="carditem">
                   <p><v-icon style="font-size: 17px; padding-right: 10px;">account_circle</v-icon> Not student friendly ~ experience required</p>
@@ -361,12 +358,23 @@ Vue.use(VueApollo);
 export default {
   apollo: {
     findJobs: gql`{
-      findJobs {
-          _id
-          title
-          description
-          type
-          address
+      findJobs (filter: { active: true }){
+        _id
+        posted_by
+        title
+        description
+        address
+        latitude
+        longitude
+        type
+        studentfriendly
+        type2
+        shift
+        age
+        pay_type
+        salary
+        pay_denomination
+        date
       }
     }`,
   },
@@ -429,6 +437,28 @@ export default {
         Store.commit('go');
         this.commitData();
       }
+    },
+    sanitizeTypes(jobTypes) {
+      const types = [];
+      for (const i in jobTypes) {
+        if (typeof jobTypes[i] === 'string') {
+          const type = jobTypes[i];
+          if (type === 'fulltime') {
+            types.push('full time');
+          } else if (type === 'parttime') {
+            types.push('part time');
+          } else {
+            types.push(type);
+          }
+        }
+      }
+      return types;
+    },
+    sanitizeSalary(salary) {
+      if (typeof salary === 'number') {
+        return salary.toFixed(2).toString();
+      }
+      return '';
     },
     commitData() {
       Store.commit({
