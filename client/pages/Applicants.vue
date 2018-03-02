@@ -199,7 +199,7 @@
             userId: this.$store.state.userID,
           },
         });
-
+        console.log('DATA', data);
         const jobs = data.findJobs;
         if (jobs && jobs.length > 0 && jobs[0]._id) {
           this.selectedJob = { title: jobs[0].title, id: jobs[0]._id };
@@ -283,7 +283,7 @@
         return status.charAt(0).toUpperCase() + status.substring(1, status.length);
       },
       getApplicantExpiringText(applicant) {
-        const { created_at: date } = applicant;
+        const { date } = applicant;
         const expiryDate = DateHelper.getExpiryDate(date);
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return daysDiff <= 5 ? `Application expiring in ${daysDiff} days` : '';

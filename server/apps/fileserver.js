@@ -11,7 +11,7 @@
  *  * owner:        ObjectId of the owner (uploader)
  *  * filename:     String of the actual filename.
  *  * uploadPath:   String of the location of the uploaded
- *                  file, relative to the server executable.
+ *                  file, dependent of the storage backend.
  *  * mimeType:     String indicating the MIME type the file
  *                  should be served in
  *  * readOnly:     Boolean indicating whether the file can
@@ -36,9 +36,16 @@ import KoaRouter from 'koa-router';
 import KoaMulter from 'koa-multer';
 import KoaSend from 'koa-send';
 
+// Mongoose
+import Mongoose from 'mongoose';
+
 // Utils
 import Models from '@/mongodb/Models';
 import uuidv1 from 'uuid/v1';
+
+// Storage backend
+// import Backend from '@/storages/GoogleCloud';
+import Backend from '@/storages/Local';
 
 // Node
 import path from 'path';
@@ -46,15 +53,132 @@ import fs from 'fs';
 
 const app = new Koa();
 const router = new KoaRouter();
+const backend = new Backend();
 const upload = KoaMulter({
   storage: KoaMulter.diskStorage({
     destination: function destination(req, file, cb) {
-      cb(null, 'uploads/');
+      cb(null, backend.getTempUploadPath());
     },
     filename: function filename(req, file, cb) {
       cb(null, `${uuidv1()}${path.extname(file.originalname)}`);
     },
   }),
+});
+
+async function uploadFile(ctx, file, fileSlot) {
+  if (!fileSlot) {
+    fs.unlink(file.path);
+
+    const response = {
+      success: false,
+      message: 'Invalid file slot',
+    };
+    ctx.status = 404;
+    ctx.body = JSON.stringify(response);
+
+    return response;
+  }
+
+  if (fileSlot.readOnly) {
+    // Read only file :(
+
+    fs.unlink(file.path);
+    const response = {
+      success: false,
+      message: 'Read-only file',
+      id: fileSlot._id,
+    };
+    ctx.status = 423;
+    ctx.body = JSON.stringify(response);
+
+    return response;
+  }
+
+  const response = {
+    success: true,
+    message: 'File uploaded',
+    id: fileSlot._id,
+  };
+
+  // Delete the original file
+  if (fileSlot.uploadPath) {
+    response.updated = true;
+    try {
+      await backend.deleteFile(fileSlot.uploadPath);
+    } catch (e) {
+      response.success = false;
+      response.message = 'Could not delete original file';
+      fs.unlinkSync(file.path);
+    }
+  }
+
+  // Upload the new one to backend
+  if (response.success) {
+    try {
+      const id = await backend.uploadFile(file.path, file.filename);
+      fileSlot.uploadPath = id;
+    } catch (e) {
+      response.success = false;
+      response.message = 'Could not upload new file';
+      fs.unlinkSync(file.path);
+    }
+  }
+
+  if (response.success && fileSlot.uploadOnce) {
+    fileSlot.readOnly = true;
+  }
+
+  fileSlot.save();
+
+  ctx.body = JSON.stringify(response);
+
+  return response;
+}
+
+router.put('/new', upload.single('file'), async (ctx) => {
+  // ctx.req.body.someField
+  const { file } = ctx.req;
+  console.log('FILE', file);
+
+  if (!file) {
+    const response = {
+      success: false,
+      message: 'File not supplied',
+    };
+    ctx.status = 400;
+    ctx.body = JSON.stringify(response);
+
+    return;
+  }
+
+  if (!ctx.isAuthenticated()) {
+    // Unauthenticated
+
+    fs.unlink(file.path);
+    const response = {
+      success: false,
+      message: 'Authentication required',
+    };
+    ctx.status = 401;
+    ctx.body = JSON.stringify(response);
+
+    return;
+  }
+
+  const fileSlot = new Models.File({
+    owner: ctx.state.user._id,
+    filename: file.filename,
+  });
+  try {
+    await fileSlot.save();
+  } catch (e) {
+    fs.unlink(file.path);
+    ctx.status = 500;
+    ctx.body = 'An error occurred';
+    return;
+  }
+
+  await uploadFile(ctx, file, fileSlot);
 });
 
 router.put('/upload/:id', upload.single('file'), async (ctx) => {
@@ -90,61 +214,20 @@ router.put('/upload/:id', upload.single('file'), async (ctx) => {
   try {
     fileSlot = await Models.File.findOne({
       _id: fileId,
-      owner: ctx.state.user._id,
+      owner: Mongoose.Types.ObjectId(ctx.state.user._id),
     });
   } catch (e) {
     // Invalid slot
-    fs.unlink(file.path);
-
-    const response = {
-      success: false,
-      message: 'Invalid file slot',
-    };
-    ctx.status = 404;
-    ctx.body = JSON.stringify(response);
-
-    return;
   }
 
-  if (fileSlot.readOnly) {
-    // Read only file :(
-
-    fs.unlink(file.path);
-    const response = {
-      success: false,
-      message: 'Read-only file',
-    };
-    ctx.status = 423;
-    ctx.body = JSON.stringify(response);
-    return;
-  }
-
-  // Accept the file
-  const response = {
-    success: true,
-    message: 'File uploaded',
-  };
-  if (fileSlot.uploadPath) {
-    response.updated = true;
-    fs.unlink(fileSlot.uploadPath);
-  } else {
-    response.updated = false;
-  }
-
-  if (fileSlot.uploadOnce) {
-    fileSlot.readOnly = true;
-  }
-
-  fileSlot.uploadPath = file.path;
-  fileSlot.save();
-
-  ctx.body = JSON.stringify(response);
+  await uploadFile(ctx, file, fileSlot);
 });
+
 
 router.get('/get/:id', async (ctx) => {
   let userId = -1;
   if (ctx.isAuthenticated()) {
-    userId = ctx.state.user._id;
+    userId = Mongoose.Types.ObjectId(ctx.state.user._id);
   }
 
   const fileId = ctx.params.id;
@@ -166,7 +249,17 @@ router.get('/get/:id', async (ctx) => {
     return;
   }
 
-  if (fileSlot.employerOnly && fileSlot.owner !== userId) {
+  let granted = false;
+
+  if (fileSlot.owner.equals(userId)) {
+    granted = true;
+  } else if (fileSlot.protected) {
+    granted = fileSlot.accessList.includes(userId);
+  } else {
+    granted = !fileSlot.employerOnly || ctx.state.user.default_org;
+  }
+
+  if (!granted) {
     // Restricted file
 
     const response = {
@@ -179,10 +272,19 @@ router.get('/get/:id', async (ctx) => {
     return;
   }
 
-  await KoaSend(ctx, fileSlot.uploadPath);
+  // Retrieve the URL from backend
+  const url = await backend.getLink(fileSlot.uploadPath);
+  if (url.startsWith('file://')) {
+    // A file link
+    const local = url.slice(7);
+    await KoaSend(ctx, local, { root: '/' });
+  } else {
+    // Some public URL on the backend
+    ctx.redirect(url);
+  }
 });
 
 app.use(router.routes());
-app.use(router.allowedMethods());
+// app.use(router.allowedMethods());
 
 export default app;

@@ -475,9 +475,7 @@
         if (!fileList.length) return;
         // append the files to FormData
         formData.append('userid', this.$store.state.userID);
-        console.log('FORMDATA 1', formData);
         formData.append(fieldName, fileList[0], fileList[0].name);
-        formData.append('a', 'b');
         /* Array
           .from(Array(fileList.length).keys())
           .map(x => {
@@ -485,7 +483,6 @@
             return null;
           }); */
         // save it
-        console.log('FORMDATA 2', formData);
         this.chosenFile = fileList[0].name;
         this.formData = formData;
       },
@@ -499,25 +496,21 @@
           // graphql query:
           // .then(
           // )
-          axios.post('file/newfile', data, headers).then((res) => {
-            console.log(res);
-            /* const _filename = res.data;
-            if (this.userdata.resumes) {
+          axios.put('file/new', data, headers).then((res) => {
+            if (res.data.success) {
+              const _filename = res.data.id;
+              if (!this.userdata.resumes) {
+                this.userdata.resumes = [];
+              }
               this.userdata.resumes.push({
                 name: this.resumeName,
                 filename: _filename,
                 resumeid: null,
               });
-            } else {
-              this.userdata.resumes = [{
-                name: this.resumeName,
-                filename: _filename,
-                resumeid: null,
-              }];
-            } */
+              this.saveUserdata();
+              this.closeFileModal();
+            }
             this.formData = null;
-            // this.saveUserdata();
-            this.closeFileModal();
           }, (error) => {
             console.error(error);
             this.currentStatus = 'FAILED';

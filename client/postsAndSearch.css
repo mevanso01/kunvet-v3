@@ -30,6 +30,7 @@
 .carditem i {
   width: 25px;
   font-size: 18px;
+  color: #4d4d4d !important;
   transform: translateY(-2px);
 }
 .carditem .carditem-image {
