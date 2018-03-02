@@ -5,14 +5,6 @@
 .saved {
   color: #ffcc00 !important;
 }
-.carditem {
-  margin-bottom: 5px;
-  font-size: 10px;
-  padding-top: 2px;
-}
-.carditem p {
-  margin: 0;
-}
 .container {
   background-color: #fff;
 }
@@ -213,7 +205,7 @@
                   </v-flex>
                 </v-layout>
                 <div class="city-img-holder">
-                  <img style="width: 100%;" :src="cityImage"></img>
+                  <img style="width: 100%;" :src="svgs.cityImage"></img>
                 </div>
               </section>
               <div v-if="firstSearch">
@@ -284,19 +276,17 @@
 
       <v-layout row wrap v-if="!firstSearch">
 
-        <div class="post-card" v-for="(job, index) in findJobs" :key="index" xs12>
+        <div class="post-card" v-for="(job, index) in findJobs" :key="index">
             <v-layout align-center row spacer slot="header">
 
               <v-flex xs8>
                 <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
                   <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
                 </v-avatar>
-                <div style="color: #A7A7A7; width: calc(100% - 46px); padding-top: 7px;">A certain inc</div>
+                <!--<div style="color: #A7A7A7; width: calc(100% - 46px); padding-top: 7px;">{{ job.posted_by }}</div>-->
+                <div style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
               </v-flex>
-              <v-flex style="padding-left: 1px;">
-                <div style="color: #A7A7A7;">{{ job.posted_by }}</div>
-              </v-flex>
-              <v-flex xs12 sm6>
+              <v-flex xs4>
 
               <div class="float-right">
                 <v-avatar size="36px" slot="activator">
@@ -313,19 +303,22 @@
           <router-link :to="'JobDetail/'+job._id">
             <v-layout>
               <v-flex xs12 style="padding-top: 0px;">
-                <div><p style="font-size: 150%;">{{ job.title }}</p></div>
+                <div><h3 class="post-title">{{ job.title }}</h3></div>
                 <div class="carditem" style="color: #A7A7A7;"><timeago :since="job.date"></timeago></div>
                 <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
-                  <p><v-icon style="color: #A7A7A7; padding-right: 10px;">location_city</v-icon> {{ job.address }}</p>
+                  <p><v-icon style="color: #A7A7A7;">location_city</v-icon>{{ job.address }}</p>
                 </div>
                 <!--<div class="carditem">
                   <p><v-icon style="font-size: 17px; padding-right: 10px;">sms</v-icon> Average review</p>
                 </div>-->
-                <div class="carditem">
+                <!--<div class="carditem">
                   <p><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> {{ sanitizeTypes(job.type) }} ~ {{ job.type2 }} ~ {{ sanitizeSalary(job.salary) }} {{ job.pay_denomination }}</p>
+                </div>-->
+                <div class="carditem">
+                  <p><v-icon>info</v-icon>{{ getMainJobInfo(job) }}</p>
                 </div>
                 <div class="carditem">
-                  <p><v-icon style="font-size: 17px; padding-right: 10px;">account_circle</v-icon> Not student friendly ~ experience required</p>
+                  <p><span class="carditem-image"><img :src="svgs.student" /></span>{{ job.studentfriendly ? '' : 'Not ' }}Student Friendly</p>
                 </div>
 
                 <div class="image-row">
@@ -349,9 +342,14 @@ import VueApollo from 'vue-apollo';
 import Store from '@/store';
 import VuexLS from '@/store/persist';
 import CitySvg from '@/assets/vc.svg';
+import InformationSvg from '@/assets/job_posts/information.svg';
+import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
+import StudentSvg from '@/assets/job_posts/user_1.svg';
 import FirstViewCard1 from '@/components/FirstViewCard1';
 import FirstViewCardRText from '@/components/FirstViewCardRText';
 import FirstViewCardLText from '@/components/FirstViewCardLText';
+import StringHelper from '@/utils/StringHelper';
+
 
 Vue.use(VueApollo);
 
@@ -426,7 +424,12 @@ export default {
       selectedPositions: Store.state.selectedPositions,
       selectedShifts: Store.state.selectedShifts,
       vuextest: Store.state.count,
-      cityImage: CitySvg,
+      svgs: {
+        cityImage: CitySvg,
+        information: InformationSvg,
+        locationMarker: LocationMarkerSvg,
+        student: StudentSvg,
+      },
       selectedPositionsInital: 'All / Any',
     };
   },
@@ -444,9 +447,9 @@ export default {
         if (typeof jobTypes[i] === 'string') {
           const type = jobTypes[i];
           if (type === 'fulltime') {
-            types.push('full time');
+            types.push('Full-Time');
           } else if (type === 'parttime') {
-            types.push('part time');
+            types.push('Part-time');
           } else {
             types.push(type);
           }
@@ -459,6 +462,27 @@ export default {
         return salary.toFixed(2).toString();
       }
       return '';
+    },
+    getJobTypeString(jobTypes) {
+      if (!jobTypes) return '';
+      if (jobTypes.length === 0) return 'Unknown'; // probably unnecessary
+      return StringHelper.listToSlashString(this.sanitizeTypes(jobTypes));
+    },
+    getSalaryString(job) {
+      if (job.pay_type !== 'paid') {
+        return job.pay_type;
+      }
+      return `$${job.salary} ${job.pay_denomination}`;
+    },
+    getMainJobInfo(job) {
+      const jobType = this.getJobTypeString(job.type);
+      const jobType2 = this.getJobTypeString(job.type2);
+      const salary = this.getSalaryString(job);
+      let result = '';
+      if (jobType) result += jobType;
+      if (jobType && jobType2) result += ` • ${jobType2}`;
+      if (salary) result += ` • ${salary}`;
+      return result;
     },
     commitData() {
       Store.commit({

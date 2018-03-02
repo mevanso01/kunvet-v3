@@ -16,19 +16,19 @@
           v-for="job in unpostedJobs"
           class="new-applicant-card"
         >
-          <div class="inner"> 
+          <div class="inner">
             <div class="new-applicant-card__info">
               <router-link :to="`/jobdetail/${job._id}`">
                 <h2 class="new-applicant-card__title">
                   {{ job.title }}
-                </h2> 
+                </h2>
               </router-link>
             </div>
             <div class="btn-holder">
               <div class="btn-holder__right-elements">
                 <router-link :to="`/createnewjob/${job._id}`">
                   <v-btn class="kunvet-accept-small-btn">
-                    Continue Editing 
+                    Continue Editing
                   </v-btn>
                 </router-link>
                 <v-btn
@@ -39,7 +39,7 @@
                 </v-btn>
                </div>
             </div>
-          </div> 
+          </div>
         </v-flex>
       </v-layout>
 
@@ -52,7 +52,7 @@
           v-for="job in activeJobs"
           class="new-applicant-card"
         >
-          <div class="inner"> 
+          <div class="inner">
             <div class="new-applicant-card__info">
               <router-link :to="`/jobdetail/${job._id}`">
                 <h2 class="new-applicant-card__title">
@@ -85,12 +85,12 @@
                   Repost in {{ getRepostDaysString(job.created_at) }}
                 </span>
                 <router-link :to="`/createnewjob/${job._id}`">
-                  <v-icon>edit</v-icon> 
+                  <v-icon>edit</v-icon>
                 </router-link>
-                <v-icon @click="onShowJobDialog(job)">delete</v-icon> 
+                <v-icon @click="onShowJobDialog(job)">delete</v-icon>
               </div>
             </div>
-          </div> 
+          </div>
         </v-flex>
       </v-layout>
 
@@ -103,7 +103,7 @@
           v-for="job in expiredJobs"
           class="new-applicant-card"
         >
-          <div class="inner"> 
+          <div class="inner">
             <div class="new-applicant-card__info">
               <router-link :to="`/jobdetail/${job._id}`">
                 <h2 class="new-applicant-card__title">
@@ -139,12 +139,12 @@
                 Repost
               </v-btn>
               <router-link :to="`/createnewjob/${job._id}`">
-                <v-icon>edit</v-icon> 
+                <v-icon>edit</v-icon>
               </router-link>
               <v-icon @click="onShowJobDialog(job)">delete</v-icon>
             </div>
           </div>
-        </div> 
+        </div>
       </v-flex>
       </v-layout>
     </div>
@@ -176,6 +176,25 @@
 
   import DateHelper from '@/utils/DateHelper';
   import StringHelper from '@/utils/StringHelper';
+
+  const findJobsQuery = gql`
+      query($userId: MongoID) {
+        findJobs(filter: { user_id: $userId }) {
+          _id
+          posted_by
+          title
+          active
+          created_at
+          address
+          type
+          type2
+          studentfriendly
+          pay_type
+          salary
+          pay_denomination
+          experience
+      }
+    }`;
 
   export default {
     created() {
@@ -219,40 +238,23 @@
       };
     },
     methods: {
-      async getData() {
+      /* async getData() {
         const { data } = await this.$apollo.query(this.getFindJobsQuery());
         this.jobs = data.findJobs;
+      }, */
+      getData() {
+        this.$apollo.query({
+          query: findJobsQuery,
+          variables: {
+            userId: this.$store.state.userID,
+          },
+        }).then(res => {
+          this.jobs = res.data.findJobs;
+        });
       },
       onShowJobDialog(job) {
         this.dialogs.currentJob = job;
         this.dialogs.showDelete = true;
-      },
-      getFindJobsQuery() {
-        const findJobsQuery = {
-          query: gql`
-            query($userId: MongoID) {
-              findJobs(filter: { user_id: $userId }) {
-                _id
-                posted_by
-                title
-                active
-                created_at
-                address
-                type
-                type2
-                studentfriendly
-                pay_type
-                salary
-                pay_denomination
-                experience
-            }
-          }
-          `,
-          variables: {
-            userId: this.$store.state.userID,
-          },
-        };
-        return findJobsQuery;
       },
       async onJobDelete() {
         const { currentJob: { _id: jobId } } = this.dialogs;
@@ -266,7 +268,10 @@
           variables: {
             jobId,
           },
-          refetchQueries: [this.getFindJobsQuery()],
+          refetchQueries: [{
+            query: findJobsQuery,
+            variables: { userId: this.$store.state.userID },
+          }],
         });
         const { recordId } = res.data.removeJob;
         this.jobs = this.jobs.filter(({ _id }) => _id !== recordId);
