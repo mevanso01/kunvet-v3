@@ -12,7 +12,7 @@
                     <v-list>
                       <v-list-tile v-if="!bdata.address" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <!--<v-list-tile-title>Add school info</v-list-tile-title>-->
@@ -88,7 +88,7 @@
 
                       <v-list-tile v-if="!bdata.phone_number" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -424,17 +424,16 @@
         });
       },
       async fillUpJobs() {
-        const { business_name: businessName } = this.bdata;
         const { data: { findJobs: jobs } } = await this.$apollo.query({
           // this.$store.state.businessID
-          query: (gql`query ($businessName: String) {
-            findJobs (filter: { posted_by: $businessName}){
+          query: (gql`query ($userId: MongoID) {
+            findJobs (filter: { user_id: $userId}){
               _id
               active
             }
           }`),
           variables: {
-            businessName, // this.$store.state.businessID,
+            userId: this.$store.state.userID, // this.$store.state.businessID,
           },
         });
         this.jobs = this.jobs.concat(jobs.slice());

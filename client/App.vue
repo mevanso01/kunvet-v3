@@ -216,6 +216,8 @@ export default {
 <style lang="scss">
 @import 'app.css';
 @import 'account.css';
+@import 'applicants.css';
+@import 'buttons.css';
 @import 'postsAndSearch.css';
 body, html {
   height: 100%;

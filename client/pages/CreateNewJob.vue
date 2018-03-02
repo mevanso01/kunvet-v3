@@ -343,6 +343,7 @@ const createJobMutation = gql`
     createJob (record: $job) {
       recordId
       record {
+        user_id
         posted_by
         title
         description
@@ -371,6 +372,7 @@ const updateJobMutation = gql`
     updateJob (filter: {_id: $id}, record: $job) {
       recordId
       record {
+        user_id
         posted_by
         title
         description
@@ -451,9 +453,6 @@ export default {
     };
   },
   methods: {
-    test() {
-      console.log('TEST');
-    },
     setPlace(place) {
       if (!place.geometry) {
         return;
@@ -544,6 +543,11 @@ export default {
     createJobArray() {
       const job = {
         // user_name: State.userdata.username,
+        // TODO: Make sure this user_id line is correct.
+        // $store.state.userID vs $store.state.businessID
+        // Do we have to differentiate between this?
+        // Because on the backend, ctx only cares about user._id.
+        user_id: this.$store.state.userID,
         posted_by: this.posted_by,
         active: this.active,
         title: this.title,
@@ -606,7 +610,7 @@ export default {
           this.address = job.address;
           this.latitude = job.latitude;
           this.longitude = job.latitude;
-          if (job.type.lenght > 1) {
+          if (job.type.length > 1) {
             this.type = 'both';
           } else if (job.type) {
             this.type = job.type[0];

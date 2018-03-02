@@ -436,20 +436,19 @@
     methods: {
       async fillUpJobs() {
         const { data: { findJobs: jobs } } = await this.$apollo.query({
-          query: (gql`query ($user: String) {
-            findJobs (filter: { posted_by: $user }){
+          query: (gql`query ($user: MongoID) {
+            findJobs (filter: { user_id: $user }){
               _id
               active
             }
           }`),
           variables: {
-            user: this.user,
+            user: this.$store.state.userID,
           },
         });
         // TODO: Temporary concat for testing with base jobs state.
         // This doesn't do any parsing at the moment since I don't know the complete object state yet.
         this.jobs = this.jobs.concat(jobs.slice());
-        console.log('JOBS', this.jobs);
         this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
           .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
       },

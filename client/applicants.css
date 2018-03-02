@@ -1,0 +1,129 @@
+.applicant-page .job-title {
+  z-index: 1;
+}
+.applicant-card {
+  height: 160px;
+  color: #5D5D5D;
+}
+.applicant-card > .inner {
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+.applicant-card h2,
+.applicant-card p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.applicant-card h2 {
+  margin-bottom: 10px;
+  color: #5D5D5D;
+  font-weight: normal;
+}
+.applicant-card p {
+  margin-bottom: 6px;
+}
+.applicant-card i {
+  color: rgb(63, 169, 245);
+  margin-right: 5px;
+  margin-left: 5px;
+  width: 18px;
+  font-size: 13px;
+}
+.applicant-card .button-holder {
+  border-top: 1px solid black; 
+  background-color: #f2f2f2;
+  padding: 3px 5px 4px 5px;
+}
+.applicant-page .button-holder a {
+  padding: 0 5px;
+  cursor: pointer;
+  display: block;
+  float: right;
+}
+.button-holder {
+  text-align: right;
+  height: auto;
+}
+@media (min-width: 601px) {
+  .applicant-card {
+     width: calc(50% - 15px);
+     margin: 10px 0 0px 10px;
+  }
+  .applicant-card:nth-last-child(1) {
+    margin-bottom: 10px;
+  }
+  .applicant-page .job-title {
+    padding-left: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .applicant-card {
+    margin: 10px;
+  }
+}
+.new-applicant-card {
+}
+.new-applicant-card .inner {
+  padding: 0 10px 10px 10px;
+  background-color: #f2f2f2;
+}
+@media only screen and (min-width: 480px) {
+  .new-applicant-card .inner {
+    margin: 0 10px;
+  }
+}
+.new-applicant-card__title {
+  margin-bottom: 10px;
+  color: #5D5D5D;
+  font-weight: normal;
+}
+.new-applicant-card .btn-holder {
+  padding-top: 7px;
+}
+.new-applicant-card__info {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.new-applicant-card__blue-ico {
+  color: rgb(63, 169, 245);
+  margin-right: 5px;
+}
+.btn-holder {
+  overflow: hidden;
+  border-top: 1px solid black;
+}
+.btn-holder__left-elements {
+  float: left;
+}
+.btn-holder__right-elements {
+  float: right;
+}
+.new-applicant-card__regular-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+.new-applicant-card__title {
+  margin-bottom: 0;
+}
+.new-applicant-card__address {
+  text-decoration: underline;
+}
+.new-applicant-card__time-ago {
+  padding-bottom: 10px;
+  color: grey;
+}
+.new-applicant-card__unread-circle {
+  background: #ef5350;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.new-applicant-card__profile-pic-container {
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin: 8px 20px 0 20px;
+  position: relative;
+}

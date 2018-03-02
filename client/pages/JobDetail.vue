@@ -192,7 +192,7 @@
     <v-dialog v-model="applydialog">
       <v-card style="padding: 20px;">
         <h3>Select resume to send</h3>
-        <v-radio-group v-model="selectedResume" hide-details>
+        <v-radio-group v-model="selectedResumeName" hide-details>
           <v-radio v-for="(resume, index) in resumes"
             class="kunvet-red"
             :key="index"
@@ -256,8 +256,7 @@ export default {
         display_email: null,
       },
       resumes: [],
-      resumenames: [],
-      selectedResume: null,
+      selectedResumeName: null,
       userdatafetched: false,
       applied: false,
     };
@@ -386,7 +385,7 @@ export default {
           }
         }
         if (this.resumes.length > 0) {
-          this.selectedResume = this.resumes[0].name;
+          this.selectedResumeName = this.resumes[0].name;
         }
         this.userdatafetched = true;
       }).catch((error) => {
@@ -418,7 +417,7 @@ export default {
     createApplication() {
       // validate
       if (this.uid && this.userdata) {
-        const index = this.resumenames.indexOf(this.selectedResume);
+        const index = this.resumes.findIndex(resume => this.selectedResumeName === resume.name);
         const application = {
           user_id: this.uid,
           job_id: this.id,

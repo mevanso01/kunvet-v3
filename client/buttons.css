@@ -1,0 +1,49 @@
+.kunvet-black-large-btn,
+.kunvet-black-small-btn,
+.kunvet-accept-large-btn,
+.kunvet-reject-large-btn,
+.kunvet-large-small-btn,
+.kunvet-accept-small-btn,
+.kunvet-reject-small-btn,
+.kunvet-pomote-large-btn,
+.kunvet-promote-small-btn {
+  border-width: 1px;
+  border-style: solid;
+  text-transform: none;
+  min-width: auto;
+}
+.kunvet-black-large-btn,
+.kunvet-accept-large-btn,
+.kunvet-reject-large-btn,
+.kunvet-promote-large-btn {
+  height: 36px !important;
+  margin: 15px 0px 15px 5px !important;
+}
+.kunvet-black-small-btn,
+.kunvet-accept-small-btn,
+.kunvet-reject-small-btn,
+.kunvet-promote-small-btn {
+  height: 30px !important;
+  margin: 5px 0 0 8px;
+}
+.kunvet-black-large-btn,
+.kunvet-black-small-btn {
+  border-color: black;
+  color: black;
+}
+.kunvet-accept-large-btn,
+.kunvet-accept-small-btn {
+  border-color: #FF9800;
+  color: #FF9800 !important;
+}
+.kunvet-reject-large-btn,
+.kunvet-reject-small-btn {
+  border-color: #F44336;
+  color: #F44336 !important;
+}
+.kunvet-promote-large-btn,
+.kunvet-promote-small-btn {
+  border-color: #8aacb8;
+  color: #8aacb8 !important;
+}
+

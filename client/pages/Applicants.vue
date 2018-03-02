@@ -1,117 +1,139 @@
 <style>
-  .applicant-page .job-title {
-      z-index: 1;
-  }
-  .applicant-card {
-    height: 160px;
-    color: #5D5D5D;
-  }
-  .applicant-card > .inner {
-    padding: 10px;
-    background-color: #f2f2f2;
-  }
-  .applicant-card h2,
-  .applicant-card p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .applicant-card h2 {
-    margin-bottom: 10px;
-    color: #5D5D5D;
-    font-weight: normal;
-  }
-  .applicant-card p {
-    margin-bottom: 6px;
-  }
-  .applicant-card i {
-    color: rgb(63, 169, 245);
-    margin-right: 5px;
-    margin-left: 5px;
-    width: 18px;
-    font-size: 13px;
-  }
-  .applicant-card .button-holder {
-    border-top: 1px solid rgb(214, 214, 214);
-    background-color: #f2f2f2;
-    padding: 3px 5px 4px 5px;
-    height: 30px;
-  }
-  .applicant-page .button-holder a {
-    padding: 0 5px;
-    cursor: pointer;
-    display: block;
-    float: right;
-  }
-  @media (min-width: 601px) {
-    .applicant-card {
-      width: calc(50% - 15px);
-      margin: 10px 0 0px 10px;
-      float: left;
-    }
-    .applicant-card:nth-last-child(1) {
-      margin-bottom: 10px;
-    }
-    .applicant-page .job-title {
-      padding-left: 10px;
-    }
-  }
-  @media (max-width: 600px) {
-    .applicant-card {
-      margin: 10px;
-    }
-  }
 </style>
 <template>
   <v-container fluid class="applicant-page">
     <div class="main-cont-large">
-      <v-layout>
-        <v-flex xs-0 md2 dark class="no-padding">
-         <!--<v-card width="100%" height="100%">-->
-        <v-navigation-drawer permanent dark style="position: relative; width: 100%; z-index: 1;">
-          <v-list dense style="padding-top: 64px;">
-            <v-list-tile v-for="item in jobs" :key="item.title" @click="">
-              <v-list-tile-content @click="selectedJob = item">
-                <v-list-tile-title class="center">{{ item.title }}</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-navigation-drawer>
-                 <!--</v-card>-->
+      <v-layout row wrap>
+        <v-flex xs12 v-if="jobs.length > 0">
+          <h1>
+            View Applicants by Job
+          </h1>
         </v-flex>
+        <template
+          v-if="jobs.length > 0"
+          v-for="job in jobs"
+        >
+          <v-flex xs12>
+            <h2>{{ job.title }}</h2>
+            <h3>
+              <span class="kunvet-red">
+                {{ getApplicantsFromJobs(job._id).length }}
+              </span> applicants in total
+            </h3>
+          </v-flex>
 
-        <v-flex xs9 md10 style="" class="no-padding">
-          <v-toolbar card class="job-title">
-           <v-toolbar-title>{{ selectedJob.title }}</v-toolbar-title>
-          </v-toolbar>
-
-          <div style="max-height: 68vh; overflow: auto;">
-            <div v-for="item in applicants[selectedJob.id]" class="applicant-card">
+          <v-flex xs12 sm6
+            v-if="applicants.length > 0"
+            v-for="item in getApplicantsFromJobs(job._id)"
+            class="new-applicant-card"
+          >
+            <div class="myjobs-container">
               <div class="inner">
-                  <router-link :to="'view-applicant/'+item._id">
-                    <h2>{{ item.name }}</h2>
-                    <p><i class="fa fa-graduation-cap" aria-hidden="true"></i>{{ item.school }}</p>
-                    <p style="margin-left: 28px;" class="post-intro">{{ item.notes }}</p>
+                <div class="new-applicant-card__info" style="padding-bottom: 20px;">
+                  <div class="new-applicant-card__profile-pic-container">
+                    <figure>
+                      <div v-if="item.status !== 'opened'" class="new-applicant-card__unread-circle" />
+                      <img
+                        :src="svgs.kunvetCharacter"
+                      />
+                      <figurecaption style="font-size: 0.6em; color: grey; padding-left: 5px;">
+                        <timeago :since="item.created_at" />
+                      </figurecaption>
+                    </figure>
+                  </div>
+                  <router-link :to="'view-applicant/'+item._id"> 
+                    <h2 class="new-applicant-card__title">{{ item.name }}</h2> 
+                    <p style="overflow: hidden;">
+                      <i class="fa fa-graduation-cap new-applicant-card__blue-ico" aria-hidden="true"></i>{{ item.school || 'Did Not Provide' }}<br />
+                      <span style="color: grey;" v-if="item.degree">{{ item.degree }}<br /></span>
+                      <span style="color: grey;">{{ getApplicantNotesDisplayText(item) }}</span>
+                    </p> 
+                    <p style="margin-left: 28px;" class="post-intro">
+                    </p> 
                   </router-link>
-              </div>
-              <div class="button-holder">
-                <a class="reject" @click="">Reject</a>
-                <a class="accept" @click="">Accept</a>
+                </div>
+                <div class="btn-holder"> 
+                  <div class="btn-holder__right-elements">
+                    <span v-if="isAcceptedOrRejected(item)">
+                      <span style="color: grey;">
+                        {{ getAcceptedOrRejectedText(item) }}
+                      </span>
+                      <v-btn
+                        v-if="item.status === 'accepted'"
+                        class="kunvet-black-small-btn"
+                        @click=""
+                      >
+                        Message
+                      </v-btn>
+                    </span>
+                    <span v-else>
+                      <span style="color: red;">
+                        {{ getApplicantExpiringText(item) }}
+                      </span>
+                      <v-btn
+                        class="kunvet-accept-small-btn"
+                        @click="onShowAcceptDialog(item)"
+                      >
+                        Accept
+                      </v-btn>
+                      <v-btn
+                        class="kunvet-reject-small-btn"
+                        @click="onShowRejectDialog(item)"
+                      >
+                        Reject
+                      </v-btn>
+                    </span>
+                  </div>
+                </div> 
               </div>
             </div>
-          </div>
-
-          <h3 v-if="!loading && applicants[selectedJob.id].length == 0" style="color: #b0b0b0; text-align: center; margin-top: 48px;">
-            No applicants for this job, yet!
-          </h3>
-        </v-flex>
+          </v-flex>
+        </template>
       </v-layout>
     </div>
+
+    <v-dialog v-model="dialogs.showAccept">
+      <v-card>
+        <v-card-title class="headline">
+          Accept Applicant
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="green darken-1" flat="flat" @click.native="onAccept">
+            Confirm
+          </v-btn>
+          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showAccept= false">
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialogs.showReject">
+      <v-card>
+        <v-card-title class="headline">
+          Reject Applicant
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="green darken-1" flat="flat" @click.native="onReject">
+            Confirm
+          </v-btn>
+          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showReject = false">
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
+  import axios from 'axios';
+
+  import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
+  import KunvetCharacterSvg from '@/assets/account/default_profile_picture.svg';
+
+  import DateHelper from '@/utils/DateHelper';
+  import StringHelper from '@/utils/StringHelper';
 
   export default {
     created() {
@@ -144,49 +166,51 @@
         user: null,
         jobs: [],
         selectedJob: { title: null, id: null },
-        applicants: {},
+        applicants: [],
         job_titles: [],
-        fakedata: [
-          { name: 'Guillaume Rocheteau', school: 'University of California, Irvine' },
-          { name: 'Peter the Anteater', school: 'idk UCLA probably' },
-          { name: 'Bill Kunvet', school: 'Paul Merage School of Business' },
-        ],
         settingsoption1: '',
         addorg: false,
+        shouldShowAllApplicants: false,
+        dialogs: {
+          currentApplicant: {},
+          showAccept: false,
+          showReject: false,
+        },
+        svgs: {
+          locationMarker: LocationMarkerSvg,
+          kunvetCharacter: KunvetCharacterSvg,
+        },
       };
     },
     methods: {
-      getData() {
-        console.log('GETTING DATA for', this.user);
-        this.$apollo.query({
-          query: (gql`query ($user: String) {
-            findJobs (filter: { posted_by: $user, active: true }){
+      async getData() {
+        const { data } = await this.$apollo.query({
+          query: (gql`query ($userId: MongoID) {
+            findJobs (filter: { user_id: $userId, active: true }){
               _id
+              user_id
               posted_by
               title
+              address
+              created_at
             }
           }`),
           variables: {
-            user: this.user,
+            userId: this.$store.state.userID,
           },
-        }).then((data) => {
-          const jobs = data.data.findJobs;
-          // console.log(this.jobs);
-          if (jobs && jobs.length > 0 && jobs[0]._id) {
-            this.selectedJob = { title: jobs[0].title, id: jobs[0]._id };
-          }
-          for (var i in jobs) {
-            if (jobs[i]._id) {
-              var jobId = jobs[i]._id;
-              this.addApplicants(jobId);
-              this.jobs.push({ title: jobs[i].title, id: jobId });
-            }
-          }
         });
+
+        const jobs = data.findJobs;
+        if (jobs && jobs.length > 0 && jobs[0]._id) {
+          this.selectedJob = { title: jobs[0].title, id: jobs[0]._id };
+        }
+        const jobIds = jobs.map(({ _id }) => _id);
+        const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
+        this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
+        this.jobs = jobs;
       },
-      addApplicants(jobId) {
-        this.applicants[jobId] = null;
-        this.$apollo.query({
+      async getApplicants(jobId) {
+        return this.$apollo.query({
           query: (gql`query ($JobId: MongoID) {
             findApplicants (filter: {
               job_id: $JobId
@@ -197,17 +221,85 @@
                 degree
                 notes
                 job_id
+                status
+                created_at
             }
           }`),
           variables: {
             JobId: jobId,
           },
-        }).then((d) => {
-          // add to array
-          var applicants = d.data.findApplicants;
-          this.applicants[jobId] = applicants;
-          this.loading = false;
         });
+      },
+      async getApplicationsFromJob(jobId) {
+        const { data: { findApplicants: applicants } } = await this.getApplicants(jobId);
+        return applicants;
+      },
+      async updateApplicantStatus(newStatus = 'submitted') {
+        try {
+          const { _id: applicantId } = this.dialogs.currentApplicant;
+          await axios.post(`/application/${applicantId}/setStatus/${newStatus}`);
+          const { applicants } = this;
+          for (let i = 0; i < applicants.length; ++i) {
+            if (applicants[i]._id === applicantId) {
+              this.applicants = this.applicants.map(applicant => {
+                if (applicant._id === applicantId) {
+                  return {
+                    ...applicant,
+                    status: newStatus,
+                  };
+                }
+                return applicant;
+              });
+            }
+          }
+        } catch (exception) {
+          console.log('could not do it:', exception);
+        }
+        this.resetDialogState();
+      },
+      onShowAcceptDialog(applicant) {
+        this.dialogs.currentApplicant = { ...applicant };
+        this.dialogs.showAccept = true;
+      },
+      onShowRejectDialog(applicant) {
+        this.dialogs.currentApplicant = { ...applicant };
+        this.dialogs.showReject = true;
+      },
+      onAccept() {
+        this.updateApplicantStatus('accepted');
+      },
+      onReject() {
+        this.updateApplicantStatus('rejected');
+      },
+      resetDialogState() {
+        this.dialogs.showAccept = false;
+        this.dialogs.showReject = false;
+        this.dialogs.currentApplicant = {};
+      },
+      isAcceptedOrRejected({ status }) {
+        return status === 'accepted' || status === 'rejected';
+      },
+      getAcceptedOrRejectedText({ status }) {
+        return status.charAt(0).toUpperCase() + status.substring(1, status.length);
+      },
+      getApplicantExpiringText(applicant) {
+        const { created_at: date } = applicant;
+        const expiryDate = DateHelper.getExpiryDate(date);
+        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
+        return daysDiff <= 5 ? `Application expiring in ${daysDiff} days` : '';
+      },
+      getApplicantsFromJobs(jobId) {
+        const { applicants } = this;
+        return applicants.filter(({ job_id: id }) => id === jobId);
+      },
+      getApplicantNotesDisplayText({ notes }) {
+        if (!notes) return '';
+        return StringHelper.truncate(notes);
+      },
+    },
+    computed: {
+      getApplicantsCount() {
+        return this.applicants.length;
       },
     },
   };
