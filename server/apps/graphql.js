@@ -13,12 +13,23 @@ const app = new Koa();
 const router = new KoaRouter();
 
 // GraphQL endpoint
-router.post('/graphql', KoaBody(), graphqlKoa({
-  schema: Schema,
-}));
-router.get('/graphql', graphqlKoa({
-  schema: Schema,
-}));
+function buildOptions(ctx) {
+  return {
+    schema: Schema,
+    context: {
+      user: ctx.state.user,
+    },
+  };
+}
+
+router.post('/graphql', KoaBody(), (ctx) => {
+  const options = buildOptions(ctx);
+  return graphqlKoa(options)(ctx);
+});
+router.get('/graphql', (ctx) => {
+  const options = buildOptions(ctx);
+  return graphqlKoa(options)(ctx);
+});
 
 app.use(router.routes());
 app.use(router.allowedMethods());

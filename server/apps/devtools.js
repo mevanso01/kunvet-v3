@@ -2,9 +2,6 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
 
-// Utils
-import Mailer from '@/utils/Mailer';
-
 // GraphiQL
 import { graphiqlKoa } from 'apollo-server-koa';
 
@@ -44,6 +41,7 @@ router.get('/', (ctx) => {
         <p>
           Running in development mode. Useful tools:
           <ul>
+            <li><a href="/login">Log in</li>
             <li><a href="/graphiql">Graph<em>i</em>QL</a></li>
           </ul>
         </p>
@@ -57,23 +55,8 @@ router.get('/graphiql', graphiqlKoa({
   endpointURL: '/srv/graphql',
 }));
 
-// Mailer test
-router.get('/test-mailer', (ctx) => {
-  const mailer = new Mailer();
-  mailer.sendTemplate(
-    'Zhaofeng Li <hello@zhaofeng.li>',
-    'welcome',
-    {
-      firstname: 'Zhaofeng',
-      lastname: 'Li',
-    },
-  );
-  ctx.body = 'Check your mailbox!';
-});
-
 // Login form
-// FIXME: Debug purposes only - Please remove me
-router.get('/loginform', (ctx) => {
+router.get('/login', (ctx) => {
   const loginStatus = ctx.isAuthenticated() ? 'logged in' : 'not logged in';
   ctx.body = `
 <!doctype html>
@@ -82,19 +65,10 @@ router.get('/loginform', (ctx) => {
     <title>Log in</title>
   </head>
   <body>
-    <pre>
-Login Interface
-
-You find yourself staring at a sketchy login interface. It's
-totally unstyled, complete with misspelt labels and a plaintext password field.
-
-You say to yourself, "Eww! I probably shouldn't type in a valuable password.
-Also, whoever spent time writing this should be fired."
-    </pre>
     <p>You are ${loginStatus}. <a href='/auth/logout'>Log out?</a></p>
     <form action='/auth/login' method='post'>
-      <input name='email' placeholder='Usename'>
-      <input name='password' placeholder='Pass word'>
+      <input name='email' placeholder='E-mail'>
+      <input name='password' placeholder='Password'>
       <button type='submit'>Log in</button>
     </form>
   </body>

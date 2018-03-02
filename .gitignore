@@ -239,5 +239,6 @@ $RECYCLE.BIN/
 
 /server-dist.js
 /dist
+/server-dist
 /config.json
 /uploads

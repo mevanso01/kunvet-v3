@@ -1,23 +1,28 @@
+const path = require('path');
 const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
+const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
 const utils = require('./utils');
-const nodeExternals = require('webpack-node-externals');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = {
+const wpconf = {
   // Server
   target: 'node',
   entry: './server/index.js',
-  externals: [nodeExternals()],
+  externals: {
+    // The root of all evils :(
+    'email-templates': 'commonjs email-templates',
+  },
   output: {
-    filename: 'server-dist.js',
+    path: path.resolve(__dirname, './../server-dist/'),
+    filename: 'index.js',
+    // index.js will expose a middleware for Google Cloud Functions/AWS Lambda
+    libraryTarget: 'commonjs',
   },
   resolve: {
     extensions: ['.js', '.json'],
     unsafeCache: /data/,
     alias: {
       '@': utils.resolve('server'),
-      config: utils.resolve('config/server'),
     },
   },
   node: {
@@ -44,9 +49,17 @@ module.exports = {
   },
   plugins: [
     new webpack.IgnorePlugin(/vertx/),
-    new webpack.DefinePlugin({
-      'process.env.CLIENT_PATH': "require('path').join(require('path').dirname(require.main.filename), '..', 'client')",
-    }),
+    new webpack.IgnorePlugin(/^\.\/data\/parser$/), // for mimer
+    new GeneratePackageJsonPlugin({}, `${__dirname}/../package.json`),
   ],
-  devtool: 'cheap-module-eval-source-map',
 };
+
+if (process.env.NODE_ENV === 'production') {
+  wpconf.plugins.push(new webpack.DefinePlugin({
+    'process.env.NODE_ENV': 'production',
+  }));
+} else {
+  wpconf.devtool = 'inline-cheap-source-map';
+}
+
+module.exports = wpconf;
