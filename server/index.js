@@ -8,7 +8,7 @@ import 'source-map-support/register';
 // Koa
 import Koa from 'koa';
 import KoaMount from 'koa-mount';
-import KoaBodyParser from 'koa-bodyparser';
+// import KoaBodyParser from 'koa-bodyparser';
 import KoaSession from 'koa-session';
 import KoaPassport from 'koa-passport';
 
@@ -46,7 +46,9 @@ const port = process.env.PORT || 3000;
 const app = new Koa();
 
 // Body parser
-app.use(KoaBodyParser());
+/* app.use(KoaBodyParser({
+  enableTypes: ['json', 'form', 'multipart'],
+})); */
 
 // Session
 app.keys = ['rua'];
