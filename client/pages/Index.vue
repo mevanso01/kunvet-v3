@@ -444,7 +444,7 @@ export default {
     sanitizeTypes(jobTypes) {
       const types = [];
       for (const i in jobTypes) {
-        if (typeof i === 'number' && typeof jobTypes[i] === 'string') {
+        if (typeof jobTypes[i] === 'string') {
           const type = jobTypes[i];
           if (type === 'fulltime') {
             types.push('Full-Time');
@@ -467,6 +467,7 @@ export default {
       if (!jobTypes) return '';
       if (jobTypes.length === 0) return 'Unknown'; // probably unnecessary
       return StringHelper.listToSlashString(this.sanitizeTypes(jobTypes));
+      // return this.sanitizeTypes(jobTypes);
     },
     getSalaryString(job) {
       if (job.pay_type !== 'paid') {
