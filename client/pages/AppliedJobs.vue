@@ -6,7 +6,7 @@
       <h1>
         <span class="kunvet-red">
           {{ jobsAndApplications.length }}
-        </span> <span style="color: grey;">Applied Jobs</span>
+        </span> <span style="color: #A7A7A7;">Applied Jobs</span>
       </h1>
       <v-layout row wrap>
         <div class="post-card" v-for="{ job, application } in jobsAndApplications" style="height: auto;">
