@@ -1,5 +1,4 @@
 <style>
-
 </style>
 <template>
   <v-container fluid>
@@ -10,15 +9,17 @@
         </span> <span style="color: grey;">Applied Jobs</span>
       </h1>
       <v-layout row wrap>
-        <div class="post-card" v-for="{ job, application } in jobsAndApplications">
-            <v-layout align-center row spacer slot="header">
-              <v-flex xs12>
-                <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
-                  <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
-                </v-avatar>
-                <div style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
-              </v-flex>
-            </v-layout>
+        <div class="post-card" v-for="{ job, application } in jobsAndApplications" style="height: auto;">
+          <v-layout align-center row spacer slot="header">
+            <v-flex xs12>
+              <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
+                <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+              </v-avatar>
+              <div style="color: #A7A7A7; line-height: 36px;">
+                {{ job.posted_by }}
+              </div>
+            </v-flex>
+          </v-layout>
 
           <router-link :to="'JobDetail/'+job._id">
             <v-layout>
@@ -33,7 +34,7 @@
                   <img :src="svgs.reviews" class="new-applicant-card__regular-icon" /> No Reviews
                 </div>
                 <div class="carditem">
-                  <p><v-icon>info</v-icon> {{ parseJobIntoMainJobInfo(job) }}</p>
+                  <p><v-icon>info</v-icon>{{ parseJobIntoMainJobInfo(job) }}</p>
                 </div>
                 <div class="carditem">
                   <p>
@@ -53,23 +54,7 @@
           </router-link>
         </div>
       </v-layout>
-
-    <v-layout>
-
-      <v-flex xs12 style="" class="no-padding">
-        <div style="max-height: 68vh; overflow: auto;">
-          <div class="post-card">
-              <a href="/JobDetail/59be0c0f3077d224476ba3cd" class="">
-                <div><h1 style="font-weight: normal;">hi</h1></div>
-                <p class="post-address">123 sesame street</p>
-                <p class="post-intro">desc</p> <div class="image-row">
-                <img src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png" style="max-width: 100%;"></div>
-              </a>
-          </div>
-        </div>
-      </v-flex>
-    </v-layout>
-  </div>
+    </div>
   </v-container>
 </template>
 <script>
@@ -88,12 +73,6 @@
         settingsoption1: '',
         addorg: false,
         jobsAndApplications: [],
-        /*
-        {
-          job: {},
-          application: {},
-        }
-        */
         svgs: {
           locationMarker: LocationMarkerSvg,
           reviews: ReviewsSvg,
