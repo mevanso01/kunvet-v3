@@ -315,7 +315,7 @@
         <vue-editor id="responsibilities" v-model="responsibilities" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
-        <h3 v-bind:class="{ error_h3: !experience_valid }">Experience/Qualifications</h3>
+        <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience/Qualifications</h3>
         <p class="error_p" v-if="!experience_valid">Required</p>
         <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
 

@@ -2,14 +2,6 @@
 .sub-container {
     padding: 10px 15px;
 }
-#job-company-logo img {
-    border-radius: 50%;
-}
-#job-star {
-    font-size: 16pt;
-    padding: 0 0 0 8px;
-    float: right;
-}
 .job-star-icon {
     color: #e0e0e0;
     cursor: pointer;
@@ -73,8 +65,7 @@
 }
 .top-container {
   width: 100%;
-  height: 40px;
-  margin-bottom: 8px;
+  height: 48px;
 }
 .bottom-container {
   display: flex;
@@ -94,6 +85,17 @@
 .bookmark-btn {
   height: 36px !important;
   width: 36px !important;
+}
+.svg-button {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  flex: 0 1 auto;
+}
+.svg-button img {
+  height: inherit;
+  display: block;
+  margin: auto;
 }
 @media (max-width: 600px) {
   .flex {
@@ -130,6 +132,20 @@
       		  <div class="float-left" style="color: #A7A7A7; margin-right: 1px;">
               <h3 style="color: #616161;">{{ findJob.posted_by }}</h3>
             </div>
+            <div class="float-right">
+              <a class="svg-button" flat style="margin: 2px 8px;" @click="saveJob(findJob._id)">
+                <img v-if="saved" :src="savedIcon"/>
+                <img v-else :src="notSavedIcon"/>
+              </a>
+            </div>
+            <div class="float-right hidden-xs-only">
+              <v-btn :disabled="applied"
+                outline class="red--text darken-1"
+                style="margin: 2px 8px;"
+                @click="apply">
+                {{ applied ? 'Applied' : 'Apply' }}
+              </v-btn>
+            </div>
           </div>
           <v-divider></v-divider>
           <h2 class="post-title">{{ findJob.title }}</h2>
@@ -163,28 +179,29 @@
           <v-divider></v-divider>
       </div>
       <div class="sub-container">
-          <h2 style="margin-bottom: 8px;">Job Overview</h2>
+          <h2 style="margin-bottom: 8px;">Job Overview:</h2>
           <div v-html="findJob.description"></div>
 
-          <h2 style="margin-bottom: 8px;">Experience</h2>
+          <h2 style="margin-bottom: 8px;">Needed Experience:</h2>
           <div v-html="findJob.experience"></div>
 
-          <h2 style="margin-bottom: 8px;">Responsibilities</h2>
+          <h2 style="margin-bottom: 8px;">Responsibilities:</h2>
           <div v-html="findJob.responsibilities"></div>
 
           <div class="bottom-container">
-            <div style="margin: hidden;">
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
                 <img style="width: 90%;" :src="FBfull"></img>
               </v-btn>
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
                 <img style="width: 90%;" :src="FBstroke"></img>
               </v-btn>
-              <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-                <v-icon class="bookmark-icon">bookmark_border</v-icon>
+              <v-btn :disabled="applied" outline class="red--text darken-1" @click="apply">
+                {{ applied ? 'Applied' : 'Apply' }}
               </v-btn>
-              <v-btn v-bind:class="{ 'kunvet-red-bg': applied }" round outline class="red--text darken-1" @click="apply">Apply</v-btn>
-            </div>
+              <a class="svg-button" style="margin: 6px 8px;" @click="saveJob(findJob._id)">
+                <img v-if="saved" :src="savedIcon"/>
+                <img v-else :src="notSavedIcon"/>
+              </a>
           </div>
       </div>
     </div>
@@ -226,6 +243,8 @@ import SalarySvg from '@/assets/job_detail/salary.svg';
 import ClockSvg from '@/assets/job_detail/clock.svg';
 import FBfullSvg from '@/assets/job_detail/facebook_full.svg';
 import FBstrokeSvg from '@/assets/job_detail/facebook_stroke.svg';
+import nsiSvg from '@/assets/icons/Asset(36).svg';
+import siSvg from '@/assets/icons/Asset(37).svg';
 import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
 
@@ -246,6 +265,8 @@ export default {
       sSvg: SalarySvg,
       FBfull: FBfullSvg,
       FBstroke: FBstrokeSvg,
+      savedIcon: siSvg,
+      notSavedIcon: nsiSvg,
       uid: null,
       applydialog: false,
       userdata: {
@@ -259,6 +280,8 @@ export default {
       selectedResumeName: null,
       userdatafetched: false,
       applied: false,
+      saved: false,
+      saved_jobs: [],
     };
   },
   computed: {
@@ -327,16 +350,6 @@ export default {
         } else {
           this.salary = this.findJob.pay_type;
         }
-        console.log(this.findJob);
-        /* if (this.findJob.type2) {
-          for (const i in this.findJob.type2) {
-            if (typeof this.findJob.type2[i] === 'string') {
-              const type = this.findJob.type2[i];
-              const t = type.charAt(0).toUpperCase() + type.slice(1);
-              this.jobType2.push(t);
-            }
-          }
-        } */
       });
     },
     apply() {
@@ -347,6 +360,66 @@ export default {
         }
       } else {
         this.$router.push('/login');
+      }
+    },
+    getSavedJobs() {
+      this.$apollo.query({
+        query: (gql`query ($uid: MongoID) {
+          findAccount (filter: {
+            _id: $uid
+          }) {
+            saved_jobs
+          }
+        }`),
+        variables: {
+          uid: this.uid,
+        },
+      }).then((data) => {
+        const res = data.data.findAccount;
+        if (res && res.saved_jobs) {
+          const x = this.saved_jobs.concat(res.saved_jobs);
+          this.saved_jobs = x;
+          for (const i in this.saved_jobs) {
+            if (this.saved_jobs[i] === this.id) {
+              this.saved = true;
+            }
+          }
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+    saveJob(id) {
+      if (this.uid) {
+        if (this.saved_jobs.indexOf(id) === -1) {
+          this.saved_jobs.push(id);
+        } else {
+          const index = this.saved_jobs.indexOf(id);
+          if (index !== -1) {
+            this.saved_jobs.splice(index, 1);
+          }
+        }
+        this.saved = !this.saved;
+        this.$apollo.mutate({
+          mutation: (gql`
+            mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
+          {
+            updateAccount (
+              filter: { _id: $uid },
+              record: $record,
+            ) {
+              recordId
+            }
+          }`),
+          variables: {
+            uid: this.uid,
+            record: {
+              saved_jobs: this.saved_jobs,
+            },
+          },
+        }).catch((error) => {
+          console.error(error);
+        });
       }
     },
     _getUserData() {
@@ -461,6 +534,7 @@ export default {
     if (this.$store.state.userID) {
       this.uid = this.$store.state.userID;
       this._checkIsApplied();
+      this.getSavedJobs();
     } else {
       VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
         if (data.userID) {
