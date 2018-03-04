@@ -4,6 +4,56 @@
 <template>
   <v-container fluid>
     <div class="main-cont-large">
+      <h1>
+        <span class="kunvet-red">
+          {{ applications.length }}
+        </span> <span style="color: grey;">Applied Jobs</span>
+      </h1>
+      <v-layout row wrap>
+        <div class="post-card" v-for="job in jobs" :key="index">
+            <v-layout align-center row spacer slot="header">
+              <v-flex xs8>
+                <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
+                  <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+                </v-avatar>
+                <!--<div style="color: #A7A7A7; width: calc(100% - 46px); padding-top: 7px;">{{ job.posted_by }}</div>-->
+                <div style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
+              </v-flex>
+              <v-flex xs4>
+
+              <div class="float-right">
+                <v-avatar size="36px" slot="activator">
+                  <v-icon class="whatshot">whatshot</v-icon>
+                </v-avatar>
+              </div>
+              </v-flex>
+            </v-layout>
+
+          <router-link :to="'JobDetail/'+job._id">
+            <v-layout>
+              <v-flex xs12 style="padding-top: 0px;">
+                <div><h3 class="post-title">{{ job.title }}</h3></div>
+                <div class="carditem" style="color: #A7A7A7;"><timeago :since="job.date"></timeago></div>
+                <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
+                  <p><v-icon style="color: #A7A7A7;">location_city</v-icon>{{ job.address }}</p>
+                </div>
+                <div class="carditem">
+                  <p><v-icon>info</v-icon></p>
+                </div>
+                <div class="carditem">
+                  <p><span class="carditem-image"><img /></span>{{ job.studentfriendly ? '' : 'Not ' }}Student Friendly</p>
+                </div>
+
+                <div class="image-row">
+                  <!-- insert gallary here -->
+                  <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
+                </div>
+              </v-flex>
+            </v-layout>
+          </router-link>
+        </div>
+      </v-layout>
+
     <v-layout>
 
       <v-flex xs12 style="" class="no-padding">
@@ -70,6 +120,7 @@
               title
               address
               date
+              studentfriendly
             }
           }`),
           variables: {
