@@ -6,26 +6,17 @@
     <div class="main-cont-large">
       <h1>
         <span class="kunvet-red">
-          {{ applications.length }}
+          {{ jobsAndApplications.length }}
         </span> <span style="color: grey;">Applied Jobs</span>
       </h1>
       <v-layout row wrap>
-        <div class="post-card" v-for="job in jobs" :key="index">
+        <div class="post-card" v-for="{ job, application } in jobsAndApplications">
             <v-layout align-center row spacer slot="header">
-              <v-flex xs8>
+              <v-flex xs12>
                 <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
                   <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
                 </v-avatar>
-                <!--<div style="color: #A7A7A7; width: calc(100% - 46px); padding-top: 7px;">{{ job.posted_by }}</div>-->
                 <div style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
-              </v-flex>
-              <v-flex xs4>
-
-              <div class="float-right">
-                <v-avatar size="36px" slot="activator">
-                  <v-icon class="whatshot">whatshot</v-icon>
-                </v-avatar>
-              </div>
               </v-flex>
             </v-layout>
 
@@ -33,20 +24,29 @@
             <v-layout>
               <v-flex xs12 style="padding-top: 0px;">
                 <div><h3 class="post-title">{{ job.title }}</h3></div>
-                <div class="carditem" style="color: #A7A7A7;"><timeago :since="job.date"></timeago></div>
                 <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
-                  <p><v-icon style="color: #A7A7A7;">location_city</v-icon>{{ job.address }}</p>
+                  <p style="color: #A7A7A7">
+                    <img :src="svgs.locationMarker" class="new-applicant-card__regular-icon" />{{ job.address }}
+                  </p>
                 </div>
                 <div class="carditem">
-                  <p><v-icon>info</v-icon></p>
+                  <img :src="svgs.reviews" class="new-applicant-card__regular-icon" /> No Reviews
                 </div>
                 <div class="carditem">
-                  <p><span class="carditem-image"><img /></span>{{ job.studentfriendly ? '' : 'Not ' }}Student Friendly</p>
+                  <p><v-icon>info</v-icon> {{ parseJobIntoMainJobInfo(job) }}</p>
+                </div>
+                <div class="carditem">
+                  <p>
+                    <span class="carditem-image">
+                      <img :src="svgs.student" class="new-applicant-card__regular-icon" />
+                    </span>{{ job.studentfriendly ? 'S' : 'Not s' }}tudent-friendly
+                    <span>{{ job.experience ? '&bull; Experience required' : '' }}</span>
+                  </p>
                 </div>
 
-                <div class="image-row">
-                  <!-- insert gallary here -->
-                  <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
+                <div class="btn-holder">
+                  <div style="color: green">Applied <timeago :since="application.date" /></div>
+                  <div style="color: #A7A7A7">{{ application.status === 'opened' ? 'Seen' : 'Unseen' }} by employer</div>
                 </div>
               </v-flex>
             </v-layout>
@@ -57,11 +57,6 @@
     <v-layout>
 
       <v-flex xs12 style="" class="no-padding">
-        <h1>
-          <span class="kunvet-red">
-            {{ applications.length }}
-          </span> <span style="color: grey;">Applied Jobs</span>
-        </h1>
         <div style="max-height: 68vh; overflow: auto;">
           <div class="post-card">
               <a href="/JobDetail/59be0c0f3077d224476ba3cd" class="">
@@ -81,13 +76,29 @@
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
 
+  import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
+  import ReviewsSvg from '@/assets/job_posts/messages_1.svg';
+  import StudentSvg from '@/assets/job_posts/user_1.svg';
+
+  import DisplayTextHelper from '@/utils/DisplayTextHelper';
+
   export default {
     data() {
       return {
         settingsoption1: '',
         addorg: false,
-        applications: [],
-        jobs: [],
+        jobsAndApplications: [],
+        /*
+        {
+          job: {},
+          application: {},
+        }
+        */
+        svgs: {
+          locationMarker: LocationMarkerSvg,
+          reviews: ReviewsSvg,
+          student: StudentSvg,
+        },
       };
     },
     methods: {
@@ -97,20 +108,20 @@
             findApplicants (filter: {
               user_id: $user_id
             }) {
-                _id
-                job_id
-                status
-                date
+              _id
+              job_id
+              status
+              date
             }
           }`),
           variables: {
             user_id: this.$store.state.userID,
           },
         });
-        this.applications = applications;
-        this.jobs = applications.map(this.getJobForEachApplication);
+        const jobPromises = Promise.all(applications.map(this.getPairForEachApplication));
+        this.jobsAndApplications = (await jobPromises).filter(({ job }) => job);
       },
-      async getJobForEachApplication({ job_id: jobId }) {
+      async getPairForEachApplication({ job_id: jobId, ...application }) {
         const { data: { findJobs: job } } = await this.$apollo.query({
           query: (gql`query ($jobId: MongoID) {
             findJobs (filter: { _id: $jobId, active: true }){
@@ -121,13 +132,25 @@
               address
               date
               studentfriendly
+              experience
+              type
+              type2
+              salary
+              pay_type
+              pay_denomination
             }
           }`),
           variables: {
             jobId,
           },
         });
-        return job;
+        return {
+          job: job.length > 0 ? job[0] : undefined,
+          application: { _id: jobId, ...application },
+        };
+      },
+      parseJobIntoMainJobInfo(job) {
+        return DisplayTextHelper.getMainJobInfo(job);
       },
     },
     created() {

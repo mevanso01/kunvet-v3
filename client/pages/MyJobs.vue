@@ -70,7 +70,7 @@
               <div>
                 <img
                   class="job-post-icon"
-                  :src="svgs.information" /> {{ getMainJobInfo(job) }}
+                  :src="svgs.information" /> {{ parseJobIntoMainInfo(job) }}
               </div>
               <div>
                 <span><img
@@ -121,7 +121,7 @@
             <div>
               <img
                 class="job-post-icon"
-                :src="svgs.information" /> {{ getMainJobInfo(job) }}
+                :src="svgs.information" /> {{ parseJobIntoMainInfo(job) }}
             </div>
             <div>
               <span><img
@@ -175,6 +175,7 @@
   import StudentSvg from '@/assets/job_posts/user_1.svg';
 
   import DateHelper from '@/utils/DateHelper';
+  import DisplayTextHelper from '@/utils/DisplayTextHelper';
   import StringHelper from '@/utils/StringHelper';
 
   const findJobsQuery = gql`
@@ -285,26 +286,8 @@
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return `${daysDiff} ${StringHelper.pluralize('day', daysDiff)}`;
       },
-      getJobTypeString(jobTypes) {
-        if (!jobTypes) return '';
-        if (jobTypes.length === 0) return 'Unknown'; // probably unnecessary
-        return StringHelper.listToSlashString(jobTypes);
-      },
-      getMainJobInfo(job) {
-        const jobType = this.getJobTypeString(job.type);
-        const jobType2 = this.getJobTypeString(job.type2);
-        const salary = this.getSalaryString(job);
-        let result = '';
-        if (jobType) result += jobType;
-        if (jobType && jobType2) result += ` • ${jobType2}`;
-        if (salary) result += ` • ${salary}`;
-        return result;
-      },
-      getSalaryString(job) {
-        if (job.pay_type === 'unpaid' || job.pay_type === 'negotiable' || job.pay_type === 'none') {
-          return job.pay_type;
-        }
-        return `$${job.salary} ${job.pay_denomination}`;
+      parseJobIntoMainInfo(job) {
+        return DisplayTextHelper.getMainJobInfo(job);
       },
       getJobCountString(jobType, length) {
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
