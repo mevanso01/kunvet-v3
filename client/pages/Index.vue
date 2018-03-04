@@ -256,7 +256,7 @@
                 </section>
 
                 <input v-if="!firstSearch" class="hidden-input" id="submit" type="submit" value="GO">
-                <div v-if="!firstSearch" id="general-submit" @click="searchGo">
+                <div v-if="!firstSearch" id="general-submit" @click="search">
                     <div id="general-submit-default">
                         <span>GO</span>
                     </div>
@@ -381,7 +381,7 @@ export default {
         'Latest jobs',
       ],
       availableCities: [
-        'Irvine, CA',
+        { text: 'Irvine, CA', value: [33.6846, -117.8265] },
         'UC Irvine',
         'Los Angeles, CA',
         'UCLA',
@@ -393,13 +393,10 @@ export default {
         'Something else',
       ],
       availableTypes: [
-        'Full time',
-        'Part time',
-        'Internship',
-        'Freelance',
-        'Contract',
-        'Temporary',
-        'Seasonal',
+        { text: 'Full time', value: 'fulltime' },
+        { text: 'Part time', value: 'parttime' },
+        { text: 'Internship', value: 'internship' },
+        { text: 'Contract', value: 'contract' },
       ],
       availableShifts: [
         'Morning',
@@ -431,6 +428,53 @@ export default {
         Store.commit('go');
         this.commitData();
       }
+    },
+    search() {
+      // job types
+      let selectedTypes = [];
+      let selectedTypes2 = [];
+      if (this.selectedTypes.length === 0) {
+        selectedTypes = ['fulltime', 'parttime'];
+        selectedTypes2 = ['internship', 'contract'];
+      } else {
+        for (var i = 0; i < this.selectedTypes.length; i++) {
+          if (['fulltime', 'parttime'].indexOf(this.selectedTypes[i]) >= 0) {
+            selectedTypes.push(this.selectedTypes[i]);
+          }
+          if (['internship', 'contract'].indexOf(this.selectedTypes[i]) >= 0) {
+            selectedTypes2.push(this.selectedTypes[i]);
+          }
+        }
+      }
+      console.log(selectedTypes, selectedTypes2);
+      /* this.$apollo.query({
+        query: (gql`{
+          findJobs (
+            filter: { active: true },
+            orderBy: latitude_DESC,
+          ){
+            _id
+            posted_by
+            title
+            description
+            address
+            latitude
+            longitude
+            type
+            studentfriendly
+            type2
+            shift
+            age
+            pay_type
+            salary
+            pay_denomination
+            date
+          }
+        }`),
+      }).then((result) => {
+        const res = result.data.findJobs;
+        console.log(res);
+      }); */
     },
     sanitizeSalary(salary) {
       if (typeof salary === 'number') {

@@ -59,6 +59,7 @@ h3 {
 }
 .dialog {
   max-width: 420px;
+  border-radius: 0;
   width: auto;
 }
 .application,
@@ -107,6 +108,18 @@ h3 {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+.no-border-radius {
+  border-radius: 0;
+}
+.bottom-dialog-button {
+  width: 100%;
+  line-height: 48px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff !important;
+  background-color: #ef5350 !important;
+}
 .kunvet-red, .kunvet-red.input-group--active label {
   color: #ef5350 !important;
 }

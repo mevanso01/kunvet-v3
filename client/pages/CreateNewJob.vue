@@ -111,6 +111,9 @@
 .optional_p {
   margin-bottom: 5px;
 }
+.input-group--error, .input-group--error label {
+  color: #f00 !important;
+}
 @media (min-width: 600px) {
   .requirements .flex {
     padding: 0 15px;
@@ -324,9 +327,24 @@
         <br>
         <v-layout>
           <v-btn @click="saveForLater">Save for later</v-btn>
-          <v-btn @click="saveAndPost">Save and Post</v-btn>
+          <v-btn @click="validateBeforePosting(true)">Save and Post</v-btn>
         </v-layout>
-        <!--<p>{{ message }}</p>-->
+        <!--<br>
+        <p style="color: #f00;" v-show="submitted && !valid">There are still a few fields you need to fill out</p>-->
+
+        <v-dialog class="no-border-radius" v-model="confirmPost">
+          <v-card flat class="no-border-radius" style="max-width: 350px;">
+            <v-card-title>
+              <div class="headline">All seems good, you can now post your job!</div>
+              <br>
+              <p>(You can still edit certain parts of your job even when it's active)</p>
+            </v-card-title>
+            <div class="bottom-dialog-button" @click="saveAndPost">
+              Save and Post
+            </div>
+          </v-card>
+        </v-dialog>
+
       </section>
     </div>
   </v-container>
@@ -423,17 +441,18 @@ export default {
       salary_select: null,
       pay_denomination: 'per hour',
       education: '',
-      description: '',
+      description: null,
       description_valid: true,
-      responsibilities: '',
+      responsibilities: null,
       responsibilities_valid: true,
-      experience: '',
+      experience: null,
       experience_valid: true,
       notes: '',
       studentfriendly: true,
       language: '',
       degree: '',
       active: false,
+      confirmPost: true,
 
       educationOptions: [
         'None (recommended)',
@@ -458,15 +477,18 @@ export default {
       if (!place.geometry) {
         return;
       }
-      console.log(place);
       this.address = place.formatted_address;
       this.latitude = place.geometry.location.lat();
       this.longitude = place.geometry.location.lng();
     },
-    sanitizeQuillInput(property) {
-      const text = this[property].replace(/<p>|<\/p>|<br>|<h1>|<\/h1>/g, '');
-      console.log('TEXT', text);
-      if (text.length < 1) {
+    sanitizeQuillInput(text, property) {
+      if (text == null || typeof text !== 'string') {
+        this[`${property}_valid`] = false;
+        return false;
+      }
+      const newtext = text.replace(/<p>|<\/p>|<br>|<h1>|<\/h1>/g, '');
+      console.log('TEXT', newtext);
+      if (newtext.length < 1) {
         this[`${property}_valid`] = false;
         return false;
       }
@@ -519,14 +541,21 @@ export default {
         });
       }
     },
-    saveAndPost() {
+    validateBeforePosting(showDialog = false) {
       this.submitted = true;
       this.$refs.form.validate();
-      if (!this.sanitizeQuillInput('description')) { this.valid = false; }
-      if (!this.sanitizeQuillInput('responsibilities')) { this.valid = false; }
-      if (!this.sanitizeQuillInput('experience')) { this.valid = false; }
+      if (!this.sanitizeQuillInput(this.description, 'description')) { this.valid = false; }
+      if (!this.sanitizeQuillInput(this.responsibilities, 'responsibilities')) { this.valid = false; }
+      if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
       if (this.shift.length <= 0) { this.valid = false; }
       if (this.longitude == null || this.latitude == null) { this.valid = false; }
+      console.log(showDialog, this.valid);
+      if (showDialog && this.valid) {
+        this.confirmPost = true;
+      }
+    },
+    saveAndPost() {
+      this.validateBeforePosting();
       if (this.valid) {
         this.active = true;
         this._save();

@@ -8256,7 +8256,7 @@ vue-timeago@^3.4.4:
   version "3.4.4"
   resolved "https://registry.yarnpkg.com/vue-timeago/-/vue-timeago-3.4.4.tgz#a878c9ba5840816939a89659451902f84ebdf23f"
 
-vue2-editor@^2.0.26:
+vue2-editor@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/vue2-editor/-/vue2-editor-2.4.2.tgz#2b5e134e80760d9aef01d0023588ad21506aaa73"
   dependencies:
