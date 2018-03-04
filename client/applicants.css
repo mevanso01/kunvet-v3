@@ -78,7 +78,7 @@
   color: #5D5D5D;
   font-weight: normal;
 }
-.new-applicant-card .btn-holder {
+.btn-holder {
   padding-top: 7px;
 }
 .new-applicant-card__info {
@@ -109,6 +109,7 @@
 }
 .new-applicant-card__address {
   text-decoration: underline;
+  color: #A7A7A7;
 }
 .new-applicant-card__time-ago {
   padding-bottom: 10px;

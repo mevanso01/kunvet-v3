@@ -24,27 +24,25 @@
           <router-link :to="'JobDetail/'+job._id">
             <v-layout>
               <v-flex xs12 style="padding-top: 0px;">
-                <div><h3 class="post-title">{{ job.title }}</h3></div>
-                <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
-                  <p style="color: #A7A7A7">
-                    <img :src="svgs.locationMarker" class="new-applicant-card__regular-icon" />{{ job.address }}
-                  </p>
-                </div>
-                <div class="carditem">
-                  <img :src="svgs.reviews" class="new-applicant-card__regular-icon" /> No Reviews
-                </div>
-                <div class="carditem">
-                  <p><v-icon>info</v-icon>{{ parseJobIntoMainJobInfo(job) }}</p>
-                </div>
-                <div class="carditem">
+                <div class="new-applicant-card__info">
+                  <div><h3 class="post-title">{{ job.title }}</h3></div>
                   <p>
-                    <span class="carditem-image">
-                      <img :src="svgs.student" class="new-applicant-card__regular-icon" />
-                    </span>{{ job.studentfriendly ? 'S' : 'Not s' }}tudent-friendly
-                    <span>{{ job.experience ? '&bull; Experience required' : '' }}</span>
+                    <span class="new-applicant-card__address">
+                      <img class="new-applicant-card__regular-icon" :src="svgs.locationMarker" />{{ job.address }}
+                    </span>
                   </p>
+                  <div class="carditem">
+                    <p><v-icon>info</v-icon>{{ parseJobIntoMainJobInfo(job) }}</p>
+                  </div>
+                  <div class="carditem">
+                    <p>
+                      <span class="carditem-image">
+                        <img :src="svgs.student" class="new-applicant-card__regular-icon" />
+                      </span>{{ job.studentfriendly ? 'S' : 'Not s' }}tudent-friendly
+                      <span>{{ job.experience ? '&bull; Experience required' : '' }}</span>
+                    </p>
+                  </div>
                 </div>
-
                 <div class="btn-holder">
                   <div style="color: green">Applied <timeago :since="application.date" /></div>
                   <div style="color: #A7A7A7">{{ application.status === 'opened' ? 'Seen' : 'Unseen' }} by employer</div>
