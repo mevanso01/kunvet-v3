@@ -147,14 +147,6 @@
     height: calc(100vh - 75px);
   }
 }
-
-.top-container {
-  width: 100%;
-  height: 48px;
-}
-.top-container {
-  margin-bottom: 8px;
-}
 #rua {
   width: 100%;
   flex-wrap: nowrap;
@@ -503,7 +495,6 @@ export default {
           this.saved_jobs.splice(index, 1);
         }
       }
-      console.log(this.saved_jobs);
       this.$apollo.mutate({
         mutation: (gql`
           mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
@@ -531,7 +522,7 @@ export default {
           findAccount (filter: {
             _id: $uid
           }) {
-              saved_jobs
+            saved_jobs
           }
         }`),
         variables: {
