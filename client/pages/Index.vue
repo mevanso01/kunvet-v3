@@ -307,7 +307,7 @@
                   <p><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> {{ sanitizeTypes(job.type) }} ~ {{ job.type2 }} ~ {{ sanitizeSalary(job.salary) }} {{ job.pay_denomination }}</p>
                 </div>-->
                 <div class="carditem">
-                  <p><v-icon>info</v-icon>{{ getMainJobInfo(job) }}</p>
+                  <p><v-icon>info</v-icon>{{ parseJobIntoMainInfo(job) }}</p>
                 </div>
                 <div class="carditem">
                   <p><span class="carditem-image"><img :src="svgs.student" /></span>{{ job.studentfriendly ? '' : 'Not ' }}Student Friendly</p>
@@ -340,8 +340,7 @@ import StudentSvg from '@/assets/job_posts/user_1.svg';
 import FirstViewCard1 from '@/components/FirstViewCard1';
 import FirstViewCardRText from '@/components/FirstViewCardRText';
 import FirstViewCardLText from '@/components/FirstViewCardLText';
-import StringHelper from '@/utils/StringHelper';
-
+import DisplayTextHelper from '@/utils/DisplayTextHelper';
 
 Vue.use(VueApollo);
 
@@ -433,49 +432,14 @@ export default {
         this.commitData();
       }
     },
-    sanitizeTypes(jobTypes) {
-      const types = [];
-      for (const i in jobTypes) {
-        if (typeof jobTypes[i] === 'string') {
-          const type = jobTypes[i];
-          if (type === 'fulltime') {
-            types.push('Full-Time');
-          } else if (type === 'parttime') {
-            types.push('Part-time');
-          } else {
-            types.push(type);
-          }
-        }
-      }
-      return types;
-    },
     sanitizeSalary(salary) {
       if (typeof salary === 'number') {
         return salary.toFixed(2).toString();
       }
       return '';
     },
-    getJobTypeString(jobTypes) {
-      if (!jobTypes) return '';
-      if (jobTypes.length === 0) return 'Unknown'; // probably unnecessary
-      return StringHelper.listToSlashString(this.sanitizeTypes(jobTypes));
-      // return this.sanitizeTypes(jobTypes);
-    },
-    getSalaryString(job) {
-      if (job.pay_type !== 'paid') {
-        return job.pay_type;
-      }
-      return `$${job.salary} ${job.pay_denomination}`;
-    },
-    getMainJobInfo(job) {
-      const jobType = this.getJobTypeString(job.type);
-      const jobType2 = this.getJobTypeString(job.type2);
-      const salary = this.getSalaryString(job);
-      let result = '';
-      if (jobType) result += jobType;
-      if (jobType && jobType2) result += ` • ${jobType2}`;
-      if (salary) result += ` • ${salary}`;
-      return result;
+    parseJobIntoMainInfo(job) {
+      return DisplayTextHelper.getMainJobInfo(job);
     },
     commitData() {
       Store.commit({
