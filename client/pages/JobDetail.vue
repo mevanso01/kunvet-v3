@@ -207,7 +207,8 @@
     </div>
 
     <v-dialog v-model="applydialog">
-      <v-card style="padding: 20px;">
+      <v-card class="no-border-radius">
+        <div style="padding: 20px;">
         <h3>Select resume to send</h3>
         <v-radio-group v-model="selectedResumeName" hide-details>
           <v-radio v-for="(resume, index) in resumes"
@@ -220,13 +221,12 @@
         <br>
         <p style="margin-bottom: 2px;">My info:</p>
         <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
-        <p class="small-p">{{ userdata.display_email }}</p>
+        <p class="small-p">{{ userdata.email }}</p>
         <p class="small-p">{{ userdata.school }}</p>
         <p class="small-p">{{ userdata.degree }}</p>
         <br>
-        <v-card-actions style="padding-bottom: 0;">
-          <v-btn flat style="margin: auto;" class="kunvet-red-bg white--text" @click="createApplication">Apply</v-btn>
-        </v-card-actions>
+        </div>
+        <div class="bottom-dialog-button" @click="createApplication">Apply</div>
       </v-card>
     </v-dialog>
 
@@ -432,7 +432,7 @@ export default {
             lastname
             school
             degree
-            display_email
+            email
             resumes {
               name
               filename
@@ -450,7 +450,7 @@ export default {
         this.userdata.lastname = res.lastname;
         this.userdata.school = res.school;
         this.userdata.degree = res.degree;
-        this.userdata.display_email = res.display_email;
+        this.userdata.email = res.email;
         // this.resumes = res.resumes;
         for (var r in res.resumes) {
           if (res.resumes[r].name) {

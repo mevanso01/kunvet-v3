@@ -623,6 +623,29 @@
               resumes: _resumes,
             },
           },
+          refetchQueries: [{
+            query: (gql`query ($uid: MongoID) {
+              findAccount (filter: {
+                _id: $uid
+              }) {
+                  _id
+                  firstname
+                  lastname
+                  school
+                  degree
+                  email
+                  org_list
+                  resumes {
+                    name
+                    filename
+                    resumeid
+                  }
+              }
+            }`),
+            variables: {
+              uid: this.$store.state.userID,
+            },
+          }],
         }).catch((error) => {
           console.error(error);
         });

@@ -140,8 +140,8 @@ export default {
           { title: 'Sign up', icon: null, href: '/signup' },
         ],
         [
-          { title: 'Saved Jobs', icon: 'dashboard', href: '/savedjobs' },
-          { title: 'Applied Jobs', icon: 'dashboard', href: '/appliedjobs' },
+          { title: 'Saved Jobs', icon: null, href: '/savedjobs' },
+          { title: 'Applied Jobs', icon: null, href: '/appliedjobs' },
           // { title: 'Messages', icon: 'question_answer', href: '/messages' },
           { title: 'Account', icon: null, href: '/account' },
           { title: 'Settings', icon: settingIconFull, href: '/settings' },
