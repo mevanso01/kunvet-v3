@@ -267,61 +267,11 @@
             </form>
 
       <v-layout row wrap v-if="!firstSearch">
-
-        <div class="post-card" v-for="(job, index) in findJobs" :key="index">
-            <v-layout align-center row spacer slot="header">
-
-              <v-flex xs8>
-                <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
-                  <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
-                </v-avatar>
-                <!--<div style="color: #A7A7A7; width: calc(100% - 46px); padding-top: 7px;">{{ job.posted_by }}</div>-->
-                <div style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
-              </v-flex>
-              <v-flex xs4>
-
-              <div class="float-right">
-                <v-avatar size="36px" slot="activator">
-                  <v-icon class="whatshot">whatshot</v-icon>
-                </v-avatar>
-
-                <v-avatar size="36px" slot="activator" @click="saveJob(job._id)">
-                  <v-icon class="bookmark-icon" v-bind:class="{ saved: saved_jobs.indexOf(job._id) !== -1 }">bookmark_border</v-icon>
-                </v-avatar>
-              </div>
-              </v-flex>
-            </v-layout>
-
-          <router-link :to="'JobDetail/'+job._id">
-            <v-layout>
-              <v-flex xs12 style="padding-top: 0px;">
-                <div><h3 class="post-title">{{ job.title }}</h3></div>
-                <div class="carditem" style="color: #A7A7A7;"><timeago :since="job.date"></timeago></div>
-                <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
-                  <p><v-icon style="color: #A7A7A7;">location_city</v-icon>{{ job.address }}</p>
-                </div>
-                <!--<div class="carditem">
-                  <p><v-icon style="font-size: 17px; padding-right: 10px;">sms</v-icon> Average review</p>
-                </div>-->
-                <!--<div class="carditem">
-                  <p><v-icon style="font-size: 17px; padding-right: 10px;">info</v-icon> {{ sanitizeTypes(job.type) }} ~ {{ job.type2 }} ~ {{ sanitizeSalary(job.salary) }} {{ job.pay_denomination }}</p>
-                </div>-->
-                <div class="carditem">
-                  <p><v-icon>info</v-icon>{{ parseJobIntoMainInfo(job) }}</p>
-                </div>
-                <div class="carditem">
-                  <p><span class="carditem-image"><img :src="svgs.student" /></span>{{ job.studentfriendly ? '' : 'Not ' }}Student Friendly</p>
-                </div>
-
-                <div class="image-row">
-                  <!-- insert gallary here -->
-                  <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
-                </div>
-              </v-flex>
-            </v-layout>
-          </router-link>
-        </div>
-
+        <v-flex xs12 class="no-padding">
+          <div v-for="job in findJobs" :key="job._id">
+              <MainJobCard :job="job" :saveJobFunc="saveJob" :isSaved="isSaved(job._id)" />
+          </div>
+        </v-flex>
       </v-layout>
     </div>
   </v-container>
@@ -340,6 +290,7 @@ import StudentSvg from '@/assets/job_posts/user_1.svg';
 import FirstViewCard1 from '@/components/FirstViewCard1';
 import FirstViewCardRText from '@/components/FirstViewCardRText';
 import FirstViewCardLText from '@/components/FirstViewCardLText';
+import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 
 Vue.use(VueApollo);
@@ -371,6 +322,7 @@ export default {
     FirstViewCard1,
     FirstViewCardRText,
     FirstViewCardLText,
+    MainJobCard,
   },
   data() {
     return {
@@ -520,6 +472,18 @@ export default {
             saved_jobs: this.saved_jobs,
           },
         },
+        refetchQueries: [{
+          query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+              saved_jobs
+            }
+          }`),
+          variables: {
+            uid: this.uid,
+          },
+        }],
       }).catch((error) => {
         console.error(error);
       });
@@ -545,6 +509,9 @@ export default {
       }).catch((error) => {
         console.error(error);
       });
+    },
+    isSaved(id) {
+      return this.saved_jobs.indexOf(id) > -1;
     },
   },
   beforeDestroy() {
