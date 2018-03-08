@@ -25,7 +25,7 @@
       <v-layout>
         <v-flex xs12 style="padding-top: 0px;">
           <div><h3 class="post-title">{{ job.title }}</h3></div>
-          <div class="carditem" style="color: #A7A7A7;"><timeago :since="job.date"></timeago></div>
+          <div class="carditem" style="color: #A7A7A7;"><timeago :since="job.date"></timeago> {{ distance }}</div>
           <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
             <p><v-icon style="color: #A7A7A7;">location_city</v-icon>{{ job.address }}</p>
           </div>
@@ -50,7 +50,7 @@ import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import StudentSvg from '@/assets/job_posts/user_1.svg';
 
 export default {
-  props: ['job', 'saveJobFunc', 'isSaved'],
+  props: ['job', 'saveJobFunc', 'isSaved', 'distance'],
   data() {
     return {
       svgs: {

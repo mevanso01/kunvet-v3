@@ -268,8 +268,12 @@
 
       <v-layout row wrap v-if="!firstSearch">
         <v-flex xs12 class="no-padding">
-          <div v-for="job in findJobs" :key="job._id">
-              <MainJobCard :job="job" :saveJobFunc="saveJob" :isSaved="isSaved(job._id)" />
+          <div v-for="job in filteredJobs" :key="job._id">
+              <MainJobCard
+                :job="job"
+                :saveJobFunc="saveJob"
+                :isSaved="isSaved(job._id)"
+                :distance="getDistance(job.latitude, job.longitude)"/>
           </div>
         </v-flex>
       </v-layout>
@@ -294,8 +298,8 @@ import DisplayTextHelper from '@/utils/DisplayTextHelper';
 
 Vue.use(VueApollo);
 
-/* const findJobQuery = gql`{
-  findJobs (filter: { active: true }){
+const findJobQuery = gql`query ($id: MongoID) {
+  findJob (filter: { active: true, _id: $id }){
     _id
     posted_by
     title
@@ -313,17 +317,13 @@ Vue.use(VueApollo);
     pay_denomination
     date
   }
-}`; */
+}`;
 
 export default {
-  apollo: {
+  /* apollo: {
     findJobs: gql`{
       findJobs (filter: { active: true }){
         _id
-        posted_by
-        title
-        description
-        address
         latitude
         longitude
         type
@@ -332,12 +332,10 @@ export default {
         shift
         age
         pay_type
-        salary
-        pay_denomination
         date
       }
     }`,
-  },
+  }, */
   components: {
     FirstViewCard1,
     FirstViewCardRText,
@@ -347,13 +345,14 @@ export default {
   data() {
     return {
       uid: null,
+      findJobs: undefined,
       saved_jobs: [],
       filteredJobs: [],
       firstSearchTypes: [
         'Latest jobs',
       ],
       availableCities: [
-        { text: 'Irvine, CA', value: [33.6846, -117.8265] },
+        'Irvine, CA',
         'UC Irvine',
         'Los Angeles, CA',
         'UCLA',
@@ -383,6 +382,8 @@ export default {
       selectedTypes: Store.state.selectedTypes,
       selectedPositions: Store.state.selectedPositions,
       selectedShifts: Store.state.selectedShifts,
+      selectedLat: 33.6459163,
+      selectedLong: -117.8429332,
       vuextest: Store.state.count,
       svgs: {
         cityImage: CitySvg,
@@ -402,7 +403,7 @@ export default {
         this.commitData();
       }
     },
-    async filterJobs() {
+    filterJobs() {
       // job types
       let selectedTypes = [];
       let selectedTypes2 = [];
@@ -410,7 +411,7 @@ export default {
         selectedTypes = ['fulltime', 'parttime'];
         selectedTypes2 = ['internship', 'contract'];
       } else {
-        for (var i = 0; i < this.selectedTypes.length; i++) {
+        for (let i = 0; i < this.selectedTypes.length; i++) {
           if (['fulltime', 'parttime'].indexOf(this.selectedTypes[i]) >= 0) {
             selectedTypes.push(this.selectedTypes[i]);
           }
@@ -419,20 +420,56 @@ export default {
           }
         }
       }
-      console.log(selectedTypes, selectedTypes2);
-      let sortedJobs = this.findJobs.concat();
-      console.log('before', sortedJobs);
-      sortedJobs = sortedJobs.sort((a, b) => this.compareDistance(a, b));
-      // const sortedJobs = this.findJobs.sort(functothis.compareDistance(a, b));
-      console.log('after', sortedJobs);
+      const sortedJobs = this.findJobs.concat();
+      if (this.selectedLat && this.selectedLong) {
+        sortedJobs.sort((a, b) => this.compareDistance(a, b));
+      }
+      var endIndex = sortedJobs.length;
+      if (endIndex > 99) {
+        endIndex = 99;
+      }
+      if (endIndex > 0) {
+        this.filteredJobs = [];
+        for (let i = 0; i < endIndex; i++) {
+          const jobId = sortedJobs[i]._id;
+          this.$apollo.query({
+            query: findJobQuery,
+            variables: {
+              id: jobId,
+            },
+          }).then((res) => {
+            if (res.data.findJob) {
+              this.filteredJobs.push(res.data.findJob);
+            }
+          });
+        }
+      }
     },
-    computeDistance(a) {
-      return Math.sqrt(((this.selectedCities[0] - a.latitude) ** 2) + ((this.selectedCities[1] - a.longitude) ** 2));
+    getDistance(lat, long) {
+      return `- ${this.computeDistance(lat, long).toFixed(1)} miles away`;
+    },
+    computeDistance(lat, long) {
+      // const degrees = Math.sqrt(((this.selectedLat - lat) ** 2) + ((this.selectedLong - long) ** 2));
+      // return (degrees * 69).toFixed(1); // convert to miles
+      var R = 3958.3; // miles  // metres = 6371e3
+      var φ1 = this._toRad(lat);
+      var φ2 = this._toRad(this.selectedLat);
+      var Δφ = this._toRad(this.selectedLat - lat);
+      var Δλ = this._toRad(this.selectedLong - long);
+
+      var a = (Math.sin(Δφ / 2) * Math.sin(Δφ / 2)) + (Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2));
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+      var d = R * c;
+      return d;
+    },
+    _toRad(degrees) {
+      return degrees * (Math.PI / 180);
     },
     compareDistance(a, b) {
-      const distanceA = Math.sqrt(((this.selectedCities[0] - a.latitude) ** 2) + ((this.selectedCities[1] - a.longitude) ** 2));
-      const distanceB = Math.sqrt(((this.selectedCities[0] - b.latitude) ** 2) + ((this.selectedCities[1] - b.longitude) ** 2));
-      console.log('distance', distanceA, distanceB);
+      // should we use the more accurate computeDistance function?
+      const distanceA = Math.sqrt(((this.selectedLat - a.latitude) ** 2) + ((this.selectedLong - a.longitude) ** 2));
+      const distanceB = Math.sqrt(((this.selectedLat - b.latitude) ** 2) + ((this.selectedLong - b.longitude) ** 2));
       return distanceA - distanceB;
     },
     sanitizeSalary(salary) {
@@ -520,11 +557,32 @@ export default {
     isSaved(id) {
       return this.saved_jobs.indexOf(id) > -1;
     },
+    async loadInitialJobs() {
+      const { data: { findJobs } } = await this.$apollo.query({
+        query: gql`{
+          findJobs (filter: { active: true }){
+            _id
+            latitude
+            longitude
+            type
+            studentfriendly
+            type2
+            shift
+            age
+            pay_type
+            date
+          }
+        }`,
+      });
+      this.findJobs = findJobs;
+      this.filterJobs();
+    },
   },
   beforeDestroy() {
     this.commitData();
   },
   created() {
+    this.loadInitialJobs();
     VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
       if (data) {
         console.log(data);
