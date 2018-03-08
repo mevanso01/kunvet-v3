@@ -185,14 +185,14 @@
                   :svg="svgs.resume"
                   :text="'Resume'"
                 />
-                <pdf
+                <!--<pdf
                   v-if="src"
-                  :src="src"
                   v-for="i in numPages"
                   :key="i"
+                  :src="src"
                   :page="i"
-                />
-                <!--<object v-if="src" :src="src" type="application/pdf"></object>-->
+                />-->
+                <object v-if="pdfurl" :data="pdfurl" width="100%" height="1200"></object>
               </v-flex>
             </v-layout>
           </section>
@@ -259,7 +259,7 @@ export default {
         status: null,
       },
       src: undefined,
-      testsrc: undefined,
+      pdfurl: undefined,
       numPages: undefined,
       editingNotes: false,
       newNotes: '',
@@ -362,37 +362,15 @@ export default {
           this.data.status = res.status;
           this.data.degree = res.degree;
           if (res.resume && res.resume.filename) {
-            /* const loadingTask = pdf.createLoadingTask(
-              `../../server/uploads/${res.resume.filename}`,
-            ); */
-
-            var pdfData = atob(
-              'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
-              'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
-              'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
-              'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
-              'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
-              'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
-              'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
-              'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
-              'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
-              'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
-              'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
-              'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
-              'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-
-            const file = await axios.get(`/file/get/${res.resume.filename}`);
-            const filedata = file.data; // encode me to binary form!!!
-
-            console.log('FILE', filedata);
-            this.testsrc = file.data;
-            const loadingTask = pdf.createLoadingTask({ data: pdfData });
+            const pdfurl = `http://localhost:3000/file/get/${res.resume.filename}`;
+            console.log('PDF url', pdfurl);
+            this.pdfurl = pdfurl;
+            /*
+            const loadingTask = pdf.createLoadingTask(); // { data: pdfData });
             this.src = loadingTask;
-            console.log(this.src);
             this.src.then(_pdf => {
-              console.log(_pdf);
               this.numPages = _pdf.numPages;
-            });
+            }); */
           }
           this.updateApplicantStatus('opened');
         })

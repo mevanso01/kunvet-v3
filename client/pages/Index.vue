@@ -256,7 +256,7 @@
                 </section>
 
                 <input v-if="!firstSearch" class="hidden-input" id="submit" type="submit" value="GO">
-                <div v-if="!firstSearch" id="general-submit" @click="search">
+                <div v-if="!firstSearch" id="general-submit" @click="filterJobs">
                     <div id="general-submit-default">
                         <span>GO</span>
                     </div>
@@ -276,7 +276,6 @@
     </div>
   </v-container>
 </template>
-
 <script>
 import gql from 'graphql-tag';
 import Vue from 'vue';
@@ -294,6 +293,27 @@ import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 
 Vue.use(VueApollo);
+
+/* const findJobQuery = gql`{
+  findJobs (filter: { active: true }){
+    _id
+    posted_by
+    title
+    description
+    address
+    latitude
+    longitude
+    type
+    studentfriendly
+    type2
+    shift
+    age
+    pay_type
+    salary
+    pay_denomination
+    date
+  }
+}`; */
 
 export default {
   apollo: {
@@ -328,7 +348,7 @@ export default {
     return {
       uid: null,
       saved_jobs: [],
-      jobs: [],
+      filteredJobs: [],
       firstSearchTypes: [
         'Latest jobs',
       ],
@@ -359,7 +379,7 @@ export default {
       ],
       firstSearch: Store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
-      selectedCities: Store.state.selectedCities,
+      selectedCities: 'Irvine, CA', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCities,
       selectedTypes: Store.state.selectedTypes,
       selectedPositions: Store.state.selectedPositions,
       selectedShifts: Store.state.selectedShifts,
@@ -376,12 +396,13 @@ export default {
   methods: {
     searchGo() {
       if (this.selectedCities && this.selectedCities[0]) {
+        this.filterJobs();
         this.firstSearch = false;
         Store.commit('go');
         this.commitData();
       }
     },
-    search() {
+    async filterJobs() {
       // job types
       let selectedTypes = [];
       let selectedTypes2 = [];
@@ -399,34 +420,20 @@ export default {
         }
       }
       console.log(selectedTypes, selectedTypes2);
-      /* this.$apollo.query({
-        query: (gql`{
-          findJobs (
-            filter: { active: true },
-            orderBy: latitude_DESC,
-          ){
-            _id
-            posted_by
-            title
-            description
-            address
-            latitude
-            longitude
-            type
-            studentfriendly
-            type2
-            shift
-            age
-            pay_type
-            salary
-            pay_denomination
-            date
-          }
-        }`),
-      }).then((result) => {
-        const res = result.data.findJobs;
-        console.log(res);
-      }); */
+      let sortedJobs = this.findJobs.concat();
+      console.log('before', sortedJobs);
+      sortedJobs = sortedJobs.sort((a, b) => this.compareDistance(a, b));
+      // const sortedJobs = this.findJobs.sort(functothis.compareDistance(a, b));
+      console.log('after', sortedJobs);
+    },
+    computeDistance(a) {
+      return Math.sqrt(((this.selectedCities[0] - a.latitude) ** 2) + ((this.selectedCities[1] - a.longitude) ** 2));
+    },
+    compareDistance(a, b) {
+      const distanceA = Math.sqrt(((this.selectedCities[0] - a.latitude) ** 2) + ((this.selectedCities[1] - a.longitude) ** 2));
+      const distanceB = Math.sqrt(((this.selectedCities[0] - b.latitude) ** 2) + ((this.selectedCities[1] - b.longitude) ** 2));
+      console.log('distance', distanceA, distanceB);
+      return distanceA - distanceB;
     },
     sanitizeSalary(salary) {
       if (typeof salary === 'number') {
@@ -520,10 +527,13 @@ export default {
   created() {
     VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
       if (data) {
+        console.log(data);
         this.firstSearch = data.firstSearch;
-        if (data.selectedCities && data.selectedCities[0]) {
+        this.selectedCities = data.selectedCities;
+        /* if (data.selectedCities && data.selectedCities[0]) {
           this.selectedCities = data.selectedCities;
-        }
+        } */
+        console.log(this.selectedCities);
         if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
           this.selectedPositions = data.selectedPositions;
         }

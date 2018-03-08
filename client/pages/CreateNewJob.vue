@@ -452,7 +452,7 @@ export default {
       language: '',
       degree: '',
       active: false,
-      confirmPost: true,
+      confirmPost: false,
 
       educationOptions: [
         'None (recommended)',

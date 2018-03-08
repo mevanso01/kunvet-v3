@@ -24,6 +24,9 @@ module.exports = {
     'no-var': 0,
     'no-loop-func': 0,
     'vars-on-top': 0,
+    'max-len': 0,
+    'func-names': 0,
+    'space-before-function-paren': 0,
     'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
