@@ -6,10 +6,19 @@
           <section style="padding: 0; margin: 15px; width: auto;">
             <v-layout>
               <v-flex xs12 sm8>
-                <h1>{{ bdata.business_name }}</h1>
-                <v-layout>
+                <v-layout row wrap>
+                  <v-flex xs12 class="acct-name-header-container">
+                    <h1 class="acct-name-header-container__name">
+                      {{ bdata.business_name }}
+                    </h1>
+                    <i
+                       class="fa fa-edit acct-name-header-container__edit-icon"
+                       @click="createEditModal('business_name', bdata.business_name, 'business_name')"
+                    />
+                  </v-flex>
                   <v-flex xs12 sm10 class="no-padding">
                     <v-list>
+                      <v-list-tile
                       <v-list-tile v-if="!bdata.address" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
                           <i class="fa fa-plus-square-o" aria-hidden="true"></i>
@@ -285,6 +294,7 @@
       return {
         tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
         active: null,
+        updateName: '',
         updateAddress: '',
         updateEmail: '',
         updateWebsite: '',
@@ -355,6 +365,7 @@
           mutation: (gql`
             mutation (
               $bid: MongoID,
+              $business_name: String
               $address: String,
               $website: String,
               $phone_number: String,
@@ -363,6 +374,7 @@
             updateOrganization (
               filter: { _id: $bid },
               record: {
+                business_name: $business_name,
                 address: $address,
                 website: $website,
                 phone_number: $phone_number,
@@ -375,6 +387,7 @@
           variables: {
             // find a more secure way to run query
             bid: this.$store.state.businessID,
+            business_name: this.bdata.business_name,
             address: this.bdata.address,
             website: this.bdata.website,
             phone_number: this.bdata.phone_number,

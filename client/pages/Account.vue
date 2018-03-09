@@ -29,9 +29,18 @@
   <v-container fluid class="acct-page-container white-bg">
     <div class="main-cont-large">
           <section style="padding: 0; margin: 15px; width: auto;">
-            <v-layout>
+            <v-layout row wrap>
+              <v-flex xs12 class="acct-name-header-container">
+                <h1 class="acct-name-header-container__name">
+                  {{ userdata.firstname }} {{ userdata.lastname }}
+                </h1>
+                <i
+                  class="fa fa-edit acct-name-header-container__edit-icon"
+                  @click="createEditNameModal(userdata.firstname, userdata.lastname)"
+
+                />
+              </v-flex>
               <v-flex xs12 sm8>
-                <h1>{{ userdata.firstname }} {{ userdata.lastname }}</h1>
                 <v-layout>
                   <v-flex xs12 sm10 class="no-padding">
                     <v-list>
@@ -344,6 +353,38 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
+
+
+            <v-dialog v-model="editNameModal.show">
+              <v-card>
+                <v-card-title>
+                  <div class="headline">Edit Name</div>
+                  <div class="edit-modal-input-cont">
+                    <v-text-field
+                      v-model="editNameModal.firstName"
+                      style="padding: 0 2px;"
+                      name="edit-modal-input"
+                      hide-details
+                      single-line
+                    />
+                  </div>
+                  <div class="edit-modal-input-cont">
+                    <v-text-field
+                      v-model="editNameModal.lastName"
+                      style="padding: 0 2px;"
+                      name="edit-modal-input"
+                      hide-details
+                      single-line
+                    />
+                  </div>
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn color="green darken-1" flat="flat" @click.native="editNameModal.show = false">Cancel</v-btn>
+                  <v-btn color="green darken-1" flat="flat" @click.native="saveFromEditNameModal">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
           </section>
     </div>
   </v-container>
@@ -379,6 +420,11 @@
           text: null,
           property: null,
           show: false,
+        },
+        editNameModal: {
+          show: false,
+          firstName: '',
+          lastName: '',
         },
         userdata: {
           firstname: null,
@@ -567,6 +613,11 @@
         this.editModal.property = property;
         this.editModal.show = true;
       },
+      createEditNameModal(firstName, lastName) {
+        this.editNameModal.firstName = firstName;
+        this.editNameModal.lastName = lastName;
+        this.editNameModal.show = true;
+      },
       destroyEditModal() {
         this.editModal.show = false;
         this.editModal.title = null;
@@ -578,6 +629,13 @@
         this.userdata[property] = text;
         this.saveUserdata();
         this.destroyEditModal();
+      },
+      saveFromEditNameModal() {
+        const { firstName, lastName } = this.editNameModal;
+        this.userdata.firstname = firstName;
+        this.userdata.lastname = lastName;
+        this.saveUserdata();
+        this.editNameModal.show = false;
       },
       saveUserdata() {
         this.updateAccount();
