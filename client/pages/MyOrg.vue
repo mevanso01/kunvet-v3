@@ -21,7 +21,7 @@
                       <v-list-tile
                       <v-list-tile v-if="!bdata.address" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                          <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <!--<v-list-tile-title>Add school info</v-list-tile-title>-->
@@ -46,23 +46,24 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.address" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.locationMarker"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
                             {{ bdata.address }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('address', bdata.address, 'address')">
-                              edit
-                            </v-icon>
+                            <i class="fa fa-edit acct-page-container__edit-icon"
+                              @click="createEditModal('address', bdata.address, 'address')"
+                            />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
 
                       <v-list-tile v-if="!bdata.display_email" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -86,7 +87,10 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.display_email" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountEmail"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
@@ -97,7 +101,7 @@
 
                       <v-list-tile v-if="!bdata.phone_number" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                          <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -121,23 +125,25 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.phone_number" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-phone" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountPhone"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
                             {{ bdata.phone_number }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('phone number', bdata.phone_number, 'phone_number')">
-                              edit
-                            </v-icon>
+                            <i
+                              class="fa fa-edit acct-page-container__edit-icon"
+                              @click="createEditModal('phone', bdata.phone_number, 'phone_number')"
+                            />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
 
                       <v-list-tile v-if="!bdata.website" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -161,16 +167,24 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.website" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-globe" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountGlobe"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            <a :href="bdata.website" target="_blank">{{ bdata.website }}</a>
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('website url', bdata.website, 'website')">
-                              edit
-                            </v-icon>
+                            <a
+                              :href="bdata.website"
+                              target="_blank"
+                              class="acct-page-container__website"
+                            >
+                              {{ bdata.website }}
+                            </a>
+                            <i
+                              class="fa fa-edit acct-page-container__edit-icon"
+                              @click="createEditModal('website url', bdata.website, 'website')"
+                            />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
@@ -213,7 +227,7 @@
               <v-flex xs12 sm6 offset-md1 class="right-account-column padding-sm-left">
                 <account-header
                   :svg="svgs.suitcase"
-                  :text="'Posted Jobs and Applicants'"
+                  :text="'Posted Jobs & Applicants'"
                 />
                 <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
                 <div>
@@ -282,6 +296,10 @@
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
 
+  import AccountEmailSvg from '@/assets/account/account_email.svg';
+  import AccountGlobeSvg from '@/assets/account/account_globe.svg';
+  import AccountPhoneSvg from '@/assets/account/account_phone.svg';
+  import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import PeopleSvg from '@/assets/account/people_full_black.svg';
   import SuitcaseSvg from '@/assets/navbar/suitcase_full_black.svg';
 
@@ -320,6 +338,10 @@
         jobs: [],
         applications: [],
         svgs: {
+          accountEmail: AccountEmailSvg,
+          accountGlobe: AccountGlobeSvg,
+          accountPhone: AccountPhoneSvg,
+          locationMarker: LocationMarkerSvg,
           people: PeopleSvg,
           suitcase: SuitcaseSvg,
         },

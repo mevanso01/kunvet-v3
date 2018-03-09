@@ -37,7 +37,6 @@
                 <i
                   class="fa fa-edit acct-name-header-container__edit-icon"
                   @click="createEditNameModal(userdata.firstname, userdata.lastname)"
-
                 />
               </v-flex>
               <v-flex xs12 sm8>
@@ -46,7 +45,7 @@
                     <v-list>
                       <v-list-tile v-if="!userdata.school" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
 
@@ -56,7 +55,7 @@
                               v-model="updateSchool"
                               class="no-padding no-underline"
                               name="input-1-3"
-                              label="Add school"
+                              label="Add School Info"
                               single-line
                               @keyup.enter="saveSchool"
                             ></v-text-field>
@@ -71,22 +70,24 @@
                       </v-list-tile>
                       <v-list-tile v-if="userdata.school" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountSchool"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
                             {{ userdata.school }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('school', userdata.school, 'school')">
-                              edit
-                            </v-icon>
+                            <i
+                              class="fa fa-edit acct-page-container__edit-icon"
+                              @click="createEditModal('school', userdata.school, 'school')"
+                            />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
                       <v-list-tile v-if="userdata.school && !userdata.degree" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -95,7 +96,7 @@
                                 v-model="updateDegree"
                                 class="no-padding no-underline"
                                 name="input-2"
-                                label="Add degree"
+                                label="Add Degree"
                                 single-line
                                 @keyup.enter="saveDegree"
                               ></v-text-field>
@@ -110,22 +111,24 @@
                       </v-list-tile>
                       <v-list-tile v-if="userdata.degree" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-book" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountDegree"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
                             {{ userdata.degree }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('degree', userdata.degree, 'degree')">
-                              edit
-                            </v-icon>
+                            <i
+                              class="fa fa-edit acct-page-container__edit-icon"
+                              @click="createEditModal('degree', userdata.degree, 'degree')"
+                            />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
                       <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -149,7 +152,10 @@
                       </v-list-tile>
                       <v-list-tile v-if="userdata.email" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountEmail"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
@@ -399,6 +405,9 @@
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
 
+  import AccountDegreeSvg from '@/assets/account/account_degree.svg';
+  import AccountEmailSvg from '@/assets/account/account_email.svg';
+  import AccountSchoolSvg from '@/assets/account/account_school.svg';
   import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
   import SuitcaseSvg from '@/assets/navbar/suitcase_full_black.svg';
   import BuildingSvg from '@/assets/account/org_building_full_black.svg';
@@ -450,9 +459,12 @@
         jobs: [],
         applications: [],
         svgs: {
+          accountDegree: AccountDegreeSvg,
+          accountEmail: AccountEmailSvg,
+          accountSchool: AccountSchoolSvg,
+          building: BuildingSvg,
           resume: ResumeSvg,
           suitcase: SuitcaseSvg,
-          building: BuildingSvg,
         },
       };
     },
@@ -707,6 +719,9 @@
         }).catch((error) => {
           console.error(error);
         });
+      },
+      createOrganization() {
+
       },
       async populateOrgList() {
         for (var i = 0; i < this.userdata.org_list.length; i++) {
