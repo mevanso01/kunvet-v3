@@ -50,7 +50,7 @@
   transform: translateY(-15px);
 }
 .acct-page-container .profile-pic-cont {
-  transform: translateY(-15px);
+  transform: translateY(9px);
 }
 
 .acct-page-container .edit-icon {
@@ -135,6 +135,9 @@
 } */
 .acct-page-container .dialog .btn__content {
   padding: 0 !important;
+}
+.acct-name-header-container {
+  padding-top: 0;
 }
 .acct-name-header-container__name, .acct-name-header-container__edit-icon, .acct-page-container__edit-icon {
   display: inline-block;

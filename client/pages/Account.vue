@@ -28,8 +28,10 @@
 <template>
   <v-container fluid class="acct-page-container white-bg">
     <div class="main-cont-large">
-          <section style="padding: 0; margin: 15px; width: auto;">
-            <v-layout row wrap>
+      <section style="padding: 0; margin: 15px; width: auto;">
+        <v-layout row wrap style="padding-bottom: 15px">
+          <v-flex xs12 sm8>
+            <v-layout row wrap> 
               <v-flex xs12 class="acct-name-header-container">
                 <h1 class="acct-name-header-container__name">
                   {{ userdata.firstname }} {{ userdata.lastname }}
@@ -39,139 +41,135 @@
                   @click="createEditNameModal(userdata.firstname, userdata.lastname)"
                 />
               </v-flex>
-              <v-flex xs12 sm8>
-                <v-layout>
-                  <v-flex xs12 sm10 class="no-padding">
-                    <v-list>
-                      <v-list-tile v-if="!userdata.school" class="cust-tile-2 grey-color">
-                        <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-
-                          <v-layout style="width: 100%">
-                          <v-flex xs9 class="no-padding">
-                            <v-text-field
-                              v-model="updateSchool"
-                              class="no-padding no-underline"
-                              name="input-1-3"
-                              label="Add School Info"
-                              single-line
-                              @keyup.enter="saveSchool"
-                            ></v-text-field>
-                          </v-flex>
-                          <v-flex xs3 v-show="updateSchool" class="no-padding">
-                            <v-btn small center class="cust-btn-1" @click="saveSchool">
-                              Save
-                            </v-btn>
-                          </v-flex>
-                        </v-layout>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="userdata.school" class="cust-tile-2">
-                        <v-list-tile class="cust-tile-1">
-                          <img
-                            :src="svgs.accountSchool"
-                            class="acct-page-container__display-text-icon"
+              <v-flex xs12 sm10 class="no-padding">
+                <v-list>
+                  <v-list-tile v-if="!userdata.school" class="cust-tile-2 grey-color">
+                    <v-list-tile class="cust-tile-1">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-layout style="width: 100%">
+                        <v-flex xs9 class="no-padding">
+                          <v-text-field
+                            v-model="updateSchool"
+                            class="no-padding no-underline"
+                            name="input-1-3"
+                            label="Add School Info"
+                            single-line
+                            @keyup.enter="saveSchool"
                           />
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ userdata.school }}
-                            <i
-                              class="fa fa-edit acct-page-container__edit-icon"
-                              @click="createEditModal('school', userdata.school, 'school')"
-                            />
-                          </v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="userdata.school && !userdata.degree" class="cust-tile-2 grey-color">
-                        <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-layout style="width: 100%">
-                            <v-flex xs9 class="no-padding">
-                              <v-text-field
-                                v-model="updateDegree"
-                                class="no-padding no-underline"
-                                name="input-2"
-                                label="Add Degree"
-                                single-line
-                                @keyup.enter="saveDegree"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs3 v-show="updateDegree" class="no-padding">
-                              <v-btn small center class="cust-btn-1" @click="saveDegree">
-                                Save
-                              </v-btn>
-                            </v-flex>
-                          </v-layout>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="userdata.degree" class="cust-tile-2">
-                        <v-list-tile class="cust-tile-1">
-                          <img
-                            :src="svgs.accountDegree"
-                            class="acct-page-container__display-text-icon"
+                        </v-flex>
+                        <v-flex xs3 v-show="updateSchool" class="no-padding">
+                          <v-btn small center class="cust-btn-1" @click="saveSchool">
+                            Save
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile v-if="userdata.school" class="cust-tile-2">
+                    <v-list-tile class="cust-tile-1">
+                      <img
+                        :src="svgs.accountSchool"
+                        class="acct-page-container__display-text-icon"
+                      />
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ userdata.school }}
+                        <i
+                          class="fa fa-edit acct-page-container__edit-icon"
+                          @click="createEditModal('school', userdata.school, 'school')"
+                        />
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile v-if="userdata.school && !userdata.degree" class="cust-tile-2 grey-color">
+                    <v-list-tile class="cust-tile-1">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-layout style="width: 100%">
+                        <v-flex xs9 class="no-padding">
+                          <v-text-field
+                            v-model="updateDegree"
+                            class="no-padding no-underline"
+                            name="input-2"
+                            label="Add Degree"
+                            single-line
+                            @keyup.enter="saveDegree"
                           />
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ userdata.degree }}
-                            <i
-                              class="fa fa-edit acct-page-container__edit-icon"
-                              @click="createEditModal('degree', userdata.degree, 'degree')"
-                            />
-                          </v-list-tile-title>
-                        </v-list-tile-content>
+                        </v-flex>
+                        <v-flex xs3 v-show="updateDegree" class="no-padding">
+                          <v-btn small center class="cust-btn-1" @click="saveDegree">
+                            Save
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile v-if="userdata.degree" class="cust-tile-2">
+                    <v-list-tile class="cust-tile-1">
+                      <img
+                        :src="svgs.accountDegree"
+                        class="acct-page-container__display-text-icon"
+                      />
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ userdata.degree }}
+                        <i
+                          class="fa fa-edit acct-page-container__edit-icon"
+                          @click="createEditModal('degree', userdata.degree, 'degree')"
+                        />
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                    <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
+                      <v-list-tile class="cust-tile-1">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
                       </v-list-tile>
-                      <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
-                        <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-layout style="width: 100%">
-                            <v-flex xs10 class="no-padding">
-                              <v-text-field
-                                v-model="updateEmail"
-                                class="no-padding no-underline"
-                                name="input-3"
-                                label="Add email to display"
-                                single-line
-                                @keyup.enter="saveEmail"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs2 v-show="updateEmail" class="no-padding">
-                              <v-btn small  center class="cust-btn-1" @click="saveEmail">
-                                Save
-                              </v-btn>
-                            </v-flex>
-                          </v-layout>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="userdata.email" class="cust-tile-2">
-                        <v-list-tile class="cust-tile-1">
-                          <img
-                            :src="svgs.accountEmail"
-                            class="acct-page-container__display-text-icon"
+                    <v-list-tile-content>
+                      <v-layout style="width: 100%">
+                        <v-flex xs10 class="no-padding">
+                          <v-text-field
+                            v-model="updateEmail"
+                            class="no-padding no-underline"
+                            name="input-3"
+                            label="Add email to display"
+                            single-line
+                            @keyup.enter="saveEmail"
                           />
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ userdata.email }}
-                          </v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                  </v-flex>
-                </v-layout>
-              </v-flex>
-              <v-flex sm4 class="hidden-xs-only">
-                <div class="profile-pic-cont hidden-xs-only">
-                </div>
+                        </v-flex>
+                        <v-flex xs2 v-show="updateEmail" class="no-padding">
+                          <v-btn small  center class="cust-btn-1" @click="saveEmail">
+                            Save
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile v-if="userdata.email" class="cust-tile-2">
+                    <v-list-tile class="cust-tile-1">
+                      <img
+                        :src="svgs.accountEmail"
+                        class="acct-page-container__display-text-icon"
+                      />
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ userdata.email }}
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
               </v-flex>
             </v-layout>
+          </v-flex>
+          <v-flex sm4 class="hidden-xs-only">
+            <div class="profile-pic-cont hidden-xs-only" />
+          </v-flex>
+        </v-layout>
 
             <v-divider class="acct-divider" />
 
@@ -190,11 +188,6 @@
                       <v-list-tile-content>
                         <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
                       </v-list-tile-content>
-                      <v-list-tile-action>
-                        <v-btn icon ripple>
-                          <v-icon color="grey lighten-1">edit</v-icon>
-                        </v-btn>
-                      </v-list-tile-action>
                       <v-list-tile-action @click="
                         deleteResumeIndex=index;
                         deleteResumeName=resume.name;
