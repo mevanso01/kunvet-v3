@@ -149,7 +149,7 @@
  * if we decide to change the styles.
  */
 .acct-page-container__edit-icon, .acct-name-header-container__edit-icon {
-  color: #CCC;
+  color: #AAA;
   margin-left: 5px;
   cursor: pointer;
 }

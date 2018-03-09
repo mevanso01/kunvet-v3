@@ -206,12 +206,10 @@
                   <img :src="svgs.people" class="acct-icon" />
                   <h3 class="acct-h3">
                     About Us
-                    <v-icon
-                      v-if="bdata.biography"
-                      class = "edit-icon"
-                      @click="createEditModal('biography', bdata.biography, 'biography')">
-                      edit
-                    </v-icon>
+                    <i
+                      class="fa fa-edit acct-page-container__edit-icon"
+                      @click="createEditModal('biography', bdata.biography, 'biography')"
+                    />
                   </h3>
                 </div>
                 <p v-if="bdata.biography">{{ bdata.biography }}</p>
