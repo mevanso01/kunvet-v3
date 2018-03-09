@@ -68,6 +68,7 @@ const Store = new Vuex.Store({
         school: null,
         degree: null,
         display_email: null,
+        org_list: [],
       };
     },
   },

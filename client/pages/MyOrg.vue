@@ -63,7 +63,7 @@
 
                       <v-list-tile v-if="!bdata.display_email" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -75,7 +75,7 @@
                                 label="Add Contact Email"
                                 single-line
                                 @keyup.enter="saveProperty('display_email', updateEmail)"
-                              ></v-text-field>
+                              />
                             </v-flex>
                             <v-flex xs2 v-show="updateEmail" class="no-padding">
                               <v-btn small  center class="cust-btn-1" @click="saveProperty('display_email', updateEmail)">
@@ -236,17 +236,6 @@
                   </router-link>
                 </div>
 
-                <v-dialog v-model="addorg">
-                  <v-card>
-                    <v-card-title class="headline">Create organization / business profile</v-card-title>
-                    <v-card-actions>
-                      <!--<v-spacer></v-spacer>-->
-                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Create</v-btn>
-                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Cancel</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-
                 <v-dialog v-model="editModal.show">
                   <v-card>
                     <v-card-title>
@@ -332,7 +321,6 @@
           biography: null,
         },
         settingsoption1: '',
-        addorg: false,
         jobs: [],
         applications: [],
         svgs: {

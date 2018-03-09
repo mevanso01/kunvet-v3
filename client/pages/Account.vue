@@ -213,14 +213,14 @@
                   :svg="svgs.building"
                   :text="'My Organization'"
                 />
-                <p v-if="org_list && org_list.length === 0">
+                <p v-if="userdata.org_list && userdata.org_list.length === 0">
                   If you own a business, school club, or other type of organization, then post your job here.
                 </p>
                 <v-list two-line class="acct-list" v-else>
-                  <template v-for="(org, index) in org_list">
-                    <v-list-tile :key="org._id">
+                    <template v-for="({ _id, name }, index) in userdata.org_list">
+                    <v-list-tile :key="_id">
                       <v-list-tile-content>
-                        <v-list-tile-title>{{ org.name }}</v-list-tile-title>
+                        <v-list-tile-title>{{ name }}</v-list-tile-title>
                       </v-list-tile-content>
                       <v-list-tile-action>
                         <v-btn icon ripple>
@@ -228,26 +228,17 @@
                         </v-btn>
                       </v-list-tile-action>
                     </v-list-tile>
-                    <v-divider v-if="index + 1 < org_list.length" :key="org._id"></v-divider>
+                    <v-divider v-if="index + 1 < userdata.org_list.length" :key="index" />
                   </template>
                 </v-list>
                 <div>
                   <v-btn
                     class="acct-btn"
-                    @click.native.stop="addorg = true"
+                    @click.native.stop="createOrganizationModal.show = true"
                   >
                     Create an Organization
                   </v-btn>
                 </div>
-                <v-dialog v-model="addorg">
-                  <v-card>
-                    <v-card-title class="headline">Create Organization / Business Profile</v-card-title>
-                    <v-card-actions>
-                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Create</v-btn>
-                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Cancel</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
@@ -354,6 +345,37 @@
             </v-dialog>
 
 
+                <v-dialog v-model="createOrganizationModal.show">
+                  <v-card>
+                    <v-card-title class="headline">
+                      Create organization / business profile
+                    </v-card-title>
+                    <div class="edit-modal-input-cont">
+                      <v-text-field
+                        v-model="createOrganizationModal.organizationName"
+                        style="padding: 0 2px;"
+                        name="edit-modal-input"
+                        hide-details
+                        single-line
+                      />
+                      <v-text-field
+                        v-model="createOrganizationModal.aboutUs"
+                        style="padding: 0 2px;"
+                        name="edit-modal-input"
+                        placeholder="A description of your business or organization"
+                        hide-details
+                        multi-line
+                        rows=3
+                      />
+                    </div>
+                    <v-card-actions>
+                      <!--<v-spacer></v-spacer>-->
+                      <v-btn color="green darken-1" flat="flat" @click.native="createOrganization">Create</v-btn>
+                      <v-btn color="green darken-1" flat="flat" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
             <v-dialog v-model="editNameModal.show">
               <v-card>
                 <v-card-title>
@@ -411,7 +433,6 @@
     data() {
       return {
         resumes: [],
-        org_list: [],
         tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
         active: null,
         updateSchool: '',
@@ -428,6 +449,11 @@
           firstName: '',
           lastName: '',
         },
+        createOrganizationModal: {
+          show: false,
+          organizationName: '',
+          aboutUs: '',
+        },
         userdata: {
           firstname: null,
           lastname: null,
@@ -439,7 +465,6 @@
           resumes: [],
         },
         settingsoption1: '',
-        addorg: false,
         uploadFieldName: 'file',
         showFileModal: false,
         currentStatus: 'INITIAL',
@@ -713,15 +738,72 @@
           console.error(error);
         });
       },
-      createOrganization() {
+      async createOrganization() {
+        const { aboutUs, organizationName } = this.createOrganizationModal;
+        const { data: { createOrganization: { recordId } } } = await this.$apollo.mutate({
+          mutation: (gql`mutation ($name: String, $bio: String) {
+            createOrganization(record: {
+              business_name: $name,
+              biography: $bio,
+            }) {
+              recordId
+            }
+          }`),
+          variables: {
+            name: organizationName,
+            bio: aboutUs,
+          },
+        });
 
+        // Strange bugs in this file that causes org_list to be empty... Patching it here.
+        const orgListOrEmpty = this.userdata.org_list || [];
+        const newOrgList = orgListOrEmpty
+          .map(({ _id }) => _id)
+          .concat(recordId);
+
+        await this.$apollo.mutate({
+          mutation: (gql`mutation ($_id: MongoID, $record: UpdateOneAccountInput!) {
+            updateAccount(
+              filter: { _id: $_id },
+              record: $record,
+            ) {
+              recordId
+            }
+          }`),
+          variables: {
+            _id: this.$store.state.userID,
+            record: {
+              org_list: newOrgList,
+            },
+          },
+          refetchQueries: [{
+            query: (gql`query ($_id: MongoID) {
+              findAccount (filter: {
+                _id: $_id
+              }) {
+                _id
+                org_list
+              }
+            }`),
+            variables: {
+              _id: this.$store.state.userID,
+            },
+          }],
+        });
+
+        this.createOrganizationModal.show = false;
+        this.userdata.org_list = orgListOrEmpty.concat({
+          _id: recordId,
+          name: organizationName,
+        });
       },
-      async populateOrgList() {
-        for (var i = 0; i < this.userdata.org_list.length; i++) {
-          this.getOrgByID(this.userdata.org_list[i]).then((data) => {
-            this.org_list.push({ name: data.business_name, _id: data._id });
-          });
-        }
+      async populateOrgList(orgList) {
+        this.userdata.org_list = (await Promise.all(
+          orgList.map(this.getOrgByID),
+        )).map(({ business_name: name, _id }) => ({
+          name, _id,
+        }),
+        );
       },
       getOrgByID(_oid) {
         return new Promise(resolve => {
@@ -774,11 +856,10 @@
           this.userdata.school = res.school;
           this.userdata.degree = res.degree;
           this.userdata.email = res.email;
-          this.userdata.org_list = res.org_list;
           this.userdata.resumes = res.resumes;
           this.commitUserdata();
           if (res.org_list) {
-            this.populateOrgList();
+            this.populateOrgList(res.org_list);
           }
         }).catch((error) => {
           console.error(error);
@@ -788,10 +869,8 @@
     created() {
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.userdata.firstname && data.acct !== 0) {
-          this.userdata = data.userdata;
-          if (data.userdata.org_list) {
-            this.populateOrgList();
-          }
+          this.fetchData(); // temp
+          // this.userdata = data.userdata; // temp
           if (data.acct === 1) { // Regular user. Should probably use constants soon.
             await this.fillUpJobs();
           }
