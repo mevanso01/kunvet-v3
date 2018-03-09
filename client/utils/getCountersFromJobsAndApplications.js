@@ -8,7 +8,7 @@ const getCountersFromJobsAndApplications = (jobs, applications) => {
       expired: jobs.filter(job => job.expired).length,
     },
     applications: {
-      unread: applications.filter(application => application.unread).length,
+      unread: applications.filter(({ status }) => status === 'submitted').length,
       applied: applications.length,
       expired: applications.filter(application => application.expired).length,
     },
