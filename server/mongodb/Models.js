@@ -46,8 +46,8 @@ const JobSchema = Mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  /* Jobs should be ordered by repost_date. */
-  repost_date: {
+  /* Jobs should be ordered by recreate_date. */
+  recreate_date: {
     type: Date,
     default: Date.now,
   },

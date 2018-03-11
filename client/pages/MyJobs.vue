@@ -8,6 +8,9 @@
   <v-container fluid class="white-bg">
     <div class="main-cont-large">
       <v-layout row wrap>
+        <v-flex xs-12 v-if="jobs.length === 0">
+          You have no jobs.
+        </v-flex>
         <v-flex xs12 v-if="unpostedJobs.length > 0">
           <h1><span class="kunvet-red">{{ unpostedJobs.length }}</span> {{ getUnpostedJobsString }}</h1>
         </v-flex>
