@@ -36,7 +36,7 @@
                 <v-card-text>
                     <div style="margin-bottom: 64px;">
                     <h2>Individual</h2>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Post indivual jobs or requests for help</p>
+                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Post individual jobs or requests for help</p>
                     <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Create your unique resume, share it through QRcode or personalized link</p>
                     <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Custom job search, now much easier to locate a match</p>
                     <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Save interested jobs, and review them later</p>

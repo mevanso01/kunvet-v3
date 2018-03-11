@@ -6,13 +6,22 @@
           <section style="padding: 0; margin: 15px; width: auto;">
             <v-layout>
               <v-flex xs12 sm8>
-                <h1>{{ bdata.business_name }}</h1>
-                <v-layout>
+                <v-layout row wrap>
+                  <v-flex xs12 class="acct-name-header-container">
+                    <h1 class="acct-name-header-container__name">
+                      {{ bdata.business_name }}
+                    </h1>
+                    <i
+                       class="fa fa-edit acct-name-header-container__edit-icon"
+                       @click="createEditModal('business_name', bdata.business_name, 'business_name')"
+                    />
+                  </v-flex>
                   <v-flex xs12 sm10 class="no-padding">
                     <v-list>
+                      <v-list-tile
                       <v-list-tile v-if="!bdata.address" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                          <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <!--<v-list-tile-title>Add school info</v-list-tile-title>-->
@@ -37,23 +46,24 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.address" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.locationMarker"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
                             {{ bdata.address }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('address', bdata.address, 'address')">
-                              edit
-                            </v-icon>
+                            <i class="fa fa-edit acct-page-container__edit-icon"
+                              @click="createEditModal('address', bdata.address, 'address')"
+                            />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
 
                       <v-list-tile v-if="!bdata.display_email" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -65,7 +75,7 @@
                                 label="Add Contact Email"
                                 single-line
                                 @keyup.enter="saveProperty('display_email', updateEmail)"
-                              ></v-text-field>
+                              />
                             </v-flex>
                             <v-flex xs2 v-show="updateEmail" class="no-padding">
                               <v-btn small  center class="cust-btn-1" @click="saveProperty('display_email', updateEmail)">
@@ -77,7 +87,10 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.display_email" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountEmail"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
@@ -88,7 +101,7 @@
 
                       <v-list-tile v-if="!bdata.phone_number" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                          <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -112,23 +125,25 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.phone_number" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-phone" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountPhone"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
                             {{ bdata.phone_number }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('phone number', bdata.phone_number, 'phone_number')">
-                              edit
-                            </v-icon>
+                            <i
+                              class="fa fa-edit acct-page-container__edit-icon"
+                              @click="createEditModal('phone', bdata.phone_number, 'phone_number')"
+                            />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
 
                       <v-list-tile v-if="!bdata.website" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-layout style="width: 100%">
@@ -152,16 +167,24 @@
                       </v-list-tile>
                       <v-list-tile v-if="bdata.website" class="cust-tile-2">
                         <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-globe" aria-hidden="true"></i>
+                          <img
+                            :src="svgs.accountGlobe"
+                            class="acct-page-container__display-text-icon"
+                          />
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            <a :href="bdata.website" target="_blank">{{ bdata.website }}</a>
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('website url', bdata.website, 'website')">
-                              edit
-                            </v-icon>
+                            <a
+                              :href="bdata.website"
+                              target="_blank"
+                              class="acct-page-container__website"
+                            >
+                              {{ bdata.website }}
+                            </a>
+                            <i
+                              class="fa fa-edit acct-page-container__edit-icon"
+                              @click="createEditModal('website url', bdata.website, 'website')"
+                            />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
@@ -183,12 +206,10 @@
                   <img :src="svgs.people" class="acct-icon" />
                   <h3 class="acct-h3">
                     About Us
-                    <v-icon
-                      v-if="bdata.biography"
-                      class = "edit-icon"
-                      @click="createEditModal('biography', bdata.biography, 'biography')">
-                      edit
-                    </v-icon>
+                    <i
+                      class="fa fa-edit acct-page-container__edit-icon"
+                      @click="createEditModal('biography', bdata.biography, 'biography')"
+                    />
                   </h3>
                 </div>
                 <p v-if="bdata.biography">{{ bdata.biography }}</p>
@@ -204,7 +225,7 @@
               <v-flex xs12 sm6 offset-md1 class="right-account-column padding-sm-left">
                 <account-header
                   :svg="svgs.suitcase"
-                  :text="'Posted Jobs and Applicants'"
+                  :text="'Posted Jobs & Applicants'"
                 />
                 <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
                 <div>
@@ -214,17 +235,6 @@
                     </v-btn>
                   </router-link>
                 </div>
-
-                <v-dialog v-model="addorg">
-                  <v-card>
-                    <v-card-title class="headline">Create organization / business profile</v-card-title>
-                    <v-card-actions>
-                      <!--<v-spacer></v-spacer>-->
-                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Create</v-btn>
-                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Cancel</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
 
                 <v-dialog v-model="editModal.show">
                   <v-card>
@@ -273,6 +283,10 @@
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
 
+  import AccountEmailSvg from '@/assets/account/account_email.svg';
+  import AccountGlobeSvg from '@/assets/account/account_globe.svg';
+  import AccountPhoneSvg from '@/assets/account/account_phone.svg';
+  import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import PeopleSvg from '@/assets/account/people_full_black.svg';
   import SuitcaseSvg from '@/assets/navbar/suitcase_full_black.svg';
 
@@ -285,6 +299,7 @@
       return {
         tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
         active: null,
+        updateName: '',
         updateAddress: '',
         updateEmail: '',
         updateWebsite: '',
@@ -306,10 +321,13 @@
           biography: null,
         },
         settingsoption1: '',
-        addorg: false,
         jobs: [],
         applications: [],
         svgs: {
+          accountEmail: AccountEmailSvg,
+          accountGlobe: AccountGlobeSvg,
+          accountPhone: AccountPhoneSvg,
+          locationMarker: LocationMarkerSvg,
           people: PeopleSvg,
           suitcase: SuitcaseSvg,
         },
@@ -355,6 +373,7 @@
           mutation: (gql`
             mutation (
               $bid: MongoID,
+              $business_name: String
               $address: String,
               $website: String,
               $phone_number: String,
@@ -363,6 +382,7 @@
             updateOrganization (
               filter: { _id: $bid },
               record: {
+                business_name: $business_name,
                 address: $address,
                 website: $website,
                 phone_number: $phone_number,
@@ -375,6 +395,7 @@
           variables: {
             // find a more secure way to run query
             bid: this.$store.state.businessID,
+            business_name: this.bdata.business_name,
             address: this.bdata.address,
             website: this.bdata.website,
             phone_number: this.bdata.phone_number,

@@ -28,135 +28,148 @@
 <template>
   <v-container fluid class="acct-page-container white-bg">
     <div class="main-cont-large">
-          <section style="padding: 0; margin: 15px; width: auto;">
-            <v-layout>
-              <v-flex xs12 sm8>
-                <h1>{{ userdata.firstname }} {{ userdata.lastname }}</h1>
-                <v-layout>
-                  <v-flex xs12 sm10 class="no-padding">
-                    <v-list>
-                      <v-list-tile v-if="!userdata.school" class="cust-tile-2 grey-color">
-                        <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-plus-square-o" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-
-                          <v-layout style="width: 100%">
-                          <v-flex xs9 class="no-padding">
-                            <v-text-field
-                              v-model="updateSchool"
-                              class="no-padding no-underline"
-                              name="input-1-3"
-                              label="Add school"
-                              single-line
-                              @keyup.enter="saveSchool"
-                            ></v-text-field>
-                          </v-flex>
-                          <v-flex xs3 v-show="updateSchool" class="no-padding">
-                            <v-btn small center class="cust-btn-1" @click="saveSchool">
-                              Save
-                            </v-btn>
-                          </v-flex>
-                        </v-layout>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="userdata.school" class="cust-tile-2">
-                        <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ userdata.school }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('school', userdata.school, 'school')">
-                              edit
-                            </v-icon>
-                          </v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="userdata.school && !userdata.degree" class="cust-tile-2 grey-color">
-                        <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-plus-square-o" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-layout style="width: 100%">
-                            <v-flex xs9 class="no-padding">
-                              <v-text-field
-                                v-model="updateDegree"
-                                class="no-padding no-underline"
-                                name="input-2"
-                                label="Add degree"
-                                single-line
-                                @keyup.enter="saveDegree"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs3 v-show="updateDegree" class="no-padding">
-                              <v-btn small center class="cust-btn-1" @click="saveDegree">
-                                Save
-                              </v-btn>
-                            </v-flex>
-                          </v-layout>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="userdata.degree" class="cust-tile-2">
-                        <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-book" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ userdata.degree }}
-                            <v-icon
-                              class = "edit-icon"
-                              @click="createEditModal('degree', userdata.degree, 'degree')">
-                              edit
-                            </v-icon>
-                          </v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
-                        <v-list-tile class="cust-tile-1">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-layout style="width: 100%">
-                            <v-flex xs10 class="no-padding">
-                              <v-text-field
-                                v-model="updateEmail"
-                                class="no-padding no-underline"
-                                name="input-3"
-                                label="Add email to display"
-                                single-line
-                                @keyup.enter="saveEmail"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs2 v-show="updateEmail" class="no-padding">
-                              <v-btn small  center class="cust-btn-1" @click="saveEmail">
-                                Save
-                              </v-btn>
-                            </v-flex>
-                          </v-layout>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile v-if="userdata.email" class="cust-tile-2">
-                        <v-list-tile class="cust-tile-1">
-                           <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                        </v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ userdata.email }}
-                          </v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                  </v-flex>
-                </v-layout>
+      <section style="padding: 0; margin: 15px; width: auto;">
+        <v-layout row wrap style="padding-bottom: 15px">
+          <v-flex xs12 sm8>
+            <v-layout row wrap> 
+              <v-flex xs12 class="acct-name-header-container">
+                <h1 class="acct-name-header-container__name">
+                  {{ userdata.firstname }} {{ userdata.lastname }}
+                </h1>
+                <i
+                  class="fa fa-edit acct-name-header-container__edit-icon"
+                  @click="createEditNameModal(userdata.firstname, userdata.lastname)"
+                />
               </v-flex>
-              <v-flex sm4 class="hidden-xs-only">
-                <div class="profile-pic-cont hidden-xs-only">
-                </div>
+              <v-flex xs12 sm10 class="no-padding">
+                <v-list>
+                  <v-list-tile v-if="!userdata.school" class="cust-tile-2 grey-color">
+                    <v-list-tile class="cust-tile-1">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-layout style="width: 100%">
+                        <v-flex xs9 class="no-padding">
+                          <v-text-field
+                            v-model="updateSchool"
+                            class="no-padding no-underline"
+                            name="input-1-3"
+                            label="Add School Info"
+                            single-line
+                            @keyup.enter="saveSchool"
+                          />
+                        </v-flex>
+                        <v-flex xs3 v-show="updateSchool" class="no-padding">
+                          <v-btn small center class="cust-btn-1" @click="saveSchool">
+                            Save
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile v-if="userdata.school" class="cust-tile-2">
+                    <v-list-tile class="cust-tile-1">
+                      <img
+                        :src="svgs.accountSchool"
+                        class="acct-page-container__display-text-icon"
+                      />
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ userdata.school }}
+                        <i
+                          class="fa fa-edit acct-page-container__edit-icon"
+                          @click="createEditModal('school', userdata.school, 'school')"
+                        />
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile v-if="userdata.school && !userdata.degree" class="cust-tile-2 grey-color">
+                    <v-list-tile class="cust-tile-1">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-layout style="width: 100%">
+                        <v-flex xs9 class="no-padding">
+                          <v-text-field
+                            v-model="updateDegree"
+                            class="no-padding no-underline"
+                            name="input-2"
+                            label="Add Degree"
+                            single-line
+                            @keyup.enter="saveDegree"
+                          />
+                        </v-flex>
+                        <v-flex xs3 v-show="updateDegree" class="no-padding">
+                          <v-btn small center class="cust-btn-1" @click="saveDegree">
+                            Save
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile v-if="userdata.degree" class="cust-tile-2">
+                    <v-list-tile class="cust-tile-1">
+                      <img
+                        :src="svgs.accountDegree"
+                        class="acct-page-container__display-text-icon"
+                      />
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ userdata.degree }}
+                        <i
+                          class="fa fa-edit acct-page-container__edit-icon"
+                          @click="createEditModal('degree', userdata.degree, 'degree')"
+                        />
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                    <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
+                      <v-list-tile class="cust-tile-1">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                      </v-list-tile>
+                    <v-list-tile-content>
+                      <v-layout style="width: 100%">
+                        <v-flex xs10 class="no-padding">
+                          <v-text-field
+                            v-model="updateEmail"
+                            class="no-padding no-underline"
+                            name="input-3"
+                            label="Add email to display"
+                            single-line
+                            @keyup.enter="saveEmail"
+                          />
+                        </v-flex>
+                        <v-flex xs2 v-show="updateEmail" class="no-padding">
+                          <v-btn small  center class="cust-btn-1" @click="saveEmail">
+                            Save
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile v-if="userdata.email" class="cust-tile-2">
+                    <v-list-tile class="cust-tile-1">
+                      <img
+                        :src="svgs.accountEmail"
+                        class="acct-page-container__display-text-icon"
+                      />
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ userdata.email }}
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
               </v-flex>
             </v-layout>
+          </v-flex>
+          <v-flex sm4 class="hidden-xs-only">
+            <div class="profile-pic-cont hidden-xs-only" />
+          </v-flex>
+        </v-layout>
 
             <v-divider class="acct-divider" />
 
@@ -175,11 +188,6 @@
                       <v-list-tile-content>
                         <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
                       </v-list-tile-content>
-                      <v-list-tile-action>
-                        <v-btn icon ripple>
-                          <v-icon color="grey lighten-1">edit</v-icon>
-                        </v-btn>
-                      </v-list-tile-action>
                       <v-list-tile-action @click="
                         deleteResumeIndex=index;
                         deleteResumeName=resume.name;
@@ -205,14 +213,14 @@
                   :svg="svgs.building"
                   :text="'My Organization'"
                 />
-                <p v-if="org_list && org_list.length === 0">
+                <p v-if="userdata.org_list && userdata.org_list.length === 0">
                   If you own a business, school club, or other type of organization, then post your job here.
                 </p>
                 <v-list two-line class="acct-list" v-else>
-                  <template v-for="(org, index) in org_list">
-                    <v-list-tile :key="org._id">
+                    <template v-for="({ _id, name }, index) in userdata.org_list">
+                    <v-list-tile :key="_id">
                       <v-list-tile-content>
-                        <v-list-tile-title>{{ org.name }}</v-list-tile-title>
+                        <v-list-tile-title>{{ name }}</v-list-tile-title>
                       </v-list-tile-content>
                       <v-list-tile-action>
                         <v-btn icon ripple>
@@ -220,26 +228,17 @@
                         </v-btn>
                       </v-list-tile-action>
                     </v-list-tile>
-                    <v-divider v-if="index + 1 < org_list.length" :key="org._id"></v-divider>
+                    <v-divider v-if="index + 1 < userdata.org_list.length" :key="index" />
                   </template>
                 </v-list>
                 <div>
                   <v-btn
                     class="acct-btn"
-                    @click.native.stop="addorg = true"
+                    @click.native.stop="createOrganizationModal.show = true"
                   >
                     Create an Organization
                   </v-btn>
                 </div>
-                <v-dialog v-model="addorg">
-                  <v-card>
-                    <v-card-title class="headline">Create Organization / Business Profile</v-card-title>
-                    <v-card-actions>
-                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Create</v-btn>
-                      <v-btn color="green darken-1" flat="flat" @click.native="addorg = false">Cancel</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
@@ -344,6 +343,69 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
+
+
+                <v-dialog v-model="createOrganizationModal.show">
+                  <v-card>
+                    <v-card-title class="headline">
+                      Create organization / business profile
+                    </v-card-title>
+                    <div class="edit-modal-input-cont">
+                      <v-text-field
+                        v-model="createOrganizationModal.organizationName"
+                        style="padding: 0 2px;"
+                        name="edit-modal-input"
+                        hide-details
+                        single-line
+                      />
+                      <v-text-field
+                        v-model="createOrganizationModal.aboutUs"
+                        style="padding: 0 2px;"
+                        name="edit-modal-input"
+                        placeholder="A description of your business or organization"
+                        hide-details
+                        multi-line
+                        rows=3
+                      />
+                    </div>
+                    <v-card-actions>
+                      <!--<v-spacer></v-spacer>-->
+                      <v-btn color="green darken-1" flat="flat" @click.native="createOrganization">Create</v-btn>
+                      <v-btn color="green darken-1" flat="flat" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
+            <v-dialog v-model="editNameModal.show">
+              <v-card>
+                <v-card-title>
+                  <div class="headline">Edit Name</div>
+                  <div class="edit-modal-input-cont">
+                    <v-text-field
+                      v-model="editNameModal.firstName"
+                      style="padding: 0 2px;"
+                      name="edit-modal-input"
+                      hide-details
+                      single-line
+                    />
+                  </div>
+                  <div class="edit-modal-input-cont">
+                    <v-text-field
+                      v-model="editNameModal.lastName"
+                      style="padding: 0 2px;"
+                      name="edit-modal-input"
+                      hide-details
+                      single-line
+                    />
+                  </div>
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn color="green darken-1" flat="flat" @click.native="editNameModal.show = false">Cancel</v-btn>
+                  <v-btn color="green darken-1" flat="flat" @click.native="saveFromEditNameModal">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
           </section>
     </div>
   </v-container>
@@ -358,6 +420,9 @@
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
 
+  import AccountDegreeSvg from '@/assets/account/account_degree.svg';
+  import AccountEmailSvg from '@/assets/account/account_email.svg';
+  import AccountSchoolSvg from '@/assets/account/account_school.svg';
   import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
   import SuitcaseSvg from '@/assets/navbar/suitcase_full_black.svg';
   import BuildingSvg from '@/assets/account/org_building_full_black.svg';
@@ -368,7 +433,6 @@
     data() {
       return {
         resumes: [],
-        org_list: [],
         tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
         active: null,
         updateSchool: '',
@@ -379,6 +443,16 @@
           text: null,
           property: null,
           show: false,
+        },
+        editNameModal: {
+          show: false,
+          firstName: '',
+          lastName: '',
+        },
+        createOrganizationModal: {
+          show: false,
+          organizationName: '',
+          aboutUs: '',
         },
         userdata: {
           firstname: null,
@@ -391,7 +465,6 @@
           resumes: [],
         },
         settingsoption1: '',
-        addorg: false,
         uploadFieldName: 'file',
         showFileModal: false,
         currentStatus: 'INITIAL',
@@ -404,9 +477,12 @@
         jobs: [],
         applications: [],
         svgs: {
+          accountDegree: AccountDegreeSvg,
+          accountEmail: AccountEmailSvg,
+          accountSchool: AccountSchoolSvg,
+          building: BuildingSvg,
           resume: ResumeSvg,
           suitcase: SuitcaseSvg,
-          building: BuildingSvg,
         },
       };
     },
@@ -567,6 +643,11 @@
         this.editModal.property = property;
         this.editModal.show = true;
       },
+      createEditNameModal(firstName, lastName) {
+        this.editNameModal.firstName = firstName;
+        this.editNameModal.lastName = lastName;
+        this.editNameModal.show = true;
+      },
       destroyEditModal() {
         this.editModal.show = false;
         this.editModal.title = null;
@@ -578,6 +659,13 @@
         this.userdata[property] = text;
         this.saveUserdata();
         this.destroyEditModal();
+      },
+      saveFromEditNameModal() {
+        const { firstName, lastName } = this.editNameModal;
+        this.userdata.firstname = firstName;
+        this.userdata.lastname = lastName;
+        this.saveUserdata();
+        this.editNameModal.show = false;
       },
       saveUserdata() {
         this.updateAccount();
@@ -650,12 +738,72 @@
           console.error(error);
         });
       },
-      async populateOrgList() {
-        for (var i = 0; i < this.userdata.org_list.length; i++) {
-          this.getOrgByID(this.userdata.org_list[i]).then((data) => {
-            this.org_list.push({ name: data.business_name, _id: data._id });
-          });
-        }
+      async createOrganization() {
+        const { aboutUs, organizationName } = this.createOrganizationModal;
+        const { data: { createOrganization: { recordId } } } = await this.$apollo.mutate({
+          mutation: (gql`mutation ($name: String, $bio: String) {
+            createOrganization(record: {
+              business_name: $name,
+              biography: $bio,
+            }) {
+              recordId
+            }
+          }`),
+          variables: {
+            name: organizationName,
+            bio: aboutUs,
+          },
+        });
+
+        // Strange bugs in this file that causes org_list to be empty... Patching it here.
+        const orgListOrEmpty = this.userdata.org_list || [];
+        const newOrgList = orgListOrEmpty
+          .map(({ _id }) => _id)
+          .concat(recordId);
+
+        await this.$apollo.mutate({
+          mutation: (gql`mutation ($_id: MongoID, $record: UpdateOneAccountInput!) {
+            updateAccount(
+              filter: { _id: $_id },
+              record: $record,
+            ) {
+              recordId
+            }
+          }`),
+          variables: {
+            _id: this.$store.state.userID,
+            record: {
+              org_list: newOrgList,
+            },
+          },
+          refetchQueries: [{
+            query: (gql`query ($_id: MongoID) {
+              findAccount (filter: {
+                _id: $_id
+              }) {
+                _id
+                org_list
+              }
+            }`),
+            variables: {
+              _id: this.$store.state.userID,
+            },
+          }],
+        });
+
+        this.createOrganizationModal.show = false;
+        this.userdata.org_list = orgListOrEmpty.concat({
+          _id: recordId,
+          name: organizationName,
+        });
+      },
+      async populateOrgList(orgList) {
+        this.userdata.org_list = (await Promise.all(
+          orgList.map(this.getOrgByID),
+        )).map(({ business_name: name, _id }) => ({
+          name, _id,
+        }),
+        );
       },
       getOrgByID(_oid) {
         return new Promise(resolve => {
@@ -708,11 +856,10 @@
           this.userdata.school = res.school;
           this.userdata.degree = res.degree;
           this.userdata.email = res.email;
-          this.userdata.org_list = res.org_list;
           this.userdata.resumes = res.resumes;
           this.commitUserdata();
           if (res.org_list) {
-            this.populateOrgList();
+            this.populateOrgList(res.org_list);
           }
         }).catch((error) => {
           console.error(error);
@@ -722,10 +869,8 @@
     created() {
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.userdata.firstname && data.acct !== 0) {
-          this.userdata = data.userdata;
-          if (data.userdata.org_list) {
-            this.populateOrgList();
-          }
+          this.fetchData(); // temp
+          // this.userdata = data.userdata; // temp
           if (data.acct === 1) { // Regular user. Should probably use constants soon.
             await this.fillUpJobs();
           }

@@ -50,7 +50,7 @@
   transform: translateY(-15px);
 }
 .acct-page-container .profile-pic-cont {
-  transform: translateY(-15px);
+  transform: translateY(9px);
 }
 
 .acct-page-container .edit-icon {
@@ -96,6 +96,7 @@
 .acct-h3 {
   display: inline-block;
   color: #191919;
+  font-weight: normal;
 }
 .acct-divider {
   border-bottom: 1px solid black;
@@ -135,7 +136,35 @@
 .acct-page-container .dialog .btn__content {
   padding: 0 !important;
 }
-
+.acct-name-header-container {
+  padding-top: 0;
+}
+.acct-name-header-container__name, .acct-name-header-container__edit-icon, .acct-page-container__edit-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+/*
+ * acct-page-container__edit-icon & .acct-name-header-container__edit-icon
+ * uses the same styles, but they are 2 separate classes in case
+ * if we decide to change the styles.
+ */
+.acct-page-container__edit-icon, .acct-name-header-container__edit-icon {
+  color: #AAA;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.acct-page-container .fa-plus-circle {
+  color: #A7A7A7;
+}
+.acct-page-container__display-text-icon {
+  color: #A7A7A7;
+  margin-left: 5px;
+  width: 16px;
+  height: 18px;
+}
+.acct-page-container__website {
+  text-decoration: underline;
+}
 @media (min-width: 961px) {
   .cust-tile-2 {
     margin-bottom: 8px;
