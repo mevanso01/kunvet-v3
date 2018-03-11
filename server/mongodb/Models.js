@@ -46,6 +46,11 @@ const JobSchema = Mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  /* Jobs should be ordered by repost_date. */
+  repost_date: {
+    type: Date,
+    default: Date.now,
+  },
   expiry_date: {
     type: Date,
     default: () => new Date(+new Date() + (1000 * 60 * 60 * 24 * 30)),
