@@ -229,6 +229,7 @@
                 job_id
                 status
                 date
+                expiry_date
             }
           }`),
           variables: {
@@ -289,9 +290,8 @@
         return status.charAt(0).toUpperCase() + status.substring(1, status.length);
       },
       getApplicantExpiringText(applicant) {
-        const { date } = applicant;
-        const expiryDate = DateHelper.getExpiryDate(date);
-        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
+        const { expiry_date: expiryDate } = applicant;
+        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), new Date(expiryDate));
         return daysDiff <= 5 ? `Application expiring in ${daysDiff} days` : '';
       },
       getApplicantsFromJobs(jobId) {
