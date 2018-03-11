@@ -1,5 +1,6 @@
 // Trying to deal with duplicate code between business / account.
 import ApplicantHelper from '@/utils/ApplicantHelper';
+import JobHelper from '@/utils/JobHelper';
 
 const getCountersFromJobsAndApplications = (jobs, applications) => {
   const jobsActiveLength = jobs.filter(job => job.active).length;
@@ -7,12 +8,12 @@ const getCountersFromJobsAndApplications = (jobs, applications) => {
     jobs: {
       unfinished: jobs.length - jobsActiveLength,
       active: jobsActiveLength,
-      expired: jobs.filter(job => job.expired).length,
+      expired: jobs.filter(JobHelper.isJobExpired).length,
     },
     applications: {
       unread: applications.filter(({ status }) => status === 'submitted').length,
       applied: applications.length,
-      expired: applications.filter(ApplicantHelper.isApplicantExpired).length,
+      expired: applications.filter(ApplicantHelper.isApplicantAboutToExpire).length,
     },
   };
 
