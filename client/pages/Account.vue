@@ -572,13 +572,10 @@
           // graphql query:
           // .then(
           // )
-          axios.put('file/new', data, headers).then((res) => {
+          axios.put('/file/new', data, headers).then((res) => {
             if (res.data.success) {
               const _filename = res.data.id;
-              if (!this.userdata.resumes) {
-                this.userdata.resumes = [];
-              }
-              this.userdata.resumes.push({
+              this.userdata.resumes = this.userdata.resumes.concat({
                 name: this.resumeName,
                 filename: _filename,
                 resumeid: null,
@@ -588,7 +585,7 @@
             }
             this.formData = null;
           }, (error) => {
-            console.error(error);
+            console.error('uploading file error:', error);
             this.currentStatus = 'FAILED';
           });
         }
@@ -679,8 +676,8 @@
       },
       updateAccount() {
         // this is weird. Not sure why it adds the property '__typename' if I dont do this
-        var _resumes = [];
-        for (var i = 0; i < this.userdata.resumes.length; i++) {
+        const _resumes = [];
+        for (let i = 0; i < this.userdata.resumes.length; i++) {
           _resumes.push({
             name: this.userdata.resumes[i].name,
             filename: this.userdata.resumes[i].filename,
