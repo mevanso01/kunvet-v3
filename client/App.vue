@@ -46,6 +46,46 @@
           </router-link>
         </v-toolbar-items>
     </v-toolbar>
+    <v-toolbar
+      dense
+      v-if="isJobPostRoute"
+      class="job-post__helper-nav-bar"
+    >
+      <v-toolbar-items>
+        <v-btn flat small :to="'/'" :class="isActiveJobPostLink('')">
+          <span class="job-post__helper-nav-bar__btn-text">
+            Search 
+          </span>
+        </v-btn>
+        <v-btn flat small :to="'/savedjobs'" :class="isActiveJobPostLink('/savedjobs')">
+          <span class="job-post__helper-nav-bar__btn-text">
+            Saved
+          </span>
+        </v-btn>
+        <v-btn flat small :to="'/appliedjobs'" :class="isActiveJobPostLink('/appliedjobs')">
+          <span class="job-post__helper-nav-bar__btn-text">
+            Applied
+          </span>
+        </v-btn>
+        <span class="job-post__helper-nav-bar__divider" />
+        <v-btn flat small :to="'/myjobs'" :class="isActiveJobPostLink('/myjobs')">
+          <span class="job-post__helper-nav-bar__btn-text">
+            Posted 
+          </span>
+        </v-btn>
+        <v-btn flat small :to="'/applicants'" :class="isActiveJobPostLink('/applicants')">
+          <span class="job-post__helper-nav-bar__btn-text">
+            Applicants 
+          </span>
+        </v-btn>
+      </v-toolbar-items>
+      <v-spacer />
+      <v-toolbar-items>
+        <v-btn flat small class="job-post__helper-nav-bar__post-a-job" :to="'/createnewjob'">
+          <i class="fa fa-edit job-post__helper-nav-bar__post-a-job__icon" />Post a Job
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
 
     <v-navigation-drawer absolute temporary right light v-model="drawer" overflow>
       <v-toolbar flat class="transparent">
@@ -111,7 +151,8 @@ import Store from '@/store';
 import VuexLS from '@/store/persist';
 import gql from 'graphql-tag';
 // svgs
-import afw from './assets/navbar/applicant_full_white.svg';
+// temp globe icon
+import AccountGlobeSvg from '@/assets/account/account_globe.svg';
 import sfw from './assets/navbar/suitcase_full_white.svg';
 import settingIconFull from './assets/navbar/setting_full_white.svg';
 import bellIconFull from './assets/navbar/bell_full_white.svg';
@@ -150,12 +191,9 @@ export default {
           { title: 'Settings', icon: settingIconFull, href: '/settings' },
         ],
         [
-          { title: 'Create job', icon: null, href: '/createnewjob' },
-          { title: 'My Jobs', icon: sfw, href: '/myjobs' },
-          { title: 'Applicants', icon: afw, href: '/applicants' },
+          { title: 'Jobs', icon: sfw, href: '/myjobs' },
           { title: 'Notifications', icon: bellIconFull, href: '/', subItems: [] },
-          { title: 'Account', icon: null, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }] },
-          /* { title: 'Settings', icon: settingIconFull, href: '/settings' }, */
+          { title: 'Account', icon: AccountGlobeSvg, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }] },
         ],
       ],
       right: true,
@@ -232,6 +270,9 @@ export default {
       }
       return [];
     },
+    isActiveJobPostLink(link) {
+      return link === this.$route.path ? 'job-post__helper-nav-bar__active-link' : '';
+    },
   },
   created() {
     Bus.$on('logout', this.lo);
@@ -255,6 +296,14 @@ export default {
       }
     });
   },
+  computed: {
+    isJobPostRoute() {
+      return (this.$route.path === '/myjobs') ||
+        (this.$route.path === '/applicants') ||
+        (this.$route.path === '/savedjobs') ||
+        (this.$route.path === '/appliedjobs');
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -262,6 +311,7 @@ export default {
 @import 'account.css';
 @import 'applicants.css';
 @import 'buttons.css';
+@import 'nav.css';
 @import 'postsAndSearch.css';
 body, html {
   height: 100%;

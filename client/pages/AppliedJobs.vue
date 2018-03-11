@@ -1,7 +1,7 @@
 <style>
 </style>
 <template>
-  <v-container fluid>
+  <v-container fluid class="job-post__container">
     <div class="main-cont-large">
       <h1>
         <span class="kunvet-red">

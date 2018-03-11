@@ -5,7 +5,7 @@
   }
 </style>
 <template>
-  <v-container fluid class="white-bg">
+  <v-container fluid class="white-bg job-post__container">
     <div class="main-cont-large">
       <v-layout row wrap>
         <v-flex xs-12 v-if="jobs.length === 0">
