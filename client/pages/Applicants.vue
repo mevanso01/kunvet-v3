@@ -21,7 +21,7 @@
             <h3>
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
-              </span> applicants in total
+              </span> {{ getApplicantsCountString }} in total
             </h3>
           </v-flex>
 
@@ -306,6 +306,9 @@
     computed: {
       getApplicantsCount() {
         return this.applicants.length;
+      },
+      getApplicantsCountString() {
+        return `${StringHelper.pluralize('applicant', this.applicants.length)}`;
       },
     },
   };
