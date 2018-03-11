@@ -4,6 +4,9 @@
   <v-container fluid class="applicant-page">
     <div class="main-cont-large">
       <v-layout row wrap>
+        <v-flex xs12 v-if="jobs.length === 0">
+          You have no jobs.
+        </v-flex>
         <v-flex xs12 v-if="jobs.length > 0">
           <h1>
             View Applicants by Job
