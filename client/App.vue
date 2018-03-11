@@ -30,7 +30,7 @@
                 <img class="nav-img notranslate" :src="item.icon"></img>
                 <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
               </v-btn>
-              <v-list>
+              <v-list v-if="item.subItems.length > 0">
                 <!--<v-list-tile v-if="false && subItems === 'notifcations'" v-for="(subitem, index) in getNotifications()" @click="routeTo(subitem.route)">
                   <v-list-tile-title>{{ subitem.text }}</v-list-tile-title>
                 </v-list-tile>-->
