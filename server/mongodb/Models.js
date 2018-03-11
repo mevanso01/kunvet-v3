@@ -431,8 +431,8 @@ const AccountSchema = Mongoose.Schema({
   },
   notifications: [{
     text: String,
-    link: String,
-    type: Number,
+    route: String,
+    notification_type: String,
     date: {
       type: { Date },
       default: Date.now,

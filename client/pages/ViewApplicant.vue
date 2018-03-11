@@ -208,11 +208,15 @@
         <v-card-title class="headline">
           Accept Applicant
         </v-card-title>
+        <v-card-text style="padding-top: 0; padding-bottom: 0;">
+          <p v-if="loading">Loading...</p>
+          <p v-if="errorOccured">An error occured, please try again later</p>
+        </v-card-text>
         <v-card-actions>
-          <v-btn color="green darken-1" flat="flat" @click.native="onAccept">
+          <v-btn :disabled="loading" color="green darken-1" flat="flat" @click.native="onAccept">
             Confirm
           </v-btn>
-          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showAccept= false">
+          <v-btn color="green darken-1" flat="flat" @click.native="closeDialogs">
             Cancel
           </v-btn>
         </v-card-actions>
@@ -223,11 +227,15 @@
         <v-card-title class="headline">
           Reject Applicant
         </v-card-title>
+        <v-card-text style="padding-top: 0; padding-bottom: 0;">
+          <p v-if="loading">Loading...</p>
+          <p v-if="errorOccured">An error occured, please try again later</p>
+        </v-card-text>
         <v-card-actions>
-          <v-btn color="green darken-1" flat="flat" @click.native="onReject">
+          <v-btn :disabled="loading" color="green darken-1" flat="flat" @click.native="onReject">
             Confirm
           </v-btn>
-          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showReject = false">
+          <v-btn color="green darken-1" flat="flat" @click.native="closeDialogs">
             Cancel
           </v-btn>
         </v-card-actions>
@@ -278,12 +286,11 @@ export default {
         showReject: false,
       },
       page: 1,
+      loading: false,
+      errorOccured: false,
     };
   },
   methods: {
-    test() {
-      this.page += 1;
-    },
     updateNotes(currentNotes) {
       this.editingNotes = true;
       this.newNotes = currentNotes;
@@ -408,20 +415,33 @@ export default {
       return job.user_id === this.$store.state.userID;
     },
     updateApplicantStatus(newStatus = 'submitted') {
+      this.loading = true;
       axios
         .post(`/application/${this.id}/setStatus/${newStatus}`)
-        .then(() => {
+        .then((res) => {
+          this.loading = false;
           this.data.status = newStatus;
+          if (res.data.success) {
+            this.closeDialogs();
+          } else {
+            this.errorOccured = true;
+          }
         })
-        .catch(console.error);
-      this.dialogs.showAccept = false;
-      this.dialogs.showReject = false;
+        .catch((err) => {
+          this.errorOccured = true;
+          console.error(err);
+        });
     },
     async onAccept() {
       this.updateApplicantStatus('accepted');
     },
     async onReject() {
       this.updateApplicantStatus('rejected');
+    },
+    closeDialogs() {
+      this.dialogs.showAccept = false;
+      this.dialogs.showReject = false;
+      this.errorOccured = false;
     },
   },
   computed: {

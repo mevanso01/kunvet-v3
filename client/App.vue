@@ -31,8 +31,11 @@
                 <div class="nav-text" style="color:#818181">{{ item.title }}</div>
               </v-btn>
               <v-list>
-                <v-list-tile v-for="subitem in item.subItems" :key="item.title" @click="routeTo(subitem.href)">
-                  <v-list-tile-title>{{ subitem.title }}</v-list-tile-title>
+                <!--<v-list-tile v-if="false && subItems === 'notifcations'" v-for="(subitem, index) in getNotifications()" @click="routeTo(subitem.route)">
+                  <v-list-tile-title>{{ subitem.text }}</v-list-tile-title>
+                </v-list-tile>-->
+                <v-list-tile v-for="(subitem, index) in item.subItems" :key="index" @click="routeTo(subitem.route)">
+                  <v-list-tile-title>{{ subitem.text }}</v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-menu>
@@ -101,13 +104,12 @@
 
 <script>
 import 'font-awesome/scss/font-awesome.scss';
-// import 'vuetify/dist/vuetify.min.css';
-// import 'vuetify/src/stylus/main.styl';
 import '@/stylus/main.styl';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import Store from '@/store';
 import VuexLS from '@/store/persist';
+import gql from 'graphql-tag';
 // svgs
 import afw from './assets/navbar/applicant_full_white.svg';
 import sfw from './assets/navbar/suitcase_full_white.svg';
@@ -141,6 +143,7 @@ export default {
         ],
         [
           { title: 'Saved Jobs', icon: null, href: '/savedjobs' },
+          { title: 'Notifications', icon: bellIconFull, href: '/', subItems: [] },
           { title: 'Applied Jobs', icon: null, href: '/appliedjobs' },
           // { title: 'Messages', icon: 'question_answer', href: '/messages' },
           { title: 'Account', icon: null, href: '/account' },
@@ -148,10 +151,10 @@ export default {
         ],
         [
           { title: 'Create job', icon: null, href: '/createnewjob' },
-          { title: 'Applicants', icon: afw, href: '/applicants' },
           { title: 'My Jobs', icon: sfw, href: '/myjobs' },
-          { title: 'Notifications', icon: bellIconFull, href: '/myorg' },
-          { title: 'Account', icon: null, href: '/myorg', subItems: [{ title: 'Settings', href: '/settings' }] },
+          { title: 'Applicants', icon: afw, href: '/applicants' },
+          { title: 'Notifications', icon: bellIconFull, href: '/', subItems: [] },
+          { title: 'Account', icon: null, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }] },
           /* { title: 'Settings', icon: settingIconFull, href: '/settings' }, */
         ],
       ],
@@ -199,6 +202,36 @@ export default {
     routeTo(route) {
       this.$router.push(route);
     },
+    async getNotifications() {
+      if (this.acct === 0) { return []; }
+      try {
+        console.log(this.$store.state.userID);
+        const { data: { findAccount } } = await this.$apollo.query({
+          query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+              _id
+              notifications {
+                text
+                route
+                notification_type
+                date
+              }
+            }
+          }`),
+          variables: {
+            uid: this.$store.state.userID,
+          },
+        });
+        if (findAccount) {
+          return findAccount.notifications;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      return [];
+    },
   },
   created() {
     Bus.$on('logout', this.lo);
@@ -208,6 +241,17 @@ export default {
     VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
       if (data) {
         this.acct = data.acct;
+        if (this.acct !== 0) {
+          // TODO: make this better
+          this.getNotifications().then((n) => {
+            for (var i = 0; i < this.items[this.acct].length; i++) {
+              if (this.items[this.acct][i].title === 'Notifications') {
+                this.items[this.acct][i].subItems = n;
+                break;
+              }
+            }
+          });
+        }
       }
     });
   },

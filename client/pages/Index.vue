@@ -538,6 +538,7 @@ export default {
           findAccount (filter: {
             _id: $uid
           }) {
+            _id
             saved_jobs
           }
         }`),

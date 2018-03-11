@@ -9,6 +9,7 @@ export default class Mailer {
     this.transport = Nodemailer.createTransport(Config.mailTransport);
   }
   sendTemplate(recipient, template, locals) {
+    console.log(recipient);
     const email = new Email({
       message: {
         from: Config.mailFrom,
