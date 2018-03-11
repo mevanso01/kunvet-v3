@@ -176,6 +176,7 @@
 
   import DateHelper from '@/utils/DateHelper';
   import DisplayTextHelper from '@/utils/DisplayTextHelper';
+  import JobHelper from '@/utils/JobHelper';
   import StringHelper from '@/utils/StringHelper';
 
   const findJobsQuery = gql`
@@ -186,6 +187,7 @@
           title
           active
           date
+          expiry_date
           address
           type
           type2
@@ -243,15 +245,14 @@
         const { data } = await this.$apollo.query(this.getFindJobsQuery());
         this.jobs = data.findJobs;
       }, */
-      getData() {
-        this.$apollo.query({
+      async getData() {
+        const { data } = await this.$apollo.query({
           query: findJobsQuery,
           variables: {
             userId: this.$store.state.userID,
           },
-        }).then(res => {
-          this.jobs = res.data.findJobs;
         });
+        this.jobs = data.findJobs;
       },
       onShowJobDialog(job) {
         this.dialogs.currentJob = job;
@@ -292,24 +293,18 @@
       getJobCountString(jobType, length) {
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
       },
-      isJobExpired(date) {
-        const expiryDate = DateHelper.getExpiryDate(date);
-        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
-        const expired = daysDiff <= 0; // daysDiff can be negative so this is goo
-        return expired;
-      },
     },
     computed: {
       activeJobs() { // and unexpired
-        const { jobs, isJobExpired } = this;
-        return jobs.filter(({ date, active }) => !isJobExpired(date) && active);
+        const { jobs } = this;
+        return jobs.filter(JobHelper.isJobActive);
       },
       unpostedJobs() {
         return this.jobs.filter(({ active }) => !active);
       },
       expiredJobs() {
-        const { jobs, isJobExpired } = this;
-        return jobs.filter(({ date, active }) => isJobExpired(date) && active);
+        const { jobs } = this;
+        return jobs.filter(JobHelper.isJobExpired);
       },
       getUnpostedJobsString() {
         return this.getJobCountString('Unposted', this.unpostedJobs.length);

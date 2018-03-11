@@ -46,6 +46,10 @@ const JobSchema = Mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  expiry_date: {
+    type: Date,
+    default: () => new Date(+new Date() + (1000 * 60 * 60 * 24 * 30)),
+  },
   description: {
     // Short description
     type: String,
@@ -133,6 +137,10 @@ const ApplicantSchema = Mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  expiry_date: {
+    type: Date,
+    default: () => new Date(+new Date() + (1000 * 60 * 60 * 24 * 30)),
   },
   status: {
     type: String,
