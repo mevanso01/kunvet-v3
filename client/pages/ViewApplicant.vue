@@ -41,6 +41,9 @@
 .main-cont-large .toolbar__content {
   height: 100%;
 }
+.view-applicant-page iframe body {
+  background-color: #fff !important;
+}
 @media only screen and (min-width: 320px) {
   .view-applicant-left-elements {
     float: left;
@@ -49,7 +52,7 @@
     float: right;
   }
 }
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 601px) {
   .view-applicant-container {
     padding-top: 35px;
   }
@@ -185,14 +188,17 @@
                   :svg="svgs.resume"
                   :text="'Resume'"
                 />
-                <!--<pdf
+                <pdf
                   v-if="src"
-                  v-for="i in numPages"
-                  :key="i"
                   :src="src"
-                  :page="i"
-                />-->
-                <object v-if="pdfurl" :data="pdfurl" width="100%" height="1200"></object>
+                  :page="page"
+                />
+                <div v-if="src" style="padding-top: 5px">
+                  <v-btn :disabled="page == 1" @click="page -= 1">Previous</v-btn>
+                  <v-btn v-if="src" :disabled="page == numPages" @click="page += 1">Next</v-btn>
+                </div>
+                <object v-if="docurl" :data="docurl" style="width: 100%; height: 1200px; overflow: hidden"></object>
+
               </v-flex>
             </v-layout>
           </section>
@@ -238,8 +244,7 @@ import AccountHeader from '@/components/AccountHeader';
 
 import MajorPreferredSvg from '@/assets/job_detail/major_preferred.svg';
 import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
-// const loadingTask =
-// pdf.createLoadingTask('../../server/uploads/5a4081c6aafda36afb0bc423-1514266624436.pdf');
+
 export default {
   props: ['id'],
   components: {
@@ -259,7 +264,7 @@ export default {
         status: null,
       },
       src: undefined,
-      pdfurl: undefined,
+      docurl: undefined,
       numPages: undefined,
       editingNotes: false,
       newNotes: '',
@@ -272,9 +277,13 @@ export default {
         showAccept: false,
         showReject: false,
       },
+      page: 1,
     };
   },
   methods: {
+    test() {
+      this.page += 1;
+    },
     updateNotes(currentNotes) {
       this.editingNotes = true;
       this.newNotes = currentNotes;
@@ -362,15 +371,20 @@ export default {
           this.data.status = res.status;
           this.data.degree = res.degree;
           if (res.resume && res.resume.filename) {
-            const pdfurl = `http://localhost:3000/file/get/${res.resume.filename}`;
-            console.log('PDF url', pdfurl);
-            this.pdfurl = pdfurl;
-            /*
-            const loadingTask = pdf.createLoadingTask(); // { data: pdfData });
-            this.src = loadingTask;
-            this.src.then(_pdf => {
-              this.numPages = _pdf.numPages;
-            }); */
+            const url = `http://localhost:3000/file/get/${res.resume.filename}`;
+            // const url = '../../../uploads/3a194d40-2268-11e8-b674-e3bddf9cbbe8.pdf';
+            // console.log('URL', url);
+            if (true || url.substr(url.length - 4) === '.pdf') {
+              // file is a pdf
+              this.src = pdf.createLoadingTask(url);
+              this.src.then((p) => {
+                this.numPages = p.numPages;
+                console.log('Num Pages', this.numPages);
+              });
+            } else {
+              // file is not a pdf
+              this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
+            }
           }
           this.updateApplicantStatus('opened');
         })

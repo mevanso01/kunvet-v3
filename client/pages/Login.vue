@@ -94,7 +94,7 @@ a:hover{
 
             </section>
 
-            <div v-show="sent == 0" id="general-submit" @click="send()">
+            <div v-show="!sent" id="general-submit" @click="send()">
                 <div id="general-submit-default">
                     <span>Request password reset</span>
                 </div>
@@ -127,7 +127,7 @@ export default {
       forgetpwd: 0,
       bad_login: false,
       loggedIn: false,
-      sent: 0,
+      sent: false,
       email: '',
       emailRules: [
         v => !!v || 'E-mail is required',

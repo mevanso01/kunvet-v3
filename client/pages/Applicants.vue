@@ -36,9 +36,12 @@
                       <img
                         :src="svgs.kunvetCharacter"
                       />
-                      <figurecaption style="font-size: 0.6em; color: grey; padding-left: 5px;">
+                      <div style="font-size: 0.6em; color: grey; padding-left: 5px;">
                         <timeago :since="item.date" />
-                      </figurecaption>
+                      </div>
+                      <!--<figurecaption style="font-size: 0.6em; color: grey; padding-left: 5px;">
+                        <timeago :since="item.date" />
+                      </figurecaption>-->
                     </figure>
                   </div>
                   <router-link :to="'view-applicant/'+item._id">
