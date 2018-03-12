@@ -141,6 +141,9 @@
   .city-img-holder {
     padding: 0 48px;
   }
+  section.search {
+    padding: 32px 48px 48px 48px;
+  }
 }
 @media (min-width: 601px) and (max-width: 960px) {
   .firstSearch {

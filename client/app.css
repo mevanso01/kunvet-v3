@@ -27,6 +27,9 @@ h3 {
   line-height: 1.2;
 }
 /*  ---- Navbar ----  */
+.application--wrap {
+  padding-top: 64px;
+}
 .main-navbar {
   height: 64px;
 }
@@ -85,9 +88,6 @@ h3 {
 .radio-group .radio label,
 .input-group.checkbox.input-group--selection-controls label {
   line-height: 24px;
-}
-.container {
-  padding-top: 80px;
 }
 .toolbar__content {
   max-width: 960px;
@@ -240,9 +240,10 @@ body {
 #nav-logo {
     height: 100%;
 }
-#nav-logo-svg {
-    height: 64px;
-    fill: #ef5350;
+#nav-logo-svg,
+#nav-logo-svg svg {
+  height: 64px;
+  fill: #ef5350;
 }
 #nav-items {
     position: absolute;
@@ -327,7 +328,7 @@ body {
     position: relative;
     width: 100%;
     max-width: 960px;
-    margin: 30px auto; /* previously: 50px auto */
+    margin: auto; /* previously: 50px auto */
     left: 0;
     right: 0;
     padding: 0;
@@ -612,52 +613,6 @@ body {
     height: 64px;
     line-height: 64px;
 }
-@keyframes general-submit-default-off {
-    0% {
-        left: 0;
-    }
-    100% {
-        left: -100%;
-    }
-}
-@keyframes general-submit-default-on {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 0;
-    }
-}
-@keyframes general-submit-error-on {
-    0% {
-        left: 100%;
-    }
-    100% {
-        left: 0;
-    }
-}
-@keyframes general-submit-error-off {
-    0% {
-        left: 0;
-    }
-    100% {
-        left: 100%;
-    }
-}
-.blink {
-    animation: blink 0.2s 2 ease;
-}
-@keyframes blink {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
 #bottom {
     background-color: #ef5350;
 }
@@ -675,7 +630,8 @@ body {
     color: #fff;
     box-sizing: border-box;
 }
-#bottom-brand svg {
+#bottom-brand svg,
+#bottom-brand img {
     height: 24pt;
 }
 #bottom-brand path {
@@ -696,6 +652,7 @@ body {
     margin: 16px 0;
 }
 #bottom-footer {
+    color: #222;
     opacity: 0.5;
 }
 #nav-img {
@@ -727,9 +684,6 @@ body {
   }
   section:last-of-type {
       padding-bottom: 48px;
-  }
-  section.search {
-    padding: 24px 48px 48px 48px;
   }
 }
 @media (max-width: 960px) {
@@ -782,7 +736,7 @@ body {
       -webkit-margin-after: 0.83em;
     }
     .container {
-      padding-top: 72px;
+      /* padding-top: 72px; */
       padding-left: 16px;
       padding-right: 16px;
     }
@@ -794,6 +748,9 @@ body {
     }
     .main-navbar, .main-navbar .toolbar__content {
       height: 56px !important;
+    }
+    .application--wrap {
+      padding-top: 56px;
     }
     #nav-logo {
         left: 16px;
