@@ -6,7 +6,7 @@
     <div class="main-cont-large" style="background: none">
       <v-layout>
         <v-flex xs12>
-          <h3><span class="kunvet-red">{{ counter }}</span> Saved job{{ plural }}</h3>
+          <h1><span class="kunvet-red">{{ counter }}</span> Saved Job{{ plural }}</h1>
         </v-flex>
       </v-layout>
       <v-layout>

@@ -25,9 +25,16 @@
       <v-layout>
         <v-flex xs12 style="padding-top: 0px;">
           <div><h3 class="post-title">{{ job.title }}</h3></div>
-          <div class="carditem" style="color: #A7A7A7;"><timeago :since="job.date"></timeago> {{ distance }}</div>
-          <div class="carditem" style="color: #A7A7A7; text-decoration: underline;">
-            <p><v-icon style="color: #A7A7A7;">location_city</v-icon>{{ job.address }}</p>
+          <div class="carditem" style="color: #A7A7A7">
+            <timeago :since="job.date" />
+          </div>
+          <div
+            class="carditem"
+            style="text-decoration: underline;"
+          >
+            <p style="color: #A7A7A7;">
+              <span class="carditem-image"><img :src="svgs.locationMarker" /></span><span v-if="showAddress">{{ job.address }}</span><span v-else>{{ distance }}</span>
+            </p>
           </div>
           <div class="carditem">
             <p><v-icon>info</v-icon>{{ parseJobIntoMainInfo(job) }}</p>
@@ -48,13 +55,15 @@
 <script>
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import StudentSvg from '@/assets/job_posts/user_1.svg';
+import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 
 export default {
-  props: ['job', 'saveJobFunc', 'isSaved', 'distance'],
+  props: ['job', 'saveJobFunc', 'isSaved', 'distance', 'showAddress'],
   data() {
     return {
       svgs: {
         student: StudentSvg,
+        locationMarker: LocationMarkerSvg,
       },
     };
   },
