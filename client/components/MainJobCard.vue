@@ -40,7 +40,7 @@
             <p><v-icon>info</v-icon>{{ parseJobIntoMainInfo(job) }}</p>
           </div>
           <div class="carditem">
-            <p><span class="carditem-image"><img :src="svgs.student" /></span>{{ job.studentfriendly ? '' : 'Not ' }}Student Friendly</p>
+            <p><span class="carditem-image"><img :src="svgs.student" /></span>{{ job.studentfriendly ? '' : 'Not ' }}Student-friendly</p>
           </div>
 
           <div class="image-row">

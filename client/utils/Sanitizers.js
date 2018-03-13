@@ -5,7 +5,7 @@ class Sanitizers {
       if (typeof jobTypes[i] === 'string') {
         const type = jobTypes[i];
         if (type === 'fulltime') {
-          types.push('Full-Time');
+          types.push('Full-time');
         } else if (type === 'parttime') {
           types.push('Part-time');
         } else {
