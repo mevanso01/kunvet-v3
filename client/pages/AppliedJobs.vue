@@ -6,7 +6,7 @@
       <h1>
         <span class="kunvet-red">
           {{ jobsAndApplications.length }}
-        </span> <span style="color: #A7A7A7;">Applied Jobs</span>
+        </span> Applied {{ getAppliedJobsString }}
       </h1>
       <v-layout row wrap>
         <div class="post-card" v-for="{ job, application } in jobsAndApplications" style="height: auto;">
@@ -64,6 +64,7 @@
   import StudentSvg from '@/assets/job_posts/user_1.svg';
 
   import DisplayTextHelper from '@/utils/DisplayTextHelper';
+  import StringHelper from '@/utils/StringHelper';
 
   export default {
     data() {
@@ -128,6 +129,11 @@
       },
       parseJobIntoMainJobInfo(job) {
         return DisplayTextHelper.getMainJobInfo(job);
+      },
+    },
+    computed: {
+      getAppliedJobsString() {
+        return StringHelper.pluralize('Job', this.jobsAndApplications);
       },
     },
     created() {

@@ -312,6 +312,7 @@ export default {
 @import 'account.css';
 @import 'applicants.css';
 @import 'buttons.css';
+@import 'job_pages.css';
 @import 'nav.css';
 @import 'postsAndSearch.css';
 body, html {
