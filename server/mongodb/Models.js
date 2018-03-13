@@ -379,6 +379,14 @@ const FileSchema = Mongoose.Schema({
     required: true,
     default: false,
   },
+  protected: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  accessList: [
+    Mongoose.Schema.Types.ObjectId,
+  ],
 });
 
 const AccountSchema = Mongoose.Schema({
@@ -451,6 +459,11 @@ const AccountSchema = Mongoose.Schema({
       default: Date.now,
     },
   }],
+  is_developer: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 AccountSchema.plugin(PassportLocalMongoose, {
   usernameField: 'email',

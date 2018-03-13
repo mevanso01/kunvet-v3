@@ -116,7 +116,6 @@ a:hover{
 </template>
 <script>
 import App from '@/App';
-import Config from 'config';
 import Axios from 'axios';
 
 export default {
@@ -159,7 +158,7 @@ export default {
       this.sent = true;
     },
     fetchData() {
-      Axios.get(`${Config.serverUrl}/auth/status`).then((response) => {
+      Axios.get('/auth/status').then((response) => {
         if (!response.data.success) {
           // Unsuccessful
           console.error('Server error', response.data);

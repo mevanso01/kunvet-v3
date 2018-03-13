@@ -184,8 +184,8 @@ const router = new VueRouter({
 /* eslint-disable no-new */
 
 new Vue({
-  apolloProvider,
   el: '#app',
+  provide: apolloProvider.provide(),
   router,
   store,
   render: h => h(App),

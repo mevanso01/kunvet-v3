@@ -6,13 +6,13 @@ import path from 'path';
 
 export default class Mailer {
   constructor() {
-    this.transport = Nodemailer.createTransport(Config.mailTransport);
+    this.transport = Nodemailer.createTransport(Config.get('private.mail.mailTransport'));
   }
   sendTemplate(recipient, template, locals) {
     console.log(recipient);
     const email = new Email({
       message: {
-        from: Config.mailFrom,
+        from: Config.get('private.mail.mailFrom'),
       },
       views: {
         root: path.resolve('email-templates'),

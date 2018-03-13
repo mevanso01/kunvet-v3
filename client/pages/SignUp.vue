@@ -258,7 +258,7 @@ export default {
         pwd: this.password,
         reqtype: 'validate',
       };
-      Vue.http.post(`${Config.serverUrl}/auth/register`, data, headers).then((res) => {
+      Vue.http.post(`${Config.get('serverUrl')}/auth/register`, data, headers).then((res) => {
         this.loading = false;
         if (res.body.message === 'User already exists') {
           this.error = 'UserExistsError';
@@ -295,7 +295,7 @@ export default {
           pwd: this.password,
           reqtype: 'validate',
         };
-        Vue.http.post(`${Config.serverUrl}/auth/register`, bdata, headers).then(() => {
+        Vue.http.post(`${Config.get('serverUrl')}/auth/register`, bdata, headers).then(() => {
           this.loading = false;
         }, (error) => {
           console.error(error);
