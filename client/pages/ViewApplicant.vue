@@ -381,13 +381,20 @@ export default {
             const url = `http://localhost:3000/file/get/${res.resume.filename}`;
             // const url = '../../../uploads/3a194d40-2268-11e8-b674-e3bddf9cbbe8.pdf';
             // console.log('URL', url);
-            if (true || url.substr(url.length - 4) === '.pdf') {
+            if (true) { // true || url.substr(url.length - 4) === '.pdf'
               // file is a pdf
-              this.src = pdf.createLoadingTask(url);
-              this.src.then((p) => {
-                this.numPages = p.numPages;
-                console.log('Num Pages', this.numPages);
-              });
+              try {
+                this.src = pdf.createLoadingTask(url);
+                await this.src.then((p) => {
+                  this.numPages = p.numPages;
+                });
+              } catch (e) {
+                if (e.name === 'InvalidPDFException') {
+                  // this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
+                } else {
+                  console.error(e);
+                }
+              }
             } else {
               // file is not a pdf
               this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;

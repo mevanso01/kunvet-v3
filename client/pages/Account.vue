@@ -31,7 +31,7 @@
       <section style="padding: 0; margin: 15px; width: auto;">
         <v-layout row wrap style="padding-bottom: 15px">
           <v-flex xs12 sm8>
-            <v-layout row wrap> 
+            <v-layout row wrap>
               <v-flex xs12 class="acct-name-header-container">
                 <h1 class="acct-name-header-container__name">
                   {{ userdata.firstname }} {{ userdata.lastname }}
@@ -317,8 +317,8 @@
                   <h2>Delete {{ deleteResumeName }}?</h2>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn color="green darken-1" flat="flat" @click="showDeleteResumeDialog=false;">Cancel</v-btn>
-                  <v-btn error flat="flat" @click="deleteResume(deleteResumeIndex)">Delete</v-btn>
+                  <v-btn flat="flat" @click="showDeleteResumeDialog=false;">Cancel</v-btn>
+                  <v-btn color="red darken-1" flat="flat" @click="deleteResume(deleteResumeIndex)">Delete</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -338,8 +338,8 @@
                   </div>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn color="green darken-1" flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
-                  <v-btn color="green darken-1" flat="flat" @click.native="saveFromEditModal">Save</v-btn>
+                  <v-btn flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
+                  <v-btn flat="flat" @click.native="saveFromEditModal">Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -350,28 +350,20 @@
                     <v-card-title class="headline">
                       Create organization / business profile
                     </v-card-title>
-                    <div class="edit-modal-input-cont">
+                    <v-card-text>
                       <v-text-field
                         v-model="createOrganizationModal.organizationName"
                         style="padding: 0 2px;"
                         name="edit-modal-input"
                         hide-details
                         single-line
+                        placeholder="Name of business or organization"
                       />
-                      <v-text-field
-                        v-model="createOrganizationModal.aboutUs"
-                        style="padding: 0 2px;"
-                        name="edit-modal-input"
-                        placeholder="A description of your business or organization"
-                        hide-details
-                        multi-line
-                        rows=3
-                      />
-                    </div>
+                    </v-card-text>
                     <v-card-actions>
                       <!--<v-spacer></v-spacer>-->
-                      <v-btn color="green darken-1" flat="flat" @click.native="createOrganization">Create</v-btn>
-                      <v-btn color="green darken-1" flat="flat" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
+                      <v-btn flat="flat" @click.native="createOrganization">Continue</v-btn>
+                      <v-btn flat="flat" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -400,8 +392,8 @@
                   </div>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn color="green darken-1" flat="flat" @click.native="editNameModal.show = false">Cancel</v-btn>
-                  <v-btn color="green darken-1" flat="flat" @click.native="saveFromEditNameModal">Save</v-btn>
+                  <v-btn flat="flat" @click.native="editNameModal.show = false">Cancel</v-btn>
+                  <v-btn flat="flat" @click.native="saveFromEditNameModal">Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -451,8 +443,8 @@
         },
         createOrganizationModal: {
           show: false,
-          organizationName: '',
-          aboutUs: '',
+          organizationName: null,
+          aboutUs: null,
         },
         userdata: {
           firstname: null,
