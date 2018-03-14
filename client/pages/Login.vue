@@ -23,7 +23,7 @@ a:hover{
           <v-form v-model="valid" ref="form">
             <section class="login-section">
                 <h2>Welcome Back!</h2>
-                <p v-if="bad_login" style="color: #f00">The email or password you entered is incorrect</p>
+                <p v-if="bad_login" style="color: #f00; margin-bottom: 0">The email or password you entered is incorrect</p>
                     <v-text-field
                         label="E-mail"
                         v-model="email"
@@ -151,7 +151,11 @@ export default {
           this.bad_login = true;
         }
       }).catch((err) => {
-        console.error(err);
+        if (err.message === 'Request failed with status code 401') {
+          this.bad_login = true;
+        } else {
+          console.error(err);
+        }
       });
     },
     send() {

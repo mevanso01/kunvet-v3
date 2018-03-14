@@ -107,7 +107,8 @@
                     required
                   ></v-text-field>
                   <div class="text-xs-center">
-                    <v-btn error :disabled="loading" dark @click="submit">Sign up!</v-btn>
+                    <v-btn class="kunvet-red-bg" :disabled="loading" dark @click="submit">Sign up!</v-btn>
+                    <p v-show="loading" style="color: #999">Loading...</p>
                   </div>
                 </v-form>
               </v-card-text>
@@ -161,7 +162,8 @@
                     required
                   ></v-text-field>
                   <div class="text-xs-center">
-                    <v-btn error :disabled="loading" dark @click="submit">Create business account</v-btn>
+                    <v-btn class="kunvet-red-bg" :disabled="loading" dark @click="submit">Create business account</v-btn>
+                    <p v-show="loading" style="color: #999">Loading...</p>
                   </div>
                 </v-form>
               </v-card-text>
