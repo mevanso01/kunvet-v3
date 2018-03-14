@@ -110,4 +110,10 @@ const wpconf = {
   ],
 };
 
+if (process.env.NODE_ENV === 'development') {
+  wpconf.plugins.push(new webpack.DefinePlugin({
+    'process.env.NODE_ENV': '"development"',
+  }));
+}
+
 module.exports = wpconf;
