@@ -208,25 +208,37 @@
 
     <v-dialog v-model="applydialog">
       <v-card class="no-border-radius">
-        <div style="padding: 20px;">
-        <h3>Select resume to send</h3>
-        <v-radio-group v-model="selectedResumeName" hide-details>
-          <v-radio v-for="(resume, index) in resumes"
-            class="kunvet-red"
-            :key="index"
-            :label="resume.name"
-            :value="resume.name">
-          </v-radio>
-        </v-radio-group>
-        <br>
-        <p style="margin-bottom: 2px;">My info:</p>
-        <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
-        <p class="small-p">{{ userdata.email }}</p>
-        <p class="small-p">{{ userdata.school }}</p>
-        <p class="small-p">{{ userdata.degree }}</p>
-        <br>
+        <div style="padding: 20px;" v-if="!showSuccessMessage">
+          <h3>Select resume to send</h3>
+          <v-radio-group v-model="selectedResumeName" hide-details>
+            <v-radio v-for="(resume, index) in resumes"
+              class="kunvet-red"
+              :key="index"
+              :label="resume.name"
+              :value="resume.name">
+            </v-radio>
+          </v-radio-group>
+          <br>
+          <p style="margin-bottom: 2px;">My info:</p>
+          <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
+          <p class="small-p">{{ userdata.email }}</p>
+          <p class="small-p">{{ userdata.school }}</p>
+          <p class="small-p">{{ userdata.degree }}</p>
+          <br>
         </div>
-        <div class="bottom-dialog-button" @click="createApplication">Apply</div>
+        <div style="padding: 20px;" v-else>
+          <h3>Success!</h3>
+          <p>You can track the status of your application in the <router-link to="/appliedjobs">applied jobs</router-link> page</p>
+        </div>
+        <div v-if="!showSuccessMessage"
+          class="bottom-dialog-button"
+          v-bind:class="{'disabled': loading}"
+          @click="createApplication">
+          Apply
+        </div>
+        <router-link v-else to="/">
+          <div class="bottom-dialog-button">Keep browsing jobs</div>
+        </router-link>
       </v-card>
     </v-dialog>
 
@@ -282,6 +294,8 @@ export default {
       applied: false,
       saved: false,
       saved_jobs: [],
+      loading: false,
+      showSuccessMessage: false,
     };
   },
   computed: {
@@ -491,7 +505,8 @@ export default {
     },
     createApplication() {
       // validate
-      if (this.uid && this.userdata) {
+      if (this.uid && this.userdata && !this.loading && !this.applied) {
+        this.loading = true;
         const index = this.resumes.findIndex(resume => this.selectedResumeName === resume.name);
         const application = {
           user_id: this.uid,
@@ -524,8 +539,15 @@ export default {
           }`),
           variables: { application },
         }).then((data) => {
-          console.log(data);
+          this.loading = false;
+          if (data) {
+            this.showSuccessMessage = true;
+            this.applied = true;
+          } else {
+            console.log(data);
+          }
         }).catch((error) => {
+          this.loading = false;
           console.error(error);
         });
       }

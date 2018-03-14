@@ -26,6 +26,9 @@ h3 {
   height: 1.2em;
   line-height: 1.2;
 }
+p > a {
+  text-decoration: underline;
+}
 /*  ---- Navbar ----  */
 .application--wrap {
   padding-top: 64px;
@@ -122,6 +125,9 @@ h3 {
   cursor: pointer;
   color: #fff !important;
   background-color: #ef5350 !important;
+}
+.bottom-dialog-button.disabled {
+  opacity: 0.75;
 }
 .kunvet-red, .kunvet-red.input-group--active label {
   color: #ef5350 !important;

@@ -197,7 +197,7 @@
                   <v-btn :disabled="page == 1" @click="page -= 1">Previous</v-btn>
                   <v-btn v-if="src" :disabled="page == numPages" @click="page += 1">Next</v-btn>
                 </div>
-                <object v-if="docurl" :data="docurl" style="width: 100%; height: 1200px; overflow: hidden"></object>
+                <iframe v-if="docurl" :src="docurl" style="width: 100%; height: 1200px; overflow: hidden"></iframe>
 
               </v-flex>
             </v-layout>
@@ -390,13 +390,16 @@ export default {
                 });
               } catch (e) {
                 if (e.name === 'InvalidPDFException') {
-                  // this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
+                  console.log(url);
+                  this.src = null;
+                  this.docurl = `${url}#embedded=true`;
                 } else {
                   console.error(e);
                 }
               }
             } else {
               // file is not a pdf
+              this.src = null;
               this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
             }
           }

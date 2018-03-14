@@ -6,10 +6,10 @@
     <div class="main-cont-large" style="background: none">
       <v-layout>
         <v-flex xs12>
-          <h1><span class="kunvet-red">{{ counter }}</span> Saved Job{{ plural }}</h1>
+          <h1 style="margin-bottom: 10px;"><span class="kunvet-red">{{ counter }}</span> Saved Job{{ plural }}</h1>
         </v-flex>
       </v-layout>
-      <v-layout>
+      <v-layout style="padding-bottom: 32px;"> 
         <v-flex xs12 class="no-padding">
           <div v-for="job in findJobs" :index="job._id">
             <MainJobCard :job="job" :saveJobFunc="unsaveJob" :isSaved="true" />

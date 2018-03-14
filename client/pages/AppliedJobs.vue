@@ -3,12 +3,16 @@
 <template>
   <v-container fluid class="job-post__container">
     <div class="main-cont-large">
-      <h1>
-        <span class="kunvet-red">
-          {{ jobsAndApplications.length }}
-        </span> Applied {{ getAppliedJobsString }}
-      </h1>
-      <v-layout row wrap>
+      <v-layout>
+        <v-flex xs12>
+          <h1 style="margin-bottom: 10px;">
+            <span class="kunvet-red">
+              {{ jobsAndApplications.length }}
+            </span> Applied {{ getAppliedJobsString }}
+          </h1>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap style="padding-bottom: 32px;">
         <div class="post-card" v-for="{ job, application } in jobsAndApplications" style="height: auto;">
           <v-layout align-center row spacer slot="header">
             <v-flex xs12>
