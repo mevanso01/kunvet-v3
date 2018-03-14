@@ -4,6 +4,9 @@
 	"private": {
 		"FIXCONFIG": "!!!This is not supposed to appear in production!!!",
 		"database": "mongodb://localhost/kunvet-dev",
+		"files": {
+			"defaultStorage": "local"
+		},
 		"mail": {
 			"mailFrom": "Kunvet Notifications <notifications@kunvet.com>",
 			"mailTransport": {

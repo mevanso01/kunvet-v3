@@ -358,11 +358,16 @@ const FileSchema = Mongoose.Schema({
     type: String,
     required: true,
   },
-  uploadPath: {
+  backend: {
+    type: String,
+  },
+  backendPath: {
     type: String,
   },
   mimeType: {
     type: String,
+    required: true,
+    default: 'application/octet-stream',
   },
   uploadOnce: {
     type: Boolean,

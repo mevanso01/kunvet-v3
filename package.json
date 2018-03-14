@@ -80,6 +80,7 @@
     "koa-session": "^5.5.0",
     "koa-static": "^4.0.1",
     "lodash": "^4.17.5",
+    "mime-types": "^2.1.18",
     "mongoose": "^4.11.7",
     "nodemailer": "^4.1.1",
     "passport-local-mongoose": "^4.4.0",
