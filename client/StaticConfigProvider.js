@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/extensions
+// eslint-disable-next-line
 import staticConfig from 'static_config';
 import has from 'lodash/has';
 import get from 'lodash/get';
