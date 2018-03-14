@@ -28,11 +28,8 @@
           <div class="carditem" style="color: #A7A7A7">
             <timeago :since="job.date" />
           </div>
-          <div
-            class="carditem"
-            style="text-decoration: underline;"
-          >
-            <p style="color: #A7A7A7;">
+          <div class="carditem">
+            <p style="color: #A7A7A7; text-decoration: underline;">
               <span class="carditem-image"><img :src="svgs.locationMarker" /></span><span v-if="showAddress">{{ job.address }}</span><span v-else>{{ distance }}</span>
             </p>
           </div>

@@ -139,7 +139,13 @@
 .acct-name-header-container {
   padding-top: 0;
 }
-.acct-name-header-container__name, .acct-name-header-container__edit-icon, .acct-page-container__edit-icon {
+.acct-name-header-container__edit-icon {
+  font-size: 22px;
+}
+.acct-page-container__edit-icon {
+  font-size: 14px;
+}
+.acct-name-header-container__name, .acct-name-header-container__edit-icon {
   display: inline-block;
   vertical-align: middle;
 }
@@ -149,7 +155,7 @@
  * if we decide to change the styles.
  */
 .acct-page-container__edit-icon, .acct-name-header-container__edit-icon {
-  color: #AAA;
+  color: #ef5350 !important;
   margin-left: 5px;
   cursor: pointer;
 }

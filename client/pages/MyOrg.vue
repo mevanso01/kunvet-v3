@@ -179,12 +179,7 @@
                               target="_blank"
                               class="acct-page-container__website"
                             >
-                              {{ bdata.website }}
-                            </a>
-                            <i
-                              class="fa fa-edit acct-page-container__edit-icon"
-                              @click="createEditModal('website url', bdata.website, 'website')"
-                            />
+                              {{ bdata.website }}</a><i class="fa fa-edit acct-page-container__edit-icon" @click="createEditModal('website url', bdata.website, 'website')" />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
