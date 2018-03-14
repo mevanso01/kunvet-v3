@@ -1,9 +1,10 @@
 const Config = require('config');
 const path = require('path');
-const fs = require('fs');
+// const fs = require('fs');
 const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const utils = require('./utils');
 
 function styleLoaders(options) {
@@ -21,7 +22,7 @@ function styleLoaders(options) {
 
 // Build static config
 delete Config.private;
-fs.writeFileSync(path.resolve(__dirname, '../dist/staticConfig.json'), JSON.stringify(Config));
+// fs.writeFileSync(path.resolve(__dirname, '../dist/staticConfig.json'), JSON.stringify(Config));
 
 const wpconf = {
   entry: {
@@ -38,7 +39,7 @@ const wpconf = {
       vue$: 'vue/dist/vue.esm.js',
       '@': utils.resolve('client'),
       config$: path.resolve(__dirname, '../client/StaticConfigProvider.js'),
-      static_config$: path.resolve(__dirname, '../dist/staticConfig.json'),
+      static_config$: path.resolve(__dirname, '../virtual/staticConfig.json'),
     },
     unsafeCache: /data/,
   },
@@ -87,6 +88,10 @@ const wpconf = {
     ],
   },
   plugins: [
+    new VirtualModulePlugin({
+      moduleName: 'virtual/staticConfig.json',
+      contents: JSON.stringify(Config),
+    }),
     new webpack.IgnorePlugin(/vertx/),
     new HtmlWebpackPlugin({
       filename: 'index.html',
