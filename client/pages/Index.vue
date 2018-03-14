@@ -449,7 +449,7 @@ export default {
       }
     },
     getDistance(lat, long) {
-      return `- ${this.computeDistance(lat, long).toFixed(1)} miles away`;
+      return `${this.computeDistance(lat, long).toFixed(1)} miles away`;
     },
     computeDistance(lat, long) {
       // const degrees = Math.sqrt(((this.selectedLat - lat) ** 2) + ((this.selectedLong - long) ** 2));
