@@ -310,7 +310,7 @@ router.get('/get/:id', async (ctx) => {
   const backend = getBackend(fileSlot.backend);
 
   // Retrieve the URL from backend
-  const url = await backend.getLink(fileSlot.uploadPath);
+  const url = await backend.getLink(fileSlot);
   if (url === true) {
     // Local download
     await backend.localDownload(fileSlot, ctx);
