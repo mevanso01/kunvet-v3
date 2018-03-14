@@ -84,7 +84,6 @@ router.post('/register', async (ctx) => {
         email: req.email,
         firstname: req.fname,
         lastname: req.lname,
-        password: req.pwd,
         default_org: req.default_org,
       },
       req.pwd,
