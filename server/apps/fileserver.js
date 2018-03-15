@@ -318,6 +318,68 @@ router.get('/get/:id', async (ctx) => {
   }
 });
 
+router.post('/delete/:id', async (ctx) => {
+  if (!ctx.isAuthenticated()) {
+    const response = {
+      success: false,
+      message: 'Authentication required',
+    };
+    ctx.status = 401;
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+
+  const fileId = ctx.params.id;
+  let fileSlot = null;
+  try {
+    fileSlot = await Models.File.findOne({
+      _id: fileId,
+    });
+  } catch (e) {
+    const response = {
+      success: false,
+      message: 'Invalid file slot',
+    };
+    ctx.status = 404;
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+
+  const backend = getBackend(fileSlot.backend);
+  try {
+    await backend.deleteFile(fileSlot);
+  } catch (e) {
+    const response = {
+      success: false,
+      message: e.message,
+    };
+    ctx.status = 500;
+    ctx.body = JSON.stringify(response);
+    console.log(response);
+    return;
+  }
+  try {
+    fileSlot = await Models.File.remove({
+      _id: fileId,
+    });
+  } catch (e) {
+    console.log(e);
+    const response = {
+      success: false,
+      message: 'Unable to remove fileslot',
+    };
+    ctx.status = 500;
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+
+  const response = {
+    success: true,
+    message: 'Success',
+  };
+  ctx.body = JSON.stringify(response);
+});
+
 app.use(router.routes());
 // app.use(router.allowedMethods());
 
