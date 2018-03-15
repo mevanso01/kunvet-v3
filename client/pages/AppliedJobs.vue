@@ -48,8 +48,9 @@
                   </div>
                 </div>
                 <div class="btn-holder">
-                  <div style="color: green">Applied <timeago :since="application.date" /></div>
-                  <div style="color: #A7A7A7">{{ application.status === 'opened' ? 'Seen' : 'Unseen' }} by employer</div>
+                  <h3 :style="`font-weight: normal; color: ${getStatusColor(application)}; margin-bottom: 0; height: auto;`">
+                    {{ getStatusFromApplication(application) }}
+                  </h3>
                 </div>
               </v-flex>
             </v-layout>
@@ -69,6 +70,8 @@
 
   import DisplayTextHelper from '@/utils/DisplayTextHelper';
   import StringHelper from '@/utils/StringHelper';
+
+  import ApplicationConstants from '@/constants/application';
 
   export default {
     data() {
@@ -133,6 +136,15 @@
       },
       parseJobIntoMainJobInfo(job) {
         return DisplayTextHelper.getMainJobInfo(job);
+      },
+      getStatusFromApplication(application) {
+        const str = ApplicationConstants.status[application.status];
+        return str || ApplicationConstants.status.submitted;
+      },
+      getStatusColor({ status }) {
+        if (status === 'accepted') return 'green';
+        if (status === 'rejected') return '#e53935';
+        return '#A7A7A7';
       },
     },
     computed: {

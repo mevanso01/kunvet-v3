@@ -7,17 +7,12 @@
         <v-flex xs12 v-if="jobs.length === 0">
           You have no jobs.
         </v-flex>
-        <v-flex xs12 v-if="jobs.length > 0">
-          <h1>
-            View Applicants by Job
-          </h1>
-        </v-flex>
         <template
           v-if="jobs.length > 0"
           v-for="job in jobs"
         >
           <v-flex xs12>
-            <h2>{{ job.title }}</h2>
+            <h1>{{ job.title }}</h1>
             <p>
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
