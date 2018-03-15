@@ -10,7 +10,7 @@
 			"region": "us-west-1"
 		},
 		"files": {
-			"defaultStorage": "local"
+			"defaultStorage": "local",
 			"S3": {
 				"bucket": "kunvet-dev"
 			}
