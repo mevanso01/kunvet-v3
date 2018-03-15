@@ -1,3 +1,7 @@
 .job-post__container h1 {
   color: #A7A7A7;
 }
+
+.job-post__container h2 {
+  font-weight: normal;
+}
