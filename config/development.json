@@ -6,7 +6,7 @@
 		"database": "mongodb://localhost/kunvet-dev",
 		"Aws": {
 			"accessKeyId": "",
-			"secretAccessKey": ",
+			"secretAccessKey": "",
 			"region": "us-west-1"
 		},
 		"files": {
