@@ -5,7 +5,7 @@
     <div class="main-cont-large">
       <v-layout>
         <v-flex xs12>
-          <h1 style="margin-bottom: 10px;">
+          <h1 style="margin-bottom: 10px; color: #A7A7A7;">
             <span class="kunvet-red">
               {{ jobsAndApplications.length }}
             </span> Applied {{ getAppliedJobsString }}
@@ -137,7 +137,7 @@
     },
     computed: {
       getAppliedJobsString() {
-        return StringHelper.pluralize('Job', this.jobsAndApplications);
+        return StringHelper.pluralize('Job', this.jobsAndApplications.length);
       },
     },
     created() {

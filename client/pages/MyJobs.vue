@@ -12,7 +12,7 @@
           You have no jobs.
         </v-flex>
         <v-flex xs12 v-if="unpostedJobs.length > 0">
-          <h2><span class="kunvet-red">{{ unpostedJobs.length }}</span> {{ getUnpostedJobsString }}</h2>
+          <h1><span class="kunvet-red">{{ unpostedJobs.length }}</span> {{ getUnpostedJobsString }}</h1>
         </v-flex>
         <v-flex xs12 sm6
           v-if="unpostedJobs.length > 0"
@@ -48,7 +48,7 @@
 
       <v-layout row wrap>
         <v-flex xs12 v-if="activeJobs.length > 0">
-          <h2><span class="kunvet-red">{{ activeJobs.length }}</span> {{ getActiveJobsString }}</h2>
+          <h1><span class="kunvet-red">{{ activeJobs.length }}</span> {{ getActiveJobsString }}</h1>
         </v-flex>
         <v-flex xs12 sm6
           v-if="activeJobs.length > 0"
@@ -99,7 +99,7 @@
 
       <v-layout row wrap>
         <v-flex xs12 v-if="expiredJobs.length > 0">
-          <h2><span class="kunvet-red">{{ expiredJobs.length }}</span> {{ getExpiredJobsString }}</h2>
+          <h1><span class="kunvet-red">{{ expiredJobs.length }}</span> {{ getExpiredJobsString }}</h1>
         </v-flex>
         <v-flex xs12 sm6
           v-if="expiredJobs.length > 0"

@@ -1,6 +1,6 @@
 class StringHelper {
   static pluralize(string, count) {
-    if (count > 1) {
+    if (count > 1 || count === 0) {
       if (string.charAt(string.length - 1) === 's') {
         return `${string}'`;
       }

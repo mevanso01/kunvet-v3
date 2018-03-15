@@ -18,11 +18,11 @@
         >
           <v-flex xs12>
             <h2>{{ job.title }}</h2>
-            <h3>
+            <p>
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
               </span> {{ getApplicantsCountString }} in total
-            </h3>
+            </p>
           </v-flex>
 
           <v-flex xs12 sm6
