@@ -45,7 +45,7 @@ import uuidv1 from 'uuid/v1';
 
 // Storage backend
 import LocalStorage from '@/storages/Local';
-// import S3Storage from '@/storages/S3';
+import S3Storage from '@/storages/S3';
 
 // Node
 import path from 'path';
@@ -76,11 +76,9 @@ function getBackend(name) {
     case 'local':
       backend = new LocalStorage();
       break;
-    /*
     case 's3':
       backend = new S3Storage();
       break;
-    */
     default:
       throw Error('Unknown backend');
   }

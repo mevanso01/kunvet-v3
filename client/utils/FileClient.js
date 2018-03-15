@@ -21,6 +21,17 @@ export default class FileClient {
 
         break;
       }
+      case 's3Upload': {
+        // S3 POST upload
+        const data = new FormData();
+        for (const key of Object.keys(instructions.form.fields)) {
+          data.append(key, instructions.form.fields[key]);
+        }
+        data.append('file', file);
+        await this._api.post(instructions.form.url, data);
+
+        break;
+      }
       default: {
         throw Error(`Unsupported action ${instructions.action}`);
       }

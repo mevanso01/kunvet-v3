@@ -4,8 +4,16 @@
 	"private": {
 		"FIXCONFIG": "!!!This is not supposed to appear in production!!!",
 		"database": "mongodb://localhost/kunvet-dev",
+		"Aws": {
+			"accessKeyId": "",
+			"secretAccessKey": ",
+			"region": "us-west-1"
+		},
 		"files": {
 			"defaultStorage": "local"
+			"S3": {
+				"bucket": "kunvet-dev"
+			}
 		},
 		"mail": {
 			"mailFrom": "Kunvet Notifications <notifications@kunvet.com>",
