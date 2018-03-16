@@ -46,25 +46,17 @@
                     <h2 class="new-applicant-card__title">{{ item.name }}</h2>
                     <p style="overflow: hidden;">
                       <i class="fa fa-graduation-cap new-applicant-card__blue-ico" aria-hidden="true"></i>{{ item.school || 'Did Not Provide' }}<br />
-                      <span v-if="item.school && item.student_type">
-                        <img
-                          :src="svgs.studentType"
-                          width=15
-                          height=15
-                          style="margin-right: 8px;"
-                        />{{ item.student_type }}<br />
-                      </span>
                       <span 
                         v-if="item.degree"
                         style="color: grey; padding-left: 23px;"
                       >
                         {{ item.degree }}<br />
                       </span>
-                      <span
-                        v-if="item.gpa"
+                      <span 
+                        v-if="item.major"
                         style="color: grey; padding-left: 23px;"
                       >
-                        GPA: {{ item.gpa === 0.0 ? 'N/A' : item.gpa }}<br />
+                        {{ item.major }}<br />
                       </span>
                       <span style="color: grey;">{{ getApplicantNotesDisplayText(item) }}</span>
                     </p>
@@ -151,10 +143,12 @@
 
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import KunvetCharacterSvg from '@/assets/account/default_profile_picture.svg';
-  import StudentTypeSvg from '@/assets/account/student_type.svg';
+  import MajorSvg from '@/assets/account/account_major.svg';
+  import DegreeSvg from '@/assets/account/degree.svg';
 
   import DateHelper from '@/utils/DateHelper';
   import StringHelper from '@/utils/StringHelper';
+  import { degreeDbToString } from '@/constants/degrees';
 
   export default {
     created() {
@@ -200,7 +194,8 @@
         svgs: {
           locationMarker: LocationMarkerSvg,
           kunvetCharacter: KunvetCharacterSvg,
-          studentType: StudentTypeSvg,
+          major: MajorSvg,
+          degree: DegreeSvg,
         },
       };
     },
@@ -241,8 +236,7 @@
                 name
                 school
                 degree
-                student_type
-                gpa
+                major
                 notes
                 job_id
                 status
@@ -257,7 +251,7 @@
       },
       async getApplicationsFromJob(jobId) {
         const { data: { findApplicants: applicants } } = await this.getApplicants(jobId);
-        return applicants;
+        return applicants.map(({ degree, ...rest }) => ({ ...rest, degree: degreeDbToString(degree) }));
       },
       async updateApplicantStatus(newStatus = 'submitted') {
         try {

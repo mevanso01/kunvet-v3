@@ -224,8 +224,7 @@
           <p class="small-p">{{ userdata.email }}</p>
           <p class="small-p">{{ userdata.school }}</p>
           <p class="small-p">{{ userdata.degree }}</p>
-          <p class="small-p">{{ userdata.studentType }}</p>
-          <p class="small-p">{{ userdata.gpa }} GPA</p>
+          <p class="small-p">{{ userdata.major }}</p>
           <br>
         </div>
         <div style="padding: 20px;" v-else>
@@ -261,6 +260,7 @@ import nsiSvg from '@/assets/icons/Asset(36).svg';
 import siSvg from '@/assets/icons/Asset(37).svg';
 import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
+import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
 
 Vue.use(Vuetify);
 Vue.use(VueApollo);
@@ -288,8 +288,8 @@ export default {
         lastname: null,
         school: null,
         degree: null,
+        major: null,
         student_type: null,
-        gpa: null,
         display_email: null,
       },
       resumes: [],
@@ -452,8 +452,7 @@ export default {
             lastname
             school
             degree
-            student_type
-            gpa
+            major
             email
             resumes {
               name
@@ -467,13 +466,11 @@ export default {
         },
       }).then((data) => {
         const res = data.data.findAccount;
-        console.log(res);
         this.userdata.firstname = res.firstname;
         this.userdata.lastname = res.lastname;
         this.userdata.school = res.school;
-        this.userdata.degree = res.degree;
-        this.userdata.studentType = res.student_type;
-        this.userdata.gpa = res.gpa === 0.0 ? 'N/A' : res.gpa;
+        this.userdata.degree = degreeDbToString(res.degree);
+        this.userdata.major = res.major;
         this.userdata.email = res.email;
         // this.resumes = res.resumes;
         for (var r in res.resumes) {
@@ -521,14 +518,13 @@ export default {
           job_id: this.id,
           name: `${this.userdata.firstname} ${this.userdata.lastname}`,
           school: this.userdata.school,
-          degree: this.userdata.degree,
-          student_type: this.userdata.studentType,
-          gpa: this.userdata.gpa === 'N/A' ? 0.0 : this.userdata.gpa,
+          degree: degreeStringToDb(this.userdata.degree),
+          major: this.userdata.major,
           email: this.userdata.display_email,
-          resume: {
+          resume: this.resumes.length > 0 ? ({
             filename: this.resumes[index].filename,
             resumeid: this.resumes[index].resumeid,
-          },
+          }) : null,
         };
         this.$apollo.mutate({
           mutation: (gql`mutation ($application: CreateOneApplicantInput!) {
@@ -539,6 +535,7 @@ export default {
                 job_id
                 school
                 degree
+                major
                 email
                 resume {
                   filename

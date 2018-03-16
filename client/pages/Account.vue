@@ -84,20 +84,23 @@
                       </v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-if="userdata.school && !userdata.degree" class="cust-tile-2 grey-color">
+
+
+                  <v-list-tile
+                    v-if="userdata.school && !userdata.degree"
+                    class="cust-tile-2 grey-color"
+                  >
                     <v-list-tile class="cust-tile-1">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-layout style="width: 100%">
                         <v-flex xs9 class="no-padding">
-                          <v-text-field
+                          <v-select
+                            :items="degreeSelectItems"
                             v-model="updateDegree"
-                            class="no-padding no-underline"
-                            name="input-2"
-                            label="Add Major"
+                            label="Select Degree"
                             single-line
-                            @keyup.enter="saveDegree"
                           />
                         </v-flex>
                         <v-flex xs3 v-show="updateDegree" class="no-padding">
@@ -120,104 +123,60 @@
                         {{ userdata.degree }}
                         <i
                           class="fa fa-edit acct-page-container__edit-icon"
-                          @click="createEditModal('degree', userdata.degree, 'degree')"
+                          @click="createEditModal('degree', userdata.degree, 'degree', 'select', degreeSelectItems)"
                         />
                       </v-list-tile-title>
                     </v-list-tile-content>
+                  </v-list-tile>
 
 
-                  <v-list-tile
-                    v-if="userdata.school && userdata.degree && !userdata.studentType"
-                    class="cust-tile-2 grey-color"
-                  >
+
+
+
+                  <v-list-tile v-if="userdata.school && userdata.degree && !userdata.major" class="cust-tile-2 grey-color">
                     <v-list-tile class="cust-tile-1">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-layout style="width: 100%">
                         <v-flex xs9 class="no-padding">
-                          <v-select
-                            :items="['Undergraduate', 'Graduate']"
-                            v-model="updateStudentType"
-                            label="Select Student Type"
+                          <v-text-field
+                            v-model="updateMajor"
+                            class="no-padding no-underline"
+                            name="input-2"
+                            label="Add Major"
                             single-line
+                            @keyup.enter="saveMajor"
                           />
                         </v-flex>
-                        <v-flex xs3 v-show="updateStudentType" class="no-padding">
-                          <v-btn small center class="cust-btn-1" @click="saveStudentType">
+                        <v-flex xs3 v-show="updateMajor" class="no-padding">
+                          <v-btn small center class="cust-btn-1" @click="updateMajor">
                             Save
                           </v-btn>
                         </v-flex>
                       </v-layout>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-if="userdata.studentType" class="cust-tile-2">
+                  <v-list-tile v-if="userdata.major" class="cust-tile-2">
                     <v-list-tile class="cust-tile-1">
                       <img
-                        :src="svgs.accountDegree"
+                        :src="svgs.accountMajor"
                         class="acct-page-container__display-text-icon"
                       />
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>
-                        {{ userdata.studentType }}
+                        {{ userdata.major }}
                         <i
                           class="fa fa-edit acct-page-container__edit-icon"
-                          @click="createEditModal('studentType', userdata.studentType, 'studentType', 'select', ['Undergraduate', 'Graduate'])"
+                          @click="createEditModal('major', userdata.major, 'major')"
                         />
                       </v-list-tile-title>
                     </v-list-tile-content>
-                  </v-list-tile>
-
-                  <v-list-tile
-                    v-if="userdata.school && userdata.degree && userdata.studentType && !userdata.gpa"
-                    class="cust-tile-2 grey-color"
-                  >
-                    <v-list-tile class="cust-tile-1">
-                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    </v-list-tile>
-                    <v-list-tile-content>
-                      <v-layout style="width: 100%">
-                        <v-flex xs9 class="no-padding">
-                          <v-select
-                            :items="gpaSelectItems"
-                            v-model="updateGPA"
-                            label="Select GPA"
-                            single-line
-                          />
-                        </v-flex>
-                        <v-flex xs3 v-show="updateGPA" class="no-padding">
-                          <v-btn small center class="cust-btn-1" @click="saveGPA">
-                            Save
-                          </v-btn>
-                        </v-flex>
-                      </v-layout>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile v-if="userdata.gpa" class="cust-tile-2">
-                    <v-list-tile class="cust-tile-1">
-                      <img
-                        :src="svgs.accountDegree"
-                        class="acct-page-container__display-text-icon"
-                      />
-                    </v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>
-                        {{ userdata.gpa }} 
-                        <i
-                          class="fa fa-edit acct-page-container__edit-icon"
-                          @click="createEditModal('gpa', userdata.gpa, 'gpa', 'select', gpaSelectItems)"
-                        />
-                      </v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-
-
-
-
 
 
                   </v-list-tile>
+
                     <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
                       <v-list-tile class="cust-tile-1">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -512,7 +471,8 @@
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
 
-  import AccountDegreeSvg from '@/assets/account/account_degree.svg';
+  import AccountDegreeSvg from '@/assets/account/degree.svg';
+  import AccountMajorSvg from '@/assets/account/account_major.svg';
   import AccountEmailSvg from '@/assets/account/account_email.svg';
   import AccountSchoolSvg from '@/assets/account/account_school.svg';
   import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
@@ -520,6 +480,7 @@
   import BuildingSvg from '@/assets/account/org_building_full_black.svg';
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
+  import DegreeConstants, { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
 
   export default {
     data() {
@@ -530,8 +491,7 @@
         updateSchool: '',
         updateEmail: '',
         updateDegree: '',
-        updateStudentType: '',
-        updateGPA: null,
+        updateMajor: '',
         editModal: {
           title: null,
           text: null,
@@ -555,8 +515,7 @@
           lastname: null,
           school: null,
           degree: null,
-          studentType: null,
-          gpa: null,
+          major: null,
           email: null,
           display_email: null,
           org_list: [],
@@ -577,6 +536,7 @@
         svgs: {
           accountDegree: AccountDegreeSvg,
           accountEmail: AccountEmailSvg,
+          accountMajor: AccountMajorSvg,
           accountSchool: AccountSchoolSvg,
           building: BuildingSvg,
           resume: ResumeSvg,
@@ -606,14 +566,11 @@
         const { jobs, applications } = this;
         return getCountersFromJobsAndApplications(jobs, applications);
       },
-      gpaSelectItems() {
-        let gpas = [];
-        for (let i = 2.0; i <= 4.01; i += 0.1) {
-          gpas.push(i.toFixed(2));
-        }
-        gpas = ['N/A'] // => 0.0
-          .concat(gpas);
-        return gpas;
+      degreeSelectItems() {
+        console.log(degreeStringToDb);
+
+
+        return Object.keys(DegreeConstants).map(degreeDbToString);
       },
     },
     methods: {
@@ -736,19 +693,14 @@
         this.updateDegree = '';
         this.saveUserdata();
       },
+      saveMajor() {
+        this.userdata.major = this.updateMajor;
+        this.updateMajor = '';
+        this.saveUserdata();
+      },
       saveEmail() {
         this.userdata.display_email = this.updateEmail;
         this.updateEmail = '';
-        this.saveUserdata();
-      },
-      saveGPA() {
-        this.userdata.gpa = this.updateGPA;
-        this.updateGPA = null;
-        this.saveUserdata();
-      },
-      saveStudentType() {
-        this.userdata.studentType = this.updateStudentType;
-        this.updateStudentType = '';
         this.saveUserdata();
       },
       createEditModal(title, text, property, type = 'text', items = []) {
@@ -822,9 +774,8 @@
               firstname: this.userdata.firstname,
               lastname: this.userdata.lastname,
               school: this.userdata.school,
-              degree: this.userdata.degree,
-              student_type: this.userdata.studentType.toLowerCase(),
-              gpa: this.userdata.gpa === 'N/A' ? 0.0 : this.userdata.gpa,
+              degree: degreeStringToDb(this.userdata.degree),
+              major: this.userdata.major,
               // display_email: this.userdata.display_email,
               resumes: _resumes,
             },
@@ -839,8 +790,7 @@
                   lastname
                   school
                   degree
-                  student_type 
-                  gpa
+                  major
                   email
                   org_list
                   resumes {
@@ -957,8 +907,7 @@
                 lastname
                 school
                 degree
-                student_type
-                gpa
+                major
                 email
                 org_list
                 resumes {
@@ -976,9 +925,8 @@
           this.userdata.firstname = res.firstname;
           this.userdata.lastname = res.lastname;
           this.userdata.school = res.school;
-          this.userdata.degree = res.degree;
-          this.userdata.studentType = res.student_type;
-          this.userdata.gpa = res.gpa === 0.0 ? 'N/A' : res.gpa;
+          this.userdata.degree = res.degree ? degreeDbToString(res.degree) : null;
+          this.userdata.major = res.major;
           this.userdata.email = res.email;
           this.userdata.resumes = res.resumes;
           this.commitUserdata();
