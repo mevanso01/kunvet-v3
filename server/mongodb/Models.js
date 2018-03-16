@@ -156,6 +156,13 @@ const ApplicantSchema = Mongoose.Schema({
   email: String,
   school: String,
   degree: String,
+  student_type: {
+    type: String,
+    enum: ['undergraduate', 'graduate'],
+  },
+  gpa: {
+    type: Number,
+  },
   notes: String,
   resume: {
     filename: String,
@@ -436,6 +443,13 @@ const AccountSchema = Mongoose.Schema({
   },
   degree: {
     type: String,
+  },
+  student_type: {
+    type: String,
+    enum: ['undergraduate', 'graduate'],
+  },
+  gpa: {
+    type: Number,
   },
   display_email: {
     type: String,

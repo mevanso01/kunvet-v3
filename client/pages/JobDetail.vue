@@ -224,6 +224,8 @@
           <p class="small-p">{{ userdata.email }}</p>
           <p class="small-p">{{ userdata.school }}</p>
           <p class="small-p">{{ userdata.degree }}</p>
+          <p class="small-p">{{ userdata.studentType }}</p>
+          <p class="small-p">{{ userdata.gpa }} GPA</p>
           <br>
         </div>
         <div style="padding: 20px;" v-else>
@@ -286,6 +288,8 @@ export default {
         lastname: null,
         school: null,
         degree: null,
+        student_type: null,
+        gpa: null,
         display_email: null,
       },
       resumes: [],
@@ -448,6 +452,8 @@ export default {
             lastname
             school
             degree
+            student_type
+            gpa
             email
             resumes {
               name
@@ -466,6 +472,8 @@ export default {
         this.userdata.lastname = res.lastname;
         this.userdata.school = res.school;
         this.userdata.degree = res.degree;
+        this.userdata.studentType = res.student_type;
+        this.userdata.gpa = res.gpa === 0.0 ? 'N/A' : res.gpa;
         this.userdata.email = res.email;
         // this.resumes = res.resumes;
         for (var r in res.resumes) {
@@ -514,6 +522,8 @@ export default {
           name: `${this.userdata.firstname} ${this.userdata.lastname}`,
           school: this.userdata.school,
           degree: this.userdata.degree,
+          student_type: this.userdata.studentType,
+          gpa: this.userdata.gpa === 'N/A' ? 0.0 : this.userdata.gpa,
           email: this.userdata.display_email,
           resume: {
             filename: this.resumes[index].filename,

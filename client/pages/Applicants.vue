@@ -46,7 +46,26 @@
                     <h2 class="new-applicant-card__title">{{ item.name }}</h2>
                     <p style="overflow: hidden;">
                       <i class="fa fa-graduation-cap new-applicant-card__blue-ico" aria-hidden="true"></i>{{ item.school || 'Did Not Provide' }}<br />
-                      <span style="color: grey;" v-if="item.degree">{{ item.degree }}<br /></span>
+                      <span v-if="item.school && item.student_type">
+                        <img
+                          :src="svgs.studentType"
+                          width=15
+                          height=15
+                          style="margin-right: 8px;"
+                        />{{ item.student_type }}<br />
+                      </span>
+                      <span 
+                        v-if="item.degree"
+                        style="color: grey; padding-left: 23px;"
+                      >
+                        {{ item.degree }}<br />
+                      </span>
+                      <span
+                        v-if="item.gpa"
+                        style="color: grey; padding-left: 23px;"
+                      >
+                        GPA: {{ item.gpa === 0.0 ? 'N/A' : item.gpa }}<br />
+                      </span>
                       <span style="color: grey;">{{ getApplicantNotesDisplayText(item) }}</span>
                     </p>
                     <p style="margin-left: 28px;" class="post-intro">
@@ -132,6 +151,7 @@
 
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import KunvetCharacterSvg from '@/assets/account/default_profile_picture.svg';
+  import StudentTypeSvg from '@/assets/account/student_type.svg';
 
   import DateHelper from '@/utils/DateHelper';
   import StringHelper from '@/utils/StringHelper';
@@ -180,6 +200,7 @@
         svgs: {
           locationMarker: LocationMarkerSvg,
           kunvetCharacter: KunvetCharacterSvg,
+          studentType: StudentTypeSvg,
         },
       };
     },
@@ -220,6 +241,8 @@
                 name
                 school
                 degree
+                student_type
+                gpa
                 notes
                 job_id
                 status
