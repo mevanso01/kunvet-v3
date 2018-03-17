@@ -290,7 +290,7 @@ export default {
         degree: null,
         major: null,
         student_type: null,
-        display_email: null,
+        email: null,
       },
       resumes: [],
       selectedResumeName: null,
@@ -520,7 +520,7 @@ export default {
           school: this.userdata.school,
           degree: degreeStringToDb(this.userdata.degree),
           major: this.userdata.major,
-          email: this.userdata.display_email,
+          email: this.userdata.email,
           resume: this.resumes.length > 0 ? ({
             filename: this.resumes[index].filename,
             resumeid: this.resumes[index].resumeid,
