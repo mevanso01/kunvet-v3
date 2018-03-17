@@ -14,7 +14,6 @@
 
 <script>
   import App from '@/App';
-  import Config from 'config';
   import Axios from 'axios';
 
   export default {
@@ -28,7 +27,7 @@
         this.$store.commit({
           type: 'resetState',
         });
-        Axios.get(`${Config.serverUrl}/auth/logout`).then(() => {
+        Axios.get('/auth/logout').then(() => {
         }, (error) => {
           console.error(error);
         });
