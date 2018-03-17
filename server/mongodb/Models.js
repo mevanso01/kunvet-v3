@@ -155,14 +155,18 @@ const ApplicantSchema = Mongoose.Schema({
   name: String,
   email: String,
   school: String,
-  degree: String,
-  student_type: {
+  degree: {
     type: String,
-    enum: ['undergraduate', 'graduate'],
+    enum: [
+      'pursuing_bachelor',
+      'bachelors',
+      'pursuing_master',
+      'masters',
+      'pursuing_phd',
+      'phd',
+    ],
   },
-  gpa: {
-    type: Number,
-  },
+  major: String,
   notes: String,
   resume: {
     filename: String,
@@ -254,9 +258,6 @@ const EmployeeProfileSchema = Mongoose.Schema({
   },
   school: {
     type: String,
-  },
-  gpa: {
-    type: Number,
   },
   graduation_date: {
     type: Date,
@@ -443,14 +444,16 @@ const AccountSchema = Mongoose.Schema({
   },
   degree: {
     type: String,
+    enum: [
+      'pursuing_bachelor',
+      'bachelors',
+      'pursuing_master',
+      'masters',
+      'pursuing_phd',
+      'phd',
+    ],
   },
-  student_type: {
-    type: String,
-    enum: ['undergraduate', 'graduate'],
-  },
-  gpa: {
-    type: Number,
-  },
+  major: String,
   display_email: {
     type: String,
   },

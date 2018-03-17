@@ -125,7 +125,7 @@
           <v-flex xs12 sm8 offset-sm2>
             <v-card>
               <v-card-text>
-                <h2>Lets get started</h2>
+                <h2>Let's get started</h2>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
                     label="First name"

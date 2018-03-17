@@ -157,12 +157,25 @@
                     </v-list-tile>
                     <v-list-tile v-if="data.degree" class="cust-tile-2">
                       <v-list-tile class="cust-tile-1">
-                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <img
+                          :src="svgs.degree"
+                          width=16
+                          height=16
+                          style="margin-left: 3px"
+                        />
                       </v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>
                           {{ data.degree }}
                         </v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile v-if="data.major" class="cust-tile-2">
+                      <v-list-tile class="cust-tile-1">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                      </v-list-tile>
+                      <v-list-tile-content>
+                        {{ data.major }}
                       </v-list-tile-content>
                     </v-list-tile>
                     <v-list-tile v-if="data.email" class="cust-tile-2">
@@ -248,8 +261,11 @@ import axios from 'axios';
 import gql from 'graphql-tag';
 import pdf from 'vue-pdf';
 
+import { degreeDbToString } from '@/constants/degrees';
+
 import AccountHeader from '@/components/AccountHeader';
 
+import DegreeSvg from '@/assets/account/degree.svg';
 import MajorPreferredSvg from '@/assets/job_detail/major_preferred.svg';
 import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
 
@@ -267,6 +283,7 @@ export default {
         name: null,
         school: null,
         degree: null,
+        major: null,
         email: null,
         notes: null,
         status: null,
@@ -280,6 +297,7 @@ export default {
       svgs: {
         majorPreferred: MajorPreferredSvg,
         resume: ResumeSvg,
+        degree: DegreeSvg,
       },
       dialogs: {
         showAccept: false,
@@ -352,8 +370,9 @@ export default {
                 name
                 email
                 school
-                notes
                 degree
+                major
+                notes
                 resume {
                   filename
                   resumeid
@@ -376,7 +395,8 @@ export default {
           this.data.email = res.email;
           this.data.notes = res.notes;
           this.data.status = res.status;
-          this.data.degree = res.degree;
+          this.data.degree = degreeDbToString(res.degree);
+          this.data.major = res.major;
           if (res.resume && res.resume.filename) {
             const url = `http://localhost:3000/file/get/${res.resume.filename}`;
             // const url = '../../../uploads/3a194d40-2268-11e8-b674-e3bddf9cbbe8.pdf';
