@@ -203,7 +203,7 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>
-                        {{ userdata.gpa }} 
+                        {{ userdata.gpa }}
                         <i
                           class="fa fa-edit acct-page-container__edit-icon"
                           @click="createEditModal('gpa', userdata.gpa, 'gpa', 'select', gpaSelectItems)"
@@ -357,51 +357,10 @@
             </v-layout>
 
             <v-dialog v-model="showFileModal" class="auto-dialog">
-              <v-card>
-                <v-card-title>
-                <div v-if="currentStatus === 'INITIAL' || currentStatus === 'SAVING'">
-                <form enctype="multipart/form-data" novalidate style="width: 100%;">
-                  <h1>Upload Resume</h1>
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      :name="uploadFieldName"
-                      :disabled="currentStatus === 'SAVING'"
-                      @change="filesChange($event.target.name, $event.target.files)"
-                      accept="application/*"
-                      class="input-file"
-                    >
-                      <p v-if="currentStatus === 'INITIAL'">
-                        Drag your file here<br> or click to browse
-                      </p>
-                      <p v-if="currentStatus === 'SAVING'">
-                        Uploading files...
-                      </p>
-                  </div>
-                  <div style="min-height: 21px; margin: 10px 0;">
-                    <p style="margin: 0;">{{ chosenFile }}</p>
-                  </div>
-                </form>
-                <v-text-field
-                  v-model="resumeName"
-                  style="padding: 0 2px;"
-                  name="edit-modal-input"
-                  hide-details
-                  single-line
-                  placeholder="Resume name"
-                ></v-text-field>
-                </div>
-                <div style="min-height: 40px;" v-if="currentStatus === 'FAILED'">
-                  <h3 style="display: inline-block;">
-                    Oops! Something went wrong on our end. Please try again later
-                  </h3>
-                </div>
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn flat="flat" @click="closeFileModal">Cancel</v-btn>
-                  <v-btn :disabled="!formData || !resumeName" flat="flat" @click="saveFile">Save</v-btn>
-                </v-card-actions>
-              </v-card>
+              <ResumeUploader
+                @uploaded="resumeUploaded"
+                @cancel="closeFileModal"
+              />
             </v-dialog>
 
             <v-dialog v-model="showDeleteResumeDialog">
@@ -511,6 +470,7 @@
 
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
+  import ResumeUploader from '@/components/ResumeUploader';
 
   import AccountDegreeSvg from '@/assets/account/account_degree.svg';
   import AccountEmailSvg from '@/assets/account/account_email.svg';
@@ -587,6 +547,7 @@
     components: {
       AccountHeader,
       JobsAndApplicationsCounters,
+      ResumeUploader,
     },
     computed: {
       // TODO
@@ -696,6 +657,15 @@
             this.currentStatus = 'FAILED';
           });
         }
+      },
+      resumeUploaded(_filename, _resumename) {
+        this.userdata.resumes = this.userdata.resumes.concat({
+          name: _resumename,
+          filename: _filename,
+          resumeid: null,
+        });
+        this.saveUserdata();
+        this.closeFileModal();
       },
       closeFileModal() {
         this.showFileModal = false;
@@ -823,7 +793,7 @@
               lastname: this.userdata.lastname,
               school: this.userdata.school,
               degree: this.userdata.degree,
-              student_type: this.userdata.studentType.toLowerCase(),
+              // student_type: this.userdata.studentType.toLowerCase(),
               gpa: this.userdata.gpa === 'N/A' ? 0.0 : this.userdata.gpa,
               // display_email: this.userdata.display_email,
               resumes: _resumes,
@@ -839,7 +809,7 @@
                   lastname
                   school
                   degree
-                  student_type 
+                  student_type
                   gpa
                   email
                   org_list

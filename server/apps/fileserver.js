@@ -328,6 +328,13 @@ router.post('/delete/:id', async (ctx) => {
     ctx.body = JSON.stringify(response);
     return;
   }
+  /*
+  try {
+    fileSlot = await Models.Applicant.findOne({
+       resume: { filename: fileId}
+    });
+  }
+  */
 
   const fileId = ctx.params.id;
   let fileSlot = null;
@@ -345,34 +352,44 @@ router.post('/delete/:id', async (ctx) => {
     return;
   }
 
-  const backend = getBackend(fileSlot.backend);
+  let usedInApplication = null;
   try {
-    await backend.deleteFile(fileSlot);
-  } catch (e) {
-    const response = {
-      success: false,
-      message: e.message,
-    };
-    ctx.status = 500;
-    ctx.body = JSON.stringify(response);
-    console.log(response);
-    return;
-  }
-  try {
-    fileSlot = await Models.File.remove({
-      _id: fileId,
+    usedInApplication = await Models.Applicant.findOne({
+      resume: { filename: fileId },
     });
   } catch (e) {
-    console.log(e);
-    const response = {
-      success: false,
-      message: 'Unable to remove fileslot',
-    };
-    ctx.status = 500;
-    ctx.body = JSON.stringify(response);
-    return;
+    usedInApplication = null;
   }
 
+  if (!usedInApplication) {
+    const backend = getBackend(fileSlot.backend);
+    try {
+      await backend.deleteFile(fileSlot);
+    } catch (e) {
+      const response = {
+        success: false,
+        message: e.message,
+      };
+      ctx.status = 500;
+      ctx.body = JSON.stringify(response);
+      console.log(response);
+      return;
+    }
+    try {
+      fileSlot = await Models.File.remove({
+        _id: fileId,
+      });
+    } catch (e) {
+      console.log(e);
+      const response = {
+        success: false,
+        message: 'Unable to remove fileslot',
+      };
+      ctx.status = 500;
+      ctx.body = JSON.stringify(response);
+      return;
+    }
+  }
   const response = {
     success: true,
     message: 'Success',
