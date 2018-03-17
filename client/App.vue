@@ -185,7 +185,7 @@ export default {
           { title: 'Sign up', icon: null, href: '/signup' },
         ],
         [
-          { title: 'Jobs', icon: sfg, href: '/', subItems: [] },
+          { title: 'Jobs', icon: sfg, href: '/myjobs', subItems: [] },
           { title: 'Notifications', icon: bellg, href: '/', subItems: [] },
           { title: 'Account', icon: personSvgG, href: '/account', subItems: [{ text: 'Settings', route: '/settings' }] },
         ],
