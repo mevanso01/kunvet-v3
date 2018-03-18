@@ -147,6 +147,9 @@ import Vuetify from 'vuetify';
 import Store from '@/store';
 import VuexLS from '@/store/persist';
 import gql from 'graphql-tag';
+
+import StringHelper from '@/utils/StringHelper';
+
 // svgs
 // temp globe icon
 import AccountGlobeSvg from '@/assets/account/account_globe.svg';
@@ -170,6 +173,12 @@ Vue.use(Vuetify, {
     minifyTheme(val) {
       return process.env.NODE_ENV === 'production' ? val.replace(/[\s|\r\n|\r|\n]/g, '') : null;
     },
+  },
+});
+
+Vue.mixin({
+  methods: {
+    capitalize: StringHelper.capitalize,
   },
 });
 
