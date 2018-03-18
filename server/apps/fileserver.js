@@ -361,19 +361,23 @@ router.post('/delete/:id', async (ctx) => {
     usedInApplication = null;
   }
 
-  if (!usedInApplication) {
+  if (!usedInApplication && fileSlot) {
     const backend = getBackend(fileSlot.backend);
     try {
       await backend.deleteFile(fileSlot);
     } catch (e) {
-      const response = {
-        success: false,
-        message: e.message,
-      };
-      ctx.status = 500;
-      ctx.body = JSON.stringify(response);
-      console.log(response);
-      return;
+      if (e.message.substring(0, 33) === 'ENOENT: no such file or directory') {
+        console.log('File not found, continuing anyway');
+      } else {
+        const response = {
+          success: false,
+          message: e.message,
+        };
+        ctx.status = 500;
+        ctx.body = JSON.stringify(response);
+        console.log(response);
+        return;
+      }
     }
     try {
       fileSlot = await Models.File.remove({

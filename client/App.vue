@@ -23,8 +23,13 @@
         <div class="hidden-sm-and-up">
           <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </div>
+        <v-toolbar-items v-if="acct === 0" class="hidden-xs">
+          <router-link v-for="item in items[acct]" :to="item.href" class="toolbar__items">
+            <v-btn flat>{{ item.title }}</v-btn>
+          </router-link>
+        </v-toolbar-items>
 
-        <v-toolbar-items class="hidden-xs">
+        <v-toolbar-items v-else class="hidden-xs">
           <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
             <v-menu offset-y v-if="item.subItems" open-on-hover>
               <v-btn flat style="width: 10px;" slot="activator">
@@ -32,9 +37,6 @@
                 <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
               </v-btn>
               <v-list v-if="item.subItems.length > 0">
-                <!--<v-list-tile v-if="false && subItems === 'notifcations'" v-for="(subitem, index) in getNotifications()" @click="routeTo(subitem.route)">
-                  <v-list-tile-title>{{ subitem.text }}</v-list-tile-title>
-                </v-list-tile>-->
                 <v-list-tile v-for="(subitem, index) in item.subItems" :key="index" @click="routeTo(subitem.route)">
                   <v-list-tile-title>{{ subitem.text }}</v-list-tile-title>
                 </v-list-tile>
@@ -103,7 +105,7 @@
       </v-toolbar>
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
-        <router-link :to="item.href" v-for="item in items[acct]" :key="item.title">
+        <router-link :to="item.href" v-for="item in sidebarItems[acct]" :key="item.title">
           <v-list-tile>
             <v-list-tile-content>
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -200,6 +202,28 @@ export default {
           { title: 'Jobs', icon: sfw, href: '/myjobs', subItems: [] },
           { title: 'Notifications', icon: bellw, href: '/', subItems: [] },
           { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }] },
+        ],
+      ],
+      sidebarItems: [
+        [
+          { title: 'Login', icon: null, href: '/login' },
+          { title: 'Sign up', icon: null, href: '/signup' },
+        ],
+        [
+          { title: 'Applied Jobs', href: '/appliedjobs' },
+          { title: 'Saved Jobs', href: '/savedjobs' },
+          { title: 'Notifications', href: '/notifications' },
+          { title: 'Account', href: '/account' },
+          { title: 'Post Individual Job', href: '/createnewjob' },
+          { title: 'My Individual Jobs', href: '/myjobs' },
+          { title: 'Applicants', href: '/applicants' },
+        ],
+        [
+          { title: 'Post New Job',  href: '/createnewjob' },
+          { title: 'My Jobs',  href: '/myjobs' },
+          { title: 'Applicants', href: '/applicants' },
+          { title: 'Notifications', href: '/notifications' },
+          { title: 'Account', href: '/account' },
         ],
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },

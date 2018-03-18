@@ -636,10 +636,8 @@
         this.deleteResumeIndex = null;
         this.deleteResumeName = null;
         if (this.userdata.resumes[index].filename) {
-          const headers = { emulateJSON: true };
-          const data = { filename: this.userdata.resumes[index].filename };
-          console.log(data);
-          this.$http.post('http://localhost:3000/removefile', data, headers).then(() => {
+          const filename = this.userdata.resumes[index].filename;
+          axios.post(`/file/delete/${filename}`).then(() => {
             this.userdata.resumes.splice(index, 1);
             this.saveUserdata();
           }, (error) => {
@@ -898,7 +896,7 @@
           this.userdata.degree = res.degree ? degreeDbToString(res.degree) : null;
           this.userdata.major = res.major;
           this.userdata.email = res.email;
-          this.userdata.resumes = res.resumes;
+          this.userdata.resumes = [].concat(res.resumes);
           this.commitUserdata();
           if (res.org_list) {
             this.populateOrgList(res.org_list);
