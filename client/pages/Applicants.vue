@@ -27,42 +27,43 @@
           >
             <div class="myjobs-container">
               <div class="inner">
-                <div class="new-applicant-card__info" style="padding-bottom: 20px;">
-                  <div class="new-applicant-card__profile-pic-container">
-                    <figure>
-                      <div v-if="item.status !== 'opened'" class="new-applicant-card__unread-circle" />
-                      <img
-                        :src="svgs.kunvetCharacter"
-                      />
-                      <div style="font-size: 0.6em; color: grey; padding-left: 5px;">
-                        <timeago :since="item.date" />
+                <div class="new-applicant-card__info">
+                  <v-layout row wrap>
+                    <v-flex xs12 sm2>
+                      <div class="new-applicant-card__profile-pic-container">
+                        <figure>
+                          <div v-if="item.status !== 'opened'" class="new-applicant-card__unread-circle" />
+                            <img
+                              :src="svgs.kunvetCharacter"
+                            />
+                              <div style="font-size: 0.6em; color: grey; padding-left: 5px;">
+                                <timeago :since="item.date" />
+                              </div>
+                        </figure>
                       </div>
-                      <!--<figurecaption style="font-size: 0.6em; color: grey; padding-left: 5px;">
-                        <timeago :since="item.date" />
-                      </figurecaption>-->
-                    </figure>
-                  </div>
-                  <router-link :to="'view-applicant/'+item._id">
-                    <h2 class="new-applicant-card__title">{{ item.name }}</h2>
-                    <p style="overflow: hidden;">
-                      <i class="fa fa-graduation-cap new-applicant-card__blue-ico" aria-hidden="true"></i>{{ item.school || 'Did Not Provide' }}<br />
-                      <span 
-                        v-if="item.degree"
-                        style="color: grey; padding-left: 23px;"
-                      >
-                        {{ item.degree }}<br />
-                      </span>
-                      <span 
-                        v-if="item.major"
-                        style="color: grey; padding-left: 23px;"
-                      >
-                        {{ item.major }}<br />
-                      </span>
-                      <span style="color: grey;">{{ getApplicantNotesDisplayText(item) }}</span>
-                    </p>
-                    <p style="margin-left: 28px;" class="post-intro">
-                    </p>
-                  </router-link>
+                    </v-flex>
+                    <v-flex xs12 sm10>
+                      <router-link :to="'view-applicant/'+item._id">
+                        <h2 class="new-applicant-card__title">{{ item.name }}</h2>
+                        <p style="overflow: hidden;">
+                          <i class="fa fa-graduation-cap new-applicant-card__blue-ico" aria-hidden="true"></i>{{ item.school || 'School not provided' }}<br />
+                          <span 
+                            v-if="item.degree"
+                            style="color: grey; padding-left: 23px;"
+                          >
+                            {{ item.degree }}<br />
+                          </span>
+                          <span 
+                            v-if="item.major"
+                            style="color: grey; padding-left: 23px;"
+                          >
+                            {{ item.major }}<br />
+                          </span>
+                          <span style="color: grey;">{{ getApplicantNotesDisplayText(item) }}</span>
+                        </p>
+                      </router-link>
+                    </v-flex>
+                  </v-layout>
                 </div>
                 <div class="btn-holder">
                   <div class="btn-holder__right-elements">

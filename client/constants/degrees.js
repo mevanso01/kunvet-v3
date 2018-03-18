@@ -1,9 +1,9 @@
 const degrees = {
-  pursuing_bachelor: 'Currently pursuing Bachelor\'s degree',
+  pursuing_bachelor: 'Pursuing Bachelor\'s degree',
   bachelors: 'Bachelor\'s degree',
-  pursuing_master: 'Currently pursing Master\'s degree',
+  pursuing_master: 'Pursuing Master\'s degree',
   masters: 'Master\'s degree',
-  pursuing_phd: 'Currently pursuing PhD degree',
+  pursuing_phd: 'Pursuing PhD degree',
   phd: 'PhD degree',
 };
 
