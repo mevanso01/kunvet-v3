@@ -57,6 +57,9 @@ p > a {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
+    transform: translate3d(0, -18px, 0) scale(0.75);
+}
 .input-group__details {
   color: #1976D2;
 }
@@ -114,6 +117,12 @@ p > a {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+.no-padding-select {
+  padding-top: 0;
+}
+.no-padding-select label {
+  top: 0;
+}
 .no-border-radius {
   border-radius: 0;
 }

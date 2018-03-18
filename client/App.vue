@@ -49,7 +49,7 @@
     </v-toolbar>
     <v-toolbar
       dense flat
-      v-if="isJobPostRoute"
+      v-if="isJobPostRoute && acct !== 0"
       class="job-post__helper-nav-bar"
     >
       <v-toolbar-items>
@@ -151,13 +151,11 @@ import gql from 'graphql-tag';
 import StringHelper from '@/utils/StringHelper';
 
 // svgs
-// temp globe icon
-import AccountGlobeSvg from '@/assets/account/account_globe.svg';
 import sfw from './assets/navbar/suitcase_full_white.svg';
 import sfg from './assets/navbar/suitcase_full_gray.svg';
 import bellw from './assets/navbar/bell_full_white.svg';
 import bellg from './assets/navbar/bell_full_gray.svg';
-// import personSvgW from './assets/navbar/person_white.svg';
+import peopleFullWhite from './assets/navbar/people_full_white.svg';
 import personSvgG from './assets/navbar/person_gray.svg';
 import logoNav from './assets/navbar/kunvet_logo_nav.svg';
 import logoFooter from './assets/navbar/kunvet_logo_footer.svg';
@@ -201,7 +199,7 @@ export default {
         [
           { title: 'Jobs', icon: sfw, href: '/myjobs', subItems: [] },
           { title: 'Notifications', icon: bellw, href: '/', subItems: [] },
-          { title: 'Account', icon: AccountGlobeSvg, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }] },
+          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }] },
         ],
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },

@@ -202,6 +202,7 @@
                   <h3 class="acct-h3">
                     About Us
                     <i
+                      v-if="!bdata.biography && bdata.biography !== ''"
                       class="fa fa-edit acct-page-container__edit-icon"
                       @click="createEditModal('biography', bdata.biography, 'biography')"
                     />

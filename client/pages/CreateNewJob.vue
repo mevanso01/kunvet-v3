@@ -67,18 +67,6 @@
 .createnewjob-container .radio-group label:after {
   content: '';
 }
-/*.createnewjob-container .cust-radio-box .input-group.radio.input-group--active label,
-.createnewjob-container .multi-checkbox .input-group.checkbox.input-group--active label {
-  color: #fff;
-}
-.createnewjob-container .multi-checkbox {
-  width: auto;
-  min-height: 38px;
-}
-.createnewjob-container .cust-radio-box .input-group--active,
-.createnewjob-container .multi-checkbox .input-group--active {
-  background-color: #555 !important;
-} */
 .requirements .flex {
   padding-top: 0;
   padding-bottom: 0;
@@ -166,19 +154,24 @@
               ref="addressField"
               label="Address"
               required
+              :rules="[() => !!(address) || !submitted || 'Required',
+                       () => !!(latitude) && !!(longitude) || !submitted || 'Invalid address']"
             ></v-text-field>
+            <v-checkbox class="optional" style="margin-top: 16px;"
+              label="Is this job on a school campus?"
+              v-model="isCommunity"
+              hide-details
+            ></v-checkbox>
+            <v-select class="optional no-padding-select"
+              v-if="isCommunity"
+              label="Which one?"
+              v-model="community"
+              v-bind:items="schools"
+              autocomplete
+              hide-details
+              single-line
+            ></v-select>
           </v-flex>
-
-          <!--
-          <v-flex xs12 class="padding-15px-right-sm-up">
-            <GmapAutocomplete @place_changed="setPlace" class="addr-field">
-            </GmapAutocomplete>
-          </v-flex>
-
-          <v-flex xs12 md6 class="padding-15px-right-sm-up">
-            Coordinates: {{ latitude }}, {{ longitude }}
-          </v-flex>
-          -->
         </v-layout>
 
         <br>
@@ -188,14 +181,11 @@
             <v-radio-group v-model="type"
               row class="no-padding"
               hide-details
-              :rules="[(type) => !!(type) || 'Required']"
+              :rules="[(type) => !!(type) || !submitted || 'Required']"
               requred>
               <v-radio label="Full time" value="fulltime"></v-radio>
               <v-radio label="Part time" value="parttime"></v-radio>
               <v-radio label="Both" value="both"></v-radio>
-              <!--<v-radio label="Full time" value="['fulltime']"></v-radio>
-              <v-radio label="Part time" value="['parttime']"></v-radio>
-              <v-radio label="Both" value="['fulltime', 'parttime']"></v-radio>-->
             </v-radio-group>
           </div>
         </v-flex>
@@ -315,12 +305,32 @@
         <br>
         <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
         <p class="error_p" v-if="!responsibilities_valid">Required</p>
-        <vue-editor id="responsibilities" v-model="responsibilities" :editorToolbar="customEditorToolbar"></vue-editor>
+        <vue-editor id="responsibilities" v-model="responsibilities" @input="test" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
         <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience/Qualifications</h3>
         <p class="error_p" v-if="!experience_valid">Required</p>
         <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
+
+        <br>
+        <h3 style="margin-bottom: 5px;">Position tags</h3>
+        <p>Please select at least one catagory that is relevant to this job</p>
+        <v-select class="no-padding-select"
+          label="Select..."
+          v-bind:items="tags"
+          autocomplete
+          hide-details
+          multiple
+          single-line
+        ></v-select>
+        <br>
+        <v-select class="optional"
+          label="How did you hear of Kunvet?"
+          v-model="howDidYouHear"
+          v-bind:items="howDidYouHearItems"
+          autocomplete
+          hide-details
+        ></v-select>
 
         </v-form>
 
@@ -354,7 +364,7 @@ import { VueEditor } from 'vue2-editor';
 import gql from 'graphql-tag';
 import VuexLS from '@/store/persist';
 import * as VueGoogleMaps from 'vue2-google-maps';
-
+import Schools from '@/constants/schools';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -366,6 +376,7 @@ const createJobMutation = gql`
         title
         description
         address
+        community
         latitude
         longitude
         type
@@ -395,6 +406,7 @@ const updateJobMutation = gql`
         title
         description
         address
+        community
         latitude
         longitude
         type
@@ -453,13 +465,19 @@ export default {
       degree: '',
       active: false,
       confirmPost: false,
-
+      isCommunity: false,
+      community: null,
+      howDidYouHear: null,
+      schools: Schools.schools,
+      tags: [],
       educationOptions: [
         'None (recommended)',
         'High School', 'Bachelor Degree',
         'Masters Degree', 'Doctorate/PHD',
       ],
-
+      howDidYouHearItems: [
+        'Flyers', 'Word of mouth', 'Email', 'Instagram', 'Wechat', 'Other',
+      ],
       customEditorToolbar: [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
         // ['blockquote', 'code-block'],
@@ -473,6 +491,9 @@ export default {
     };
   },
   methods: {
+    test(e) {
+      console.log(e);
+    },
     setPlace(place) {
       if (!place.geometry) {
         return;
@@ -519,7 +540,6 @@ export default {
       this.active = false;
       if (this.$route.params.id) {
         const job = this.createJobArray();
-        console.log(job);
         const id = this.$route.params.id;
         this.$apollo.mutate({
           mutation: updateJobMutation,
@@ -549,7 +569,6 @@ export default {
       if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
       if (this.shift.length <= 0) { this.valid = false; }
       if (this.longitude == null || this.latitude == null) { this.valid = false; }
-      console.log(showDialog, this.valid);
       if (showDialog && this.valid) {
         this.confirmPost = true;
       }
@@ -589,6 +608,7 @@ export default {
         date: doesJobActivelyExist ? this.date : Date.now(),
         description: this.description,
         address: this.address,
+        community: this.isCommunity ? this.community : null,
         latitude: this.latitude,
         longitude: this.longitude,
         type: this.jobTypeStrToType(this.type),
@@ -618,6 +638,7 @@ export default {
             date
             description
             address
+            community
             latitude
             longitude
             type
@@ -646,6 +667,7 @@ export default {
           this.active = job.active;
           this.date = job.date;
           this.address = job.address;
+          this.community = job.community;
           this.latitude = job.latitude;
           this.longitude = job.latitude;
           if (job.type.length > 1) {
