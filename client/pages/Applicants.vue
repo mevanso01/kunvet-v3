@@ -36,9 +36,9 @@
                             <img
                               :src="svgs.kunvetCharacter"
                             />
-                              <div style="font-size: 0.6em; color: grey; padding-left: 5px;">
-                                <timeago :since="item.date" />
-                              </div>
+                            <div style="font-size: 0.6em; color: grey; padding-left: 5px;">
+                              <timeago :since="item.date" />
+                            </div>
                         </figure>
                       </div>
                     </v-flex>
@@ -59,7 +59,9 @@
                           >
                             {{ item.major }}<br />
                           </span>
-                          <span style="color: grey;">{{ getApplicantNotesDisplayText(item) }}</span>
+                          <span style="color: grey;">
+                            {{ getApplicantNotesDisplayText(item) }}
+                          </span>
                         </p>
                       </router-link>
                     </v-flex>

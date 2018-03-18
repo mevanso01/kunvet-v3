@@ -120,6 +120,9 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  left: -4px;
 }
 .new-applicant-card__profile-pic-container {
   position: relative;
