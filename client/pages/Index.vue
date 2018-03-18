@@ -276,7 +276,8 @@
                 :job="job"
                 :saveJobFunc="saveJob"
                 :isSaved="isSaved(job._id)"
-                :distance="getDistance(job.latitude, job.longitude)"/>
+                :fromCoordinates="{ latitude: selectedLat, longitude: selectedLong }"
+              />
           </div>
         </v-flex>
       </v-layout>
@@ -298,6 +299,8 @@ import FirstViewCardRText from '@/components/FirstViewCardRText';
 import FirstViewCardLText from '@/components/FirstViewCardLText';
 import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
+import DistanceHelper from '@/utils/DistanceHelper';
+import Coordinates from '@/constants/coordinates';
 
 Vue.use(VueApollo);
 
@@ -385,8 +388,8 @@ export default {
       selectedTypes: Store.state.selectedTypes,
       selectedPositions: Store.state.selectedPositions,
       selectedShifts: Store.state.selectedShifts,
-      selectedLat: 33.6459163,
-      selectedLong: -117.8429332,
+      selectedLat: Coordinates.uci.latitude,
+      selectedLong: Coordinates.uci.longitude,
       vuextest: Store.state.count,
       svgs: {
         cityImage: CitySvg,
@@ -449,25 +452,19 @@ export default {
       }
     },
     getDistance(lat, long) {
-      return `${this.computeDistance(lat, long).toFixed(1)} miles away`;
+      return `${this.computeDistance(lat, long)} miles away`;
     },
     computeDistance(lat, long) {
-      // const degrees = Math.sqrt(((this.selectedLat - lat) ** 2) + ((this.selectedLong - long) ** 2));
-      // return (degrees * 69).toFixed(1); // convert to miles
-      var R = 3958.3; // miles  // metres = 6371e3
-      var φ1 = this._toRad(lat);
-      var φ2 = this._toRad(this.selectedLat);
-      var Δφ = this._toRad(this.selectedLat - lat);
-      var Δλ = this._toRad(this.selectedLong - long);
-
-      var a = (Math.sin(Δφ / 2) * Math.sin(Δφ / 2)) + (Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2));
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-      var d = R * c;
-      return d;
-    },
-    _toRad(degrees) {
-      return degrees * (Math.PI / 180);
+      return DistanceHelper.computeDistance(
+        {
+          latitude: this.selectedLat,
+          longitude: this.selectedLong,
+        },
+        {
+          latitude: lat,
+          longitude: long,
+        },
+      );
     },
     compareDistance(a, b) {
       // should we use the more accurate computeDistance function?

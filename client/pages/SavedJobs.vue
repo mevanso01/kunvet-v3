@@ -12,7 +12,12 @@
       <v-layout style="padding-bottom: 32px;"> 
         <v-flex xs12 class="no-padding">
           <div v-for="job in findJobs" :index="job._id">
-            <MainJobCard :job="job" :saveJobFunc="unsaveJob" :isSaved="true" />
+            <MainJobCard 
+              :job="job"
+              :saveJobFunc="unsaveJob"
+              :isSaved="true"
+              :defaultFromUCI="true"
+            />
           </div>
         </v-flex>
       </v-layout>
@@ -73,6 +78,7 @@
             findAccount (filter: {
               _id: $uid
             }) {
+              _id
               saved_jobs
             }
           }`),
@@ -128,6 +134,7 @@
               findAccount (filter: {
                 _id: $uid
               }) {
+                id
                 saved_jobs
               }
             }`),

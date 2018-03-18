@@ -30,7 +30,9 @@
           </div>
           <div class="carditem">
             <p style="color: #A7A7A7; text-decoration: underline;">
-              <span class="carditem-image"><img :src="svgs.locationMarker" /></span><span v-if="showAddress">{{ job.address }}</span><span v-else>{{ distance }}</span>
+              <span class="carditem-image"><img :src="svgs.locationMarker" /></span><Distance v-if="defaultFromUCI || fromCoordinates" :first="defaultFromUCI ? uciCoordinates : fromCoordinates" :second="getCoordinatesFromJob(job)" />
+              <br />
+              <span class="carditem-image"><img :src="svgs.locationMarker" /></span><span>{{ job.address }}</span>
             </p>
           </div>
           <div class="carditem">
@@ -50,12 +52,20 @@
   </div>
 </template>
 <script>
+import Distance from '@/components/Distance';
+
+import Coordinates from '@/constants/coordinates';
+
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
+
 import StudentSvg from '@/assets/job_posts/user_1.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 
 export default {
-  props: ['job', 'saveJobFunc', 'isSaved', 'distance', 'showAddress'],
+  props: ['job', 'saveJobFunc', 'isSaved', 'defaultFromUCI', 'fromCoordinates'],
+  components: {
+    Distance,
+  },
   data() {
     return {
       svgs: {
@@ -67,6 +77,9 @@ export default {
   computed: {
     computeIsSaved() {
       return this.isSaved;
+    },
+    uciCoordinates() {
+      return Coordinates.uci;
     },
   },
   methods: {
@@ -81,6 +94,9 @@ export default {
     },
     saveJobClicked(id) {
       this.saveJobFunc(id);
+    },
+    getCoordinatesFromJob({ latitude, longitude }) {
+      return { latitude, longitude };
     },
   },
 };
