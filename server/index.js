@@ -91,6 +91,25 @@ Db.connect()
     process.exit(1);
   });
 
-app.listen(port, () => {
-  Logger.info(`Up and running! Listening on port ${port}`);
-});
+if (!process.env.DISABLE_SERVER) {
+  app.listen(port, () => {
+    Logger.info(`Up and running! Listening on port ${port}`);
+  });
+}
+
+// Exports
+
+// Google Cloud Functions
+const gcf = app.callback();
+
+// AWS Lambda
+/* eslint-disable import/no-mutable-exports, global-require */
+let lambda = null;
+if (process.env.TARGET === 'lambda') {
+  const AwsServerlessExpress = require('aws-serverless-express');
+  const server = AwsServerlessExpress.createServer(app.callback());
+  lambda = (event, context) => AwsServerlessExpress.proxy(server, event, context);
+}
+/* eslint-enable */
+
+export { gcf, lambda };

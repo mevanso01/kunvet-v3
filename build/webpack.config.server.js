@@ -84,4 +84,29 @@ if (process.env.NODE_ENV === 'production') {
   wpconf.devtool = 'inline-cheap-source-map';
 }
 
+switch (process.env.TARGET) {
+  case 'lambda':
+    // AWS Lambda
+    wpconf.plugins.push(new webpack.DefinePlugin({
+      'process.env.TARGET': '"lambda"',
+      'process.env.DISABLE_SERVER': 'true',
+    }));
+    break;
+  case 'gcf':
+    // Google Cloud Functions
+    wpconf.plugins.push(new webpack.DefinePlugin({
+      'process.env.TARGET': '"gcf"',
+      'process.env.DISABLE_SERVER': 'true',
+    }));
+    break;
+  case 'normal':
+  default:
+    // Normal long-running server
+    wpconf.plugins.push(new webpack.DefinePlugin({
+      'process.env.TARGET': '"normal"',
+      'process.env.DISABLE_SERVER': 'false',
+    }));
+    break;
+}
+
 module.exports = wpconf;
