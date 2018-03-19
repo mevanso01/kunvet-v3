@@ -72,19 +72,6 @@ const wpconf = {
   ],
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-            keep_fnames: true,
-            keep_classnames: true,
-          },
-          mangle: {
-            keep_fnames: true,
-            keep_classnames: true,
-          },
-        },
-      }),
     ],
   },
 };
