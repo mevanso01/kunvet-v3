@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const utils = require('./utils');
 
 // Build static config
@@ -136,6 +137,18 @@ const wpconf = {
       chunksSortMode: 'dependency',
     }),
   ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+            drop_console: true,
+          },
+        },
+      }),
+    ],
+  },
 };
 
 if (process.env.NODE_ENV === 'development') {
