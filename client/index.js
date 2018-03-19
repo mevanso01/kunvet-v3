@@ -44,9 +44,6 @@ import CreateResume from '@/pages/CreateResume';
 import MyOrg from '@/pages/MyOrg';
 import PhotoGallery from '@/pages/PhotoGallery';
 
-// Developer sandbox
-import Sandbox from '@/pages/Sandbox';
-
 // DEBUG
 import FileClient from '@/utils/FileClient';
 
@@ -189,6 +186,8 @@ const router = new VueRouter({
 });
 
 if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line global-require
+  const Sandbox = require('@/pages/Sandbox').default;
   router.addRoutes([
     {
       path: '/sandbox',
