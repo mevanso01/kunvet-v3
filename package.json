@@ -15,7 +15,8 @@
     "build": "cross-env NODE_ENV=production npm-run-all --parallel build:server build:client",
     "build:server": "webpack -p --progress --config build/webpack.config.server.js --mode production",
     "build:client": "webpack -p --progress --config build/webpack.config.client.js --mode production",
-    "eslint": "eslint --format 'node_modules/eslint-friendly-formatter' server/ client/ common/"
+    "eslint": "eslint --format 'node_modules/eslint-friendly-formatter' server/ client/ common/",
+    "reset-credentials": "cp config/credentials{.example,}.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
