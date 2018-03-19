@@ -44,13 +44,8 @@ import CreateResume from '@/pages/CreateResume';
 import MyOrg from '@/pages/MyOrg';
 import PhotoGallery from '@/pages/PhotoGallery';
 
-// DEBUG
-import FileClient from '@/utils/FileClient';
-
 import App from '@/App';
 import store from '@/store';
-
-window.FileClient = FileClient;
 
 /* Vue.use(Vuetify, {
   theme: {
