@@ -242,3 +242,4 @@ $RECYCLE.BIN/
 /server-dist
 /config.json
 /uploads
+/config/credentials.js

@@ -1,7 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
+const Config = require('config');
 const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
+const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const utils = require('./utils');
 
 const wpconf = {
@@ -23,6 +25,8 @@ const wpconf = {
     unsafeCache: /data/,
     alias: {
       '@': utils.resolve('server'),
+      config$: path.resolve(__dirname, '../common/StaticConfigProvider.js'),
+      static_config$: path.resolve(__dirname, '../virtual/staticConfig.json'),
     },
   },
   node: {
@@ -48,6 +52,10 @@ const wpconf = {
     ],
   },
   plugins: [
+    new VirtualModulePlugin({
+      moduleName: 'virtual/staticConfig.json',
+      contents: JSON.stringify(Config),
+    }),
     new webpack.IgnorePlugin(/vertx/),
     new webpack.IgnorePlugin(/^\.\/data\/parser$/), // for mimer
     new GeneratePackageJsonPlugin({}, `${__dirname}/../package.json`),

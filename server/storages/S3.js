@@ -6,7 +6,7 @@ import Mime from 'mime-types';
 import Config from 'config';
 import Storage from '../Storage';
 
-Aws.config.update(Config.get('private.Aws'));
+Aws.config.update(Config.get('private.aws'));
 
 export default class S3 extends Storage {
   constructor() {
@@ -29,7 +29,7 @@ export default class S3 extends Storage {
     const name = await this.constructor._getS3Key(file);
 
     const params = {
-      Bucket: Config.get('private.files.S3.bucket'),
+      Bucket: Config.get('private.files.s3.bucket'),
       Fields: {
         Key: name,
       },
@@ -48,7 +48,7 @@ export default class S3 extends Storage {
 
   async getLink(file) {
     const url = this.s3.getSignedUrl('getObject', {
-      Bucket: Config.get('private.files.S3.bucket'),
+      Bucket: Config.get('private.files.s3.bucket'),
       Key: file.backendPath,
       Expires: 10, // seconds
     });
@@ -58,7 +58,7 @@ export default class S3 extends Storage {
 
   async deleteFile(file) {
     return this.s3.deleteObject({
-      Bucket: Config.get('private.files.S3.bucket'),
+      Bucket: Config.get('private.files.s3.bucket'),
       Key: file.backendPath,
     }).promise();
   }

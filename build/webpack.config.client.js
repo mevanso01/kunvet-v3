@@ -22,7 +22,6 @@ function styleLoaders(options) {
 
 // Build static config
 delete Config.private;
-// fs.writeFileSync(path.resolve(__dirname, '../dist/staticConfig.json'), JSON.stringify(Config));
 
 const wpconf = {
   entry: {
@@ -38,7 +37,7 @@ const wpconf = {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
       '@': utils.resolve('client'),
-      config$: path.resolve(__dirname, '../client/StaticConfigProvider.js'),
+      config$: path.resolve(__dirname, '../common/StaticConfigProvider.js'),
       static_config$: path.resolve(__dirname, '../virtual/staticConfig.json'),
     },
     unsafeCache: /data/,
