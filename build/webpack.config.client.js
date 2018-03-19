@@ -7,19 +7,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const utils = require('./utils');
 
-function styleLoaders(options) {
-  const output = [];
-  const loaders = utils.cssLoaders(options);
-  for (const extension of Object.keys(loaders)) {
-    const loader = loaders[extension];
-    output.push({
-      test: new RegExp(`\\.${extension}$`),
-      use: loader,
-    });
-  }
-  return output;
-}
-
 // Build static config
 delete Config.private;
 
@@ -54,12 +41,55 @@ const wpconf = {
         },
       },
       {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.sass$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader?indentedSyntax',
+        ],
+      },
+      {
+        test: /\.styl$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'stylus-loader',
+        ],
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: utils.cssLoaders({
-            extract: utils.isProduction,
-          }),
+          loaders: {
+            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
+            // the "scss" and "sass" values for the lang attribute to the right configs here.
+            // other preprocessors should work out of the box, no loader config like this necessary.
+            'scss': [
+              'vue-style-loader',
+              'css-loader',
+              'sass-loader',
+            ],
+            'sass': [
+              'vue-style-loader',
+              'css-loader',
+              'sass-loader?indentedSyntax',
+            ],
+          },
         },
       },
       {
@@ -83,7 +113,6 @@ const wpconf = {
           name: 'static/fonts/[name].[hash:7].[ext]',
         },
       },
-      ...styleLoaders(),
     ],
   },
   plugins: [

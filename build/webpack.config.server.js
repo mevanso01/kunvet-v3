@@ -4,6 +4,7 @@ const eslintFormatter = require('eslint-friendly-formatter');
 const Config = require('config');
 const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const utils = require('./utils');
 
 const wpconf = {
@@ -60,6 +61,23 @@ const wpconf = {
     new webpack.IgnorePlugin(/^\.\/data\/parser$/), // for mimer
     new GeneratePackageJsonPlugin({}, `${__dirname}/../package.json`),
   ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+            keep_fnames: true,
+            keep_classnames: true,
+          },
+          mangle: {
+            keep_fnames: true,
+            keep_classnames: true,
+          },
+        },
+      }),
+    ],
+  },
 };
 
 if (process.env.NODE_ENV === 'production') {
