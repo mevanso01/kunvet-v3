@@ -50,6 +50,15 @@ const wpconf = {
         loader: 'babel-loader?cacheDirectory',
         exclude: /node_modules/,
       },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader?cacheDirectory',
+        include: /node_modules/,
+        options: {
+          babelrc: false,
+          plugins: ['transform-async-to-generator'],
+        },
+      },
     ],
   },
   plugins: [
