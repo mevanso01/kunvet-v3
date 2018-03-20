@@ -36,7 +36,7 @@
                             <img
                               :src="svgs.kunvetCharacter"
                             />
-                            <div style="font-size: 0.6em; color: grey; padding-left: 5px;">
+                            <div style="font-size: 0.6em; color: grey;">
                               <timeago :since="item.date" />
                             </div>
                         </figure>
