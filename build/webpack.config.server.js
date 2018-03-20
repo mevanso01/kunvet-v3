@@ -4,7 +4,6 @@ const eslintFormatter = require('eslint-friendly-formatter');
 const Config = require('config');
 const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const utils = require('./utils');
 
 const wpconf = {
