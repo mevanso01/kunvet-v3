@@ -31,14 +31,15 @@
 
         <v-toolbar-items v-else class="hidden-xs">
           <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
-            <v-menu offset-y v-if="item.subItems" open-on-hover>
+            <v-menu offset-y v-if="item.subItems" left open-on-hover>
               <v-btn flat style="width: 10px;" slot="activator">
                 <img class="nav-img notranslate" :src="item.icon"></img>
                 <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
               </v-btn>
-              <v-list v-if="item.subItems.length > 0">
+              <Notifications v-if="item.title === 'Notifications'" isNavbar />
+              <v-list v-if="item.subItems.length > 0 && item.title !== 'Notifications'" dense>
                 <v-list-tile v-for="(subitem, index) in item.subItems" :key="index" @click="routeTo(subitem.route)">
-                  <v-list-tile-title>{{ subitem.text }}</v-list-tile-title>
+                  <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-menu>
@@ -151,6 +152,7 @@ import VuexLS from '@/store/persist';
 import gql from 'graphql-tag';
 
 import StringHelper from '@/utils/StringHelper';
+import Notifications from '@/components/Notifications';
 
 // svgs
 import sfw from './assets/navbar/suitcase_full_white.svg';
@@ -230,6 +232,9 @@ export default {
       right: true,
     };
   },
+  components: {
+    Notifications,
+  },
   methods: {
     firstSearch() {
       Bus.$emit('firstSearch');
@@ -274,7 +279,7 @@ export default {
     async getNotifications() {
       if (this.acct === 0) { return []; }
       try {
-        console.log(this.$store.state.userID);
+        // console.log(this.$store.state.userID);
         const { data: { findAccount } } = await this.$apollo.query({
           query: (gql`query ($uid: MongoID) {
             findAccount (filter: {

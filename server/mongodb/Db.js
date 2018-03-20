@@ -9,7 +9,7 @@ export default class Db {
     const db = Config.get('private.database');
     Logger.info(`Using database ${db}`);
     return Mongoose.connect(db, {
-      useMongoClient: true,
+      // useMongoClient: true,
     });
   }
   static get mongoose() {

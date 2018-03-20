@@ -57,6 +57,9 @@ p > a {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.theme--light .list .list__tile--link:hover {
+  background: rgba(0,0,0,0.08) !important;
+}
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
     transform: translate3d(0, -18px, 0) scale(0.75);
 }
