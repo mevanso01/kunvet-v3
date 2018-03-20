@@ -75,11 +75,7 @@ const wpconf = {
   },
 };
 
-if (process.env.NODE_ENV === 'production') {
-  wpconf.plugins.push(new webpack.DefinePlugin({
-    'process.env.NODE_ENV': '"production"',
-  }));
-} else {
+if (process.env.NODE_ENV !== 'production') {
   wpconf.devtool = 'inline-cheap-source-map';
 }
 
