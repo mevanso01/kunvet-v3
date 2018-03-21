@@ -1,16 +1,21 @@
 <template>
-  <v-list :dense="isNavbar">
-    <v-list-tile v-for="(n, index) in notifications" :key="index" @click="routeTo(n.route, index)">
-      <v-list-tile-content>
-        <v-list-tile-title style="font-size: 14px;">{{ n.text }}</v-list-tile-title>
-      </v-list-tile-content>
-      <v-list-tile-action style="min-width: 38px;">
-        <v-btn flat icon color="red darken-1" @click="removeNotification(index)">
-          <v-icon>remove</v-icon>
-        </v-btn>
-      </v-list-tile-action>
-    </v-list-tile>
-  </v-list>
+  <div>
+    <v-list :dense="isNavbar" v-show="notifications.length > 0">
+      <v-list-tile v-for="(n, index) in notifications" :key="index" @click="routeTo(n.route, index)">
+        <v-list-tile-content>
+          <v-list-tile-title style="font-size: 14px;">{{ n.text }}</v-list-tile-title>
+        </v-list-tile-content>
+        <v-list-tile-action style="min-width: 38px;">
+          <v-btn flat icon color="red darken-1" @click="removeNotification(index)">
+            <v-icon>remove</v-icon>
+          </v-btn>
+        </v-list-tile-action>
+      </v-list-tile>
+    </v-list>
+    <div v-show="notifications.length === 0" style="height: 48px; background-color: #f4f4f4;">
+      <p style="line-height: 48px; margin-bottom: 0; padding: 0 10px;">No new notifications</p>
+    </div>
+  </div>
 </template>
 <script>
 import gql from 'graphql-tag';
@@ -79,6 +84,24 @@ export default {
             notifications: this.notifications,
           },
         },
+        refetchQueries: [{
+          query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+              _id
+              notifications {
+                text
+                route
+                notification_type
+                date
+              }
+            }
+          }`),
+          variables: {
+            uid: Store.state.userID,
+          },
+        }],
       }).catch(console.error);
     },
     routeTo(route, index) {
