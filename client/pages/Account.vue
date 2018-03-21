@@ -21,7 +21,7 @@
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </v-list-tile>
                     <v-list-tile-content>
-                      <v-layout style="width: 100%">
+                      <v-layout class="acct-page-container__input-field-layout">
                         <v-flex xs9 class="no-padding">
                           <v-text-field
                             v-model="updateSchool"
@@ -67,13 +67,14 @@
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </v-list-tile>
                     <v-list-tile-content>
-                      <v-layout style="width: 100%">
+                      <v-layout class="acct-page-container__input-field-layout">
                         <v-flex xs9 class="no-padding">
                           <v-select
                             :items="degreeSelectItems"
                             v-model="updateDegree"
                             label="Select Degree"
                             single-line
+                            style="padding: 0;"
                           />
                         </v-flex>
                         <v-flex xs3 v-show="updateDegree" class="no-padding">
@@ -111,7 +112,7 @@
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </v-list-tile>
                     <v-list-tile-content>
-                      <v-layout style="width: 100%">
+                      <v-layout class="acct-page-container__input-field-layout">
                         <v-flex xs9 class="no-padding">
                           <v-text-field
                             v-model="updateMajor"
@@ -155,7 +156,7 @@
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                       </v-list-tile>
                     <v-list-tile-content>
-                      <v-layout style="width: 100%">
+                      <v-layout class="acct-page-container__input-field-layout">
                         <v-flex xs10 class="no-padding">
                           <v-text-field
                             v-model="updateEmail"
