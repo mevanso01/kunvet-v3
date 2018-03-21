@@ -202,7 +202,7 @@
                   <h3 class="acct-h3">
                     About Us
                     <i
-                      v-if="!bdata.biography && bdata.biography !== ''"
+                      v-if="bdata.biography && bdata.biography !== ''"
                       class="fa fa-edit acct-page-container__edit-icon"
                       @click="createEditModal('biography', bdata.biography, 'biography')"
                     />
@@ -373,7 +373,7 @@
               $address: String,
               $website: String,
               $phone_number: String,
-              $de: String)
+            )
           {
             updateOrganization (
               filter: { _id: $bid },
@@ -382,7 +382,6 @@
                 address: $address,
                 website: $website,
                 phone_number: $phone_number,
-                display_email: $de,
               }
             ) {
               recordId
@@ -395,7 +394,6 @@
             address: this.bdata.address,
             website: this.bdata.website,
             phone_number: this.bdata.phone_number,
-            de: this.bdata.display_email,
           },
         }).catch((error) => {
           console.error(error);
@@ -417,7 +415,7 @@
             }) {
                 business_name
                 address
-                display_email
+                email
                 phone_number
                 website
                 biography
@@ -430,7 +428,7 @@
           const res = data.data.findOrganization;
           console.log('res', res);
           this.bdata.business_name = res.business_name;
-          this.bdata.display_email = res.display_email;
+          this.bdata.display_email = res.email;
           this.bdata.address = res.address;
           this.bdata.website = res.website;
           this.bdata.phone_number = res.phone_number;

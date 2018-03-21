@@ -136,7 +136,7 @@
 }
 @media (min-width: 961px) {
   .firstSearch {
-    height: calc(100vh - 105px);
+    height: calc(100vh - 70px);
   }
   .city-img-holder {
     padding: 0 48px;
@@ -176,7 +176,7 @@
                 <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
                   <v-flex xs11 sm10 md9 offset-md2 style="height: 48px;"
                     no-wrap class="grey--text no-padding fsSelect">
-                    <v-select class="no-padding" style="width: 50%; display: inline-block; border-right: 1px solid #eee;"
+                    <v-select class="no-padding" style="width: 50%; display: inline-block; border-right: 1px solid #eee; height: 47px;"
                       label="City or School"
                       v-bind:items="availableCities"
                       v-model="selectedCities"

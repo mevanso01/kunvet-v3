@@ -528,9 +528,6 @@
         return getCountersFromJobsAndApplications(jobs, applications);
       },
       degreeSelectItems() {
-        console.log(degreeStringToDb);
-
-
         return Object.keys(DegreeConstants).map(degreeDbToString);
       },
     },

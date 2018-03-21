@@ -5,6 +5,8 @@ const degrees = {
   masters: 'Master\'s degree',
   pursuing_phd: 'Pursuing PhD degree',
   phd: 'PhD degree',
+  high_school: 'High school',
+  none: 'None',
 };
 
 const objKeys = Object.keys(degrees);
