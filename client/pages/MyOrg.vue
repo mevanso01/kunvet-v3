@@ -25,7 +25,7 @@
                         </v-list-tile>
                         <v-list-tile-content>
                           <!--<v-list-tile-title>Add school info</v-list-tile-title>-->
-                          <v-layout style="width: 100%">
+                          <v-layout class="acct-page-container__input-field-layout">
                           <v-flex xs10 class="no-padding">
                             <v-text-field
                               v-model="updateAddress"
@@ -66,7 +66,7 @@
                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
-                          <v-layout style="width: 100%">
+                          <v-layout class="acct-page-container__input-field-layout">
                             <v-flex xs10 class="no-padding">
                               <v-text-field
                                 v-model="updateEmail"
@@ -104,7 +104,7 @@
                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
-                          <v-layout style="width: 100%">
+                          <v-layout class="acct-page-container__input-field-layout">
                             <v-flex xs10 class="no-padding">
                               <v-text-field
                                 v-model="updatePhoneNumber"
@@ -146,7 +146,7 @@
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
                         <v-list-tile-content>
-                          <v-layout style="width: 100%">
+                          <v-layout class="acct-page-container__input-field-layout">
                             <v-flex xs10 class="no-padding">
                               <v-text-field
                                 v-model="updateWebsite"

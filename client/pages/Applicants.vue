@@ -29,7 +29,7 @@
               <div class="inner">
                 <div class="new-applicant-card__info">
                   <v-layout row wrap>
-                    <v-flex xs12 sm2>
+                    <v-flex xs12 sm2 style="padding-bottom: 0;">
                       <div class="new-applicant-card__profile-pic-container">
                         <figure>
                           <div v-if="item.status !== 'opened'" class="new-applicant-card__unread-circle" />
@@ -42,25 +42,28 @@
                         </figure>
                       </div>
                     </v-flex>
-                    <v-flex xs12 sm10>
+                    <v-flex xs12 sm10 style="padding-bottom: 0;">
                       <router-link :to="'view-applicant/'+item._id">
                         <h2 class="new-applicant-card__title">{{ item.name }}</h2>
-                        <p style="overflow: hidden;">
-                          <i class="fa fa-graduation-cap new-applicant-card__blue-ico" aria-hidden="true"></i>{{ item.school || 'School not provided' }}<br />
+                        <p style="overflow: hidden; margin-bottom: 0;">
+                          <span>
+                            {{ item.school || 'School not provided' }}
+                          </span><br />
                           <span 
                             v-if="item.degree"
-                            style="color: grey; padding-left: 23px;"
+                            style="color: grey;"
                           >
                             {{ item.degree }}<br />
                           </span>
                           <span 
                             v-if="item.major"
-                            style="color: grey; padding-left: 23px;"
+                            style="color: grey;"
                           >
                             {{ item.major }}<br />
                           </span>
-                          <span style="color: grey;">
-                            {{ getApplicantNotesDisplayText(item) }}
+                          <span v-if="item.notes" style="color: grey;">
+                            <br />
+                            Notes: {{ getApplicantNotesDisplayText(item) }}
                           </span>
                         </p>
                       </router-link>
@@ -315,7 +318,7 @@
       },
       getApplicantNotesDisplayText({ notes }) {
         if (!notes) return '';
-        return StringHelper.truncate(notes);
+        return StringHelper.truncate(notes, 50);
       },
     },
     computed: {

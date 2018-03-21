@@ -409,7 +409,7 @@ export default {
         this.commitData();
       }
     },
-    filterJobs() {
+    async filterJobs() {
       // job types
       let selectedTypes = [];
       let selectedTypes2 = [];
@@ -430,25 +430,23 @@ export default {
       if (this.selectedLat && this.selectedLong) {
         sortedJobs.sort((a, b) => this.compareDistance(a, b));
       }
-      var endIndex = sortedJobs.length;
+      let endIndex = sortedJobs.length;
       if (endIndex > 99) {
         endIndex = 99;
       }
       if (endIndex > 0) {
-        this.filteredJobs = [];
-        for (let i = 0; i < endIndex; i++) {
-          const jobId = sortedJobs[i]._id;
-          this.$apollo.query({
-            query: findJobQuery,
-            variables: {
-              id: jobId,
-            },
-          }).then((res) => {
-            if (res.data.findJob) {
-              this.filteredJobs.push(res.data.findJob);
-            }
-          });
-        }
+        const promises = Promise.all(
+          sortedJobs.map(({ _id: id }) =>
+            this.$apollo.query({
+              query: findJobQuery,
+              variables: {
+                id,
+              },
+            }),
+          ),
+        );
+
+        this.filteredJobs = (await promises).map(el => el.data.findJob);
       }
     },
     getDistance(lat, long) {

@@ -171,6 +171,11 @@
 .acct-page-container__website {
   text-decoration: underline;
 }
+.acct-page-container__input-field-layout {
+  /* This allows us to show the placeholder as well as fix the height on Mozilla. */
+  width: 100%;
+  height: 100%;
+}
 @media (min-width: 961px) {
   .cust-tile-2 {
     margin-bottom: 8px;
