@@ -319,7 +319,7 @@
         </v-dialog>
         <br>
         <h3 style="margin-bottom: 5px;">Position tags</h3>
-        <p>Please select at least one catagory that is relevant to this job</p>
+        <p>Please select at least one category that is relevant to this job</p>
         <v-select class="no-padding-select"
           label="Select..."
           v-bind:items="tags"
