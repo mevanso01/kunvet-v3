@@ -61,7 +61,7 @@ p > a {
   background: rgba(0,0,0,0.08) !important;
 }
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
-    transform: translate3d(0, -18px, 0) scale(0.75);
+    transform: translate3d(0, -18px, 0) scale(0.75) !important;
 }
 .input-group__details {
   color: #1976D2;
@@ -120,6 +120,12 @@ p > a {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+.notification-container {
+  margin: auto;
+  max-width: 400px;
+  min-height: 50vh;
+  background-color: #fff;
+}
 .no-padding-select {
   padding-top: 0;
 }
@@ -690,6 +696,11 @@ body {
 @media (min-width: 961px) {
   .flex {
     padding: 10px 0;
+  }
+  .notification-container {
+    min-height: 45vh;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
   section {
       position: relative;

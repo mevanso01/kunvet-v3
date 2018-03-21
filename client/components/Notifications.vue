@@ -12,8 +12,8 @@
         </v-list-tile-action>
       </v-list-tile>
     </v-list>
-    <div v-show="notifications.length === 0" style="height: 48px; background-color: #f4f4f4;">
-      <p style="line-height: 48px; margin-bottom: 0; padding: 0 10px;">No new notifications</p>
+    <div v-show="notifications.length === 0" style="height: 48px; background-color: #fff;">
+      <p class="center" style="line-height: 48px; margin-bottom: 0; padding: 0 10px; color: rgb(167, 167, 167);">No new notifications</p>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ import gql from 'graphql-tag';
 import Store from '@/store';
 
 export default {
-  props: ['isNavbar'],
+  props: ['isNavbar', 'max'],
   data() {
     return {
       notifications: [],
@@ -63,7 +63,8 @@ export default {
             });
           }
         }
-        this.notifications = notifications.slice(0, 8);
+        const maxNum = (this.max && typeof this.max === 'number') ? this.max : 8;
+        this.notifications = notifications.slice(0, maxNum);
         console.log(this.notifications);
       }).catch(console.error);
     },

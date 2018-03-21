@@ -196,14 +196,33 @@ export default {
           { title: 'Sign up', icon: null, href: '/signup' },
         ],
         [
-          { title: 'Jobs', icon: sfg, href: '/myjobs', subItems: [] },
-          { title: 'Notifications', icon: bellg, href: '/', subItems: [] },
+          {
+            title: 'Jobs',
+            icon: sfg,
+            href: '/',
+            subItems: [
+              { text: 'Search', route: '/' },
+              { text: 'Applied Jobs', route: '/appliedjobs' },
+              { text: 'Saved Jobs', route: '/savedjobs' },
+              { text: 'My Posted Jobs', route: '/myjobs' },
+            ],
+          },
+          { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
           { title: 'Account', icon: personSvgG, href: '/account', subItems: [{ text: 'Settings', route: '/settings' }] },
         ],
         [
-          { title: 'Jobs', icon: sfw, href: '/myjobs', subItems: [] },
-          { title: 'Notifications', icon: bellw, href: '/', subItems: [] },
-          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }] },
+          {
+            title: 'Jobs',
+            icon: sfw,
+            href: '/myjobs',
+            subItems: [
+              { text: 'My Jobs',  route: '/myjobs' },
+              { text: 'Post New Job',  route: '/createnewjob' },
+              { text: 'Applicants', route: '/applicants' },
+            ],
+          },
+          { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
+          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }, { text: 'Personal bio', route: '/account' }] },
         ],
       ],
       sidebarItems: [
@@ -216,9 +235,9 @@ export default {
           { title: 'Saved Jobs', href: '/savedjobs' },
           { title: 'Notifications', href: '/notifications' },
           { title: 'Account', href: '/account' },
-          { title: 'Post Individual Job', href: '/createnewjob' },
-          { title: 'My Individual Jobs', href: '/myjobs' },
-          { title: 'Applicants', href: '/applicants' },
+          // { title: 'Post Individual Job', href: '/createnewjob' },
+          // { title: 'My Individual Jobs', href: '/myjobs' },
+          // { title: 'Applicants', href: '/applicants' },
         ],
         [
           { title: 'Post New Job',  href: '/createnewjob' },

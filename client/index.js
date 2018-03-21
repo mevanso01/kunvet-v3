@@ -34,6 +34,7 @@ import Settings from '@/pages/Settings';
 import MyJobs from '@/pages/MyJobs';
 import Applicants from '@/pages/Applicants';
 import ViewApplicant from '@/pages/ViewApplicant';
+import NotificationPage from '@/pages/NotificationPage';
 
 // individual acct pages
 import SavedJobs from '@/pages/SavedJobs';
@@ -134,6 +135,10 @@ const router = new VueRouter({
     {
       path: '/messages',
       component: Messages,
+    },
+    {
+      path: '/notifications',
+      component: NotificationPage,
     },
     {
       path: '/account',

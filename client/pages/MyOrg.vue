@@ -175,7 +175,7 @@
                         <v-list-tile-content>
                           <v-list-tile-title>
                             <a
-                              :href="bdata.website"
+                              :href="`http://${bdata.website}`"
                               target="_blank"
                               class="acct-page-container__website"
                             >

@@ -84,13 +84,13 @@
             </div>
             <div class="btn-holder">
               <div class="btn-holder__right-elements">
-                <span style="color: grey">
+                <span style="color: grey;">
                   Repost in {{ getRepostDaysString(job.date) }}
                 </span>
                 <router-link :to="`/createnewjob/${job._id}`">
-                  <v-icon>edit</v-icon>
+                  <v-icon style="margin-left: 5px;">edit</v-icon>
                 </router-link>
-                <v-icon @click="onShowJobDialog(job)">delete</v-icon>
+                <v-icon style="cursor: pointer; margin-left: 5px;" @click="onShowJobDialog(job)">delete</v-icon>
               </div>
             </div>
           </div>
