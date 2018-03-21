@@ -1,3 +1,4 @@
+import Config from 'config';
 import Axios from 'axios';
 import https from 'https';
 
@@ -61,5 +62,11 @@ export default class FileClient {
     }
 
     return response.data.id;
+  }
+
+  // Let's break some rules for style
+  // eslint-disable-next-line
+  getLink(id) {
+    return `${Config.get('serverUrl')}/file/get/${id}`;
   }
 }
