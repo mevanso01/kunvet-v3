@@ -14,9 +14,14 @@ const HDYH = composeWithMongoose(Models.HDYH);
 
 // Helper functions
 function wrapResolvers(fn, resolvers) {
+  const farr = Array.isArray(fn) ? fn : [fn];
+
   Object.keys(resolvers).forEach((k) => {
-    resolvers[k] = resolvers[k].wrapResolve(next => req => fn(req, next));
+    for (const f of farr) {
+      resolvers[k] = resolvers[k].wrapResolve(next => req => f(req, next));
+    }
   });
+
   return resolvers;
 }
 
