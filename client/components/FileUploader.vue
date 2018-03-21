@@ -17,6 +17,7 @@
     </v-card-text>
     <v-card-actions>
       <v-btn flat @click="upload">Upload</v-btn>
+      <v-btn flat :href="client.getLink(curId)">Download</v-btn>
       <span v-if="curId">You are uploading to an existing file slot</span>
       <span v-else>You are creating a new file slot</span>
     </v-card-actions>
