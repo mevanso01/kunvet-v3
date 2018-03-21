@@ -161,6 +161,13 @@
                     :type="e1 ? 'password' : 'text'"
                     required
                   ></v-text-field>
+                  <v-select class="optional"
+                    label="(Optional) How did you hear of Kunvet?"
+                    v-model="howDidYouHear"
+                    v-bind:items="howDidYouHearItems"
+                    autocomplete
+                    hide-details
+                  ></v-select>
                   <div class="text-xs-center">
                     <v-btn class="kunvet-red-bg" :disabled="loading" dark @click="submit">Create business account</v-btn>
                     <p v-show="loading" style="color: #999">Loading...</p>
@@ -226,6 +233,10 @@ export default {
       ],
       loading: false,
       error: null,
+      howDidYouHear: null,
+      howDidYouHearItems: [
+        'Flyers', 'Word of mouth', 'Email', 'Instagram', 'Wechat', 'Other',
+      ],
     };
   },
   methods: {
@@ -298,6 +309,9 @@ export default {
           reqtype: 'validate',
         };
         Vue.http.post(`${Config.get('serverUrl')}/auth/register`, bdata, headers).then(() => {
+          if (this.howDidYouHear) {
+            this.uploadHowDidYouHear();
+          }
           this.loading = false;
         }, (error) => {
           console.error(error);
@@ -305,6 +319,22 @@ export default {
       }).catch((error) => {
         console.error(error);
       });
+    },
+    uploadHowDidYouHear() {
+      this.$apollo.mutate({
+        mutation: (gql`mutation ($e: String, $h: String) {
+          createHDYH(record: {
+            how_did_you_hear: $h,
+            email: $e,
+          }) {
+            recordId
+          }
+        }`),
+        variables: {
+          h: this.howDidYouHear,
+          e: this.email,
+        },
+      }).catch(console.error);
     },
   },
 };

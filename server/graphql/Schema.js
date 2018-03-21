@@ -10,6 +10,7 @@ const Account = composeWithMongoose(Models.Account);
 const Applicant = composeWithMongoose(Models.Applicant);
 const BusinessProfile = composeWithMongoose(Models.BusinessProfile);
 const Organization = composeWithMongoose(Models.Organization);
+const HDYH = composeWithMongoose(Models.HDYH);
 
 // Helper functions
 function wrapResolvers(fn, resolvers) {
@@ -63,6 +64,9 @@ GQC.rootMutation().addFields({
     createApplication: Applicant.get('$createOne'),
     updateApplication: Applicant.get('$updateOne'),
     removeApplication: Applicant.get('$removeOne'),
+    // Extra stuff
+    createHDYH: HDYH.get('$createOne'),
+    removeHDYH: HDYH.get('$removeOne'),
 
     // Employer-only mutations
     ...wrapResolvers(Restrictions.BusinessAccount, {

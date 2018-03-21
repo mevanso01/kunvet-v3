@@ -311,7 +311,12 @@
         <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience/Qualifications</h3>
         <p class="error_p" v-if="!experience_valid">Required</p>
         <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
-
+        <br>
+        <h3 class="optional" style="margin-bottom: 5px;">Pictures</h3>
+        <v-btn @click="picUploaderDialog = true" flat small outline class="optional" style="margin-left: 0;">Upload</v-btn>
+        <v-dialog v-model="picUploaderDialog">
+          <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" multiple />
+        </v-dialog>
         <br>
         <h3 style="margin-bottom: 5px;">Position tags</h3>
         <p>Please select at least one catagory that is relevant to this job</p>
@@ -323,15 +328,6 @@
           multiple
           single-line
         ></v-select>
-        <br>
-        <v-select class="optional"
-          label="How did you hear of Kunvet?"
-          v-model="howDidYouHear"
-          v-bind:items="howDidYouHearItems"
-          autocomplete
-          hide-details
-        ></v-select>
-
         </v-form>
 
         <br>
@@ -365,6 +361,7 @@ import gql from 'graphql-tag';
 import VuexLS from '@/store/persist';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Schools from '@/constants/schools';
+import PicUploader from '@/components/PicUploader';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -430,6 +427,7 @@ const updateJobMutation = gql`
 export default {
   components: {
     VueEditor,
+    PicUploader,
   },
   data() {
     return {
@@ -470,6 +468,7 @@ export default {
       howDidYouHear: null,
       schools: Schools.schools,
       tags: [],
+      picUploaderDialog: false,
       educationOptions: [
         'None (recommended)',
         'High School', 'Bachelor Degree',
@@ -690,6 +689,9 @@ export default {
           this.responsibilities = job.responsibilities;
         }
       });
+    },
+    picsUploaded(fileIds) {
+      console.log(fileIds);
     },
   },
   created() {

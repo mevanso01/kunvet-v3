@@ -77,6 +77,30 @@ p > a {
 .dialog > div {
   min-width: 250px;
 }
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -5px;
+  background: #f8f8f8;
+  color: dimgray;
+  min-height: 100px; /* minimum height */
+  position: relative;
+  cursor: pointer;
+}
+.dropbox .input-file {
+  opacity: 0;
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  cursor: pointer;
+}
+.dropbox:hover {
+  background: lightblue; /* when mouse over to the drop zone, change color */
+}
+.dropbox p {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 20px 0;
+}
 .application,
 .container {
   background-color: #fff;
@@ -177,27 +201,15 @@ p > a {
 input:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0 24px #fff;
 }
-input::-webkit-input-placeholder {
-    color: #e0e0e0;
-}
-input::-moz-placeholder {
-    color: #e0e0e0;
-}
-input:-ms-input-placeholder {
-    color: #e0e0e0;
-}
+input::-webkit-input-placeholder,
+input::-moz-placeholder,
+input:-ms-input-placeholder,
 input:-moz-placeholder {
     color: #e0e0e0;
 }
-textarea::-webkit-input-placeholder {
-    color: #e0e0e0;
-}
-textarea::-moz-placeholder {
-    color: #e0e0e0;
-}
-textarea:-ms-input-placeholder {
-    color: #e0e0e0;
-}
+textarea::-webkit-input-placeholder,
+textarea::-moz-placeholder,
+textarea:-ms-input-placeholder,
 textarea:-moz-placeholder {
     color: #e0e0e0;
 }

@@ -24,6 +24,11 @@ const TempAccountSchema = Mongoose.Schema({
   },
 });
 
+const HowDidYouHearSchema = Mongoose.Schema({
+  email: String,
+  how_did_you_hear: String,
+});
+
 const JobSchema = Mongoose.Schema({
   user_id: {
     type: Mongoose.Schema.Types.ObjectId,
@@ -508,4 +513,5 @@ export default {
   EmployeeProfile: Mongoose.model('EmployeeProfile', EmployeeProfileSchema),
   Organization: Mongoose.model('Organization', OrganizationSchema),
   File: Mongoose.model('File', FileSchema),
+  HDYH: Mongoose.model('HDYH', HowDidYouHearSchema),
 };

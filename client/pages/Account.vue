@@ -1,30 +1,3 @@
-<style>
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  /* outline-offset: -8px; */
-  background: #f8f8f8;
-  color: dimgray;
-  /* padding: 10px 10px; */
-  min-height: 100px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-.dropbox .input-file {
-  opacity: 0;
-  width: 100%;
-  height: 100px;
-  position: absolute;
-  cursor: pointer;
-}
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 20px 0;
-}
-</style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
     <div class="main-cont-large">

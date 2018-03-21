@@ -222,7 +222,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
-          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }, { text: 'Personal bio', route: '/account' }] },
+          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }, { text: 'Personal Bio', route: '/account' }] },
         ],
       ],
       sidebarItems: [
