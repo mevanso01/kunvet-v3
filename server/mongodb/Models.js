@@ -42,6 +42,10 @@ const JobSchema = Mongoose.Schema({
     type: { Boolean, default: false },
     required: true,
   },
+  expired: {
+    type: Boolean,
+    default: false,
+  },
   title: {
     // Name of the job
     type: String,
@@ -157,7 +161,7 @@ const ApplicantSchema = Mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['submitted', 'opened', 'processing', 'processed', 'accepted', 'rejected', 'withdrawn'],
+    enum: ['submitted', 'opened', 'processing', 'processed', 'accepted', 'rejected', 'withdrawn', 'expired'],
     default: 'submitted',
   },
   name: String,

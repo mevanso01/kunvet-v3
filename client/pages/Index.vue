@@ -585,7 +585,7 @@ export default {
   },
   created() {
     this.loadInitialJobs();
-    VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
+    VuexLS.restoreState('vuex', window.localStorage).then((data) => {
       if (data) {
         console.log(data);
         this.firstSearch = data.firstSearch;
