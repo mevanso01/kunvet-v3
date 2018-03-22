@@ -25,6 +25,9 @@ function wrapResolvers(fn, resolvers) {
   return resolvers;
 }
 
+// Redact fields from client
+Account.removeField(['password', 'hash', 'salt', 'is_developer']);
+
 // Root query fields
 GQC.rootQuery().addFields({
   // Job
@@ -34,10 +37,7 @@ GQC.rootQuery().addFields({
   findResume: Resume.get('$findOne'),
   findResumes: Resume.get('$findMany'),
   // Account
-  ...wrapResolvers([
-    Restrictions.getFilterByUserId('_id'),
-    Restrictions.getDropResultFields(['password', 'hash', 'is_developer']),
-  ], {
+  ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
     findAccount: Account.get('$findOne'),
     findAccounts: Account.get('$findMany'),
   }),
