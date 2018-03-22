@@ -34,8 +34,13 @@ GQC.rootQuery().addFields({
   findResume: Resume.get('$findOne'),
   findResumes: Resume.get('$findMany'),
   // Account
-  findAccount: Account.get('$findOne'),
-  findAccounts: Account.get('$findMany'),
+  ...wrapResolvers([
+    Restrictions.getFilterByUserId('_id'),
+    Restrictions.getDropResultFields(['password', 'hash', 'is_developer']),
+  ], {
+    findAccount: Account.get('$findOne'),
+    findAccounts: Account.get('$findMany'),
+  }),
   // Applicants
   findApplicant: Applicant.get('$findOne'),
   findApplicants: Applicant.get('$findMany'),
