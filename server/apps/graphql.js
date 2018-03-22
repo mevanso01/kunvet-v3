@@ -23,7 +23,10 @@ function buildOptions(ctx) {
     },
     validationRules: [],
   };
-  if (process.env.NODE_ENV === 'production' || process.env.NO_INTROSPECTION) {
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.GRAPHQL_PRODUCTION
+  ) {
     options.validationRules.push(NoIntrospection);
     options.formatError = (e) => {
       Logger.error(e);
