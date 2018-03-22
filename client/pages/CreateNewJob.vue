@@ -478,14 +478,10 @@ export default {
         'Flyers', 'Word of mouth', 'Email', 'Instagram', 'Wechat', 'Other',
       ],
       customEditorToolbar: [
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['bold', 'italic', 'underline'],        // toggled buttons
         // ['blockquote', 'code-block'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscriptn
         [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-        [{ 'align': [] }],
-        ['clean'],
       ],
     };
   },
