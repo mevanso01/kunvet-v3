@@ -5,6 +5,7 @@ import KoaBody from 'koa-bodyparser';
 
 // GraphQL and Apollo
 import { graphqlKoa } from 'apollo-server-koa';
+import NoIntrospection from 'graphql-disable-introspection';
 
 // Our stuff
 import Schema from '../graphql/Schema';
@@ -14,12 +15,17 @@ const router = new KoaRouter();
 
 // GraphQL endpoint
 function buildOptions(ctx) {
-  return {
+  const options = {
     schema: Schema,
     context: {
       user: ctx.state.user,
     },
+    validationRules: [],
   };
+  if (process.env.NODE_ENV === 'production' || process.env.NO_INTROSPECTION) {
+    options.validationRules.push(NoIntrospection);
+  }
+  return options;
 }
 
 router.post('/graphql', KoaBody(), (ctx) => {

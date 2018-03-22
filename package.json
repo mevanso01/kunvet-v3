@@ -75,6 +75,7 @@
     "graphql": "=0.13.0",
     "graphql-compose": "^3.0.6",
     "graphql-compose-mongoose": "^3.1.1",
+    "graphql-disable-introspection": "^1.0.1",
     "graphql-tag": "^2.4.2",
     "handlebars": "^4.0.11",
     "koa": "^2.3.0",
