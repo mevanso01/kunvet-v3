@@ -2,13 +2,15 @@
   /* padding-top: 64px; */ /* Make this padding the same height as the main nav-bar to push it donw belwo */
 }
 
-/* This does not work. */
-.job-post__helper-nav-bar a:hover, .job-post__helper-nav-bar a:focus {
-  outline: none !important;
-  background: none !important;
+
+.job-post__helper-nav-bar .btn__content {
+  color: #616161;
 }
-.job-post__helper-nav-bar {
-  color: #616161 !important;
+.job-post__helper-nav-bar .btn:hover .btn__content:before {
+  background-color: transparent;
+}
+.job-post__helper-nav-bar .btn:hover .btn__content span {
+  color: red;
 }
 .job-post__helper-nav-bar .btn {
   color: #616161;
@@ -38,12 +40,12 @@
   color: #ef5350 !important;
 }
 
-.job-post__helper-nav-bar__post-a-job {
+.job-post__helper-nav-bar__post-a-job .btn__content {
   color: #ef5350 !important;
 }
 
-.job-post__helper-nav-bar__post-a-job:hover {
-  color: #ef5350;
+.job-post__helper-nav-bar__post-a-job:hover .btn__content:before {
+  background-color: transparent;
 }
 
 .job-post__helper-nav-bar__post-a-job__icon {

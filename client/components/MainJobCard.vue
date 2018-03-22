@@ -32,7 +32,7 @@
             <p style="color: #A7A7A7; text-decoration: underline;">
               <span class="carditem-image"><img :src="svgs.locationMarker" /></span><Distance v-if="defaultFromUCI || fromCoordinates" :first="defaultFromUCI ? uciCoordinates : fromCoordinates" :second="getCoordinatesFromJob(job)" />
               <br />
-              <span class="carditem-image"><img :src="svgs.locationMarker" /></span><span>{{ job.address }}</span>
+              <!--<span>{{ job.university }}</span>-->
             </p>
           </div>
           <div class="carditem">

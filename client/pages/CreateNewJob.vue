@@ -159,13 +159,13 @@
             ></v-text-field>
             <v-checkbox class="optional" style="margin-top: 16px;"
               label="Is this job on a school campus?"
-              v-model="isCommunity"
+              v-model="isUniversity"
               hide-details
             ></v-checkbox>
             <v-select class="optional no-padding-select"
-              v-if="isCommunity"
+              v-if="isUniversity"
               label="Which one?"
-              v-model="community"
+              v-model="university"
               v-bind:items="schools"
               autocomplete
               hide-details
@@ -373,7 +373,7 @@ const createJobMutation = gql`
         title
         description
         address
-        community
+        university 
         latitude
         longitude
         type
@@ -403,7 +403,7 @@ const updateJobMutation = gql`
         title
         description
         address
-        community
+        university 
         latitude
         longitude
         type
@@ -463,8 +463,8 @@ export default {
       degree: '',
       active: false,
       confirmPost: false,
-      isCommunity: false,
-      community: null,
+      isUniversity: false,
+      university: null,
       howDidYouHear: null,
       schools: Schools.schools,
       tags: [],
@@ -607,7 +607,7 @@ export default {
         date: doesJobActivelyExist ? this.date : Date.now(),
         description: this.description,
         address: this.address,
-        community: this.isCommunity ? this.community : null,
+        university: this.isUniversity ? this.university : null,
         latitude: this.latitude,
         longitude: this.longitude,
         type: this.jobTypeStrToType(this.type),
@@ -637,7 +637,7 @@ export default {
             date
             description
             address
-            community
+            university 
             latitude
             longitude
             type
@@ -666,7 +666,7 @@ export default {
           this.active = job.active;
           this.date = job.date;
           this.address = job.address;
-          this.community = job.community;
+          this.university = job.university;
           this.latitude = job.latitude;
           this.longitude = job.latitude;
           if (job.type.length > 1) {

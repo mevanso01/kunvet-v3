@@ -56,23 +56,23 @@
       class="job-post__helper-nav-bar"
     >
       <v-toolbar-items>
-        <v-btn flat small :to="'/'" :class="isActiveJobPostLink('/')">
+        <v-btn flat small :ripple="false" :to="'/'" :class="isActiveJobPostLink('/')">
           <span class="job-post__helper-nav-bar__btn-text">
             Search
           </span>
         </v-btn>
-        <v-btn flat small :to="'/savedjobs'" :class="isActiveJobPostLink('/savedjobs')">
+        <v-btn flat small :ripple="false" :to="'/savedjobs'" :class="isActiveJobPostLink('/savedjobs')">
           <span class="job-post__helper-nav-bar__btn-text">
             Saved
           </span>
         </v-btn>
-        <v-btn flat small :to="'/appliedjobs'" :class="isActiveJobPostLink('/appliedjobs')">
+        <v-btn flat small :ripple="false" :to="'/appliedjobs'" :class="isActiveJobPostLink('/appliedjobs')">
           <span class="job-post__helper-nav-bar__btn-text">
             Applied
           </span>
         </v-btn>
         <span class="job-post__helper-nav-bar__divider" />
-        <v-btn flat small :to="'/myjobs'" :class="isActiveJobPostLink('/myjobs')">
+        <v-btn flat small :ripple="false" :to="'/myjobs'" :class="isActiveJobPostLink('/myjobs')">
           <span class="job-post__helper-nav-bar__btn-text">
             Posted
           </span>
@@ -85,8 +85,8 @@
       </v-toolbar-items>
       <v-spacer />
       <v-toolbar-items>
-        <v-btn flat small class="job-post__helper-nav-bar__post-a-job" :to="'/createnewjob'">
-          <i class="fa fa-edit job-post__helper-nav-bar__post-a-job__icon" />Post a Job
+        <v-btn flat small :ripple="false" class="job-post__helper-nav-bar__post-a-job" :to="'/createnewjob'">
+          <i class="fa fa-edit job-post__helper-nav-bar__post-a-job__icon" /><span>Post a Job</span>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>

@@ -270,12 +270,12 @@
 
                 <input v-if="!firstSearch" class="hidden-input" id="submit" type="submit" value="GO">
                 <div v-if="!firstSearch" id="general-submit" @click="filterJobs">
-                    <div id="general-submit-default">
-                        <span>GO</span>
-                    </div>
-                    <div id="general-submit-error">
-                        <span id="general-submit-error-msg"></span>
-                    </div>
+                  <div id="general-submit-default">
+                    <span>GO</span>
+                  </div>
+                  <div id="general-submit-error">
+                    <span id="general-submit-error-msg"></span>
+                  </div>
                 </div>
             </form>
 
@@ -321,6 +321,7 @@ const findJobQuery = gql`query ($id: MongoID) {
     title
     description
     address
+    university
     latitude
     longitude
     type

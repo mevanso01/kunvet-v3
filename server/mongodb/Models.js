@@ -80,7 +80,7 @@ const JobSchema = Mongoose.Schema({
     // Address
     type: String,
   },
-  community: {
+  university: {
     type: String,
   },
   latitude: {
