@@ -36,11 +36,11 @@ function buildOptions(ctx) {
   return options;
 }
 
-router.post('/graphql', KoaBody(), (ctx) => {
+router.post('/', KoaBody(), (ctx) => {
   const options = buildOptions(ctx);
   return graphqlKoa(options)(ctx);
 });
-router.get('/graphql', (ctx) => {
+router.get('/', (ctx) => {
   const options = buildOptions(ctx);
   return graphqlKoa(options)(ctx);
 });

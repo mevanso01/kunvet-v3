@@ -59,7 +59,7 @@ app.use(KoaPassport.initialize());
 app.use(KoaPassport.session());
 
 // Mount sub apps
-app.use(KoaMount('/srv', GraphQLApp));
+app.use(KoaMount('/data', GraphQLApp));
 app.use(KoaMount('/auth', AuthApp));
 app.use(KoaMount('/file', FileServerApp));
 app.use(KoaMount('/application', ApplicationApp));

@@ -36,7 +36,7 @@ router.get('/', (ctx) => {
 
 // Interactive GraphiQL interface
 router.get('/graphiql', graphiqlKoa({
-  endpointURL: '/srv/graphql',
+  endpointURL: '/data',
 }));
 
 // Login form
