@@ -24,6 +24,13 @@
             <p style="margin: 0;" v-for="file in files">{{ file.name }}</p>
           </div>
         </form>
+        <vue-croppie
+          ref=croppieRef
+          :enableZoom="false"
+          @result="result">
+        </vue-croppie>
+        <img v-bind:src="cropped">
+        <button @click="crop()">Crop Via Callback</button>
       </div>
       <div style="min-height: 40px;" v-if="state === 'FAILED'">
         <h3 style="display: inline-block;">
@@ -39,6 +46,8 @@
 </template>
 <script>
 import FileClient from '@/utils/FileClient';
+// import { Croppie } from 'croppie';
+// import 'croppie/croppie.css';
 
 export default {
   props: {
@@ -54,13 +63,31 @@ export default {
       curId: null,
       files: [],
       client: null,
+      cropped: null,
     };
   },
   mounted() {
     this.client = new FileClient();
     this.curId = this.id;
+    this.$refs.croppieRef.bind({
+      url: 'http://i.imgur.com/Fq2DMeH.jpg',
+    });
   },
   methods: {
+    result(output) {
+      this.cropped = output;
+    },
+    crop() {
+      // Here we are getting the result via callback function
+      // and set the result to this.cropped which is being
+      // used to display the result above.
+      const options = {
+        format: 'jpeg',
+      };
+      this.$refs.croppieRef.result(options, (output) => {
+        this.cropped = output;
+      });
+    },
     updateFile(files) {
       if (files.length > 0 && this.state !== 'UPLOADING') {
         for (var i = 0; i < files.length; i++) {

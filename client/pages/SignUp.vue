@@ -168,6 +168,7 @@
                     autocomplete
                     hide-details
                   ></v-select>
+                  <br>
                   <div class="text-xs-center">
                     <v-btn class="kunvet-red-bg" :disabled="loading" dark @click="submit">Create business account</v-btn>
                     <p v-show="loading" style="color: #999">Loading...</p>
@@ -216,7 +217,7 @@ export default {
       chosenForm: '',
       submitClicked: false,
       email: '',
-      business_name: '',
+      business_name: null,
       fname: '',
       lname: '',
       requiredRules: [
@@ -265,7 +266,7 @@ export default {
       const headers = { emulateJSON: true };
       const data = {
         email: this.email,
-        default_org: null,
+        business_name: null,
         fname: this.fname,
         lname: this.lname,
         pwd: this.password,
@@ -284,39 +285,21 @@ export default {
       });
     },
     createBusinessAcct() {
-      this.$apollo.mutate({
-        mutation: (gql`mutation ($e: String, $bn: String) {
-          createOrganization(record: {
-            business_name: $bn,
-            email: $e,
-          }) {
-            recordId
-          }
-        }`),
-        variables: {
-          bn: this.business_name,
-          e: this.email,
-        },
-      }).then((data) => {
-        const businessID = data.data.createOrganization.recordId;
-        const headers = { emulateJSON: true };
-        const bdata = {
-          email: this.email,
-          default_org: businessID,
-          fname: this.fname,
-          lname: this.lname,
-          pwd: this.password,
-          reqtype: 'validate',
-        };
-        Vue.http.post(`${Config.get('serverUrl')}/auth/register`, bdata, headers).then(() => {
-          if (this.howDidYouHear) {
-            this.uploadHowDidYouHear();
-          }
-          this.loading = false;
-        }, (error) => {
-          console.error(error);
-        });
-      }).catch((error) => {
+      const headers = { emulateJSON: true };
+      const bdata = {
+        email: this.email,
+        business_name: this.business_name,
+        fname: this.fname,
+        lname: this.lname,
+        pwd: this.password,
+        reqtype: 'validate',
+      };
+      Vue.http.post(`${Config.get('serverUrl')}/auth/register`, bdata, headers).then(() => {
+        if (this.howDidYouHear) {
+          this.uploadHowDidYouHear();
+        }
+        this.loading = false;
+      }, (error) => {
         console.error(error);
       });
     },

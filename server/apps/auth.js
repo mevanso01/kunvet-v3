@@ -78,13 +78,22 @@ router.post('/register', async (ctx) => {
   const req = ctx.request.body;
   const promiseRegister = promisify(Models.Account.register, Models.Account);
 
+  let default_org = null;
+  if (req.business_name) {
+    const org = new Models.Organization({
+      business_name: req.business_name,
+      email: req.email,
+    });
+    await org.save();
+    default_org = org._id;
+  }
   try {
     await promiseRegister(
       {
         email: req.email,
         firstname: req.fname,
         lastname: req.lname,
-        default_org: req.default_org,
+        default_org: default_org,
       },
       req.pwd,
     );
@@ -108,8 +117,7 @@ router.post('/register', async (ctx) => {
 
   const validationCode = uuidv1();
 
-  const TAS = Models.TempAccount;
-  const x = new TAS({
+  const x = new Models.TempAccount({
     email: req.email,
     vcode: validationCode,
   });

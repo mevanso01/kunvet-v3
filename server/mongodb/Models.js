@@ -187,112 +187,6 @@ const ApplicantSchema = Mongoose.Schema({
     resumeid: String,
   },
 });
-const BusinessProfileSchema = Mongoose.Schema({
-  biography: {
-    type: String,
-  },
-  business_name: {
-    type: String,
-    required: true,
-    index: { unique: true },
-  },
-  img: {
-    data: Buffer,
-    contentType: String,
-  },
-  email: {
-    type: String,
-  },
-  display_email: {
-    type: String,
-  },
-  password: {
-    type: String,
-    // required: true,
-  },
-  industry: {
-    type: String,
-  },
-  address: {
-    type: String,
-  },
-  community: {
-    type: String,
-  },
-  city: {
-    type: String,
-  },
-  zip_code: {
-    type: String,
-  },
-  latitude: {
-    type: Number,
-  },
-  longitude: {
-    type: Number,
-  },
-});
-
-// remove me maybe?
-const EmployeeProfileSchema = Mongoose.Schema({
-  about_me: {
-    type: String,
-    required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-    // unique: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  first_name: {
-    type: String,
-    required: true,
-  },
-  last_name: {
-    type: String,
-    required: true,
-  },
-  profile_img: {
-    data: Buffer,
-    contentType: String,
-  },
-  created_date: {
-    type: { Date, default: Date.now },
-  },
-  last_login: {
-    type: Date,
-  },
-  student: {
-    type: Boolean,
-  },
-  school: {
-    type: String,
-  },
-  graduation_date: {
-    type: Date,
-  },
-  degree: {
-    type: String,
-  },
-  availability: {
-    type: Date,
-    enum: ['8:00', '8:30'],
-  },
-  saved_jobs: {
-    type: [String],
-  },
-  applied_jobs: {
-    type: [String],
-  },
-  other: {
-    type: String,
-  },
-});
 
 const ResumeSchema = Mongoose.Schema({
   name: {
@@ -513,8 +407,6 @@ export default {
   Account: Mongoose.model('Account', AccountSchema),
   Applicant: Mongoose.model('Applicant', ApplicantSchema),
   TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
-  BusinessProfile: Mongoose.model('BusinessProfile', BusinessProfileSchema),
-  EmployeeProfile: Mongoose.model('EmployeeProfile', EmployeeProfileSchema),
   Organization: Mongoose.model('Organization', OrganizationSchema),
   File: Mongoose.model('File', FileSchema),
   HDYH: Mongoose.model('HDYH', HowDidYouHearSchema),

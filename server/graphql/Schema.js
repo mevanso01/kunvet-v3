@@ -8,7 +8,6 @@ const Job = composeWithMongoose(Models.Job);
 const Resume = composeWithMongoose(Models.Resume);
 const Account = composeWithMongoose(Models.Account);
 const Applicant = composeWithMongoose(Models.Applicant);
-const BusinessProfile = composeWithMongoose(Models.BusinessProfile);
 const Organization = composeWithMongoose(Models.Organization);
 const HDYH = composeWithMongoose(Models.HDYH);
 
@@ -35,9 +34,6 @@ GQC.rootQuery().addFields({
   findApplicant: Applicant.get('$findOne'),
   findApplicants: Applicant.get('$findMany'),
   // Business Profile
-  findBusinessProfile: BusinessProfile.get('$findOne'),
-  findBusinessProfiles: BusinessProfile.get('$findMany'),
-  // Employee Profile
   findOrganization: Organization.get('$findOne'),
   findOrganizations: Organization.get('$findMany'),
   // Developer-only
@@ -74,10 +70,6 @@ GQC.rootMutation().addFields({
       createJob: Job.get('$createOne'),
       updateJob: Job.get('$updateOne'),
       removeJob: Job.get('$removeOne'),
-      // Business Profile
-      createBusinessProfile: BusinessProfile.get('$createOne'),
-      updateBusinessProfile: BusinessProfile.get('$updateOne'),
-      removeBusinessProfile: BusinessProfile.get('$removeOne'),
       // Organization
       createOrganization: Organization.get('$createOne'),
       updateOrganization: Organization.get('$updateOne'),
