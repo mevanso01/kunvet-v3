@@ -479,9 +479,7 @@ export default {
       ],
       customEditorToolbar: [
         ['bold', 'italic', 'underline'],        // toggled buttons
-        // ['blockquote', 'code-block'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
       ],
     };
   },
