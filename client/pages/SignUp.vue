@@ -106,6 +106,14 @@
                     :type="e1 ? 'password' : 'text'"
                     required
                   ></v-text-field>
+                  <v-select class="optional"
+                    label="(Optional) How did you hear of Kunvet?"
+                    v-model="howDidYouHear"
+                    v-bind:items="howDidYouHearItems"
+                    autocomplete
+                    hide-details
+                  ></v-select>
+                  <br>
                   <div class="text-xs-center">
                     <v-btn class="kunvet-red-bg" :disabled="loading" dark @click="submit">Sign up!</v-btn>
                     <p v-show="loading" style="color: #999">Loading...</p>
@@ -198,13 +206,26 @@
         </v-layout>
       </section>
 
+      <section v-if="chosenForm === 'not verified'">
+        <v-layout>
+          <v-flex xs12 sm8 offset-sm2>
+            <v-card>
+              <v-card-text>
+                <p style="margin-bottom: 8px;">It looks like <strong>{{ email }}</strong> already exists, but is not verified.</p>
+                <p>Would you like us to send verification another email?</p>
+                <v-btn flat @click="resendEmail">Send another email</v-btn>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </section>
+
     </div>
   </v-container>
 </template>
 <script>
 import Vue from 'vue';
 import VueResource from 'vue-resource';
-import gql from 'graphql-tag';
 import Config from 'config';
 
 Vue.use(VueResource);
@@ -267,6 +288,7 @@ export default {
       const data = {
         email: this.email,
         business_name: null,
+        hdyh: this.howDidYouHear,
         fname: this.fname,
         lname: this.lname,
         pwd: this.password,
@@ -274,11 +296,13 @@ export default {
       };
       Vue.http.post(`${Config.get('serverUrl')}/auth/register`, data, headers).then((res) => {
         this.loading = false;
-        if (res.body.message === 'User already exists') {
-          this.error = 'UserExistsError';
-        } else {
-          console.log(res);
+        if (res.body.success) {
           this.chosenForm = 'success';
+        } else if (res.body.message === 'User already exists') {
+          this.error = 'UserExistsError';
+        } else if (res.body.message === 'Email exists but not verified') {
+          this.error = 'Not Verified';
+          this.chosenForm = 'not verified';
         }
       }, (error) => {
         console.error(error);
@@ -289,35 +313,39 @@ export default {
       const bdata = {
         email: this.email,
         business_name: this.business_name,
+        hdyh: this.howDidYouHear,
         fname: this.fname,
         lname: this.lname,
         pwd: this.password,
         reqtype: 'validate',
       };
-      Vue.http.post(`${Config.get('serverUrl')}/auth/register`, bdata, headers).then(() => {
-        if (this.howDidYouHear) {
-          this.uploadHowDidYouHear();
-        }
+      Vue.http.post(`${Config.get('serverUrl')}/auth/register`, bdata, headers).then((res) => {
         this.loading = false;
+        if (res.body.success) {
+          this.chosenForm = 'success';
+        } else if (res.body.message === 'User already exists') {
+          this.error = 'UserExistsError';
+        } else if (res.body.message === 'Email exists but not verified') {
+          this.error = 'Not Verified';
+          this.chosenForm = 'not verified';
+        }
       }, (error) => {
         console.error(error);
       });
     },
-    uploadHowDidYouHear() {
-      this.$apollo.mutate({
-        mutation: (gql`mutation ($e: String, $h: String) {
-          createHDYH(record: {
-            how_did_you_hear: $h,
-            email: $e,
-          }) {
-            recordId
-          }
-        }`),
-        variables: {
-          h: this.howDidYouHear,
-          e: this.email,
-        },
-      }).catch(console.error);
+    resendEmail() {
+      const headers = { emulateJSON: true };
+      const data = {
+        email: this.email,
+      };
+      Vue.http.post(`${Config.get('serverUrl')}/auth/resendVerificationEmail`, data, headers).then((res) => {
+        this.loading = false;
+        if (res.body.success) {
+          this.chosenForm = 'success';
+        }
+      }, (error) => {
+        console.error(error);
+      });
     },
   },
 };

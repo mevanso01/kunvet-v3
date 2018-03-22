@@ -22,6 +22,10 @@ const TempAccountSchema = Mongoose.Schema({
   business_name: {
     type: String,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const HowDidYouHearSchema = Mongoose.Schema({

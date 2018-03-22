@@ -53,7 +53,8 @@ export default {
     };
   },
   methods: {
-    async validateCode() {
+    validateCode() {
+      console.log('TEST');
       this.$apollo.query({
         query: (gql`query ($c: String) {
           findVCode (filter: {
@@ -67,6 +68,7 @@ export default {
           c: this.code,
         },
       }).then((data) => {
+        console.log('DATA', data);
         if (data.data.findVCode) {
           this.isvalid = true;
           // set account to valid
@@ -75,7 +77,7 @@ export default {
           this.isvalid = true;
           this.loading = false;
         }
-      });
+      }).catch(console.error);
     },
     validateAcct(email) {
       if (this.isvalid) {
@@ -97,82 +99,6 @@ export default {
         }).then(() => {
           this.deleteTempAcct(email);
           this.loading = false;
-        }).catch((error) => {
-          console.error(error);
-        });
-      }
-    },
-    // unused
-    uploadAcctData(email, password) {
-      if (this.isvalid && this.dne) {
-        this.$apollo.mutate({
-          mutation: (gql`mutation ($e: String, $p: String) {
-            createAccount(record: {
-              password: $p,
-              email: $e,
-              firstname: "firstname",
-              lastname: "lastname",
-            }) {
-              recordId
-            }
-          }`),
-          variables: {
-            e: email,
-            p: password,
-          },
-        }).then(() => {
-          this.deleteTempAcct(email);
-        }).catch((error) => {
-          console.error(error);
-        });
-      }
-    },
-    // unused
-    uploadBusinessAcctData(email, password, fname, lname, bname) {
-      if (this.isvalid && this.dne) {
-        // create business record
-        this.$apollo.mutate({
-          mutation: (gql`mutation ($e: String, $bn: String) {
-            createOrganization(record: {
-              business_name: $bn,
-              email: $e,
-            }) {
-              recordId
-            }
-          }`),
-          variables: {
-            bn: bname,
-            e: email,
-          },
-        }).then((data) => {
-          // create user record
-          const businessID = data.data.createOrganization.recordId;
-          this.$apollo.mutate({
-            mutation: (gql`mutation ($e: String, $p: String, $fn: String, $ln: String, $bID: String, $olist: Object) {
-              createAccount(record: {
-                password: $p,
-                email: $e,
-                firstname: $fn,
-                lastname: $ln,
-                default_org: $bID
-                org_list: $olist
-              }) {
-                recordId
-              }
-            }`),
-            variables: {
-              e: email,
-              p: password,
-              fn: fname,
-              ln: lname,
-              bID: businessID,
-              olist: [businessID],
-            },
-          }).then(() => {
-            this.deleteTempAcct(email);
-          }).catch((error) => {
-            console.error(error);
-          });
         }).catch((error) => {
           console.error(error);
         });
