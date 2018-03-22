@@ -9,6 +9,7 @@ import NoIntrospection from 'graphql-disable-introspection';
 
 // Our stuff
 import Schema from '../graphql/Schema';
+import Logger from '../utils/Logger';
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -24,6 +25,10 @@ function buildOptions(ctx) {
   };
   if (process.env.NODE_ENV === 'production' || process.env.NO_INTROSPECTION) {
     options.validationRules.push(NoIntrospection);
+    options.formatError = (e) => {
+      Logger.error(e);
+      return 'An error occured.';
+    };
   }
   return options;
 }
