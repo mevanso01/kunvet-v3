@@ -100,6 +100,16 @@
   font-size: 32px;
   margin-bottom: 0;
 }
+@media only screen and (max-width: 480px) {
+  .fs-select-positions {
+    display: none !important;
+  }
+}
+@media only screen and (min-width: 480px) {
+  .fs-select-cities {
+    width: 50%;
+  }
+}
 .fs-select-positions {
   width: 50%;
   display: inline-block;
@@ -176,7 +186,7 @@
                 <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
                   <v-flex xs10 sm10 md11 style="height: 48px;"
                     no-wrap class="grey--text no-padding fsSelect">
-                    <v-select class="no-padding" style="width: 50%; display: inline-block; border-right: 1px solid #eee; height: 47px;"
+                    <v-select class="no-padding fs-select-cities" style="display: inline-block; border-right: 1px solid #eee; height: 47px;"
                       label="City or School"
                       v-bind:items="availableCities"
                       v-model="selectedCities"

@@ -3851,6 +3851,12 @@ graphql-compose@^3.0.6:
     babel-runtime "^6.26.0"
     object-path "^0.11.4"
 
+graphql-disable-introspection@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/graphql-disable-introspection/-/graphql-disable-introspection-1.0.1.tgz#52c7b3b0c80e9f525c5714475a7704f45b91d778"
+  dependencies:
+    graphql "^0.9.2"
+
 graphql-extensions@^0.0.x:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.0.7.tgz#807e7c3493da45e8f8fd02c0da771a9b3f1f2d1a"
@@ -3867,6 +3873,12 @@ graphql@=0.13.0:
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.13.0.tgz#d1b44a282279a9ce0a6ec1037329332f4c1079b6"
   dependencies:
     iterall "1.1.x"
+
+graphql@^0.9.2:
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.9.6.tgz#514421e9d225c29dfc8fd305459abae58815ef2c"
+  dependencies:
+    iterall "^1.0.0"
 
 grouped-queue@^0.3.3:
   version "0.3.3"
@@ -4782,6 +4794,10 @@ isurl@^1.0.0-alpha5:
 iterall@1.1.x:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.1.4.tgz#0db40d38fdcf53ae14dc8ec674e62ab190d52cfc"
+
+iterall@^1.0.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
 
 jmespath@0.15.0:
   version "0.15.0"

@@ -13,11 +13,19 @@ const HDYH = composeWithMongoose(Models.HDYH);
 
 // Helper functions
 function wrapResolvers(fn, resolvers) {
+  const farr = Array.isArray(fn) ? fn : [fn];
+
   Object.keys(resolvers).forEach((k) => {
-    resolvers[k] = resolvers[k].wrapResolve(next => req => fn(req, next));
+    for (const f of farr) {
+      resolvers[k] = resolvers[k].wrapResolve(next => req => f(req, next));
+    }
   });
+
   return resolvers;
 }
+
+// Redact fields from client
+Account.removeField(['password', 'hash', 'salt', 'is_developer']);
 
 // Root query fields
 GQC.rootQuery().addFields({
@@ -28,8 +36,10 @@ GQC.rootQuery().addFields({
   findResume: Resume.get('$findOne'),
   findResumes: Resume.get('$findMany'),
   // Account
-  findAccount: Account.get('$findOne'),
-  findAccounts: Account.get('$findMany'),
+  ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
+    findAccount: Account.get('$findOne'),
+    findAccounts: Account.get('$findMany'),
+  }),
   // Applicants
   findApplicant: Applicant.get('$findOne'),
   findApplicants: Applicant.get('$findMany'),

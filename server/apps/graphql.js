@@ -5,21 +5,35 @@ import KoaBody from 'koa-bodyparser';
 
 // GraphQL and Apollo
 import { graphqlKoa } from 'apollo-server-koa';
+import NoIntrospection from 'graphql-disable-introspection';
 
 // Our stuff
 import Schema from '../graphql/Schema';
+import Logger from '../utils/Logger';
 
 const app = new Koa();
 const router = new KoaRouter();
 
 // GraphQL endpoint
 function buildOptions(ctx) {
-  return {
+  const options = {
     schema: Schema,
     context: {
       user: ctx.state.user,
     },
+    validationRules: [],
   };
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.GRAPHQL_PRODUCTION
+  ) {
+    options.validationRules.push(NoIntrospection);
+    options.formatError = (e) => {
+      Logger.error(e);
+      return 'An error occured.';
+    };
+  }
+  return options;
 }
 
 router.post('/graphql', KoaBody(), (ctx) => {
