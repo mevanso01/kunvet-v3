@@ -315,13 +315,10 @@ const FileSchema = Mongoose.Schema({
 });
 
 const AccountSchema = Mongoose.Schema({
-  /*
-  Added by passport-local-mongoose:
-
+  /*  Added by passport-local-mongoose:
   username: {...},
   hash: {...},
-  salt: {...},
-  */
+  salt: {...}, */
   firstname: {
     type: String,
     required: true,
@@ -331,7 +328,8 @@ const AccountSchema = Mongoose.Schema({
     required: true,
   },
   email_verified: {
-    type: { Boolean, default: false },
+    type: Boolean,
+    default: false,
   },
   email: {
     type: String,

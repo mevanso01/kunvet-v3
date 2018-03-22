@@ -23,6 +23,7 @@ const router = new KoaRouter();
 
 router.post('/verify', async (ctx) => {
   const req = ctx.request.body;
+  console.log(req);
   let tempAcct = null;
   try {
     tempAcct = await Models.TempAccount.findOne({
@@ -69,6 +70,9 @@ router.post('/verify', async (ctx) => {
   try {
     userAcct.email_verified = true;
     await userAcct.save();
+    tempAcct = await Models.TempAccount.remove({
+      email: userEmail,
+    });
   } catch (e) {
     console.error(e);
     ctx.status = 500;

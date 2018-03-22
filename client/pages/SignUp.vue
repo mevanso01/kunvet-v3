@@ -31,7 +31,7 @@
                <h1>Select an account</h1>
           </div>
           <v-layout row wrap>
-            <v-flex d-flex xs12 md6>
+            <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
               <v-card>
                 <v-card-text>
                     <div style="margin-bottom: 64px;">
@@ -48,7 +48,7 @@
                 </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex d-flex xs12 md6>
+            <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
               <v-card>
                 <v-card-text>
                   <div style="margin-bottom: 64px;">

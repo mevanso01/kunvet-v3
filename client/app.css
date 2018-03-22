@@ -761,12 +761,16 @@ body {
     .padding-15px-right-sm-up {
       padding: 0 15px 0 0;
     }
+    .padding-10px-sm-up {
+      padding: 10px;
+    }
     .float-right-sm-up {
       float: right;
     }
     .align-right-sm-up {
       text-align: right;
     }
+
 }
 @media (max-width: 600px) {
     .no-padding-xs {

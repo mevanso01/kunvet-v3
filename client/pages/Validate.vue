@@ -25,19 +25,8 @@
 </template>
 <script>
 import gql from 'graphql-tag';
-import Vue from 'vue';
-import Vuetify from 'vuetify';
-import VueApollo from 'vue-apollo';
+import axios from 'axios';
 
-Vue.use(Vuetify);
-Vue.use(VueApollo);
-
-/*
-password
-firstname
-lastname
-business_name
-*/
 
 export default {
   created() {
@@ -54,30 +43,16 @@ export default {
   },
   methods: {
     validateCode() {
-      console.log('TEST');
-      this.$apollo.query({
-        query: (gql`query ($c: String) {
-          findVCode (filter: {
-            vcode: $c
-          }) {
-              email
-              vcode
-          }
-        }`),
-        variables: {
-          c: this.code,
-        },
-      }).then((data) => {
-        console.log('DATA', data);
-        if (data.data.findVCode) {
+      axios.post('/auth/verify', { code: this.code }).then((res) => {
+        this.loading = false;
+        console.log(res);
+        if (res.data.success) {
           this.isvalid = true;
-          // set account to valid
-          this.validateAcct(data.data.findVCode.email);
-        } else {
-          this.isvalid = true;
-          this.loading = false;
         }
-      }).catch(console.error);
+      }).catch(() => {
+        this.loading = false;
+        // console.error(error);
+      });
     },
     validateAcct(email) {
       if (this.isvalid) {
@@ -103,43 +78,6 @@ export default {
           console.error(error);
         });
       }
-    },
-    doesNotExist(email) {
-      return new Promise(resolve => {
-        this.$apollo.query({
-          query: (gql`query ($e: String) {
-            findAccount(filter: {
-              email: $e
-            }) {
-              email
-            }
-          }`),
-          variables: {
-            e: email,
-          },
-        }).then((data) => {
-          if (!data.data.findAccount) {
-            this.dne = true;
-          } else {
-            this.dne = false;
-          }
-          resolve(this.dne);
-        });
-      });
-    },
-    deleteTempAcct(email) {
-      this.$apollo.mutate({
-        mutation: (gql`mutation ($e: String) {
-          removeTempAccount(filter: { email: $e }) {
-            recordId
-          }
-        }`),
-        variables: {
-          e: email,
-        },
-      }).catch((error) => {
-        console.error(error);
-      });
     },
   },
 };

@@ -1,7 +1,4 @@
 <style lang="scss">
-.card {
-  box-shadow: none;
-}
 .saved {
   color: #ffcc00 !important;
 }
