@@ -77,7 +77,7 @@
             Posted
           </span>
         </v-btn>
-        <v-btn flat small :to="'/applicants'" :class="isActiveJobPostLink('/applicants')">
+        <v-btn flat small :ripple="false" :to="'/applicants'" :class="isActiveJobPostLink('/applicants')">
           <span class="job-post__helper-nav-bar__btn-text">
             Applicants
           </span>
