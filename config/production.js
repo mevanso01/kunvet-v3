@@ -1,7 +1,7 @@
 /*
  * Production configurations
  *
- * To supply credentials, copy credentials.js.example
+ * To supply credentials, copy credentials.example.js
  * to credentials.js
  */
 

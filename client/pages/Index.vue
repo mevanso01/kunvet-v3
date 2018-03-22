@@ -184,7 +184,7 @@
                   <h2 style="color: #333;">Find nearby jobs for students like you</h2>
                 </div>
                 <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
-                  <v-flex xs11 sm10 md9 offset-md2 style="height: 48px;"
+                  <v-flex xs10 sm10 md11 style="height: 48px;"
                     no-wrap class="grey--text no-padding fsSelect">
                     <v-select class="no-padding fs-select-cities" style="display: inline-block; border-right: 1px solid #eee; height: 47px;"
                       label="City or School"
