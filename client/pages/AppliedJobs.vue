@@ -6,9 +6,14 @@
       <v-layout>
         <v-flex xs12>
           <h1 style="margin-bottom: 10px; color: #A7A7A7;">
-            <span class="kunvet-red">
-              {{ jobsAndApplications.length }}
-            </span> Applied {{ getAppliedJobsString }}
+            <router-link to="/" v-if="jobsAndApplications.length === 0">
+              You have not yet applied for any jobs. Click me to go to the jobs dashboard.
+            </router-link>
+            <span v-else="jobsAndApplications.length > 0">
+              <span class="kunvet-red">
+                {{ jobsAndApplications.length }}
+              </span> Applied {{ getAppliedJobsString }}
+            </span>
           </h1>
         </v-flex>
       </v-layout>

@@ -423,7 +423,7 @@ export default {
               this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
             }
           }
-          this.updateApplicantStatus('opened');
+          if (res.status !== 'opened') this.updateApplicantStatus('opened');
         })
         .catch(error => {
           console.error(error);

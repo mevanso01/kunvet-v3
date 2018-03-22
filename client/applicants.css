@@ -93,6 +93,21 @@
   overflow: hidden;
   border-top: 1px solid black;
 }
+.new-applicant-card--equal-height .inner {
+  height: 300px;
+}
+@media only screen and (min-width: 480px) {
+  .new-applicant-card--equal-height .inner {
+    height: 200px;
+  }
+}
+.btn-holder--equal-height {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 5px 10px 10px 10px;
+}
 .btn-holder__left-elements {
   float: left;
 }
@@ -111,14 +126,18 @@
   text-decoration: underline;
   color: #A7A7A7;
 }
+.new-applicant-card__profile-pic-container img {
+  margin-left: 5px;
+  max-width: 50px;
+}
 .new-applicant-card__time-ago {
-  padding-bottom: 10px;
-  color: grey;
+  font-size: 0.8em;
+  color: #5D5D5D;
 }
 .new-applicant-card__unread-circle {
   background: #ef5350;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   position: absolute;
   top: -8px;
@@ -126,7 +145,4 @@
 }
 .new-applicant-card__profile-pic-container {
   position: relative;
-}
-.new-applicant-card__profile-pic-container img {
-  max-width: 50px;
 }

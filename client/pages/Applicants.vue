@@ -23,85 +23,76 @@
           <v-flex xs12 sm6
             v-if="applicants.length > 0"
             v-for="item in getApplicantsFromJobs(job._id)"
-            class="new-applicant-card"
+            class="new-applicant-card new-applicant-card--equal-height"
           >
-            <div class="myjobs-container">
-              <div class="inner">
-                <div class="new-applicant-card__info">
-                  <v-layout row wrap>
-                    <v-flex xs12 sm2 style="padding-bottom: 0;">
-                      <div class="new-applicant-card__profile-pic-container">
-                        <figure>
-                          <div v-if="item.status !== 'opened'" class="new-applicant-card__unread-circle" />
-                            <img
-                              :src="svgs.kunvetCharacter"
-                            />
-                            <div style="font-size: 0.6em; color: grey;">
-                              <timeago :since="item.date" />
-                            </div>
-                        </figure>
-                      </div>
-                    </v-flex>
-                    <v-flex xs12 sm10 style="padding-bottom: 0;">
-                      <router-link :to="'view-applicant/'+item._id">
-                        <h2 class="new-applicant-card__title">{{ item.name }}</h2>
-                        <p style="overflow: hidden; margin-bottom: 0;">
-                          <span>
-                            {{ item.school || 'School not provided' }}
-                          </span><br />
-                          <span 
-                            v-if="item.degree"
-                            style="color: grey;"
-                          >
-                            {{ item.degree }}<br />
-                          </span>
-                          <span 
-                            v-if="item.major"
-                            style="color: grey;"
-                          >
-                            {{ item.major }}<br />
-                          </span>
-                          <span v-if="item.notes" style="color: grey;">
-                            <br />
-                            Notes: {{ getApplicantNotesDisplayText(item) }}
-                          </span>
-                        </p>
-                      </router-link>
-                    </v-flex>
-                  </v-layout>
-                </div>
-                <div class="btn-holder">
-                  <div class="btn-holder__right-elements">
-                    <span v-if="isAcceptedOrRejected(item)">
-                      <span style="color: grey;">
-                        {{ getAcceptedOrRejectedText(item) }}
-                      </span>
-                      <v-btn
-                        v-if="item.status === 'accepted'"
-                        class="kunvet-black-small-btn"
-                        @click=""
-                      >
-                        Message
-                      </v-btn>
+            <div class="inner" style="position: relative;">
+              <div class="new-applicant-card__info">
+                <v-layout row wrap>
+                  <v-flex xs12 sm2 style="padding-bottom: 0;">
+                    <div class="new-applicant-card__profile-pic-container">
+                      <figure>
+                        <div v-if="item.status !== 'opened'" class="new-applicant-card__unread-circle" />
+                          <img
+                            :src="svgs.kunvetCharacter"
+                          />
+                          <div class="new-applicant-card__time-ago"s>
+                            <timeago :since="item.date" />
+                          </div>
+                      </figure>
+                    </div>
+                  </v-flex>
+                  <v-flex xs12 sm10 style="padding-bottom: 0;">
+                    <router-link :to="'view-applicant/'+item._id">
+                      <h2 class="new-applicant-card__title">{{ item.name }}</h2>
+                      <p style="overflow: hidden; margin-bottom: 0;">
+                        <span>
+                          {{ item.school || 'School info unknown' }}
+                        </span><br />
+                        <span 
+                          v-if="item.degree && item.degree !== 'None'"
+                          style="color: grey;"
+                        >
+                          {{ item.degree }} in {{ item.major }}<br />
+                        </span>
+                        <span v-if="item.notes" style="color: grey;">
+                          Notes: {{ getApplicantNotesDisplayText(item) }}
+                        </span>
+                      </p>
+                    </router-link>
+                  </v-flex>
+                </v-layout>
+              </div>
+              <div class="btn-holder btn-holder--equal-height">
+                <div class="btn-holder__right-elements">
+                  <span v-if="isAcceptedOrRejected(item)">
+                    <span style="color: grey;">
+                      {{ getAcceptedOrRejectedText(item) }}
                     </span>
-                    <span v-else>
-                      <span style="color: red;">
-                        {{ getApplicantExpiringText(item) }}
-                      </span>
-                      <v-btn
-                        class="kunvet-accept-small-btn"
-                        @click="onShowAcceptDialog(item)"
-                      >
-                        Accept
-                      </v-btn>
-                      <v-btn
-                        class="kunvet-reject-small-btn"
-                        @click="onShowRejectDialog(item)"
-                      >
-                        Reject
-                      </v-btn>
+                    <v-btn
+                      v-if="item.status === 'accepted'"
+                      class="kunvet-black-small-btn"
+                      @click=""
+                    >
+                      Message
+                    </v-btn>
+                  </span>
+                  <span v-else>
+                    <span style="color: red;">
+                      {{ getApplicantExpiringText(item) }}
                     </span>
-                  </div>
+                    <v-btn
+                      class="kunvet-accept-small-btn"
+                      @click="onShowAcceptDialog(item)"
+                    >
+                      Accept
+                    </v-btn>
+                    <v-btn
+                      class="kunvet-reject-small-btn"
+                      @click="onShowRejectDialog(item)"
+                    >
+                      Reject
+                    </v-btn>
+                  </span>
                 </div>
               </div>
             </div>
@@ -318,7 +309,7 @@
       },
       getApplicantNotesDisplayText({ notes }) {
         if (!notes) return '';
-        return StringHelper.truncate(notes, 50);
+        return StringHelper.truncate(notes);
       },
     },
     computed: {
