@@ -106,6 +106,9 @@
   .requirements .flex {
     padding: 0 15px;
   }
+  .picUploaderDialog {
+    min-width: 450px;
+  }
 }
 @media (max-width: 700px) {
   .createnewjob-container .work-hours {
@@ -312,12 +315,14 @@
         <p class="error_p" v-if="!experience_valid">Required</p>
         <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
         <br>
+
         <h3 class="optional" style="margin-bottom: 5px;">Pictures</h3>
         <v-btn @click="picUploaderDialog = true" flat small outline class="optional" style="margin-left: 0;">Upload</v-btn>
-        <v-dialog v-model="picUploaderDialog">
-          <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" multiple />
+        <v-dialog v-model="picUploaderDialog" width="100%">
+          <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" />
         </v-dialog>
         <br>
+
         <h3 style="margin-bottom: 5px;">Position tags</h3>
         <p>Please select at least one category that is relevant to this job</p>
         <v-select class="no-padding-select"
@@ -373,7 +378,7 @@ const createJobMutation = gql`
         title
         description
         address
-        university 
+        university
         latitude
         longitude
         type
@@ -403,7 +408,7 @@ const updateJobMutation = gql`
         title
         description
         address
-        university 
+        university
         latitude
         longitude
         type
@@ -631,7 +636,7 @@ export default {
             date
             description
             address
-            university 
+            university
             latitude
             longitude
             type

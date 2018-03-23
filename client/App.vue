@@ -31,7 +31,7 @@
 
         <v-toolbar-items v-else class="hidden-xs">
           <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
-            <v-menu offset-y v-if="item.subItems" left open-on-hover>
+            <v-menu fixed offset-y v-if="item.subItems" left open-on-hover>
               <v-btn flat style="width: 10px;" slot="activator">
                 <img class="nav-img notranslate" :src="item.icon"></img>
                 <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
