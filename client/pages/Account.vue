@@ -77,15 +77,18 @@
                             style="padding: 0;"
                           />
                         </v-flex>
-                        <v-flex xs3 v-show="updateDegree" class="no-padding">
-                          <v-btn small center class="cust-btn-1" @click="saveDegree">
+                        <v-flex xs3 v-if="updateDegree === 'High school' || updateDegree === 'None'" v-show="updateDegree" class="no-padding">
+                          <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
                             Save
                           </v-btn>
+                        </v-flex>
+                        <v-flex xs3 v-else style="padding-left: 5px; color: black;">
+                          in
                         </v-flex>
                       </v-layout>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-if="userdata.degree" class="cust-tile-2">
+                  <v-list-tile v-if="userdata.school && userdata.degree" class="cust-tile-2">
                     <v-list-tile class="cust-tile-1">
                       <img
                         :src="svgs.accountDegree"
@@ -97,17 +100,18 @@
                         {{ userdata.degree }}
                         <i
                           class="fa fa-edit acct-page-container__edit-icon"
-                          @click="createEditModal('degree', userdata.degree, 'degree', 'select', degreeSelectItems)"
+                          @click="createEditDegreeMajorInfo.show = true"
                         />
                       </v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
 
-
-
-
-
-                  <v-list-tile v-if="userdata.school && userdata.degree && !userdata.major" class="cust-tile-2 grey-color">
+                  <v-list-tile v-if="
+                    userdata.school &&
+                    userdata.degree !== 'High school' && userdata.degree !== 'None' &&
+                    updateDegree !== 'High school' && updateDegree !== 'None' &&
+                    !userdata.major
+                  " class="cust-tile-2 grey-color">
                     <v-list-tile class="cust-tile-1">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </v-list-tile>
@@ -120,18 +124,20 @@
                             name="input-2"
                             label="Add Major"
                             single-line
-                            @keyup.enter="saveMajor"
                           />
                         </v-flex>
-                        <v-flex xs3 v-show="updateMajor" class="no-padding">
-                          <v-btn small center class="cust-btn-1" @click="updateMajor">
+                        <v-flex xs3
+                          v-if="updateDegree && updateMajor"
+                          v-show="updateMajor" class="no-padding"
+                        >
+                          <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
                             Save
                           </v-btn>
                         </v-flex>
                       </v-layout>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-if="userdata.major" class="cust-tile-2">
+                  <v-list-tile v-if="userdata.school && userdata.degree !== 'None' && userdata.degree !== 'High school' && userdata.major" class="cust-tile-2">
                     <v-list-tile class="cust-tile-1">
                       <img
                         :src="svgs.accountMajor"
@@ -141,10 +147,6 @@
                     <v-list-tile-content>
                       <v-list-tile-title>
                         {{ userdata.major }}
-                        <i
-                          class="fa fa-edit acct-page-container__edit-icon"
-                          @click="createEditModal('major', userdata.major, 'major')"
-                        />
                       </v-list-tile-title>
                     </v-list-tile-content>
 
@@ -337,6 +339,44 @@
             </v-dialog>
 
 
+            <v-dialog v-model="createEditDegreeMajorInfo.show">
+              <v-card>
+                <v-card-title>
+                  <div class="headline">Edit Degree and Major Information</div>
+                  <div class="edit-modal-input-cont">
+                    <v-select
+                      v-model="createEditDegreeMajorInfo.degree"
+                      :items="degreeSelectItems"
+                      single-line
+                      :placeholder="userdata.degree"
+                    />
+                    <v-text-field
+                      v-model="createEditDegreeMajorInfo.major"
+                      v-if="createEditDegreeMajorInfo.degree !== 'None' && createEditDegreeMajorInfo.degree !== 'High school'"
+                      style="padding: 0 2px;"
+                      name="edit-modal-input"
+                      hide-details
+                      single-line
+                      :placeholder="userdata.major"
+                    />
+                  </div>
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn flat="flat" @click.native="destroyDegreeMajorModal">Cancel</v-btn>
+                  <v-btn
+                    v-if="
+                    (createEditDegreeMajorInfo.degree === 'None' || createEditDegreeMajorInfo.degree === 'High school') ||
+                    (createEditDegreeMajorInfo.degree && createEditDegreeMajorInfo.major)
+                    "
+                    flat="flat" @click.native="saveFromDegreeMajorModal"
+                  >
+                    Save
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+
                 <v-dialog v-model="createOrganizationModal.show">
                   <v-card>
                     <v-card-title class="headline">
@@ -438,6 +478,11 @@
           show: false,
           firstName: '',
           lastName: '',
+        },
+        createEditDegreeMajorInfo: {
+          show: false,
+          degree: null,
+          major: null,
         },
         createOrganizationModal: {
           show: false,
@@ -622,19 +667,18 @@
       logout() {
         App.methods.logout();
       },
+      saveDegreeMajorInfo() {
+        if (this.updateDegree === 'None' || this.updateDegree === 'High school') this.updateMajor = ''; // not sure if needed
+        this.userdata.degree = this.updateDegree;
+        this.updateDegree = '';
+
+        this.userdata.major = this.updateMajor;
+        this.updateMajor = '';
+        this.saveUserdata();
+      },
       saveSchool() {
         this.userdata.school = this.updateSchool;
         this.updateSchool = '';
-        this.saveUserdata();
-      },
-      saveDegree() {
-        this.userdata.degree = this.updateDegree;
-        this.updateDegree = '';
-        this.saveUserdata();
-      },
-      saveMajor() {
-        this.userdata.major = this.updateMajor;
-        this.updateMajor = '';
         this.saveUserdata();
       },
       saveEmail() {
@@ -673,6 +717,19 @@
         this.userdata.lastname = lastName;
         this.saveUserdata();
         this.editNameModal.show = false;
+      },
+      destroyDegreeMajorModal() {
+        this.createEditDegreeMajorInfo.show = false;
+        this.createEditDegreeMajorInfo.degree = null;
+        this.createEditDegreeMajorInfo.major = null;
+      },
+      saveFromDegreeMajorModal() {
+        const { degree } = this.createEditDegreeMajorInfo;
+        if (degree === 'None' || degree === 'High school') this.createEditDegreeMajorInfo.major = '';
+        this.userdata.degree = this.createEditDegreeMajorInfo.degree;
+        this.userdata.major = this.createEditDegreeMajorInfo.major;
+        this.destroyDegreeMajorModal();
+        this.saveUserdata();
       },
       saveUserdata() {
         this.updateAccount();

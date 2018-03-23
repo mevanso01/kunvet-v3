@@ -2,9 +2,9 @@ const degrees = {
   none: 'None',
   high_school: 'High school',
   pursuing_bachelor: 'Pursuing Bachelor\'s Degree',
-  bachelors: 'Bachelor\'s degree',
+  bachelors: 'Bachelor\'s Degree',
   pursuing_master: 'Pursuing Master\'s Degree',
-  masters: 'Master\'s degree',
+  masters: 'Master\'s Degree',
   pursuing_phd: 'Pursuing PhD Degree',
   phd: 'PhD degree',
 };

@@ -49,10 +49,16 @@
                           {{ item.school || 'School info unknown' }}
                         </span><br />
                         <span 
-                          v-if="item.degree && item.degree !== 'None'"
+                          v-if="item.degree && item.degree !== 'None' && item.degree != 'High school'"
                           style="color: grey;"
                         >
                           {{ item.degree }} in {{ item.major }}<br />
+                        </span>
+                        <span
+                          v-if="item.degree === 'High school'"
+                          style="color: grey;"
+                        >
+                          {{ item.degree }}
                         </span>
                         <span v-if="item.notes" style="color: grey;">
                           Notes: {{ getApplicantNotesDisplayText(item) }}
