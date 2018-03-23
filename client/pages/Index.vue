@@ -199,7 +199,8 @@
                       autocomplete
                       single-line
                       hide-details
-                      multiple>
+                      multiple
+                    >
                     </v-select>
                   </v-flex>
                   <v-flex xs2 sm2 md1 class="no-padding fsGoBtn" @click="searchGo">

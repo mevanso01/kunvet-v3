@@ -1,3 +1,11 @@
+<style>
+@media only screen and (max-width: 480px) {
+  .acct-page-container__add-major {
+     margin-left: 40px;
+     max-width: 230px;
+  }
+}
+</style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
     <div class="main-cont-large">
@@ -60,7 +68,7 @@
 
 
                   <v-list-tile
-                    v-if="userdata.school && !userdata.degree"
+                    v-if="userdata.school && !userdata.degree || (userdata.degree && userdata.degree === 'None')"
                     class="cust-tile-2 grey-color"
                   >
                     <v-list-tile class="cust-tile-1">
@@ -68,16 +76,16 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">
-                        <v-flex xs9 class="no-padding">
+                        <v-flex xs7 class="no-padding">
                           <v-select
                             :items="degreeSelectItems"
                             v-model="updateDegree"
                             label="Select Degree"
                             single-line
-                            style="padding: 0;"
+                            style="padding: 0; max-width: 275px;"
                           />
                         </v-flex>
-                        <v-flex xs3 v-if="updateDegree === 'High school' || updateDegree === 'None'" v-show="updateDegree" class="no-padding">
+                        <v-flex xs5 v-if="updateDegree === 'High school' || updateDegree === 'None'" v-show="updateDegree" class="no-padding">
                           <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
                             Save
                           </v-btn>
@@ -88,7 +96,7 @@
                       </v-layout>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-if="userdata.school && userdata.degree" class="cust-tile-2">
+                  <v-list-tile v-if="userdata.school && userdata.degree !== 'None'" class="cust-tile-2">
                     <v-list-tile class="cust-tile-1">
                       <img
                         :src="svgs.accountDegree"
@@ -97,7 +105,7 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>
-                        {{ userdata.degree }}
+                        {{ userdata.degree }} <span v-if="userdata.degree !== 'High school'">in {{ userdata.major }}</span>
                         <i
                           class="fa fa-edit acct-page-container__edit-icon"
                           @click="createEditDegreeMajorInfo.show = true"
@@ -108,25 +116,23 @@
 
                   <v-list-tile v-if="
                     userdata.school &&
-                    userdata.degree !== 'High school' && userdata.degree !== 'None' &&
+                    userdata.degree !== 'High school' &&
                     updateDegree !== 'High school' && updateDegree !== 'None' &&
                     !userdata.major
                   " class="cust-tile-2 grey-color">
-                    <v-list-tile class="cust-tile-1">
-                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    </v-list-tile>
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">
-                        <v-flex xs9 class="no-padding">
+                        <v-flex xs8 class="no-padding">
                           <v-text-field
                             v-model="updateMajor"
-                            class="no-padding no-underline"
-                            name="input-2"
+                            class="no-padding no-underline acct-page-container__add-major"
+                            name="add-major"
                             label="Add Major"
+                            style="margin-left: 40px; max-width: 230px;"
                             single-line
                           />
                         </v-flex>
-                        <v-flex xs3
+                        <v-flex xs4
                           v-if="updateDegree && updateMajor"
                           v-show="updateMajor" class="no-padding"
                         >
@@ -136,21 +142,6 @@
                         </v-flex>
                       </v-layout>
                     </v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile v-if="userdata.school && userdata.degree !== 'None' && userdata.degree !== 'High school' && userdata.major" class="cust-tile-2">
-                    <v-list-tile class="cust-tile-1">
-                      <img
-                        :src="svgs.accountMajor"
-                        class="acct-page-container__display-text-icon"
-                      />
-                    </v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title>
-                        {{ userdata.major }}
-                      </v-list-tile-title>
-                    </v-list-tile-content>
-
-
                   </v-list-tile>
 
                     <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
@@ -668,10 +659,9 @@
         App.methods.logout();
       },
       saveDegreeMajorInfo() {
-        if (this.updateDegree === 'None' || this.updateDegree === 'High school') this.updateMajor = ''; // not sure if needed
+        if (this.updateDegree === 'None' || this.updateDegree === 'High school') this.updateMajor = '';
         this.userdata.degree = this.updateDegree;
         this.updateDegree = '';
-
         this.userdata.major = this.updateMajor;
         this.updateMajor = '';
         this.saveUserdata();
