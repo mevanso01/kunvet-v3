@@ -43,7 +43,8 @@ const JobSchema = Mongoose.Schema({
     required: true,
   },
   active: {
-    type: { Boolean, default: false },
+    type: Boolean,
+    default: false,
     required: true,
   },
   expired: {
@@ -141,10 +142,10 @@ const JobSchema = Mongoose.Schema({
   notes: {
     type: String,
   },
-  img: {
-    data: Buffer,
-    contentType: String,
-  },
+  images: [{
+    original: Mongoose.Schema.Types.ObjectId,
+    cropped: Mongoose.Schema.Types.ObjectId,
+  }],
 });
 const ApplicantSchema = Mongoose.Schema({
   user_id: {
@@ -347,7 +348,8 @@ const AccountSchema = Mongoose.Schema({
     contentType: String,
   },
   created_date: {
-    type: { Date, default: Date.now },
+    type: Date,
+    default: Date.now,
   },
   school: {
     type: String,

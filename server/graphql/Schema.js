@@ -80,17 +80,17 @@ GQC.rootMutation().addFields({
     // Extra stuff
     createHDYH: HDYH.get('$createOne'),
     removeHDYH: HDYH.get('$removeOne'),
+    // Job
+    createJob: Job.get('$createOne'),
+    updateJob: Job.get('$updateOne'),
+    removeJob: Job.get('$removeOne'),
+    // Organization
+    createOrganization: Organization.get('$createOne'),
+    updateOrganization: Organization.get('$updateOne'),
+    removeOrganization: Organization.get('$removeOne'),
 
     // Employer-only mutations
     ...wrapResolvers(Restrictions.BusinessAccount, {
-      // Job
-      createJob: Job.get('$createOne'),
-      updateJob: Job.get('$updateOne'),
-      removeJob: Job.get('$removeOne'),
-      // Organization
-      createOrganization: Organization.get('$createOne'),
-      updateOrganization: Organization.get('$updateOne'),
-      removeOrganization: Organization.get('$removeOne'),
     }),
   }),
 });

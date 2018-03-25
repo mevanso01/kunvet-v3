@@ -3,7 +3,7 @@
     <v-card-title>
       <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="width: 100%;">
         <form enctype="multipart/form-data" novalidate style="width: 100%;">
-          <h1>Add Pictures</h1>
+          <h1>Add Picture</h1>
           <div class="dropbox">
             <input
               type="file"
@@ -20,12 +20,13 @@
                 Uploading files...
               </p>
           </div>
-          <div style="min-height: 21px; margin: 10px 0;">
+          <!--<div style="min-height: 21px; margin: 10px 0;">
             <p style="margin: 0;" v-for="file in files">{{ file.name }}</p>
-          </div>
+          </div>-->
         </form>
-        <div id="cropper-container" v-show="!multiple" style="width: 100%;">
-          <vueCropper v-show="!cropped"
+        <p style="margin-bottom: 5px" v-if="this.files[0] && keepOriginal">Create a preview for this image:</p>
+        <div id="cropper-container" v-show="!cropped" style="width: 100%;">
+          <vueCropper
             ref="cropper"
             :img="cropperOptions.img"
             :outputSize="cropperOptions.size"
@@ -39,13 +40,14 @@
             :canScale="false"
             >
           </vueCropper>
-          <div v-show="cropped" style="display: flex;">
-            <img style="margin: auto;" v-bind:src="cropped">
-          </div>
         </div>
-        <button @click="changeScale(1)" class="btn">+</button>
-				<button @click="changeScale(-1)" class="btn">-</button>
-        <button @click="crop()">Crop Via Callback</button>
+        <div v-show="cropped" style="display: flex;">
+          <img style="margin: auto;" v-bind:src="cropped">
+        </div>
+        <div v-if="this.files[0]">
+          <v-btn style="margin-left: 0;" v-if="!cropped" @click="cropSingle()">Crop</v-btn>
+          <v-btn style="margin-left: 0;" v-else @click="cropped = null;">Redo Crop</v-btn>
+        </div>
       </div>
       <div style="min-height: 40px;" v-if="state === 'FAILED'">
         <h3 style="display: inline-block;">
@@ -71,7 +73,12 @@ const _URL = window.URL || window.webkitURL;
 export default {
   props: {
     id: String,
+    croppedId: String,
     multiple: {
+      type: Boolean,
+      default: false,
+    },
+    keepOriginal: {
       type: Boolean,
       default: false,
     },
@@ -83,15 +90,17 @@ export default {
     return {
       state: 'INITIAL',
       curId: null,
+      curCroppedId: null,
       file: null,
       files: [],
+      croppedFiles: [],
       client: null,
       cropped: null,
       cropperOptions: {
         img: undefined,
         size: 1,
         full: false,
-        outputType: 'jpg',
+        outputType: undefined,
         canMove: true,
         fixedBox: true,
         original: false,
@@ -106,25 +115,27 @@ export default {
   mounted() {
     this.client = new FileClient();
     this.curId = this.id;
-    /* this.$refs.croppieRef.bind({
-      url: 'http://i.imgur.com/Fq2DMeH.jpg',
-    }); */
+    this.curCroppedId = this.croppedId;
   },
   methods: {
     result(output) {
       this.cropped = output;
     },
+    changeCropBox(num) {
+      // doesnt work
+      var n = num || 1;
+      this.cropperOptions.autoCropWidth += n;
+      this.cropperOptions.autoCropHeight += n;
+    },
     changeScale(num) {
       var n = num || 1;
       this.$refs.cropper.changeScale(n);
     },
-    crop() {
+    cropSingle() {
       this.$refs.cropper.getCropBlob((data) => {
-        // preview image
-        console.log(data);
         const file = new File([data], this.files[0].name, { type: this.files[0].type, lastModified: Date.now() });
-        this.files[0] = file;
-        console.log('FILES', this.files);
+        this.croppedFiles[0] = file;
+        // preview image
         this.cropped = _URL.createObjectURL(data);
       });
     },
@@ -136,27 +147,26 @@ export default {
           }
         } else {
           this.files = [files[0]];
+          this.updateCropperImg(this.files[0]);
         }
       }
-      if (this.files[0]) {
+      // multiple currently does not work
+      /* if (!this.multiple && this.files[0]) {
         console.log(this.files);
         this.updateCropperImg(this.files[0]);
-      }
+      } */
     },
-    updateCropperImg(file) {
-      this.loadImg(file).then((img) => {
-        this.cropperOptions.img = img.src;
-        var cc = document.getElementById('cropper-container');
-        const width = cc.offsetWidth;
-        const newHeight = Math.round(width * (img.height / img.width));
-        cc.style.height = `${newHeight}px`;
-        const square = Math.min(width, newHeight);
-        this.cropperOptions.autoCropWidth = square;
-        this.cropperOptions.autoCropHeight = square;
-        // console.log('Width', width);
-        // console.log('Height', newHeight);
-        // console.log('Square', square);
-      });
+    async updateCropperImg(file) {
+      this.cropperOptions.outputType = file.type;
+      const img = await this.loadImg(file);
+      this.cropperOptions.img = img.src;
+      var cc = document.getElementById('cropper-container');
+      const width = cc.offsetWidth;
+      const newHeight = Math.round(width * (img.height / img.width));
+      cc.style.height = `${newHeight}px`;
+      const square = Math.min(width, newHeight);
+      this.cropperOptions.autoCropWidth = square;
+      this.cropperOptions.autoCropHeight = square;
     },
     loadImg(file) {
       return new Promise((resolve, reject) => {
@@ -167,53 +177,66 @@ export default {
       });
     },
     upload() {
-      if (this.multiple) {
-        this.uploadMultiple();
+      if (this.keepOriginal) {
+        this.uploadOriginalAndCropped();
       } else {
-        this.uploadSingle();
+        this.uploadCroppedOnly();
       }
     },
-    async uploadSingle() {
+    async uploadCroppedOnly() {
       this.state = 'UPLOADING';
 
-      if (!this.curId) {
+      if (!this.curCroppedId) {
         // Create a new file slot
         try {
-          this.curId = await this.client.createFileSlot(this.files[0].name, this.files[0].type);
+          this.curCroppedId = await this.client.createFileSlot(this.croppedFiles[0].name, this.croppedFiles[0].type);
         } catch (e) {
           this.state = 'FAILED';
           console.error(e);
           return;
         }
-        this.$emit('created', this.curId);
+        this.$emit('created', this.curCroppedId);
       }
       try {
-        await this.client.uploadFile(this.curId, this.files[0]);
+        await this.client.uploadFile(this.curCroppedId, this.croppedFiles[0]);
       } catch (e) {
         this.state = 'FAILED';
         console.error(e);
         return;
       }
       this.state = 'SUCCESSFUL';
-      this.$emit('uploaded', this.curId);
+      this.$emit('uploaded', this.curCroppedId);
     },
-    async uploadMultiple() {
-      this.state = 'UPLOADING';
-      var fileIds = [];
-      for (const file of this.files) {
-        try {
-          const curId = await this.client.createFileSlot(file.name, file.type);
-          this.client.uploadFile(curId, file);
-          fileIds.push(curId);
-        } catch (e) {
-          this.state = 'FAILED';
-          console.error(e);
-          return;
+    async uploadOriginalAndCropped() {
+      try {
+        if (!this.curCroppedId) {
+          this.curCroppedId = await this.client.createFileSlot(this.croppedFiles[0].name, this.croppedFiles[0].type);
         }
+        if (!this.curId) {
+          this.curId = await this.client.createFileSlot(this.files[0].name, this.files[0].type);
+        }
+        await this.client.uploadFile(this.curCroppedId, this.croppedFiles[0]);
+        await this.client.uploadFile(this.curId, this.files[0]);
+      } catch (e) {
+        this.state = 'FAILED';
+        console.error(e);
+        return;
       }
-      Promise.all(fileIds).then((res) => {
-        this.state = 'SUCCESSFUL';
-        this.$emit('uploaded', res);
+      this.$emit('uploaded', { original: this.curId, cropped: this.curCroppedId });
+    },
+    _secretCrop(originalFile) {
+      return new Promise((resolve, reject) => {
+        try {
+          this.$refs.cropper.getCropBlob((data) => {
+            console.log('BLOB DATA', data);
+            const croppedfile = new File([data], originalFile.name, { type: originalFile.type, lastModified: Date.now() });
+            // this.cropped = _URL.createObjectURL(data);
+            resolve(croppedfile);
+          });
+        } catch (e) {
+          console.error(e);
+          reject(e);
+        }
       });
     },
     cancel() {

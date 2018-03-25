@@ -10,7 +10,7 @@
 }
 .createnewjob-container h3 {
   margin-top: 1em;
-  margin-bottom: 1.2em;
+  /* margin-bottom: 1.2em; */
   color: #4d4d4d;
   font-size: 1.5em;
 }
@@ -316,11 +316,28 @@
         <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
         <br>
 
-        <h3 class="optional" style="margin-bottom: 5px;">Pictures</h3>
-        <v-btn @click="picUploaderDialog = true" flat small outline class="optional" style="margin-left: 0;">Upload</v-btn>
+        <div style="display: flex">
+        <h3 class="optional" style="margin: 7px 10px 6px 0;">Pictures</h3>
+        <v-btn v-if="images.length === 0"
+          @click="picUploaderDialog = true"
+          flat small outline
+          class="optional">Upload</v-btn>
+        <v-btn v-else
+          @click="picUploaderDialog = true"
+          flat small outline class="optional">Upload Another</v-btn>
+        </div>
+
         <v-dialog v-model="picUploaderDialog" width="100%">
-          <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" />
+
+          <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" keepOriginal />
         </v-dialog>
+        <v-container fluid grid-list-sm style="margin-top: 8px;">
+          <v-layout row wrap>
+            <v-flex xs4 md3 v-for="image in images">
+              <img class="image" :src="`http://localhost:3000/file/get/${image.cropped}`" alt="lorem" width="100%" height="100%">
+            </v-flex>
+          </v-layout>
+        </v-container>
         <br>
 
         <h3 style="margin-bottom: 5px;">Position tags</h3>
@@ -394,6 +411,10 @@ const createJobMutation = gql`
         experience
         responsibilities
         notes
+        images {
+          original
+          cropped
+        }
       }
     }
   }
@@ -424,6 +445,10 @@ const updateJobMutation = gql`
         experience
         responsibilities
         notes
+        images {
+          original
+          cropped
+        }
       }
     }
   }
@@ -439,6 +464,7 @@ export default {
       valid: false,
       submitted: false,
       posted_by: null,
+      uid: null,
       title: '',
       date: null,
       address: '',
@@ -472,6 +498,7 @@ export default {
       university: null,
       howDidYouHear: null,
       schools: Schools.schools,
+      images: [],
       tags: [],
       picUploaderDialog: false,
       educationOptions: [
@@ -543,20 +570,20 @@ export default {
           mutation: updateJobMutation,
           variables: {
             id,
-            job,
+            job: job,
           },
-        });
+        }).catch(console.error);
       } else {
         const job = this.createJobArray();
         this.$apollo.mutate({
           mutation: createJobMutation,
           variables: {
-            job,
+            job: job,
           },
         }).then((d) => {
           const id = d.data.createJob.recordId;
           this.$router.push({ path: `/createnewjob/${id}` });
-        });
+        }).catch(console.error);
       }
     },
     validateBeforePosting(showDialog = false) {
@@ -599,7 +626,7 @@ export default {
         // $store.state.userID vs $store.state.businessID
         // Do we have to differentiate between this?
         // Because on the backend, ctx only cares about user._id.
-        user_id: this.$store.state.userID,
+        user_id: this.uid,
         posted_by: this.posted_by,
         active: this.active,
         title: this.title,
@@ -622,13 +649,14 @@ export default {
         experience: this.experience,
         responsibilities: this.responsibilities,
         notes: this.notes,
+        images: this.images,
       };
       return job;
     },
     getEditJobData(_id) {
       this.$apollo.query({
         query: (gql`query ($id: MongoID, $user: String) {
-          findJob (filter: { _id: $id, posted_by: $user,  }){
+          findJob (filter: { _id: $id, posted_by: $user }){
             _id
             posted_by
             active
@@ -652,10 +680,14 @@ export default {
             experience
             responsibilities
             notes
+            images {
+              original
+              cropped
+            }
           }
         }`),
         variables: {
-          user: this.user,
+          user: this.posted_by,
           id: _id,
         },
       }).then((data) => {
@@ -668,7 +700,7 @@ export default {
           this.university = job.university;
           this.latitude = job.latitude;
           this.longitude = job.latitude;
-          if (job.type.length > 1) {
+          if (job.type && job.type.length > 1) {
             this.type = 'both';
           } else if (job.type) {
             this.type = job.type[0];
@@ -686,21 +718,30 @@ export default {
           this.language = job.language;
           this.experience = job.experience;
           this.responsibilities = job.responsibilities;
+          for (const image of job.images) {
+            this.images.push({ original: image.original, cropped: image.cropped });
+          }
         }
+      }).catch((error) => {
+        console.error(error);
       });
     },
     picsUploaded(fileIds) {
-      console.log(fileIds);
+      this.picUploaderDialog = false;
+      this.images.push(fileIds);
+      console.log(this.images);
     },
   },
   created() {
     if (this.$store.state.acct === 2) {
       this.posted_by = this.$store.state.bdata.business_name;
+      this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);
       }
     } else if (this.$store.state.acct === 1) {
       this.posted_by = `${this.$store.state.userdata.firstname} ${this.$store.state.userdata.lastname}`;
+      this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);
       }
@@ -708,6 +749,7 @@ export default {
       VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
         if (data.acct === 2) {
           this.posted_by = data.bdata.business_name;
+          this.uid = data.userID;
           if (this.$route.params.id) {
             this.getEditJobData(this.$route.params.id);
           }
