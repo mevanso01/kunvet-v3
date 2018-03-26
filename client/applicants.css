@@ -96,6 +96,11 @@
 .new-applicant-card--equal-height .inner {
   height: 300px;
 }
+@media only screen and (min-width: 400px) {
+  .new-applicant-card--equal-height .inner {
+    height: 260px;
+  }
+}
 @media only screen and (min-width: 595px) {
   .new-applicant-card--equal-height .inner {
     height: 225px;
