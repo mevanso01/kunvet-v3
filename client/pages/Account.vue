@@ -1,9 +1,9 @@
 <style>
-@media only screen and (max-width: 480px) {
-  .acct-page-container__add-major {
-     margin-left: 40px;
-     max-width: 230px;
-  }
+.acct-page-container__add-major {
+  margin-left: 40px !important;
+}
+.acct-page-container__select-degree .input-group__details::before {
+  background-color: transparent !important;
 }
 </style>
 <template>
@@ -76,24 +76,25 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">
-                        <div style="width: 265px;">
-                          <v-select
-                            :items="degreeSelectItems"
-                            v-model="updateDegree"
-                            label="Select Degree"
-                            single-line
-                            style="padding: 0; max-width: 275px;"
-                            hide-details
-                          />
-                        </div>
-                        <v-flex xs5 v-if="updateDegree === 'High school' || updateDegree === 'None'" v-show="updateDegree" class="no-padding">
-                          <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
-                            Save
-                          </v-btn>
-                        </v-flex>
-                        <v-flex xs3 v-else style="padding-left: 5px; color: black;">
-                          in
-                        </v-flex>
+                       <div v-bind:style="getSelectMaxWidth">
+                         <v-select
+                           :items="degreeSelectItems"
+                           class="acct-page-container__select-degree"
+                           v-model="updateDegree"
+                           label="Select Degree"
+                           single-line
+                           style="padding: 0;"
+                           hide-details
+                         />
+                       </div>
+                       <v-flex xs5 v-if="updateDegree === 'High school' || updateDegree === 'None'" v-show="updateDegree" class="no-padding">
+                         <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
+                           Save
+                         </v-btn>
+                       </v-flex>
+                       <v-flex xs3 v-else style="padding-left: 5px; padding-top: 5px; color: black;">
+                         in
+                       </v-flex>
                       </v-layout>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -123,19 +124,18 @@
                   " class="cust-tile-2 grey-color">
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">
-                        <v-flex xs8 class="no-padding">
+                        <v-flex xs9 class="no-padding">
                           <v-text-field
                             v-model="updateMajor"
                             class="no-padding no-underline acct-page-container__add-major"
                             name="add-major"
                             label="Add Major"
-                            style="margin-left: 40px; max-width: 230px;"
                             single-line
                           />
                         </v-flex>
-                        <v-flex xs4
+                        <v-flex xs3
                           v-if="updateDegree && updateMajor"
-                          v-show="updateMajor" class="no-padding"
+                          v-show="updateMajor" class="no-padding" style="margin-left: 40px;"
                         >
                           <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
                             Save
@@ -446,7 +446,8 @@
   import BuildingSvg from '@/assets/account/org_building_full_black.svg';
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
-  import DegreeConstants, { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
+  import DegreeConstants, { degreeDbToString, degreeSelectMaxWidths, degreeStringToDb } from '@/constants/degrees';
+
 
   export default {
     data() {
@@ -540,6 +541,13 @@
       },
       degreeSelectItems() {
         return Object.keys(DegreeConstants).map(degreeDbToString);
+      },
+      getSelectMaxWidth() {
+        const { updateDegree: degree } = this;
+        if (!degree || degree === 'none') return { width: '160px' }; // cover placeholder
+        return {
+          maxWidth: `${degreeSelectMaxWidths[degreeStringToDb(degree)]}px`,
+        };
       },
     },
     methods: {

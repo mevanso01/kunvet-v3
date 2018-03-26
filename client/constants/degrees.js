@@ -9,6 +9,17 @@ const degrees = {
   phd: 'PhD degree',
 };
 
+export const degreeSelectMaxWidths = {
+  none: 85,
+  high_school: 200,
+  pursuing_bachelor: 275,
+  bachelors: 200,
+  pursuing_master: 250,
+  masters: 230,
+  pursuing_phd: 230,
+  phd: 200,
+};
+
 const objKeys = Object.keys(degrees);
 
 export const degreeDbToString = constant => degrees[constant];
