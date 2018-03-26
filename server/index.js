@@ -14,11 +14,14 @@ import KoaPassport from 'koa-passport';
 
 import REPL from 'repl';
 
+import Logger from 'winston';
+
 // CORS
 import Cors from '@/Cors';
 
 // Options
 import '@/options/passport';
+import '@/options/logger';
 
 // Sub apps
 import AuthApp from '@/apps/auth';
@@ -30,7 +33,6 @@ import ApplicationApp from '@/apps/application';
 // Our stuff
 import Db from '@/mongodb/Db';
 import Models from '@/mongodb/Models';
-import Logger from '@/utils/Logger';
 
 // ========
 // | Main |

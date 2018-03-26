@@ -1,6 +1,6 @@
 import Config from 'config';
 import Mongoose from 'mongoose';
-import Logger from '@/utils/Logger';
+import Logger from 'winston';
 
 Mongoose.Promise = global.Promise;
 

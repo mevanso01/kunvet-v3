@@ -1,4 +1,4 @@
-import Logger from '@/utils/Logger';
+import Logger from 'winston';
 import set from 'lodash/set';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';

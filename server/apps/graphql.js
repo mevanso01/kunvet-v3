@@ -7,9 +7,11 @@ import KoaBody from 'koa-bodyparser';
 import { graphqlKoa } from 'apollo-server-koa';
 import NoIntrospection from 'graphql-disable-introspection';
 
+// Logger
+import Logger from 'winston';
+
 // Our stuff
 import Schema from '../graphql/Schema';
-import Logger from '../utils/Logger';
 
 const app = new Koa();
 const router = new KoaRouter();
