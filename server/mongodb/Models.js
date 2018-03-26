@@ -110,6 +110,9 @@ const JobSchema = Mongoose.Schema({
   age: {
     type: Number,
   },
+  preferred_major: {
+    type: String,
+  },
   pay_type: {
     type: String,
     enum: ['paid', 'unpaid', 'negotiable', 'none'],

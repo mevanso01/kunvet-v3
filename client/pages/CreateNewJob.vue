@@ -102,6 +102,10 @@
 .input-group--error, .input-group--error label {
   color: #f00 !important;
 }
+.bottom-error-message {
+  color: #f00;
+  transition: all 0.4s linear;
+}
 @media (min-width: 600px) {
   .requirements .flex {
     padding: 0 15px;
@@ -134,6 +138,7 @@
           </div>
           <div class="float-right">
             <v-btn flat @click="saveForLater" v-if="!active">Save for later</v-btn>
+            <v-btn v-else style="margin-left: 0;" @click="updateActiveJob">Save</v-btn>
           </div>
         </div>
         <v-divider></v-divider>
@@ -279,9 +284,9 @@
           </v-flex>
           <v-flex xs12 sm6 md5>
             <v-text-field class="optional"
-              name="preferred-degree"
-              v-model="degree"
-              label="Preferred degree"
+              name="preferred-major"
+              v-model="major"
+              label="Preferred major"
             ></v-text-field>
           </v-flex>
           <v-flex xs12 sm6 md5>
@@ -308,7 +313,7 @@
         <br>
         <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
         <p class="error_p" v-if="!responsibilities_valid">Required</p>
-        <vue-editor id="responsibilities" v-model="responsibilities" @input="test" :editorToolbar="customEditorToolbar"></vue-editor>
+        <vue-editor id="responsibilities" v-model="responsibilities" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
         <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience/Qualifications</h3>
@@ -353,10 +358,16 @@
         </v-form>
 
         <br>
-        <v-layout>
-          <v-btn @click="saveForLater">Save for later</v-btn>
+        <v-layout v-if="!active">
+          <v-btn style="margin-left: 0;" @click="saveForLater">Save for later</v-btn>
           <v-btn @click="validateBeforePosting(true)">Save and Post</v-btn>
         </v-layout>
+        <v-layout v-else>
+          <v-btn style="margin-left: 0;" @click="updateActiveJob">Save</v-btn>
+        </v-layout>
+
+        <br>
+        <p style="opacity: 0;" class="bottom-error-message" id="bottom-error-message">Looks like you still have a few invalid fields.</p>
         <!--<br>
         <p style="color: #f00;" v-show="submitted && !valid">There are still a few fields you need to fill out</p>-->
 
@@ -491,7 +502,7 @@ export default {
       notes: '',
       studentfriendly: true,
       language: '',
-      degree: '',
+      major: '',
       active: false,
       confirmPost: false,
       isUniversity: false,
@@ -501,6 +512,7 @@ export default {
       images: [],
       tags: [],
       picUploaderDialog: false,
+      showInvalidMessage: false,
       educationOptions: [
         'None (recommended)',
         'High School', 'Bachelor Degree',
@@ -561,31 +573,6 @@ export default {
       }
       return null;
     },
-    saveForLater() {
-      this.active = false;
-      if (this.$route.params.id) {
-        const job = this.createJobArray();
-        const id = this.$route.params.id;
-        this.$apollo.mutate({
-          mutation: updateJobMutation,
-          variables: {
-            id,
-            job: job,
-          },
-        }).catch(console.error);
-      } else {
-        const job = this.createJobArray();
-        this.$apollo.mutate({
-          mutation: createJobMutation,
-          variables: {
-            job: job,
-          },
-        }).then((d) => {
-          const id = d.data.createJob.recordId;
-          this.$router.push({ path: `/createnewjob/${id}` });
-        }).catch(console.error);
-      }
-    },
     validateBeforePosting(showDialog = false) {
       this.submitted = true;
       this.$refs.form.validate();
@@ -597,22 +584,64 @@ export default {
       if (showDialog && this.valid) {
         this.confirmPost = true;
       }
+      if (!this.valid) {
+        var msg = document.getElementById('bottom-error-message');
+        msg.style.opacity = 1;
+        setTimeout(() => { msg.style.opacity = 0; }, 5000);
+      }
+    },
+    saveForLater() {
+      this.active = false;
+      this._save();
     },
     saveAndPost() {
       this.validateBeforePosting();
       if (this.valid) {
         this.active = true;
-        this._save();
+        this._save(true);
+      } else {
+        this.saveForLater();
       }
     },
-    _save() {
-      const job = this.createJobArray();
-      this.$apollo.mutate({
-        mutation: createJobMutation,
-        variables: {
-          job,
-        },
-      });
+    updateActiveJob() {
+      this.validateBeforePosting();
+      if (this.valid && this.$route.params.id) {
+        this.active = true;
+        this._save(true);
+      }
+    },
+    _save(viewJob = false) {
+      if (this.$route.params.id) {
+        const job = this.createJobArray();
+        const id = this.$route.params.id;
+        this.$apollo.mutate({
+          mutation: updateJobMutation,
+          variables: {
+            id: id,
+            job: job,
+          },
+        }).then((res) => {
+          const recordId = res.data.updateJob.recordId;
+          if (viewJob) {
+            this.$router.push(`/jobdetail/${recordId}`);
+          }
+        }).catch(console.error);
+      } else {
+        const job = this.createJobArray();
+        this.$apollo.mutate({
+          mutation: createJobMutation,
+          variables: {
+            job: job,
+          },
+        }).then((res) => {
+          const recordId = res.data.createJob.recordId;
+          if (!viewJob) {
+            this.$router.push({ path: `/createnewjob/${recordId}` });
+          } else {
+            this.$router.push(`/jobdetail/${recordId}`);
+          }
+        }).catch(console.error);
+      }
     },
     createJobArray() {
       // Note: this.active is always true at this point if you're clicking Save Post,
@@ -644,7 +673,8 @@ export default {
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
         salary: this.salary_select !== 'paid' ? null : parseInt(this.salary, 10),
         pay_denomination: this.salary_select !== 'paid' ? null : this.pay_denomination,
-        education: 'None',
+        education: this.education,
+        preferred_major: this.major,
         language: this.language,
         experience: this.experience,
         responsibilities: this.responsibilities,
@@ -676,6 +706,7 @@ export default {
             salary
             pay_denomination
             education
+            preferred_major
             language
             experience
             responsibilities
@@ -698,6 +729,9 @@ export default {
           this.date = job.date;
           this.address = job.address;
           this.university = job.university;
+          if (job.university) {
+            this.isUniversity = true;
+          }
           this.latitude = job.latitude;
           this.longitude = job.latitude;
           if (job.type && job.type.length > 1) {
@@ -715,6 +749,8 @@ export default {
           }
           this.description = job.description;
           this.education = job.education;
+          this.major = job.preferred_major;
+          this.age = job.age;
           this.language = job.language;
           this.experience = job.experience;
           this.responsibilities = job.responsibilities;

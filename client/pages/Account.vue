@@ -76,15 +76,16 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">
-                        <v-flex xs7 class="no-padding">
+                        <div style="width: 265px;">
                           <v-select
                             :items="degreeSelectItems"
                             v-model="updateDegree"
                             label="Select Degree"
                             single-line
                             style="padding: 0; max-width: 275px;"
+                            hide-details
                           />
-                        </v-flex>
+                        </div>
                         <v-flex xs5 v-if="updateDegree === 'High school' || updateDegree === 'None'" v-show="updateDegree" class="no-padding">
                           <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
                             Save
