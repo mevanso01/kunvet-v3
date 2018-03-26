@@ -22,6 +22,7 @@ import Cors from '@/Cors';
 // Options
 import '@/options/passport';
 import '@/options/logger';
+import '@/options/tasks';
 
 // Sub apps
 import AuthApp from '@/apps/auth';

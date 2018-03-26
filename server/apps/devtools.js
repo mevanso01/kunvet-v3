@@ -5,6 +5,9 @@ import KoaRouter from 'koa-router';
 // GraphiQL
 import { graphiqlKoa } from 'apollo-server-koa';
 
+// Scheduler
+import Scheduler from '@/Scheduler';
+
 const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
@@ -27,6 +30,7 @@ router.get('/', (ctx) => {
           <ul>
             <li><a href="/login">Log in</li>
             <li><a href="/graphiql">Graph<em>i</em>QL</a></li>
+            <li><a href="/trigger_scheduler">Trigger scheduler</li>
           </ul>
         </p>
       </body>
@@ -58,6 +62,12 @@ router.get('/login', (ctx) => {
   </body>
 </html>
   `;
+});
+
+// Trigger scheduler
+router.get('/trigger_scheduler', async (ctx) => {
+  Scheduler.trigger();
+  ctx.body = 'Triggered!';
 });
 
 app.use(router.routes());
