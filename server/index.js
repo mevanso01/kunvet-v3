@@ -109,9 +109,8 @@ const gcf = app.callback();
 /* eslint-disable import/no-mutable-exports, global-require */
 let lambda = null;
 if (process.env.TARGET === 'lambda') {
-  const AwsServerlessExpress = require('aws-serverless-express');
-  const server = AwsServerlessExpress.createServer(app.callback());
-  lambda = (event, context) => AwsServerlessExpress.proxy(server, event, context);
+  const Lambda = require('@/exports/Lambda').default;
+  lambda = Lambda.get(app);
 }
 /* eslint-enable */
 
