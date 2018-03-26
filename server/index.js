@@ -15,22 +15,22 @@ import KoaPassport from 'koa-passport';
 import REPL from 'repl';
 
 // CORS
-import cors from './cors';
+import Cors from '@/Cors';
 
-// Passport
-import './auth';
+// Options
+import '@/options/passport';
 
 // Sub apps
-import AuthApp from './apps/auth';
-import GraphQLApp from './apps/graphql';
-import DevToolsApp from './apps/devtools';
-import FileServerApp from './apps/fileserver';
-import ApplicationApp from './apps/application';
+import AuthApp from '@/apps/auth';
+import GraphQLApp from '@/apps/graphql';
+import DevToolsApp from '@/apps/devtools';
+import FileServerApp from '@/apps/fileserver';
+import ApplicationApp from '@/apps/application';
 
 // Our stuff
-import Db from './mongodb/Db';
-import Models from './mongodb/Models';
-import Logger from './utils/Logger';
+import Db from '@/mongodb/Db';
+import Models from '@/mongodb/Models';
+import Logger from '@/utils/Logger';
 
 // ========
 // | Main |
@@ -52,7 +52,7 @@ app.keys = ['rua'];
 app.use(KoaSession({}, app));
 
 // CORS
-app.use(cors);
+app.use(Cors);
 
 // Passport
 app.use(KoaPassport.initialize());
