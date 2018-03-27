@@ -280,7 +280,7 @@
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
 
   import AccountEmailSvg from '@/assets/account/account_email.svg';
-  import AccountGlobeSvg from '@/assets/account/account_globe.svg';
+  import AccountGlobeSvg from '@/assets/account/earth.svg';
   import AccountPhoneSvg from '@/assets/account/account_phone.svg';
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import PeopleSvg from '@/assets/account/people_full_black.svg';
