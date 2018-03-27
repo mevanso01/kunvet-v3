@@ -41,7 +41,7 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  serverUrl: 'https://kunvet.com',
+  serverUrl: 'https://kunvet-testprod.x.zfg.li',
   googleMapsKey: Credentials.googleMapsKey,
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
@@ -51,7 +51,7 @@ module.exports = {
     files: {
       defaultStorage: 's3',
       s3: {
-        bucket: 'kunvet-prod',
+        bucket: 'kunvet-testprod',
       },
     },
     mail: {
