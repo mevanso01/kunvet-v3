@@ -23,7 +23,7 @@ const wpconf = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      vue$: 'vue/dist/vue.esm.js',
+      vue$: 'vue/dist/vue.runtime.esm.js',
       '@': utils.resolve('client'),
       config$: path.resolve(__dirname, '../common/StaticConfigProvider.js'),
       static_config$: path.resolve(__dirname, '../virtual/staticConfig.json'),
