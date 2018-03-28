@@ -9,7 +9,6 @@ const Account = composeWithMongoose(Models.Account);
 const Applicant = composeWithMongoose(Models.Applicant);
 const Organization = composeWithMongoose(Models.Organization);
 const HDYH = composeWithMongoose(Models.HDYH);
-const TempAccount = composeWithMongoose(Models.TempAccount);
 
 // Helper functions
 function wrapResolvers(fn, resolvers) {
@@ -32,9 +31,6 @@ GQC.rootQuery().addFields({
   // Job
   findJob: Job.get('$findOne'),
   findJobs: Job.get('$findMany'),
-
-  findTempAccount: TempAccount.get('$findOne'),
-  findTempAccounts: TempAccount.get('$findMany'),
 
   findAccount: Account.get('$findOne'),
   findAccounts: Account.get('$findMany'),
