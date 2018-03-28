@@ -8,42 +8,9 @@ import TimeagoLocale from 'vue-timeago/locales/en-US.json';
 
 import Client from '@/apollo/client';
 
-import Index from '@/pages/Index';
-import AboutUs from '@/pages/AboutUs';
-import Terms from '@/pages/Terms';
-
 // Axios config
 import '@/axios';
 import '@/googleMaps';
-
-// no login
-import Login from '@/pages/Login';
-import SignUp from '@/pages/SignUp';
-
-// general pages
-import JobDetail from '@/pages/JobDetail';
-import Employee from '@/pages/Employee';
-import Messages from '@/pages/Messages'; // does sharing one page for employee and business conflict with UI
-import Resume from '@/pages/Resume';
-import Validate from '@/pages/Validate';
-
-// both types of acct pages
-import Account from '@/pages/Account';
-import CreateNewJob from '@/pages/CreateNewJob';
-import Settings from '@/pages/Settings';
-import MyJobs from '@/pages/MyJobs';
-import Applicants from '@/pages/Applicants';
-import ViewApplicant from '@/pages/ViewApplicant';
-import NotificationPage from '@/pages/NotificationPage';
-
-// individual acct pages
-import SavedJobs from '@/pages/SavedJobs';
-import AppliedJobs from '@/pages/AppliedJobs';
-import CreateResume from '@/pages/CreateResume';
-
-// Business acct pages
-import MyOrg from '@/pages/MyOrg';
-import PhotoGallery from '@/pages/PhotoGallery';
 
 import App from '@/App';
 import store from '@/store';
@@ -73,103 +40,103 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      component: Index,
+      component: () => import('@/pages/Index'),
     },
     {
       path: '*',
-      component: Index,
+      component: () => import('@/pages/Index'),
     },
     {
       path: '/employee',
-      component: Employee,
+      component: () => import('@/pages/Employee'),
     },
     {
       path: '/login',
-      component: Login,
+      component: () => import('@/pages/Login'),
     },
     {
       path: '/signup',
-      component: SignUp,
+      component: () => import('@/pages/SignUp'),
     },
     {
       path: '/jobdetail/:id',
-      component: JobDetail,
+      component: () => import('@/pages/JobDetail'),
       props: true,
     },
     {
       path: '/validate/:code',
-      component: Validate,
+      component: () => import('@/pages/Validate'),
       props: true,
     },
     {
       path: '/resume',
-      component: Resume,
+      component: () => import('@/pages/Resume'),
     },
     {
       path: '/createresume',
-      component: CreateResume,
+      component: () => import('@/pages/CreateResume'),
     },
     {
       path: '/myjobs',
-      component: MyJobs,
+      component: () => import('@/pages/MyJobs'),
     },
     {
       path: '/savedjobs',
-      component: SavedJobs,
+      component: () => import('@/pages/SavedJobs'),
     },
     {
       path: '/appliedjobs',
-      component: AppliedJobs,
+      component: () => import('@/pages/AppliedJobs'),
     },
     {
       path: '/messages',
-      component: Messages,
+      component: () => import('@/pages/Messages'),
     },
     {
       path: '/notifications',
-      component: NotificationPage,
+      component: () => import('@/pages/NotificationPage'),
     },
     {
       path: '/account',
-      component: Account,
+      component: () => import('@/pages/Account'),
     },
     {
       path: '/settings',
-      component: Settings,
+      component: () => import('@/pages/Settings'),
     },
     {
       path: '/createnewjob/:id',
-      component: CreateNewJob,
+      component: () => import('@/pages/CreateNewJob'),
       props: { id: null },
     },
     {
       path: '/createnewjob',
-      component: CreateNewJob,
+      component: () => import('@/pages/CreateNewJob'),
     },
     {
       path: '/view-applicant/:id',
-      component: ViewApplicant,
+      component: () => import('@/pages/ViewApplicant'),
       props: true,
     },
     {
       path: '/myorg',
-      component: MyOrg,
+      component: () => import('@/pages/MyOrg'),
     },
     {
       path: '/photogallery',
-      component: PhotoGallery,
+      component: () => import('@/pages/PhotoGallery'),
     },
     {
       path: '/applicants',
-      component: Applicants,
+      component: () => import('@/pages/Applicants'),
     },
     {
       path: '/AboutUs',
-      component: AboutUs,
+      component: () => import('@/pages/AboutUs'),
     },
     {
       path: '/Terms',
-      component: Terms,
+      component: () => import('@/pages/Terms'),
     },
   ],
 });
