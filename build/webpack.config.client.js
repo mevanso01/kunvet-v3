@@ -6,6 +6,7 @@ const eslintFormatter = require('eslint-friendly-formatter');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const VisualizerPlugin = require('webpack-visualizer-plugin');
 const utils = require('./utils');
 
 // Build static config
@@ -155,6 +156,10 @@ if (process.env.NODE_ENV === 'development') {
   wpconf.plugins.push(new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"development"',
   }));
+}
+
+if (process.env.ENABLE_WEBPACK_VISUALIZER) {
+  wpconf.plugins.push(new VisualizerPlugin());
 }
 
 module.exports = wpconf;
