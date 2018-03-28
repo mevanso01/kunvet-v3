@@ -72,13 +72,11 @@ export default {
       }
     },
     async upload() {
-      this.state = 'UPLOADING';
       if (!this.curId) {
         // Create a new file slot
         try {
           this.curId = await this.client.createFileSlot(this.file.name, this.file.type);
         } catch (e) {
-          this.state = 'FAILED';
           console.error(e);
           return;
         }
@@ -88,12 +86,10 @@ export default {
       try {
         await this.client.uploadFile(this.curId, this.file);
       } catch (e) {
-        this.state = 'FAILED';
         console.error(e);
         return;
       }
 
-      this.state = 'SUCCESSFUL';
       this.$emit('uploaded', this.curId, this.resumeName);
       this.reset();
     },
@@ -105,7 +101,6 @@ export default {
       this.curId =  '';
       this.file = null;
       this.chosenFile = null;
-      this.client = null;
       this.resumeName = '';
     },
   },
