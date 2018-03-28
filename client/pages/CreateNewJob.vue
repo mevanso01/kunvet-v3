@@ -396,6 +396,7 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
 import Config from 'config';
+import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -515,11 +516,7 @@ export default {
       tags: [],
       picUploaderDialog: false,
       showInvalidMessage: false,
-      educationOptions: [
-        'None (recommended)',
-        'High School', 'Bachelor Degree',
-        'Masters Degree', 'Doctorate/PHD',
-      ],
+      educationOptions: Object.keys(degreesReduced).map(key => degreesReduced[key]),
       howDidYouHearItems: [
         'Flyers', 'Word of mouth', 'Email', 'Instagram', 'Wechat', 'Other',
       ],
@@ -675,7 +672,7 @@ export default {
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
         salary: this.salary_select !== 'paid' ? null : parseInt(this.salary, 10),
         pay_denomination: this.salary_select !== 'paid' ? null : this.pay_denomination,
-        education: this.education,
+        education: this.education ? degreeReducedStringToDb(this.education) : null,
         preferred_major: this.major,
         language: this.language,
         experience: this.experience,
@@ -687,8 +684,8 @@ export default {
     },
     getEditJobData(_id) {
       this.$apollo.query({
-        query: (gql`query ($id: MongoID, $user: String) {
-          findJob (filter: { _id: $id, posted_by: $user }){
+        query: (gql`query ($id: MongoID, $user: MongoID) {
+          findJob (filter: { _id: $id, user_id: $user }){
             _id
             posted_by
             active
@@ -720,7 +717,7 @@ export default {
           }
         }`),
         variables: {
-          user: this.posted_by,
+          user: this.user_id,
           id: _id,
         },
       }).then((data) => {
@@ -750,7 +747,7 @@ export default {
             this.salary = job.salary;
           }
           this.description = job.description;
-          this.education = job.education;
+          this.education = job.education ? degreeReducedDbToString(job.education) : null;
           this.major = job.preferred_major;
           this.age = job.age;
           this.language = job.language;

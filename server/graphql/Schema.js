@@ -5,12 +5,10 @@ import Restrictions from './Restrictions';
 
 // GraphQL types
 const Job = composeWithMongoose(Models.Job);
-const Resume = composeWithMongoose(Models.Resume);
 const Account = composeWithMongoose(Models.Account);
 const Applicant = composeWithMongoose(Models.Applicant);
 const Organization = composeWithMongoose(Models.Organization);
 const HDYH = composeWithMongoose(Models.HDYH);
-const TempAccount = composeWithMongoose(Models.TempAccount);
 
 // Helper functions
 function wrapResolvers(fn, resolvers) {
@@ -33,12 +31,6 @@ GQC.rootQuery().addFields({
   // Job
   findJob: Job.get('$findOne'),
   findJobs: Job.get('$findMany'),
-  // Resume
-  findResume: Resume.get('$findOne'),
-  findResumes: Resume.get('$findMany'),
-
-  findTempAccount: TempAccount.get('$findOne'),
-  findTempAccounts: TempAccount.get('$findMany'),
 
   findAccount: Account.get('$findOne'),
   findAccounts: Account.get('$findMany'),
@@ -67,24 +59,33 @@ GQC.rootQuery().addFields({
 GQC.rootMutation().addFields({
   // All mutations require logging in
   ...wrapResolvers(Restrictions.LoggedIn, {
-    // Resume
-    createResume: Resume.get('$createOne'),
-    updateResume: Resume.get('$updateOne'),
-    removeResume: Resume.get('$removeOne'),
     // Account
-    updateAccount: Account.get('$updateOne'),
+    ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
+      updateAccount: Account.get('$updateOne'),
+    }),
     // Applicant
-    createApplication: Applicant.get('$createOne'),
-    updateApplication: Applicant.get('$updateOne'),
-    removeApplication: Applicant.get('$removeOne'),
+    ...wrapResolvers([], {
+      // TODO: Forcibly set user_id to the user ID in context
+      createApplication: Applicant.get('$createOne'),
+    }),
+    ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
+      updateApplication: Applicant.get('$updateOne'),
+      removeApplication: Applicant.get('$removeOne'),
+    }),
     // Extra stuff
     createHDYH: HDYH.get('$createOne'),
     removeHDYH: HDYH.get('$removeOne'),
     // Job
-    createJob: Job.get('$createOne'),
-    updateJob: Job.get('$updateOne'),
-    removeJob: Job.get('$removeOne'),
+    ...wrapResolvers([], {
+      // TODO: Forcibly set user_id to the user ID in context
+      createJob: Job.get('$createOne'),
+    }),
+    ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
+      updateJob: Job.get('$updateOne'),
+      removeJob: Job.get('$removeOne'),
+    }),
     // Organization
+    // FIXME: We must have a user_id to restrict actions
     createOrganization: Organization.get('$createOne'),
     updateOrganization: Organization.get('$updateOne'),
     removeOrganization: Organization.get('$removeOne'),
