@@ -48,9 +48,10 @@
 import FileClient from '@/utils/FileClient';
 
 export default {
-  props: ['id', 'state'],
+  props: ['id'],
   data() {
     return {
+      state: 'INITIAL',
       curId: '',
       file: null,
       chosenFile: null,
@@ -72,12 +73,14 @@ export default {
       }
     },
     async upload() {
+      this.state = 'UPLOADING';
       if (!this.curId) {
         // Create a new file slot
         try {
           this.curId = await this.client.createFileSlot(this.file.name, this.file.type);
         } catch (e) {
           console.error(e);
+          this.state = 'FAILED';
           return;
         }
 
@@ -109,5 +112,8 @@ export default {
       this.curId = newId;
     },
   },
+  created() {
+    this.state = 'INITIAL'
+  }
 };
 </script>
