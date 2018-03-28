@@ -5,7 +5,6 @@ import Restrictions from './Restrictions';
 
 // GraphQL types
 const Job = composeWithMongoose(Models.Job);
-const Resume = composeWithMongoose(Models.Resume);
 const Account = composeWithMongoose(Models.Account);
 const Applicant = composeWithMongoose(Models.Applicant);
 const Organization = composeWithMongoose(Models.Organization);
@@ -33,9 +32,6 @@ GQC.rootQuery().addFields({
   // Job
   findJob: Job.get('$findOne'),
   findJobs: Job.get('$findMany'),
-  // Resume
-  findResume: Resume.get('$findOne'),
-  findResumes: Resume.get('$findMany'),
 
   findTempAccount: TempAccount.get('$findOne'),
   findTempAccounts: TempAccount.get('$findMany'),
@@ -67,10 +63,6 @@ GQC.rootQuery().addFields({
 GQC.rootMutation().addFields({
   // All mutations require logging in
   ...wrapResolvers(Restrictions.LoggedIn, {
-    // Resume
-    createResume: Resume.get('$createOne'),
-    updateResume: Resume.get('$updateOne'),
-    removeResume: Resume.get('$removeOne'),
     // Account
     updateAccount: Account.get('$updateOne'),
     // Applicant
