@@ -48,10 +48,9 @@
 import FileClient from '@/utils/FileClient';
 
 export default {
-  props: ['id'],
+  props: ['id', 'state'],
   data() {
     return {
-      state: 'INITIAL',
       curId: '',
       file: null,
       chosenFile: null,
@@ -96,9 +95,18 @@ export default {
 
       this.state = 'SUCCESSFUL';
       this.$emit('uploaded', this.curId, this.resumeName);
+      this.reset();
     },
     cancel() {
       this.$emit('cancel');
+      this.reset();
+    },
+    reset() {
+      this.curId =  '';
+      this.file = null;
+      this.chosenFile = null;
+      this.client = null;
+      this.resumeName = '';
     },
   },
   watch: {

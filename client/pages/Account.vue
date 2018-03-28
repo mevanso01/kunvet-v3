@@ -287,6 +287,7 @@
               <ResumeUploader
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
+                :state="currentStatus"
               />
             </v-dialog>
 
@@ -742,14 +743,9 @@
       },
       updateAccount() {
         // this is weird. Not sure why it adds the property '__typename' if I dont do this
-        const _resumes = [];
-        for (let i = 0; i < this.userdata.resumes.length; i++) {
-          _resumes.push({
-            name: this.userdata.resumes[i].name,
-            filename: this.userdata.resumes[i].filename,
-            resumeid: this.userdata.resumes[i].resumeid,
-          });
-        }
+        const _resumes = this.userdata.resumes.map(({
+          name, filename, resumeid,
+        }) => ({ name, filename, resumeid }));
 
         this.$apollo.mutate({
           mutation: (gql`
