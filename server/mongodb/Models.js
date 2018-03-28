@@ -124,7 +124,7 @@ const JobSchema = Mongoose.Schema({
   pay_denomination: String,
   education: {
     type: String,
-    enum: ['Associate', 'Bachelor', 'Master', 'None'],
+    enum: ['High_School', 'Associate', 'Bachelor', 'Master', 'None'],
   },
   language: {
     type: String,
@@ -184,6 +184,8 @@ const ApplicantSchema = Mongoose.Schema({
       'masters',
       'pursuing_phd',
       'phd',
+      'pursuing_associate',
+      'associates',
       'high_school',
       'none',
     ],
