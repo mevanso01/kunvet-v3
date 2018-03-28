@@ -105,6 +105,7 @@ export default {
       this.file = null;
       this.chosenFile = null;
       this.resumeName = '';
+      this.state = 'INITIAL';
     },
   },
   watch: {
@@ -112,8 +113,5 @@ export default {
       this.curId = newId;
     },
   },
-  created() {
-    this.state = 'INITIAL'
-  }
 };
 </script>

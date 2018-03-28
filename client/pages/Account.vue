@@ -287,7 +287,6 @@
               <ResumeUploader
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
-                :state="currentStatus"
               />
             </v-dialog>
 
@@ -505,10 +504,7 @@
         settingsoption1: '',
         uploadFieldName: 'file',
         showFileModal: false,
-        currentStatus: 'INITIAL',
-        chosenFile: '',
         formData: null,
-        resumeName: null,
         deleteResumeIndex: null,
         deleteResumeName: null,
         showDeleteResumeDialog: false,
@@ -611,36 +607,7 @@
             return null;
           }); */
         // save it
-        this.chosenFile = fileList[0].name;
         this.formData = formData;
-      },
-      saveFile() {
-        // upload data to the server
-        if (this.formData) {
-          this.currentStatus = 'SAVING';
-          const headers = { 'Content-type': 'application/x-www-form-urlencoded' };
-          const data = this.formData;
-          console.log('SENT DATA', data);
-          // graphql query:
-          // .then(
-          // )
-          axios.put('/file/new', data, headers).then((res) => {
-            if (res.data.success) {
-              const _filename = res.data.id;
-              this.userdata.resumes = this.userdata.resumes.concat({
-                name: this.resumeName,
-                filename: _filename,
-                resumeid: null,
-              });
-              this.saveUserdata();
-              this.closeFileModal();
-            }
-            this.formData = null;
-          }, (error) => {
-            console.error('uploading file error:', error);
-            this.currentStatus = 'FAILED';
-          });
-        }
       },
       resumeUploaded(_filename, _resumename) {
         this.userdata.resumes = this.userdata.resumes.concat({
@@ -654,9 +621,9 @@
       closeFileModal() {
         this.showFileModal = false;
         this.formData = null;
-        this.resumeName = null;
-        this.chosenFile = '';
-        this.currentStatus = 'INITIAL';
+      },
+      profilePicUploaded() {
+
       },
       deleteResume(index) {
         this.showDeleteResumeDialog = false;
