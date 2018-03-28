@@ -12,13 +12,12 @@
     "server:build": "cross-env NODE_ENV=development webpack --watch --progress --config build/webpack.config.server.js --mode development",
     "server:server": "cross-env NODE_ENV=development nodemon -w 'dist/server' 'dist/server/index.js'",
     "client": "cross-env NODE_ENV=development webpack-dev-server --hot --watch --progress --open --history-api-fallback --config build/webpack.config.client.js --mode development",
-    "build": "npm-run-all --parallel build:server build:client",
-    "build:server": "cross-env NODE_ENV=production TARGET=lambda webpack -p --progress --config build/webpack.config.server.js --mode production",
-    "build:client": "cross-env NODE_ENV=production webpack -p --progress --config build/webpack.config.client.js --mode production",
+    "build": "cross-env NODE_ENV=production node -r esm node_modules/.bin/gulp",
     "eslint": "eslint --format 'node_modules/eslint-friendly-formatter' server/ client/ common/",
     "reset-credentials": "cp config/credentials{.example,}.js"
   },
   "devDependencies": {
+    "archiver": "^2.1.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.2",
@@ -36,8 +35,11 @@
     "eslint-loader": "^2.0.0",
     "eslint-plugin-html": "^3.2.0",
     "eslint-plugin-import": "^2.7.0",
+    "esm": "^3.0.12",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
+    "gulp": "^3.9.1",
+    "gulp-shell": "^0.6.5",
     "html-webpack-plugin": "^3.0.6",
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
@@ -54,6 +56,7 @@
     "webpack-cli": "^2.0.12",
     "webpack-dev-server": "^3.1.1",
     "webpack-node-externals": "^1.6.0",
+    "webpack-stream": "^4.0.3",
     "worker-loader": "^1.1.1"
   },
   "dependencies": {
@@ -115,5 +118,8 @@
     "vuex-persist": "^0.6.0",
     "webpack-material-design-icons": "^0.1.0",
     "winston": "^2.4.1"
+  },
+  "esm": {
+    "mode": "auto"
   }
 }
