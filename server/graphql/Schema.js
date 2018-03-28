@@ -60,19 +60,32 @@ GQC.rootMutation().addFields({
   // All mutations require logging in
   ...wrapResolvers(Restrictions.LoggedIn, {
     // Account
-    updateAccount: Account.get('$updateOne'),
+    ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
+      updateAccount: Account.get('$updateOne'),
+    }),
     // Applicant
-    createApplication: Applicant.get('$createOne'),
-    updateApplication: Applicant.get('$updateOne'),
-    removeApplication: Applicant.get('$removeOne'),
+    ...wrapResolvers([], {
+      // TODO: Forcibly set user_id to the user ID in context
+      createApplication: Applicant.get('$createOne'),
+    }),
+    ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
+      updateApplication: Applicant.get('$updateOne'),
+      removeApplication: Applicant.get('$removeOne'),
+    }),
     // Extra stuff
     createHDYH: HDYH.get('$createOne'),
     removeHDYH: HDYH.get('$removeOne'),
     // Job
-    createJob: Job.get('$createOne'),
-    updateJob: Job.get('$updateOne'),
-    removeJob: Job.get('$removeOne'),
+    ...wrapResolvers([], {
+      // TODO: Forcibly set user_id to the user ID in context
+      createJob: Job.get('$createOne'),
+    }),
+    ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
+      updateJob: Job.get('$updateOne'),
+      removeJob: Job.get('$removeOne'),
+    }),
     // Organization
+    // FIXME: We must have a user_id to restrict actions
     createOrganization: Organization.get('$createOne'),
     updateOrganization: Organization.get('$updateOne'),
     removeOrganization: Organization.get('$removeOne'),
