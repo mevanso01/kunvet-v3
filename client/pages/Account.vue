@@ -290,6 +290,13 @@
               />
             </v-dialog>
 
+            <v-dialog v-model="showPicUploaderDialog" class="auto-dialog">
+              <PicUploader
+                @uploaded="profilePicUploaded"
+                @cancel="showPicUploaderDialog = false"
+              />
+            </v-dialog>
+
             <v-dialog v-model="showDeleteResumeDialog">
               <v-card>
                 <v-card-title>
@@ -436,6 +443,7 @@
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
   import ResumeUploader from '@/components/ResumeUploader';
+  import PicUploader from '@/components/PicUploader';
 
   import AccountDegreeSvg from '@/assets/account/degree.svg';
   import AccountMajorSvg from '@/assets/account/account_major.svg';
@@ -503,6 +511,7 @@
         deleteResumeIndex: null,
         deleteResumeName: null,
         showDeleteResumeDialog: false,
+        showPicUploaderDialog: false,
         jobs: [],
         applications: [],
         svgs: {
@@ -520,6 +529,7 @@
       AccountHeader,
       JobsAndApplicationsCounters,
       ResumeUploader,
+      PicUploader,
     },
     computed: {
       // TODO

@@ -268,6 +268,7 @@ import AccountHeader from '@/components/AccountHeader';
 import DegreeSvg from '@/assets/account/degree.svg';
 import MajorPreferredSvg from '@/assets/job_detail/major_preferred.svg';
 import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
+import Config from 'config';
 
 export default {
   props: ['id'],
@@ -277,8 +278,6 @@ export default {
   },
   data() {
     return {
-      // TODO: Temporary!!
-      // Remove when necessary. Mock data because I hate seeding databases manually D:.
       data: {
         name: null,
         school: null,
@@ -306,6 +305,7 @@ export default {
       page: 1,
       loading: false,
       errorOccured: false,
+      serverUrl: Config.get('serverUrl'),
     };
   },
   methods: {
@@ -398,30 +398,30 @@ export default {
           this.data.degree = degreeDbToString(res.degree);
           this.data.major = res.major;
           if (res.resume && res.resume.filename) {
-            const url = `http://localhost:3000/file/get/${res.resume.filename}`;
+            const url = `${this.serverUrl}/file/get/${res.resume.filename}`;
             // const url = '../../../uploads/3a194d40-2268-11e8-b674-e3bddf9cbbe8.pdf';
             // console.log('URL', url);
-            if (true) { // true || url.substr(url.length - 4) === '.pdf'
-              // file is a pdf
-              try {
-                this.src = pdf.createLoadingTask(url);
-                await this.src.then((p) => {
-                  this.numPages = p.numPages;
-                });
-              } catch (e) {
-                if (e.name === 'InvalidPDFException') {
-                  console.log(url);
-                  this.src = null;
-                  this.docurl = `${url}#embedded=true`;
-                } else {
-                  console.error(e);
-                }
+            // true || url.substr(url.length - 4) === '.pdf'
+            // file is a pdf
+            try {
+              this.src = pdf.createLoadingTask(url);
+              await this.src.then((p) => {
+                this.numPages = p.numPages;
+              });
+            } catch (e) {
+              if (e.name === 'InvalidPDFException') {
+                console.log(url);
+                this.src = null;
+                this.docurl = `${url}#embedded=true`;
+              } else {
+                console.error(e);
               }
-            } else {
+            }
+            /* } else {
               // file is not a pdf
               this.src = null;
               this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
-            }
+            } */
           }
           if (res.status !== 'opened') this.updateApplicantStatus('opened');
         })

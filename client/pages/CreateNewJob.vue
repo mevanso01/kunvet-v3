@@ -339,7 +339,7 @@
         <v-container fluid grid-list-sm style="margin-top: 8px;">
           <v-layout row wrap>
             <v-flex xs4 md3 v-for="image in images">
-              <img class="image" :src="`http://localhost:3000/file/get/${image.cropped}`" alt="lorem" width="100%" height="100%">
+              <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="lorem" width="100%" height="100%">
             </v-flex>
           </v-layout>
         </v-container>
@@ -395,6 +395,7 @@ import VuexLS from '@/store/persist';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
+import Config from 'config';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -472,6 +473,7 @@ export default {
   },
   data() {
     return {
+      serverUrl: Config.get('serverUrl'),
       valid: false,
       submitted: false,
       posted_by: null,
