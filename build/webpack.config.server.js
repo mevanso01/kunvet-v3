@@ -6,6 +6,12 @@ const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin'
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const utils = require('./utils');
 
+const basePackageValues = {
+  dependencies: {
+    handlebars: '',
+  },
+};
+
 const wpconf = {
   // Server
   target: 'node',
@@ -67,7 +73,7 @@ const wpconf = {
     }),
     new webpack.IgnorePlugin(/vertx/),
     new webpack.IgnorePlugin(/^\.\/data\/parser$/), // for mimer
-    new GeneratePackageJsonPlugin({}, `${__dirname}/../package.json`),
+    new GeneratePackageJsonPlugin(basePackageValues, `${__dirname}/../package.json`),
   ],
   optimization: {
     minimizer: [
