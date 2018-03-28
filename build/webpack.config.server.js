@@ -21,7 +21,7 @@ const wpconf = {
     'email-templates': 'commonjs email-templates',
   },
   output: {
-    path: path.resolve(__dirname, './../server-dist/'),
+    path: path.resolve(__dirname, '../dist/server'),
     filename: 'index.js',
     // index.js will expose a middleware for Google Cloud Functions/AWS Lambda
     libraryTarget: 'commonjs',

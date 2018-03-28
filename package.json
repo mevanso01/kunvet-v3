@@ -10,7 +10,7 @@
     "start": "npm-run-all --parallel server client",
     "server": "npm-run-all --parallel server:server server:build",
     "server:build": "cross-env NODE_ENV=development webpack --watch --progress --config build/webpack.config.server.js --mode development",
-    "server:server": "cross-env NODE_ENV=development nodemon -w 'server-dist/index.js' './server-dist/index.js'",
+    "server:server": "cross-env NODE_ENV=development nodemon -w 'dist/server' 'dist/server/index.js'",
     "client": "cross-env NODE_ENV=development webpack-dev-server --hot --watch --progress --open --history-api-fallback --config build/webpack.config.client.js --mode development",
     "build": "npm-run-all --parallel build:server build:client",
     "build:server": "cross-env NODE_ENV=production TARGET=lambda webpack -p --progress --config build/webpack.config.server.js --mode production",
