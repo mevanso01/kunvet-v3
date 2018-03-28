@@ -5,7 +5,7 @@
  * keys overridden
 */
 
-const base = require('./production.js');
+const base = Object.assign({}, require('./production.js'));
 
 base.serverUrl = 'http://localhost:3000';
 base.private.database = 'mongodb://localhost/kunvet-dev';
