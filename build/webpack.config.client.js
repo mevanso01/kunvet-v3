@@ -10,7 +10,8 @@ const VisualizerPlugin = require('webpack-visualizer-plugin');
 const utils = require('./utils');
 
 // Build static config
-delete Config.private;
+const staticConfig = Object.assign({}, Config);
+delete staticConfig.private;
 
 const wpconf = {
   entry: {
@@ -27,7 +28,7 @@ const wpconf = {
       vue$: 'vue/dist/vue.runtime.esm.js',
       '@': utils.resolve('client'),
       config$: path.resolve(__dirname, '../common/StaticConfigProvider.js'),
-      static_config$: path.resolve(__dirname, '../virtual/staticConfig.json'),
+      static_config$: path.resolve(__dirname, '../virtual/staticConfig.client.json'),
     },
     unsafeCache: /data/,
   },
@@ -119,8 +120,8 @@ const wpconf = {
   },
   plugins: [
     new VirtualModulePlugin({
-      moduleName: 'virtual/staticConfig.json',
-      contents: JSON.stringify(Config),
+      moduleName: 'virtual/staticConfig.client.json',
+      contents: JSON.stringify(staticConfig),
     }),
     new webpack.IgnorePlugin(/vertx/),
     new HtmlWebpackPlugin({

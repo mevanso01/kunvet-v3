@@ -6,6 +6,8 @@ const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin'
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const utils = require('./utils');
 
+const staticConfig = Object.assign({}, Config);
+
 const basePackageValues = {
   dependencies: {
     handlebars: '',
@@ -32,7 +34,7 @@ const wpconf = {
     alias: {
       '@': utils.resolve('server'),
       config$: path.resolve(__dirname, '../common/StaticConfigProvider.js'),
-      static_config$: path.resolve(__dirname, '../virtual/staticConfig.json'),
+      static_config$: path.resolve(__dirname, '../virtual/staticConfig.server.json'),
     },
   },
   node: {
@@ -68,8 +70,8 @@ const wpconf = {
   },
   plugins: [
     new VirtualModulePlugin({
-      moduleName: 'virtual/staticConfig.json',
-      contents: JSON.stringify(Config),
+      moduleName: 'virtual/staticConfig.server.json',
+      contents: JSON.stringify(staticConfig),
     }),
     new webpack.IgnorePlugin(/vertx/),
     new webpack.IgnorePlugin(/^\.\/data\/parser$/), // for mimer
