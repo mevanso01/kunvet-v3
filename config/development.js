@@ -7,7 +7,7 @@
 
 const base = Object.assign({}, require('./production.js'));
 
-base.serverUrl = 'http://localhost:3000';
+base.serverUrl = 'https://kunvet-testprod.x.zfg.li';
 base.private.database = 'mongodb://localhost/kunvet-dev';
 base.private.files.defaultStorage = 'local';
 base.private.files.s3.bucket = 'kunvet-dev';

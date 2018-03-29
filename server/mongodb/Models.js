@@ -348,9 +348,9 @@ const AccountSchema = Mongoose.Schema({
   default_org: {
     type: String,
   },
-  profile_img: {
-    data: Buffer,
-    contentType: String,
+  profile_pic: {
+    type: Mongoose.Schema.Types.ObjectId,
+    default: null,
   },
   created_date: {
     type: Date,

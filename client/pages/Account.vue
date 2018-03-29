@@ -294,6 +294,7 @@
               <PicUploader
                 @uploaded="profilePicUploaded"
                 @cancel="showPicUploaderDialog = false"
+                :croppedId="userdata.profile_pic"
               />
             </v-dialog>
 
@@ -498,6 +499,7 @@
           major: null,
           email: null,
           display_email: null,
+          profile_pic: null,
           org_list: [],
           resumes: [],
         },
@@ -618,12 +620,14 @@
         this.saveUserdata();
         this.closeFileModal();
       },
+      profilePicUploaded(fileId) {
+        this.userdata.profile_pic = fileId;
+        this.saveUserdata();
+        this.showPicUploaderDialog = false;
+      },
       closeFileModal() {
         this.showFileModal = false;
         this.formData = null;
-      },
-      profilePicUploaded() {
-
       },
       deleteResume(index) {
         this.showDeleteResumeDialog = false;
@@ -744,7 +748,7 @@
               school: this.userdata.school,
               degree: degreeStringToDb(this.userdata.degree),
               major: this.userdata.major,
-              // display_email: this.userdata.display_email,
+              profile_pic: this.userdata.profile_pic,
               resumes: _resumes,
             },
           },
@@ -760,6 +764,7 @@
                   degree
                   major
                   email
+                  profile_pic
                   org_list
                   resumes {
                     name
@@ -878,6 +883,7 @@
                 major
                 email
                 org_list
+                profile_pic
                 resumes {
                   name
                   filename
@@ -896,6 +902,7 @@
           this.userdata.degree = res.degree ? degreeDbToString(res.degree) : null;
           this.userdata.major = res.major;
           this.userdata.email = res.email;
+          this.userdata.profile_pic = res.profile_pic;
           this.userdata.resumes = [].concat(res.resumes);
           this.commitUserdata();
           if (res.org_list) {

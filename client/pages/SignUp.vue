@@ -179,7 +179,7 @@
                   <br>
                   <div class="text-xs-center">
                     <v-btn class="kunvet-red-bg" :disabled="loading" dark @click="submit">Create business account</v-btn>
-                    <p v-show="loading" style="color: #999">Loading...</p>
+                    <p v-show="loading" style="color: #999; margin-bottom: 0;">Loading...</p>
                   </div>
                 </v-form>
               </v-card-text>
@@ -213,7 +213,7 @@
               <v-card-text>
                 <p style="margin-bottom: 8px;">It looks like <strong>{{ email }}</strong> already exists, but is not verified.</p>
                 <p>Would you like us to send verification another email?</p>
-                <v-btn flat @click="resendEmail">Send another email</v-btn>
+                <v-btn style="margin-left: 0;" flat @click="resendEmail" :disabled="loading">Send another email</v-btn>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -338,6 +338,7 @@ export default {
       const data = {
         email: this.email,
       };
+      this.loading = true;
       Vue.http.post(`${Config.get('serverUrl')}/auth/resendVerificationEmail`, data, headers).then((res) => {
         this.loading = false;
         if (res.body.success) {

@@ -156,6 +156,13 @@ export default {
         this.updateCropperImg(this.files[0]);
       } */
     },
+    upload() {
+      if (this.keepOriginal) {
+        this.uploadOriginalAndCropped();
+      } else {
+        this.uploadCroppedOnly();
+      }
+    },
     async updateCropperImg(file) {
       this.cropperOptions.outputType = file.type;
       const img = await this.loadImg(file);
@@ -175,13 +182,6 @@ export default {
         img.onerror = reject;
         img.src = _URL.createObjectURL(file);
       });
-    },
-    upload() {
-      if (this.keepOriginal) {
-        this.uploadOriginalAndCropped();
-      } else {
-        this.uploadCroppedOnly();
-      }
     },
     async uploadCroppedOnly() {
       this.state = 'UPLOADING';
