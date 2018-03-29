@@ -59,40 +59,32 @@ GQC.rootQuery().addFields({
 GQC.rootMutation().addFields({
   // All mutations require logging in
   ...wrapResolvers(Restrictions.LoggedIn, {
-    // Account
-    ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
-      updateAccount: Account.get('$updateOne'),
-    }),
-    // Applicant
-    ...wrapResolvers([], {
-      // TODO: Forcibly set user_id to the user ID in context
+    // == Create ==
+    ...wrapResolvers(Restrictions.getEnsureRecordHasUserId('user_id'), {
+      createJob: Job.get('$createOne'),
       createApplication: Applicant.get('$createOne'),
     }),
-    ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
+    // == Update ==
+    ...wrapResolvers([
+      Restrictions.getEnsureRecordHasUserId('user_id'),
+      Restrictions.getFilterByUserId('user_id'),
+    ], {
+      updateJob: Job.get('$updateOne'),
       updateApplication: Applicant.get('$updateOne'),
+      updateAccount: Account.get('$updateOne'),
+    }),
+    // == Remove ==
+    ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
+      removeJob: Job.get('$removeOne'),
       removeApplication: Applicant.get('$removeOne'),
     }),
-    // Extra stuff
+
+    // == Extra stuff ==
     createHDYH: HDYH.get('$createOne'),
     removeHDYH: HDYH.get('$removeOne'),
-    // Job
-    ...wrapResolvers([], {
-      // TODO: Forcibly set user_id to the user ID in context
-      createJob: Job.get('$createOne'),
-    }),
-    ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
-      updateJob: Job.get('$updateOne'),
-      removeJob: Job.get('$removeOne'),
-    }),
-    // Organization
-    // FIXME: We must have a user_id to restrict actions
     createOrganization: Organization.get('$createOne'),
     updateOrganization: Organization.get('$updateOne'),
     removeOrganization: Organization.get('$removeOne'),
-
-    // Employer-only mutations
-    ...wrapResolvers(Restrictions.BusinessAccount, {
-    }),
   }),
 });
 
