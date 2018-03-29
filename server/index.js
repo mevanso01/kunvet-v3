@@ -107,10 +107,17 @@ const gcf = app.callback();
 
 // AWS Lambda
 /* eslint-disable import/no-mutable-exports, global-require */
-let lambda = null;
+let lambda = (event, context) => {
+  context.fail({
+    success: false,
+    message: 'Deployment error',
+  });
+};
 if (process.env.TARGET === 'lambda') {
   const Lambda = require('@/exports/Lambda').default;
   lambda = Lambda.get(app);
+} else if (process.env.LAMBDA_TASK_ROOT && process.env.AWS_EXECUTION_ENV) {
+  Logger.warn('Running on AWS Lambda, but this server is not built for Lambda');
 }
 /* eslint-enable */
 
