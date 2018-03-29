@@ -1,5 +1,6 @@
 import Logger from 'winston';
 import set from 'lodash/set';
+import get from 'lodash/get';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 
@@ -59,6 +60,16 @@ export default {
     return async (req, next) => {
       const result = await next(req);
       return result.map(e => omit(e, forbiddenFields));
+    };
+  },
+  getEnsureRecordHasUserId(idField) {
+    // Ensures a field in the supplied record has the user ID
+    return (req, next) => {
+      const uid = get(req, ['args', 'record', idField]);
+      if (uid !== req.context.user._id.toString()) {
+        throw Error('User ID mismatch.');
+      }
+      return next(req);
     };
   },
 };
