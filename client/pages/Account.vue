@@ -246,7 +246,12 @@
                     <template v-for="({ _id, name }, index) in userdata.org_list">
                     <v-list-tile :key="_id">
                       <v-list-tile-content>
-                        <v-list-tile-title>{{ name }}</v-list-tile-title>
+                        <v-list-tile-title
+                          @click="switchToOrg(_id)"
+                          style="cursor: pointer;"
+                        >
+                          {{ name }}
+                        </v-list-tile-title>
                       </v-list-tile-content>
                       <v-list-tile-action>
                         <v-btn icon ripple>
@@ -922,6 +927,11 @@
         }).catch((error) => {
           console.error('fetch data failed', error);
         });
+      },
+      switchToOrg(id) {
+        this.$store.commit({ type: 'setBusinessID', id });
+        App.methods.login_b();
+        this.$router.push('/myorg');
       },
     },
     created() {

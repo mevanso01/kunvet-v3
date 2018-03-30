@@ -413,12 +413,13 @@
             findOrganization (filter: {
               _id: $bid
             }) {
-                business_name
-                address
-                email
-                phone_number
-                website
-                biography
+              _id
+              business_name
+              address
+              email
+              phone_number
+              website
+              biography
             }
           }`),
           variables: {
@@ -448,7 +449,7 @@
             }
           }`),
           variables: {
-            userId: this.$store.state.userID, // this.$store.state.businessID,
+            userId: this.$store.state.businessID,
           },
         });
         this.jobs = this.jobs.concat(jobs.slice());
