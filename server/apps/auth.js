@@ -253,6 +253,7 @@ router.post('/register', async (ctx) => {
         firstname: req.fname,
         lastname: req.lname,
         default_org: defaultOrg,
+        org_list: [defaultOrg],
       },
       req.pwd,
     );
