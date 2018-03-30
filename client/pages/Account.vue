@@ -98,7 +98,7 @@
                       </v-layout>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-if="userdata.school && userdata.degree !== 'None'" class="cust-tile-2">
+                  <v-list-tile v-if="userdata.school && userdata.degree && userdata.degree !== 'None'" class="cust-tile-2">
                     <v-list-tile class="cust-tile-1">
                       <img
                         :src="svgs.accountDegree"
@@ -903,13 +903,13 @@
           this.userdata.major = res.major;
           this.userdata.email = res.email;
           this.userdata.profile_pic = res.profile_pic;
-          this.userdata.resumes = [].concat(res.resumes);
+          this.userdata.resumes = res.resumes.slice();
           this.commitUserdata();
           if (res.org_list) {
             this.populateOrgList(res.org_list);
           }
         }).catch((error) => {
-          console.error(error);
+          console.error('fetch data failed', error);
         });
       },
     },
