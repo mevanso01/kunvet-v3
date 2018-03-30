@@ -189,12 +189,12 @@
           <div v-html="findJob.responsibilities"></div>
 
           <div class="bottom-container">
-              <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
+              <!--<v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
                 <img style="width: 90%;" :src="FBfull"></img>
               </v-btn>
               <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
                 <img style="width: 90%;" :src="FBstroke"></img>
-              </v-btn>
+              </v-btn>-->
               <v-btn :disabled="applied" outline class="red--text darken-1" @click="apply">
                 {{ applied ? 'Applied' : 'Apply' }}
               </v-btn>
@@ -247,9 +247,6 @@
 </template>
 <script>
 import gql from 'graphql-tag';
-import Vue from 'vue';
-import Vuetify from 'vuetify';
-import VueApollo from 'vue-apollo';
 import InternshipSvg from '@/assets/job_detail/internship.svg';
 import StudentFriendlySvg from '@/assets/job_detail/student_friendly.svg';
 import SalarySvg from '@/assets/job_detail/salary.svg';
@@ -261,9 +258,6 @@ import siSvg from '@/assets/icons/Asset(37).svg';
 import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
 import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
-
-Vue.use(Vuetify);
-Vue.use(VueApollo);
 
 
 export default {

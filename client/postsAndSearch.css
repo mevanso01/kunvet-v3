@@ -89,15 +89,17 @@
     color: #ef5350;
 }
 .image-row {
-  /* position: absolute;
-  bottom: 32px;
-  width: calc(100% - 96px);*/
   padding-top: 16px;
   width: 100%;
-  max-height: 130px;
 }
 .image-row img {
   max-height: 130px;
+}
+.image-row .container.grid-list-sm {
+  padding: 0px;
+}
+.image-row .flex {
+  max-width: 130px;
 }
 .post-photos {
     position: absolute;

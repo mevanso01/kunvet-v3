@@ -43,8 +43,13 @@
           </div>
 
           <div class="image-row">
-            <!-- insert gallary here -->
-            <img style="max-width: 100%;" src="https://pbs.twimg.com/profile_images/575042635171172352/kP-VewoF_400x400.png"></img>
+            <v-container fluid grid-list-sm style="margin-top: 8px;">
+              <v-layout row wrap>
+                <v-flex v-if="job.images" xs4 v-for="image in job.images.concat().splice(0, 3)">
+                  <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="lorem" width="100%" height="100%">
+                </v-flex>
+              </v-layout>
+            </v-container>
           </div>
         </v-flex>
       </v-layout>
@@ -53,13 +58,11 @@
 </template>
 <script>
 import Distance from '@/components/Distance';
-
 import Coordinates from '@/constants/coordinates';
-
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
-
 import StudentSvg from '@/assets/job_posts/user_1.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
+import Config from 'config';
 
 export default {
   props: ['job', 'saveJobFunc', 'isSaved', 'defaultFromUCI', 'fromCoordinates'],
@@ -68,6 +71,7 @@ export default {
   },
   data() {
     return {
+      serverUrl: Config.get('serverUrl'),
       svgs: {
         student: StudentSvg,
         locationMarker: LocationMarkerSvg,

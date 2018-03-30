@@ -2,9 +2,6 @@
 .saved {
   color: #ffcc00 !important;
 }
-.container {
-  background-color: #fff;
-}
 .general-dropdown-items select, .general-dropdown-items label {
   width: 100%;
   height: 100%;
@@ -331,26 +328,13 @@ const findJobQuery = gql`query ($id: MongoID) {
     salary
     pay_denomination
     date
+    images {
+      cropped
+    }
   }
 }`;
 
 export default {
-  /* apollo: {
-    findJobs: gql`{
-      findJobs (filter: { active: true }){
-        _id
-        latitude
-        longitude
-        type
-        studentfriendly
-        type2
-        shift
-        age
-        pay_type
-        date
-      }
-    }`,
-  }, */
   components: {
     FirstViewCard1,
     FirstViewCardRText,
@@ -454,7 +438,6 @@ export default {
             }),
           ),
         );
-
         this.filteredJobs = (await promises).map(el => el.data.findJob);
       }
     },
