@@ -350,7 +350,6 @@ const AccountSchema = Mongoose.Schema({
   },
   profile_pic: {
     type: Mongoose.Schema.Types.ObjectId,
-    default: null,
   },
   created_date: {
     type: Date,

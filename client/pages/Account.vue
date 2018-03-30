@@ -98,7 +98,7 @@
                       </v-layout>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-if="userdata.school && userdata.degree && userdata.degree !== 'None'" class="cust-tile-2">
+                  <v-list-tile v-if="userdata.school && userdata.degree && userdata.degree !== 'None'" class="cust-tile-3">
                     <v-list-tile class="cust-tile-1">
                       <img
                         :src="svgs.accountDegree"
@@ -187,7 +187,13 @@
             </v-layout>
           </v-flex>
           <v-flex sm4 class="hidden-xs-only">
-            <div class="profile-pic-cont hidden-xs-only" />
+            <div class="profile-pic-cont hidden-xs-only">
+              <img v-if="userdata.profile_pic" style="width: 100%; height: 100%;" :src="`${serverUrl}/file/get/${userdata.profile_pic}`"></img>
+              <img v-else style="width: 100%; height: 100%;" :src="default_pic"></img>
+              <v-btn style="position: relative; top: -42px; left: -5px;" icon small @click="showPicUploaderDialog = true;">
+                <v-icon style="color: #616161;">photo_camera</v-icon>
+              </v-btn>
+            </div>
           </v-flex>
         </v-layout>
 
@@ -295,6 +301,7 @@
                 @uploaded="profilePicUploaded"
                 @cancel="showPicUploaderDialog = false"
                 :croppedId="userdata.profile_pic"
+                title="Change Profile Picture"
               />
             </v-dialog>
 
@@ -347,16 +354,17 @@
                     <v-select
                       v-model="createEditDegreeMajorInfo.degree"
                       :items="degreeSelectItems"
-                      single-line
+                      label="Degree"
+                      hide-details
                       :placeholder="userdata.degree"
                     />
                     <v-text-field
                       v-model="createEditDegreeMajorInfo.major"
                       v-if="createEditDegreeMajorInfo.degree !== 'None' && createEditDegreeMajorInfo.degree !== 'High school'"
-                      style="padding: 0 2px;"
                       name="edit-modal-input"
+                      style="margin-top: 12px;"
+                      label="In:"
                       hide-details
-                      single-line
                       :placeholder="userdata.major"
                     />
                   </div>
@@ -440,6 +448,7 @@
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
   import axios from 'axios';
+  import Config from 'config';
 
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
@@ -462,7 +471,9 @@
     data() {
       return {
         resumes: [],
-        tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
+        uid: null,
+        serverUrl: Config.get('serverUrl'),
+        default_pic: 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true',
         active: null,
         updateSchool: '',
         updateEmail: '',
@@ -741,7 +752,7 @@
           }`),
           variables: {
             // find a more secure way to run query
-            uid: this.$store.state.userID,
+            uid: this.uid,
             record: {
               firstname: this.userdata.firstname,
               lastname: this.userdata.lastname,
@@ -774,7 +785,7 @@
               }
             }`),
             variables: {
-              uid: this.$store.state.userID,
+              uid: this.uid,
             },
           }],
         }).catch((error) => {
@@ -814,7 +825,7 @@
             }
           }`),
           variables: {
-            _id: this.$store.state.userID,
+            _id: this.uid,
             record: {
               org_list: newOrgList,
             },
@@ -917,6 +928,8 @@
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.userdata.firstname && data.acct !== 0) {
           this.fetchData(); // temp
+          this.uid = data.userID;
+          console.log(this.uid);
           // this.userdata = data.userdata; // temp
           if (data.acct === 1) { // Regular user. Should probably use constants soon.
             await this.fillUpJobs();

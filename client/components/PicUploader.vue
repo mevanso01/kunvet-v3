@@ -3,7 +3,7 @@
     <v-card-title>
       <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="width: 100%;">
         <form enctype="multipart/form-data" novalidate style="width: 100%;">
-          <h1>Add Picture</h1>
+          <h1 style="margin-bottom: 10px;">{{ title }}</h1>
           <div class="dropbox">
             <input
               type="file"
@@ -81,6 +81,10 @@ export default {
     keepOriginal: {
       type: Boolean,
       default: false,
+    },
+    title: {
+      type: String,
+      default: 'Add Picture',
     },
   },
   components: {

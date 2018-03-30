@@ -32,13 +32,13 @@ GQC.rootQuery().addFields({
   findJob: Job.get('$findOne'),
   findJobs: Job.get('$findMany'),
 
-  findAccount: Account.get('$findOne'),
-  findAccounts: Account.get('$findMany'),
+  // findAccount: Account.get('$findOne'),
+  // findAccounts: Account.get('$findMany'),
   // Account
-  /* ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
+  ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
     findAccount: Account.get('$findOne'),
     findAccounts: Account.get('$findMany'),
-  }), */
+  }),
   // Applicants
   findApplicant: Applicant.get('$findOne'),
   findApplicants: Applicant.get('$findMany'),
@@ -65,13 +65,15 @@ GQC.rootMutation().addFields({
       createApplication: Applicant.get('$createOne'),
     }),
     // == Update ==
+    ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
+      updateAccount: Account.get('$updateOne'),
+    }),
     ...wrapResolvers([
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.getFilterByUserId('user_id'),
     ], {
       updateJob: Job.get('$updateOne'),
       updateApplication: Applicant.get('$updateOne'),
-      updateAccount: Account.get('$updateOne'),
     }),
     // == Remove ==
     ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {

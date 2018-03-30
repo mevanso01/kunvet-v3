@@ -17,7 +17,7 @@
 .bio .input-group__input {
   padding-bottom: 4px;
 }
-#signup .btn--disabled {
+#signup .kunvet-red-bg.btn--disabled {
   background-color: rgba(239,83,80,0.4) !important;
   color: #fff;
 }
