@@ -9,10 +9,10 @@
           <h1 style="margin-bottom: 10px; color: #A7A7A7;"><span class="kunvet-red">{{ counter }}</span> Saved Job{{ plural }}</h1>
         </v-flex>
       </v-layout>
-      <v-layout style="padding-bottom: 32px;"> 
+      <v-layout style="padding-bottom: 32px;">
         <v-flex xs12 class="no-padding">
           <div v-for="job in findJobs" :index="job._id">
-            <MainJobCard 
+            <MainJobCard
               :job="job"
               :saveJobFunc="unsaveJob"
               :isSaved="true"
@@ -48,6 +48,9 @@
         salary
         pay_denomination
         date
+        images {
+          cropped
+        }
     }
   }`;
 
@@ -134,7 +137,7 @@
               findAccount (filter: {
                 _id: $uid
               }) {
-                id
+                _id
                 saved_jobs
               }
             }`),

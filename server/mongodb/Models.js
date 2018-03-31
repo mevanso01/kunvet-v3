@@ -384,12 +384,8 @@ const AccountSchema = Mongoose.Schema({
     type: String,
     resume: Mongoose.model('Resume', ResumeSchema),
   },
-  saved_jobs: {  // list of mongoIDs
-    type: { default: [] },
-  },
-  org_list: {  // list of mongoIDs
-    type: { default: [] },
-  },
+  saved_jobs: [],
+  org_list: [],
   notifications: [{
     text: String,
     route: String,

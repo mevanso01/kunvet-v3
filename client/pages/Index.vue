@@ -1,7 +1,4 @@
 <style lang="scss">
-.saved {
-  color: #ffcc00 !important;
-}
 .general-dropdown-items select, .general-dropdown-items label {
   width: 100%;
   height: 100%;

@@ -303,6 +303,8 @@ export default {
         } else if (res.body.message === 'Email exists but not verified') {
           this.error = 'Not Verified';
           this.chosenForm = 'not verified';
+        } else {
+          this.chosenForm = 'error';
         }
       }, (error) => {
         console.error(error);

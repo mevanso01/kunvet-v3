@@ -120,6 +120,9 @@ main {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+.saved {
+  color: #ffcc00 !important;
+}
 .cropper-view-box {
   /* outline-offset: -1px; */
   outline: 1px solid #39f !important;

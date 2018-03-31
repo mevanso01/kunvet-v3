@@ -10,9 +10,9 @@
         <v-flex xs4>
 
         <div class="float-right">
-          <v-avatar size="36px" slot="activator">
+          <!--<v-avatar size="36px" slot="activator">
             <v-icon class="whatshot">whatshot</v-icon>
-          </v-avatar>
+          </v-avatar>-->
 
           <v-avatar size="36px" @click="saveJobClicked(job._id)">
             <v-icon class="bookmark-icon" v-bind:class="{ 'saved': isSaved }">bookmark_border</v-icon>
