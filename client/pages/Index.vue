@@ -303,6 +303,7 @@ import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import DistanceHelper from '@/utils/DistanceHelper';
 import Coordinates from '@/constants/coordinates';
+import intersection from 'lodash/intersection';
 
 Vue.use(VueApollo);
 
@@ -435,7 +436,22 @@ export default {
             }),
           ),
         );
-        this.filteredJobs = (await promises).map(el => el.data.findJob);
+        this.filteredJobs = (await promises).map(el => el.data.findJob).filter((job) => {
+          if (
+            !intersection(selectedTypes, job.type).length &&
+            !intersection(selectedTypes2, job.type).length
+          ) {
+            return false;
+          }
+
+          if (this.selectedShifts.length) {
+            if (!intersection(this.selectedShifts, job.shift).length) {
+              return false;
+            }
+          }
+
+          return true;
+        });
       }
     },
     getDistance(lat, long) {
