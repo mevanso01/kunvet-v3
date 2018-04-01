@@ -96,7 +96,7 @@
       },
       async saveDefaultOrganization() {
         const { defaultOrg } = this;
-        const res = await this.$apollo.mutate({
+        await this.$apollo.mutate({
           mutation: (gql`
             mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
           {

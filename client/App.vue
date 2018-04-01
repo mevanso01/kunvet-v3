@@ -106,13 +106,17 @@
       </v-toolbar>
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
-        <router-link :to="item.href" v-for="item in sidebarItems[acct]" :key="item.title">
-          <v-list-tile>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </router-link>
+        <div v-for="category in sidebarItems[acct]" style="border: solid 1px #E7E7E7; margin: 0 0 20px 0;">
+          <div>
+            <router-link :to="item.href" v-for="item in category" :key="item.title">
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </router-link>
+          </div>
+        </div>
       </v-list>
     </v-navigation-drawer>
 
@@ -227,24 +231,37 @@ export default {
       ],
       sidebarItems: [
         [
-          { title: 'Login', icon: null, href: '/login' },
-          { title: 'Sign up', icon: null, href: '/signup' },
+          [
+            { title: 'Login', icon: null, href: '/login' },
+            { title: 'Sign up', icon: null, href: '/signup' },
+          ],
         ],
         [
-          { title: 'Applied Jobs', href: '/appliedjobs' },
-          { title: 'Saved Jobs', href: '/savedjobs' },
-          { title: 'Notifications', href: '/notifications' },
-          { title: 'Account', href: '/account' },
-          // { title: 'Post Individual Job', href: '/createnewjob' },
-          // { title: 'My Individual Jobs', href: '/myjobs' },
-          // { title: 'Applicants', href: '/applicants' },
+          [
+            { title: 'Search', href: '/' },
+            { title: 'Applied Jobs', href: '/appliedjobs' },
+            { title: 'Saved Jobs', href: '/savedjobs' },
+            { title: 'My Posted Jobs', href: '/myjobs' },
+          ],
+          [
+            { title: 'Notifications', href: '/notifications' },
+            { title: 'Account', href: '/account' },
+            { title: 'Settings', href: '/settings' },
+          ],
         ],
         [
-          { title: 'Post New Job',  href: '/createnewjob' },
-          { title: 'My Jobs',  href: '/myjobs' },
-          { title: 'Applicants', href: '/applicants' },
-          { title: 'Notifications', href: '/notifications' },
-          { title: 'Account', href: '/account' },
+          [
+            { title: 'Post New Job',  href: '/createnewjob' },
+            { title: 'Applied Jobs', href: '/appliedjobs' },
+            { title: 'Saved Jobs', href: '/savedjobs' },
+            { title: 'My Posted Jobs', href: '/myjobs' },
+            { title: 'Applicants', href: '/applicants' },
+          ],
+          [
+            { title: 'Notifications', href: '/notifications' },
+            { title: 'Account', href: '/account' },
+            { title: 'Settings', href: '/settings' },
+          ],
         ],
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },
