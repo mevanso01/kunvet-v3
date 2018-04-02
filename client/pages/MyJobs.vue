@@ -183,8 +183,8 @@
   import StringHelper from '@/utils/StringHelper';
 
   const findJobsQuery = gql`
-      query($userId: MongoID) {
-        findJobs(filter: { user_id: $userId }) {
+      query($userId: MongoID, $businessId: MongoID) {
+        findJobs(filter: { user_id: $userId, business_id: $businessId }) {
           _id
           posted_by
           title
@@ -253,6 +253,7 @@
           query: findJobsQuery,
           variables: {
             userId: this.$store.state.userID,
+            businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
           },
         });
         this.jobs = data.findJobs;

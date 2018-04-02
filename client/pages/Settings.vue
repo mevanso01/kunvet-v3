@@ -19,7 +19,12 @@
         <v-btn @click="saveDefaultOrganization">
           Save Default Organization
         </v-btn>
-        <v-btn @click="logout">Logout</v-btn>
+        <div v-if="this.$store.state.acct === 2">
+          <v-btn @click="loginToRegularAccount">Login to Regular Account</v-btn>
+        </div>
+        <div>
+          <v-btn @click="logout">Logout</v-btn>
+        </div>
       </section>
     </div>
   </v-container>
@@ -128,6 +133,9 @@
           }],
         });
         this.defaultOrg = { name: defaultOrg.name, _id: defaultOrg._id };
+      },
+      async loginToRegularAccount() {
+        App.methods.login_i();
       },
     },
     computed: {

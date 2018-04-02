@@ -205,8 +205,8 @@
     methods: {
       async getData() {
         const { data } = await this.$apollo.query({
-          query: (gql`query ($userId: MongoID) {
-            findJobs (filter: { user_id: $userId, active: true }){
+          query: (gql`query ($userId: MongoID, $businessId: MongoID) {
+            findJobs (filter: { user_id: $userId, business_id: $businessId, active: true }){
               _id
               user_id
               posted_by
@@ -217,6 +217,7 @@
           }`),
           variables: {
             userId: this.$store.state.userID,
+            businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
           },
         });
         console.log('DATA', data);

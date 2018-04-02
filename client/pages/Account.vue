@@ -350,7 +350,6 @@
               </v-card>
             </v-dialog>
 
-
             <v-dialog v-model="createEditDegreeMajorInfo.show">
               <v-card>
                 <v-card-title>
@@ -578,14 +577,15 @@
     methods: {
       async fillUpJobs() {
         const { data: { findJobs: jobs } } = await this.$apollo.query({
-          query: (gql`query ($user: MongoID) {
-            findJobs (filter: { user_id: $user }){
+          query: (gql`query ($user: MongoID, $businessId: MongoID) {
+            findJobs (filter: { user_id: $user, business_id: $businessId }){
               _id
               active
             }
           }`),
           variables: {
             user: this.$store.state.userID,
+            businessId: null,
           },
         });
         // TODO: Temporary concat for testing with base jobs state.

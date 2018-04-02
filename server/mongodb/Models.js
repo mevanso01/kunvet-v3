@@ -38,6 +38,7 @@ const JobSchema = Mongoose.Schema({
     type: Mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  business_id: Mongoose.Schema.Types.ObjectId,
   posted_by: {
     type: String,
     required: true,

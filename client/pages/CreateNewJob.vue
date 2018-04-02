@@ -675,6 +675,7 @@ export default {
         // Do we have to differentiate between this?
         // Because on the backend, ctx only cares about user._id.
         user_id: this.uid,
+        business_id: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
         posted_by: this.posted_by,
         active: this.active,
         title: this.title,

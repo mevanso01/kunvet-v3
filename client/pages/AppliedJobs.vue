@@ -94,9 +94,10 @@
     methods: {
       async getData() {
         const { data: { findApplicants: applications } } = await this.$apollo.query({
-          query: (gql`query ($user_id: MongoID) {
+          query: (gql`query ($user_id: MongoID, $business_id: MongoID) {
             findApplicants (filter: {
               user_id: $user_id
+              business_id: $business_id
             }) {
               _id
               job_id
@@ -106,6 +107,7 @@
           }`),
           variables: {
             user_id: this.$store.state.userID,
+            business_id: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
           },
         });
         const jobPromises = Promise.all(applications.map(this.getPairForEachApplication));

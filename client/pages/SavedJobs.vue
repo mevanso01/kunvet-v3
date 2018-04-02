@@ -77,9 +77,10 @@
     methods: {
       async getSavedJobs() {
         this.$apollo.query({
-          query: (gql`query ($uid: MongoID) {
+          query: (gql`query ($uid: MongoID, $business_id: MongoID) {
             findAccount (filter: {
               _id: $uid
+              business_id: $business_id
             }) {
               _id
               saved_jobs
@@ -87,6 +88,7 @@
           }`),
           variables: {
             uid: this.uid,
+            business_id: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
           },
         }).then((data) => {
           const res = data.data.findAccount;

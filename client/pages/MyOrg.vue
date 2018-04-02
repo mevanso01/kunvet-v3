@@ -442,14 +442,15 @@
       async fillUpJobs() {
         const { data: { findJobs: jobs } } = await this.$apollo.query({
           // this.$store.state.businessID
-          query: (gql`query ($userId: MongoID) {
-            findJobs (filter: { user_id: $userId}){
+          query: (gql`query ($userId: MongoID, $businessId: MongoID) {
+            findJobs (filter: { user_id: $userId, business_id: $businessId }){
               _id
               active
             }
           }`),
           variables: {
-            userId: this.$store.state.businessID,
+            userId: this.$store.state.userID,
+            businessId: this.$store.state.businessID,
           },
         });
         this.jobs = this.jobs.concat(jobs.slice());
