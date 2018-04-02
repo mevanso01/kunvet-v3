@@ -156,6 +156,7 @@ const ApplicantSchema = Mongoose.Schema({
     type: Mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  business_id: Mongoose.Schema.Types.ObjectId,
   job_id: {
     type: Mongoose.Schema.Types.ObjectId,
     required: true,
@@ -362,6 +363,8 @@ const AccountSchema = Mongoose.Schema({
   degree: {
     type: String,
     enum: [
+      'pursuing_associate',
+      'associates',
       'pursuing_bachelor',
       'bachelors',
       'pursuing_master',

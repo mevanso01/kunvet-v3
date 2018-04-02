@@ -118,9 +118,9 @@
 
                   <v-list-tile v-if="
                     userdata.school &&
-                    userdata.degree !== 'High school' &&
-                    updateDegree !== 'High school' && updateDegree !== 'None' &&
-                    !userdata.major
+                    (
+                      (updateDegree && updateDegree !== 'High school' && updateDegree !== 'None')
+                    )
                   " class="cust-tile-2 grey-color">
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">

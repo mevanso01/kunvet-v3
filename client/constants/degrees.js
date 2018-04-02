@@ -7,7 +7,7 @@
 const degrees = {
   none: 'None',
   high_school: 'High school',
-  pursuing_assosociate: 'Pursuing Associate\'s Degree',
+  pursuing_associate: 'Pursuing Associate\'s Degree',
   associates: 'Associate\'s Degree',
   pursuing_bachelor: 'Pursuing Bachelor\'s Degree',
   bachelors: 'Bachelor\'s Degree',
