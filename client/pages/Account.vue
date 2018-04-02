@@ -930,13 +930,19 @@
       },
       switchToOrg(id) {
         this.$store.commit({ type: 'setBusinessID', id });
+        this.$store.commit({
+          type: 'keepBdata',
+          bdata: null,
+        });
         App.methods.login_b();
         this.$router.push('/myorg');
       },
     },
     created() {
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
-        if (data.userdata.firstname && data.acct !== 0) {
+        if (data.acct === 2) {
+          this.$router.push('/myorg');
+        } else if (data.userdata.firstname && data.acct !== 0) {
           this.fetchData(); // temp
           this.uid = data.userID;
           console.log(this.uid);
