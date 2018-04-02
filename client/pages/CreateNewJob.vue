@@ -333,13 +333,15 @@
         </div>
 
         <v-dialog v-model="picUploaderDialog" width="100%">
-
           <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" keepOriginal />
         </v-dialog>
         <v-container fluid grid-list-sm style="margin-top: 8px;">
           <v-layout row wrap>
             <v-flex xs4 md3 v-for="image in images">
               <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="lorem" width="100%" height="100%">
+              <v-btn icon ripple @click="showDeletePictureModal(image.cropped)">
+                <v-icon color="grey lighten-1">delete</v-icon>
+              </v-btn>
             </v-flex>
           </v-layout>
         </v-container>
@@ -381,6 +383,19 @@
             <div class="bottom-dialog-button" @click="saveAndPost">
               Save and Post
             </div>
+          </v-card>
+        </v-dialog>
+
+
+        <v-dialog v-model="deletePictureModal.show">
+          <v-card>
+            <v-card-title>
+              <div class="headline">Delete this picture?</div>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn flat="flat" @click.native="cancelDeletePictureModal">Cancel</v-btn>
+              <v-btn flat="flat" @click.native="deletePicture">Save</v-btn>
+            </v-card-actions>
           </v-card>
         </v-dialog>
 
@@ -524,6 +539,10 @@ export default {
         ['bold', 'italic', 'underline'],        // toggled buttons
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
       ],
+      deletePictureModal: {
+        show: false,
+        croppedID: null,
+      },
     };
   },
   methods: {
@@ -672,7 +691,7 @@ export default {
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
         salary: this.salary_select !== 'paid' ? null : parseInt(this.salary, 10),
         pay_denomination: this.salary_select !== 'paid' ? null : this.pay_denomination,
-        education: this.education ? degreeReducedStringToDb(this.education) : null,
+        education: this.education ? degreeReducedStringToDb(this.education) : 'None',
         preferred_major: this.major,
         language: this.language,
         experience: this.experience,
@@ -765,6 +784,18 @@ export default {
       this.picUploaderDialog = false;
       this.images.push(fileIds);
       console.log(this.images);
+    },
+    showDeletePictureModal(croppedID) {
+      this.deletePictureModal.show = true;
+      this.deletePictureModal.croppedID = croppedID;
+    },
+    cancelDeletePictureModal() {
+      this.deletePictureModal.show = false;
+      this.deletePictureModal.croppedID = null;
+    },
+    deletePicture() {
+      this.images = this.images.filter(({ cropped }) => cropped !== this.deletePictureModal.croppedID);
+      this.cancelDeletePictureModal();
     },
   },
   created() {
