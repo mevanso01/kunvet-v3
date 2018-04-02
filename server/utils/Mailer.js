@@ -12,7 +12,7 @@ export default class Mailer {
     console.log(recipient);
     const email = new Email({
       message: {
-        from: Config.get('private.mail.mailFrom'),
+        from: Config.get('private.mailTransport.from'),
       },
       views: {
         root: path.resolve('email-templates'),
