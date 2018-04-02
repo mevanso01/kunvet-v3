@@ -391,6 +391,7 @@
           <v-card>
             <v-card-title>
               <div class="headline">Delete this picture?</div>
+              <img class="image" :src="`${serverUrl}/file/get/${deletePictureModal.croppedID}`" alt="lorem" width="100%" height="100%">
             </v-card-title>
             <v-card-actions>
               <v-btn flat="flat" @click.native="cancelDeletePictureModal">Cancel</v-btn>
