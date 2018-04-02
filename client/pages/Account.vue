@@ -575,7 +575,7 @@
       },
     },
     methods: {
-      async fillUpJobs() {
+      async fillUpIndividualJobs() {
         const { data: { findJobs: jobs } } = await this.$apollo.query({
           query: (gql`query ($user: MongoID, $businessId: MongoID) {
             findJobs (filter: { user_id: $user, business_id: $businessId }){
@@ -940,18 +940,13 @@
     },
     created() {
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
-        if (data.acct === 2) {
-          this.$router.push('/myorg');
-        } else if (data.userdata.firstname && data.acct !== 0) {
+        if (data.acct !== 0) {
           this.fetchData(); // temp
           this.uid = data.userID;
-          console.log(this.uid);
           // this.userdata = data.userdata; // temp
           if (data.acct === 1) { // Regular user. Should probably use constants soon.
-            await this.fillUpJobs();
+            await this.fillUpIndividualJobs();
           }
-        } else if (data.acct !== 0) {
-          this.fetchData();
         } else {
           this.$router.push('/login');
         }

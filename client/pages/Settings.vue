@@ -1,30 +1,41 @@
 <style>
+.settings-page .btn {
+  margin-left: 0;
+}
+.settings-page section {
+  max-width: 500px !important;
+}
 </style>
 <template>
-  <v-container fluid class="white-bg">
+  <v-container fluid class="settings-page">
     <div class="main-cont-large">
       <section style="padding: 0; margin: 15px; width: auto;">
         <h1>Settings</h1>
         <br>
-        <v-select class="optional no-padding-select"
-          label="Which one?"
-          v-model="defaultOrg"
-          :items="orgSelectItems"
-          item-text="name"
-          item-value="_id"
-          return-object
-          autocomplete
-          single-line
-        ></v-select>
-        <v-btn @click="saveDefaultOrganization">
-          Save Default Organization
-        </v-btn>
-        <div v-if="this.$store.state.acct === 2">
-          <v-btn @click="loginToRegularAccount">Login to Regular Account</v-btn>
-        </div>
         <div>
           <v-btn @click="logout">Logout</v-btn>
         </div>
+        <br>
+        <br>
+        <div v-if="orgList.length > 0">
+          On login, sign in into:
+          <v-select class="optional no-padding-select"
+            label="Which one?"
+            v-model="defaultOrg"
+            :items="orgSelectItems"
+            item-text="name"
+            item-value="_id"
+            return-object
+            autocomplete
+            single-line
+          ></v-select>
+          <v-btn style="margin-top:0" @click="saveDefaultOrganization">
+            Save Login Preferences
+          </v-btn>
+        </div>
+        <!--<div v-if="this.$store.state.acct === 2">
+          <v-btn @click="loginToRegularAccount">Login to Regular Account</v-btn>
+        </div>-->
       </section>
     </div>
   </v-container>
@@ -140,7 +151,7 @@
     },
     computed: {
       orgSelectItems() {
-        return this.orgList;
+        return this.orgList.concat([{ name: 'None (Your individual account)', _id: null }]);
       },
     },
     async created() {

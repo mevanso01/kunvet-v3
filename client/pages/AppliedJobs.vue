@@ -5,11 +5,13 @@
     <div class="main-cont-large">
       <v-layout>
         <v-flex xs12>
-          <h1 style="margin-bottom: 10px; color: #A7A7A7;">
-            <router-link to="/" v-if="jobsAndApplications.length === 0">
+          <router-link v-if="jobsAndApplications.length === 0" to="/">
+            <p style="text-decoration: none;">
               You have not yet applied for any jobs. Click me to go to the jobs dashboard.
-            </router-link>
-            <span v-else="jobsAndApplications.length > 0">
+            </p>
+          </router-link>
+          <h1 v-else="jobsAndApplications.length > 0" style="margin-bottom: 10px; color: #A7A7A7;">
+            <span>
               <span class="kunvet-red">
                 {{ jobsAndApplications.length }}
               </span> Applied {{ getAppliedJobsString }}
