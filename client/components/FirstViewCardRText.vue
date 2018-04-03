@@ -1,7 +1,7 @@
 <template>
   <v-layout align-center row style="padding-bottom: 10px;">
     <v-flex xs12 md6>
-        <img style="max-width: 80%;" src="http://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
+        <img style="max-width: 80%;" src="https://i.telegraph.co.uk/multimedia/archive/02022/Jiang-Zemin-SUM_2022366a.jpg"></img>
     </v-flex>
     <v-flex xs12 md6>
         <v-card-title><div class="headline">Who is Elder?</div></v-card-title>
