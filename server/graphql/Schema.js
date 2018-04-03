@@ -35,7 +35,10 @@ GQC.rootQuery().addFields({
   // findAccount: Account.get('$findOne'),
   // findAccounts: Account.get('$findMany'),
   // Account
-  ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
+  ...wrapResolvers([
+    Restrictions.getFilterByUserId('_id'),
+    Restrictions.LoggedIn,
+  ], {
     findAccount: Account.get('$findOne'),
     findAccounts: Account.get('$findMany'),
   }),
