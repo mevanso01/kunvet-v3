@@ -106,18 +106,21 @@ export default {
     },
   },
   async created() {
-    if (this.job.user_id) {
-     try {
-       const { data } = (await axios.get(`/profile-pic/account/${this.job.user_id}`));
-       if (data.profilePictureId) {
-         const url = `${this.serverUrl}/file/get/${data.profilePictureId}`;
-         this.profilePic = url;
-         return;
-       }
-       throw Error('Not found. Falling back to svg');
-     } catch (ex) {
-       this.profilePic = this.svgs.student;
-     }
+    try {
+      let data;
+      if (this.job.business_id) {
+        data = (await axios.get(`/profile-pic/business/${this.job.business_id}`)).data;
+      } else {
+        data = (await axios.get(`/profile-pic/account/${this.job.user_id}`)).data;
+      }
+      if (data.profilePictureId) {
+        const url = `${this.serverUrl}/file/get/${data.profilePictureId}`;
+        this.profilePic = url;
+        return;
+      }
+      throw Error('Not found. Falling back to svg');
+    } catch (ex) {
+      this.profilePic = this.svgs.student;
     }
   },
 };
