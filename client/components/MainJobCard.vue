@@ -106,13 +106,13 @@ export default {
     },
   },
   async created() {
+    const { business_id: businessID, user_id: userID } = this.job;
+    const { type, id } = {
+      type: businessID ? 'business' : 'account',
+      id: businessID || userID,
+    };
     try {
-      let data;
-      if (this.job.business_id) {
-        data = (await axios.get(`/profile-pic/business/${this.job.business_id}`)).data;
-      } else {
-        data = (await axios.get(`/profile-pic/account/${this.job.user_id}`)).data;
-      }
+      const { data } = await axios.get(`/profile-pic/${type}/${id}`);
       if (data.profilePictureId) {
         const url = `${this.serverUrl}/file/get/${data.profilePictureId}`;
         this.profilePic = url;
