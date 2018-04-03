@@ -3,7 +3,7 @@
       <v-layout align-center row spacer slot="header">
         <v-flex xs8>
           <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
-            <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+            <img :src="profilePic" alt="">
           </v-avatar>
           <div style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
         </v-flex>
@@ -63,6 +63,7 @@ import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import StudentSvg from '@/assets/job_posts/user_1.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Config from 'config';
+import axios from 'axios';
 
 export default {
   props: ['job', 'saveJobFunc', 'isSaved', 'defaultFromUCI', 'fromCoordinates'],
@@ -72,6 +73,7 @@ export default {
   data() {
     return {
       serverUrl: Config.get('serverUrl'),
+      profilePic: null,
       svgs: {
         student: StudentSvg,
         locationMarker: LocationMarkerSvg,
@@ -102,6 +104,21 @@ export default {
     getCoordinatesFromJob({ latitude, longitude }) {
       return { latitude, longitude };
     },
+  },
+  async created() {
+    if (this.job.user_id) {
+     try {
+       const { data } = (await axios.get(`/profile-pic/account/${this.job.user_id}`));
+       if (data.profilePictureId) {
+         const url = `${this.serverUrl}/file/get/${data.profilePictureId}`;
+         this.profilePic = url;
+         return;
+       }
+       throw Error('Not found. Falling back to svg');
+     } catch (ex) {
+       this.profilePic = this.svgs.student;
+     }
+    }
   },
 };
 </script>

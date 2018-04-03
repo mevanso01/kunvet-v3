@@ -30,6 +30,7 @@ import GraphQLApp from '@/apps/graphql';
 import DevToolsApp from '@/apps/devtools';
 import FileServerApp from '@/apps/fileserver';
 import ApplicationApp from '@/apps/application';
+import ProfilePicApp from '@/apps/profile_pic';
 
 // Our stuff
 import Db from '@/mongodb/Db';
@@ -66,6 +67,7 @@ app.use(KoaMount('/data', GraphQLApp));
 app.use(KoaMount('/auth', AuthApp));
 app.use(KoaMount('/file', FileServerApp));
 app.use(KoaMount('/application', ApplicationApp));
+app.use(KoaMount('/profile-pic', ProfilePicApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies

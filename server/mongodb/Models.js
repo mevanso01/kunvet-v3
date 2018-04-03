@@ -156,7 +156,6 @@ const ApplicantSchema = Mongoose.Schema({
     type: Mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  business_id: Mongoose.Schema.Types.ObjectId,
   job_id: {
     type: Mongoose.Schema.Types.ObjectId,
     required: true,

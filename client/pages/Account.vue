@@ -939,6 +939,7 @@
       },
     },
     created() {
+      console.log(this.$store.state.userID);
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.acct !== 0) {
           this.fetchData(); // temp

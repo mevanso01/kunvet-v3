@@ -311,6 +311,8 @@ const findJobQuery = gql`query ($id: MongoID) {
   findJob (filter: { active: true, _id: $id }){
     _id
     posted_by
+    user_id
+    business_id
     title
     description
     address
