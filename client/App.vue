@@ -208,7 +208,6 @@ export default {
               { text: 'Search', route: '/' },
               { text: 'Applied Jobs', route: '/appliedjobs' },
               { text: 'Saved Jobs', route: '/savedjobs' },
-              { text: 'My Posted Jobs', route: '/myjobs' },
             ],
           },
           { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },

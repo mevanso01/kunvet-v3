@@ -60,10 +60,12 @@
 import Distance from '@/components/Distance';
 import Coordinates from '@/constants/coordinates';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
-import StudentSvg from '@/assets/job_posts/user_1.svg';
+import StudentSvg from '@/assets/icons/Asset(17).svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Config from 'config';
 import axios from 'axios';
+
+const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
 export default {
   props: ['job', 'saveJobFunc', 'isSaved', 'defaultFromUCI', 'fromCoordinates'],
@@ -120,7 +122,7 @@ export default {
       }
       throw Error('Not found. Falling back to svg');
     } catch (ex) {
-      this.profilePic = this.svgs.student;
+      this.profilePic = DefaultPic;
     }
   },
 };

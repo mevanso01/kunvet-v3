@@ -137,7 +137,7 @@
 }
 @media (min-width: 961px) {
   .firstSearch {
-    height: calc(100vh - 112px);
+    height: calc(100vh - 70px);
   }
   .city-img-holder {
     padding: 0 48px;
@@ -148,7 +148,7 @@
 }
 @media (min-width: 601px) and (max-width: 960px) {
   .firstSearch {
-    height: calc(100vh - 112px);
+    height: calc(100vh - 70px);
   }
 }
 #rua {

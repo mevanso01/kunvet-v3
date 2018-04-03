@@ -645,12 +645,14 @@ export default {
     },
     validateBeforePosting(showDialog = false) {
       this.submitted = true;
-      this.$refs.form.validate();
+      const f = this.$refs.form.validate();
+      this.valid = f; // wierd workaround?
       if (!this.sanitizeQuillInput(this.description, 'description')) { this.valid = false; }
       if (!this.sanitizeQuillInput(this.responsibilities, 'responsibilities')) { this.valid = false; }
       if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
       if (this.shift.length <= 0) { this.valid = false; }
       if (this.longitude == null || this.latitude == null) { this.valid = false; }
+      console.log(this.valid);
       if (showDialog && this.valid) {
         this.confirmPost = true;
       }
@@ -670,6 +672,7 @@ export default {
         this.active = true;
         this._save(true);
       } else {
+        this.confirmPost = false;
         this.saveForLater();
       }
     },
