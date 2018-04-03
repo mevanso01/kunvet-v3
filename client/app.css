@@ -57,6 +57,9 @@ p > a {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.alert.success {
+  background-color: #4caf50 !important;
+}
 .theme--light .list .list__tile--link:hover {
   background: rgba(0,0,0,0.08) !important;
 }
@@ -784,6 +787,9 @@ body {
 
 }
 @media (max-width: 600px) {
+    .job-post__helper-nav-bar {
+      display: none;
+    }
     .no-padding-xs {
       padding: 0 !important;
     }

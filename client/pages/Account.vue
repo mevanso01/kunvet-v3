@@ -190,8 +190,9 @@
             <div class="profile-pic-cont hidden-xs-only">
               <img v-if="userdata.profile_pic" style="width: 100%; height: 100%;" :src="`${serverUrl}/file/get/${userdata.profile_pic}`"></img>
               <img v-else style="width: 100%; height: 100%;" :src="default_pic"></img>
-              <v-btn style="position: relative; top: -42px; left: -5px;" icon small @click="showPicUploaderDialog = true;">
-                <v-icon style="color: #616161;">photo_camera</v-icon>
+              <v-btn style="position: relative; top: -42px; left: -5px; background-color: rgba(0,0,0,0.1);"
+                icon small @click="showPicUploaderDialog = true;">
+                <v-icon style="color: #fff;">photo_camera</v-icon>
               </v-btn>
             </div>
           </v-flex>

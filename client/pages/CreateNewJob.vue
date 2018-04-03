@@ -106,6 +106,15 @@
   color: #f00;
   transition: all 0.4s linear;
 }
+.createnewjob-container .image-container {
+  position: relative;
+}
+.createnewjob-container .image-container .delete-img-btn {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  color: rgba(255,255,255,0.75);
+}
 @media (min-width: 600px) {
   .requirements .flex {
     padding: 0 15px;
@@ -335,13 +344,14 @@
         <v-dialog v-model="picUploaderDialog" width="100%">
           <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" keepOriginal />
         </v-dialog>
+
         <v-container fluid grid-list-sm style="margin-top: 8px;">
           <v-layout row wrap>
-            <v-flex xs4 md3 v-for="image in images">
-              <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="lorem" width="100%" height="100%">
-              <v-btn icon ripple @click="showDeletePictureModal(image.cropped)">
-                <v-icon color="grey lighten-1">delete</v-icon>
+            <v-flex xs4 md3 class="image-container" v-for="image in images">
+              <v-btn icon small ripple class="delete-img-btn" @click="showDeletePictureModal(image.cropped)">
+                <v-icon>cancel</v-icon>
               </v-btn>
+              <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image" width="100%">
             </v-flex>
           </v-layout>
         </v-container>
@@ -390,15 +400,23 @@
         <v-dialog v-model="deletePictureModal.show">
           <v-card>
             <v-card-title>
-              <div class="headline">Delete this picture?</div>
-              <img class="image" :src="`${serverUrl}/file/get/${deletePictureModal.croppedID}`" alt="lorem" width="100%" height="100%">
+              <div class="headline" style="margin-bottom: 10px;">Delete this picture?</div>
+              <img v-if="deletePictureModal.croppedID"
+                class="image" :src="`${serverUrl}/file/get/${deletePictureModal.croppedID}`"
+                width="100%">
             </v-card-title>
             <v-card-actions>
               <v-btn flat="flat" @click.native="cancelDeletePictureModal">Cancel</v-btn>
-              <v-btn flat="flat" @click.native="deletePicture">Save</v-btn>
+              <v-btn flat="flat" @click.native="deletePicture">Delete</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <v-alert type="success" dismissible v-model="successAlert" style="position: fixed; bottom: 0; z-index: 5;">
+          <p style="color: #fff; margin-bottom: 0; min-width: 250px;">
+            Saved! <router-link :to="`/jobdetail/${id}`">View job</router-link>
+          </p>
+        </v-alert>
 
       </section>
     </div>
@@ -482,6 +500,37 @@ const updateJobMutation = gql`
     }
   }
 `;
+const findJobsQuery = gql`
+  query($id: MongoID) {
+    findJobs(filter: { _id: $id }) {
+      _id
+      posted_by
+      title
+      description
+      address
+      university
+      latitude
+      longitude
+      type
+      studentfriendly
+      type2
+      shift
+      age
+      pay_type
+      salary
+      pay_denomination
+      education
+      language
+      experience
+      responsibilities
+      notes
+      images {
+        original
+        cropped
+      }
+    }
+  }
+`;
 
 export default {
   components: {
@@ -491,6 +540,7 @@ export default {
   data() {
     return {
       serverUrl: Config.get('serverUrl'),
+      id: null,
       valid: false,
       submitted: false,
       posted_by: null,
@@ -531,6 +581,7 @@ export default {
       images: [],
       tags: [],
       picUploaderDialog: false,
+      successAlert: false,
       showInvalidMessage: false,
       educationOptions: Object.keys(degreesReduced).map(key => degreesReduced[key]),
       howDidYouHearItems: [
@@ -626,7 +677,7 @@ export default {
       this.validateBeforePosting();
       if (this.valid && this.$route.params.id) {
         this.active = true;
-        this._save(true);
+        this._save();
       }
     },
     _save(viewJob = false) {
@@ -639,10 +690,17 @@ export default {
             id: id,
             job: job,
           },
+          refetchQueries: [{
+            query: findJobsQuery,
+            variables: { id: id },
+          }],
         }).then((res) => {
           const recordId = res.data.updateJob.recordId;
           if (viewJob) {
             this.$router.push(`/jobdetail/${recordId}`);
+          } else {
+            this.id = recordId;
+            this.successAlert = true;
           }
         }).catch(console.error);
       } else {
@@ -656,6 +714,8 @@ export default {
           const recordId = res.data.createJob.recordId;
           if (!viewJob) {
             this.$router.push({ path: `/createnewjob/${recordId}` });
+            this.id = recordId;
+            this.successAlert = true;
           } else {
             this.$router.push(`/jobdetail/${recordId}`);
           }
