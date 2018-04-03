@@ -29,6 +29,7 @@ module.exports = {
   //
   // Get yours from https://ethereal.email/create
   mailTransport: {
+    from: 'Kunvet Notifications <notifications@kunvet.com>',
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
