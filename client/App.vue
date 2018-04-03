@@ -212,7 +212,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
-          { title: 'Account', icon: personSvgG, href: '/account', subItems: [{ text: 'Settings', route: '/settings' }] },
+          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: [{ text: 'Settings', route: '/settings' }] },
         ],
         [
           {
@@ -241,19 +241,21 @@ export default {
             { title: 'Search', href: '/' },
             { title: 'Applied Jobs', href: '/appliedjobs' },
             { title: 'Saved Jobs', href: '/savedjobs' },
-            { title: 'My Posted Jobs', href: '/myjobs' },
           ],
           [
             { title: 'Notifications', href: '/notifications' },
-            { title: 'Account', href: '/account' },
+            { title: 'My Profile', href: '/account' },
             { title: 'Settings', href: '/settings' },
+          ],
+          [
+            { title: 'Post Individual Job',  href: '/createnewjob' },
+            { title: 'My Posted Jobs', href: '/myjobs' },
+            { title: 'My Applicants', href: '/applicants' },
           ],
         ],
         [
           [
             { title: 'Post New Job',  href: '/createnewjob' },
-            { title: 'Applied Jobs', href: '/appliedjobs' },
-            { title: 'Saved Jobs', href: '/savedjobs' },
             { title: 'My Posted Jobs', href: '/myjobs' },
             { title: 'Applicants', href: '/applicants' },
           ],
@@ -261,6 +263,11 @@ export default {
             { title: 'Notifications', href: '/notifications' },
             { title: 'Account', href: '/account' },
             { title: 'Settings', href: '/settings' },
+          ],
+          [
+            { title: 'Job Search', href: '/' },
+            { title: 'Applied Jobs', href: '/appliedjobs' },
+            { title: 'Saved Jobs', href: '/savedjobs' },
           ],
         ],
       ],

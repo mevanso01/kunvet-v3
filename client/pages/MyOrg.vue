@@ -189,6 +189,11 @@
               </v-flex>
               <v-flex sm4 class="hidden-xs-only">
                 <div class="profile-pic-cont hidden-xs-only">
+                  <img v-if="bdata.profile_pic" style="width: 100%; height: 100%;" :src="`${serverUrl}/file/get/${bdata.profile_pic}`"></img>
+                  <img v-else style="width: 100%; height: 100%;" :src="default_pic"></img>
+                  <v-btn style="position: relative; top: -42px; left: -5px;" icon small @click="showPicUploaderDialog = true;">
+                    <v-icon style="color: #616161;">photo_camera</v-icon>
+                  </v-btn>
                 </div>
               </v-flex>
             </v-layout>
@@ -262,6 +267,15 @@
                   </v-card>
                 </v-dialog>
 
+                <v-dialog v-model="showPicUploaderDialog" class="auto-dialog">
+                  <PicUploader
+                    @uploaded="profilePicUploaded"
+                    @cancel="showPicUploaderDialog = false"
+                    :croppedId="bdata.profile_pic"
+                    title="Change Organization Picture"
+                  />
+                </v-dialog>
+
               </v-flex>
             </v-layout>
           </section>
@@ -273,9 +287,11 @@
   import App from '@/App';
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
+  import Config from 'config';
 
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
+  import PicUploader from '@/components/PicUploader';
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
 
@@ -290,10 +306,12 @@
     components: {
       AccountHeader,
       JobsAndApplicationsCounters,
+      PicUploader,
     },
     data() {
       return {
-        tabs: ['Profile', 'Resume', 'Jobs', 'Settings'],
+        serverUrl: Config.get('serverUrl'),
+        default_pic: 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true',
         active: null,
         updateName: '',
         updateAddress: '',
@@ -315,10 +333,12 @@
           phone_number: null,
           website: null,
           biography: null,
+          profile_pic: null,
         },
         settingsoption1: '',
         jobs: [],
         applications: [],
+        showPicUploaderDialog: false,
         svgs: {
           accountEmail: AccountEmailSvg,
           accountGlobe: AccountGlobeSvg,
@@ -330,9 +350,6 @@
       };
     },
     methods: {
-      next() {
-        this.active = this.tabs[(this.tabs.indexOf(this.active) + 1) % this.tabs.length];
-      },
       logout() {
         App.methods.logout();
       },
@@ -363,6 +380,11 @@
         this.saveData();
         this.destroyEditModal();
       },
+      profilePicUploaded(fileId) {
+        this.bdata.profile_pic = fileId;
+        this.saveData();
+        this.showPicUploaderDialog = false;
+      },
       saveData() {
         this.commitBdata();
         this.$apollo.mutate({
@@ -373,6 +395,7 @@
               $address: String,
               $website: String,
               $phone_number: String,
+              $profile_pic: MongoID,
             )
           {
             updateOrganization (
@@ -382,6 +405,7 @@
                 address: $address,
                 website: $website,
                 phone_number: $phone_number,
+                profile_pic: $profile_pic,
               }
             ) {
               recordId
@@ -394,6 +418,7 @@
             address: this.bdata.address,
             website: this.bdata.website,
             phone_number: this.bdata.phone_number,
+            profile_pic: this.bdata.profile_pic,
           },
         }).catch((error) => {
           console.error(error);
@@ -420,6 +445,7 @@
               phone_number
               website
               biography
+              profile_pic
             }
           }`),
           variables: {
@@ -434,6 +460,7 @@
           this.bdata.website = res.website;
           this.bdata.phone_number = res.phone_number;
           this.bdata.biography = res.biography;
+          this.bdata.profile_pic = res.profile_pic;
           this.commitBdata();
         }).catch((error) => {
           console.error(error);

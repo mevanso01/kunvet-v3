@@ -238,6 +238,9 @@ const OrganizationSchema = Mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  profile_pic: {
+    type: Mongoose.Schema.Types.ObjectId,
+  },
   email: {
     type: String,
   },
@@ -270,12 +273,6 @@ const OrganizationSchema = Mongoose.Schema({
     type: String,
   },
 });
-
-/* const ResumeItem = {
-  name: String,
-  filename: String,
-  resumeid: String,
-}; */
 
 const FileSchema = Mongoose.Schema({
   owner: {
