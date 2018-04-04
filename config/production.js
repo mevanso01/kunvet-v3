@@ -55,8 +55,8 @@ module.exports = {
       },
     },
     mail: {
-      mailFrom: 'Kunvet Notifications <notifications@kunvet.com>',
-      mailTransport: Credentials.mailTransport,
+      from: 'Kunvet Notifications <notifications@kunvet.com>',
+      transport: Credentials.mailTransport,
     },
   },
 };
