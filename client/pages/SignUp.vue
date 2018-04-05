@@ -307,6 +307,7 @@ export default {
           this.chosenForm = 'error';
         }
       }, (error) => {
+        this.chosenForm = 'error';
         console.error(error);
       });
     },
@@ -332,6 +333,7 @@ export default {
           this.chosenForm = 'not verified';
         }
       }, (error) => {
+        this.chosenForm = 'error';
         console.error(error);
       });
     },
@@ -345,8 +347,11 @@ export default {
         this.loading = false;
         if (res.body.success) {
           this.chosenForm = 'success';
+        } else {
+          this.chosenForm = 'error';
         }
       }, (error) => {
+        this.chosenForm = 'error';
         console.error(error);
       });
     },

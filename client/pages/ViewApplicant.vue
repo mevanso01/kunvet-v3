@@ -26,6 +26,11 @@
 .view-applicant-profile-pic-cont {
   float: none;
   display: inline-block;
+  z-index: 90;
+  width: 210px;
+  height: 210px;
+  border: 1px solid grey;
+  background-color: grey;
 }
 .view-applicant-container {
   padding-top: 15px;
@@ -54,10 +59,17 @@
 }
 @media only screen and (min-width: 601px) {
   .view-applicant-container {
-    padding-top: 35px;
+    padding-top: 20px;
+    padding-bottom: 15px;
   }
   .view-applicant-details {
     padding-left: 30px;
+  }
+}
+@media only screen  and (max-width: 960px) {
+  .view-applicant-profile-pic-cont {
+    width: 186px;
+    height: 186px;
   }
 }
 </style>
@@ -68,12 +80,13 @@
             <v-toolbar height="64px" card style="z-index: 1; border-bottom: 1px solid black; padding: 0 12px;">
               <v-toolbar-items style="width: 100%; display: block;">
                 <div class="view-applicant-left-elements">
-                  <v-btn
-                    class="kunvet-black-large-btn"
-                    @click="updateNotes(data.notes)"
-                  >
-                    {{ `${!data.notes ? 'Make' : 'Edit' } Note` }}
-                  </v-btn>
+                  <router-link :to="'/applicants'">
+                    <v-btn
+                      class="kunvet-black-large-btn"
+                    >
+                      Back
+                    </v-btn>
+                  </router-link>
                 </div>
                 <div class="view-applicant-right-elements">
                   <span v-if="!isAcceptedOrRejected">
@@ -96,18 +109,17 @@
                   >
                     {{ getAcceptedOrRejectedText }}
                   </span>
-                  <router-link :to="'/applicants'">
-                    <v-btn
-                      class="kunvet-black-large-btn"
-                    >
-                      Back
-                    </v-btn>
-                  </router-link>
+                  <v-btn
+                    class="kunvet-black-large-btn"
+                    @click="updateNotes(data.notes)"
+                  >
+                    {{ `${!data.notes ? 'Make' : 'Edit' } Note` }}
+                  </v-btn>
                 </div>
               </v-toolbar-items>
             </v-toolbar>
             <div class="notes" v-if="data.notes || editingNotes">
-              <div v-show="!editingNotes" style="font-size: 16px; padding-top: 4px;">
+              <div v-show="!editingNotes" style="font-size: 16px; padding-top: 6px;">
                 <pre style="font-family: Verdana; white-space: pre-line;">
                   {{ data.notes }}
                 </pre>
@@ -122,7 +134,6 @@
                 auto-grow
                 rows=1
                 hide-details
-                style="border-bottom: 1px solid black;"
               ></v-text-field>
             </div>
             <div v-if="editingNotes" class="saveNotesDiv">
@@ -141,9 +152,9 @@
             </div>
             <v-layout row wrap class="view-applicant-container">
               <v-flex>
-                <div class="view-applicant-profile-pic-cont profile-pic-cont hidden-xs-only" />
+                <div class="view-applicant-profile-pic-cont hidden-xs-only" />
                 <div class="view-applicant-details">
-                  <h1 style="padding-left: 4px;">{{ data.name }}</h1>
+                  <h1 style="padding-left: 4px; margin-bottom: 0;">{{ data.name }}</h1>
                   <v-list>
                     <v-list-tile v-if="data.school" class="cust-tile-2">
                       <v-list-tile class="cust-tile-1">
@@ -219,17 +230,17 @@
     <v-dialog v-model="dialogs.showAccept">
       <v-card>
         <v-card-title class="headline">
-          Accept Applicant
+          Accept Applicant?
         </v-card-title>
         <v-card-text style="padding-top: 0; padding-bottom: 0;">
           <p v-if="loading">Loading...</p>
           <p v-if="errorOccured">An error occured, please try again later</p>
         </v-card-text>
         <v-card-actions>
-          <v-btn :disabled="loading" color="green darken-1" flat="flat" @click.native="onAccept">
-            Confirm
+          <v-btn :disabled="loading" color="yellow darken-3" flat="flat" @click.native="onAccept">
+            Accept
           </v-btn>
-          <v-btn color="green darken-1" flat="flat" @click.native="closeDialogs">
+          <v-btn flat="flat" @click.native="closeDialogs">
             Cancel
           </v-btn>
         </v-card-actions>
@@ -245,10 +256,10 @@
           <p v-if="errorOccured">An error occured, please try again later</p>
         </v-card-text>
         <v-card-actions>
-          <v-btn :disabled="loading" color="green darken-1" flat="flat" @click.native="onReject">
-            Confirm
+          <v-btn :disabled="loading" color="red darken-1" flat="flat" @click.native="onReject">
+            Reject
           </v-btn>
-          <v-btn color="green darken-1" flat="flat" @click.native="closeDialogs">
+          <v-btn flat="flat" @click.native="closeDialogs">
             Cancel
           </v-btn>
         </v-card-actions>

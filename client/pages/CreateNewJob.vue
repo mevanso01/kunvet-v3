@@ -17,6 +17,9 @@
 .createnewjob-container .input-group--text-field {
   max-width: 500px;
 }
+.createnewjob-container .input-group--required label:after {
+  content: '';
+}
 .createnewjob-container .input-group--text-field .input-group__details {
   min-height: 10px;
 }
@@ -44,7 +47,7 @@
 .createnewjob-container .cust-radio-box .input-group.input-group--selection-controls.radio,
 .createnewjob-container .multi-checkbox .input-group.input-group--selection-controls {
   padding-top: 4px;
-  max-width: 130px;
+  max-width: 110px;
   height: 34px;
   float: left;
   /* background-color: #f8f8f8; *
@@ -209,8 +212,8 @@
         <v-flex xs12 class="cflex_1">
           <div class="cust-radio-box">
             <v-radio-group v-model="studentfriendly" row required hide-details>
-              <v-radio label="Student friendly" :value="true" style="max-width: 190px;" selected></v-radio>
-              <v-radio label="Not student friendly" :value="false" style="max-width: 210px;"></v-radio>
+              <v-radio label="Student friendly" :value="true" style="max-width: 160px;" selected></v-radio>
+              <v-radio label="Not student friendly" :value="false" style="max-width: 180px;"></v-radio>
             </v-radio-group>
           </div>
         </v-flex>
@@ -229,15 +232,15 @@
         <h3 v-bind:class="{ 'error_h3_2': submitted && shift.length <= 0 }">Working Hours</h3>
 
         <div class="multi-checkbox work-hours">
-            <v-checkbox style="max-width: 120px;"
+            <v-checkbox style="max-width: 110px;"
               label="morning" v-model="shift" value="morning"
               v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"
               required></v-checkbox>
-            <v-checkbox style="max-width: 95px;" label="noon" v-model="shift" value="noon"
+            <v-checkbox style="max-width: 85px;" label="noon" v-model="shift" value="noon"
               v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"></v-checkbox>
-            <v-checkbox label="afternoon" v-model="shift" value="afternoon"
+            <v-checkbox style="max-width: 115px;" label="afternoon" v-model="shift" value="afternoon"
               v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"></v-checkbox>
-            <v-checkbox style="max-width: 120px;" label="evening" v-model="shift" value="evening"
+            <v-checkbox style="max-width: 100px;" label="evening" v-model="shift" value="evening"
               v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"></v-checkbox>
             <v-checkbox label="night" v-model="shift" value="night"
               v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"></v-checkbox>
@@ -659,7 +662,7 @@ export default {
       if (!this.valid) {
         var msg = document.getElementById('bottom-error-message');
         msg.style.opacity = 1;
-        setTimeout(() => { msg.style.opacity = 0; }, 5000);
+        setTimeout(() => { msg.style.opacity = 0; }, 4000);
       }
     },
     saveForLater() {
@@ -816,7 +819,7 @@ export default {
             this.isUniversity = true;
           }
           this.latitude = job.latitude;
-          this.longitude = job.latitude;
+          this.longitude = job.longitude;
           if (job.type && job.type.length > 1) {
             this.type = 'both';
           } else if (job.type) {

@@ -29,7 +29,7 @@
         name="edit-modal-input"
         hide-details
         single-line
-        placeholder="Resume name"
+        placeholder="Give this resume a name"
       ></v-text-field>
       </div>
       <div style="min-height: 40px;" v-if="state === 'FAILED'">

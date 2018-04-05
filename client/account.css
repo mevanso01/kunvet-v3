@@ -52,7 +52,7 @@
   margin: 15px;
 }
 .profile-pic-cont {
-  z-index: 90;
+  z-index: 10;
   width: 210px;
   height: 210px;
   float: right;

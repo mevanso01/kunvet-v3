@@ -210,9 +210,10 @@ router.post('/register', async (ctx) => {
   const promiseRegister = promisify(Models.Account.register, Models.Account);
 
   let defaultOrg = null;
+  let org = null;
   if (req.business_name) {
     try {
-      const org = new Models.Organization({
+      org = new Models.Organization({
         business_name: req.business_name,
         email: req.email,
       });
@@ -245,9 +246,9 @@ router.post('/register', async (ctx) => {
       return;
     }
   }
-
+  let user = null;
   try {
-    await promiseRegister(
+    user = await promiseRegister(
       {
         email: req.email,
         firstname: req.fname,
@@ -283,7 +284,10 @@ router.post('/register', async (ctx) => {
     ctx.body = JSON.stringify(response);
     return;
   }
-
+  if (org) {
+    org.user_id = user._id;
+    await org.save();
+  }
   const validationCode = uuidv1();
 
   const x = new Models.TempAccount({

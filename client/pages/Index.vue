@@ -14,6 +14,7 @@
 .firstSearch .input-group__details{
   display: none !important;
 }
+/* --- old selects --- */
 .search .input-group--select .input-group__input {
   padding: 0 16px;
   height: 48px;
@@ -42,10 +43,25 @@
   top: 8px;
   left: 16px;
 }
-/* .input-group--multiple .input-group__selections > div {
+/* --- new selects --- */
+.search .menu {
+  width: 100%;
+}
+.search .custom-select {
+  height: 48px;
+  padding: 0 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: relative;
+}
+.search .custom-select .btn {
   position: absolute;
-  top: 4px;
-} */
+  right: 0;
+}
+.search .custom-select span {
+  color: #000;
+  line-height: 48px;
+}
 
 .input-group--text-field.input-group--dirty.input-group--select label,
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
@@ -143,7 +159,7 @@
     padding: 0 48px;
   }
   section.search {
-    padding: 32px 48px 48px 48px;
+    padding: 16px 16px 32px 16px;
   }
 }
 @media (min-width: 601px) and (max-width: 960px) {
@@ -236,18 +252,31 @@
                       </v-select>
                     </v-flex>
                     <v-flex xs12 sm6>
-                      <v-select
+                      <!--<v-select
                         label="Select positions"
                         :items="availablePositions"
                         v-model="selectedPositions"
                         autocomplete
                         single-line
                         hide-details
-                        multiple>
-                      </v-select>
+                        multiple
+                        chips>
+                      </v-select>-->
+
+                      <v-menu bottom offset-y :close-on-content-click="false">
+                        <div class="custom-select" slot="activator">
+                          <span>{{ computeSelectString(this.selectedPositions) }}</span>
+                          <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
+                        </div>
+                        <v-list style="min-width: 250px;">
+                          <v-list-tile v-for="(item, i) in availablePositions" :key="i">
+                            <v-checkbox :label="item" v-model="selectedPositions" :value="item" hide-details></v-checkbox>
+                          </v-list-tile>
+                        </v-list>
+                      </v-menu>
                     </v-flex>
                     <v-flex xs12 sm6>
-                      <v-select
+                      <!--<v-select
                         label="Select shifts"
                         :items="availableShifts"
                         v-model="selectedShifts"
@@ -255,7 +284,18 @@
                         single-line
                         hide-details
                         multiple>
-                      </v-select>
+                      </v-select>-->
+                      <v-menu class="custom-select-wrapper" bottom offset-y :close-on-content-click="false">
+                        <div class="custom-select" slot="activator">
+                          <span>{{ computeSelectString(this.selectedShifts) }}</span>
+                          <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
+                        </div>
+                        <v-list style="min-width: 250px;">
+                          <v-list-tile v-for="(item, i) in availableShifts" :key="i">
+                            <v-checkbox :label="item.text" v-model="selectedShifts" :value="item.value" hide-details></v-checkbox>
+                          </v-list-tile>
+                        </v-list>
+                      </v-menu>
                     </v-flex>
                   </v-layout>
                 </section>
@@ -263,7 +303,7 @@
                 <input v-if="!firstSearch" class="hidden-input" id="submit" type="submit" value="GO">
                 <div v-if="!firstSearch" id="general-submit" @click="filterJobs">
                   <div id="general-submit-default">
-                    <span>GO</span>
+                    <span>SEARCH</span>
                   </div>
                   <div id="general-submit-error">
                     <span id="general-submit-error-msg"></span>
@@ -393,6 +433,15 @@ export default {
       selectedPositionsInital: 'All / Any',
     };
   },
+  computed: {
+    computedPositions() {
+      if (this.selectedPositions.length <= 2) {
+        return this.selectedPositions.join(', ');
+      }
+      const items = this.selectedPositions;
+      return `${items[0]}, ${items[1]}, +${items.length - 2}`;
+    },
+  },
   methods: {
     searchGo() {
       if (this.selectedCities && this.selectedCities[0]) {
@@ -455,6 +504,15 @@ export default {
           return true;
         });
       }
+    },
+    computeSelectString(property) {
+      const items = property;
+      if (items.length <= 2) {
+        return items.join(', ');
+        // return this.selectedPositions.join(', ');
+      }
+      // const items = this.selectedPositions;
+      return `${items[0]}, ${items[1]}, +${items.length - 2}`;
     },
     getDistance(lat, long) {
       return `${this.computeDistance(lat, long)} miles away`;

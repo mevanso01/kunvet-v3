@@ -230,6 +230,9 @@ const OrganizationSchema = Mongoose.Schema({
     required: true,
     index: { unique: true },
   },
+  user_id: {
+    type: Mongoose.Schema.Types.ObjectId,
+  },
   biography: {
     type: String,
   },
