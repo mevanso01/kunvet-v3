@@ -203,7 +203,7 @@
                     >
                     </v-select>
                     <v-select class="no-padding fs-select-positions"
-                      label="Positions (all)"
+                      label="All jobs nearby"
                       :items="availablePositions"
                       v-model="selectedPositions"
                       autocomplete
@@ -231,17 +231,32 @@
                 <section v-if="!firstSearch" class="search">
                   <v-layout row wrap>
                     <v-flex xs12 sm6>
-                      <v-select
+                      <!--<v-select
                         label="Select city"
                         v-bind:items="availableCities"
                         v-model="selectedCities"
                         single-line
                         hide-details
                         autocomplete>
-                      </v-select>
+                      </v-select>-->
+                      <v-menu bottom offset-y :close-on-content-click="false">
+                        <div class="custom-select" slot="activator">
+                          <span v-if="this.selectedCities">{{ selectedCities }}</span>
+                          <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
+                          <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
+                        </div>
+                        <v-radio-group v-model="selectedCities">
+                          <v-list style="min-width: 250px;">
+                            <v-list-tile v-for="(item, i) in availableCities" :key="i">
+                              <v-radio :label="item" :value="item"
+                              ></v-radio>
+                            </v-list-tile>
+                          </v-list>
+                        </v-radio-group>
+                      </v-menu>
                     </v-flex>
                     <v-flex xs12 sm6>
-                      <v-select
+                      <!--<v-select
                         label="Select types"
                         v-bind:items="availableTypes"
                         v-model="selectedTypes"
@@ -249,7 +264,19 @@
                         single-line
                         hide-details
                         multiple>
-                      </v-select>
+                      </v-select>-->
+                      <v-menu bottom offset-y :close-on-content-click="false">
+                        <div class="custom-select" slot="activator">
+                          <span v-if="this.selectedTypes.length > 0">{{ computeSelectString(this.selectedTypes, 'availableTypes') }}</span>
+                          <span v-else style="color: rgba(0,0,0,.54);">Filter by job type</span>
+                          <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
+                        </div>
+                        <v-list style="min-width: 250px;">
+                          <v-list-tile v-for="(item, i) in availableTypes" :key="i">
+                            <v-checkbox :label="item.text" v-model="selectedTypes" :value="item.value" hide-details></v-checkbox>
+                          </v-list-tile>
+                        </v-list>
+                      </v-menu>
                     </v-flex>
                     <v-flex xs12 sm6>
                       <!--<v-select
@@ -262,10 +289,10 @@
                         multiple
                         chips>
                       </v-select>-->
-
                       <v-menu bottom offset-y :close-on-content-click="false">
                         <div class="custom-select" slot="activator">
-                          <span>{{ computeSelectString(this.selectedPositions) }}</span>
+                          <span v-if="this.selectedPositions.length > 0">{{ computeSelectString(this.selectedPositions) }}</span>
+                          <span v-else style="color: rgba(0,0,0,.54);">Filter by positions</span>
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
                         <v-list style="min-width: 250px;">
@@ -285,9 +312,10 @@
                         hide-details
                         multiple>
                       </v-select>-->
-                      <v-menu class="custom-select-wrapper" bottom offset-y :close-on-content-click="false">
+                      <v-menu bottom offset-y :close-on-content-click="false">
                         <div class="custom-select" slot="activator">
-                          <span>{{ computeSelectString(this.selectedShifts) }}</span>
+                          <span v-if="this.selectedShifts.length > 0">{{ computeSelectString(this.selectedShifts, 'availableShifts') }}</span>
+                          <span v-else style="color: rgba(0,0,0,.54);">Filter by shifts</span>
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
                         <v-list style="min-width: 250px;">
@@ -433,15 +461,6 @@ export default {
       selectedPositionsInital: 'All / Any',
     };
   },
-  computed: {
-    computedPositions() {
-      if (this.selectedPositions.length <= 2) {
-        return this.selectedPositions.join(', ');
-      }
-      const items = this.selectedPositions;
-      return `${items[0]}, ${items[1]}, +${items.length - 2}`;
-    },
-  },
   methods: {
     searchGo() {
       if (this.selectedCities && this.selectedCities[0]) {
@@ -453,6 +472,7 @@ export default {
     },
     async filterJobs() {
       // job types
+      this.commitData();
       let selectedTypes = [];
       let selectedTypes2 = [];
       if (this.selectedTypes.length === 0) {
@@ -468,7 +488,7 @@ export default {
           }
         }
       }
-      const sortedJobs = this.findJobs.concat();
+      let sortedJobs = this.findJobs.concat();
       if (this.selectedLat && this.selectedLong) {
         sortedJobs.sort((a, b) => this.compareDistance(a, b));
       }
@@ -476,6 +496,8 @@ export default {
       if (endIndex > 99) {
         endIndex = 99;
       }
+      sortedJobs = sortedJobs.splice(0, endIndex);
+      console.log(sortedJobs);
       if (endIndex > 0) {
         const promises = Promise.all(
           sortedJobs.map(({ _id: id }) =>
@@ -490,28 +512,35 @@ export default {
         this.filteredJobs = (await promises).map(el => el.data.findJob).filter((job) => {
           if (
             !intersection(selectedTypes, job.type).length &&
-            !intersection(selectedTypes2, job.type).length
+            !intersection(selectedTypes2, job.type2).length
           ) {
             return false;
           }
-
-          if (this.selectedShifts.length) {
-            if (!intersection(this.selectedShifts, job.shift).length) {
-              return false;
-            }
+          let selectedShifts = this.selectedShifts;
+          if (this.selectedShifts.length === 0) {
+            selectedShifts = this.availableShifts.map(x => x.value);
+          }
+          if (!intersection(selectedShifts, job.shift).length) {
+            return false;
           }
 
           return true;
         });
       }
     },
-    computeSelectString(property) {
-      const items = property;
+    computeSelectString(property, original = null) {
+      let items = property;
+      if (typeof items[0] === 'object') {
+        items = items.map(x => x.text);
+      } else if (original && typeof original === 'string') {
+        items = property.map(val => {
+          const obj = this[original].find(el => el.value === val);
+          return obj.text;
+        });
+      }
       if (items.length <= 2) {
         return items.join(', ');
-        // return this.selectedPositions.join(', ');
       }
-      // const items = this.selectedPositions;
       return `${items[0]}, ${items[1]}, +${items.length - 2}`;
     },
     getDistance(lat, long) {
@@ -650,12 +679,22 @@ export default {
     this.loadInitialJobs();
     VuexLS.restoreState('vuex', window.localStorage).then((data) => {
       if (data) {
-        console.log(data);
-        this.firstSearch = data.firstSearch;
+        if (data.firstSearch) {
+          this.firstSearch = data.firstSearch;
+        }
         this.selectedCities = data.selectedCities;
-        /* if (data.selectedCities && data.selectedCities[0]) {
-          this.selectedCities = data.selectedCities;
-        } */
+        if (!Store.state) {
+          if (data.selectedPositions) {
+            this.selectedPositions = data.selectedPositions;
+          }
+          if (data.selectedShifts) {
+            this.selectedShifts = data.selectedShifts;
+            console.log(this.selectedShifts);
+          }
+          if (data.selectedTypes) {
+            this.selectedTypes = data.selectedTypes;
+          }
+        }
         console.log(this.selectedCities);
         if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
           this.selectedPositions = data.selectedPositions;

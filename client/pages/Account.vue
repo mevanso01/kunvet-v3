@@ -238,7 +238,7 @@
               <v-flex xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
                 <account-header
                   :svg="svgs.building"
-                  :text="'My Organization'"
+                  :text="'My Organizations'"
                 />
                 <p v-if="userdata.org_list && userdata.org_list.length === 0">
                   If you own a business, school club, or other type of organization, then post your job here.
@@ -247,16 +247,13 @@
                     <template v-for="({ _id, name }, index) in userdata.org_list">
                     <v-list-tile :key="_id">
                       <v-list-tile-content>
-                        <v-list-tile-title
-                          @click="switchToOrg(_id)"
-                          style="cursor: pointer;"
-                        >
+                        <v-list-tile-title>
                           {{ name }}
                         </v-list-tile-title>
                       </v-list-tile-content>
                       <v-list-tile-action>
-                        <v-btn icon ripple>
-                          <v-icon color="grey lighten-1">edit</v-icon>
+                        <v-btn icon ripple @click="switchToOrg(_id)">
+                          <v-icon color="grey lighten-1">keyboard_arrow_right</v-icon>
                         </v-btn>
                       </v-list-tile-action>
                     </v-list-tile>
@@ -277,10 +274,10 @@
               <v-flex xs12 sm6 offset-sm6 md5 offset-md7 class="right-account-column padding-sm-left">
                 <account-header
                   :svg="svgs.suitcase"
-                  :text="'Posted Personal Jobs & Applicants'"
+                  :text="'Personal Jobs & Applicants'"
                 />
                 <p v-if="doesNotHaveJobs">
-                  Personal jobs are jobs that you offer as an individual
+                  Personal jobs are jobs that you offer as an individual.
                   If you are posting on behalf of a business,
                   please create an organization from the menu bar.
                 </p>

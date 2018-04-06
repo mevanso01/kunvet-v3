@@ -60,7 +60,7 @@ a:hover{
 
 
             <v-alert
-              style="background-color: green"
+              color="green darken-1"
               icon="priority_high"
               :value="loggedIn"
               transition="slide-x-transition">
@@ -101,7 +101,7 @@ a:hover{
             </div>
 
             <v-alert
-                color="success"
+                color="green darken-1"
                 icon="check_circle"
                 :value="sent"
                 transition="slide-x-transition"

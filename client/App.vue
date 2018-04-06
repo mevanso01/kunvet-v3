@@ -359,7 +359,11 @@ export default {
     Bus.$on('firstSearch', this.fs1);
     VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
       if (data) {
-        this.acct = data.acct;
+        if (data.acct) {
+          this.acct = data.acct;
+        } else {
+          this.acct = 0;
+        }
         if (this.acct !== 0) {
           // TODO: make this better
           this.getNotifications().then((n) => {
