@@ -363,12 +363,14 @@
         <h3 style="margin-bottom: 5px;">Position tags</h3>
         <p>Please select at least one category that is relevant to this job</p>
         <v-select class="no-padding-select"
-          label="Select..."
+          label="Type here..."
           v-bind:items="tags"
+          v-model="selectedTags"
           autocomplete
           hide-details
           multiple
           single-line
+          bottom
         ></v-select>
         </v-form>
 
@@ -434,6 +436,7 @@ import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
 import Config from 'config';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
+import positions from '@/constants/positions';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -465,6 +468,7 @@ const createJobMutation = gql`
           original
           cropped
         }
+        position_tags
       }
     }
   }
@@ -499,6 +503,7 @@ const updateJobMutation = gql`
           original
           cropped
         }
+        position_tags
       }
     }
   }
@@ -531,6 +536,7 @@ const findJobsQuery = gql`
         original
         cropped
       }
+      position_tags
     }
   }
 `;
@@ -582,7 +588,8 @@ export default {
       howDidYouHear: null,
       schools: Schools.schools,
       images: [],
-      tags: [],
+      tags: positions,
+      selectedTags: [],
       picUploaderDialog: false,
       successAlert: false,
       showInvalidMessage: false,
@@ -766,6 +773,7 @@ export default {
         responsibilities: this.responsibilities,
         notes: this.notes,
         images: this.images,
+        position_tags: this.selectedTags,
       };
       return job;
     },
@@ -801,6 +809,7 @@ export default {
               original
               cropped
             }
+            position_tags
           }
         }`),
         variables: {
@@ -842,6 +851,9 @@ export default {
           this.responsibilities = job.responsibilities;
           for (const image of job.images) {
             this.images.push({ original: image.original, cropped: image.cropped });
+          }
+          if (job.position_tags) {
+            this.selectedTags = job.position_tags.concat();
           }
         }
       }).catch((error) => {

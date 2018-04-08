@@ -35,6 +35,7 @@ p > a {
 }
 .main-navbar {
   height: 64px;
+  z-index: 99;
 }
 .nav-text {
     font-size: 10px;

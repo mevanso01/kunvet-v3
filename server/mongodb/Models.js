@@ -150,6 +150,7 @@ const JobSchema = Mongoose.Schema({
     original: Mongoose.Schema.Types.ObjectId,
     cropped: Mongoose.Schema.Types.ObjectId,
   }],
+  position_tags: [String],
 });
 const ApplicantSchema = Mongoose.Schema({
   user_id: {

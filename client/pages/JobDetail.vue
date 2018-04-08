@@ -126,7 +126,7 @@
           <div class="top-container">
             <div class="float-left">
               <v-avatar size="38px" slot="activator" style="float: left; margin-right: 10px;">
-                <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+                <img :src="profilePic" alt="">
               </v-avatar>
             </div>
       		  <div class="float-left" style="color: #A7A7A7; margin-right: 1px;">
@@ -258,14 +258,19 @@ import siSvg from '@/assets/icons/Asset(37).svg';
 import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
 import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
+import Config from 'config';
+import axios from 'axios';
 
+const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
 export default {
   props: ['id'],
   data() {
     return {
-      findJob: [],
+      findJob: {},
       jobType: [],
+      serverUrl: Config.get('serverUrl'),
+      profilePic: DefaultPic,
       salary: null,
       Internship: InternshipSvg,
       Clock: ClockSvg,
@@ -309,6 +314,8 @@ export default {
             _id: $JobId
           }) {
               _id
+              user_id
+              business_id
               posted_by
               title
               description
@@ -362,6 +369,7 @@ export default {
         } else {
           this.salary = this.findJob.pay_type;
         }
+        this.fetchProfilePic();
       });
     },
     apply() {
@@ -433,6 +441,24 @@ export default {
         }).catch((error) => {
           console.error(error);
         });
+      }
+    },
+    async fetchProfilePic() {
+      const { business_id: businessID, user_id: userID } = this.findJob;
+      const { type, id } = {
+        type: businessID ? 'business' : 'account',
+        id: businessID || userID,
+      };
+      try {
+        const { data } = await axios.get(`/profile-pic/${type}/${id}`);
+        if (data.profilePictureId) {
+          const url = `${this.serverUrl}/file/get/${data.profilePictureId}`;
+          this.profilePic = url;
+          return;
+        }
+        throw Error('Not found. Falling back to svg');
+      } catch (ex) {
+        this.profilePic = DefaultPic;
       }
     },
     _getUserData() {

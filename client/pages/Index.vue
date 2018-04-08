@@ -62,6 +62,19 @@
   color: #000;
   line-height: 48px;
 }
+.custom-select-menu {
+  max-height: 300px;
+  min-width: 250px;
+}
+.custom-select-menu li {
+  background-color: #fff;
+}
+.filterInput {
+  width: calc(100% - 32px);
+  height: 20px;
+  margin: 4px 16px;
+  outline: none !important;
+}
 
 .input-group--text-field.input-group--dirty.input-group--select label,
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
@@ -230,7 +243,7 @@
 
                 <section v-if="!firstSearch" class="search">
                   <v-layout row wrap>
-                    <v-flex xs12 sm6>
+                    <v-flex xs12 md6>
                       <!--<v-select
                         label="Select city"
                         v-bind:items="availableCities"
@@ -246,7 +259,7 @@
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
                         <v-radio-group v-model="selectedCities">
-                          <v-list style="min-width: 250px;">
+                          <v-list class="custom-select-menu">
                             <v-list-tile v-for="(item, i) in availableCities" :key="i">
                               <v-radio :label="item" :value="item"
                               ></v-radio>
@@ -255,11 +268,12 @@
                         </v-radio-group>
                       </v-menu>
                     </v-flex>
-                    <v-flex xs12 sm6>
+                    <v-flex xs12 md6>
                       <!--<v-select
                         label="Select types"
                         v-bind:items="availableTypes"
                         v-model="selectedTypes"
+                        :value="computeSelectString(this.selectedTypes, 'availableTypes')"
                         autocomplete
                         single-line
                         hide-details
@@ -267,18 +281,23 @@
                       </v-select>-->
                       <v-menu bottom offset-y :close-on-content-click="false">
                         <div class="custom-select" slot="activator">
-                          <span v-if="this.selectedTypes.length > 0">{{ computeSelectString(this.selectedTypes, 'availableTypes') }}</span>
-                          <span v-else style="color: rgba(0,0,0,.54);">Filter by job type</span>
+                          <span v-if="this.selectedTypes.length > 0">
+                            {{ computeSelectString(this.selectedTypes, 'availableTypes') }}
+                          </span>
+                          <span v-else style="color: rgba(0,0,0,.54);">
+                            Filter by job type
+                          </span>
+
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
-                        <v-list style="min-width: 250px;">
+                        <v-list class="custom-select-menu">
                           <v-list-tile v-for="(item, i) in availableTypes" :key="i">
                             <v-checkbox :label="item.text" v-model="selectedTypes" :value="item.value" hide-details></v-checkbox>
                           </v-list-tile>
                         </v-list>
                       </v-menu>
                     </v-flex>
-                    <v-flex xs12 sm6>
+                    <v-flex xs12 md6>
                       <!--<v-select
                         label="Select positions"
                         :items="availablePositions"
@@ -295,14 +314,15 @@
                           <span v-else style="color: rgba(0,0,0,.54);">Filter by positions</span>
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
-                        <v-list style="min-width: 250px;">
-                          <v-list-tile v-for="(item, i) in availablePositions" :key="i">
+                        <v-list class="custom-select-menu">
+                          <input placeholder="search..." class="filterInput" v-model="filterPositions"/>
+                          <v-list-tile v-for="(item, i) in filteredAvailablePositions" :key="i">
                             <v-checkbox :label="item" v-model="selectedPositions" :value="item" hide-details></v-checkbox>
                           </v-list-tile>
                         </v-list>
                       </v-menu>
                     </v-flex>
-                    <v-flex xs12 sm6>
+                    <v-flex xs12 md6>
                       <!--<v-select
                         label="Select shifts"
                         :items="availableShifts"
@@ -318,7 +338,7 @@
                           <span v-else style="color: rgba(0,0,0,.54);">Filter by shifts</span>
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
-                        <v-list style="min-width: 250px;">
+                        <v-list class="custom-select-menu">
                           <v-list-tile v-for="(item, i) in availableShifts" :key="i">
                             <v-checkbox :label="item.text" v-model="selectedShifts" :value="item.value" hide-details></v-checkbox>
                           </v-list-tile>
@@ -371,7 +391,10 @@ import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import DistanceHelper from '@/utils/DistanceHelper';
 import Coordinates from '@/constants/coordinates';
+import positions from '@/constants/positions';
 import intersection from 'lodash/intersection';
+import difference from 'lodash/difference';
+// import concat from 'lodash/concat';
 
 Vue.use(VueApollo);
 
@@ -399,6 +422,7 @@ const findJobQuery = gql`query ($id: MongoID) {
     images {
       cropped
     }
+    position_tags
   }
 }`;
 
@@ -424,12 +448,8 @@ export default {
         'Los Angeles, CA',
         'UCLA',
       ],
-      availablePositions: [
-        'All / Any',
-        'Frontend developer',
-        'Vue.js developer',
-        'Something else',
-      ],
+      filterPositions: '',
+      availablePositions: positions,
       availableTypes: [
         { text: 'Full time', value: 'fulltime' },
         { text: 'Part time', value: 'parttime' },
@@ -460,6 +480,18 @@ export default {
       },
       selectedPositionsInital: 'All / Any',
     };
+  },
+  computed: {
+    filteredAvailablePositions() {
+      var str = this.filterPositions;
+      if (!str || str === '') {
+        // return concat(this.selc['two']);
+        // return concat(this.selectedPositions, this.availablePositions);
+        return this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
+      }
+      str = str.toLowerCase();
+      return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+    },
   },
   methods: {
     searchGo() {
@@ -516,13 +548,17 @@ export default {
           ) {
             return false;
           }
-          let selectedShifts = this.selectedShifts;
-          if (this.selectedShifts.length === 0) {
-            selectedShifts = this.availableShifts.map(x => x.value);
+          if (this.selectedPositions.length > 0) {
+            if (!intersection(this.selectedPositions, job.position_tags).length) {
+              return false;
+            }
           }
-          if (!intersection(selectedShifts, job.shift).length) {
-            return false;
+          if (this.selectedShifts.length > 0) {
+            if (!intersection(this.selectedShifts, job.shift).length) {
+              return false;
+            }
           }
+
 
           return true;
         });
