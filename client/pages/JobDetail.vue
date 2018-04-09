@@ -259,7 +259,7 @@ import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
 import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
 import Config from 'config';
-import axios from 'axios';
+import ProfilePicHelper from '@/utils/GetProfilePic';
 
 const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
@@ -445,21 +445,7 @@ export default {
     },
     async fetchProfilePic() {
       const { business_id: businessID, user_id: userID } = this.findJob;
-      const { type, id } = {
-        type: businessID ? 'business' : 'account',
-        id: businessID || userID,
-      };
-      try {
-        const { data } = await axios.get(`/profile-pic/${type}/${id}`);
-        if (data.profilePictureId) {
-          const url = `${this.serverUrl}/file/get/${data.profilePictureId}`;
-          this.profilePic = url;
-          return;
-        }
-        throw Error('Not found. Falling back to svg');
-      } catch (ex) {
-        this.profilePic = DefaultPic;
-      }
+      this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
     },
     _getUserData() {
       this.$apollo.query({

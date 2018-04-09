@@ -31,7 +31,7 @@
   font-size: 13px;
 }
 .applicant-card .button-holder {
-  border-top: 1px solid black; 
+  border-top: 1px solid black;
   background-color: #f2f2f2;
   padding: 3px 5px 4px 5px;
 }
@@ -45,33 +45,11 @@
   text-align: right;
   height: auto;
 }
-@media (min-width: 601px) {
-  .applicant-card {
-     width: calc(50% - 15px);
-     margin: 10px 0 0px 10px;
-  }
-  .applicant-card:nth-last-child(1) {
-    margin-bottom: 10px;
-  }
-  .applicant-page .job-title {
-    padding-left: 10px;
-  }
-}
-@media (max-width: 600px) {
-  .applicant-card {
-    margin: 10px;
-  }
-}
 .new-applicant-card {
 }
 .new-applicant-card .inner {
   padding: 0 10px 10px 10px;
   background-color: #f2f2f2;
-}
-@media only screen and (min-width: 480px) {
-  .new-applicant-card .inner {
-    margin: 0 10px;
-  }
 }
 .new-applicant-card__title {
   margin-bottom: 10px;
@@ -95,21 +73,6 @@
 }
 .new-applicant-card--equal-height .inner {
   height: 300px;
-}
-@media only screen and (min-width: 400px) {
-  .new-applicant-card--equal-height .inner {
-    height: 260px;
-  }
-}
-@media only screen and (min-width: 595px) {
-  .new-applicant-card--equal-height .inner {
-    height: 225px;
-  }
-}
-@media only screen and (min-width: 895px) {
-  .new-applicant-card--equal-height .inner {
-    height: 200px;
-  }
 }
 .btn-holder--equal-height {
   position: absolute;
@@ -138,7 +101,7 @@
 }
 .new-applicant-card__profile-pic-container img {
   margin-left: 5px;
-  max-width: 50px;
+  max-width: 75%;
 }
 .new-applicant-card__time-ago {
   font-size: 0.8em;
@@ -155,4 +118,46 @@
 }
 .new-applicant-card__profile-pic-container {
   position: relative;
+}
+
+@media only screen and (min-width: 400px) {
+  .new-applicant-card--equal-height .inner {
+    height: 260px;
+  }
+}
+@media only screen and (min-width: 480px) {
+  .new-applicant-card .inner {
+    margin: 0 10px;
+  }
+}
+@media only screen and (min-width: 595px) {
+  .new-applicant-card--equal-height .inner {
+    height: 225px;
+  }
+}
+@media only screen and (min-width: 895px) {
+  .new-applicant-card--equal-height .inner {
+    height: 200px;
+  }
+}
+@media (min-width: 601px) {
+  .applicant-card {
+     width: calc(50% - 15px);
+     margin: 10px 0 0px 10px;
+  }
+  .applicant-card:nth-last-child(1) {
+    margin-bottom: 10px;
+  }
+  .applicant-page .job-title {
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .applicant-card {
+    margin: 10px;
+  }
+  .new-applicant-card__profile-pic-container img {
+    max-width: 50px;
+  }
 }

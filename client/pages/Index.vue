@@ -258,7 +258,7 @@
                           <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
-                        <v-radio-group v-model="selectedCities">
+                        <v-radio-group v-model="selectedCities" hide-details>
                           <v-list class="custom-select-menu">
                             <v-list-tile v-for="(item, i) in availableCities" :key="i">
                               <v-radio :label="item" :value="item"
@@ -485,8 +485,6 @@ export default {
     filteredAvailablePositions() {
       var str = this.filterPositions;
       if (!str || str === '') {
-        // return concat(this.selc['two']);
-        // return concat(this.selectedPositions, this.availablePositions);
         return this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
       }
       str = str.toLowerCase();
@@ -529,7 +527,6 @@ export default {
         endIndex = 99;
       }
       sortedJobs = sortedJobs.splice(0, endIndex);
-      console.log(sortedJobs);
       if (endIndex > 0) {
         const promises = Promise.all(
           sortedJobs.map(({ _id: id }) =>
@@ -558,8 +555,6 @@ export default {
               return false;
             }
           }
-
-
           return true;
         });
       }

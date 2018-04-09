@@ -28,7 +28,7 @@
             <div class="inner" style="position: relative;">
               <div class="new-applicant-card__info">
                 <v-layout row wrap>
-                  <v-flex xs12 sm2 style="padding-bottom: 0;">
+                  <v-flex xs3 sm3 style="padding-bottom: 0;">
                     <div class="new-applicant-card__profile-pic-container">
                       <figure>
                         <div v-if="item.status !== 'opened'" class="new-applicant-card__unread-circle" />
@@ -41,14 +41,14 @@
                       </figure>
                     </div>
                   </v-flex>
-                  <v-flex xs12 sm10 style="padding-bottom: 0;">
+                  <v-flex xs9 sm9 style="padding-bottom: 0;">
                     <router-link :to="'view-applicant/'+item._id">
                       <h2 class="new-applicant-card__title">{{ item.name }}</h2>
                       <p style="overflow: hidden; margin-bottom: 0;">
                         <span>
                           {{ item.school || 'School info unknown' }}
                         </span><br />
-                        <span 
+                        <span
                           v-if="item.degree && item.degree !== 'None' && item.degree != 'High school'"
                           style="color: grey;"
                         >
@@ -113,10 +113,10 @@
           Accept Applicant
         </v-card-title>
         <v-card-actions>
-          <v-btn color="green darken-1" flat="flat" @click.native="onAccept">
+          <v-btn flat="flat" @click.native="onAccept">
             Confirm
           </v-btn>
-          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showAccept= false">
+          <v-btn flat="flat" @click.native="dialogs.showAccept= false">
             Cancel
           </v-btn>
         </v-card-actions>
@@ -128,10 +128,10 @@
           Reject Applicant
         </v-card-title>
         <v-card-actions>
-          <v-btn color="green darken-1" flat="flat" @click.native="onReject">
+          <v-btn flat="flat" @click.native="onReject">
             Confirm
           </v-btn>
-          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showReject = false">
+          <v-btn flat="flat" @click.native="dialogs.showReject = false">
             Cancel
           </v-btn>
         </v-card-actions>
