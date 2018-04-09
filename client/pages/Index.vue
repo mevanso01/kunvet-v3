@@ -103,7 +103,6 @@
 }
 .firstSearch .fsSelect .input-group__input {
   padding-left: 16px !important;
-  padding-top: 3px;
 }
 .firstSearch .fsSelect .input-group__input .input-group__selections {
   padding-top: 2px;
@@ -126,8 +125,14 @@
   }
 }
 @media only screen and (min-width: 480px) {
-  .fs-select-cities {
+  .fs-select-cities,
+  .fs-select-positions {
     width: 50%;
+    float: left;
+    display: inline-block;
+  }
+  .firstSearch .fsSelect .input-group__input {
+    padding-top: 3px;
   }
 }
 .fs-select-positions {
@@ -206,7 +211,7 @@
                 <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
                   <v-flex xs10 sm10 md11 style="height: 48px;"
                     no-wrap class="grey--text no-padding fsSelect">
-                    <v-select class="no-padding fs-select-cities" style="display: inline-block; border-right: 1px solid #eee; height: 47px;"
+                    <v-select class="no-padding fs-select-cities" style="height: 46px;"
                       label="City or School"
                       v-bind:items="availableCities"
                       v-model="selectedCities"
@@ -215,7 +220,7 @@
                       hide-details
                     >
                     </v-select>
-                    <v-select class="no-padding fs-select-positions"
+                    <v-select class="no-padding fs-select-positions" style="border-left: 1px solid #eee; height: 46px;"
                       label="All jobs nearby"
                       :items="availablePositions"
                       v-model="selectedPositions"

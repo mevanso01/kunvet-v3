@@ -105,7 +105,7 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <v-navigation-drawer absolute temporary right light v-model="drawer" overflow>
+    <v-navigation-drawer class="hidden-sm-and-up" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
       <v-toolbar flat class="transparent">
         <v-list class="pa-0">
           <v-list-tile>

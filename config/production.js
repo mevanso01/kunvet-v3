@@ -14,10 +14,10 @@ if (!fs.existsSync(credPath)) {
   console.error(colors.red.bold(`
 ***** 🤔 *****
 ** Hmm. Looks like you haven't supplied your credentials yet.
-** 
+**
 ** Run \`yarn reset-credentials\` and edit config/credentials.js
 ** to continue.
-** 
+**
 ** -- Your friend, the Hmm Face
 *************
 `));
@@ -30,10 +30,10 @@ if (Credentials.REMOVEMEPLS) {
   console.error(colors.red.bold(`
 ***** 🤔 *****
 ** Hmm. You have credentials.js, but something is amiss.
-** 
+**
 ** Please read through the entire file, and actually fill in
 ** your credentials.
-** 
+**
 ** -- Your friend, the Hmm Face
 *************
 `));
@@ -41,7 +41,7 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  serverUrl: 'https://kunvet-testprod.x.zfg.li',
+  serverUrl: 'https://hrmy3ed4n1.execute-api.us-east-1.amazonaws.com/production',
   googleMapsKey: Credentials.googleMapsKey,
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
