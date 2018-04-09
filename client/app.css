@@ -49,6 +49,15 @@ p > a {
     top: 12px;
     width: 20px;
 }
+.nav-notification-mark {
+  position: absolute;
+  min-width: 15px;
+  font-size: 10px;
+  border-radius: 8px;
+  top: 15px;
+  left: 25px;
+  background-color: #ef5350
+}
 .black {
   background-color: #222 !important;
   border-color: #222 !important;

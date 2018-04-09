@@ -31,22 +31,36 @@
 
         <v-toolbar-items v-else class="hidden-xs">
           <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
+
             <v-menu fixed offset-y v-if="item.subItems" left open-on-hover>
-              <v-btn flat style="width: 10px;" slot="activator">
-                <img class="nav-img notranslate" :src="item.icon"></img>
-                <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
-              </v-btn>
-              <Notifications v-if="item.title === 'Notifications'" isNavbar/>
-              <v-list v-if="item.subItems.length > 0 && item.title !== 'Notifications'" dense>
-                <v-list-tile v-for="(subitem, index) in item.subItems" :key="index" @click="routeTo(subitem.route)">
-                  <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
+
+              <template v-if="item.title === 'Notifications'">
+                <v-btn flat style="width: 10px;" slot="activator">
+                  <img class="nav-img notranslate" :src="item.icon"></img>
+                  <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>
+                  <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
+                </v-btn>
+                <Notifications isNavbar/>
+              </template>
+
+              <template v-else>
+                <v-btn flat style="width: 10px;" slot="activator">
+                  <img class="nav-img notranslate" :src="item.icon"></img>
+                  <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
+                </v-btn>
+                <v-list v-if="item.subItems.length > 0" dense>
+                  <v-list-tile v-for="(subitem, index) in item.subItems" :key="index" @click="routeTo(subitem.route)">
+                    <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </template>
+
             </v-menu>
-            <v-btn v-else flat>
+
+            <!--<v-btn v-else flat>
               <img class="nav-img" :src="item.icon"></img>
               <div class="nav-text" style="color:#818181">{{ item.title }}</div>
-            </v-btn>
+            </v-btn>-->
           </router-link>
         </v-toolbar-items>
     </v-toolbar>
@@ -272,6 +286,7 @@ export default {
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },
       right: true,
+      numNotifications: 0,
     };
   },
   components: {
@@ -299,6 +314,9 @@ export default {
     login_b() {
       Bus.$emit('business');
     },
+    emitSetNumNotifications(n) {
+      Bus.$emit('setNotifications', n);
+    },
     l1() {
       this.acct = 1;
       Store.commit({
@@ -318,35 +336,32 @@ export default {
     routeTo(route) {
       this.$router.push(route);
     },
-    async getNotifications() {
-      if (this.acct === 0) { return []; }
-      try {
-        // console.log(this.$store.state.userID);
-        const { data: { findAccount } } = await this.$apollo.query({
-          query: (gql`query ($uid: MongoID) {
-            findAccount (filter: {
-              _id: $uid
-            }) {
-              _id
-              notifications {
-                text
-                route
-                notification_type
-                date
-              }
-            }
-          }`),
-          variables: {
-            uid: this.$store.state.userID,
-          },
-        });
-        if (findAccount) {
-          return findAccount.notifications;
-        }
-      } catch (e) {
-        console.error(e);
+    getNumNotifications() {
+      if (this.acct === 0 || !Store.state.userID) {
+        this.numNotifications = 0;
+        return;
       }
-      return [];
+      this.$apollo.query({
+        query: (gql`query ($uid: MongoID) {
+          findAccount (filter: {
+            _id: $uid
+          }) {
+            _id
+            notifications {
+              text
+              route
+              notification_type
+              date
+            }
+          }
+        }`),
+        variables: {
+          uid: Store.state.userID,
+        },
+      }).then((res) => {
+        const n = res.data.findAccount.notifications;
+        this.numNotifications = n.length;
+      }).catch(console.error);
     },
     isActiveJobPostLink(link) {
       return link === this.$route.path ? 'job-post__helper-nav-bar__active-link' : '';
@@ -357,6 +372,13 @@ export default {
     Bus.$on('individual', this.l1);
     Bus.$on('business', this.l2);
     Bus.$on('firstSearch', this.fs1);
+    Bus.$on('setNotifications', n => {
+      if (typeof n === 'number') {
+        this.numNotifications = n;
+      } else {
+        this.numNotifications = 0;
+      }
+    });
     VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
       if (data) {
         if (data.acct) {
@@ -364,17 +386,9 @@ export default {
         } else {
           this.acct = 0;
         }
-        if (this.acct !== 0) {
-          // TODO: make this better
-          this.getNotifications().then((n) => {
-            for (var i = 0; i < this.items[this.acct].length; i++) {
-              if (this.items[this.acct][i].title === 'Notifications') {
-                this.items[this.acct][i].subItems = n;
-                break;
-              }
-            }
-          });
-        }
+        /* if (this.acct !== 0) {
+          // this.getNumNotifications();
+        } */
       }
     });
   },

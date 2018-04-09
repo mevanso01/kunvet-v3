@@ -7,7 +7,7 @@
         </v-list-tile-content>
         <v-list-tile-action style="min-width: 38px;">
           <v-btn flat icon color="red darken-1" @click="removeNotification(index)">
-            <v-icon>remove</v-icon>
+            <v-icon>clear</v-icon>
           </v-btn>
         </v-list-tile-action>
       </v-list-tile>
@@ -20,6 +20,7 @@
 <script>
 import gql from 'graphql-tag';
 import Store from '@/store';
+import App from '@/App';
 
 export default {
   props: ['isNavbar', 'max'],
@@ -63,6 +64,7 @@ export default {
             });
           }
         }
+        App.methods.emitSetNumNotifications(n.length);
         const maxNum = (this.max && typeof this.max === 'number') ? this.max : 8;
         this.notifications = notifications.slice(0, maxNum);
         console.log(this.notifications);
@@ -70,6 +72,7 @@ export default {
     },
     removeNotification(index) {
       this.notifications.splice(index, 1);
+      App.methods.emitSetNumNotifications(this.notifications.length);
       this.$apollo.mutate({
         mutation: (gql` mutation ($uid: MongoID, $record: UpdateOneAccountInput!) {
           updateAccount (
