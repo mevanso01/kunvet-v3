@@ -84,12 +84,17 @@ GQC.rootMutation().addFields({
       removeApplication: Applicant.get('$removeOne'),
     }),
 
+    // == Organizations ==
+    createOrganization: Organization.get('$createOne'),
+    ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
+      updateOrganization: Organization.get('$updateOne'),
+      removeOrganization: Organization.get('$removeOne'),
+    }),
+
     // == Extra stuff ==
     createHDYH: HDYH.get('$createOne'),
     removeHDYH: HDYH.get('$removeOne'),
-    createOrganization: Organization.get('$createOne'),
-    updateOrganization: Organization.get('$updateOne'),
-    removeOrganization: Organization.get('$removeOne'),
+
   }),
 });
 

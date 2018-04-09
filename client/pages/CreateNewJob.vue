@@ -367,10 +367,12 @@
           v-bind:items="tags"
           v-model="selectedTags"
           autocomplete
-          hide-details
+          deletable-chips
           multiple
           single-line
           bottom
+          required
+          :rules="[(v) => (v.length > 0) || 'Required']"
         ></v-select>
         </v-form>
 
@@ -508,9 +510,41 @@ const updateJobMutation = gql`
     }
   }
 `;
-const findJobsQuery = gql`
+const findJobQuery = gql`
   query($id: MongoID) {
-    findJobs(filter: { _id: $id }) {
+    findJob(filter: { _id: $id }) {
+      _id
+      posted_by
+      title
+      description
+      address
+      university
+      latitude
+      longitude
+      type
+      studentfriendly
+      type2
+      shift
+      age
+      pay_type
+      salary
+      pay_denomination
+      education
+      language
+      experience
+      responsibilities
+      notes
+      images {
+        original
+        cropped
+      }
+      position_tags
+    }
+  }
+`;
+const findJobsQuery = gql`
+    query($userId: MongoID, $businessId: MongoID) {
+      findJobs(filter: { user_id: $userId, business_id: $businessId }) {
       _id
       posted_by
       title
@@ -704,7 +738,7 @@ export default {
             job: job,
           },
           refetchQueries: [{
-            query: findJobsQuery,
+            query: findJobQuery,
             variables: { id: id },
           }],
         }).then((res) => {
@@ -723,6 +757,13 @@ export default {
           variables: {
             job: job,
           },
+          refetchQueries: [{
+            query: findJobsQuery,
+            variables: {
+              userId: this.$store.state.userID,
+              businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+            },
+          }],
         }).then((res) => {
           const recordId = res.data.createJob.recordId;
           if (!viewJob) {

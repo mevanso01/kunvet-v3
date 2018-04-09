@@ -158,10 +158,10 @@
           Delete Job
         </v-card-title>
         <v-card-actions>
-          <v-btn color="green darken-1" flat="flat" @click.native="onJobDelete">
+          <v-btn flat="flat" @click.native="onJobDelete">
             Confirm
           </v-btn>
-          <v-btn color="green darken-1" flat="flat" @click.native="dialogs.showDelete = false">
+          <v-btn flat="flat" @click.native="dialogs.showDelete = false">
             Cancel
           </v-btn>
         </v-card-actions>
@@ -244,10 +244,6 @@
       };
     },
     methods: {
-      /* async getData() {
-        const { data } = await this.$apollo.query(this.getFindJobsQuery());
-        this.jobs = data.findJobs;
-      }, */
       async getData() {
         const { data } = await this.$apollo.query({
           query: findJobsQuery,
@@ -276,7 +272,10 @@
           },
           refetchQueries: [{
             query: findJobsQuery,
-            variables: { userId: this.$store.state.userID },
+            variables: {
+              userId: this.$store.state.userID,
+              businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+            },
           }],
         });
         const { recordId } = res.data.removeJob;
