@@ -798,10 +798,11 @@
       async createOrganization() {
         const { aboutUs, organizationName } = this.createOrganizationModal;
         const { data: { createOrganization: { recordId } } } = await this.$apollo.mutate({
-          mutation: (gql`mutation ($name: String, $bio: String) {
+          mutation: (gql`mutation ($name: String, $bio: String, $uid: MongoID) {
             createOrganization(record: {
               business_name: $name,
               biography: $bio,
+              user_id: $uid,
             }) {
               recordId
             }
@@ -809,6 +810,7 @@
           variables: {
             name: organizationName,
             bio: aboutUs,
+            uid: this.uid,
           },
         });
 
