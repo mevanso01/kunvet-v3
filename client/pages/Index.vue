@@ -363,8 +363,10 @@
                   </div>
                 </div>
             </form>
-
       <v-layout row wrap v-if="!firstSearch">
+        <div v-if="loadingJobs" style="width: 100%; height: 60px;">
+          <h3 style="text-align: center; margin-top: 25px;">Loading jobs...</h3>
+        </div>
         <v-flex xs12 class="no-padding">
           <div v-for="job in filteredJobs" :key="job._id">
               <MainJobCard
@@ -375,6 +377,11 @@
               />
           </div>
         </v-flex>
+        <div v-if="!loadingJobs && filteredJobs.length === 0"
+          style="width: 100%; height: 125px; background: linear-gradient(135deg, #fafafa, #f5f5f5);
+            background-image: linear-gradient(135deg, rgb(250, 250, 250), rgb(245, 245, 245));">
+          <h3 style="text-align: center; margin-top: 50px; color: #797979;">No jobs match those filters</h3>
+        </div>
       </v-layout>
     </div>
   </v-container>
@@ -484,6 +491,7 @@ export default {
         student: StudentSvg,
       },
       selectedPositionsInital: 'All / Any',
+      loadingJobs: false,
     };
   },
   computed: {
@@ -563,6 +571,7 @@ export default {
           return true;
         });
       }
+      this.loadingJobs = false;
     },
     computeSelectString(property, original = null) {
       let items = property;
@@ -688,6 +697,7 @@ export default {
       return this.saved_jobs.indexOf(id) > -1;
     },
     async loadInitialJobs() {
+      this.loadingJobs = true;
       const { data: { findJobs } } = await this.$apollo.query({
         query: gql`{
           findJobs (filter: { active: true }){

@@ -356,12 +356,11 @@ export default {
       });
     },
     resendEmail() {
-      const headers = { emulateJSON: true };
       const data = {
         email: this.email,
       };
       this.loading = true;
-      axios.post('/auth/resendVerificationEmail', data, headers).then((res) => {
+      axios.post('/auth/resendVerificationEmail', data).then((res) => {
         this.loading = false;
         if (res.data.success) {
           this.chosenForm = 'success';
@@ -371,6 +370,7 @@ export default {
       }, (error) => {
         this.chosenForm = 'error';
         console.error(error);
+        this.loading = false;
       });
     },
     logIntoAcct(email, password) {

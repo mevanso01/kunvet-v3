@@ -639,6 +639,7 @@ export default {
         show: false,
         croppedID: null,
       },
+      email_verified: true,
     };
   },
   methods: {
@@ -917,6 +918,26 @@ export default {
     deletePicture() {
       this.images = this.images.filter(({ cropped }) => cropped !== this.deletePictureModal.croppedID);
       this.cancelDeletePictureModal();
+    },
+    checkIfEmailVerified() {
+      if (this.uid) {
+        this.$apollo.query({
+          query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+                _id
+                email_verified
+            }
+          }`),
+          variables: {
+            uid: this.uid,
+          },
+        }).then((data) => {
+          const res = data.data.findAccount;
+          this.email_verified = res.email_verified;
+        }).catch(console.error);
+      }
     },
   },
   created() {

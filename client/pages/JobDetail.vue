@@ -189,12 +189,6 @@
           <div v-html="findJob.responsibilities"></div>
 
           <div class="bottom-container">
-              <!--<v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-                <img style="width: 90%;" :src="FBfull"></img>
-              </v-btn>
-              <v-btn outline small fab class="grey--text lighten-2 bookmark-btn">
-                <img style="width: 90%;" :src="FBstroke"></img>
-              </v-btn>-->
               <v-btn :disabled="applied" outline class="red--text darken-1" @click="apply">
                 {{ applied ? 'Applied' : 'Apply' }}
               </v-btn>
@@ -210,7 +204,7 @@
       <v-card class="no-border-radius">
         <div style="padding: 20px;" v-if="!showSuccessMessage">
           <h3>Select resume to send</h3>
-          <v-radio-group v-model="selectedResumeName" hide-details>
+          <v-radio-group v-if="resumes.length > 0" v-model="selectedResumeName" hide-details>
             <v-radio v-for="(resume, index) in resumes"
               class="kunvet-red"
               :key="index"
@@ -218,6 +212,15 @@
               :value="resume.name">
             </v-radio>
           </v-radio-group>
+          <p v-else>You have no resumes yet!</p>
+          <input
+            type="file"
+            :disabled="state === 'UPLOADING'"
+            @change="updateFile($event.target.files)"
+            accept="application/*"
+            class="input-file"
+            label="Upload new resume"
+          >
           <br>
           <p style="margin-bottom: 2px;">My info:</p>
           <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
@@ -260,6 +263,7 @@ import VuexLS from '@/store/persist';
 import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
 import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
+import FileClient from '@/utils/FileClient';
 
 const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
@@ -299,12 +303,19 @@ export default {
       saved_jobs: [],
       loading: false,
       showSuccessMessage: false,
+      file: null,
+      fileName: null,
+      state: 'INITIAL',
+      client: null,
     };
   },
   computed: {
     sanitizedDescription() {
       return sanitizeHtml(this.findJob.description);
     },
+  },
+  mounted() {
+    this.client = new FileClient();
   },
   methods: {
     getData() {
@@ -564,6 +575,95 @@ export default {
           console.error(error);
         });
       }
+    },
+    updateFile(files) {
+      if (!files.length) {
+        this.file = null;
+      } else {
+        this.file = files[0];
+        this.fileName = files[0].name;
+        this.uploadResume();
+      }
+    },
+    async uploadResume() {
+      let curId = null;
+      if (!this.file) {
+        return;
+      }
+      this.state = 'UPLOADING';
+      try {
+        curId = await this.client.createFileSlot(this.file.name, this.file.type);
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+      try {
+        await this.client.uploadFile(curId, this.file);
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+      this.resumes.push({
+        name: this.file.name,
+        filename: curId,
+        resumeid: null,
+      });
+      this.selectedResumeName = this.file.name;
+      this.file = null;
+      this.fileName = null;
+      this.state = 'UPLOADED';
+      this.updateAcct();
+    },
+    updateAccount() {
+      // this is weird. Not sure why it adds the property '__typename' if I dont do this
+      const _resumes = this.resumes.map(({
+        name, filename, resumeid,
+      }) => ({ name, filename, resumeid }));
+
+      this.$apollo.mutate({
+        mutation: (gql`
+          mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
+        {
+          updateAccount (
+            filter: { _id: $uid },
+            record: $record,
+          ) {
+            recordId
+          }
+        }`),
+        variables: {
+          // find a more secure way to run query
+          uid: this.uid,
+          record: {
+            resumes: _resumes,
+          },
+        },
+        refetchQueries: [{
+          query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+                _id
+                firstname
+                lastname
+                school
+                degree
+                major
+                email
+                profile_pic
+                org_list
+                resumes {
+                  name
+                  filename
+                  resumeid
+                }
+            }
+          }`),
+          variables: {
+            uid: this.uid,
+          },
+        }],
+      }).catch(console.error);
     },
   },
   created() {
