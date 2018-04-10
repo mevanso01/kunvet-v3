@@ -105,7 +105,7 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <v-navigation-drawer class="hidden-sm-and-up" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
+    <v-navigation-drawer class="hidden-sm-and-up mobile-menu" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
       <v-toolbar flat class="transparent">
         <v-list class="pa-0">
           <v-list-tile>
@@ -119,7 +119,6 @@
         </v-list>
       </v-toolbar>
       <v-list class="pt-0" dense>
-        <v-divider></v-divider>
         <div v-for="category in sidebarItems[acct]" style="border: solid 1px #E7E7E7; margin: 0 0 20px 0;">
           <div>
             <router-link :to="item.href" v-for="item in category" :key="item.title">

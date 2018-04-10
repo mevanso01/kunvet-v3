@@ -69,6 +69,11 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/reset-password/:code',
+      component: () => import('@/pages/ResetPassword'),
+      props: true,
+    },
+    {
       path: '/resume',
       component: () => import('@/pages/Resume'),
     },

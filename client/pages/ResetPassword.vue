@@ -1,8 +1,4 @@
 <style>
-.val-c-p {
-  margin-left: 15px;
-  margin-right: 15px;
-}
 </style>
 <template>
   <v-container fluid style="padding-left: 0; padding-right: 0;">
@@ -24,7 +20,8 @@
   </v-container>
 </template>
 <script>
-import axios from 'axios';
+// import gql from 'graphql-tag';
+// import axios from 'axios';
 
 
 export default {
@@ -34,6 +31,7 @@ export default {
   props: ['code'],
   data() {
     return {
+      // id: this.$route.params.id,
       loading: true,
       isvalid: false,
       dne: null,
@@ -41,14 +39,21 @@ export default {
   },
   methods: {
     validateCode() {
-      axios.post('/auth/verify', { code: this.code }).then((res) => {
+      // Check if code is valid
+
+      /* axios.post('/auth/verify', { code: this.code }).then((res) => {
         this.loading = false;
+        console.log(res);
         if (res.data.success) {
           this.isvalid = true;
         }
       }).catch(() => {
         this.loading = false;
-      });
+        // console.error(error);
+      }); */
+    },
+    resetPassword() {
+      // send request to server
     },
   },
 };

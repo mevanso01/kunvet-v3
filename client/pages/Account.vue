@@ -9,6 +9,9 @@
 <template>
   <v-container fluid class="acct-page-container white-bg">
     <div class="main-cont-large">
+      <div v-if="!email_verified" style="width: 100%; height: 40px; background-color: #ef5350; margin-bottom: 10px;">
+        <p style="text-align: center; line-height: 40px; color: #fff;">You have not verified your email yet!</p>
+      </div>
       <section style="padding: 0; margin: 15px; width: auto;">
         <v-layout row wrap style="padding-bottom: 15px">
           <v-flex xs12 sm8>
@@ -516,6 +519,7 @@
           org_list: [],
           resumes: [],
         },
+        email_verified: true,
         settingsoption1: '',
         uploadFieldName: 'file',
         showFileModal: false,
@@ -857,12 +861,14 @@
         });
       },
       async populateOrgList(orgList) {
-        this.userdata.org_list = (await Promise.all(
-          orgList.map(this.getOrgByID),
-        )).map(({ business_name: name, _id }) => ({
-          name, _id,
-        }),
-        );
+        if (Array.isArray(orgList) && orgList.length > 0 && orgList[0] !== null) {
+          this.userdata.org_list = (await Promise.all(
+            orgList.map(this.getOrgByID),
+          )).map(({ business_name: name, _id }) => ({
+            name, _id,
+          }),
+          );
+        }
       },
       getOrgByID(_oid) {
         return new Promise(resolve => {
@@ -905,6 +911,7 @@
                   filename
                   resumeid
                 }
+                email_verified
             }
           }`),
           variables: {
@@ -924,6 +931,7 @@
           if (res.org_list) {
             this.populateOrgList(res.org_list);
           }
+          this.email_verified = res.email_verified;
         }).catch((error) => {
           console.error('fetch data failed', error);
         });
@@ -939,7 +947,6 @@
       },
     },
     created() {
-      console.log(this.$store.state.userID);
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.acct !== 0) {
           this.fetchData(); // temp

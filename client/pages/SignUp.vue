@@ -191,6 +191,20 @@
         </v-layout>
       </section>
 
+      <section v-if="chosenForm === 'error'">
+        <v-layout>
+          <v-flex xs12 sm8 offset-sm2>
+            <v-card>
+              <v-card-text>
+                <h2>Oh no, an error occured</h2>
+                <br>
+                <p>Please try again later</p>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </section>
+
       <section v-if="chosenForm === 'success'">
         <v-layout>
           <v-flex xs12 sm8 offset-sm2>
@@ -199,7 +213,8 @@
                 <h2>Thank you!</h2>
                 <br>
                 <p style="margin-bottom: 8px;">We've sent a verification email to {{ email }}</p>
-                <p>Please click the link in your email to complete the sign up process</p>
+                <p style="margin-bottom: 8px;">Please click the link in your email to complete the sign up process</p>
+                <p>Routing you to your account page...</p>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -224,11 +239,12 @@
   </v-container>
 </template>
 <script>
-import Vue from 'vue';
-import VueResource from 'vue-resource';
-import Config from 'config';
+import axios from 'axios';
+import App from '@/App';
 
-Vue.use(VueResource);
+// import Vue from 'vue';
+// import VueResource from 'vue-resource';
+// Vue.use(VueResource);
 
 export default {
   data() {
@@ -294,13 +310,14 @@ export default {
         pwd: this.password,
         reqtype: 'validate',
       };
-      Vue.http.post(`${Config.get('serverUrl')}/auth/register`, data, headers).then((res) => {
+      axios.post('/auth/register', data, headers).then((res) => {
         this.loading = false;
-        if (res.body.success) {
+        if (res.data.success) {
           this.chosenForm = 'success';
-        } else if (res.body.message === 'User already exists') {
+          this.logIntoAcct(this.email, this.password);
+        } else if (res.data.message === 'User already exists') {
           this.error = 'UserExistsError';
-        } else if (res.body.message === 'Email exists but not verified') {
+        } else if (res.data.message === 'Email exists but not verified') {
           this.error = 'Not Verified';
           this.chosenForm = 'not verified';
         } else {
@@ -322,13 +339,14 @@ export default {
         pwd: this.password,
         reqtype: 'validate',
       };
-      Vue.http.post(`${Config.get('serverUrl')}/auth/register`, bdata, headers).then((res) => {
+      axios.post('/auth/register', bdata, headers).then((res) => {
         this.loading = false;
-        if (res.body.success) {
+        if (res.success) {
           this.chosenForm = 'success';
-        } else if (res.body.message === 'User already exists') {
+          this.logIntoAcct(this.email, this.password);
+        } else if (res.message === 'User already exists') {
           this.error = 'UserExistsError';
-        } else if (res.body.message === 'Email exists but not verified') {
+        } else if (res.data.message === 'Email exists but not verified') {
           this.error = 'Not Verified';
           this.chosenForm = 'not verified';
         }
@@ -343,9 +361,9 @@ export default {
         email: this.email,
       };
       this.loading = true;
-      Vue.http.post(`${Config.get('serverUrl')}/auth/resendVerificationEmail`, data, headers).then((res) => {
+      axios.post('/auth/resendVerificationEmail', data, headers).then((res) => {
         this.loading = false;
-        if (res.body.success) {
+        if (res.data.success) {
           this.chosenForm = 'success';
         } else {
           this.chosenForm = 'error';
@@ -353,6 +371,66 @@ export default {
       }, (error) => {
         this.chosenForm = 'error';
         console.error(error);
+      });
+    },
+    logIntoAcct(email, password) {
+      axios.post('/auth/login', {
+        email: email,
+        password: password,
+      }).then((response) => {
+        if (response.data.success) {
+          // logged in successfully
+          this.fetchAcctData();
+        }
+      }).catch(console.error);
+    },
+    fetchAcctData() {
+      axios.get('/auth/status').then((response) => {
+        if (!response.data.success) {
+          // Unsuccessful
+          console.error('Server error', response.data);
+          return;
+        }
+        if (!response.data.status) {
+          // Logged out
+          console.error('Logged out', response.data);
+          return;
+        }
+        const udata = response.data.user;
+        this.commitUserdata(udata);
+        this.commitID(udata._id);
+
+        if (udata.default_org === '' || !udata.default_org) {
+          // login individual
+          App.methods.login_i();
+          this.$router.push('/account');
+        } else {
+          // login business
+          this.commitBusinessID(udata.default_org);
+          App.methods.login_b();
+          this.$router.push('/myorg');
+        }
+      }).catch((error) => {
+        // Network error
+        console.error(error);
+      });
+    },
+    commitUserdata(udata) {
+      this.$store.commit({
+        type: 'keepUserdata',
+        userdata: udata,
+      });
+    },
+    commitID(_id) {
+      this.$store.commit({
+        type: 'setAcctID',
+        id: _id,
+      });
+    },
+    commitBusinessID(_id) {
+      this.$store.commit({
+        type: 'setBusinessID',
+        id: _id,
       });
     },
   },
