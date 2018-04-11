@@ -8,9 +8,8 @@ import TimeagoLocale from 'vue-timeago/locales/en-US.json';
 
 import Client from '@/apollo/client';
 
-// Axios config
-import '@/axios';
-import '@/googleMaps';
+import '@/options/axios';
+import '@/options/googleMaps';
 
 import App from '@/App';
 import store from '@/store';
