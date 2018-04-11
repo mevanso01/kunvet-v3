@@ -239,12 +239,12 @@
                   <img style="width: 100%;" :src="svgs.cityImage"></img>
                 </div>
               </section>
-              <div v-if="firstSearch">
+              <!--<div v-if="firstSearch">
                   <FirstViewCard1/>
                   <FirstViewCardRText/>
                   <FirstViewCardLText/>
                   <FirstViewCardRText/>
-              </div>
+              </div>-->
 
                 <section v-if="!firstSearch" class="search">
                   <v-layout row wrap>
@@ -266,7 +266,7 @@
                         <v-radio-group v-model="selectedCities" hide-details>
                           <v-list class="custom-select-menu">
                             <v-list-tile v-for="(item, i) in availableCities" :key="i">
-                              <v-radio :label="item" :value="item"
+                              <v-radio :label="item.name" :value="item.name"
                               ></v-radio>
                             </v-list-tile>
                           </v-list>
@@ -314,14 +314,14 @@
                         chips>
                       </v-select>-->
                       <v-menu bottom offset-y :close-on-content-click="false">
-                        <div class="custom-select" slot="activator">
+                        <div class="custom-select" slot="activator" @click="reorderAvailablePositions">
                           <span v-if="this.selectedPositions.length > 0">{{ computeSelectString(this.selectedPositions) }}</span>
                           <span v-else style="color: rgba(0,0,0,.54);">Filter by positions</span>
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
                         <v-list class="custom-select-menu">
                           <input placeholder="search..." class="filterInput" v-model="filterPositions"/>
-                          <v-list-tile v-for="(item, i) in filteredAvailablePositions" :key="i">
+                          <v-list-tile v-for="(item, i) in availablePositions" :key="i">
                             <v-checkbox :label="item" v-model="selectedPositions" :value="item" hide-details></v-checkbox>
                           </v-list-tile>
                         </v-list>
@@ -373,7 +373,7 @@
                 :job="job"
                 :saveJobFunc="saveJob"
                 :isSaved="isSaved(job._id)"
-                :fromCoordinates="{ latitude: selectedLat, longitude: selectedLong }"
+                :fromCoordinates="selectedCoordinates"
               />
           </div>
         </v-flex>
@@ -404,6 +404,7 @@ import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import DistanceHelper from '@/utils/DistanceHelper';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
+import locations from '@/constants/locations';
 import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
 // import concat from 'lodash/concat';
@@ -454,12 +455,7 @@ export default {
       firstSearchTypes: [
         'Latest jobs',
       ],
-      availableCities: [
-        'Irvine, CA',
-        'UC Irvine',
-        'Los Angeles, CA',
-        'UCLA',
-      ],
+      availableCities: locations.search_locations,
       filterPositions: '',
       availablePositions: positions,
       availableTypes: [
@@ -502,6 +498,13 @@ export default {
       }
       str = str.toLowerCase();
       return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+    },
+    selectedCoordinates() {
+      const selected = locations.search_locations.find(el => el.name === this.selectedCities);
+      if (!selected) {
+        return Coordinates.uci;
+      }
+      return { latitude: selected.latitude, longitude: selected.longitude };
     },
   },
   methods: {
@@ -572,6 +575,15 @@ export default {
         });
       }
       this.loadingJobs = false;
+    },
+    reorderAvailablePositions() {
+      var str = this.filterPositions;
+      if (!str || str === '') {
+        this.availablePositions = this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
+      } else {
+        str = str.toLowerCase();
+        this.availablePositions = this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+      }
     },
     computeSelectString(property, original = null) {
       let items = property;

@@ -30,9 +30,10 @@
           </div>
           <div class="carditem">
             <p style="color: #A7A7A7; text-decoration: underline;">
-              <span class="carditem-image"><img :src="svgs.locationMarker" /></span><Distance v-if="defaultFromUCI || fromCoordinates" :first="defaultFromUCI ? uciCoordinates : fromCoordinates" :second="getCoordinatesFromJob(job)" />
-              <br />
-              <!--<span>{{ job.university }}</span>-->
+              <span class="carditem-image">
+                <img :src="svgs.locationMarker" />
+              </span>
+              <Distance v-if="fromCoordinates" :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
             </p>
           </div>
           <div class="carditem">

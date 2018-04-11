@@ -1,9 +1,5 @@
 export default {
-  schools: [
-    'University of California, Irvine',
-    'University of California, Los Angeles',
-  ],
-  school_coordinates: [
+  search_locations: [
     { name: 'University of California, Irvine', latitude: 33.6460516, longitude: -117.8427444 },
     { name: 'Irvine Valley College', latitude: 33.6754033, longitude: -117.77773 },
     { name: 'Concordia University Irvine', latitude: 33.6536915, longitude: -117.8108672 },

@@ -221,7 +221,7 @@
     </div>
 
     <v-dialog v-model="applydialog">
-      <v-card class="no-border-radius apply-card">
+      <v-card class="no-border-radius apply-card" v-show="email_verified">
         <div style="padding: 20px;" v-if="!showSuccessMessage">
           <h3>Select resume to send</h3>
           <v-radio-group v-if="resumes.length > 0" v-model="selectedResumeName" hide-details>
@@ -265,6 +265,16 @@
         <router-link v-else to="/">
           <div class="bottom-dialog-button">Keep browsing jobs</div>
         </router-link>
+      </v-card>
+      <v-card class="no-border-radius apply-card" v-if="!email_verified">
+        <v-card-text>
+          You need to verify your email before you can apply to jobs!
+        </v-card-text>
+        <v-card-actions>
+          <v-btn flat @click="applydialog = false;">
+            Okay
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
 
@@ -329,6 +339,7 @@ export default {
       fileName: null,
       state: 'INITIAL',
       client: null,
+      email_verified: true,
     };
   },
   computed: {
@@ -498,6 +509,7 @@ export default {
               filename
               resumeid
             }
+            email_verified
           }
         }`),
         variables: {
@@ -520,6 +532,7 @@ export default {
         if (this.resumes.length > 0) {
           this.selectedResumeName = this.resumes[0].name;
         }
+        this.email_verified = res.email_verified;
         this.userdatafetched = true;
       }).catch((error) => {
         console.error(error);

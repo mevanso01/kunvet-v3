@@ -140,6 +140,9 @@
 <template>
   <v-container fluid class="createnewjob-container">
     <div class="main-cont-large">
+      <section v-show="!email_verified" class="no-padding-xs" style="min-height: 350px; padding-top: 10px;">
+        <h3>You need to verify your email before you can post a job!</h3>
+      </section>
       <section v-show="email_verified" class="no-padding-xs" style="padding-top: 10px;">
         <div style="width: 100%; height: 50px;">
           <div class="float-left">
@@ -634,6 +637,7 @@ export default {
       customEditorToolbar: [
         ['bold', 'italic', 'underline'], // toggled buttons
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['clean'],
       ],
       deletePictureModal: {
         show: false,
@@ -943,12 +947,14 @@ export default {
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);
       }
+      this.checkIfEmailVerified();
     } else if (this.$store.state.acct === 1) {
       this.posted_by = `${this.$store.state.userdata.firstname} ${this.$store.state.userdata.lastname}`;
       this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);
       }
+      this.checkIfEmailVerified();
     } else {
       VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
         if (data.acct === 2) {
@@ -957,11 +963,13 @@ export default {
           if (this.$route.params.id) {
             this.getEditJobData(this.$route.params.id);
           }
+          this.checkIfEmailVerified();
         } else if (data.acct === 1) {
           this.posted_by = `${data.userdata.firstname} ${data.userdata.lastname}`;
           if (this.$route.params.id) {
             this.getEditJobData(this.$route.params.id);
           }
+          this.checkIfEmailVerified();
         } else {
           // not logged in
           this.$router.push('/login');

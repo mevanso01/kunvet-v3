@@ -1,7 +1,7 @@
 <style>
 </style>
 <template>
-  <span>{{ distance }} miles away <span v-if="equalToUCICoordinates">from UC Irvine</span></span>
+  <span>{{ distance }} miles away<span v-if="equalToUCICoordinates"> from UC Irvine</span></span>
 </template>
 <script>
 import DistanceHelper from '@/utils/DistanceHelper';
