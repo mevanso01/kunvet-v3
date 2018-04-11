@@ -16,7 +16,7 @@ import serverConfig from './build/webpack.config.server';
 const progress = {};
 
 function redrawProgress() {
-  if (!process.stdout.isTTY) {
+  if (!process.stdout.isTTY || process.env.TERM === 'dumb') {
     return;
   }
   const formatted = Object.keys(progress).map((task) => {
