@@ -70,8 +70,15 @@ gulp.task('server-node-modules', ['server'],
   }),
 );
 
+// Copy email templates into server artifact
+gulp.task('server-email-templates', ['server'], () => {
+  return gulp.src('email-templates/**/*')
+    .pipe(gulp.dest('dist/server/email-templates'));
+});
+
+
 // AWS Lambda Deployment Package
-gulp.task('lambda', ['server', 'server-node-modules'], (callback) => {
+gulp.task('lambda', ['server', 'server-node-modules', 'server-email-templates'], (callback) => {
   const sourcePath = path.resolve(__dirname, 'dist/server');
   const outputPath = path.resolve(__dirname, 'dist/lambda.zip');
 
