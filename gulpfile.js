@@ -16,6 +16,9 @@ import serverConfig from './build/webpack.config.server';
 const progress = {};
 
 function redrawProgress() {
+  if (!process.stdout.isTTY) {
+    return;
+  }
   const formatted = Object.keys(progress).map((task) => {
     const percent = progress[task].percent;
     const message = progress[task].message;
