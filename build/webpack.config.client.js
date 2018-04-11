@@ -15,7 +15,7 @@ delete staticConfig.private;
 
 const wpconf = {
   entry: {
-    index: ['babel-polyfill', './client/index.js'],
+    index: ['whatwg-fetch', 'babel-polyfill', './client/index.js'],
   },
   output: {
     filename: '[name].[hash].js',
