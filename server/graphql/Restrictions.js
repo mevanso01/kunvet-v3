@@ -47,6 +47,13 @@ export default {
       return next(req);
     };
   },
+  getFilterRecordFields(allowedFields) {
+    // Restricts allowed fields in the record
+    return async (req, next) => {
+      req.args.record = pick(req.args.record, allowedFields);
+      return next(req);
+    };
+  },
   getFilterResultFields(allowedFields) {
     // Restricts allowed fields in the result
     return async (req, next) => {

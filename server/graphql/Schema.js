@@ -68,7 +68,10 @@ GQC.rootMutation().addFields({
       createApplication: Applicant.get('$createOne'),
     }),
     // == Update ==
-    ...wrapResolvers(Restrictions.getFilterByUserId('_id'), {
+    ...wrapResolvers([
+      Restrictions.getFilterByUserId('_id'),
+      Restrictions.getFilterRecordFields(['firstname', 'lastname', 'profile_pic', 'school', 'major', 'resumes']),
+    ], {
       updateAccount: Account.get('$updateOne'),
     }),
     ...wrapResolvers([
