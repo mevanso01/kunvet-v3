@@ -9,7 +9,7 @@
             type="file"
             :disabled="state === 'UPLOADING'"
             @change="updateFile($event.target.files)"
-            accept="application/*"
+            accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.text"
             class="input-file"
           >
             <p v-if="state === 'INITIAL'">

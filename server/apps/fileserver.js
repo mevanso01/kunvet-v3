@@ -86,8 +86,24 @@ function getBackend(name) {
   return backend;
 }
 
+const allowedMimeTypes = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.oasis.opendocument.text',
+];
+
 router.post('/create', Middlewares.RequireAuth, async (ctx) => {
   const req = ctx.request.body;
+
+  if (!req.mimeType.startsWith('image/') && !allowedMimeTypes.includes(req.mimeType)) {
+    const response = {
+      success: false,
+      message: 'Unsupported file type',
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
 
   const fileSlot = new Models.File({
     owner: ctx.state.user._id,
