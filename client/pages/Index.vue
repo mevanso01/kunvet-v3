@@ -213,6 +213,8 @@
                     no-wrap class="grey--text no-padding fsSelect">
                     <v-select class="no-padding fs-select-cities" style="height: 46px;"
                       label="City or School"
+                      item-text="name"
+                      item-value="name"
                       v-bind:items="availableCities"
                       v-model="selectedCities"
                       autocomplete

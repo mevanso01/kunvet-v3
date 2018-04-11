@@ -265,8 +265,6 @@ export default {
       this.reset();
     },
     reset() {
-      this.curId = null;
-      this.curCroppedId = null;
       this.files = [];
       this.croppedFiles = [];
       this.cropped = null;
