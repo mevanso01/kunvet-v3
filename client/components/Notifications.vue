@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-list :dense="isNavbar" v-show="notifications.length > 0">
-      <v-list-tile v-for="(n, index) in notifications" :key="index" @click="routeTo(n.route, index)">
-        <v-list-tile-content>
+      <v-list-tile v-for="(n, index) in notifications" :key="index">
+        <v-list-tile-content @click="routeTo(n.route, index)">
           <v-list-tile-title style="font-size: 14px;">{{ n.text }}</v-list-tile-title>
         </v-list-tile-content>
         <v-list-tile-action style="min-width: 38px;">

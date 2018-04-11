@@ -73,7 +73,7 @@ GQC.rootMutation().addFields({
     // == Update ==
     ...wrapResolvers([
       Restrictions.getFilterByUserId('_id'),
-      Restrictions.getFilterRecordFields(['firstname', 'lastname', 'profile_pic', 'school', 'major', 'resumes']),
+      Restrictions.getForbiddenRecordFields(['email_verified']),
     ], {
       updateAccount: Account.get('$updateOne'),
     }),

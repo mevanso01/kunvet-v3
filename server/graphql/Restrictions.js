@@ -106,6 +106,13 @@ export default {
       return next(req);
     };
   },
+  getForbiddenRecordFields(forbiddenFields) {
+    // Restricts allowed fields in the record
+    return async (req, next) => {
+      req.args.record = omit(req.args.record, forbiddenFields);
+      return next(req);
+    };
+  },
   getFilterResultFields(allowedFields) {
     // Restricts allowed fields in the result
     return async (req, next) => {
