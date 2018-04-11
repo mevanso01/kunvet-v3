@@ -37,6 +37,9 @@ module.exports = {
     },
   },
 
+  // Sentry
+  sentryDsn: '',
+
   // Please read on
   REMOVEMEPLS: `
 

@@ -10,6 +10,7 @@ import Client from '@/apollo/client';
 
 import '@/options/axios';
 import '@/options/googleMaps';
+import '@/options/raven';
 
 import App from '@/App';
 import store from '@/store';
