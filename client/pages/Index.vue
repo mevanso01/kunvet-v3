@@ -241,12 +241,26 @@
                   <img style="width: 100%;" :src="svgs.cityImage"></img>
                 </div>
               </section>
-              <!--<div v-if="firstSearch">
-                  <FirstViewCard1/>
-                  <FirstViewCardRText/>
-                  <FirstViewCardLText/>
-                  <FirstViewCardRText/>
-              </div>-->
+              <div v-if="firstSearch">
+                <FirstViewCardRText :image="require('@/assets/icons/Asset(66).svg')">
+                  <h2>Why use Kunvet instead?</h2>
+                  <ul>
+                    <li>For students, kunvet is a clean community with quality opportunities that are tailored for you.</li>
+                    <li>For businesses, kunvet is a platform where your jobs can actually be found by students near you.</li>
+                    <li>For school clubs, kunvet is where you can actually nd students in your school to work with you.</li>
+                  </ul>
+                </FirstViewCardRText>
+
+                <FirstViewCardRText :image="require('@/assets/icons/Asset(67).svg')">
+                  <h2>What’s exclusive at here?</h2>
+                  <p>Not only could you post a job online, you could also share it oine. Each job you posted comes with a unique Qrcode, and you may even print it out and tape it to your store front, campus walls, or wherever you wish, and let others scan it and apply to your job online, so you don’t have to do all the emailing and text messaging back and forth stuff.</p>
+                </FirstViewCardRText>
+
+                <FirstViewCardRText :image="require('@/assets/icons/Asset(68).svg')">
+                  <h2>What can we guarantee?</h2>
+                  <p>We will do whatever we must to make sure that kunvet stays clean and safe. We will take into account every user’s feedback, suggestions, and complaints, and develop kunvet as an ecosystem that really make your lives easier and easier. No matter what we encounter, we will not sacrice our user’s experience.</p>
+                </FirstViewCardRText>
+              </div>
 
                 <section v-if="!firstSearch" class="search">
                   <v-layout row wrap>
