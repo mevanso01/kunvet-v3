@@ -32,7 +32,7 @@
         <v-toolbar-items v-else class="hidden-xs">
           <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
 
-            <v-menu fixed offset-y v-if="item.subItems" left open-on-hover>
+            <v-menu fixed offset-y v-if="item.subItems" left open-on-hover :close-on-content-click="false">
 
               <template v-if="item.title === 'Notifications'">
                 <v-btn flat style="width: 10px;" slot="activator">

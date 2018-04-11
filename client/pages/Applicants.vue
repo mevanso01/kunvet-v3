@@ -31,7 +31,7 @@
                   <v-flex xs3 sm3 style="padding-bottom: 0;">
                     <div class="new-applicant-card__profile-pic-container">
                       <figure>
-                        <div v-if="item.status !== 'opened'" class="new-applicant-card__unread-circle" />
+                        <div v-if="item.status === 'submitted'" class="new-applicant-card__unread-circle" />
                           <img
                             :src="svgs.kunvetCharacter"
                           />
@@ -41,8 +41,7 @@
                       </figure>
                     </div>
                   </v-flex>
-                  <v-flex xs9 sm9 style="padding-bottom: 0;">
-                    <router-link :to="'view-applicant/'+item._id">
+                  <v-flex xs9 sm9 style="padding-bottom: 0; cursor: pointer;" @click="openApplication(item)">
                       <h2 class="new-applicant-card__title">{{ item.name }}</h2>
                       <p style="overflow: hidden; margin-bottom: 0;">
                         <span>
@@ -64,7 +63,6 @@
                           Notes: {{ getApplicantNotesDisplayText(item) }}
                         </span>
                       </p>
-                    </router-link>
                   </v-flex>
                 </v-layout>
               </div>
@@ -257,9 +255,14 @@
         const { data: { findApplicants: applicants } } = await this.getApplicants(jobId);
         return applicants.map(({ degree, ...rest }) => ({ ...rest, degree: degreeDbToString(degree) }));
       },
-      async updateApplicantStatus(newStatus = 'submitted') {
+      async updateApplicantStatus(newStatus = 'submitted', id = null) {
         try {
-          const { _id: applicantId } = this.dialogs.currentApplicant;
+          let applicantId;
+          if (id) {
+            applicantId = id;
+          } else {
+            applicantId = this.dialogs.currentApplicant._id;
+          }
           await axios.post(`/application/${applicantId}/setStatus/${newStatus}`);
           const { applicants } = this;
           for (let i = 0; i < applicants.length; ++i) {
@@ -293,6 +296,12 @@
       },
       onReject() {
         this.updateApplicantStatus('rejected');
+      },
+      openApplication(item) {
+        if (item.status === 'submitted') {
+          this.updateApplicantStatus('opened', item._id);
+        }
+        this.$router.push(`view-applicant/${item._id}`);
       },
       resetDialogState() {
         this.dialogs.showAccept = false;

@@ -19,7 +19,6 @@
 </template>
 <script>
 import gql from 'graphql-tag';
-import Store from '@/store';
 import App from '@/App';
 
 export default {
@@ -27,11 +26,12 @@ export default {
   data() {
     return {
       notifications: [],
+      loaded: false,
     };
   },
   methods: {
     getNotifications() {
-      if (!Store.state || !Store.state.userID) {
+      if (!this.$store.state || !this.$store.state.userID) {
         this.notifications = [];
       }
       this.$apollo.query({
@@ -49,11 +49,12 @@ export default {
           }
         }`),
         variables: {
-          uid: Store.state.userID,
+          uid: this.$store.userID,
         },
       }).then((res) => {
         var notifications = [];
         const n = res.data.findAccount.notifications;
+        console.log('FETCHED', n);
         for (var i in n) {
           if (n[i].notification_type) {
             notifications.push({
@@ -71,6 +72,7 @@ export default {
       }).catch(console.error);
     },
     removeNotification(index) {
+      console.log(this.$store.state.userID);
       this.notifications.splice(index, 1);
       App.methods.emitSetNumNotifications(this.notifications.length);
       this.$apollo.mutate({
@@ -83,7 +85,7 @@ export default {
           }
         }`),
         variables: {
-          uid: Store.state.userID,
+          uid: this.$store.state.userID,
           record: {
             notifications: this.notifications,
           },
@@ -103,9 +105,11 @@ export default {
             }
           }`),
           variables: {
-            uid: Store.state.userID,
+            uid: this.$store.state.userID,
           },
         }],
+      }).then(data => {
+        console.log(data);
       }).catch(console.error);
     },
     routeTo(route, index) {
@@ -114,7 +118,10 @@ export default {
     },
   },
   created() {
-    this.getNotifications();
+    if (!this.loaded) {
+      this.getNotifications();
+    }
+    this.loaded = true;
   },
 };
 </script>
