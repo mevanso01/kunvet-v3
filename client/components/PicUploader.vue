@@ -25,8 +25,8 @@
           </div>-->
         </form>
         <p style="margin-bottom: 5px" v-if="this.files[0] && keepOriginal">Create a preview for this image:</p>
-        <div id="cropper-container" v-show="!cropped" style="width: 100%;">
-          <vueCropper
+        <div id="cropper-container" v-show="!cropped && this.files.length > 0" style="width: 100%; padding: 0 16px;">
+          <vueCropper v-if="this.files.length > 0"
             ref="cropper"
             :img="cropperOptions.img"
             :outputSize="cropperOptions.size"
@@ -37,7 +37,7 @@
             :autoCropHeight="cropperOptions.autoCropHeight"
             :info="false"
             :canMove="false"
-            :canScale="false"
+            :canScale="true"
             >
           </vueCropper>
         </div>
@@ -121,6 +121,14 @@ export default {
     this.curId = this.id;
     this.curCroppedId = this.croppedId;
   },
+  created() {
+    this.files = [];
+    this.file = null;
+    this.croppedFiles = [];
+    this.cropped = null;
+    this.state = 'INITIAL';
+    this.cropperOptions.img = undefined;
+  },
   methods: {
     result(output) {
       this.cropped = output;
@@ -172,8 +180,14 @@ export default {
       const img = await this.loadImg(file);
       this.cropperOptions.img = img.src;
       var cc = document.getElementById('cropper-container');
-      const width = cc.offsetWidth;
-      const newHeight = Math.round(width * (img.height / img.width));
+      const width = cc.offsetWidth - 32;
+      let newHeight = 0;
+      if (img.height > img.width) {
+        newHeight = width;
+      } else {
+        newHeight = Math.round(width * (img.height / img.width));
+      }
+      console.log(img.width, img.height, width, newHeight);
       cc.style.height = `${newHeight}px`;
       const square = Math.min(width, newHeight);
       this.cropperOptions.autoCropWidth = square;
@@ -200,6 +214,7 @@ export default {
           return;
         }
         this.$emit('created', this.curCroppedId);
+        this.reset();
       }
       try {
         await this.client.uploadFile(this.curCroppedId, this.croppedFiles[0]);
@@ -210,6 +225,7 @@ export default {
       }
       this.state = 'SUCCESSFUL';
       this.$emit('uploaded', this.curCroppedId);
+      this.reset();
     },
     async uploadOriginalAndCropped() {
       try {
@@ -227,6 +243,7 @@ export default {
         return;
       }
       this.$emit('uploaded', { original: this.curId, cropped: this.curCroppedId });
+      this.reset();
     },
     _secretCrop(originalFile) {
       return new Promise((resolve, reject) => {
@@ -245,6 +262,16 @@ export default {
     },
     cancel() {
       this.$emit('cancel');
+      this.reset();
+    },
+    reset() {
+      this.curId = null;
+      this.curCroppedId = null;
+      this.files = [];
+      this.croppedFiles = [];
+      this.cropped = null;
+      this.state = 'INITIAL';
+      this.cropperOptions.img = undefined;
     },
   },
   watch: {
