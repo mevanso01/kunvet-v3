@@ -63,6 +63,12 @@ export default {
     }
     return next(req);
   },
+  Verified: (req, next) => {
+    if (!req.context.user.email_verified) {
+      throw Error('You must verify your email to perform this action/');
+    }
+    return next(req);
+  },
   // TODO: Implement business account restrictions
   // eslint-disable-next-line
   BusinessAccount: (req, next) => {

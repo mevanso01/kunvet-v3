@@ -63,7 +63,10 @@ GQC.rootMutation().addFields({
   // All mutations require logging in
   ...wrapResolvers(Restrictions.LoggedIn, {
     // == Create ==
-    ...wrapResolvers(Restrictions.getEnsureRecordHasUserId('user_id'), {
+    ...wrapResolvers([
+      Restrictions.getEnsureRecordHasUserId('user_id'),
+      Restrictions.Verified,
+    ], {
       createJob: Job.get('$createOne'),
       createApplication: Applicant.get('$createOne'),
     }),
