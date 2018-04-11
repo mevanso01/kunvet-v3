@@ -97,6 +97,20 @@
   display: block;
   margin: auto;
 }
+.new-resume-box {
+  height: 32px;
+  width: 100%;
+  position: relative;
+  border: 1px solid rgb(231, 231, 231);
+  margin-top: 5px;
+}
+.new-resume-box .input-file {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
 @media (max-width: 600px) {
   .flex {
     padding: 10px 1px;
@@ -109,11 +123,17 @@
     font-size: 24px;
     line-height: 1.2;
   }
+  .apply-card {
+    min-width: 300px !important;
+  }
+}
+@media (min-width: 601px) {
+  .apply-card {
+    min-width: 350px !important;
+  }
 }
 @media (min-width: 961px) {
   .job-detail-container {
-    /* -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.2), 0 2px 2px rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
-      box-shadow: 0 1px 5px rgba(0,0,0,.2), 0 2px 2px rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12); */
     border: 1px solid #e0e0e0;
   }
 }
@@ -201,7 +221,7 @@
     </div>
 
     <v-dialog v-model="applydialog">
-      <v-card class="no-border-radius">
+      <v-card class="no-border-radius apply-card">
         <div style="padding: 20px;" v-if="!showSuccessMessage">
           <h3>Select resume to send</h3>
           <v-radio-group v-if="resumes.length > 0" v-model="selectedResumeName" hide-details>
@@ -213,14 +233,16 @@
             </v-radio>
           </v-radio-group>
           <p v-else>You have no resumes yet!</p>
-          <input
-            type="file"
-            :disabled="state === 'UPLOADING'"
-            @change="updateFile($event.target.files)"
-            accept="application/*"
-            class="input-file"
-            label="Upload new resume"
-          >
+          <div class="new-resume-box">
+            <input
+              type="file"
+              :disabled="state === 'UPLOADING'"
+              @change="updateFile($event.target.files)"
+              accept="application/*"
+              class="input-file"
+            >
+            <p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume</p>
+          </div>
           <br>
           <p style="margin-bottom: 2px;">My info:</p>
           <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
@@ -612,7 +634,7 @@ export default {
       this.file = null;
       this.fileName = null;
       this.state = 'UPLOADED';
-      this.updateAcct();
+      this.updateAccount();
     },
     updateAccount() {
       // this is weird. Not sure why it adds the property '__typename' if I dont do this

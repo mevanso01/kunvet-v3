@@ -140,7 +140,7 @@
 <template>
   <v-container fluid class="createnewjob-container">
     <div class="main-cont-large">
-      <section class="no-padding-xs" style="padding-top: 10px;">
+      <section v-show="email_verified" class="no-padding-xs" style="padding-top: 10px;">
         <div style="width: 100%; height: 50px;">
           <div class="float-left">
             <h2 style="margin-bottom: 0; line-height:48px;">
@@ -632,7 +632,7 @@ export default {
         'Flyers', 'Word of mouth', 'Email', 'Instagram', 'Wechat', 'Other',
       ],
       customEditorToolbar: [
-        ['bold', 'italic', 'underline'],        // toggled buttons
+        ['bold', 'italic', 'underline'], // toggled buttons
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
       ],
       deletePictureModal: {
@@ -643,9 +643,6 @@ export default {
     };
   },
   methods: {
-    test(e) {
-      console.log(e);
-    },
     setPlace(place) {
       if (!place.geometry) {
         return;
@@ -697,7 +694,6 @@ export default {
       if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
       if (this.shift.length <= 0) { this.valid = false; }
       if (this.longitude == null || this.latitude == null) { this.valid = false; }
-      console.log(this.valid);
       if (showDialog && this.valid) {
         this.confirmPost = true;
       }

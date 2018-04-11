@@ -226,15 +226,20 @@
                       <v-list-tile-content>
                         <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
                       </v-list-tile-content>
-                      <v-list-tile-action @click="
-                        deleteResumeIndex=index;
-                        deleteResumeName=resume.name;
-                        showDeleteResumeDialog=true"
-                      >
-                        <v-btn icon ripple>
-                          <v-icon color="grey lighten-1">delete</v-icon>
-                        </v-btn>
-                      </v-list-tile-action>
+                        <v-list-tile-action @click="createEditResumeModal(userdata.resumes[index].name, index)">
+                          <v-btn icon rippl >
+                            <v-icon color="grey lighten-1">edit</v-icon>
+                          </v-btn>
+                        </v-list-tile-action>
+                        <v-list-tile-action @click="
+                          deleteResumeIndex=index;
+                          deleteResumeName=resume.name;
+                          showDeleteResumeDialog=true"
+                        >
+                          <v-btn icon ripple>
+                            <v-icon color="grey lighten-1">delete</v-icon>
+                          </v-btn>
+                        </v-list-tile-action>
                     </v-list-tile>
                     <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
                   </div>
@@ -355,6 +360,27 @@
                 <v-card-actions>
                   <v-btn flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
                   <v-btn flat="flat" @click.native="saveFromEditModal">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="editResumeModal.show">
+              <v-card>
+                <v-card-title>
+                  <div class="headline">Edit {{ editResumeModal.title }}</div>
+                  <div class="edit-modal-input-cont">
+                    <v-text-field
+                      v-model="editResumeModal.text"
+                      style="padding: 0 2px;"
+                      name="edit-modal-input"
+                      hide-details
+                      single-line
+                    ></v-text-field>
+                  </div>
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn flat="flat" @click.native="destroyEditResumeModal">Cancel</v-btn>
+                  <v-btn flat="flat" @click.native="saveFromEditResumeModal">Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -497,6 +523,13 @@
           text: null,
           type: 'text',
           selectItems: [],
+          property: null,
+          show: false,
+        },
+        editResumeModal: {
+          title: null,
+          text: null,
+          index: null,
           property: null,
           show: false,
         },
@@ -702,6 +735,13 @@
         this.editModal.items = items;
         this.editModal.show = true;
       },
+      createEditResumeModal(text, index, property = 'name', title = 'resume name') {
+        this.editResumeModal.title = title;
+        this.editResumeModal.text = text;
+        this.editResumeModal.property = property;
+        this.editResumeModal.show = true;
+        this.editResumeModal.index = index;
+      },
       createEditNameModal(firstName, lastName) {
         this.editNameModal.firstName = firstName;
         this.editNameModal.lastName = lastName;
@@ -711,6 +751,16 @@
         this.editModal.show = false;
         this.editModal.title = null;
         this.editModal.text = null;
+        this.editModal.index = null;
+      },
+      destroyEditResumeModal() {
+        this.editResumeModal = {
+          title: null,
+          text: null,
+          index: null,
+          property: null,
+          show: false,
+        };
       },
       saveFromEditModal() {
         const text = this.editModal.text;
@@ -718,6 +768,20 @@
         this.userdata[property] = text;
         this.saveUserdata();
         this.destroyEditModal();
+      },
+      saveFromEditResumeModal() {
+        const text = this.editResumeModal.text;
+        const index = this.editResumeModal.index;
+        const property = this.editResumeModal.property;
+        const resumeObject = {
+          name: this.userdata.resumes[index].name,
+          filename: this.userdata.resumes[index].filename,
+          resumeid: this.userdata.resumes[index].resumeid,
+        };
+        resumeObject[property] = text;
+        this.userdata.resumes[index] = resumeObject;
+        this.saveUserdata();
+        this.destroyEditResumeModal();
       },
       saveFromEditNameModal() {
         const { firstName, lastName } = this.editNameModal;
@@ -935,7 +999,7 @@
           this.userdata.major = res.major;
           this.userdata.email = res.email;
           this.userdata.profile_pic = res.profile_pic;
-          this.userdata.resumes = res.resumes.slice();
+          this.userdata.resumes = res.resumes.concat();
           this.commitUserdata();
           if (res.org_list) {
             this.populateOrgList(res.org_list);
