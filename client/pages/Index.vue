@@ -329,7 +329,7 @@
                         multiple
                         chips>
                       </v-select>-->
-                      <v-menu bottom offset-y :close-on-content-click="false">
+                      <v-menu bottom offset-y allow-overflow :close-on-content-click="false">
                         <div class="custom-select" slot="activator" @click="reorderAvailablePositions">
                           <span v-if="this.selectedPositions.length > 0">{{ computeSelectString(this.selectedPositions) }}</span>
                           <span v-else style="color: rgba(0,0,0,.54);">Filter by positions</span>

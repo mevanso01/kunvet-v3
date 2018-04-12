@@ -55,6 +55,9 @@
   margin-bottom: 10px;
   color: #5D5D5D;
   font-weight: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .btn-holder {
   padding-top: 7px;

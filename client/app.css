@@ -40,6 +40,9 @@ ol, ul {
   height: 64px;
   z-index: 100;
 }
+.mobile-menu {
+  position: fixed;
+}
 .navigation-drawer.mobile-menu {
   z-index: 101;
 }
