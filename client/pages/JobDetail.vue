@@ -159,7 +159,7 @@
               </a>
             </div>
             <div class="float-right hidden-xs-only">
-              <v-btn :disabled="applied"
+              <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
                 outline class="red--text darken-1"
                 style="margin: 2px 8px;"
                 @click="apply">
@@ -209,7 +209,8 @@
           <div v-html="findJob.responsibilities"></div>
 
           <div class="bottom-container">
-              <v-btn :disabled="applied" outline class="red--text darken-1" @click="apply">
+              <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
+                outline class="red--text darken-1" @click="apply">
                 {{ applied ? 'Applied' : 'Apply' }}
               </v-btn>
               <a class="svg-button" style="margin: 6px 8px;" @click="saveJob(findJob._id)">
