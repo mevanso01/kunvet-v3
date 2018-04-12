@@ -14,7 +14,8 @@
     "client": "cross-env NODE_ENV=development webpack-dev-server --hot --watch --progress --open --history-api-fallback --config build/webpack.config.client.js --mode development",
     "build": "cross-env NODE_ENV=production TARGET=lambda node -r esm node_modules/.bin/gulp",
     "eslint": "eslint --format 'node_modules/eslint-friendly-formatter' server/ client/ common/",
-    "reset-credentials": "cp config/credentials{.example,}.js"
+    "reset-credentials": "cp config/credentials{.example,}.js",
+    "show-prod-config": "cross-env NODE_ENV=production node -r esm scripts/show-static-config.js"
   },
   "devDependencies": {
     "archiver": "^2.1.1",
