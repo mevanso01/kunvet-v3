@@ -103,6 +103,7 @@ main {
 .input-group--selection-control .input-group__input,
 .application--light .input-group:not(.input-group--error) .input-group--selection-controls label,
 .theme--light .input-group:not(.input-group--error) label,
+.theme--light .card .input-group:not(.input-group--error) label,
 .theme--light .input-group--selection-controls .icon--selection-control,
 .accent--text {
   color: #4d4d4d;
@@ -653,7 +654,8 @@ body {
 .general-multiselect-check-checked {
     color: #ef5350;
 }
-#general-submit {
+#general-submit,
+.general-submit {
     font-weight: bold;
     position: relative;
     width: 100%;
@@ -662,7 +664,8 @@ body {
     text-align: center;
     overflow: hidden;
 }
-#general-submit-default {
+#general-submit-default,
+.general-submit-default {
     position: absolute;
     left: 0;
     width: 100%;
@@ -672,7 +675,8 @@ body {
     line-height: 64px;
     cursor: pointer;
 }
-#general-submit-error {
+#general-submit-error,
+.general-submit-default {
     position: absolute;
     left: 100%;
     width: 100%;
