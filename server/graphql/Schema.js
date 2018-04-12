@@ -1,5 +1,7 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
 import { GQC, Resolver } from 'graphql-compose';
+import Logger from 'winston';
+import Mailer from '@/utils/Mailer';
 import Models from '../mongodb/Models';
 import Restrictions from './Restrictions';
 
@@ -21,6 +23,52 @@ function wrapResolvers(fn, resolvers) {
   });
 
   return resolvers;
+}
+
+async function sendNewApplicationNotification(req, next) {
+  const mailer = new Mailer();
+  const user = req.context.user;
+  let job = null;
+  let employer = null;
+
+  try {
+    job = await Models.Job.findOne({
+      _id: req.args.record.job_id,
+    });
+    employer = await Models.Account.findOne({
+      _id: job.user_id,
+    });
+  } catch (e) {
+    Logger.error(e);
+    throw Error('Invalid job');
+  }
+
+  try {
+    await mailer.sendTemplate(
+      user.email,
+      'application-created',
+      {
+        name: `${user.firstname} ${user.lastname}`,
+        jobname: job.title,
+      },
+    );
+  } catch (e) {
+    throw Error('Employer could not be emailed');
+  }
+
+  try {
+    employer.notifications.push({
+      text: 'Your job has a new applicant!',
+      route: '/applicants',
+      notification_type: 'application',
+      date: Date.now,
+    });
+    employer.save();
+  } catch (e) {
+    throw Error('Employer could not be notified');
+  }
+
+  return next(req);
 }
 
 // Redact fields from client
@@ -68,7 +116,9 @@ GQC.rootMutation().addFields({
       Restrictions.Verified,
     ], {
       createJob: Job.get('$createOne'),
-      createApplication: Applicant.get('$createOne'),
+      ...wrapResolvers(sendNewApplicationNotification, {
+        createApplication: Applicant.get('$createOne'),
+      }),
     }),
     // == Update ==
     ...wrapResolvers([
