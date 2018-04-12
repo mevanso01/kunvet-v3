@@ -99,6 +99,9 @@ const wpconf = {
         test: /\.js$/,
         loader: 'babel-loader?cacheDirectory',
         exclude: /node_modules/,
+        options: {
+          plugins: ['@babel/plugin-transform-async-to-generator'],
+        },
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
