@@ -233,12 +233,15 @@
             </v-radio>
           </v-radio-group>
           <p v-else>You have no resumes yet!</p>
+          <p v-if="state === 'ERROR'" style="color: red; font-size: 12px; text-align: center; margin-bottom: 5px;">Error uploading resume</p>
           <div class="new-resume-box">
             <input
               type="file"
               :disabled="state === 'UPLOADING'"
               @change="updateFile($event.target.files)"
-              accept="application/*"
+              accept="application/pdf, application/msword,
+                application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                application/vnd.oasis.opendocument.text"
               class="input-file"
             >
             <p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume</p>
@@ -418,6 +421,7 @@ export default {
     },
     apply() {
       this.applydialog = true;
+      this.state = 'INITIAL';
       if (this.uid) {
         if (!this.userdatafetched) {
           this._getUserData();
@@ -630,12 +634,14 @@ export default {
         curId = await this.client.createFileSlot(this.file.name, this.file.type);
       } catch (e) {
         console.error(e);
+        this.state = 'ERROR';
         return;
       }
       try {
         await this.client.uploadFile(curId, this.file);
       } catch (e) {
         console.error(e);
+        this.state = 'ERROR';
         return;
       }
       this.resumes.push({

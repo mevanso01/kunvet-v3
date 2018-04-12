@@ -24,7 +24,7 @@
           <v-layout align-center row spacer slot="header">
             <v-flex xs12>
               <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
-                <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+                <img :src="job.profilePic" alt="">
               </v-avatar>
               <div style="color: #A7A7A7; line-height: 36px;">
                 {{ job.posted_by }}
@@ -77,6 +77,7 @@
 
   import DisplayTextHelper from '@/utils/DisplayTextHelper';
   import StringHelper from '@/utils/StringHelper';
+  import ProfilePicHelper from '@/utils/GetProfilePic';
 
   import ApplicationConstants from '@/constants/application';
 
@@ -114,11 +115,12 @@
         this.jobsAndApplications = (await jobPromises).filter(({ job }) => job);
       },
       async getPairForEachApplication({ job_id: jobId, ...application }) {
-        const { data: { findJobs: job } } = await this.$apollo.query({
+        let { data: { findJob: job } } = await this.$apollo.query({
           query: (gql`query ($jobId: MongoID) {
-            findJobs (filter: { _id: $jobId, active: true }){
+            findJob (filter: { _id: $jobId, active: true }){
               _id
               user_id
+              business_id
               posted_by
               title
               address
@@ -136,8 +138,10 @@
             jobId,
           },
         });
+        job = Object.assign({}, job);
+        job.profilePic = await this.getProfilePic(job);
         return {
-          job: job.length > 0 ? job[0] : undefined,
+          job: job,
           application: { _id: jobId, ...application },
         };
       },
@@ -152,6 +156,11 @@
         if (status === 'accepted') return 'green';
         if (status === 'rejected') return '#e53935';
         return '#A7A7A7';
+      },
+      async getProfilePic(job) {
+        const { business_id: businessID, user_id: userID } = job;
+        const profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
+        return profilePic;
       },
     },
     computed: {

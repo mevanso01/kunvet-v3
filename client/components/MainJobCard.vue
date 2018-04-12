@@ -1,22 +1,23 @@
 <template>
   <div class="post-card">
       <v-layout align-center row spacer slot="header">
-        <v-flex xs8>
+        <v-flex xs9>
           <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
             <img :src="profilePic" alt="">
           </v-avatar>
           <div style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs3>
 
         <div class="float-right">
           <!--<v-avatar size="36px" slot="activator">
             <v-icon class="whatshot">whatshot</v-icon>
           </v-avatar>-->
 
-          <v-avatar size="36px" @click="saveJobClicked(job._id)">
-            <v-icon class="bookmark-icon" v-bind:class="{ 'saved': isSaved }">bookmark_border</v-icon>
-          </v-avatar>
+          <a class="svg-button" @click="saveJobClicked(job._id)">
+            <img v-if="isSaved" style="width: 36px;" :src="svgs.yellowBookmark" />
+            <img v-else style="width: 36px;" :src="svgs.grayBookmark" />
+          </a>
         </div>
         </v-flex>
       </v-layout>
@@ -63,6 +64,8 @@ import Coordinates from '@/constants/coordinates';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import StudentSvg from '@/assets/icons/Asset(17).svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
+import GrayBookmarkSvg from '@/assets/icons/Asset(36).svg';
+import YellowBookmarkSvg from '@/assets/icons/Asset(37).svg';
 import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
 
@@ -79,6 +82,8 @@ export default {
       svgs: {
         student: StudentSvg,
         locationMarker: LocationMarkerSvg,
+        yellowBookmark: YellowBookmarkSvg,
+        grayBookmark: GrayBookmarkSvg,
       },
     };
   },
@@ -88,6 +93,9 @@ export default {
     },
     uciCoordinates() {
       return Coordinates.uci;
+    },
+    isIndividualJob() {
+      return !this.job.business_id;
     },
   },
   methods: {

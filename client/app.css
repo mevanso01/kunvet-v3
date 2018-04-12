@@ -139,6 +139,11 @@ main {
 .saved {
   color: #ffcc00 !important;
 }
+.svg-button img {
+  height: inherit;
+  display: block;
+  margin: auto;
+}
 .cropper-view-box {
   /* outline-offset: -1px; */
   outline: 1px solid #39f !important;
