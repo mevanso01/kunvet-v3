@@ -5,7 +5,7 @@
           <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
             <img :src="profilePic" alt="">
           </v-avatar>
-          <div style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
+          <div class="posted-by" style="color: #A7A7A7; line-height: 36px;">{{ job.posted_by }}</div>
         </v-flex>
         <v-flex xs3>
 

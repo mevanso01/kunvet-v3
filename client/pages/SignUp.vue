@@ -110,7 +110,6 @@
                     label="(Optional) How did you hear of Kunvet?"
                     v-model="howDidYouHear"
                     v-bind:items="howDidYouHearItems"
-                    autocomplete
                     hide-details
                   ></v-select>
                   <br>
@@ -173,7 +172,6 @@
                     label="(Optional) How did you hear of Kunvet?"
                     v-model="howDidYouHear"
                     v-bind:items="howDidYouHearItems"
-                    autocomplete
                     hide-details
                   ></v-select>
                   <br>

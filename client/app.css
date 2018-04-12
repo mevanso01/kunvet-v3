@@ -29,6 +29,9 @@ h3 {
 p > a {
   text-decoration: underline;
 }
+ol, ul {
+  list-style-position: inside;
+}
 /*  ---- Navbar ----  */
 .application--wrap {
   padding-top: 64px;
