@@ -30,11 +30,13 @@
             <timeago :since="job.date" />
           </div>
           <div class="carditem">
-            <p style="color: #A7A7A7; text-decoration: underline;">
+            <p style="color: #A7A7A7;">
               <span class="carditem-image">
                 <img :src="svgs.locationMarker" />
               </span>
-              <Distance v-if="fromCoordinates" :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
+              <span style="text-decoration: underline;">
+                <Distance v-if="fromCoordinates" :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
+              </span>
             </p>
           </div>
           <div class="carditem">

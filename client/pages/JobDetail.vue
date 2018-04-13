@@ -47,6 +47,7 @@
 }
 .job-info-icon {
   height: 15px;
+  width: 16px;
   margin-left: 1px;
   margin-right: 3px;
   transform: translateY(1px);
@@ -154,8 +155,8 @@
             </div>
             <div class="float-right">
               <a class="svg-button" flat style="margin: 2px 8px;" @click="saveJob(findJob._id)">
-                <img v-if="saved" :src="savedIcon"/>
-                <img v-else :src="notSavedIcon"/>
+                <img v-if="saved" :src="svgs.savedIcon"/>
+                <img v-else :src="svgs.notSavedIcon"/>
               </a>
             </div>
             <div class="float-right hidden-xs-only">
@@ -175,25 +176,39 @@
               <v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon><span style="padding-top: 2px; text-decoration: underline;">{{ findJob.address }}</span>
             </p>
           </div>
+
           <div class="blue-row" style="margin-top: 8px;">
             <span v-if="findJob.type2" class="pr-8">
-              <img class="job-info-icon" :src="Internship"></img>
+              <img class="job-info-icon" :src="svgs.Internship"></img>
               <span v-for="type in findJob.type2"> {{ type }}</span>
             </span>
             <span v-if="findJob.studentfriendly" class="pr-8">
-              <img class="job-info-icon" :src="sfSvg"></img> student friendly
+              <img class="job-info-icon" :src="svgs.sfSvg"></img> student friendly
             </span>
             <span class="pr-8">
-              <img class="job-info-icon" :src="Clock"></img>
+              <img class="job-info-icon" :src="svgs.Clock"></img>
               <span v-for="(type, index) in jobType"> {{ type }}<span v-if="index + 1 < jobType.length">,</span></span>
             </span>
             <span>
-              <img class="job-info-icon" :src="sSvg"></img> {{ salary }}
+              <img class="job-info-icon" :src="svgs.sSvg"></img> {{ salary }}
             </span>
           </div>
+
+          <div v-show="(findJob.education && findJob.education !== 'None') || findJob.preferred_major">
+            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
+            <div v-show="findJob.education && findJob.education !== 'None'" class="blue-row" >
+              <img class="job-info-icon" :src="svgs.degree"></img>
+              <span>Degree: {{ findJob.education.replace("_", " ") }}</span>
+            </div>
+            <div v-show="findJob.preferred_major" class="blue-row">
+              <img class="job-info-icon" :src="svgs.majorPreferred"></img>
+              <span>Majors preferred: {{ findJob.preferred_major }}</span>
+            </div>
+          </div>
+
           <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
           <div class="blue-row" style="margin-bottom: 16px;">
-            <img class="job-info-icon" :src="Clock"></img>
+            <img class="job-info-icon" :src="svgs.Clock"></img>
             <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></span>
           </div>
           <v-divider></v-divider>
@@ -214,8 +229,8 @@
                 {{ applied ? 'Applied' : 'Apply' }}
               </v-btn>
               <a class="svg-button" style="margin: 6px 8px;" @click="saveJob(findJob._id)">
-                <img v-if="saved" :src="savedIcon"/>
-                <img v-else :src="notSavedIcon"/>
+                <img v-if="saved" :src="svgs.savedIcon"/>
+                <img v-else :src="svgs.notSavedIcon"/>
               </a>
           </div>
       </div>
@@ -292,6 +307,8 @@ import SalarySvg from '@/assets/job_detail/salary.svg';
 import ClockSvg from '@/assets/job_detail/clock.svg';
 import FBfullSvg from '@/assets/job_detail/facebook_full.svg';
 import FBstrokeSvg from '@/assets/job_detail/facebook_stroke.svg';
+import majorPreferredSvg from '@/assets/job_detail/major_preferred.svg';
+import degreeSvg from '@/assets/job_detail/degree.svg';
 import nsiSvg from '@/assets/icons/Asset(36).svg';
 import siSvg from '@/assets/icons/Asset(37).svg';
 import sanitizeHtml from 'sanitize-html';
@@ -312,14 +329,18 @@ export default {
       serverUrl: Config.get('serverUrl'),
       profilePic: DefaultPic,
       salary: null,
-      Internship: InternshipSvg,
-      Clock: ClockSvg,
-      sfSvg: StudentFriendlySvg,
-      sSvg: SalarySvg,
-      FBfull: FBfullSvg,
-      FBstroke: FBstrokeSvg,
-      savedIcon: siSvg,
-      notSavedIcon: nsiSvg,
+      svgs: {
+        Internship: InternshipSvg,
+        Clock: ClockSvg,
+        sfSvg: StudentFriendlySvg,
+        sSvg: SalarySvg,
+        FBfull: FBfullSvg,
+        FBstroke: FBstrokeSvg,
+        savedIcon: siSvg,
+        notSavedIcon: nsiSvg,
+        majorPreferred: majorPreferredSvg,
+        degree: degreeSvg,
+      },
       uid: null,
       applydialog: false,
       userdata: {
@@ -380,6 +401,7 @@ export default {
               pay_denomination
               date
               education
+              preferred_major
               language
               experience
               responsibilities

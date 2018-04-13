@@ -465,6 +465,7 @@ const createJobMutation = gql`
         salary
         pay_denomination
         education
+        preferred_major
         language
         experience
         responsibilities
@@ -500,6 +501,7 @@ const updateJobMutation = gql`
         salary
         pay_denomination
         education
+        preferred_major
         language
         experience
         responsibilities
@@ -533,6 +535,7 @@ const findJobQuery = gql`
       salary
       pay_denomination
       education
+      preferred_major
       language
       experience
       responsibilities
@@ -565,6 +568,7 @@ const findJobsQuery = gql`
       salary
       pay_denomination
       education
+      preferred_major
       language
       experience
       responsibilities

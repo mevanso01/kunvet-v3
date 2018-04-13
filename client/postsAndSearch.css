@@ -34,22 +34,21 @@
   margin: 0;
 }
 .carditem i {
-  width: 25px;
-  font-size: 18px;
+  width: 23px;
+  font-size: 16px;
   color: #4d4d4d !important;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 .carditem .carditem-image {
   display: inline-block;
-  width: 25px;
+  width: 23px;
   line-height: 1;
-  padding-left: 2px;
-  /* transform: translateY(1px); */
+  float: left;
 }
 .carditem .carditem-image img {
   height: 15px;
   position: relative;
-  top: 1px;
+  top: 2px;
 }
 .post-company-logo {
     float: left;
