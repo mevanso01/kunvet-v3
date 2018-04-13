@@ -6,7 +6,7 @@
           <h1 style="margin-bottom: 10px;">{{ title }}</h1>
           <div class="dropbox">
             <input
-              type="file"
+              type="file" id="file-input"
               :disabled="state === 'UPLOADING'"
               @change="updateFile($event.target.files)"
               accept="image/*"
@@ -20,9 +20,6 @@
                 Uploading files...
               </p>
           </div>
-          <!--<div style="min-height: 21px; margin: 10px 0;">
-            <p style="margin: 0;" v-for="file in files">{{ file.name }}</p>
-          </div>-->
         </form>
         <p style="margin-bottom: 5px" v-if="this.files[0] && keepOriginal">Create a preview for this image:</p>
         <div id="cropper-container" v-show="!cropped && this.files.length > 0" style="width: 100%; padding: 0 16px;">
@@ -121,14 +118,6 @@ export default {
     this.curId = this.id;
     this.curCroppedId = this.croppedId;
   },
-  created() {
-    this.files = [];
-    this.file = null;
-    this.croppedFiles = [];
-    this.cropped = null;
-    this.state = 'INITIAL';
-    this.cropperOptions.img = undefined;
-  },
   methods: {
     result(output) {
       this.cropped = output;
@@ -162,11 +151,6 @@ export default {
           this.updateCropperImg(this.files[0]);
         }
       }
-      // multiple currently does not work
-      /* if (!this.multiple && this.files[0]) {
-        console.log(this.files);
-        this.updateCropperImg(this.files[0]);
-      } */
     },
     upload() {
       if (this.keepOriginal) {
@@ -178,6 +162,7 @@ export default {
     async updateCropperImg(file) {
       this.cropperOptions.outputType = file.type;
       const img = await this.loadImg(file);
+      this.cropperOptions.img = null;
       this.cropperOptions.img = img.src;
       var cc = document.getElementById('cropper-container');
       const width = cc.offsetWidth - 32;
@@ -265,6 +250,7 @@ export default {
       this.reset();
     },
     reset() {
+      document.getElementById('file-input').value = '';
       this.files = [];
       this.croppedFiles = [];
       this.cropped = null;
