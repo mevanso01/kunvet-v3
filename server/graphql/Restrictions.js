@@ -108,7 +108,7 @@ export default {
       return result;
     }
 
-    if (jobIds.includes(result.job_id)) {
+    if (jobIds.includes(result.job_id.toString())) {
       return result;
     }
 
