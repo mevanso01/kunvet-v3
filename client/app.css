@@ -159,6 +159,9 @@ main {
 .vue-cropper {
   background-repeat: repeat;
 }
+.first-search-img {
+  max-width: 80%;
+}
 .dropbox {
   outline: 2px dashed grey; /* the dash box */
   outline-offset: -5px;
@@ -814,6 +817,11 @@ body {
     }
 }
 @media (max-width: 600px) {
+    .first-search-img {
+      max-width: 100px !important;
+      display: block;
+      margin: auto;
+    }
     .job-post__helper-nav-bar {
       display: none;
     }

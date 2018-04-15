@@ -763,17 +763,15 @@ export default {
           }
           if (data.selectedShifts) {
             this.selectedShifts = data.selectedShifts;
-            console.log(this.selectedShifts);
           }
           if (data.selectedTypes) {
             this.selectedTypes = data.selectedTypes;
           }
         }
-        console.log(this.selectedCities);
         if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
           this.selectedPositions = data.selectedPositions;
         }
-        if (data.userID) {
+        if (data.userID && data.acct !== 0) {
           this.uid = data.userID;
           this.getSavedJobs();
         }

@@ -35,6 +35,21 @@ const Store = new Vuex.Store({
     },
     setAcct(state, payload) {
       state.acct = payload.acct;
+      if (payload.acct === 0) {
+        state.userdata = {
+          firstname: null,
+          lastname: null,
+          school: null,
+          degree: null,
+          email: null,
+          display_email: null,
+          profile_pic: null,
+          org_list: [],
+          resumes: [],
+        };
+        state.bdata = null;
+        state.userID = null;
+      }
     },
     setAcctID(state, payload) {
       state.userID = payload.id;

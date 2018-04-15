@@ -167,6 +167,7 @@ import Vuetify from 'vuetify';
 import Store from '@/store';
 import VuexLS from '@/store/persist';
 import gql from 'graphql-tag';
+import axios from 'axios';
 
 import StringHelper from '@/utils/StringHelper';
 import Notifications from '@/components/Notifications';
@@ -378,18 +379,31 @@ export default {
         this.numNotifications = 0;
       }
     });
-    VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
+
+    axios.get('auth/status').then(res => {
+      if (res.data.success) {
+        if (!res.data.status) {
+          this.lo();
+        } else if (res.data.user.default_org) {
+          this.l2();
+        } else {
+          this.l1();
+        }
+      } else {
+        this.lo();
+      }
+    });
+    VuexLS.restoreState('vuex',  window.localStorage);
+
+    /* .then((data) => {
       if (data) {
         if (data.acct) {
           this.acct = data.acct;
         } else {
           this.acct = 0;
         }
-        /* if (this.acct !== 0) {
-          // this.getNumNotifications();
-        } */
       }
-    });
+    }); */
   },
   computed: {
     isJobPostRoute() {
