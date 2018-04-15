@@ -656,6 +656,7 @@ export default {
         croppedID: null,
       },
       email_verified: true,
+      loading: false,
     };
   },
   methods: {
@@ -720,17 +721,22 @@ export default {
     },
     saveForLater() {
       this.active = false;
+      this.loading = true;
       this._save();
     },
     saveAndPost() {
       this.validateBeforePosting();
-      if (this.valid) {
-        this.active = true;
-        this._save(true);
-      } else {
-        this.confirmPost = false;
-        this.saveForLater();
+      if (!this.loading) {
+        if (this.valid) {
+          this.active = true;
+          this.loading = true;
+          this._save(true);
+        } else {
+          this.confirmPost = false;
+          this.saveForLater();
+        }
       }
+
     },
     updateActiveJob() {
       this.validateBeforePosting();
@@ -754,6 +760,7 @@ export default {
             variables: { id: id },
           }],
         }).then((res) => {
+          this.loading = false;
           const recordId = res.data.updateJob.recordId;
           if (viewJob) {
             this.$router.push(`/jobdetail/${recordId}`);
@@ -761,7 +768,10 @@ export default {
             this.id = recordId;
             this.successAlert = true;
           }
-        }).catch(console.error);
+        }).catch((err) => {
+          this.loading = false;
+          console.error(err);
+        });
       } else {
         const job = this.createJobArray();
         this.$apollo.mutate({
@@ -777,6 +787,7 @@ export default {
             },
           }],
         }).then((res) => {
+          this.loading = false;
           const recordId = res.data.createJob.recordId;
           if (!viewJob) {
             this.$router.push({ path: `/createnewjob/${recordId}` });
@@ -785,7 +796,10 @@ export default {
           } else {
             this.$router.push(`/jobdetail/${recordId}`);
           }
-        }).catch(console.error);
+        }).catch((err) => {
+          this.loading = false;
+          console.error(err);
+        });
       }
     },
     createJobArray() {

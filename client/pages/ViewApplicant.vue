@@ -233,6 +233,7 @@
           Accept Applicant?
         </v-card-title>
         <v-card-text style="padding-top: 0; padding-bottom: 0;">
+          <p>Notify this applicant that you are interested in their application and would like to communicate with them further.</p>
           <p v-if="loading">Loading...</p>
           <p v-if="errorOccured">An error occured, please try again later</p>
         </v-card-text>

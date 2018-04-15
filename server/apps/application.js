@@ -76,6 +76,16 @@ router.post('/:id/setStatus/:status', async (ctx) => {
     return;
   }
 
+  if(application.status === ctx.params.status) {
+    // application status is already set
+    const response = {
+      success: true,
+      message: 'Status updated',
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+
   // Set the status
   application.status = ctx.params.status;
   try {
