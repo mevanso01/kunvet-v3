@@ -567,9 +567,9 @@ export default {
     },
     _checkIsApplied() {
       this.$apollo.query({
-        query: (gql`query ($uid: MongoID, $jid: MongoID) {
+        query: (gql`query ($jid: MongoID) {
           findMyApplication (filter: {
-            job_id: $id
+            job_id: $jid
           }) {
             _id
           }
@@ -578,7 +578,7 @@ export default {
           jid: this.id,
         },
       }).then((data) => {
-        if (data.data.findApplicant) {
+        if (data.data.findMyApplication) {
           this.applied = true;
         }
       }).catch((error) => {

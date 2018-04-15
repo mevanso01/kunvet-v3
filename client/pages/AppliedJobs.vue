@@ -96,8 +96,8 @@
     },
     methods: {
       async getData() {
-        const { data: { findApplicants: applications } } = await this.$apollo.query({
-          query: (gql`query ($user_id: MongoID) {
+        const { data: { findMyApplications: applications } } = await this.$apollo.query({
+          query: (gql`query {
             findMyApplications (filter: {}) {
               _id
               job_id
