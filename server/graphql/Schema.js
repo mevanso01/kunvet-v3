@@ -91,8 +91,24 @@ GQC.rootQuery().addFields({
     findAccounts: Account.get('$findMany'),
   }),
   // Applicants
-  findApplicant: Applicant.get('$findOne'),
-  findApplicants: Applicant.get('$findMany'),
+  ...wrapResolvers([
+    Restrictions.getDropResultFields(['notes']),
+    Restrictions.getFilterByUserId('user_id'),
+    Restrictions.LoggedIn,
+  ], {
+    // Find own applications (for employees)
+    findMyApplications: Applicant.get('$findMany'),
+  }),
+
+  ...wrapResolvers([
+    // FIXME: Restrict application access
+    Restrictions.ApplicationJobOwner,
+  ], {
+    // Find employer's applications
+    findApplicant: Applicant.get('$findOne'),
+    findApplicants: Applicant.get('$findMany'),
+  }),
+
   // Business Profile
   findOrganization: Organization.get('$findOne'),
   findOrganizations: Organization.get('$findMany'),
@@ -132,7 +148,9 @@ GQC.rootMutation().addFields({
       Restrictions.getFilterByUserId('user_id'),
     ], {
       updateJob: Job.get('$updateOne'),
-      updateApplication: Applicant.get('$updateOne'),
+      ...wrapResolvers(Restrictions.ApplicationJobOwner, {
+        updateApplication: Applicant.get('$updateOne'),
+      }),
     }),
     // == Remove ==
     ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {
