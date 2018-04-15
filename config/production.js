@@ -44,13 +44,16 @@ module.exports = {
   serverUrl: 'https://hrmy3ed4n1.execute-api.us-east-1.amazonaws.com/production',
   googleMapsKey: Credentials.googleMapsKey,
   sentry: {
-    dsn: Credentials.sentryDsn,
+    dsn: Credentials.sentryClientDsn,
   },
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
 
     database: Credentials.database,
     aws: Credentials.aws,
+    sentry: {
+      dsn: Credentials.sentryServerDsn,
+    },
     files: {
       defaultStorage: 's3',
       s3: {
