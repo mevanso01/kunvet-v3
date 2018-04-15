@@ -103,7 +103,6 @@ export default {
       user_id: req.context.user._id,
     });
     jobIds = jobIds.map(job => job._id.toString());
-    
     if (Array.isArray(result)) {
       result = result.filter(application => jobIds.includes(application.job_id.toString()));
       return result;

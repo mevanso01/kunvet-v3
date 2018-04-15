@@ -199,7 +199,6 @@ export default {
           return;
         }
         this.$emit('created', this.curCroppedId);
-        this.reset();
       }
       try {
         await this.client.uploadFile(this.curCroppedId, this.croppedFiles[0]);
