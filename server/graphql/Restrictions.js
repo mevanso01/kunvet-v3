@@ -1,10 +1,9 @@
-import Logger from 'winston';
+// import Logger from 'winston';
 import Models from '@/mongodb/Models';
 import set from 'lodash/set';
 import get from 'lodash/get';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
-import intersection from 'lodash/intersection';
 
 /* IMPORT MAILER AND UNCOMMENT WHEN YOU WANT TO USE
 async function _sendNotification(user, jobname) {
@@ -54,9 +53,10 @@ async function _sendNotification(user, jobname) {
 
 export default {
   Debug: async (req, next) => {
-    Logger.debug(req);
+    console.log(req);
+    // Logger.debug(req);
     const result = await next(req);
-    Logger.debug(result);
+    // Logger.debug(result);
     return result;
   },
   LoggedIn: (req, next) => {
@@ -67,7 +67,7 @@ export default {
   },
   Verified: (req, next) => {
     if (!req.context.user.email_verified) {
-      throw Error('You must verify your email to perform this action/');
+      throw Error('You must verify your email to perform this action.');
     }
     return next(req);
   },
