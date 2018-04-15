@@ -1,8 +1,10 @@
 import Logger from 'winston';
+import Models from '@/mongodb/Models';
 import set from 'lodash/set';
 import get from 'lodash/get';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
+import intersection from 'lodash/intersection';
 
 /* IMPORT MAILER AND UNCOMMENT WHEN YOU WANT TO USE
 async function _sendNotification(user, jobname) {
@@ -89,6 +91,22 @@ export default {
   },
   Forbidden: () => {
     throw Error('This action is disabled.');
+  },
+
+  ApplicationJobOwner: async (req, next) => {
+    let result = await next(req);
+
+    if (!result) {
+      return result;
+    }
+
+    const jobIds = (await Models.Job.find({
+      user_id: req.context.user._id,
+    })).map(job => job.id);
+
+    result = result.filter(application => jobIds.includes(application.job_id));
+
+    return result;
   },
 
   // Restriction factories
