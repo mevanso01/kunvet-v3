@@ -97,6 +97,7 @@ GQC.rootQuery().addFields({
     Restrictions.LoggedIn,
   ], {
     // Find own applications (for employees)
+    findMyApplication: Applicant.get('$findOne'),
     findMyApplications: Applicant.get('$findMany'),
   }),
 
