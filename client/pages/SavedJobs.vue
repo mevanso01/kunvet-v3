@@ -29,28 +29,11 @@
   import VuexLS from '@/store/persist';
   import StudentSvg from '@/assets/job_posts/user_1.svg';
   import MainJobCard from '@/components/MainJobCard';
+  import queries from '@/constants/queries';
 
   const FindJobQuery = gql`query ($id: MongoID) {
     findJob (filter: { _id: $id }) {
-        _id
-        posted_by
-        title
-        description
-        address
-        latitude
-        longitude
-        type
-        studentfriendly
-        type2
-        shift
-        age
-        pay_type
-        salary
-        pay_denomination
-        date
-        images {
-          cropped
-        }
+      ${queries.FindJobRecordForJobCard}
     }
   }`;
 

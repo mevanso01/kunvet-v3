@@ -150,6 +150,7 @@
   import DateHelper from '@/utils/DateHelper';
   import StringHelper from '@/utils/StringHelper';
   import { degreeDbToString } from '@/constants/degrees';
+  import queries from '@/constants/queries';
 
   export default {
     created() {
@@ -234,16 +235,7 @@
             findApplicants (filter: {
               job_id: $JobId
             }) {
-                _id
-                name
-                school
-                degree
-                major
-                notes
-                job_id
-                status
-                date
-                expiry_date
+              ${queries.FindApplicantRecord}
             }
           }`),
           variables: {

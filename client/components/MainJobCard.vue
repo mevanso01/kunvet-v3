@@ -15,8 +15,8 @@
           </v-avatar>-->
 
           <a class="svg-button" @click="saveJobClicked(job._id)">
-            <img v-if="isSaved" style="height: 32px; margin: 2px 0;" :src="svgs.yellowBookmark" />
-            <img v-else style="height: 32px; margin: 2px 0;" :src="svgs.grayBookmark" />
+            <img v-if="isSaved" style="height: 24px; margin: 6px 0;" :src="svgs.yellowBookmark" />
+            <img v-else style="height: 24px; margin: 6px 0;" :src="svgs.grayBookmark" />
           </a>
         </div>
         </v-flex>

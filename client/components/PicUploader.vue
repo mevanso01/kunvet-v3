@@ -251,6 +251,8 @@ export default {
     },
     reset() {
       document.getElementById('file-input').value = '';
+      this.curId = null;
+      this.curCroppedId = null;
       this.files = [];
       this.croppedFiles = [];
       this.cropped = null;

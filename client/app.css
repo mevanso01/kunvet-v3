@@ -65,7 +65,8 @@ ol, ul {
   border-radius: 8px;
   top: 15px;
   left: 25px;
-  background-color: #ef5350
+  background-color: #ef5350;
+  color: #fff;
 }
 .black {
   background-color: #222 !important;

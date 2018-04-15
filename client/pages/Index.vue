@@ -423,35 +423,13 @@ import positions from '@/constants/positions';
 import locations from '@/constants/locations';
 import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
-// import concat from 'lodash/concat';
+import queries from '@/constants/queries';
 
 Vue.use(VueApollo);
 
 const findJobQuery = gql`query ($id: MongoID) {
   findJob (filter: { active: true, _id: $id }){
-    _id
-    posted_by
-    user_id
-    business_id
-    title
-    description
-    address
-    university
-    latitude
-    longitude
-    type
-    studentfriendly
-    type2
-    shift
-    age
-    pay_type
-    salary
-    pay_denomination
-    date
-    images {
-      cropped
-    }
-    position_tags
+    ${queries.FindJobRecordForJobCard}
   }
 }`;
 

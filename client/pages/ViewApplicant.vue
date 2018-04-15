@@ -280,6 +280,7 @@ import DegreeSvg from '@/assets/account/degree.svg';
 import MajorPreferredSvg from '@/assets/job_detail/major_preferred.svg';
 import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
 import Config from 'config';
+import queries from '@/constants/queries';
 
 export default {
   props: ['id'],
@@ -349,15 +350,7 @@ export default {
               query: gql`
                 query($aplId: MongoID) {
                   findApplicant(filter: { _id: $aplId }) {
-                    _id
-                    name
-                    email
-                    school
-                    notes
-                    resume {
-                      filename
-                      resumeid
-                    }
+                    ${queries.FindApplicantRecord}
                   }
                 }
               `,
@@ -376,19 +369,7 @@ export default {
           query: gql`
             query($aplId: MongoID) {
               findApplicant(filter: { _id: $aplId }) {
-                _id
-                job_id
-                name
-                email
-                school
-                degree
-                major
-                notes
-                resume {
-                  filename
-                  resumeid
-                }
-                status
+                ${queries.FindApplicantRecord}
               }
             }
           `,
@@ -467,6 +448,7 @@ export default {
           } else {
             this.errorOccured = true;
           }
+          this.getData();
         })
         .catch((err) => {
           this.errorOccured = true;
@@ -499,8 +481,6 @@ export default {
   },
   created() {
     this.getData();
-    // TODO: Delete this whenever. Uncomment this to reset applicant state for testing.
-    // this.updateApplicantStatus();
   },
 };
 </script>

@@ -442,6 +442,7 @@ import PicUploader from '@/components/PicUploader';
 import Config from 'config';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 import positions from '@/constants/positions';
+import queries from '@/constants/queries';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -518,6 +519,13 @@ const updateJobMutation = gql`
 const findJobQuery = gql`
   query($id: MongoID) {
     findJob(filter: { _id: $id }) {
+      ${queries.FindJobRecord}
+    }
+  }
+`;
+/* const findJobQuery = gql`
+  query($id: MongoID) {
+    findJob(filter: { _id: $id }) {
       _id
       posted_by
       title
@@ -547,10 +555,10 @@ const findJobQuery = gql`
       position_tags
     }
   }
-`;
+`; */
 const findJobsQuery = gql`
-    query($userId: MongoID, $businessId: MongoID) {
-      findJobs(filter: { user_id: $userId, business_id: $businessId }) {
+  query($userId: MongoID, $businessId: MongoID) {
+    findJobs(filter: { user_id: $userId, business_id: $businessId }) {
       _id
       posted_by
       title
@@ -665,7 +673,6 @@ export default {
         return false;
       }
       const newtext = text.replace(/<p>|<\/p>|<br>|<h1>|<\/h1>/g, '');
-      console.log('TEXT', newtext);
       if (newtext.length < 1) {
         this[`${property}_valid`] = false;
         return false;
