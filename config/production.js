@@ -53,6 +53,10 @@ module.exports = {
       s3: {
         bucket: 'kunvet-testprod',
       },
+      // image/* is hardcoded to be allowed
+      allowedMimeTypes: [
+        'application/pdf',
+      ],
     },
     mail: {
       from: 'Kunvet Notifications <notifications@kunvet.com>',

@@ -86,12 +86,10 @@ function getBackend(name) {
   return backend;
 }
 
-const allowedMimeTypes = [
-  'application/pdf',
-];
-
 router.post('/create', Middlewares.RequireAuth, async (ctx) => {
   const req = ctx.request.body;
+
+  const allowedMimeTypes = Config.get('private.files.allowedMimeTypes');
 
   if (!req.mimeType.startsWith('image/') && !allowedMimeTypes.includes(req.mimeType)) {
     const response = {
