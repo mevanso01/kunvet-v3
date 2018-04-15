@@ -42,11 +42,7 @@ function loadTheRest() {
     import('@/pages/PhotoGallery');
     import('@/pages/Applicants');
     // import('@/pages/AboutUs');
-  },
-  {
-    path: '/Terms',
-    component: () => import('@/pages/Terms'),
-  },
+    // import('@/pages/Terms');
     loaded = true;
   }
 }

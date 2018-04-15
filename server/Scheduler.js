@@ -19,13 +19,13 @@ export default class Scheduler {
   static install() {
     if (process.env.TARGET === 'normal') {
       // eslint-disable-next-line global-require
-      const NodeSchedule = require('node-schedule');
+      // const NodeSchedule = require('node-schedule');
 
       let schedule = '* * 1 * * *';
       if (Config.has('private.scheduler.schedule')) {
         schedule = Config.get('private.scheduler.schedule');
       }
-      NodeSchedule.scheduleJob(schedule, this.trigger);
+      // NodeSchedule.scheduleJob(schedule, this.trigger);
       Logger.debug(`Using node-scheduler (${schedule})`);
     }
   }
