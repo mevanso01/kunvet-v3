@@ -559,6 +559,7 @@
           profile_pic: null,
           org_list: [],
           resumes: [],
+          default_org: null,
         },
         email_verified: true,
         emailSent: false,
@@ -841,6 +842,7 @@
               major: this.userdata.major,
               profile_pic: this.userdata.profile_pic,
               resumes: _resumes,
+              default_org: this.userdata.default_org,
             },
           },
           refetchQueries: [{
@@ -857,6 +859,7 @@
                   email
                   profile_pic
                   org_list
+                  default_org
                   resumes {
                     name
                     filename
@@ -981,6 +984,7 @@
                 email
                 org_list
                 profile_pic
+                default_org
                 resumes {
                   name
                   filename
@@ -1001,6 +1005,7 @@
           this.userdata.major = res.major;
           this.userdata.email = res.email;
           this.userdata.profile_pic = res.profile_pic;
+          this.userdata.default_org = res.default_org;
           this.userdata.resumes = res.resumes.concat();
           this.commitUserdata();
           if (res.org_list) {
@@ -1017,6 +1022,8 @@
           type: 'keepBdata',
           bdata: null,
         });
+        this.userdata.default_org = id;
+        this.updateAccount();
         App.methods.login_b();
         this.$router.push('/myorg');
       },

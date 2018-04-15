@@ -12,5 +12,6 @@ base.private.database = 'mongodb://localhost/kunvet-dev';
 base.private.files.defaultStorage = 'local';
 base.private.files.s3.bucket = 'kunvet-dev';
 base.private.cors.allowedOrigins.push('http://localhost:8080');
+base.private.cors.allowedOrigins.push('http://localhost:8081');
 
 module.exports = base;

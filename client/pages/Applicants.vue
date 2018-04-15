@@ -75,9 +75,16 @@
                     <v-btn
                       v-if="item.status === 'accepted'"
                       class="kunvet-black-small-btn"
-                      @click=""
+                      @click="showContactInfoDialog(item)"
                     >
-                      Message
+                      Show contact info
+                    </v-btn>
+                    <v-btn
+                      v-if="item.status === 'accepted'"
+                      class="kunvet-black-small-btn"
+                      :href="`mailto:${item.email}`"
+                    >
+                      Send email
                     </v-btn>
                   </span>
                   <span v-else>
@@ -135,6 +142,20 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dialogs.showContactInfo">
+      <v-card>
+        <v-list>
+          <v-list-tile v-for="(i, index) in contactInfoItems" :key="index">
+            {{ i }}
+          </v-list-tile>
+        </v-list>
+      </v-card>
+      <v-card-actions>
+        <v-btn flat="flat" @click.native="resetDialogState">
+          Close
+        </v-btn>
+      </v-card-actions>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -191,7 +212,9 @@
           currentApplicant: {},
           showAccept: false,
           showReject: false,
+          showContactInfo: false,
         },
+        contactInfoItems: [],
         svgs: {
           locationMarker: LocationMarkerSvg,
           kunvetCharacter: KunvetCharacterSvg,
@@ -297,7 +320,13 @@
       resetDialogState() {
         this.dialogs.showAccept = false;
         this.dialogs.showReject = false;
+        this.dialogs.showContactInfo = false;
         this.dialogs.currentApplicant = {};
+        this.contactInfoItems = [];
+      },
+      showContactInfoDialog(item) {
+        this.contactInfoItems = [item.email];
+        this.dialogs.showContactInfo = true;
       },
       isAcceptedOrRejected({ status }) {
         return status === 'accepted' || status === 'rejected';

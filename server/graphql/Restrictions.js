@@ -102,10 +102,9 @@ export default {
 
     const jobIds = (await Models.Job.find({
       user_id: req.context.user._id,
-    })).map(job => job.id);
-
+    })).map(job => job._id.toString());
     if (Array.isArray(result)) {
-      result = result.filter(application => jobIds.includes(application.job_id));
+      result = result.filter(application => jobIds.includes(application.job_id.toString()));
       return result;
     }
 
