@@ -115,8 +115,9 @@ a:hover{
 
 </template>
 <script>
-import App from '@/App';
+// import App from '@/App';
 import Axios from 'axios';
+import EventBus from '@/EventBus';
 
 export default {
   data() {
@@ -166,11 +167,12 @@ export default {
         if (!response.data.success) {
           // Unsuccessful
           console.error('Server error', response.data);
+          EventBus.$emit('logout');
           return;
-        }
-        if (!response.data.status) {
+        } else if (!response.data.status) {
           // Logged out
           console.error('Logged out', response.data);
+          EventBus.$emit('logout');
           return;
         }
         const udata = response.data.user;
@@ -180,12 +182,14 @@ export default {
 
         if (udata.default_org === '' || !udata.default_org) {
           // login individual
-          App.methods.login_i();
+          // App.methods.login_i();
+          EventBus.$emit('individual');
           this.$router.push('/');
         } else {
           // login business
           this.commitBusinessID(udata.default_org);
-          App.methods.login_b();
+          // App.methods.login_b();
+          EventBus.$emit('business');
           this.$router.push('/myorg');
         }
       }).catch((error) => {

@@ -68,6 +68,9 @@ ol, ul {
   background-color: #ef5350;
   color: #fff;
 }
+.navbarNotifications {
+  max-height: 240px;
+}
 .black {
   background-color: #222 !important;
   border-color: #222 !important;

@@ -35,7 +35,7 @@
                           <img
                             :src="svgs.kunvetCharacter"
                           />
-                          <div class="new-applicant-card__time-ago"s>
+                          <div class="new-applicant-card__time-ago" style="margin-left: 5px;">
                             <timeago :since="item.date" />
                           </div>
                       </figure>

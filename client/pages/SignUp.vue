@@ -238,11 +238,7 @@
 </template>
 <script>
 import axios from 'axios';
-import App from '@/App';
-
-// import Vue from 'vue';
-// import VueResource from 'vue-resource';
-// Vue.use(VueResource);
+import EventBus from '@/EventBus';
 
 export default {
   data() {
@@ -400,12 +396,12 @@ export default {
 
         if (udata.default_org === '' || !udata.default_org) {
           // login individual
-          App.methods.login_i();
+          EventBus.$emit('individual');
           this.$router.push('/account');
         } else {
           // login business
           this.commitBusinessID(udata.default_org);
-          App.methods.login_b();
+          EventBus.$emit('business');
           this.$router.push('/myorg');
         }
       }).catch((error) => {

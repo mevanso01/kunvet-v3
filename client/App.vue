@@ -40,7 +40,7 @@
                   <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>
                   <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
                 </v-btn>
-                <Notifications isNavbar/>
+                <Notifications :isNavbar="true" />
               </template>
 
               <template v-else>
@@ -49,9 +49,14 @@
                   <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
                 </v-btn>
                 <v-list v-if="item.subItems.length > 0" dense>
-                  <v-list-tile v-for="(subitem, index) in item.subItems" :key="index" @click="routeTo(subitem.route)">
-                    <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
-                  </v-list-tile>
+                  <div v-for="(subitem, index) in item.subItems" :key="index">
+                    <v-list-tile v-if="subitem.text" @click="routeTo(subitem.route)">
+                      <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
+                    </v-list-tile>
+                    <div v-else="subitem === 'SwitchAccount'" style="width: 250px;">
+                      <SwitchAccount />
+                    </div>
+                  </div>
                 </v-list>
               </template>
 
@@ -168,9 +173,11 @@ import Store from '@/store';
 import VuexLS from '@/store/persist';
 import gql from 'graphql-tag';
 import axios from 'axios';
+import EventBus from '@/EventBus';
 
 import StringHelper from '@/utils/StringHelper';
 import Notifications from '@/components/Notifications';
+import SwitchAccount from '@/components/SwitchAccount';
 
 // svgs
 import sfw from './assets/navbar/suitcase_full_white.svg';
@@ -202,7 +209,7 @@ Vue.mixin({
   },
 });
 
-const Bus = new Vue();
+
 export default {
   data() {
     return {
@@ -225,7 +232,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
-          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: [{ text: 'Settings', route: '/settings' }] },
+          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }] },
         ],
         [
           {
@@ -239,7 +246,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
-          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: [{ text: 'Settings', route: '/settings' }, { text: 'Personal Bio', route: '/account' }] },
+          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, { text: 'Personal Bio', route: '/account' }] },
         ],
       ],
       sidebarItems: [
@@ -291,10 +298,11 @@ export default {
   },
   components: {
     Notifications,
+    SwitchAccount,
   },
   methods: {
     firstSearch() {
-      Bus.$emit('firstSearch');
+      EventBus.$emit('firstSearch');
       this.firstS = false;
     },
     lo() {
@@ -306,16 +314,16 @@ export default {
       Store.state.firstSearch = true;
     },
     logout() {
-      Bus.$emit('logout');
+      EventBus.$emit('logout');
     },
     login_i() {
-      Bus.$emit('individual');
+      EventBus.$emit('individual');
     },
     login_b() {
-      Bus.$emit('business');
+      EventBus.$emit('business');
     },
     emitSetNumNotifications(n) {
-      Bus.$emit('setNotifications', n);
+      EventBus.$emit('setNotifications', n);
     },
     l1() {
       this.acct = 1;
@@ -366,13 +374,62 @@ export default {
     isActiveJobPostLink(link) {
       return link === this.$route.path ? 'job-post__helper-nav-bar__active-link' : '';
     },
+    updateAccount(defaultOrgId) {
+      this.$apollo.mutate({
+        mutation: (gql`
+          mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
+        {
+          updateAccount (
+            filter: { _id: $uid },
+            record: $record,
+          ) {
+            recordId
+          }
+        }`),
+        variables: {
+          uid: this.$store.state.userID,
+          record: {
+            default_org: defaultOrgId,
+          },
+        },
+        refetchQueries: [{
+          query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+                _id
+                firstname
+                lastname
+                school
+                degree
+                major
+                email
+                profile_pic
+                org_list
+                default_org
+                resumes {
+                  name
+                  filename
+                  resumeid
+                }
+            }
+          }`),
+          variables: {
+            uid: this.uid,
+          },
+        }],
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
   },
   created() {
-    Bus.$on('logout', this.lo);
-    Bus.$on('individual', this.l1);
-    Bus.$on('business', this.l2);
-    Bus.$on('firstSearch', this.fs1);
-    Bus.$on('setNotifications', n => {
+    EventBus.$on('logout', this.lo);
+    EventBus.$on('individual', this.l1);
+    EventBus.$on('business', this.l2);
+    EventBus.$on('firstSearch', this.fs1);
+    EventBus.$on('setNotifications', notifications => {
+      const n = Array.isArray(notifications) ? notifications.length : 0;
       if (typeof n === 'number') {
         this.numNotifications = n;
       } else {

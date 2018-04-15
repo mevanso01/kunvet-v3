@@ -57,6 +57,9 @@ const Store = new Vuex.Store({
     setBusinessID(state, payload) {
       state.businessID = payload.id;
     },
+    unsetBusinessID(state) {
+      state.businessID = null;
+    },
     keepSearch(state, payload) {
       state.selectedCities = payload.sCities;
       state.selectedTypes = payload.sTypes;

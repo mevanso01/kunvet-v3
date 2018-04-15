@@ -100,9 +100,11 @@
   height: 44px;
 }
 .new-applicant-card__regular-icon {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   margin-right: 5px;
+  position: relative;
+  top: 2px;
 }
 .new-applicant-card__title {
   margin-bottom: 0;
@@ -118,7 +120,7 @@
 .new-applicant-card__time-ago {
   font-size: 0.8em;
   color: #5D5D5D;
-  margin-left: 5px;
+  margin-left: 2px;
 }
 .new-applicant-card__unread-circle {
   background: #ef5350;

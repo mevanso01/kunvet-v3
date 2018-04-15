@@ -929,7 +929,6 @@ export default {
     picsUploaded(fileIds) {
       this.picUploaderDialog = false;
       this.images.push(fileIds);
-      console.log(this.images);
     },
     showDeletePictureModal(croppedID) {
       this.deletePictureModal.show = true;

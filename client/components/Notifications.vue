@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list :dense="isNavbar" v-show="notifications.length > 0">
+    <v-list :dense="isNavbar" v-show="notifications.length > 0" v-bind:class="{ navbarNotifications: isNavbar }">
       <v-list-tile v-for="(n, index) in notifications" :key="index">
         <v-list-tile-content>
           <v-list-tile-title style="font-size: 14px; cursor: pointer;" @click="routeTo(n.route, index)">
@@ -21,10 +21,10 @@
 </template>
 <script>
 import gql from 'graphql-tag';
-import App from '@/App';
+import EventBus from '@/EventBus';
 
 export default {
-  props: ['isNavbar', 'max'],
+  props: ['isNavbar'],
   data() {
     return {
       notifications: [],
@@ -56,9 +56,8 @@ export default {
       }).then((res) => {
         var notifications = [];
         const n = res.data.findAccount.notifications;
-        console.log('FETCHED', n);
         for (var i in n) {
-          if (n[i].notification_type) {
+          if (n[i].text) {
             notifications.push({
               text: n[i].text,
               route: n[i].route,
@@ -67,16 +66,14 @@ export default {
             });
           }
         }
-        App.methods.emitSetNumNotifications(n.length);
-        const maxNum = (this.max && typeof this.max === 'number') ? this.max : 8;
-        this.notifications = notifications.slice(0, maxNum);
-        console.log(this.notifications);
+        EventBus.$emit('setNotifications', notifications);
+        // const maxNum = (this.max && typeof this.max === 'number') ? this.max : 8;
+        // this.notifications = notifications.slice(0, maxNum);
       }).catch(console.error);
     },
     removeNotification(index) {
-      console.log(this.$store.state.userID);
       this.notifications.splice(index, 1);
-      App.methods.emitSetNumNotifications(this.notifications.length);
+      EventBus.$emit('setNotifications', this.notifications);
       this.$apollo.mutate({
         mutation: (gql` mutation ($uid: MongoID, $record: UpdateOneAccountInput!) {
           updateAccount (
@@ -120,6 +117,9 @@ export default {
     },
   },
   created() {
+    EventBus.$on('setNotifications', notifications => {
+      this.notifications = notifications;
+    });
     if (!this.loaded) {
       this.getNotifications();
     }

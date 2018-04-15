@@ -289,6 +289,7 @@
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
   import Config from 'config';
+  import EventBus from '@/EventBus';
 
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
@@ -432,8 +433,7 @@
         });
       },
       fetchBusinessData() {
-        console.log('fetching business data');
-        console.log(this.$store.state.businessID);
+        // console.log(this.$store.state.businessID);
         this.$apollo.query({
           query: (gql`query ($bid: MongoID) {
             findOrganization (filter: {
@@ -510,6 +510,7 @@
       },
     },
     created() {
+      EventBus.$on('business', this.fetchBusinessData);
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.acct === 2) {
           if (data.bdata) {
