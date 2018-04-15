@@ -45,7 +45,7 @@ async function sendNewApplicationNotification(req, next) {
 
   try {
     await mailer.sendTemplate(
-      user.email,
+      employer.email,
       'application-created',
       {
         name: `${user.firstname} ${user.lastname}`,
@@ -58,7 +58,7 @@ async function sendNewApplicationNotification(req, next) {
 
   try {
     employer.notifications.push({
-      text: 'Your job has a new applicant!',
+      text: `New applicant: ${user.firstname} ${user.lastname}`,
       route: '/applicants',
       notification_type: 'application',
       date: Date.now,

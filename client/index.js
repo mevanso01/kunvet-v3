@@ -17,6 +17,13 @@ import store from '@/store';
 
 import VueCroppie from 'vue-croppie';
 
+let loaded = false;
+function loadTheRest() {
+  if (!loaded) {
+    loaded = true;
+  }
+}
+
 Vue.use(VueCroppie);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
@@ -40,7 +47,10 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/pages/Index'),
+      component: () => {
+        loadTheRest();
+        return import('@/pages/Index');
+      },
     },
     {
       path: '*',
