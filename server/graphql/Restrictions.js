@@ -104,9 +104,16 @@ export default {
       user_id: req.context.user._id,
     })).map(job => job.id);
 
-    result = result.filter(application => jobIds.includes(application.job_id));
+    if (Array.isArray(result)) {
+      result = result.filter(application => jobIds.includes(application.job_id));
+      return result;
+    }
 
-    return result;
+    if (jobIds.includes(result.job_id)) {
+      return result;
+    }
+
+    return null;
   },
 
   // Restriction factories
@@ -135,7 +142,10 @@ export default {
     // Restricts allowed fields in the result
     return async (req, next) => {
       const result = await next(req);
-      return result.map(e => pick(e, allowedFields));
+      if (Array.isArray(result)) {
+        return result.map(e => pick(e, allowedFields));
+      }
+      return pick(result, allowedFields);
     };
   },
   getDropResultFields(forbiddenFields) {
@@ -143,7 +153,10 @@ export default {
     // The exact opposite of FilterResultFields
     return async (req, next) => {
       const result = await next(req);
-      return result.map(e => omit(e, forbiddenFields));
+      if (Array.isArray(result)) {
+        return result.map(e => omit(e, forbiddenFields));
+      }
+      return omit(result, forbiddenFields);
     };
   },
   getEnsureRecordHasUserId(idField) {
