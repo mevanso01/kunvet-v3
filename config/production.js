@@ -51,6 +51,12 @@ module.exports = {
 
     database: Credentials.database,
     aws: Credentials.aws,
+    cors: {
+      allowedOrigins: [
+        'https://kunvet.com',
+        'https://dev.kunvet.com',
+      ],
+    },
     sentry: {
       dsn: Credentials.sentryServerDsn,
     },
