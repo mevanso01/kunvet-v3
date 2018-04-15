@@ -153,7 +153,7 @@
             <div><router-link to="/signup">Sign up</router-link></div>
           </div>
         </div>
-        <p id="bottom-footer">Kunvet 2017 &copy; All rights reserved.</p>
+        <p id="bottom-footer">Kunvet 2018 &copy; All rights reserved.</p>
       </div>
     </div>
   </v-app>
