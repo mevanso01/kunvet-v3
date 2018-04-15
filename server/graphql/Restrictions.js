@@ -95,25 +95,27 @@ export default {
 
   ApplicationJobOwner: async (req, next) => {
     let result = await next(req);
-
     if (!result) {
       return result;
     }
 
-    const jobIds = (await Models.Job.find({
+    let jobIds = await Models.Job.find({
       user_id: req.context.user._id,
-    })).map(job => job._id.toString());
+    });
+    jobIds = jobIds.map(job => job._id.toString());
+    
     if (Array.isArray(result)) {
       result = result.filter(application => jobIds.includes(application.job_id.toString()));
       return result;
-    }
-
-    if (jobIds.includes(result.job_id.toString())) {
+    } else if (jobIds.includes(result.job_id.toString())) {
       return result;
     }
 
     return null;
   },
+
+  // TODO: implement me!
+  ApplicationJobOwnerMutation: (req, next) => next(req),
 
   // Restriction factories
   getFilterByUserId(idField) {

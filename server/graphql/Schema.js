@@ -149,9 +149,9 @@ GQC.rootMutation().addFields({
       Restrictions.getFilterByUserId('user_id'),
     ], {
       updateJob: Job.get('$updateOne'),
-      ...wrapResolvers(Restrictions.ApplicationJobOwner, {
-        updateApplication: Applicant.get('$updateOne'),
-      }),
+    }),
+    ...wrapResolvers(Restrictions.ApplicationJobOwnerMutation, {
+      updateApplication: Applicant.get('$updateOne'),
     }),
     // == Remove ==
     ...wrapResolvers(Restrictions.getFilterByUserId('user_id'), {

@@ -352,6 +352,7 @@ export default {
                 query($aplId: MongoID) {
                   findApplicant(filter: { _id: $aplId }) {
                     ${queries.FindApplicantRecord}
+                    notes
                   }
                 }
               `,
@@ -371,6 +372,7 @@ export default {
             query($aplId: MongoID) {
               findApplicant(filter: { _id: $aplId }) {
                 ${queries.FindApplicantRecord}
+                notes
               }
             }
           `,
@@ -440,19 +442,21 @@ export default {
       return job.user_id === this.$store.state.userID;
     },
     updateApplicantStatus(newStatus = 'submitted') {
+      console.log(newStatus);
       this.loading = true;
-      axios
-        .post(`/application/${this.id}/setStatus/${newStatus}`)
+      axios.post(`/application/${this.id}/setStatus/${newStatus}`)
         .then((res) => {
+          console.log('RES', res);
           this.loading = false;
           this.data.status = newStatus;
           if (res.data.success) {
             this.closeDialogs();
             this.$apollo.mutate({
               mutation: gql`
-                mutation($aplId: MongoID) {
+                mutation($aplId: MongoID, $status: String) {
                   updateApplication(
                     filter: { _id: $aplId }
+                    record: { status: $status }
                   ) {
                     recordId
                   }
@@ -460,6 +464,7 @@ export default {
               `,
               variables: {
                 aplId: this.id,
+                status: newStatus,
               },
               refetchQueries: [{
                 query: gql`

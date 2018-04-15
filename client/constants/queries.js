@@ -62,7 +62,6 @@ const FindApplicantRecord = `
   school
   degree
   major
-  notes
   date
   expiry_date
   resume {

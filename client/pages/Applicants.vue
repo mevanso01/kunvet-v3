@@ -258,6 +258,7 @@
               job_id: $JobId
             }) {
               ${queries.FindApplicantRecord}
+              notes
             }
           }`),
           variables: {
