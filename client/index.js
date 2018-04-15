@@ -20,6 +20,33 @@ import VueCroppie from 'vue-croppie';
 let loaded = false;
 function loadTheRest() {
   if (!loaded) {
+    import('@/pages/Index');
+    import('@/pages/Employee');
+    import('@/pages/Login');
+    import('@/pages/SignUp');
+    import('@/pages/JobDetail');
+    import('@/pages/Validate');
+    import('@/pages/ResetPassword');
+    import('@/pages/Resume');
+    import('@/pages/CreateResume');
+    import('@/pages/MyJobs');
+    import('@/pages/SavedJobs');
+    import('@/pages/AppliedJobs');
+    import('@/pages/Messages');
+    import('@/pages/NotificationPage');
+    import('@/pages/Account');
+    import('@/pages/Settings');
+    import('@/pages/CreateNewJob');
+    import('@/pages/ViewApplicant');
+    import('@/pages/MyOrg');
+    import('@/pages/PhotoGallery');
+    import('@/pages/Applicants');
+    // import('@/pages/AboutUs');
+  },
+  {
+    path: '/Terms',
+    component: () => import('@/pages/Terms'),
+  },
     loaded = true;
   }
 }
