@@ -155,7 +155,6 @@
   export default {
     created() {
       if (!this.$store.state.acct) {
-        console.log('restore state');
         VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
           if (data.bdata && data.acct === 2) {
             this.user = data.bdata.business_name;
@@ -290,9 +289,9 @@
         this.updateApplicantStatus('rejected');
       },
       openApplication(item) {
-        if (item.status === 'submitted') {
+        /* if (item.status === 'submitted') {
           this.updateApplicantStatus('opened', item._id);
-        }
+        } */
         this.$router.push(`view-applicant/${item._id}`);
       },
       resetDialogState() {

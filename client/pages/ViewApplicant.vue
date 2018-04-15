@@ -415,7 +415,9 @@ export default {
               this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
             } */
           }
-          if (res.status !== 'opened') this.updateApplicantStatus('opened');
+          if (res.status === 'submitted') {
+            this.updateApplicantStatus('opened');
+          }
         })
         .catch(error => {
           console.error(error);
@@ -445,10 +447,35 @@ export default {
           this.data.status = newStatus;
           if (res.data.success) {
             this.closeDialogs();
+            this.$apollo.mutate({
+              mutation: gql`
+                mutation($aplId: MongoID) {
+                  updateApplication(
+                    filter: { _id: $aplId }
+                  ) {
+                    recordId
+                  }
+                }
+              `,
+              variables: {
+                aplId: this.id,
+              },
+              refetchQueries: [{
+                query: gql`
+                  query($aplId: MongoID) {
+                    findApplicant(filter: { _id: $aplId }) {
+                      ${queries.FindApplicantRecord}
+                    }
+                  }
+                `,
+                variables: { aplId: this.id },
+              }],
+            }).catch(error => {
+              console.error(error);
+            });
           } else {
             this.errorOccured = true;
           }
-          this.getData();
         })
         .catch((err) => {
           this.errorOccured = true;

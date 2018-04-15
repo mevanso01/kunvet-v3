@@ -98,18 +98,14 @@
       async getData() {
         const { data: { findApplicants: applications } } = await this.$apollo.query({
           query: (gql`query ($user_id: MongoID) {
-            findApplicants (filter: {
-              user_id: $user_id
-            }) {
+            findMyApplications (filter: {}) {
               _id
               job_id
               status
               date
+              expiry_date
             }
           }`),
-          variables: {
-            user_id: this.$store.state.userID,
-          },
         });
         const jobPromises = Promise.all(applications.map(this.getPairForEachApplication));
         this.jobsAndApplications = (await jobPromises).filter(({ job }) => job);

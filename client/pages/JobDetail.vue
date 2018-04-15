@@ -567,17 +567,15 @@ export default {
     },
     _checkIsApplied() {
       this.$apollo.query({
-        query: (gql`query ($uid: MongoID, $id: MongoID) {
-          findApplicant (filter: {
-            user_id: $uid,
+        query: (gql`query ($uid: MongoID, $jid: MongoID) {
+          findMyApplication (filter: {
             job_id: $id
           }) {
             _id
           }
         }`),
         variables: {
-          uid: this.uid,
-          id: this.id,
+          jid: this.id,
         },
       }).then((data) => {
         if (data.data.findApplicant) {
