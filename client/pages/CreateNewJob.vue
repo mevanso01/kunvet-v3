@@ -736,7 +736,6 @@ export default {
           this.saveForLater();
         }
       }
-
     },
     updateActiveJob() {
       this.validateBeforePosting();
