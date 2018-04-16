@@ -53,7 +53,7 @@
                     <v-list-tile v-if="subitem.text" @click="routeTo(subitem.route)">
                       <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
                     </v-list-tile>
-                    <div v-else="subitem === 'SwitchAccount'" style="width: 250px;">
+                    <div v-else="subitem === 'SwitchAccount'">
                       <SwitchAccount />
                     </div>
                   </div>

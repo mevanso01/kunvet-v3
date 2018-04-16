@@ -335,14 +335,17 @@ export default {
       };
       axios.post('/auth/register', bdata, headers).then((res) => {
         this.loading = false;
-        if (res.success) {
+        if (res.data.success) {
           this.chosenForm = 'success';
           this.logIntoAcct(this.email, this.password);
-        } else if (res.message === 'User already exists') {
+        } else if (res.data.message === 'User already exists') {
           this.error = 'UserExistsError';
         } else if (res.data.message === 'Email exists but not verified') {
           this.error = 'Not Verified';
           this.chosenForm = 'not verified';
+        } else {
+          this.chosenForm = 'error';
+          console.error(res);
         }
       }, (error) => {
         this.chosenForm = 'error';
@@ -375,6 +378,8 @@ export default {
         if (response.data.success) {
           // logged in successfully
           this.fetchAcctData();
+        } else {
+          console.error(response);
         }
       }).catch(console.error);
     },

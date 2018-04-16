@@ -18,8 +18,8 @@
   }
 </style>
 <template>
-  <div v-if="accountItems.length > 1">
-    <p style="padding: 0 16px; margin-bottom: 2px; font-size: 10px;">Signed in as:</p>
+  <div v-if="accountItems.length > 1" style="width: 250px;">
+    <p style="padding: 0 16px; margin-bottom: 0; font-size: 10px;">Signed in as:</p>
     <v-expansion-panel class="switchAccount-expansion-panel">
       <v-expansion-panel-content>
         <div slot="header">{{ selectedAccount }}</div>
