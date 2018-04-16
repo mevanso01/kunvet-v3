@@ -82,12 +82,22 @@
             uid: this.$store.state.userID,
           },
         });
-        this.orgList = await this.getOrganizations(res.org_list);
-        this.defaultOrg = this.orgList.find(({ _id }) => _id === res.default_org);
+        if (res.org_list && res.org_list[0] !== null) {
+          this.orgList = await this.getOrganizations(res.org_list);
+        }
+        if (res.defaultOrg) {
+          this.defaultOrg = this.orgList.find(({ _id }) => _id === res.default_org);
+        }
       },
       async getOrganizations(orgList) {
+        console.log(orgList);
         const resolvedOrgs = await Promise.all(orgList.map(this.getOrgByID));
-        return resolvedOrgs.map(this.parseOrg);
+        return resolvedOrgs.map(x => {
+          var rObj = {};
+          rObj.name = x.business_name;
+          rObj._id = x._id;
+          return rObj;
+        });
       },
       parseOrg({ business_name: name, _id }) {
         return {
@@ -145,7 +155,7 @@
         });
         this.defaultOrg = { name: defaultOrg.name, _id: defaultOrg._id };
       },
-      async loginToRegularAccount() {
+      loginToRegularAccount() {
         App.methods.login_i();
       },
     },
@@ -154,20 +164,20 @@
         return this.orgList.concat([{ name: 'None (Your individual account)', _id: null }]);
       },
     },
-    async created() {
+    created() {
       if (this.$store.state.acct === 2) {
         this.uid = this.$store.state.userID;
-        await this.loadOrganizationData();
+        this.loadOrganizationData();
       } else if (this.$store.state.acct === 1) {
         this.uid = this.$store.state.userID;
-        await this.loadOrganizationData();
+        this.loadOrganizationData();
       } else {
         VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
           if (data.acct === 2) {
             this.uid = data.userID;
-            await this.loadOrganizationData();
+            this.loadOrganizationData();
           } else if (data.acct === 1) {
-            await this.loadOrganizationData();
+            this.loadOrganizationData();
           } else {
             // not logged in
             this.$router.push('/login');

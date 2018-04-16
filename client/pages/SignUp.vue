@@ -305,6 +305,7 @@ export default {
         reqtype: 'validate',
       };
       axios.post('/auth/register', data, headers).then((res) => {
+        console.log('RES', res);
         this.loading = false;
         if (res.data.success) {
           this.chosenForm = 'success';
@@ -334,6 +335,7 @@ export default {
         reqtype: 'validate',
       };
       axios.post('/auth/register', bdata, headers).then((res) => {
+        console.log('RES', res);
         this.loading = false;
         if (res.data.success) {
           this.chosenForm = 'success';
@@ -371,6 +373,7 @@ export default {
       });
     },
     logIntoAcct(email, password) {
+      console.log('trying to log into new account');
       axios.post('/auth/login', {
         email: email,
         password: password,
