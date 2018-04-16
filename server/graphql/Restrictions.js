@@ -102,11 +102,14 @@ export default {
     let jobIds = await Models.Job.find({
       user_id: req.context.user._id,
     });
+    if (jobIds.lenght === 0) return null;
     jobIds = jobIds.map(job => job._id.toString());
+    // console.log(jobIds);
     if (Array.isArray(result)) {
+      // console.log('result', result);
       result = result.filter(application => jobIds.includes(application.job_id.toString()));
       return result;
-    } else if (jobIds.includes(result.job_id.toString())) {
+    } else if (result.job_id && jobIds.includes(result.job_id.toString())) {
       return result;
     }
 

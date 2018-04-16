@@ -24,7 +24,7 @@
       <v-expansion-panel-content>
         <div slot="header">{{ selectedAccount }}</div>
         <v-list dense style="background-color: #f4f4f4; padding: 0;">
-          <v-list-tile v-for="(item, i) in accountItems" :key="i" @click="switchTo(item._id)">
+          <v-list-tile v-for="(item, i) in accountItems" :key="i" @click="switchTo(item)">
             <v-list-tile-title style="font-size: 14px;">{{ item.name }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -67,6 +67,7 @@ export default {
         },
       }).then((data) => {
         const res = data.data.findAccount;
+        console.log('RES 1', res);
         this.default_org = res.default_org;
         this.populateOrgList(res.org_list);
         this.fname = res.firstname;
@@ -85,8 +86,10 @@ export default {
         );
       }
       this.accountItems = [{ name: `${this.fname} ${this.lname}`, _id: null }].concat(this.org_list);
-      if (this.default_org) {
-        this.selectedAccount = this.accountItems.find(x => x._id === this.default_org).name;
+      const defaultOrg = this.$store.state.default_org;
+      console.log('DEFAULT ORG', defaultOrg);
+      if (defaultOrg) {
+        this.selectedAccount = this.accountItems.find(x => x._id === defaultOrg).name;
       } else {
         this.selectedAccount = `${this.fname} ${this.lname}`;
       }
@@ -112,15 +115,18 @@ export default {
         });
       });
     },
-    async switchTo(id) {
-      this.defaultOrg = id;
+    async switchTo(item) {
+      const id = item._id;
+      this.default_org = id;
+      this.selectedAccount = item.name;
+      await this.updateAccountDefaultOrg(id);
       if (id !== null) {
         await this.$store.commit({
           type: 'keepBdata',
           bdata: null,
         });
+        this.$store.commit({ type: 'setDefaultOrg', id });
         this.$store.commit({ type: 'setBusinessID', id });
-        this.updateAccount();
         EventBus.$emit('business');
         this.$router.push('/myorg');
       } else {
@@ -128,12 +134,13 @@ export default {
           type: 'keepBdata',
           bdata: null,
         });
+        this.$store.commit({ type: 'setDefaultOrg', id });
         this.$store.commit({ type: 'unsetBusinessID' });
         EventBus.$emit('individual');
         this.$router.push('/account');
       }
     },
-    updateAccount(defaultOrgId) {
+    updateAccountDefaultOrg(defaultOrgId) {
       this.$apollo.mutate({
         mutation: (gql`
           mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
@@ -174,7 +181,7 @@ export default {
             }
           }`),
           variables: {
-            uid: this.uid,
+            uid: this.$store.state.userID,
           },
         }],
       }).catch((error) => {

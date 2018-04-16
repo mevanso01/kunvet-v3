@@ -198,7 +198,7 @@
             <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
             <div v-show="findJob.education && findJob.education !== 'None'" class="blue-row" >
               <img class="job-info-icon" :src="svgs.degree"></img>
-              <span>Degree: {{ findJob.education.replace("_", " ") }}</span>
+              <span v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</span>
             </div>
             <div v-show="findJob.preferred_major" class="blue-row">
               <img class="job-info-icon" :src="svgs.majorPreferred"></img>

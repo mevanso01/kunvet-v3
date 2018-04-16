@@ -152,13 +152,20 @@
             </div>
             <v-layout row wrap class="view-applicant-container">
               <v-flex>
-                <div class="view-applicant-profile-pic-cont hidden-xs-only" />
+                <div class="view-applicant-profile-pic-cont hidden-xs-only">
+                  <img v-if="profile_pic" style="width: 100%; height: 100%;" :src="`${serverUrl}/file/get/${profile_pic}`"></img>
+                </div>
                 <div class="view-applicant-details">
                   <h1 style="padding-left: 4px; margin-bottom: 0;">{{ data.name }}</h1>
                   <v-list>
                     <v-list-tile v-if="data.school" class="cust-tile-2">
                       <v-list-tile class="cust-tile-1">
-                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                        <img
+                          :src="svgs.school"
+                          width=16
+                          height=16
+                          style="margin-left: 3px"
+                        />
                       </v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>
@@ -183,7 +190,12 @@
                     </v-list-tile>
                     <v-list-tile v-if="data.major" class="cust-tile-2">
                       <v-list-tile class="cust-tile-1">
-                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <img
+                          :src="svgs.major"
+                          width=16
+                          height=16
+                          style="margin-left: 3px"
+                        />
                       </v-list-tile>
                       <v-list-tile-content>
                         {{ data.major }}
@@ -191,7 +203,12 @@
                     </v-list-tile>
                     <v-list-tile v-if="data.email" class="cust-tile-2">
                       <v-list-tile class="cust-tile-1">
-                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <img
+                          :src="svgs.email"
+                          width=16
+                          height=16
+                          style="margin-left: 3px"
+                        />
                       </v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>
@@ -272,16 +289,19 @@
 import axios from 'axios';
 import gql from 'graphql-tag';
 import pdf from 'vue-pdf';
+import Config from 'config';
 
 import { degreeDbToString } from '@/constants/degrees';
-
 import AccountHeader from '@/components/AccountHeader';
+import queries from '@/constants/queries';
+import ProfilePicHelper from '@/utils/GetProfilePic';
 
 import DegreeSvg from '@/assets/account/degree.svg';
-import MajorPreferredSvg from '@/assets/job_detail/major_preferred.svg';
 import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
-import Config from 'config';
-import queries from '@/constants/queries';
+import SchoolSvg from '@/assets/account/account_school.svg';
+import MajorSvg from '@/assets/account/account_major.svg';
+import EmailSvg from '@/assets/account/account_email.svg';
+
 
 export default {
   props: ['id'],
@@ -307,9 +327,11 @@ export default {
       newNotes: '',
       // mock data end
       svgs: {
-        majorPreferred: MajorPreferredSvg,
+        major: MajorSvg,
         resume: ResumeSvg,
         degree: DegreeSvg,
+        school: SchoolSvg,
+        email: EmailSvg,
       },
       dialogs: {
         showAccept: false,
@@ -319,6 +341,7 @@ export default {
       loading: false,
       errorOccured: false,
       serverUrl: Config.get('serverUrl'),
+      profile_pic: undefined,
     };
   },
   methods: {
@@ -382,9 +405,9 @@ export default {
         })
         .then(async data => {
           const res = data.data.findApplicant;
-          const isEmployer = await this.isEmployer(res.job_id);
+          // const isEmployer = await this.isEmployer(res.job_id);
           // Only employers that made this job should be able to view the applicant.
-          if (!isEmployer) this.$router.push('/applicants');
+          // if (!isEmployer) this.$router.push('/applicants');
           this.data.name = res.name;
           this.data.school = res.school;
           this.data.email = res.email;
@@ -417,6 +440,7 @@ export default {
               this.src = null;
               this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
             } */
+            this.profile_pic = await ProfilePicHelper.getProfilePic(res.user_id, null);
           }
           if (res.status === 'submitted') {
             this.updateApplicantStatus('opened');

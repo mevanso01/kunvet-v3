@@ -53,7 +53,7 @@
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            {{ bdata.address }}
+                            <p>{{ bdata.address }}</p>
                             <i class="fa fa-edit acct-page-container__edit-icon"
                               @click="createEditModal('address', bdata.address, 'address')"
                             />
@@ -132,7 +132,7 @@
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            {{ bdata.phone_number }}
+                            <p>{{ bdata.phone_number }}</p>
                             <i
                               class="fa fa-edit acct-page-container__edit-icon"
                               @click="createEditModal('phone', bdata.phone_number, 'phone_number')"
@@ -174,12 +174,10 @@
                         </v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            <a
-                              :href="`http://${bdata.website}`"
-                              target="_blank"
-                              class="acct-page-container__website"
-                            >
-                              {{ bdata.website }}</a><i class="fa fa-edit acct-page-container__edit-icon" @click="createEditModal('website url', bdata.website, 'website')" />
+                            <a :href="`http://${bdata.website}`" target="_blank" class="acct-page-container__website">
+                              {{ bdata.website }}
+                            </a>
+                            <i class="fa fa-edit acct-page-container__edit-icon" @click="createEditModal('website url', bdata.website, 'website')" />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
@@ -492,6 +490,7 @@
             findApplicants (filter: {
               job_id: $JobId
             }) {
+              job_id
               status
             }
           }`),

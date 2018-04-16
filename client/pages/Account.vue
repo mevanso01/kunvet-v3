@@ -68,7 +68,7 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>
-                        {{ userdata.school }}
+                        <p>{{ userdata.school }}</p>
                         <i
                           class="fa fa-edit acct-page-container__edit-icon"
                           @click="createEditModal('school', userdata.school, 'school')"
@@ -646,6 +646,7 @@
             findApplicants (filter: {
               job_id: $JobId
             }) {
+              job_id
               status
             }
           }`),

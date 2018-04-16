@@ -16,7 +16,6 @@
               :job="job"
               :saveJobFunc="unsaveJob"
               :isSaved="true"
-              :defaultFromUCI="true"
             />
           </div>
         </v-flex>

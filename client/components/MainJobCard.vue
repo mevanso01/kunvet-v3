@@ -34,8 +34,11 @@
               <span class="carditem-image">
                 <img :src="svgs.locationMarker" />
               </span>
-              <span style="text-decoration: underline;">
-                <Distance v-if="fromCoordinates" :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
+              <span v-if="fromCoordinates" style="text-decoration: underline;">
+                <Distance :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
+              </span>
+              <span v-else>
+                {{ job.address }}
               </span>
             </p>
           </div>

@@ -30,6 +30,18 @@
 .cust-tile-2 {
   height: 32px;
 }
+.cust-tile-2 .list__tile__title p {
+  color: inherit;
+}
+.cust-tile-2 .list__tile__title a,
+.cust-tile-2 .list__tile__title p {
+  display: inline-flex;
+  max-width: 92%;
+  overflow: hidden;
+  /* Doesnt work with inline-flex
+  text-overflow: ellipsis;
+  */
+}
 .cust-tile-1 {
   width: 41px;
 }

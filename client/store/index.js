@@ -9,6 +9,7 @@ Vue.use(Vuex);
 const Store = new Vuex.Store({
   state: {
     userID: null,
+    default_org: null,
     businessID: null,
     acct: 0,
     firstSearch: true,
@@ -56,6 +57,9 @@ const Store = new Vuex.Store({
     },
     setBusinessID(state, payload) {
       state.businessID = payload.id;
+    },
+    setDefaultOrg(state, payload) {
+      state.default_org = payload.id;
     },
     unsetBusinessID(state) {
       state.businessID = null;
