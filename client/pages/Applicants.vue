@@ -280,6 +280,7 @@
             applicantId = this.dialogs.currentApplicant._id;
           }
           await axios.post(`/application/${applicantId}/setStatus/${newStatus}`);
+          await this.updateApplicantViaQuery(applicantId, newStatus);
           const { applicants } = this;
           for (let i = 0; i < applicants.length; ++i) {
             if (applicants[i]._id === applicantId) {
@@ -298,6 +299,38 @@
           console.log('could not do it:', exception);
         }
         this.resetDialogState();
+      },
+      updateApplicantViaQuery(id, newStatus) {
+        console.log('newStatus', newStatus);
+        this.$apollo.mutate({
+          mutation: gql`
+            mutation($aplId: MongoID, $status: String) {
+              updateApplication(
+                filter: { _id: $aplId }
+                record: { status: $status }
+              ) {
+                recordId
+              }
+            }
+          `,
+          variables: {
+            aplId: id,
+            status: newStatus,
+          },
+          refetchQueries: [{
+            query: gql`
+              query($aplId: MongoID) {
+                findApplicant(filter: { _id: $aplId }) {
+                  ${queries.FindApplicantRecord}
+                  notes
+                }
+              }
+            `,
+            variables: { aplId: this.id },
+          }],
+        }).catch(error => {
+          console.error(error);
+        });
       },
       onShowAcceptDialog(applicant) {
         this.dialogs.currentApplicant = { ...applicant };

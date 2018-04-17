@@ -481,35 +481,7 @@ export default {
           this.data.status = newStatus;
           if (res.data.success) {
             this.closeDialogs();
-            this.$apollo.mutate({
-              mutation: gql`
-                mutation($aplId: MongoID, $status: String) {
-                  updateApplication(
-                    filter: { _id: $aplId }
-                    record: { status: $status }
-                  ) {
-                    recordId
-                  }
-                }
-              `,
-              variables: {
-                aplId: this.id,
-                status: newStatus,
-              },
-              refetchQueries: [{
-                query: gql`
-                  query($aplId: MongoID) {
-                    findApplicant(filter: { _id: $aplId }) {
-                      ${queries.FindApplicantRecord}
-                      notes
-                    }
-                  }
-                `,
-                variables: { aplId: this.id },
-              }],
-            }).catch(error => {
-              console.error(error);
-            });
+            this.updateApplicantViaQuery(newStatus);
           } else {
             this.errorOccured = true;
           }
@@ -529,6 +501,38 @@ export default {
       this.dialogs.showAccept = false;
       this.dialogs.showReject = false;
       this.errorOccured = false;
+    },
+    updateApplicantViaQuery() {
+      // newStatus is not needed for some reason
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($aplId: MongoID) {
+            updateApplication(
+              filter: { _id: $aplId }
+              record: {}
+            ) {
+              recordId
+            }
+          }
+        `,
+        variables: {
+          aplId: this.id,
+          // status: newStatus,
+        },
+        refetchQueries: [{
+          query: gql`
+            query($aplId: MongoID) {
+              findApplicant(filter: { _id: $aplId }) {
+                ${queries.FindApplicantRecord}
+                notes
+              }
+            }
+          `,
+          variables: { aplId: this.id },
+        }],
+      }).catch(error => {
+        console.error(error);
+      });
     },
   },
   computed: {
