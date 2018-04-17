@@ -77,15 +77,15 @@
                       class="kunvet-black-small-btn"
                       @click="showContactInfoDialog(item)"
                     >
-                      Show contact info
+                      Contact
                     </v-btn>
-                    <v-btn
+                    <!--<v-btn
                       v-if="item.status === 'accepted'"
                       class="kunvet-black-small-btn"
                       :href="`mailto:${item.email}`"
                     >
                       Send email
-                    </v-btn>
+                    </v-btn>-->
                   </span>
                   <span v-else>
                     <span style="color: red;">
@@ -132,6 +132,7 @@
         <v-card-title class="headline">
           Reject Applicant
         </v-card-title>
+        <p v-if="loading || true">Loading...</p>
         <v-card-actions>
           <v-btn flat="flat" @click.native="onReject">
             Confirm
@@ -144,17 +145,25 @@
     </v-dialog>
     <v-dialog v-model="dialogs.showContactInfo">
       <v-card>
-        <v-list>
-          <v-list-tile v-for="(i, index) in contactInfoItems" :key="index">
-            {{ i }}
+        <v-list class="contact-items-list">
+          <v-list-tile>
+            <p class="contact-name">{{ contactInfoItems.name }}</p>
+          </v-list-tile>
+          <v-list-tile>
+            <span class="make-selectable">Email: {{ contactInfoItems.email }}
+              <v-btn color="grey" class="dont-capitalize" flat small :href="`mailto:${contactInfoItems.email}`">
+                Send Email
+              </v-btn>
+            </span>
           </v-list-tile>
         </v-list>
+        <v-divider />
+        <v-card-actions>
+          <v-btn flat="flat" @click.native="resetDialogState">
+            Close
+          </v-btn>
+        </v-card-actions>
       </v-card>
-      <v-card-actions>
-        <v-btn flat="flat" @click.native="resetDialogState">
-          Close
-        </v-btn>
-      </v-card-actions>
     </v-dialog>
   </v-container>
 </template>
@@ -199,7 +208,7 @@
     },
     data() {
       return {
-        loading: true,
+        loading: false,
         // user: null,
         jobs: [],
         selectedJob: { title: null, id: null },
@@ -214,7 +223,11 @@
           showReject: false,
           showContactInfo: false,
         },
-        contactInfoItems: [],
+        contactInfoItems: {
+          name: null,
+          email: null,
+          phone_number: null,
+        },
         svgs: {
           locationMarker: LocationMarkerSvg,
           kunvetCharacter: KunvetCharacterSvg,
@@ -272,6 +285,7 @@
         return applicants.map(({ degree, ...rest }) => ({ ...rest, degree: degreeDbToString(degree) }));
       },
       async updateApplicantStatus(newStatus = 'submitted', id = null) {
+        this.loading = true;
         try {
           let applicantId;
           if (id) {
@@ -280,7 +294,7 @@
             applicantId = this.dialogs.currentApplicant._id;
           }
           await axios.post(`/application/${applicantId}/setStatus/${newStatus}`);
-          await this.updateApplicantViaQuery(applicantId, newStatus);
+          await this.updateApplicantViaQuery(applicantId);
           const { applicants } = this;
           for (let i = 0; i < applicants.length; ++i) {
             if (applicants[i]._id === applicantId) {
@@ -295,19 +309,21 @@
               });
             }
           }
+          this.loading = false;
         } catch (exception) {
+          this.loading = false;
           console.log('could not do it:', exception);
         }
         this.resetDialogState();
       },
-      updateApplicantViaQuery(id, newStatus) {
-        console.log('newStatus', newStatus);
+      updateApplicantViaQuery(id) {
+        // console.log('newStatus', newStatus);
         this.$apollo.mutate({
           mutation: gql`
-            mutation($aplId: MongoID, $status: String) {
+            mutation($aplId: MongoID) {
               updateApplication(
                 filter: { _id: $aplId }
-                record: { status: $status }
+                record: { }
               ) {
                 recordId
               }
@@ -315,7 +331,7 @@
           `,
           variables: {
             aplId: id,
-            status: newStatus,
+            // status: newStatus,
           },
           refetchQueries: [{
             query: gql`
@@ -326,7 +342,7 @@
                 }
               }
             `,
-            variables: { aplId: this.id },
+            variables: { aplId: id },
           }],
         }).catch(error => {
           console.error(error);
@@ -357,10 +373,11 @@
         this.dialogs.showReject = false;
         this.dialogs.showContactInfo = false;
         this.dialogs.currentApplicant = {};
-        this.contactInfoItems = [];
+        this.contactInfoItems = { name: null, email: null, phone_number: null };
       },
       showContactInfoDialog(item) {
-        this.contactInfoItems = [item.email];
+        this.contactInfoItems.name = item.name;
+        this.contactInfoItems.email = item.email;
         this.dialogs.showContactInfo = true;
       },
       isAcceptedOrRejected({ status }) {

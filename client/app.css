@@ -147,6 +147,16 @@ main {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+.dont-capitalize {
+  text-transform: none;
+}
+.make-selectable {
+  -moz-user-select: text;
+   -khtml-user-select: text;
+   -webkit-user-select: text;
+   -ms-user-select: text;
+   user-select: text;
+}
 .saved {
   color: #ffcc00 !important;
 }

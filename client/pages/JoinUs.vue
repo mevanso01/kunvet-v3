@@ -14,6 +14,7 @@
 
             <p><b>Feel free to reach us via <a href="mailto:bz@kunvet.com">bz@kunvet.com</a></b></p>
         </div>
+    </div>
   </v-container>
 </template>
 <script>

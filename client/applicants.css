@@ -1,3 +1,18 @@
+.contact-items-list {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.contact-items-list .list__tile {
+  height: 40px;
+}
+.contact-items-list .contact-name {
+  margin-bottom: 0;
+  font-size: 18px;
+  max-width: 350px;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+}
 .applicant-page .job-title {
   z-index: 1;
 }
