@@ -37,6 +37,9 @@ class StringHelper {
   }
 
   static truncate(string, length = 40) {
+    if (string.length <= length) {
+      return string;
+    }
     return `${string.substring(0, length)}...`;
   }
 }

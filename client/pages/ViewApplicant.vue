@@ -153,7 +153,7 @@
             <v-layout row wrap class="view-applicant-container">
               <v-flex>
                 <div class="view-applicant-profile-pic-cont hidden-xs-only">
-                  <img v-if="profile_pic" style="width: 100%; height: 100%;" :src="`${serverUrl}/file/get/${profile_pic}`"></img>
+                  <img v-if="profile_pic_url" style="width: 100%; height: 100%;" :src="profile_pic_url"></img>
                 </div>
                 <div class="view-applicant-details">
                   <h1 style="padding-left: 4px; margin-bottom: 0;">{{ data.name }}</h1>
@@ -341,7 +341,7 @@ export default {
       loading: false,
       errorOccured: false,
       serverUrl: Config.get('serverUrl'),
-      profile_pic: undefined,
+      profile_pic_url: undefined,
     };
   },
   methods: {
@@ -403,7 +403,7 @@ export default {
             aplId: this.id,
           },
         })
-        .then(async data => {
+        .then((data) => {
           const res = data.data.findApplicant;
           // const isEmployer = await this.isEmployer(res.job_id);
           // Only employers that made this job should be able to view the applicant.
@@ -416,32 +416,9 @@ export default {
           this.data.degree = degreeDbToString(res.degree);
           this.data.major = res.major;
           if (res.resume && res.resume.filename) {
-            const url = `${this.serverUrl}/file/get/${res.resume.filename}`;
-            // const url = '../../../uploads/3a194d40-2268-11e8-b674-e3bddf9cbbe8.pdf';
-            // console.log('URL', url);
-            // true || url.substr(url.length - 4) === '.pdf'
-            // file is a pdf
-            try {
-              this.src = pdf.createLoadingTask(url);
-              await this.src.then((p) => {
-                this.numPages = p.numPages;
-              });
-            } catch (e) {
-              if (e.name === 'InvalidPDFException') {
-                console.log(url);
-                this.src = null;
-                this.docurl = `${url}#embedded=true`;
-              } else {
-                console.error(e);
-              }
-            }
-            /* } else {
-              // file is not a pdf
-              this.src = null;
-              this.docurl = `${url}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
-            } */
-            this.profile_pic = await ProfilePicHelper.getProfilePic(res.user_id, null);
+            this.loadResume(res.resume);
           }
+          this.loadProfilePic(res.user_id);
           if (res.status === 'submitted') {
             this.updateApplicantStatus('opened');
           }
@@ -450,6 +427,35 @@ export default {
           console.error(error);
         });
     },
+    async loadResume(resume) {
+      console.log('Loading resume:', resume);
+      const url = `${this.serverUrl}/file/get/${resume.filename}`;
+      this.docurl = `${url}#embedded=true`;
+      // FIXME
+      /* try {
+        this.src = pdf.createLoadingTask(url);
+        await this.src.then((p) => {
+          this.numPages = p.numPages;
+        });
+      } catch (e) {
+        if (e.name === 'InvalidPDFException') {
+          console.log(url);
+          this.src = null;
+          this.docurl = `${url}#embedded=true`;
+        } else {
+          console.error(e);
+        }
+      } */
+    },
+    async loadProfilePic(userId) {
+      try {
+        this.profile_pic_url = await ProfilePicHelper.getProfilePic(userId, null);
+      } catch (e) {
+        console.log(e);
+        this.profile_pic_url = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
+      }
+    },
+    // UNUSED
     async isEmployer(jobId) {
       const { data: { findJob: job } } = await this.$apollo.query({
         query: gql`
@@ -466,7 +472,7 @@ export default {
       return job.user_id === this.$store.state.userID;
     },
     updateApplicantStatus(newStatus = 'submitted') {
-      console.log(newStatus);
+      console.log('Setting status to:', newStatus);
       this.loading = true;
       axios.post(`/application/${this.id}/setStatus/${newStatus}`)
         .then((res) => {
@@ -495,6 +501,7 @@ export default {
                   query($aplId: MongoID) {
                     findApplicant(filter: { _id: $aplId }) {
                       ${queries.FindApplicantRecord}
+                      notes
                     }
                   }
                 `,

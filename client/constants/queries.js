@@ -57,6 +57,7 @@ const FindJobRecordForJobCard = `
 const FindApplicantRecord = `
   _id
   job_id
+  user_id
   name
   email
   school

@@ -156,6 +156,7 @@ export default {
     // The exact opposite of FilterResultFields
     return async (req, next) => {
       const result = await next(req);
+      if (!result) return result;
       if (Array.isArray(result)) {
         return result.map(e => omit(e, forbiddenFields));
       }

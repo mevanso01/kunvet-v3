@@ -53,7 +53,8 @@ async function sendNewApplicationNotification(req, next) {
       },
     );
   } catch (e) {
-    throw Error('Employer could not be emailed');
+    Logger.error(e);
+    // throw Error('Employer could not be emailed');
   }
 
   try {
@@ -65,7 +66,8 @@ async function sendNewApplicationNotification(req, next) {
     });
     employer.save();
   } catch (e) {
-    throw Error('Employer could not be notified');
+    Logger.error(e);
+    // throw Error('Employer could not be notified');
   }
 
   return next(req);
@@ -92,9 +94,9 @@ GQC.rootQuery().addFields({
   }),
   // Applicants
   ...wrapResolvers([
-    Restrictions.getDropResultFields(['notes']),
     Restrictions.getFilterByUserId('user_id'),
     Restrictions.LoggedIn,
+    Restrictions.getDropResultFields(['notes']),
   ], {
     // Find own applications (for employees)
     findMyApplication: Applicant.get('$findOne'),
@@ -102,7 +104,6 @@ GQC.rootQuery().addFields({
   }),
 
   ...wrapResolvers([
-    // FIXME: Restrict application access
     Restrictions.ApplicationJobOwner,
   ], {
     // Find employer's applications

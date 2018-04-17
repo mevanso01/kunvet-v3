@@ -219,6 +219,10 @@ export default {
         type: 'keepUserdata',
         userdata: udata,
       });
+      this.$store.commit({
+        type: 'setDefaultOrg',
+        id: udata.default_org,
+      });
     },
     commitID(_id) {
       this.$store.commit({

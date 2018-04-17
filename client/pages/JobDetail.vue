@@ -567,15 +567,19 @@ export default {
     },
     _checkIsApplied() {
       this.$apollo.query({
-        query: (gql`query ($jid: MongoID) {
+        query: (gql`query ($jid: MongoID, $uid: MongoID) {
           findMyApplication (filter: {
-            job_id: $jid
+            job_id: $jid,
+            user_id: $uid
           }) {
             _id
+            job_id
+            user_id
           }
         }`),
         variables: {
           jid: this.id,
+          uid: this.uid,
         },
       }).then((data) => {
         if (data.data.findMyApplication) {
@@ -628,7 +632,8 @@ export default {
             this.showSuccessMessage = true;
             this.applied = true;
           } else {
-            console.log(data);
+            console.error('no data returned when creating application');
+            this.applydialog = false;
           }
         }).catch((error) => {
           this.loading = false;
