@@ -305,7 +305,6 @@ export default {
         reqtype: 'validate',
       };
       axios.post('/auth/register', data, headers).then((res) => {
-        console.log('RES', res);
         this.loading = false;
         if (res.data.success) {
           this.chosenForm = 'success';

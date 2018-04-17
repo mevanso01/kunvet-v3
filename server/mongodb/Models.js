@@ -1,6 +1,21 @@
 import Mongoose from 'mongoose';
 import PassportLocalMongoose from 'passport-local-mongoose';
 
+const PasswordResetInstance = Mongoose.Schema({
+  user_id: {
+    type: Mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  token: {
+    type: String,
+    required: true,
+  },
+});
+
 const TempAccountSchema = Mongoose.Schema({
   email: {
     type: String,
@@ -415,6 +430,7 @@ export default {
   Account: Mongoose.model('Account', AccountSchema),
   Applicant: Mongoose.model('Applicant', ApplicantSchema),
   TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
+  PasswordResetInstance: Mongoose.model('PasswordResetInstance', PasswordResetInstance),
   Organization: Mongoose.model('Organization', OrganizationSchema),
   File: Mongoose.model('File', FileSchema),
   HDYH: Mongoose.model('HDYH', HowDidYouHearSchema),

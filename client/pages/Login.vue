@@ -94,19 +94,19 @@ a:hover{
 
             </section>
 
-            <div v-show="!sent" id="general-submit" @click="send()">
+            <div v-show="!sent" id="general-submit" @click="requestPasswordReset">
                 <div id="general-submit-default">
                     <span>Request password reset</span>
                 </div>
             </div>
 
             <v-alert
-                color="green darken-1"
+                color="green darken-1" style="margin-bottom: 0;"
                 icon="check_circle"
                 :value="sent"
                 transition="slide-x-transition"
             >
-                Sending Message.
+                Request password email sent.
             </v-alert>
 
         </div>
@@ -137,6 +137,7 @@ export default {
       passwordRules: [
         v => !!v || 'Required',
       ],
+      loading: false,
     };
   },
   methods: {
@@ -159,8 +160,24 @@ export default {
         }
       });
     },
-    send() {
-      this.sent = true;
+    requestPasswordReset() {
+      console.log('TEST');
+      if (!this.loading) {
+        this.loading = true;
+        Axios.post('/reset-password/request-reset', { email: this.email }).then((res) => {
+          this.loading = false;
+          if (res.data.success) {
+            this.sent = true;
+          } else {
+            // not successful
+            this.forgetpwd = 0;
+          }
+        }).catch((error) => {
+          // Network error
+          this.loading = false;
+          console.error(error);
+        });
+      }
     },
     fetchData() {
       Axios.get('/auth/status').then((response) => {

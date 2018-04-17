@@ -49,13 +49,20 @@
             </v-alert>
           </v-form>
         </v-card>
+
+        <div v-if="status === 'code-expired'">
+          <p class="center">This token is invalid or has expired. Please request another password reset</p>
+        </div>
+        <div v-if="status === 'error'">
+          <p class="center">An error has occured. Please try again later.</p>
+        </div>
       </div>
     </div>
   </v-container>
 </template>
 <script>
 // import gql from 'graphql-tag';
-// import axios from 'axios';
+import axios from 'axios';
 
 
 export default {
@@ -66,7 +73,7 @@ export default {
   data() {
     return {
       e1: true,
-      loading: true,
+      loading: false,
       isvalid: false,
       dne: null,
       valid: false,
@@ -81,6 +88,7 @@ export default {
       ],
       successAlert: false,
       blur: false,
+      status: 'initial',
     };
   },
   methods: {
@@ -101,11 +109,24 @@ export default {
     submit() {
       this.$refs.form.validate();
       if (this.valid && this.password === this.confirmPassword) {
+        this.loading = true;
         this.resetPassword();
       }
     },
     resetPassword() {
-      // send request to server
+      const data = { token: this.code, newpassword: this.password };
+      axios.post('reset-password/reset', data).then(res => {
+        this.loading = false;
+        if (res.data.success) {
+          this.successAlert = true;
+        } else {
+          this.status = 'code-expired';
+        }
+      }).catch((err) => {
+        this.loading = false;
+        this.status = 'error';
+        console.error(err);
+      });
     },
   },
 };

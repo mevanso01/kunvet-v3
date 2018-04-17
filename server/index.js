@@ -31,6 +31,7 @@ import DevToolsApp from '@/apps/devtools';
 import FileServerApp from '@/apps/fileserver';
 import ApplicationApp from '@/apps/application';
 import ProfilePicApp from '@/apps/profile_pic';
+import ResetPasswordApp from '@/apps/reset_password';
 
 // Our stuff
 import Db from '@/mongodb/Db';
@@ -68,6 +69,7 @@ app.use(KoaMount('/auth', AuthApp));
 app.use(KoaMount('/file', FileServerApp));
 app.use(KoaMount('/application', ApplicationApp));
 app.use(KoaMount('/profile-pic', ProfilePicApp));
+app.use(KoaMount('/reset-password', ResetPasswordApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
