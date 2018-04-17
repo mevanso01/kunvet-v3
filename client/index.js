@@ -176,6 +176,10 @@ const router = new VueRouter({
       path: '/Terms',
       component: () => import('@/pages/Terms'),
     },
+    {
+      path: '/join-us',
+      component: () => import('@/pages/JoinUs'),
+    },
   ],
 });
 
