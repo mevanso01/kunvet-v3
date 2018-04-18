@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const utils = require('./utils');
 
 // Build static config
@@ -127,6 +128,7 @@ const wpconf = {
       contents: JSON.stringify(staticConfig),
     }),
     new webpack.IgnorePlugin(/vertx/),
+    new FaviconsWebpackPlugin('./client/assets/favicon.png'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'client/index.html',
