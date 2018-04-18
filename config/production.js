@@ -41,8 +41,8 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  // serverUrl: 'https://hrmy3ed4n1.execute-api.us-east-1.amazonaws.com/production',
-  serverUrl: 'http://localhost:3000',
+  serverUrl: 'https://hrmy3ed4n1.execute-api.us-east-1.amazonaws.com/production',
+  // serverUrl: 'http://localhost:3000',
   googleMapsKey: Credentials.googleMapsKey,
   sentry: {
     dsn: Credentials.sentryClientDsn,
