@@ -370,7 +370,7 @@
                 </section>
 
                 <input v-if="!firstSearch" class="hidden-input" id="submit" type="submit" value="GO">
-                <div v-if="!firstSearch" id="general-submit" @click="filterJobs">
+                <div v-if="!firstSearch" id="general-submit" @click="searchAndFilter">
                   <div id="general-submit-default">
                     <span>SEARCH</span>
                   </div>
@@ -510,6 +510,9 @@ export default {
         this.commitData();
       }
     },
+    searchAndFilter() {
+      this.loadInitialJobs();
+    },
     async filterJobs() {
       // job types
       this.commitData();
@@ -529,6 +532,7 @@ export default {
         }
       }
       let sortedJobs = this.findJobs.concat();
+      console.log('Num jobs:', sortedJobs.length);
       if (this.selectedLat && this.selectedLong) {
         sortedJobs.sort((a, b) => this.compareDistance(a, b));
       }

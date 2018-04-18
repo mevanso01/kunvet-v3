@@ -196,20 +196,20 @@
         console.log('restore state');
         VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
           if (data.bdata && data.acct === 2) {
-            this.user = data.bdata.business_name;
+            // this.user = data.bdata.business_name;
             this.getData();
           } else if (data.userdata && data.acct === 1) {
-            this.user = `${data.userdata.firstname} ${data.userdata.lastname}`;
+            // this.user = `${data.userdata.firstname} ${data.userdata.lastname}`;
             this.getData();
           } else {
             this.$router.push('/login');
           }
         });
       } else if (this.$store.state.acct === 2) {
-        this.user = this.$store.state.bdata.business_name;
+        // this.user = this.$store.state.bdata.business_name;
         this.getData();
       } else if (this.$store.state.acct === 1) {
-        this.user = this.$store.state.userdata.firstname + this.$store.state.userdata.lastname;
+        // this.user = this.$store.state.userdata.firstname + this.$store.state.userdata.lastname;
         this.getData();
       } else {
         this.$router.push('/login');
@@ -249,16 +249,20 @@
       async onJobDelete() {
         const { currentJob: { _id: jobId } } = this.dialogs;
         const res = await this.$apollo.mutate({
-          mutation: gql`mutation($jobId: MongoID) {
+          mutation: gql`mutation($jobId: MongoID, $uid: MongoID) {
             updateJob(filter: { _id: $jobId }
-              record { deleted: true })
-            {
+              record: {
+                user_id: $uid,
+                deleted: true,
+              }
+            ){
               recordId
             }
           }
           `,
           variables: {
-            jobId,
+            jobId: jobId,
+            uid: this.$store.state.userID,
           },
           refetchQueries: [
             {
@@ -277,7 +281,7 @@
             },
           ],
         });
-        const { recordId } = res.data.removeJob;
+        const { recordId } = res.data.updateJob;
         this.jobs = this.jobs.filter(({ _id }) => _id !== recordId);
         this.resetDialogState();
       },
