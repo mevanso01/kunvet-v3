@@ -717,10 +717,11 @@ export default {
             age
             pay_type
             date
+            deleted
           }
         }`,
       });
-      this.findJobs = findJobs;
+      this.findJobs = findJobs.filter(x => !x.deleted);
       this.filterJobs();
     },
   },

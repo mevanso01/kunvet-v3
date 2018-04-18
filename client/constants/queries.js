@@ -31,6 +31,8 @@ const FindJobRecord = `
 `;
 const FindJobRecordForJobCard = `
   _id
+  active
+  deleted
   posted_by
   user_id
   business_id

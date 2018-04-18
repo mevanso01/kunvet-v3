@@ -250,7 +250,9 @@
         const { currentJob: { _id: jobId } } = this.dialogs;
         const res = await this.$apollo.mutate({
           mutation: gql`mutation($jobId: MongoID) {
-            removeJob(filter: { _id: $jobId }) {
+            updateJob(filter: { _id: $jobId }
+              record { deleted: true })
+            {
               recordId
             }
           }
@@ -296,8 +298,9 @@
     },
     computed: {
       activeJobs() { // and unexpired
-        const { jobs } = this;
-        return jobs.filter(JobHelper.isJobActive);
+        return this.jobs;
+        // const { jobs } = this;
+        // return jobs.filter(JobHelper.isJobActive);
       },
       unpostedJobs() {
         return this.jobs.filter(({ active }) => !active);

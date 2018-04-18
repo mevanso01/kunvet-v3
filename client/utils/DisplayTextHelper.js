@@ -21,7 +21,7 @@ class DisplayTextHelper {
   static getMainJobInfo(job) {
     const jobType = this.getJobTypeString(job.type);
     const jobType2 = this.getJobTypeString(job.type2);
-    const salary = StringHelper.capitalize(this.getSalaryString(job));
+    const salary = this.getSalaryString(job);
     let result = '';
     if (jobType) result += jobType;
     if (jobType && jobType2) result += ` • ${jobType2}`;

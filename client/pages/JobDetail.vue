@@ -317,6 +317,7 @@ import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
 import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
 import FileClient from '@/utils/FileClient';
+import queries from '@/constants/queries';
 
 const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
@@ -626,6 +627,37 @@ export default {
             }
           }`),
           variables: { application },
+          refetchQueries: [
+            {
+              query: (gql`query ($jid: MongoID, $uid: MongoID) {
+                findMyApplication (filter: {
+                  job_id: $jid,
+                  user_id: $uid
+                }) {
+                  _id
+                  job_id
+                  user_id
+                  status
+                  date
+                  expiry_date
+                }
+              }`),
+              variables: {
+                jid: this.id,
+                uid: this.uid,
+              },
+            },
+            {
+              query: (gql`query ($jid: MongoID) {
+                findJob (filter: { _id: $jid }){
+                  ${queries.FindJobRecordForJobCard}
+                }
+              }`),
+              variables: {
+                jid: this.id,
+              },
+            },
+          ],
         }).then((data) => {
           this.loading = false;
           if (data) {
@@ -699,7 +731,6 @@ export default {
           }
         }`),
         variables: {
-          // find a more secure way to run query
           uid: this.uid,
           record: {
             resumes: _resumes,

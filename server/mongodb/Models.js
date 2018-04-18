@@ -166,6 +166,10 @@ const JobSchema = Mongoose.Schema({
     cropped: Mongoose.Schema.Types.ObjectId,
   }],
   position_tags: [String],
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 const ApplicantSchema = Mongoose.Schema({
   user_id: {
