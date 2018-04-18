@@ -8,10 +8,16 @@
   <v-container fluid style="padding-left: 0; padding-right: 0;">
     <div style="padding: 60px 0;">
       <p v-if="loading" class="center val-c-p">Validating. This should take just a few seconds.</p>
-      <p v-if="!loading && !isvalid" class="center val-c-p">
-        Validation unsuccessful, please check that you
-        entered the link correctly and try again
-      </p>
+      <div v-if="!loading && !isvalid" class="center val-c-p">
+        <p>
+          Validation unsuccessful, please request a new
+          validation email on <a href="/account">your profile page</a>.
+        </p>
+        <p>
+          It's also possible that you have already verified
+          your email. In that case, you are good to go!
+        </p>
+      </div>
       <div v-if="!loading && isvalid" style="max-width: 600px; margin: auto;">
         <v-card style="margin: 15px;">
           <v-card-text>
