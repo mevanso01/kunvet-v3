@@ -26,7 +26,7 @@ export default class Mailer {
           extension: 'handlebars',
         },
       },
-      htmlToText: false,
+      htmlToText: true,
       transport: this.transport,
       send: true,
       juice: true,
