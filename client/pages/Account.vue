@@ -1038,7 +1038,9 @@
         this.loading = true;
         axios.post('/auth/resendVerificationEmail', data).then((res) => {
           this.loading = false;
-          if (res.data.success) {
+          if (res.data.noUnverified) {
+            this.email_verified = true;
+          } else if (res.data.success) {
             this.emailSent = true;
           } else {
             this.emailSent = null;

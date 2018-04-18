@@ -102,6 +102,7 @@ router.post('/resendVerificationEmail', async (ctx) => {
     ctx.status = 404;
     const response = {
       success: false,
+      noUnverified: true,
       message: 'No unverified accounts with that email',
     };
     ctx.body = JSON.stringify(response);
@@ -109,7 +110,7 @@ router.post('/resendVerificationEmail', async (ctx) => {
   }
   const validationCode = tempAcct.vcode;
   // Remove me when email is complete
-  console.log(`Go to localhost:8080/validate/${validationCode}`);
+  // console.log(`Go to localhost:8080/validate/${validationCode}`);
   const mailer = new Mailer();
   try {
     await mailer.sendTemplate(
