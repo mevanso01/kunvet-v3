@@ -29,7 +29,7 @@ const wpconf = {
     libraryTarget: 'commonjs',
   },
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.mjs', '.js', '.json'],
     unsafeCache: /data/,
     alias: {
       '@': utils.resolve('server'),

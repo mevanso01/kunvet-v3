@@ -23,7 +23,7 @@ const wpconf = {
     publicPath: '/',
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.mjs', '.js', '.vue', '.json'],
     alias: {
       vue$: 'vue/dist/vue.runtime.esm.js',
       '@': utils.resolve('client'),
