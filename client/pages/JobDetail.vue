@@ -576,6 +576,8 @@ export default {
             _id
             job_id
             user_id
+            date
+            expiry_date
           }
         }`),
         variables: {
@@ -637,7 +639,6 @@ export default {
                   _id
                   job_id
                   user_id
-                  status
                   date
                   expiry_date
                 }
@@ -646,6 +647,17 @@ export default {
                 jid: this.id,
                 uid: this.uid,
               },
+            },
+            {
+              query: (gql`query {
+                findMyApplications (filter: {}) {
+                  _id
+                  job_id
+                  status
+                  date
+                  expiry_date
+                }
+              }`),
             },
             {
               query: (gql`query ($jid: MongoID) {

@@ -120,6 +120,7 @@
             }
           }`),
         });
+        console.log(applications);
         const jobPromises = Promise.all(applications.map(this.getPairForEachApplication));
         this.jobsAndApplications = (await jobPromises).filter(({ job }) => job);
       },

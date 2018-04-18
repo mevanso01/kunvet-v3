@@ -22,10 +22,10 @@
     <p style="padding: 0 16px; margin-bottom: 0; font-size: 10px;">Signed in as:</p>
     <v-expansion-panel class="switchAccount-expansion-panel">
       <v-expansion-panel-content>
-        <div slot="header">{{ selectedAccount }}</div>
+        <div slot="header" class="one-line">{{ selectedAccount }}</div>
         <v-list dense style="background-color: #f4f4f4; padding: 0;">
           <v-list-tile v-for="(item, i) in accountItems" :key="i" @click="switchTo(item)">
-            <v-list-tile-title style="font-size: 14px;">{{ item.name }}</v-list-tile-title>
+            <v-list-tile-title class="one-line" style="font-size: 14px;">{{ item.name }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-expansion-panel-content>

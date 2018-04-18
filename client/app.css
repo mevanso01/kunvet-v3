@@ -147,6 +147,13 @@ main {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+.one-line {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ellipsis {
+  text-overflow: ellipsis;
+}
 .dont-capitalize {
   text-transform: none;
 }
