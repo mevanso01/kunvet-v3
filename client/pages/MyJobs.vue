@@ -181,24 +181,12 @@
   import DisplayTextHelper from '@/utils/DisplayTextHelper';
   import JobHelper from '@/utils/JobHelper';
   import StringHelper from '@/utils/StringHelper';
+  import queries from '@/constants/queries';
 
   const findJobsQuery = gql`
-      query($userId: MongoID, $businessId: MongoID) {
-        findJobs(filter: { user_id: $userId, business_id: $businessId }) {
-          _id
-          posted_by
-          title
-          active
-          date
-          expiry_date
-          address
-          type
-          type2
-          studentfriendly
-          pay_type
-          salary
-          pay_denomination
-          experience
+    query($userId: MongoID, $businessId: MongoID) {
+      findJobs(filter: { user_id: $userId, business_id: $businessId }) {
+        ${queries.FindJobRecordForJobCard}
       }
     }`;
 
@@ -270,13 +258,22 @@
           variables: {
             jobId,
           },
-          refetchQueries: [{
-            query: findJobsQuery,
-            variables: {
-              userId: this.$store.state.userID,
-              businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+          refetchQueries: [
+            {
+              query: findJobsQuery,
+              variables: {
+                userId: this.$store.state.userID,
+                businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+              },
             },
-          }],
+            {
+              query: findJobsQuery,
+              variables: {
+                userId: this.$store.state.userID,
+                businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+              },
+            },
+          ],
         });
         const { recordId } = res.data.removeJob;
         this.jobs = this.jobs.filter(({ _id }) => _id !== recordId);

@@ -67,7 +67,6 @@ export default {
         },
       }).then((data) => {
         const res = data.data.findAccount;
-        console.log('RES 1', res);
         this.default_org = res.default_org;
         this.populateOrgList(res.org_list);
         this.fname = res.firstname;
@@ -87,7 +86,6 @@ export default {
       }
       this.accountItems = [{ name: `${this.fname} ${this.lname}`, _id: null }].concat(this.org_list);
       const defaultOrg = this.$store.state.default_org;
-      console.log('DEFAULT ORG', defaultOrg);
       if (defaultOrg) {
         this.selectedAccount = this.accountItems.find(x => x._id === defaultOrg).name;
       } else {

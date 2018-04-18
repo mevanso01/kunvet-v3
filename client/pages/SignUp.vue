@@ -377,6 +377,7 @@ export default {
         email: email,
         password: password,
       }).then((response) => {
+        console.log('login response', response);
         if (response.data.success) {
           // logged in successfully
           this.fetchAcctData();
@@ -387,6 +388,7 @@ export default {
     },
     fetchAcctData() {
       axios.get('/auth/status').then((response) => {
+        console.log('acct data response', response);
         if (!response.data.success) {
           // Unsuccessful
           console.error('Server error', response.data);
