@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>{{> title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      width: 560px;
+      text-align: center;
+      margin: auto;
+      font-family: arial;
+      border: 1px solid #b4b4b4;
+    }
+    div {
+      padding: 30px;
+      border-bottom: 1px solid #b4b4b4;
+    }
+    div:first-of-type {
+      background-color: #f75252;
+    }
+    div:last-of-type {
+      border-bottom: none;
+      padding: 0;
+    }
+    div:last-of-type p {
+      font-size: 12px;
+    }
+    h1 {
+      margin: 0;
+      color: #fff;
+      font-weight: lighter;
+    }
+    p {
+      color: #787878;
+      font-size: 16px;
+    }
+    a {
+      color: #787878;
+    }
+    .link-button {
+      display: block;
+      width: 180px;
+      margin: auto;
+      text-decoration: none;
+      padding: 10px 20px;
+      background-color: #f75252;
+      color: #fff;
+      border-radius: 2px;
+    }
+    .link-button:visited,
+    .link-button:active,
+    .link-button:hover {
+      background-color: gray;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>{{> heading}}</h1>
+  </div>
+
+  <div>
+    <img src="https://s3.amazonaws.com/kunvet-prod-assets/header.png" data-inline-ignore alt="kunvet's mascot" width="150px" height="150px" />
+    {{> content}}
+  </div>
+
+  <div>
+    <p>&copy; 2018 Kunvet, All Rights Reserved.</p>
+    <p>946 Stanford, Irvine, CA 92612 USA</p>
+    <p><a href="#">Contact Us</a> <a href="#">Term of Use</a> <a href="#">Privacy</a></p>
+  </div>
+</body>
+</html>

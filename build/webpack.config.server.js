@@ -21,6 +21,7 @@ const wpconf = {
   externals: {
     // The root of all evils :(
     'email-templates': 'commonjs email-templates',
+    'consolidate': 'commonjs consolidate',
   },
   output: {
     path: path.resolve(__dirname, '../dist/server'),
@@ -43,6 +44,10 @@ const wpconf = {
   },
   module: {
     rules: [
+      {
+        test: /\.handlebars$/,
+        loader: 'raw-loader',
+      },
       {
         test: /\.(js)$/,
         loader: 'eslint-loader',
