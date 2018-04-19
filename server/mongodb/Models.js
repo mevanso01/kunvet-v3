@@ -166,7 +166,7 @@ const JobSchema = Mongoose.Schema({
     cropped: Mongoose.Schema.Types.ObjectId,
   }],
   position_tags: [String],
-  deleted: {
+  is_deleted: {
     type: Boolean,
     default: false,
   },

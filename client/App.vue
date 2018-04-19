@@ -328,7 +328,7 @@ export default {
         type: 'setAcct',
         acct: 1,
       });
-      console.log(this.acct);
+      this.$store.commit('go');
     },
     l2() {
       this.acct = 2;
@@ -336,7 +336,7 @@ export default {
         type: 'setAcct',
         acct: 2,
       });
-      console.log(this.acct);
+      this.$store.commit('go');
     },
     routeTo(route) {
       this.$router.push(route);

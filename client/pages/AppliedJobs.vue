@@ -120,12 +120,10 @@
             }
           }`),
         });
-        console.log(applications);
         const jobPromises = Promise.all(applications.map(this.getPairForEachApplication));
         this.jobsAndApplications = (await jobPromises).filter(({ job }) => job);
       },
       async getPairForEachApplication({ job_id: jobId, ...application }) {
-        console.log(jobId);
         let { data: { findJob: job } } = await this.$apollo.query({
           query: (gql`query ($jobId: MongoID) {
             findJob (filter: { _id: $jobId, active: true }){

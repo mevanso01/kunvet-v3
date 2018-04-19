@@ -20,6 +20,8 @@ const degrees = {
 export const degreeSelectMaxWidths = {
   none: 85,
   high_school: 200,
+  pursuing_associate: 280,
+  associates: 205,
   pursuing_bachelor: 275,
   bachelors: 200,
   pursuing_master: 250,

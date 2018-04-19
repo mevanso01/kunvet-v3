@@ -1,7 +1,9 @@
 const FindJobRecord = `
   _id
+  user_id
   posted_by
   active
+  is_deleted
   title
   date
   description
@@ -32,7 +34,7 @@ const FindJobRecord = `
 const FindJobRecordForJobCard = `
   _id
   active
-  deleted
+  is_deleted
   posted_by
   user_id
   business_id

@@ -523,39 +523,6 @@ const findJobQuery = gql`
     }
   }
 `;
-/* const findJobQuery = gql`
-  query($id: MongoID) {
-    findJob(filter: { _id: $id }) {
-      _id
-      posted_by
-      title
-      description
-      address
-      university
-      latitude
-      longitude
-      type
-      studentfriendly
-      type2
-      shift
-      age
-      pay_type
-      salary
-      pay_denomination
-      education
-      preferred_major
-      language
-      experience
-      responsibilities
-      notes
-      images {
-        original
-        cropped
-      }
-      position_tags
-    }
-  }
-`; */
 const findJobsQuery = gql`
   query($userId: MongoID, $businessId: MongoID) {
     findJobs(filter: { user_id: $userId, business_id: $businessId }) {
@@ -754,10 +721,20 @@ export default {
             id: id,
             job: job,
           },
-          refetchQueries: [{
-            query: findJobQuery,
-            variables: { id: id },
-          }],
+          refetchQueries: [
+            {
+              query: findJobQuery,
+              variables: { id: id },
+            },
+            {
+              query: gql`query($userId: MongoID, $businessId: MongoID) {
+                findJobs(filter: { user_id: $userId, business_id: $businessId }) {
+                  ${queries.FindJobRecordForJobCard}
+                }
+              }`,
+              variables: { userId: this.$store.state.userID, businessId: this.$store.state.businessID },
+            },
+          ],
         }).then((res) => {
           this.loading = false;
           const recordId = res.data.updateJob.recordId;

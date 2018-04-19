@@ -8,7 +8,7 @@
   <v-container fluid class="white-bg job-post__container">
     <div class="main-cont-large">
       <v-layout row wrap>
-        <v-flex xs-12 v-if="jobs.length === 0">
+        <v-flex xs-12 v-if="unpostedJobs.length === 0 && activeJobs.length === 0">
           You have no jobs.
         </v-flex>
         <v-flex xs12 v-if="unpostedJobs.length > 0">
@@ -241,6 +241,7 @@
           },
         });
         this.jobs = data.findJobs;
+        console.log(this.jobs);
       },
       onShowJobDialog(job) {
         this.dialogs.currentJob = job;
@@ -253,7 +254,7 @@
             updateJob(filter: { _id: $jobId }
               record: {
                 user_id: $uid,
-                deleted: true,
+                is_deleted: true,
               }
             ){
               recordId
@@ -272,8 +273,17 @@
                 businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
               },
             },
-            {
-              query: findJobsQuery,
+            { // from applicants page
+              query: (gql`query ($userId: MongoID, $businessId: MongoID) {
+                findJobs (filter: { user_id: $userId, business_id: $businessId, active: true, is_deleted: false }){
+                  _id
+                  user_id
+                  posted_by
+                  title
+                  address
+                  date
+                }
+              }`),
               variables: {
                 userId: this.$store.state.userID,
                 businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
@@ -302,12 +312,11 @@
     },
     computed: {
       activeJobs() { // and unexpired
-        return this.jobs;
-        // const { jobs } = this;
-        // return jobs.filter(JobHelper.isJobActive);
+        const { jobs } = this;
+        return jobs.filter(JobHelper.isJobActive);
       },
       unpostedJobs() {
-        return this.jobs.filter(({ active }) => !active);
+        return this.jobs.filter(x => !x.active && !x.is_deleted);
       },
       expiredJobs() {
         const { jobs } = this;

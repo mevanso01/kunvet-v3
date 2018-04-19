@@ -216,7 +216,7 @@
                       item-text="name"
                       item-value="name"
                       v-bind:items="availableCities"
-                      v-model="selectedCities"
+                      v-model="selectedCity"
                       autocomplete
                       single-line
                       hide-details
@@ -268,18 +268,18 @@
                       <!--<v-select
                         label="Select city"
                         v-bind:items="availableCities"
-                        v-model="selectedCities"
+                        v-model="selectedCity"
                         single-line
                         hide-details
                         autocomplete>
                       </v-select>-->
                       <v-menu bottom offset-y :close-on-content-click="false">
                         <div class="custom-select" slot="activator">
-                          <span v-if="this.selectedCities">{{ selectedCities }}</span>
+                          <span v-if="this.selectedCity">{{ selectedCity }}</span>
                           <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
                           <v-btn icon><v-icon>keyboard_arrow_down</v-icon></v-btn>
                         </div>
-                        <v-radio-group v-model="selectedCities" hide-details>
+                        <v-radio-group v-model="selectedCity" hide-details>
                           <v-list class="custom-select-menu">
                             <v-list-tile v-for="(item, i) in availableCities" :key="i">
                               <v-radio :label="item.name" :value="item.name"
@@ -463,7 +463,7 @@ export default {
       ],
       firstSearch: Store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
-      selectedCities: 'Irvine, CA', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCities,
+      selectedCity: this.$store.state.selectedCity, // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
       selectedTypes: Store.state.selectedTypes,
       selectedPositions: Store.state.selectedPositions,
       selectedShifts: Store.state.selectedShifts,
@@ -489,7 +489,7 @@ export default {
       return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
     },
     selectedCoordinates() {
-      const selected = locations.search_locations.find(el => el.name === this.selectedCities);
+      const selected = locations.search_locations.find(el => el.name === this.selectedCity);
       if (!selected) {
         return Coordinates.uci;
       }
@@ -498,7 +498,7 @@ export default {
   },
   methods: {
     searchGo() {
-      if (this.selectedCities && this.selectedCities[0]) {
+      if (this.selectedCity && this.selectedCity[0]) {
         this.filterJobs();
         this.firstSearch = false;
         Store.commit('go');
@@ -527,7 +527,6 @@ export default {
         }
       }
       let sortedJobs = this.findJobs.concat();
-      console.log('Num jobs:', sortedJobs.length);
       if (this.selectedLat && this.selectedLong) {
         sortedJobs.sort((a, b) => this.compareDistance(a, b));
       }
@@ -626,7 +625,7 @@ export default {
     commitData() {
       Store.commit({
         type: 'keepSearch',
-        sCities: this.selectedCities,
+        sCities: this.selectedCity,
         sTypes: this.selectedTypes,
         sPositions: this.selectedPositions,
         sShifts: this.selectedShifts,
@@ -716,11 +715,11 @@ export default {
             age
             pay_type
             date
-            deleted
+            is_deleted
           }
         }`,
       });
-      this.findJobs = findJobs.filter(x => !x.deleted);
+      this.findJobs = findJobs.filter(x => !x.is_deleted);
       this.filterJobs();
     },
   },
@@ -734,7 +733,9 @@ export default {
         if (data.firstSearch) {
           this.firstSearch = data.firstSearch;
         }
-        this.selectedCities = data.selectedCities;
+        if (data.selectedCity && data.selectedCity.lenght > 0) {
+          this.selectedCity = data.selectedCity;
+        }
         if (!Store.state) {
           if (data.selectedPositions) {
             this.selectedPositions = data.selectedPositions;

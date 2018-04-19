@@ -240,13 +240,8 @@
       async getData() {
         const { data } = await this.$apollo.query({
           query: (gql`query ($userId: MongoID, $businessId: MongoID) {
-            findJobs (filter: { user_id: $userId, business_id: $businessId, active: true }){
-              _id
-              user_id
-              posted_by
-              title
-              address
-              date
+            findJobs (filter: { user_id: $userId, business_id: $businessId, active: true, is_deleted: false }){
+              ${queries.FindJobRecordForJobCard}
             }
           }`),
           variables: {
@@ -254,14 +249,12 @@
             businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
           },
         });
-        console.log('DATA', data);
         const jobs = data.findJobs;
         if (jobs && jobs.length > 0 && jobs[0]._id) {
           this.selectedJob = { title: jobs[0].title, id: jobs[0]._id };
         }
         const jobIds = jobs.map(({ _id }) => _id);
         const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
-        console.log('APPLICANTS', resolved);
         this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
         this.jobs = jobs;
       },
@@ -269,7 +262,7 @@
         return this.$apollo.query({
           query: (gql`query ($JobId: MongoID) {
             findApplicants (filter: {
-              job_id: $JobId
+              job_id: $JobId,
             }) {
               ${queries.FindApplicantRecord}
               notes

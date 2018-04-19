@@ -13,7 +13,7 @@ const Store = new Vuex.Store({
     businessID: null,
     acct: 0,
     firstSearch: true,
-    selectedCities: [],
+    selectedCity: null,
     selectedTypes: [],
     selectedPositions: [],
     selectedShifts: [],
@@ -66,7 +66,7 @@ const Store = new Vuex.Store({
       state.businessID = null;
     },
     keepSearch(state, payload) {
-      state.selectedCities = payload.sCities;
+      state.selectedCity = payload.sCities;
       state.selectedTypes = payload.sTypes;
       state.selectedPositions = payload.sPositions;
       state.selectedShifts = payload.sShifts;
@@ -82,7 +82,7 @@ const Store = new Vuex.Store({
       state.acct = 0;
       state.default_org = null;
       state.firstSearch = true;
-      state.selectedCities = [];
+      state.selectedCity = null;
       state.selectedTypes = [];
       state.selectedPositions = [];
       state.selectedShifts = [];
