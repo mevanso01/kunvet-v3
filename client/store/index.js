@@ -37,6 +37,7 @@ const Store = new Vuex.Store({
     setAcct(state, payload) {
       state.acct = payload.acct;
       if (payload.acct === 0) {
+        state.default_org = null;
         state.userdata = {
           firstname: null,
           lastname: null,
@@ -79,6 +80,7 @@ const Store = new Vuex.Store({
     resetState(state) {
       state.userID = null;
       state.acct = 0;
+      state.default_org = null;
       state.firstSearch = true;
       state.selectedCities = [];
       state.selectedTypes = [];

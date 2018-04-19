@@ -488,6 +488,7 @@
   import VuexLS from '@/store/persist';
   import axios from 'axios';
   import Config from 'config';
+  import EventBus from '@/EventBus';
 
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
@@ -787,6 +788,7 @@
       },
       saveFromEditNameModal() {
         const { firstName, lastName } = this.editNameModal;
+        EventBus.$emit('changed_name', { oldname: `${this.userdata.firstname} ${this.userdata.lastname}`, newname: `${firstName} ${lastName}` });
         this.userdata.firstname = firstName;
         this.userdata.lastname = lastName;
         this.saveUserdata();
@@ -916,6 +918,7 @@
             _id: this.uid,
             record: {
               org_list: newOrgList,
+              default_org: [recordId],
             },
           },
           refetchQueries: [{
@@ -923,8 +926,21 @@
               findAccount (filter: {
                 _id: $_id
               }) {
-                _id
-                org_list
+                  _id
+                  firstname
+                  lastname
+                  school
+                  degree
+                  major
+                  email
+                  profile_pic
+                  org_list
+                  default_org
+                  resumes {
+                    name
+                    filename
+                    resumeid
+                  }
               }
             }`),
             variables: {

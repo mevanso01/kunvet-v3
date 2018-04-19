@@ -246,7 +246,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
-          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, { text: 'Personal Bio', route: '/account' }] },
+          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }] },
         ],
       ],
       sidebarItems: [
@@ -307,10 +307,7 @@ export default {
     },
     lo() {
       this.acct = 0;
-      Store.commit({
-        type: 'setAcct',
-        acct: 0,
-      });
+      Store.commit({ type: 'resetState' });
       Store.state.firstSearch = true;
     },
     logout() {

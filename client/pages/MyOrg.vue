@@ -260,8 +260,8 @@
                       </div>
                     </v-card-title>
                     <v-card-actions>
-                      <v-btn color="green darken-1" flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
-                      <v-btn color="green darken-1" flat="flat" @click.native="saveFromEditModal">Save</v-btn>
+                      <v-btn flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
+                      <v-btn flat="flat" @click.native="saveFromEditModal">Save</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -376,6 +376,9 @@
       saveFromEditModal() {
         const text = this.editModal.text;
         const property = this.editModal.property;
+        if (property === 'business_name') {
+          EventBus.$emit('changed_name', { oldname: this.bdata[property], newname: text });
+        }
         this.bdata[property] = text;
         this.saveData();
         this.destroyEditModal();
@@ -412,7 +415,6 @@
             }
           }`),
           variables: {
-            // find a more secure way to run query
             bid: this.$store.state.businessID,
             business_name: this.bdata.business_name,
             address: this.bdata.address,
@@ -420,6 +422,19 @@
             phone_number: this.bdata.phone_number,
             profile_pic: this.bdata.profile_pic,
           },
+          refetchQueries: [{
+            query: (gql`query ($oid: MongoID) {
+              findOrganization(filter: {
+                _id: $oid
+              }) {
+                business_name
+                _id
+              }
+            }`),
+            variables: {
+              oid: this.$store.state.businessID,
+            },
+          }],
         }).catch((error) => {
           console.error(error);
         });

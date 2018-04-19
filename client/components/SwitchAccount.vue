@@ -24,7 +24,7 @@
       <v-expansion-panel-content>
         <div slot="header" class="one-line">{{ selectedAccount }}</div>
         <v-list dense style="background-color: #f4f4f4; padding: 0;">
-          <v-list-tile v-for="(item, i) in accountItems" v-if="item.name" :key="i" @click="switchTo(item)">
+          <v-list-tile v-for="(item, i) in accountItems" :key="i" @click="switchTo(item)">
             <v-list-tile-title class="one-line" style="font-size: 14px;">{{ item.name }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -86,11 +86,13 @@ export default {
       }
       this.accountItems = [{ name: `${this.fname} ${this.lname}`, _id: null }].concat(this.org_list);
       const defaultOrg = this.$store.state.default_org;
+      // console.log(defaultOrg);
       if (defaultOrg) {
         this.selectedAccount = this.accountItems.find(x => x._id === defaultOrg).name;
       } else {
         this.selectedAccount = `${this.fname} ${this.lname}`;
       }
+      // console.log(this.selectedAccount);
     },
     getOrgByID(_oid) {
       return new Promise(resolve => {
@@ -188,6 +190,16 @@ export default {
     },
   },
   created() {
+    EventBus.$on('changed_name', values => {
+      const { oldname, newname } = values;
+      if (this.selectedAccount === oldname) {
+        this.selectedAccount = newname;
+      }
+      const item = this.accountItems.find(x => x.name === oldname);
+      if (item) {
+        item.name = newname;
+      }
+    });
     this.fetchData();
   },
 };

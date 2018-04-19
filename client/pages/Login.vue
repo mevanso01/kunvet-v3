@@ -193,7 +193,6 @@ export default {
           return;
         }
         const udata = response.data.user;
-        console.log('UDATA', udata);
         this.commitUserdata(udata);
         this.commitID(udata._id);
 
