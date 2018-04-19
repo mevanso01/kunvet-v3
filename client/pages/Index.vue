@@ -242,24 +242,24 @@
                 </div>
               </section>
               <div v-if="firstSearch">
-                <FirstViewCardRText :image="require('@/assets/icons/Asset(66).svg')">
+                <PromoTextContainer :image="require('@/assets/icons/Asset(66).svg')">
                   <h2>Why use Kunvet instead?</h2>
                   <ul>
                     <li>Kunvet is a safe platform with student-oriented jobs & opportunities!</li>
                     <li>At Kunvet, small businesses and school clubs can locate students nearby quicker!</li>
                     <li>Applications and resumes are easily managed via Kunvet, so no more paper hassle!</li>
                   </ul>
-                </FirstViewCardRText>
+                </PromoTextContainer>
 
-                <FirstViewCardRText :image="require('@/assets/icons/Asset(67).svg')">
+                <PromoTextContainer :image="require('@/assets/icons/Asset(67).svg')">
                   <h2>What’s exclusive at here?</h2>
                   <p>We understand your pain. For example, we realized that many students apply to jobs/opportunities from flyers around the school campus, so we decide to facilitate this process. After posting a job on Kunvet, organizations can print their jobs, which comes with a unique QR code, and tape them to approved locations on campus.</p>
-                </FirstViewCardRText>
+                </PromoTextContainer>
 
-                <FirstViewCardRText :image="require('@/assets/icons/Asset(68).svg')">
+                <PromoTextContainer :image="require('@/assets/icons/Asset(68).svg')">
                   <h2>What can we guarantee?</h2>
                   <p>We will take all necessary steps to keep information on Kunvet clean and safe. We will consider every user’s feedback, suggestions, and complaints. No matter what is ahead of Kunvet team, we will not sacrifice our user’s experience.</p>
-                </FirstViewCardRText>
+                </PromoTextContainer>
               </div>
 
                 <section v-if="!firstSearch" class="search">
@@ -412,9 +412,7 @@ import CitySvg from '@/assets/vc.svg';
 import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import StudentSvg from '@/assets/job_posts/user_1.svg';
-import FirstViewCard1 from '@/components/FirstViewCard1';
-import FirstViewCardRText from '@/components/FirstViewCardRText';
-import FirstViewCardLText from '@/components/FirstViewCardLText';
+import PromoTextContainer from '@/components/PromoTextContainer';
 import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import DistanceHelper from '@/utils/DistanceHelper';
@@ -435,10 +433,8 @@ const findJobQuery = gql`query ($id: MongoID) {
 
 export default {
   components: {
-    FirstViewCard1,
-    FirstViewCardRText,
-    FirstViewCardLText,
     MainJobCard,
+    PromoTextContainer,
   },
   data() {
     return {
@@ -473,7 +469,6 @@ export default {
       selectedShifts: Store.state.selectedShifts,
       selectedLat: Coordinates.uci.latitude,
       selectedLong: Coordinates.uci.longitude,
-      vuextest: Store.state.count,
       svgs: {
         cityImage: CitySvg,
         information: InformationSvg,
