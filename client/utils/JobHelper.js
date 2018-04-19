@@ -6,7 +6,6 @@ class JobHelper {
     if (!daysDiff) {
       daysDiff = 999;
     }
-    console.log('isActive?', daysDiff, active, !isDeleted);
     return daysDiff > 0 && active && !isDeleted;
   }
   static isJobExpired = ({ expiry_date: expiryDate, active }) => {

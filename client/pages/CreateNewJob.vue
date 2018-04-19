@@ -526,33 +526,7 @@ const findJobQuery = gql`
 const findJobsQuery = gql`
   query($userId: MongoID, $businessId: MongoID) {
     findJobs(filter: { user_id: $userId, business_id: $businessId }) {
-      _id
-      posted_by
-      title
-      description
-      address
-      university
-      latitude
-      longitude
-      type
-      studentfriendly
-      type2
-      shift
-      age
-      pay_type
-      salary
-      pay_denomination
-      education
-      preferred_major
-      language
-      experience
-      responsibilities
-      notes
-      images {
-        original
-        cropped
-      }
-      position_tags
+      ${queries.FindJobRecord}
     }
   }
 `;
@@ -755,13 +729,59 @@ export default {
           variables: {
             job: job,
           },
-          refetchQueries: [{
-            query: findJobsQuery,
-            variables: {
-              userId: this.$store.state.userID,
-              businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+          refetchQueries: [
+            {
+              query: findJobsQuery,
+              variables: {
+                userId: this.$store.state.userID,
+                businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+              },
             },
-          }],
+            {
+              query: gql`query($userId: MongoID, $businessId: MongoID) {
+                findJobs(filter: { user_id: $userId, business_id: $businessId }) {
+                  ${queries.FindJobRecordForJobCard}
+                }
+              }`,
+              variables: {
+                userId: this.$store.state.userID,
+                businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+              },
+            },
+            { // from home page
+              query: gql`{
+                findJobs (filter: { active: true }){
+                  _id
+                  latitude
+                  longitude
+                  type
+                  studentfriendly
+                  type2
+                  shift
+                  age
+                  pay_type
+                  date
+                  is_deleted
+                }
+              }`,
+            },
+            { // from applicants page
+              query: (gql`query ($userId: MongoID, $businessId: MongoID) {
+                findJobs (filter: { user_id: $userId, business_id: $businessId, active: true, is_deleted: false }){
+                  _id
+                  user_id
+                  posted_by
+                  title
+                  address
+                  date
+                }
+              }`),
+              variables: {
+                userId: this.$store.state.userID,
+                businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+              },
+            },
+          ],
         }).then((res) => {
           this.loading = false;
           const recordId = res.data.createJob.recordId;
