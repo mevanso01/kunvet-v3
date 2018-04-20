@@ -156,6 +156,7 @@ const wpconf = {
       }),
     ],
   },
+  devtool: 'cheap-module-eval-source-map',
 };
 
 if (process.env.NODE_ENV === 'development') {
