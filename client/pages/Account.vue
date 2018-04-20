@@ -922,7 +922,7 @@
                 _id: this.uid,
                 record: {
                   org_list: newOrgList,
-                  default_org: [recordId],
+                  default_org: recordId,
                 },
               },
               refetchQueries: [{
