@@ -532,9 +532,11 @@ export default {
       });
     },
     onResize() {
-      const ratio = 1.3;
-      const width = this.$refs.fallbackframe.clientWidth;
-      this.$refs.fallbackFrame.style.height = `${width * ratio}px`;
+      if (this.fallback) {
+        const ratio = 1.3;
+        const width = this.$refs.fallbackframe.clientWidth;
+        this.$refs.fallbackFrame.style.height = `${width * ratio}px`;
+      }
     },
   },
   computed: {
