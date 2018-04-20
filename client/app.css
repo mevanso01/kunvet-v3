@@ -346,6 +346,10 @@ body {
 #nav-logo-svg svg {
   height: 64px;
   fill: #ef5350;
+  --navbar-icon-color: #ef5350;
+}
+.black svg#nav-logo-svg {
+  --navbar-wordmark-color: #fff;
 }
 #nav-items {
     position: absolute;
