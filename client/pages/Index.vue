@@ -632,6 +632,10 @@ export default {
       });
     },
     saveJob(id) {
+      if (!this.uid || this.$store.state.acct === 0) {
+        // console.log(this.uid, this.$store.state.acct);
+        return;
+      }
       if (this.saved_jobs.indexOf(id) === -1) {
         this.saved_jobs.push(id);
       } else {

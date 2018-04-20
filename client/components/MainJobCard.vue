@@ -10,12 +10,16 @@
         <v-flex xs3>
 
         <div class="float-right">
-          <!--<v-avatar size="36px" slot="activator">
-            <v-icon class="whatshot">whatshot</v-icon>
-          </v-avatar>-->
-
-          <a class="svg-button" @click="saveJobClicked(job._id)">
-            <img v-if="isSaved" style="height: 24px; margin: 6px 0;" :src="svgs.yellowBookmark" />
+          <v-tooltip bottom v-if="computeIsLoggedOut">
+            <div slot="activator">
+              <a class="svg-button">
+                <img style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
+              </a>
+            </div>
+            <span>Please log in</span>
+          </v-tooltip>
+          <a v-else class="svg-button" @click="saveJobClicked(job._id)">
+            <img v-if="isSaved" style="height: 24px; margin: 6px auto;" :src="svgs.yellowBookmark" />
             <img v-else style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
           </a>
         </div>
@@ -98,6 +102,9 @@ export default {
     };
   },
   computed: {
+    computeIsLoggedOut() {
+      return this.$store.state.acct === 0;
+    },
     computeIsSaved() {
       return this.isSaved;
     },
