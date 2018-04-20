@@ -21,7 +21,7 @@
       </v-layout>
       <v-layout row wrap style="padding-bottom: 32px;">
         <div class="post-card" v-for="{ job, application } in jobsAndApplications" v-if="job" style="height: auto;">
-          <div v-if="!job.deleted">
+          <div v-if="!job.is_deleted">
             <v-layout align-center row spacer slot="header">
               <v-flex xs12>
                 <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">

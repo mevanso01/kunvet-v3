@@ -80,6 +80,7 @@
 .new-applicant-card__info {
   padding-top: 7px;
   padding-bottom: 7px;
+  /* height: 161px; */
 }
 .new-applicant-card__blue-ico {
   color: rgb(63, 169, 245);

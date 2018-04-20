@@ -171,6 +171,7 @@
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
   import axios from 'axios';
+  import difference from 'lodash/difference';
 
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import KunvetCharacterSvg from '@/assets/account/default_profile_picture.svg';
@@ -256,10 +257,27 @@
         const jobIds = jobs.map(({ _id }) => _id);
         const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
         this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
+        this.applicants = [];
         this.jobs = jobs;
+        console.log(jobs);
+        this.loadFromNetwork();
       },
-      async getApplicants(jobId) {
+      async loadFromNetwork() {
+        if (this.jobs && this.jobs.lenght > 0) {
+          const jobIds = this.jobs.map(({ _id }) => _id);
+          const resolved = await Promise.all(jobIds.map(id => this.getApplicationsFromJob(id, false)));
+          const applicants = resolved.reduce((total, curr) => total.concat(curr), []);
+          const diff = difference(applicants, this.applicants);
+          if (diff && diff.length > 0) {
+            for (var i = 0; i < diff.lenght; i++) {
+              this.applicants.push(diff[i]);
+            }
+          }
+        }
+      },
+      async getApplicants(jobId, useCache = true) {
         return this.$apollo.query({
+          fetchPolicy: useCache ? 'cache-first' : 'network-only',
           query: (gql`query ($JobId: MongoID) {
             findApplicants (filter: {
               job_id: $JobId,
@@ -273,8 +291,8 @@
           },
         });
       },
-      async getApplicationsFromJob(jobId) {
-        const { data: { findApplicants: applicants } } = await this.getApplicants(jobId);
+      async getApplicationsFromJob(jobId, useCache = true) {
+        const { data: { findApplicants: applicants } } = await this.getApplicants(jobId, useCache);
         return applicants.map(({ degree, ...rest }) => ({ ...rest, degree: degreeDbToString(degree) }));
       },
       async updateApplicantStatus(newStatus = 'submitted', id = null) {

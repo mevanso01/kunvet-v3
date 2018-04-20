@@ -65,11 +65,11 @@
               <div class="new-applicant-card__time-ago">
                 <timeago :since="job.date" />
               </div>
-              <p class="post-intro">
-                <span class="new-applicant-card__address">
+              <div class="post-address-container">
+                <p class="new-applicant-card__address">
                   <img class="new-applicant-card__regular-icon" :src="svgs.locationMarker" />{{ job.address }}
-                </span>
-              </p>
+                </p>
+              </div>
               <div>
                 <img
                   class="job-post-icon"

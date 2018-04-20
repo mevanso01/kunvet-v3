@@ -583,6 +583,7 @@
           resume: ResumeSvg,
           suitcase: SuitcaseSvg,
         },
+        loading: false,
       };
     },
     components: {
@@ -879,81 +880,91 @@
         });
       },
       async createOrganization() {
-        const { aboutUs, organizationName } = this.createOrganizationModal;
-        const { data: { createOrganization: { recordId } } } = await this.$apollo.mutate({
-          mutation: (gql`mutation ($name: String, $bio: String, $email: String, $uid: MongoID) {
-            createOrganization(record: {
-              business_name: $name,
-              biography: $bio,
-              email: $email
-              user_id: $uid,
-            }) {
-              recordId
-            }
-          }`),
-          variables: {
-            name: organizationName,
-            bio: aboutUs,
-            uid: this.uid,
-            email: this.userdata.display_email,
-          },
-        });
+        if (!this.loading) {
+          this.loading = true;
+          try {
+            const { aboutUs, organizationName } = this.createOrganizationModal;
+            const { data: { createOrganization: { recordId } } } = await this.$apollo.mutate({
+              mutation: (gql`mutation ($name: String, $bio: String, $email: String, $uid: MongoID) {
+                createOrganization(record: {
+                  business_name: $name,
+                  biography: $bio,
+                  email: $email
+                  user_id: $uid,
+                }) {
+                  recordId
+                }
+              }`),
+              variables: {
+                name: organizationName,
+                bio: aboutUs,
+                uid: this.uid,
+                email: this.userdata.display_email,
+              },
+            });
 
-        // Strange bugs in this file that causes org_list to be empty... Patching it here.
-        const orgListOrEmpty = this.userdata.org_list || [];
-        const newOrgList = orgListOrEmpty
-          .map(({ _id }) => _id)
-          .concat(recordId);
+            // Strange bugs in this file that causes org_list to be empty... Patching it here.
+            const orgListOrEmpty = this.userdata.org_list || [];
+            const newOrgList = orgListOrEmpty
+              .map(({ _id }) => _id)
+              .concat(recordId);
 
-        await this.$apollo.mutate({
-          mutation: (gql`mutation ($_id: MongoID, $record: UpdateOneAccountInput!) {
-            updateAccount(
-              filter: { _id: $_id },
-              record: $record,
-            ) {
-              recordId
-            }
-          }`),
-          variables: {
-            _id: this.uid,
-            record: {
-              org_list: newOrgList,
-              default_org: [recordId],
-            },
-          },
-          refetchQueries: [{
-            query: (gql`query ($_id: MongoID) {
-              findAccount (filter: {
-                _id: $_id
-              }) {
-                  _id
-                  firstname
-                  lastname
-                  school
-                  degree
-                  major
-                  email
-                  profile_pic
-                  org_list
-                  default_org
-                  resumes {
-                    name
-                    filename
-                    resumeid
+            await this.$apollo.mutate({
+              mutation: (gql`mutation ($_id: MongoID, $record: UpdateOneAccountInput!) {
+                updateAccount(
+                  filter: { _id: $_id },
+                  record: $record,
+                ) {
+                  recordId
+                }
+              }`),
+              variables: {
+                _id: this.uid,
+                record: {
+                  org_list: newOrgList,
+                  default_org: [recordId],
+                },
+              },
+              refetchQueries: [{
+                query: (gql`query ($_id: MongoID) {
+                  findAccount (filter: {
+                    _id: $_id
+                  }) {
+                      _id
+                      firstname
+                      lastname
+                      school
+                      degree
+                      major
+                      email
+                      profile_pic
+                      org_list
+                      default_org
+                      resumes {
+                        name
+                        filename
+                        resumeid
+                      }
                   }
-              }
-            }`),
-            variables: {
-              _id: this.$store.state.userID,
-            },
-          }],
-        });
+                }`),
+                variables: {
+                  _id: this.$store.state.userID,
+                },
+              }],
+            });
 
-        this.createOrganizationModal.show = false;
-        this.userdata.org_list = orgListOrEmpty.concat({
-          _id: recordId,
-          name: organizationName,
-        });
+            this.createOrganizationModal.show = false;
+            this.loading = false;
+            this.userdata.org_list = orgListOrEmpty.concat({
+              _id: recordId,
+              name: organizationName,
+            });
+          } catch (e) {
+            console.error(e);
+            this.loading = false;
+            this.createOrganizationModal.show = false;
+          }
+        }
       },
       async populateOrgList(orgList) {
         if (Array.isArray(orgList) && orgList.length > 0 && orgList[0] !== null) {

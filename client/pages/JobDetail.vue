@@ -112,6 +112,9 @@
   height: 100%;
   cursor: pointer;
 }
+.posted-by {
+  max-width: calc(99% - 100px);
+}
 @media (max-width: 600px) {
   .flex {
     padding: 10px 1px;
@@ -132,6 +135,9 @@
   .apply-card {
     min-width: 350px !important;
   }
+  .posted-by {
+    max-width: calc(99% - 204px);
+  }
 }
 @media (min-width: 961px) {
   .job-detail-container {
@@ -150,8 +156,8 @@
                 <img :src="profilePic" alt="">
               </v-avatar>
             </div>
-      		  <div class="float-left" style="color: #A7A7A7; margin-right: 1px;">
-              <h3 style="color: #616161;">{{ findJob.posted_by }}</h3>
+      		  <div class="float-left posted-by" style="color: #A7A7A7; margin-right: 1px;">
+              <h3 style="color: #616161;" class="one-line ellipsis">{{ findJob.posted_by }}</h3>
             </div>
             <div class="float-right">
               <a class="svg-button" flat style="margin: 2px 8px;" @click="saveJob(findJob._id)">

@@ -16,7 +16,7 @@
 
           <a class="svg-button" @click="saveJobClicked(job._id)">
             <img v-if="isSaved" style="height: 24px; margin: 6px 0;" :src="svgs.yellowBookmark" />
-            <img v-else style="height: 24px; margin: 6px 0;" :src="svgs.grayBookmark" />
+            <img v-else style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
           </a>
         </div>
         </v-flex>
@@ -30,17 +30,22 @@
             <timeago :since="job.date" />
           </div>
           <div class="carditem">
-            <p style="color: #A7A7A7;">
-              <span class="carditem-image">
-                <img :src="svgs.locationMarker" />
-              </span>
-              <span v-if="fromCoordinates" style="text-decoration: underline;">
-                <Distance :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
-              </span>
-              <span v-else>
-                {{ job.address }}
-              </span>
-            </p>
+            <div class="post-address-container">
+              <p>
+                <span class="carditem-image">
+                  <img :src="svgs.locationMarker" />
+                </span>
+                <span v-if="fromCoordinates" style="text-decoration: underline;">
+                  <Distance :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
+                </span>
+                <span v-else>
+                  {{ job.address }}
+                </span>
+              </p>
+              <p v-if="job.university" style="margin-left: 23px;">
+                {{ job.university }}
+              </p>
+            </div>
           </div>
           <div class="carditem">
             <p><v-icon>info</v-icon>{{ parseJobIntoMainInfo(job) }}</p>
