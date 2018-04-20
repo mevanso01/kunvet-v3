@@ -53,7 +53,12 @@ export default {
       this.render();
     },
     async load() {
-      this.pdf = await PdfJs.getDocument(this.href);
+      try {
+        this.pdf = await PdfJs.getDocument(this.href);
+      } catch (e) {
+        this.$emit('failed', e);
+        throw e;
+      }
       this.pages = this.pdf.numPages;
       this.$emit('loaded', this.pdf);
     },
