@@ -21,7 +21,7 @@
                 <p>Our next step is to expand Kunvet throughout the entire UC campuses, constructing a safe, super easy-to-use, great user experience and all-purpose job ecosystem for university students. Kunvet Jobs will include university-offered jobs, volunteering opportunities with school-clubs, jobs surrounding university campuses, off-campus internships and basically every job opportunity that is suitable for students.</p>
 
                 <h2 style="color: #969494;">We invite you to join us</h2>
-                <p>If you have experience with web development or marketing, we invite you to <a href="/JoinUs"><b><u>join our start-up group</u></b></a>.</p>
+                <p>If you have experience with web development or marketing, we invite you to <a href="/join"><b><u>join our start-up group</u></b></a>.</p>
 
                 <h2 style="color: #969494;">Contact us</h2>
                 <p>Feel free to reach us at <a href="mailto:bz@kunvet.com">bz@kunvet.com</a></p>

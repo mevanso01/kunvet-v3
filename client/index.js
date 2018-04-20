@@ -173,15 +173,15 @@ const router = new VueRouter({
       component: () => import('@/pages/Applicants'),
     },
     {
-      path: '/AboutUs',
+      path: '/about',
       component: () => import('@/pages/AboutUs'),
     },
     {
-      path: '/Terms',
+      path: '/terms',
       component: () => import('@/pages/Terms'),
     },
     {
-      path: '/JoinUs',
+      path: '/join',
       component: () => import('@/pages/JoinUs'),
     },
   ],
