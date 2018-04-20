@@ -229,17 +229,23 @@
                   :svg="svgs.resume"
                   :text="'Resume'"
                 />
-                <pdf
+                <p
+                  v-if="resumeloading"
+                >
+                  Loading...
+                </p>
+                <PdfFrame
                   v-if="src"
-                  :src="src"
+                  :href="src"
                   :page="page"
+                  @loaded="resumeloading = false"
+                  @failed="fallback = true"
                 />
-                <div v-if="src" style="padding-top: 5px">
-                  <v-btn :disabled="page == 1" @click="page -= 1">Previous</v-btn>
-                  <v-btn v-if="src" :disabled="page == numPages" @click="page += 1">Next</v-btn>
-                </div>
-                <iframe v-if="docurl" :src="docurl" style="width: 100%; height: 1200px; overflow: hidden"></iframe>
-
+                <iframe
+                  v-if="docurl && fallback"
+                  :src="docurl"
+                  style="width: 100%; height: 1200px; overflow: hidden">
+                </iframe>
               </v-flex>
             </v-layout>
           </section>
@@ -288,8 +294,8 @@
 <script>
 import axios from 'axios';
 import gql from 'graphql-tag';
-import pdf from 'vue-pdf';
 import Config from 'config';
+import PdfFrame from '@/components/PdfFrame';
 
 import { degreeDbToString } from '@/constants/degrees';
 import AccountHeader from '@/components/AccountHeader';
@@ -302,12 +308,14 @@ import SchoolSvg from '@/assets/account/account_school.svg';
 import MajorSvg from '@/assets/account/account_major.svg';
 import EmailSvg from '@/assets/account/account_email.svg';
 
+import FileClient from '@/utils/FileClient';
+
 
 export default {
   props: ['id'],
   components: {
     AccountHeader,
-    pdf,
+    PdfFrame,
   },
   data() {
     return {
@@ -342,6 +350,8 @@ export default {
       errorOccured: false,
       serverUrl: Config.get('serverUrl'),
       profile_pic_url: undefined,
+      resumeloading: true,
+      fallback: false,
     };
   },
   methods: {
@@ -429,23 +439,9 @@ export default {
     },
     async loadResume(resume) {
       console.log('Loading resume:', resume);
-      const url = `${this.serverUrl}/file/get/${resume.filename}`;
+      const url = FileClient.getLink(resume.filename);
       this.docurl = `${url}#embedded=true`;
-      // FIXME
-      /* try {
-        this.src = pdf.createLoadingTask(url);
-        await this.src.then((p) => {
-          this.numPages = p.numPages;
-        });
-      } catch (e) {
-        if (e.name === 'InvalidPDFException') {
-          console.log(url);
-          this.src = null;
-          this.docurl = `${url}#embedded=true`;
-        } else {
-          console.error(e);
-        }
-      } */
+      this.src = url;
     },
     async loadProfilePic(userId) {
       try {
