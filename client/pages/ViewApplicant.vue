@@ -242,6 +242,7 @@
                   @failed="fallback = true"
                 />
                 <iframe
+                  ref="fallbackframe"
                   v-if="docurl && fallback"
                   :src="docurl"
                   style="width: 100%; height: 1200px; overflow: hidden">
@@ -530,6 +531,11 @@ export default {
         console.error(error);
       });
     },
+    onResize() {
+      const ratio = 1.3;
+      const width = this.$refs.fallbackframe.clientWidth;
+      this.$refs.fallbackFrame.style.height = `${width * ratio}px`;
+    },
   },
   computed: {
     isAcceptedOrRejected() {
@@ -545,6 +551,10 @@ export default {
   },
   created() {
     this.getData();
+    window.addEventListener('resize', this.onResize);
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.onResize);
   },
 };
 </script>
