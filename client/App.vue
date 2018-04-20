@@ -53,9 +53,12 @@
                     <v-list-tile v-if="subitem.text" @click="routeTo(subitem.route)">
                       <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
                     </v-list-tile>
-                    <div v-else="subitem === 'SwitchAccount'">
+                    <div v-else-if="subitem === 'SwitchAccount'">
                       <SwitchAccount />
                     </div>
+                    <v-list-tile v-else-if="subitem === 'Logout'" @click="logout">
+                      <v-list-tile-title style="font-size: 14px;">Log out</v-list-tile-title>
+                    </v-list-tile>
                   </div>
                 </v-list>
               </template>
@@ -138,7 +141,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <main>
+    <main v-bind:class="{ 'dn': isJobPostRoute && acct !== 0 }">
       <router-view></router-view>
     </main>
 
@@ -234,7 +237,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
-          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, { text: 'Log out', route: '/settings/logout' }] },
+          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
         ],
         [
           {
@@ -248,7 +251,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
-          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, { text: 'Log out', route: '/settings/logout' }] },
+          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
         ],
       ],
       sidebarItems: [
@@ -314,6 +317,14 @@ export default {
     },
     logout() {
       EventBus.$emit('logout');
+      this.$store.commit({
+        type: 'resetState',
+      });
+      axios.get('/auth/logout').then(() => {
+      }, (error) => {
+        console.error(error);
+      });
+      this.$router.push('/');
     },
     login_i() {
       EventBus.$emit('individual');

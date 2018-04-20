@@ -179,7 +179,9 @@
           <div class="carditem" style="color: #A7A7A7; margin-bottom: 10px; font-size: 11px;"><timeago :since="findJob.date"></timeago></div>
           <div class="carditem" style="color: #A7A7A7;">
             <p class="small-p">
-              <v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon><span style="padding-top: 2px; text-decoration: underline;">{{ findJob.address }}</span>
+              <!--<v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon>-->
+              <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
+              <span style="padding-top: 2px; text-decoration: underline;">{{ findJob.address }}</span>
             </p>
           </div>
 
@@ -315,6 +317,7 @@ import FBfullSvg from '@/assets/job_detail/facebook_full.svg';
 import FBstrokeSvg from '@/assets/job_detail/facebook_stroke.svg';
 import majorPreferredSvg from '@/assets/job_detail/major_preferred.svg';
 import degreeSvg from '@/assets/job_detail/degree.svg';
+import buildingSvg from '@/assets/icons/Asset(71).svg';
 import nsiSvg from '@/assets/icons/Asset(36).svg';
 import siSvg from '@/assets/icons/Asset(37).svg';
 import sanitizeHtml from 'sanitize-html';
@@ -347,6 +350,7 @@ export default {
         notSavedIcon: nsiSvg,
         majorPreferred: majorPreferredSvg,
         degree: degreeSvg,
+        building: buildingSvg,
       },
       uid: null,
       applydialog: false,

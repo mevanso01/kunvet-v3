@@ -959,6 +959,7 @@
               _id: recordId,
               name: organizationName,
             });
+            this.switchToOrg(recordId);
           } catch (e) {
             console.error(e);
             this.loading = false;
@@ -1045,14 +1046,15 @@
         });
       },
       switchToOrg(id) {
-        this.$store.commit({ type: 'setBusinessID', id });
         this.$store.commit({
           type: 'keepBdata',
           bdata: null,
         });
         this.userdata.default_org = id;
         this.updateAccount();
-        App.methods.login_b();
+        this.$store.commit({ type: 'setDefaultOrg', id });
+        this.$store.commit({ type: 'setBusinessID', id });
+        EventBus.$emit('business');
         this.$router.push('/myorg');
       },
       resendEmail() {

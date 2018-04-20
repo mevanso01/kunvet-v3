@@ -163,21 +163,22 @@ export default {
             findAccount (filter: {
               _id: $uid
             }) {
-                _id
-                firstname
-                lastname
-                school
-                degree
-                major
-                email
-                profile_pic
-                org_list
-                default_org
-                resumes {
-                  name
-                  filename
-                  resumeid
-                }
+              _id
+              firstname
+              lastname
+              school
+              degree
+              major
+              email
+              org_list
+              profile_pic
+              default_org
+              resumes {
+                name
+                filename
+                resumeid
+              }
+              email_verified
             }
           }`),
           variables: {

@@ -150,6 +150,12 @@ main {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+main {
+  min-height: calc(100vh - 121px);
+}
+main.dn {
+  min-height: calc(100vh - 169px);
+}
 .one-line {
   overflow: hidden;
   white-space: nowrap;

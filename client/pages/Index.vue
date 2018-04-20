@@ -531,7 +531,7 @@ export default {
       }
       let sortedJobs = this.findJobs.concat();
       if (this.selectedLat && this.selectedLong) {
-        sortedJobs.sort((a, b) => this.compareDistance(a, b));
+        sortedJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
       }
       let endIndex = sortedJobs.length;
       if (endIndex > 99) {
@@ -610,10 +610,15 @@ export default {
         },
       );
     },
-    compareDistance(a, b) {
+    compareDistanceAndDate(a, b) {
       // should we use the more accurate computeDistance function?
-      const distanceA = Math.sqrt(((this.selectedLat - a.latitude) ** 2) + ((this.selectedLong - a.longitude) ** 2));
-      const distanceB = Math.sqrt(((this.selectedLat - b.latitude) ** 2) + ((this.selectedLong - b.longitude) ** 2));
+      // const distanceA = Math.sqrt(((this.selectedLat - a.latitude) ** 2) + ((this.selectedLong - a.longitude) ** 2));
+      // const distanceB = Math.sqrt(((this.selectedLat - b.latitude) ** 2) + ((this.selectedLong - b.longitude) ** 2));
+      const distanceA = this.computeDistance(a.latitude, a.longitude);
+      const distanceB = this.computeDistance(b.latitude, b.longitude);
+      if (distanceA <= 6 && distanceB <= 6) {
+        return a.date < b.date;
+      }
       return distanceA - distanceB;
     },
     sanitizeSalary(salary) {
