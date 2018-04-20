@@ -80,6 +80,9 @@ ol, ul {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.expansion-panel__container {
+  overflow: hidden;
+}
 .alert.success {
   background-color: #4caf50 !important;
 }
