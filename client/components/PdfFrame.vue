@@ -32,13 +32,15 @@ export default {
     window.removeEventListener('resize', this.debouncedResize);
   },
   mounted() {
-    this.onResize();
-    this.initialLoad();
+    if (this.href) {
+      this.onResize();
+      this.initialLoad();
+    }
   },
   watch: {
     href() {
       this.pages = 0;
-      this.load();
+      this.initialLoad();
     },
   },
   methods: {
