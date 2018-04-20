@@ -42,12 +42,13 @@
 </template>
 
 <script>
-  import App from '@/App';
+  import EventBus from '@/EventBus';
   import Axios from 'axios';
   import VuexLS from '@/store/persist';
   import gql from 'graphql-tag';
 
   export default {
+    props: ['command'],
     data() {
       return {
         uid: null,
@@ -57,7 +58,7 @@
     },
     methods: {
       logout() {
-        App.methods.logout();
+        EventBus.$emit('logout');
         this.$store.commit({
           type: 'resetState',
         });
@@ -156,7 +157,7 @@
         this.defaultOrg = { name: defaultOrg.name, _id: defaultOrg._id };
       },
       loginToRegularAccount() {
-        App.methods.login_i();
+        EventBus.$emit('individual');
       },
     },
     computed: {
@@ -165,6 +166,9 @@
       },
     },
     created() {
+      if (this.$route.params && this.$route.params.command === 'logout') {
+        this.logout();
+      }
       if (this.$store.state.acct === 2) {
         this.uid = this.$store.state.userID;
         this.loadOrganizationData();

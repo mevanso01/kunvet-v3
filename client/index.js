@@ -143,6 +143,10 @@ const router = new VueRouter({
       component: () => import('@/pages/Settings'),
     },
     {
+      path: '/settings/:command',
+      component: () => import('@/pages/Settings'),
+    },
+    {
       path: '/createnewjob/:id',
       component: () => import('@/pages/CreateNewJob'),
       props: { id: null },
@@ -177,7 +181,7 @@ const router = new VueRouter({
       component: () => import('@/pages/Terms'),
     },
     {
-      path: '/join-us',
+      path: '/JoinUs',
       component: () => import('@/pages/JoinUs'),
     },
   ],

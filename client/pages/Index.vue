@@ -244,7 +244,7 @@
               <div v-if="firstSearch">
                 <PromoTextContainer :image="require('@/assets/icons/Asset(66).svg')">
                   <h2>Why use Kunvet instead?</h2>
-                  <ul>
+                  <ul style="list-style: none;">
                     <li>Kunvet is a safe platform with student-oriented jobs & opportunities!</li>
                     <li>At Kunvet, small businesses and school clubs can locate students nearby quicker!</li>
                     <li>Applications and resumes are easily managed via Kunvet, so no more paper hassle!</li>
@@ -252,8 +252,11 @@
                 </PromoTextContainer>
 
                 <PromoTextContainer :image="require('@/assets/icons/Asset(67).svg')">
-                  <h2>What’s exclusive at here?</h2>
-                  <p>We understand your pain. For example, we realized that many students apply to jobs/opportunities from flyers around the school campus, so we decide to facilitate this process. After posting a job on Kunvet, organizations can print their jobs, which comes with a unique QR code, and tape them to approved locations on campus.</p>
+                  <h2>What's exclusive here?</h2>
+                  <p>
+                    We care about the quality of opportunities listed on Kunvet. Many opportunities are exclusive at Kunvet, meaning that they aren't listed on other platforms.
+                    More importantly, these opportunities are within 20 min of driving distance, and many of them are actually located on campus.
+                  </p>
                 </PromoTextContainer>
 
                 <PromoTextContainer :image="require('@/assets/icons/Asset(68).svg')">

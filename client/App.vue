@@ -144,21 +144,23 @@
 
     <div id="bottom">
       <div id="bottom-content">
-        <div id="bottom-brand">
-          <img :src="svgs.kunvetLogoFooter"></img>
-        </div>
-        <div id="bottom-columns">
-          <div id="bottom-left">
-            <div><router-link to="/">Home</router-link></div>
-            <div><router-link to="/AboutUs">About us</router-link></div>
-            <div><router-link to="/Terms">Terms &amp; Policy</router-link></div>
-          </div>
-          <div id="bottom-right" v-if="!$store.state.userID">
-            <div><router-link to="/login">Login</router-link></div>
-            <div><router-link to="/signup">Sign up</router-link></div>
-          </div>
-        </div>
-        <p id="bottom-footer">Kunvet 2018 &copy; All rights reserved.</p>
+        <v-layout row wrap>
+          <v-flex class="footer-big-text">
+            <p class="kunvet-red">Kunvet 2018 &copy; All rights reserved.</p>
+          </v-flex>
+          <v-flex>
+            <router-link to="/AboutUs"><p style="color: #b3b3b3">About Us</p></router-link>
+          </v-flex>
+          <v-flex>
+            <router-link to="/JoinUs"><p style="color: #b3b3b3">Join Us</p></router-link>
+          </v-flex>
+          <v-flex>
+            <router-link to="/AboutUs"><p style="color: #b3b3b3">Contact Us</p></router-link>
+          </v-flex>
+          <v-flex>
+            <router-link to="/Terms"><p style="color: #b3b3b3">Terms & Policy</p></router-link>
+          </v-flex>
+        </v-layout>
       </div>
     </div>
   </v-app>
@@ -232,7 +234,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
-          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }] },
+          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, { text: 'Log out', route: '/settings/logout' }] },
         ],
         [
           {
@@ -246,7 +248,7 @@ export default {
             ],
           },
           { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
-          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }] },
+          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, { text: 'Log out', route: '/settings/logout' }] },
         ],
       ],
       sidebarItems: [

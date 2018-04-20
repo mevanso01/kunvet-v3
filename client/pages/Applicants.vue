@@ -263,7 +263,7 @@
         this.loadFromNetwork();
       },
       async loadFromNetwork() {
-        if (this.jobs && this.jobs.lenght > 0) {
+        if (this.jobs && this.jobs.length > 0) {
           const jobIds = this.jobs.map(({ _id }) => _id);
           const resolved = await Promise.all(jobIds.map(id => this.getApplicationsFromJob(id, false)));
           const applicants = resolved.reduce((total, curr) => total.concat(curr), []);
