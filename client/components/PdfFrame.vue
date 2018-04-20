@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="n in pages">
-      <canvas :id="prefix + '-page-' + n">
+      <canvas :id="prefix + '-page-' + n" class="page">
       </canvas>
     </div>
   </div>
@@ -97,3 +97,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.page {
+  pointer-events: none;
+}
+</style>
