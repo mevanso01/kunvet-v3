@@ -5,52 +5,6 @@ import get from 'lodash/get';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 
-/* IMPORT MAILER AND UNCOMMENT WHEN YOU WANT TO USE
-async function _sendNotification(user, jobname) {
-  const mailer = new Mailer();
-  try {
-    await mailer.sendTemplate(
-      user.email,
-      `application-created`,
-      {
-        name: `${user.firstname} ${user.lastname}`,
-        jobname: jobname,
-      },
-    );
-  } catch (e) {
-    console.log('ERROR', e);
-    const response = {
-      success: false,
-      message: 'Email could not be sent',
-    };
-    return JSON.stringify(response);
-  }
-
-  try {
-    user.notifications.push({
-      text: `Your job has a new applicant!`,
-      route: '/applicants',
-      notification_type: 'application',
-      date: Date.now,
-    });
-    user.save();
-  } catch (e) {
-    console.log('ERROR', e);
-    const response = {
-      success: false,
-      message: 'Email could not be sent',
-    };
-    return JSON.stringify(response);
-  }
-
-  const response = {
-    success: true,
-    message: 'Notifation created',
-  };
-  return JSON.stringify(response);
-}
-*/
-
 export default {
   Debug: async (req, next) => {
     console.log(req);

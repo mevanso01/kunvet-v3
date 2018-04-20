@@ -1,12 +1,12 @@
-<p>
-Hello,
-</p>
-
-<p>
-Your application has been accepted!
-{{ name }}
-</p>
-
-<footer>
-Kunvet Team
-</footer>
+{{#> master}}
+  {{#*inline "heading"}}
+    Hello {{ name }}
+  {{/inline}}
+  {{#*inline "content"}}
+  <p>
+     The hiring manager of {{ jobname }} is interested in your application.
+     They should contact you shortly.
+  </p>
+  <a href="www.kunvet.com/applied">View your applied jobs</a>
+  {{/inline}}
+{{/master}}

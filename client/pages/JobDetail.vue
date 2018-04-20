@@ -112,7 +112,7 @@
   height: 100%;
   cursor: pointer;
 }
-.posted-by {
+.job-detail-posted-by {
   max-width: calc(99% - 100px);
 }
 @media (max-width: 600px) {
@@ -135,7 +135,7 @@
   .apply-card {
     min-width: 350px !important;
   }
-  .posted-by {
+  .job-detail-posted-by {
     max-width: calc(99% - 204px);
   }
 }
@@ -156,7 +156,7 @@
                 <img :src="profilePic" alt="">
               </v-avatar>
             </div>
-      		  <div class="float-left posted-by" style="color: #A7A7A7; margin-right: 1px;">
+      		  <div class="float-left job-detail-posted-by" style="color: #A7A7A7; margin-right: 1px;">
               <h3 style="color: #616161;" class="one-line ellipsis">{{ findJob.posted_by }}</h3>
             </div>
             <div class="float-right">

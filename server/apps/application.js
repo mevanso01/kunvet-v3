@@ -109,6 +109,7 @@ router.post('/:id/setStatus/:status', async (ctx) => {
         `application-${ctx.params.status}`,
         {
           name: application.name,
+          jobname: job.title,
         },
       );
     } catch (e) {

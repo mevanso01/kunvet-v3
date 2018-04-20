@@ -1,7 +1,11 @@
-<p>
-{{ name }} has applied for your job, {{ jobname }}.
-</p>
-
-<footer>
-Kunvet Team
-</footer>
+{{#> master}}
+  {{#*inline "heading"}}
+    New applicant notification
+  {{/inline}}
+  {{#*inline "content"}}
+  <p>
+    Your job {{ jobname }} has a new applicant: {{ name }}
+  </p>
+  <a href="www.kunvet.com/applicant">View your applicants</a>
+  {{/inline}}
+{{/master}}
