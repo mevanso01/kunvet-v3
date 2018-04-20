@@ -58,7 +58,7 @@
     },
     methods: {
       async getSavedJobs() {
-        this.$apollo.query({
+        await this.$apollo.query({
           query: (gql`query ($uid: MongoID) {
             findAccount (filter: {
               _id: $uid
@@ -75,26 +75,32 @@
           if (res.saved_jobs) {
             const x = this.saved_jobs.concat(res.saved_jobs);
             this.saved_jobs = x;
-          }
-          for (var i in this.saved_jobs) {
-            if (this.saved_jobs[i]) {
-              const jobid = this.saved_jobs[i];
-              this.$apollo.query({
-                query: FindJobQuery,
-                variables: { id: jobid },
-              }).then((d) => {
-                console.log(d);
-                const findJob = d.data.findJob;
-                if (findJob && findJob._id === jobid) {
-                  this.counter += 1;
-                  this.findJobs.push(findJob);
-                }
-              });
+            for (var i in this.saved_jobs) {
+              if (this.saved_jobs[i]) {
+                const jobid = this.saved_jobs[i];
+                this.$apollo.query({
+                  query: FindJobQuery,
+                  variables: { id: jobid },
+                }).then((d) => {
+                  const findJob = d.data.findJob;
+                  if (findJob && findJob._id === jobid) {
+                    this.counter += 1;
+                    // console.log(findJob.title, findJob.date);
+                    this.findJobs.push(findJob);
+                  }
+                });
+              }
             }
           }
         }).catch((error) => {
           console.error(error);
         });
+        if (this.findJobs) {
+          this.findJobs.sort((a, b) => this.sortFunction(a, b));
+        }
+      },
+      sortFunction(a, b) {
+        return a.date < b.date;
       },
       updateSavedJobs() {
         this.$apollo.mutate({
@@ -135,7 +141,7 @@
         const index = this.saved_jobs.indexOf(id);
         if (index !== -1) {
           this.saved_jobs.splice(index, 1);
-          this.findJobs.splice(index, 1);
+          this.findJobs = this.findJobs.filter(x => x._id !== id);
           this.counter -= 1;
           this.updateSavedJobs();
         }
