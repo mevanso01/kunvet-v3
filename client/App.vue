@@ -145,9 +145,11 @@
     </v-navigation-drawer>
 
     <main v-bind:class="{ 'dn': isJobPostRoute && acct !== 0 }">
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <transition name="fade-transition">
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </transition>
     </main>
 
     <div id="bottom">

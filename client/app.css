@@ -32,6 +32,11 @@ p > a {
 ol, ul {
   list-style-position: inside;
 }
+/*  ---- Transitions ---- */
+.fade-transition-leave-active {
+  position: absolute;
+}
+
 /*  ---- Navbar ----  */
 .application--wrap {
   padding-top: 64px;
