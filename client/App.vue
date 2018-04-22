@@ -322,6 +322,7 @@ export default {
       this.acct = 0;
       Store.commit({ type: 'resetState' });
       Store.state.firstSearch = true;
+      this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
     },
     logout() {
       EventBus.$emit('logout');
@@ -350,6 +351,7 @@ export default {
         acct: 1,
       });
       this.$store.commit('go');
+      this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
     },
     l2() {
       this.acct = 2;

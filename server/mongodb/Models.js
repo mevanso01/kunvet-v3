@@ -293,6 +293,14 @@ const OrganizationSchema = Mongoose.Schema({
   zip_code: {
     type: String,
   },
+  email_verified: {
+    type: Boolean,
+    default: true,
+  },
+  business_verified: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const FileSchema = Mongoose.Schema({

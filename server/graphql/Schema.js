@@ -146,10 +146,12 @@ GQC.rootMutation().addFields({
       updateAccount: Account.get('$updateOne'),
     }),
     ...wrapResolvers([
+      Restrictions.Debug,
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.getFilterByUserId('user_id'),
     ], {
       updateJob: Job.get('$updateOne'),
+      updateJobs: Job.get('$updateMany'),
     }),
     ...wrapResolvers(Restrictions.ApplicationJobOwnerMutation, {
       updateApplication: Applicant.get('$updateOne'),
