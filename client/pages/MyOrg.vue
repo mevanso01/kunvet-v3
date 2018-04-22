@@ -39,6 +39,7 @@
                           <v-layout class="acct-page-container__input-field-layout">
                           <v-flex xs10 class="no-padding">
                             <v-text-field
+                              ref="addressField"
                               v-model="updateAddress"
                               class="no-padding no-underline"
                               name="input-1-3"
@@ -297,6 +298,7 @@
   import App from '@/App';
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
+  import * as VueGoogleMaps from 'vue2-google-maps';
   import Config from 'config';
   import EventBus from '@/EventBus';
   import axios from 'axios';
@@ -366,6 +368,12 @@
     methods: {
       logout() {
         App.methods.logout();
+      },
+      setPlace(place) {
+        if (!place.geometry) {
+          return;
+        }
+        this.updateAddress = place.formatted_address;
       },
       saveProperty(property, value) {
         this.bdata[property] = value;
@@ -610,6 +618,15 @@
         } else {
           this.$router.push('/login');
         }
+      });
+      VueGoogleMaps.loaded.then(() => {
+        // HACK
+        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
+        input.setAttribute('placeholder', '');
+        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        this.autocomplete.addListener('place_changed', () => {
+          this.setPlace(this.autocomplete.getPlace());
+        });
       });
     },
   };
