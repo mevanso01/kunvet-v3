@@ -57,6 +57,10 @@ const ddos = new Ddos({
   errormessage: '{"success":false,"ratelimit":true,"message":"Job hunting circuitry too hot. Wait for cooldown to get another job."}',
 });
 
+// Rate limiter
+// Why the context bind(): https://github.com/rook2pawn/node-ddos
+app.use(ddos.koa().bind(ddos));
+
 // Body parser
 app.use(KoaBodyParser());
 
@@ -70,10 +74,6 @@ app.use(Cors);
 // Passport
 app.use(KoaPassport.initialize());
 app.use(KoaPassport.session());
-
-// Rate limiter
-// Why the context bind(): https://github.com/rook2pawn/node-ddos
-app.use(ddos.koa().bind(ddos));
 
 // Mount sub apps
 app.use(KoaMount('/data', GraphQLApp));
