@@ -16,6 +16,9 @@ import REPL from 'repl';
 
 import Logger from 'winston';
 
+// Rate limiter
+import Ddos from 'ddos';
+
 // CORS
 import Cors from '@/Cors';
 
@@ -48,6 +51,15 @@ Logger.info('Kunvet server');
 
 const port = process.env.PORT || 3000;
 const app = new Koa();
+const ddos = new Ddos({
+  burst: 10,
+  limit: 15,
+  errormessage: '{"success":false,"ratelimit":true,"message":"Job hunting circuitry too hot. Wait for cooldown to get another job."}',
+});
+
+// Rate limiter
+// Why the context bind(): https://github.com/rook2pawn/node-ddos
+app.use(ddos.koa().bind(ddos));
 
 // Body parser
 app.use(KoaBodyParser());
