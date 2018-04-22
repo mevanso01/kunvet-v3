@@ -299,7 +299,12 @@ form {
 	color: #fff;
 	width: 250px;
 	text-align: center;
-	opacity: .5;
+	opacity: .2;
+	transition: opacity .2s;
+	cursor: default;
+}
+.devmode:hover {
+	opacity: 1;
 }
 .general-spin {
     transform: rotate(-90deg);
