@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <div v-if="devmode" class="devmode">
+      Development mode
+    </div>
     <v-toolbar fixed class="main-navbar" height="64px" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
       <router-link to="/">
             <div id="nav-logo">
@@ -474,6 +477,9 @@ export default {
     }); */
   },
   computed: {
+    devmode() {
+      return process.env.NODE_ENV !== 'production';
+    },
     isJobPostRoute() {
       return (this.$route.path === '/myjobs') ||
         (this.$route.path === '/applicants') ||

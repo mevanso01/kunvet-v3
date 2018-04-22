@@ -288,6 +288,19 @@ textarea:-moz-placeholder {
 form {
     margin: 0;
 }
+.devmode {
+	position: fixed;
+	top: 150px;
+	left: -10px;
+	z-index: 999;
+	transform: rotate(-45deg);
+	transform-origin: left;
+	background: #ef5350;
+	color: #fff;
+	width: 250px;
+	text-align: center;
+	opacity: .5;
+}
 .general-spin {
     transform: rotate(-90deg);
     height: 24px;
