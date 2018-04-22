@@ -24,7 +24,7 @@
                     </h1>
                     <i
                        class="fa fa-edit acct-name-header-container__edit-icon"
-                       @click="createEditModal('business_name', bdata.business_name, 'business_name')"
+                       @click="createEditModal('business name', bdata.business_name, 'business_name')"
                     />
                   </v-flex>
                   <v-flex xs12 sm10 class="no-padding">
@@ -189,7 +189,7 @@
                             <a :href="`http://${bdata.website}`" target="_blank" class="acct-page-container__website">
                               {{ bdata.website }}
                             </a>
-                            <i class="fa fa-edit acct-page-container__edit-icon" @click="createEditModal('website url', bdata.website, 'website')" />
+                            <i class="fa fa-edit acct-page-container__edit-icon" @click="createEditModal('website URL', bdata.website, 'website')" />
                           </v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
