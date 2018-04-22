@@ -79,7 +79,6 @@
     "config": "^1.30.0",
     "consolidate": "^0.15.1",
     "croppie": "^2.6.2",
-    "ddos": "^0.1.28",
     "email-templates": "^3.2.0",
     "es6-promisify": "^5.0.0",
     "font-awesome": "^4.7.0",
