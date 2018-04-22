@@ -1,5 +1,5 @@
 <template>
-  <v-container style="background-color: #f8f8f8; max-width: unset;">
+  <v-container style="background-color: #f8f8f8; max-width: unset; min-height: calc(100vh - 121px);">
     <div class="notification-container">
       <Notifications :max="100"/>
     </div>

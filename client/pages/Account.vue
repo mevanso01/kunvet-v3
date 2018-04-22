@@ -880,6 +880,7 @@
         });
       },
       async createOrganization() {
+        console.log('Email', this.userdata.email);
         if (!this.loading) {
           this.loading = true;
           try {
@@ -899,7 +900,7 @@
                 name: organizationName,
                 bio: aboutUs,
                 uid: this.uid,
-                email: this.userdata.display_email,
+                email: this.userdata.email,
               },
             });
 
@@ -925,32 +926,50 @@
                   default_org: recordId,
                 },
               },
-              refetchQueries: [{
-                query: (gql`query ($_id: MongoID) {
-                  findAccount (filter: {
-                    _id: $_id
-                  }) {
+              refetchQueries: [
+                {
+                  query: (gql`query ($_id: MongoID) {
+                    findAccount (filter: {
+                      _id: $_id
+                    }) {
+                        _id
+                        firstname
+                        lastname
+                        school
+                        degree
+                        major
+                        email
+                        profile_pic
+                        org_list
+                        default_org
+                        resumes {
+                          name
+                          filename
+                          resumeid
+                        }
+                    }
+                  }`),
+                  variables: {
+                    _id: this.$store.state.userID,
+                  },
+                },
+                {
+                  query: (gql`query ($_id: MongoID) {
+                    findAccount (filter: {
+                      _id: $_id
+                    }) {
                       _id
                       firstname
                       lastname
-                      school
-                      degree
-                      major
-                      email
-                      profile_pic
-                      org_list
                       default_org
-                      resumes {
-                        name
-                        filename
-                        resumeid
-                      }
-                  }
-                }`),
-                variables: {
-                  _id: this.$store.state.userID,
+                      org_list
+                    }
+                  }`),
+                  variables: {
+                    _id: this.$store.state.userID,
+                  },
                 },
-              }],
+              ],
             });
 
             this.createOrganizationModal.show = false;
@@ -959,6 +978,7 @@
               _id: recordId,
               name: organizationName,
             });
+            // EventBus.$emit('new_org', { name: organizationName, _id: recordId });
             this.switchToOrg(recordId);
           } catch (e) {
             console.error(e);

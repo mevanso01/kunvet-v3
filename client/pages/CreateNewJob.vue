@@ -767,7 +767,7 @@ export default {
             },
             { // from applicants page
               query: (gql`query ($userId: MongoID, $businessId: MongoID) {
-                findJobs (filter: { user_id: $userId, business_id: $businessId, active: true, is_deleted: false }){
+                findJobs (filter: { user_id: $userId, business_id: $businessId, active: true }){
                   _id
                   user_id
                   posted_by

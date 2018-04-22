@@ -231,9 +231,9 @@ export default {
             icon: sfg,
             href: '/',
             subItems: [
-              { text: 'Search', route: '/' },
+              /* { text: 'Search', route: '/' },
               { text: 'Applied Jobs', route: '/appliedjobs' },
-              { text: 'Saved Jobs', route: '/savedjobs' },
+              { text: 'Saved Jobs', route: '/savedjobs' }, */
             ],
           },
           { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
@@ -241,15 +241,16 @@ export default {
         ],
         [
           {
-            title: 'Jobs',
+            title: 'My Jobs',
             icon: sfw,
             href: '/myjobs',
             subItems: [
-              { text: 'My Jobs',  route: '/myjobs' },
+              /* { text: 'My Jobs',  route: '/myjobs' },
               { text: 'Post New Job',  route: '/createnewjob' },
-              { text: 'Applicants', route: '/applicants' },
+              { text: 'Applicants', route: '/applicants' }, */
             ],
           },
+          // { title: 'Applicants', icon: null, href: '/applicants', subItems: [] },
           { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
           { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
         ],

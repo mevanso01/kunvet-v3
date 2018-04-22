@@ -68,6 +68,7 @@ export default {
       }).then((data) => {
         const res = data.data.findAccount;
         this.default_org = res.default_org;
+        console.log(res.org_list);
         this.populateOrgList(res.org_list);
         this.fname = res.firstname;
         this.lname = res.lastname;
@@ -88,7 +89,15 @@ export default {
       const defaultOrg = this.$store.state.default_org;
       // console.log(defaultOrg);
       if (defaultOrg) {
-        this.selectedAccount = this.accountItems.find(x => x._id === defaultOrg).name;
+        let org =  this.accountItems.find(x => x._id === defaultOrg);
+        if (org) {
+          this.selectedAccount = org.name;
+        } else {
+          // fallback for wierd scenarios where accountItems is incorrect
+          org = await this.getOrgByID(defaultOrg);
+          this.selectedAccount = org.business_name;
+          this.accountItems.push({ name: org.business_name, _id: org._id });
+        }
       } else {
         this.selectedAccount = `${this.fname} ${this.lname}`;
       }
@@ -201,6 +210,11 @@ export default {
         item.name = newname;
       }
     });
+    /* EventBus.$on('new_org', org => {
+      const { name, _id } = org;
+      this.selectedAccount = name;
+      this.accountItems.push({ name: name, _id: _id });
+    }); */
     this.fetchData();
   },
 };

@@ -3,6 +3,17 @@
 <template>
   <v-container fluid class="acct-page-container white-bg">
     <div class="main-cont-large">
+      <div v-if="!email_verified" style="width: 100%; height: 40px; background-color: #ef5350; margin-bottom: 10px;">
+        <p style="text-align: center; line-height: 40px; color: #fff;">
+          You have not verified your email yet!
+          <a style="text-decoration: underline;" @click="resendEmail"
+            v-if="emailSent === false">Resend
+          </a>
+          <span v-if="emailSent === true">
+            Sent.
+          </span>
+        </p>
+      </div>
           <section style="padding: 0; margin: 15px; width: auto;">
             <v-layout>
               <v-flex xs12 sm8>
@@ -288,6 +299,7 @@
   import VuexLS from '@/store/persist';
   import Config from 'config';
   import EventBus from '@/EventBus';
+  import axios from 'axios';
 
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
@@ -347,6 +359,8 @@
           people: PeopleSvg,
           suitcase: SuitcaseSvg,
         },
+        email_verified: true,
+        emailSent: false,
       };
     },
     methods: {
@@ -516,6 +530,63 @@
 
         return applications;
       },
+      fetchAcctData() {
+        this.$apollo.query({
+          query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+                _id
+                firstname
+                lastname
+                school
+                degree
+                major
+                email
+                org_list
+                profile_pic
+                default_org
+                resumes {
+                  name
+                  filename
+                  resumeid
+                }
+                email_verified
+            }
+          }`),
+          variables: {
+            uid: this.$store.state.userID,
+          },
+        }).then((data) => {
+          const res = data.data.findAccount;
+          this.email_verified = res.email_verified;
+        }).catch((error) => {
+          console.error('fetch data failed', error);
+        });
+      },
+      resendEmail() {
+        if (this.loading) {
+          return;
+        }
+        const data = {
+          email: this.bdata.display_email,
+        };
+        this.loading = true;
+        axios.post('/auth/resendVerificationEmail', data).then((res) => {
+          this.loading = false;
+          if (res.data.noUnverified) {
+            this.email_verified = true;
+          } else if (res.data.success) {
+            this.emailSent = true;
+          } else {
+            this.emailSent = null;
+          }
+        }, (error) => {
+          console.error(error);
+          this.emailSent = null;
+          this.loading = false;
+        });
+      },
     },
     computed: {
       getJobsAndApplicationsCount() {
@@ -527,9 +598,9 @@
       EventBus.$on('business', this.fetchBusinessData);
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.acct === 2) {
+          this.fetchAcctData();
           if (data.bdata) {
             this.bdata = data.bdata;
-            console.log(data.bdata);
           } else if (this.$store.state.businessID) {
             this.fetchBusinessData();
           }

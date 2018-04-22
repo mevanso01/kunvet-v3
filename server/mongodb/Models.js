@@ -248,7 +248,6 @@ const OrganizationSchema = Mongoose.Schema({
   business_name: {
     type: String,
     required: true,
-    index: true,
   },
   user_id: {
     type: Mongoose.Schema.Types.ObjectId,
