@@ -36,7 +36,7 @@
             <router-link :to="'JobDetail/'+job._id">
               <v-layout>
                 <v-flex xs12 style="padding-top: 0px;">
-                  <div class="new-applicant-card__info">
+                  <div class="new-applicant-card__info" style="padding-top: 0;">
                     <div><h3 class="post-title">{{ job.title }}</h3></div>
                     <p>
                       <span class="new-applicant-card__address">

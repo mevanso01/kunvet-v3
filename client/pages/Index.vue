@@ -162,19 +162,39 @@
   left: 16px;
 }
 .firstSearch .fsSelect i {
-  padding: 8px !important;
+  position: absolute;
+  right: 0;
+  top: 10px;
+  width: 36px !important;
+  padding: 0 6px !important;
 }
 .firstSearch h1 {
   font-weight: 300;
   font-size: 32px;
   margin-bottom: 0;
 }
+.fs-select-cities .input-group__input {
+  height: 46px;
+  box-shadow: none !important;
+  border-radius: 6px 0px 0px 6px;
+}
+.fs-select-cities .input-group__selections {
+  padding: 0 !important;
+  width: calc(100% - 36px) !important;
+  text-overflow: ellipsis;
+}
+.fs-select-cities .input-group__input > div > div {
+  padding: 0 !important;
+}
+.fs-select-cities .input-group__input::before {
+  display: none;
+}
 @media only screen and (max-width: 480px) {
   .fs-select-positions {
     display: none !important;
   }
 }
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 481px) {
   .fs-select-cities,
   .fs-select-positions {
     width: 50%;
@@ -183,6 +203,9 @@
   }
   .firstSearch .fsSelect .input-group__input {
     padding-top: 3px;
+  }
+  .fs-select-cities .input-group__selections {
+    height: 40px !important;
   }
 }
 .fs-select-positions {
@@ -267,8 +290,8 @@
                       item-value="name"
                       v-bind:items="availableCities"
                       v-model="selectedCity"
-                      autocomplete
                       single-line
+                      overflow
                       hide-details
                     >
                     </v-select>

@@ -280,7 +280,7 @@
             <v-select class="no-padding"
               v-model="pay_denomination"
               :disabled = "salary_select != 'paid'"
-              :items="[ 'per hour', 'per month', 'Annually' ]"
+              :items="[ 'per hour', 'per week', 'per month', 'annually', 'per task' ]"
               >
             </v-select>
           </v-flex>
@@ -321,19 +321,23 @@
         </v-layout>
 
         <br>
+
         <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
         <p class="error_p" v-if="!description_valid">Required</p>
         <vue-editor id="description" v-model="description" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
+
+        <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
+        <p class="error_p" v-if="!experience_valid">Required</p>
+        <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
+
+        <br>
+
         <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
         <p class="error_p" v-if="!responsibilities_valid">Required</p>
         <vue-editor id="responsibilities" v-model="responsibilities" :editorToolbar="customEditorToolbar"></vue-editor>
 
-        <br>
-        <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience/Qualifications</h3>
-        <p class="error_p" v-if="!experience_valid">Required</p>
-        <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
         <br>
 
         <div style="display: flex">

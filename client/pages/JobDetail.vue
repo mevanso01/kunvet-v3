@@ -89,7 +89,7 @@
 }
 .svg-button {
   width: 36px;
-  height: 36px;
+  height: 28px;
   display: inline-flex;
   flex: 0 1 auto;
 }
@@ -160,7 +160,7 @@
               <h3 style="color: #616161;" class="one-line ellipsis">{{ findJob.posted_by }}</h3>
             </div>
             <div class="float-right">
-              <a class="svg-button" flat style="margin: 2px 8px;" @click="saveJob(findJob._id)">
+              <a class="svg-button" flat style="margin: 6px 8px;" @click="saveJob(findJob._id)">
                 <img v-if="saved" :src="svgs.savedIcon"/>
                 <img v-else :src="svgs.notSavedIcon"/>
               </a>
@@ -178,10 +178,13 @@
           <h2 class="post-title">{{ findJob.title }}</h2>
           <div class="carditem" style="color: #A7A7A7; margin-bottom: 10px; font-size: 11px;"><timeago :since="findJob.date"></timeago></div>
           <div class="carditem" style="color: #A7A7A7;">
-            <p class="small-p">
+            <p>
               <!--<v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon>-->
               <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
-              <span style="padding-top: 2px; text-decoration: underline;">{{ findJob.address }}</span>
+              <span style="padding-top: 2px;">{{ findJob.address }}</span>
+            </p>
+            <p v-if="findJob.university" style="margin-left: 23px;">
+              {{ findJob.university }}
             </p>
           </div>
 
@@ -248,12 +251,12 @@
       <v-card class="no-border-radius apply-card" v-show="email_verified">
         <div style="padding: 20px;" v-if="!showSuccessMessage">
           <h3>Select resume to send</h3>
-          <v-radio-group v-if="resumes.length > 0" v-model="selectedResumeName" hide-details>
+          <v-radio-group class="kunvet-red" v-if="resumes.length > 0" v-model="selectedResumeName" hide-details>
             <v-radio v-for="(resume, index) in resumes"
               class="kunvet-red"
               :key="index"
               :label="resume.name"
-              :value="resume.name">
+              :value="resume.filename">
             </v-radio>
           </v-radio-group>
           <p v-else>You have no resumes yet!</p>
@@ -364,7 +367,7 @@ export default {
         email: null,
       },
       resumes: [],
-      selectedResumeName: null,
+      selectedResume: null,
       userdatafetched: false,
       applied: false,
       saved: false,
@@ -383,9 +386,6 @@ export default {
       return sanitizeHtml(this.findJob.description);
     },
   },
-  mounted() {
-    this.client = new FileClient();
-  },
   methods: {
     getData() {
       this.$apollo.query({
@@ -393,30 +393,7 @@ export default {
           findJob (filter: {
             _id: $JobId
           }) {
-              _id
-              user_id
-              business_id
-              posted_by
-              title
-              description
-              address
-              latitude
-              longitude
-              type
-              studentfriendly
-              type2
-              shift
-              age
-              pay_type
-              salary
-              pay_denomination
-              date
-              education
-              preferred_major
-              language
-              experience
-              responsibilities
-              notes
+            ${queries.FindJobRecord}
           }
         }`),
         variables: {
@@ -568,7 +545,7 @@ export default {
           }
         }
         if (this.resumes.length > 0) {
-          this.selectedResumeName = this.resumes[0].name;
+          this.selectedResume = this.resumes[0].filename;
         }
         this.email_verified = res.email_verified;
         this.userdatafetched = true;
@@ -595,6 +572,7 @@ export default {
           uid: this.uid,
         },
       }).then((data) => {
+        console.log('my application data', data);
         if (data.data.findMyApplication) {
           this.applied = true;
         }
@@ -606,7 +584,7 @@ export default {
       // validate
       if (this.uid && this.userdata && !this.loading && !this.applied) {
         this.loading = true;
-        const index = this.resumes.findIndex(resume => this.selectedResumeName === resume.name);
+        const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
         const application = {
           user_id: this.uid,
           job_id: this.id,
@@ -729,7 +707,7 @@ export default {
         filename: curId,
         resumeid: null,
       });
-      this.selectedResumeName = this.file.name;
+      this.selectedResume = curId;
       this.file = null;
       this.fileName = null;
       this.state = 'UPLOADED';
@@ -786,7 +764,8 @@ export default {
       }).catch(console.error);
     },
   },
-  created() {
+  activated() {
+    this.client = new FileClient();
     this.getData();
     if (this.$store.state.userID) {
       this.uid = this.$store.state.userID;

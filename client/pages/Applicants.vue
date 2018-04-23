@@ -117,6 +117,7 @@
         <v-card-title class="headline">
           Accept Applicant
         </v-card-title>
+        <p style="margin: 0 16px;" v-if="loading || true">Loading...</p>
         <v-card-actions>
           <v-btn flat="flat" @click.native="onAccept">
             Confirm
@@ -132,7 +133,7 @@
         <v-card-title class="headline">
           Reject Applicant
         </v-card-title>
-        <p v-if="loading || true">Loading...</p>
+        <p style="margin: 0 16px;" v-if="loading || true">Loading...</p>
         <v-card-actions>
           <v-btn flat="flat" @click.native="onReject">
             Confirm
@@ -324,6 +325,7 @@
           this.loading = false;
           console.log('could not do it:', exception);
         }
+        this.loading = false;
         this.resetDialogState();
       },
       updateApplicantViaQuery(id) {

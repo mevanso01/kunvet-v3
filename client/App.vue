@@ -320,8 +320,7 @@ export default {
     },
     lo() {
       this.acct = 0;
-      Store.commit({ type: 'resetState' });
-      Store.state.firstSearch = true;
+      this.$store.commit({ type: 'resetState' });
       this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
     },
     logout() {
