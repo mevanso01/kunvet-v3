@@ -964,7 +964,7 @@ export default {
       }
     },
   },
-  created() {
+  activated() {
     if (this.$store.state.acct === 2) {
       this.posted_by = this.$store.state.bdata.business_name;
       this.uid = this.$store.state.userID;

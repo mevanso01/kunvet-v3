@@ -468,7 +468,7 @@
         });
       },
       fetchBusinessData() {
-        // console.log(this.$store.state.businessID);
+        console.log('fetching business data');
         this.$apollo.query({
           query: (gql`query ($bid: MongoID) {
             findOrganization (filter: {
@@ -489,7 +489,6 @@
           },
         }).then((data) => {
           const res = data.data.findOrganization;
-          console.log('res', res);
           this.bdata.business_name = res.business_name;
           this.bdata.display_email = res.email;
           this.bdata.address = res.address;
@@ -602,7 +601,7 @@
         return getCountersFromJobsAndApplications(jobs, applications);
       },
     },
-    created() {
+    activated() {
       EventBus.$on('business', this.fetchBusinessData);
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.acct === 2) {

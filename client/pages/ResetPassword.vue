@@ -66,9 +66,6 @@ import axios from 'axios';
 
 
 export default {
-  created() {
-    this.validateCode();
-  },
   props: ['code'],
   data() {
     return {
@@ -92,20 +89,6 @@ export default {
     };
   },
   methods: {
-    validateCode() {
-      // Check if code is valid
-
-      /* axios.post('/auth/verify', { code: this.code }).then((res) => {
-        this.loading = false;
-        console.log(res);
-        if (res.data.success) {
-          this.isvalid = true;
-        }
-      }).catch(() => {
-        this.loading = false;
-        // console.error(error);
-      }); */
-    },
     submit() {
       this.$refs.form.validate();
       if (this.valid && this.password === this.confirmPassword) {

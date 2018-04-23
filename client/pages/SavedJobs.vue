@@ -147,7 +147,7 @@
         }
       },
     },
-    created() {
+    activated() {
       if (this.$store.state.userID) {
         this.uid = this.$store.state.userID;
         this.getSavedJobs();

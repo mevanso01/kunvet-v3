@@ -193,27 +193,17 @@
   export default {
     created() {
       if (!this.$store.state.acct) {
-        console.log('restore state');
         VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-          if (data.bdata && data.acct === 2) {
-            // this.user = data.bdata.business_name;
-            this.getData();
-          } else if (data.userdata && data.acct === 1) {
-            // this.user = `${data.userdata.firstname} ${data.userdata.lastname}`;
-            this.getData();
-          } else {
+          if (data.bdata && data.acct === 0) {
             this.$router.push('/login');
           }
         });
-      } else if (this.$store.state.acct === 2) {
-        // this.user = this.$store.state.bdata.business_name;
-        this.getData();
-      } else if (this.$store.state.acct === 1) {
-        // this.user = this.$store.state.userdata.firstname + this.$store.state.userdata.lastname;
-        this.getData();
-      } else {
+      } else if (this.$store.state.acct === 0) {
         this.$router.push('/login');
       }
+    },
+    activated() {
+      this.getData();
     },
     data() {
       return {

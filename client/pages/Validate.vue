@@ -34,7 +34,7 @@ import axios from 'axios';
 
 
 export default {
-  created() {
+  activated() {
     this.validateCode();
   },
   props: ['code'],

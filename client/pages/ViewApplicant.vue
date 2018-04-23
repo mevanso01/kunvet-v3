@@ -551,7 +551,7 @@ export default {
       );
     },
   },
-  created() {
+  activated() {
     this.getData();
     window.addEventListener('resize', this.onResize);
   },
