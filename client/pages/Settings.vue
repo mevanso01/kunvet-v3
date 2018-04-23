@@ -319,7 +319,7 @@
         return this.orgList.concat([{ name: 'None (Your individual account)', _id: null }]);
       },
     },
-    created() {
+    activated() {
       if (this.$route.params && this.$route.params.command === 'logout') {
         this.logout();
       }
