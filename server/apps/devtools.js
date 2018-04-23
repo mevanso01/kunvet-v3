@@ -74,7 +74,7 @@ router.get('/preview_email', async (ctx) => {
     const mailer = new Mailer();
     const template = ctx.request.query.template;
     const locals = JSON.parse(ctx.request.query.locals);
-    ctx.body = await mailer.render(template + '/html', locals);
+    ctx.body = await mailer.render(`${template}/html`, locals);
     return;
   }
   ctx.body = `
