@@ -153,11 +153,15 @@ export default {
       }
     },
     upload() {
-      if (this.keepOriginal) {
-        this.uploadOriginalAndCropped();
-      } else {
-        this.uploadCroppedOnly();
-      }
+      this.state = 'UPLOADING';
+
+      setImmediate(() => {
+        if (this.keepOriginal) {
+          this.uploadOriginalAndCropped();
+        } else {
+          this.uploadCroppedOnly();
+        }
+      });
     },
     async updateCropperImg(file) {
       this.cropperOptions.outputType = file.type;
@@ -187,8 +191,6 @@ export default {
       });
     },
     async uploadCroppedOnly() {
-      this.state = 'UPLOADING';
-
       if (!this.curCroppedId) {
         // Create a new file slot
         try {
