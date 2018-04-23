@@ -68,6 +68,9 @@ module.exports = {
       // image/* is hardcoded to be allowed
       allowedMimeTypes: [
         'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.oasis.opendocument.text',
       ],
     },
     mail: {
