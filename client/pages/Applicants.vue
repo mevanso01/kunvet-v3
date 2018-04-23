@@ -117,7 +117,7 @@
         <v-card-title class="headline">
           Accept Applicant
         </v-card-title>
-        <p style="margin: 0 16px;" v-if="loading || true">Loading...</p>
+        <p style="margin: 0 16px;" v-if="loading">Loading...</p>
         <v-card-actions>
           <v-btn flat="flat" @click.native="onAccept">
             Confirm
@@ -133,7 +133,7 @@
         <v-card-title class="headline">
           Reject Applicant
         </v-card-title>
-        <p style="margin: 0 16px;" v-if="loading || true">Loading...</p>
+        <p style="margin: 0 16px;" v-if="loading">Loading...</p>
         <v-card-actions>
           <v-btn flat="flat" @click.native="onReject">
             Confirm
