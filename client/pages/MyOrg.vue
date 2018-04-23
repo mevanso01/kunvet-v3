@@ -308,6 +308,7 @@
   import PicUploader from '@/components/PicUploader';
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
+  import GoogleMapsAutocomplete from '@/utils/GoogleMapsAutocomplete';
 
   import AccountEmailSvg from '@/assets/account/account_email.svg';
   import AccountGlobeSvg from '@/assets/account/earth.svg';
@@ -368,12 +369,6 @@
     methods: {
       logout() {
         App.methods.logout();
-      },
-      setPlace(place) {
-        if (!place.geometry) {
-          return;
-        }
-        this.updateAddress = place.formatted_address;
       },
       saveProperty(property, value) {
         this.bdata[property] = value;
@@ -618,14 +613,13 @@
           this.$router.push('/login');
         }
       });
-      VueGoogleMaps.loaded.then(() => {
-        // HACK
-        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
-        input.setAttribute('placeholder', '');
-        this.autocomplete = new window.google.maps.places.Autocomplete(input);
-        this.autocomplete.addListener('place_changed', () => {
-          this.setPlace(this.autocomplete.getPlace());
-        });
+    },
+    mounted() {
+      GoogleMapsAutocomplete.attach(this.$refs.addressField, (place) => {
+        if (!place.geometry) {
+          return;
+        }
+        this.updateAddress = place.formatted_address;
       });
     },
   };
