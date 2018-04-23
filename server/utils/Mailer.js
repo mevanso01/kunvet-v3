@@ -49,5 +49,9 @@ export default class Mailer {
       locals,
     });
   }
+  async render(template, locals) {
+    const email = this.getEmailInstance();
+    return email.render(template, locals);
+  }
 }
 export { Handlebars };
