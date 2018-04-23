@@ -1,7 +1,11 @@
 import axios from 'axios';
 import Config from 'config';
+import Asset30 from '@/assets/icons/Asset(30).svg';
+import Asset31 from '@/assets/icons/Asset(31).svg';
 
-const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
+// const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
+const bDefaultPic = Asset30;
+const iDefaultPic = Asset31;
 const serverUrl = Config.get('serverUrl');
 
 class ProfilePicHelper {
@@ -18,7 +22,10 @@ class ProfilePicHelper {
       }
       throw Error('Not found. Falling back to svg');
     } catch (ex) {
-      return DefaultPic;
+      if (type === 'business') {
+        return bDefaultPic;
+      }
+      return iDefaultPic;
     }
   }
 }

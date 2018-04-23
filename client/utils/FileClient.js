@@ -66,7 +66,7 @@ export default class FileClient {
 
   // Let's break some rules for style
   // eslint-disable-next-line
-  getLink(id) {
+  static getLink(id) {
     return `${Config.get('serverUrl')}/file/get/${id}`;
   }
 }

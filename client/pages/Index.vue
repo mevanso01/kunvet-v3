@@ -857,7 +857,7 @@ export default {
   beforeDestroy() {
     this.commitData();
   },
-  created() {
+  activated() {
     this.loadInitialJobs();
     VuexLS.restoreState('vuex', window.localStorage).then((data) => {
       if (data) {

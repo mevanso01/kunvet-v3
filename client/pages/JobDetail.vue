@@ -251,7 +251,7 @@
       <v-card class="no-border-radius apply-card" v-show="email_verified">
         <div style="padding: 20px;" v-if="!showSuccessMessage">
           <h3>Select resume to send</h3>
-          <v-radio-group class="kunvet-red" v-if="resumes.length > 0" v-model="selectedResumeName" hide-details>
+          <v-radio-group class="kunvet-red" v-if="resumes.length > 0" v-model="selectedResume" hide-details>
             <v-radio v-for="(resume, index) in resumes"
               class="kunvet-red"
               :key="index"
