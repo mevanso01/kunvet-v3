@@ -401,6 +401,7 @@ export default {
         },
       }).then((data) => {
         this.findJob = data.data.findJob;
+        this.jobType = [];
         for (const i in this.findJob.type) {
           if (typeof this.findJob.type[i] === 'string') {
             const type = this.findJob.type[i];
@@ -552,6 +553,7 @@ export default {
         this.userdata.major = res.major;
         this.userdata.email = res.email;
         // this.resumes = res.resumes;
+        this.resumes = [];
         for (var r in res.resumes) {
           if (res.resumes[r].name) {
             this.resumes.push(res.resumes[r]);

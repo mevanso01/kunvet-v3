@@ -235,6 +235,17 @@ export default {
         id: _id,
       });
     },
+    resetData() {
+      this.e1 = true;
+      this.valid = false;
+      this.sent = false;
+      this.email = '';
+      this.password = '';
+      this.loading = false;
+    },
   },
+  activated() {
+    this.resetData();
+  }
 };
 </script>
