@@ -231,7 +231,6 @@
           },
         });
         this.jobs = data.findJobs;
-        console.log(this.jobs);
       },
       onShowJobDialog(job) {
         this.dialogs.currentJob = job;

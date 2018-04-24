@@ -19,13 +19,13 @@
               <v-flex xs12 sm8>
                 <v-layout row wrap>
                   <v-flex xs12 class="acct-name-header-container">
-                    <h1 class="acct-name-header-container__name">
+                    <h1 class="acct-name-header-container__name" style="margin-bottom: 0;">
                       {{ bdata.business_name }}
+                      <i
+                         class="fa fa-edit acct-name-header-container__edit-icon"
+                         @click="createEditModal('business name', bdata.business_name, 'business_name')"
+                      />
                     </h1>
-                    <i
-                       class="fa fa-edit acct-name-header-container__edit-icon"
-                       @click="createEditModal('business name', bdata.business_name, 'business_name')"
-                    />
                   </v-flex>
                   <v-flex xs12 sm10 class="no-padding">
                     <v-list>
@@ -298,7 +298,7 @@
   import App from '@/App';
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
-  import * as VueGoogleMaps from 'vue2-google-maps';
+  // import * as VueGoogleMaps from 'vue2-google-maps';
   import Config from 'config';
   import EventBus from '@/EventBus';
   import axios from 'axios';

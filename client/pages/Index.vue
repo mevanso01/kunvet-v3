@@ -821,8 +821,7 @@ export default {
       }).then((data) => {
         const res = data.data.findAccount;
         if (res.saved_jobs) {
-          const x = this.saved_jobs.concat(res.saved_jobs);
-          this.saved_jobs = x;
+          this.saved_jobs = res.saved_jobs.concat([]);
         }
       }).catch((error) => {
         console.error(error);

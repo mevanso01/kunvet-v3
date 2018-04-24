@@ -57,8 +57,8 @@
       },
     },
     methods: {
-      async getSavedJobs() {
-        await this.$apollo.query({
+      getSavedJobs() {
+        this.$apollo.query({
           query: (gql`query ($uid: MongoID) {
             findAccount (filter: {
               _id: $uid
@@ -70,11 +70,12 @@
           variables: {
             uid: this.uid,
           },
-        }).then((data) => {
+        }).then(async (data) => {
           const res = data.data.findAccount;
           if (res.saved_jobs) {
-            const x = this.saved_jobs.concat(res.saved_jobs);
-            this.saved_jobs = x;
+            this.findJobs = [];
+            this.counter = 0;
+            this.saved_jobs = res.saved_jobs.concat([]);
             for (var i in this.saved_jobs) {
               if (this.saved_jobs[i]) {
                 const jobid = this.saved_jobs[i];
@@ -87,6 +88,7 @@
                     this.counter += 1;
                     // console.log(findJob.title, findJob.date);
                     this.findJobs.push(findJob);
+                    this.findJobs = this.findJobs.sort((a, b) => this.sortFunction(a, b));
                   }
                 });
               }
@@ -95,9 +97,6 @@
         }).catch((error) => {
           console.error(error);
         });
-        if (this.findJobs) {
-          this.findJobs.sort((a, b) => this.sortFunction(a, b));
-        }
       },
       sortFunction(a, b) {
         return a.date < b.date;

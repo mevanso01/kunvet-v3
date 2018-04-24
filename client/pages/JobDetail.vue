@@ -457,8 +457,8 @@ export default {
       }).then((data) => {
         const res = data.data.findAccount;
         if (res && res.saved_jobs) {
-          const x = this.saved_jobs.concat(res.saved_jobs);
-          this.saved_jobs = x;
+          this.saved_jobs = res.saved_jobs.concat([]);
+          this.saved = false;
           for (const i in this.saved_jobs) {
             if (this.saved_jobs[i] === this.id) {
               this.saved = true;
@@ -497,6 +497,19 @@ export default {
               saved_jobs: this.saved_jobs,
             },
           },
+          refetchQueries: [{
+            query: (gql`query ($uid: MongoID) {
+              findAccount (filter: {
+                _id: $uid
+              }) {
+                _id
+                saved_jobs
+              }
+            }`),
+            variables: {
+              uid: this.uid,
+            },
+          }],
         }).catch((error) => {
           console.error(error);
         });
