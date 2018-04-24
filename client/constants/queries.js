@@ -1,6 +1,7 @@
 const FindJobRecord = `
   _id
   user_id
+  business_id
   posted_by
   active
   is_deleted

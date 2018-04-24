@@ -183,7 +183,7 @@
               <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
               <span style="padding-top: 2px;">{{ findJob.address }}</span>
             </p>
-            <p v-if="findJob.university" style="margin-left: 23px;">
+            <p v-if="findJob.university" style="margin-left: 24px;">
               {{ findJob.university }}
             </p>
           </div>
@@ -331,7 +331,7 @@ import ProfilePicHelper from '@/utils/GetProfilePic';
 import FileClient from '@/utils/FileClient';
 import queries from '@/constants/queries';
 
-const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
+// const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
 export default {
   props: ['id'],
@@ -340,7 +340,7 @@ export default {
       findJob: {},
       jobType: [],
       serverUrl: Config.get('serverUrl'),
-      profilePic: DefaultPic,
+      profilePic: null,
       salary: null,
       svgs: {
         Internship: InternshipSvg,

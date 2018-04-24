@@ -379,7 +379,7 @@
           single-line
           bottom
           required
-          :rules="[(v) => (v.length > 0) || 'Required']"
+          :rules="[(v) => (v.length > 0) || !submitted || 'Required']"
         ></v-select>
         </v-form>
 
@@ -963,8 +963,55 @@ export default {
         }).catch(console.error);
       }
     },
+    resetData() {
+      this.id = null;
+      // this.valid = false;
+      this.submitted = false;
+      this.posted_by = null;
+      this.uid = null;
+      this.title = '';
+      this.date = null;
+      this.address = '';
+      this.autocomplete = null;
+      this.latitude = null;
+      this.longitude = null;
+      this.type_str = null;
+      this.type = null;
+      this.type_current = null;
+      this.type2 = null;
+      this.type2_current = null;
+      this.shift = [];
+      this.age = '';
+      this.salary = '';
+      this.salary_select = null;
+      this.pay_denomination = 'per hour';
+      this.education = '';
+      this.description = null;
+      this.description_valid = true;
+      this.responsibilities = null;
+      this.responsibilities_valid = true;
+      this.experience = null;
+      this.experience_valid = true;
+      this.notes = '';
+      this.studentfriendly = true;
+      this.language = '';
+      this.major = '';
+      this.active = false;
+      this.confirmPost = false;
+      this.isUniversity = false;
+      this.university = null;
+      this.howDidYouHear = null;
+      this.images = [];
+      this.tags = positions;
+      this.selectedTags = [];
+      this.picUploaderDialog = false;
+      this.successAlert = false;
+      this.showInvalidMessage = false;
+      this.loading = false;
+    },
   },
   activated() {
+    this.resetData();
     if (this.$store.state.acct === 2) {
       this.posted_by = this.$store.state.bdata.business_name;
       this.uid = this.$store.state.userID;

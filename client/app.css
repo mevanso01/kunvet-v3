@@ -248,7 +248,9 @@ main.dn {
 .bottom-dialog-button.disabled {
   opacity: 0.75;
 }
-.kunvet-red, .kunvet-red.input-group--active label {
+.kunvet-red,
+.kunvet-red.input-group--active label,
+.kunvet-red .icon--radio {
   color: #ef5350 !important;
 }
 .kunvet-red-bg {

@@ -201,7 +201,7 @@
             <div class="profile-pic-cont hidden-xs-only">
               <img v-if="userdata.profile_pic" style="width: 100%; height: 100%;" :src="`${serverUrl}/file/get/${userdata.profile_pic}`"></img>
               <img v-else style="width: 100%; height: 100%;" :src="default_pic"></img>
-              <v-btn style="position: relative; top: -42px; left: -5px; background-color: rgba(0,0,0,0.1);"
+              <v-btn style="position: relative; top: -42px; left: -5px; background-color: rgba(0,0,0,0.15);"
                 icon small @click="showPicUploaderDialog = true;">
                 <v-icon style="color: #fff;">photo_camera</v-icon>
               </v-btn>
@@ -502,6 +502,7 @@
   import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
   import SuitcaseSvg from '@/assets/navbar/suitcase_full_black.svg';
   import BuildingSvg from '@/assets/account/org_building_full_black.svg';
+  import Asset31 from '@/assets/icons/Asset(31).svg';
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
   import DegreeConstants, { degreeDbToString, degreeSelectMaxWidths, degreeStringToDb } from '@/constants/degrees';
@@ -513,7 +514,7 @@
         resumes: [],
         uid: null,
         serverUrl: Config.get('serverUrl'),
-        default_pic: 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true',
+        default_pic: Asset31,
         active: null,
         updateSchool: '',
         updateEmail: '',
@@ -625,7 +626,7 @@
       async fillUpIndividualJobs() {
         const { data: { findJobs: jobs } } = await this.$apollo.query({
           query: (gql`query ($user: MongoID, $businessId: MongoID) {
-            findJobs (filter: { user_id: $user, business_id: $businessId }){
+            findJobs (filter: { user_id: $user, business_id: $businessId, is_deleted: false  }){
               _id
               active
             }
@@ -637,7 +638,7 @@
         });
         // TODO: Temporary concat for testing with base jobs state.
         // This doesn't do any parsing at the moment since I don't know the complete object state yet.
-        this.jobs = this.jobs.concat(jobs.slice());
+        this.jobs = jobs.concat([]);
         this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
           .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
       },
