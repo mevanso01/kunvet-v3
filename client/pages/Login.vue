@@ -246,6 +246,6 @@ export default {
   },
   activated() {
     this.resetData();
-  }
+  },
 };
 </script>
