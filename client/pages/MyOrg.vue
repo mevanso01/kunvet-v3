@@ -298,7 +298,6 @@
   import App from '@/App';
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
-  // import * as VueGoogleMaps from 'vue2-google-maps';
   import Config from 'config';
   import EventBus from '@/EventBus';
   import axios from 'axios';
