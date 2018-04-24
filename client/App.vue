@@ -294,7 +294,7 @@ export default {
           ],
           [
             { title: 'Notifications', href: '/notifications' },
-            { title: 'Account', href: '/account' },
+            { title: 'Account', href: '/myorg' },
             { title: 'Settings', href: '/settings' },
           ],
           [
