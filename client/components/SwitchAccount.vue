@@ -16,11 +16,33 @@
     height: 32px !important;
     padding-left: 21px;
   }
+  .switchAccount .list {
+    padding-top: 0;
+    padding-bottom: 3px;
+  }
+  .switchAccount .list__tile {
+    height: 24px !important;
+  }
+  .switchAccount .list.notNavbar .list__tile {
+    padding: 0 5px;
+  }
+  .switchAccount p.isNavbar {
+    padding: 0 16px;
+    font-size: 10px;
+  }
 </style>
 <template>
-  <div v-if="accountItems.length > 1" style="width: 250px;">
-    <p style="padding: 0 16px; margin-bottom: 0; font-size: 10px;">Signed in as:</p>
-    <v-expansion-panel class="switchAccount-expansion-panel">
+  <div v-if="accountItems.length > 1" class="switchAccount" style="width: 250px;">
+    <p v-bind:class="{ 'isNavbar': isNavbar }" style="margin-bottom: 0;">Signed in as:</p>
+    <v-list v-bind:class="{ 'notNavbar': !isNavbar }">
+      <v-list-tile v-for="(item, i) in accountItems" :key="i" @click="switchTo(item)">
+        <v-list-tile-title class="one-line" style="font-size: 14px;">
+          <span v-if="isSelected(item.name)">• </span>
+          {{ item.name }}
+        </v-list-tile-title>
+      </v-list-tile>
+    </v-list>
+    <!--<v-expansion-panel class="switchAccount-expansion-panel">
       <v-expansion-panel-content>
         <div slot="header" class="one-line">{{ selectedAccount }}</div>
         <v-list dense style="background-color: #f4f4f4; padding: 0;">
@@ -29,7 +51,7 @@
           </v-list-tile>
         </v-list>
       </v-expansion-panel-content>
-    </v-expansion-panel>
+    </v-expansion-panel>-->
   </div>
 </template>
 <script>
@@ -198,6 +220,10 @@ export default {
       }).catch((error) => {
         console.error(error);
       });
+    },
+    isSelected(name) {
+      if (name === this.selectedAccount) return true;
+      return false;
     },
   },
   created() {

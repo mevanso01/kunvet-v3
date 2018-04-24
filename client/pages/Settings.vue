@@ -20,6 +20,10 @@
   <v-container fluid class="settings-page">
     <div class="main-cont-large">
       <section style="padding: 0; margin: 15px; width: auto;">
+        <SwitchAccount />
+        <br>
+        <br>
+
         <h2>General Settings</h2>
         <v-divider></v-divider>
         <div>
@@ -27,31 +31,16 @@
         </div>
         <br>
         <br>
-        <!--<div v-if="orgList.length > 0">
-          On login, sign in into:
-          <v-select class="optional no-padding-select"
-            label="Which one?"
-            v-model="defaultOrg"
-            :items="orgSelectItems"
-            item-text="name"
-            item-value="_id"
-            return-object
-            autocomplete
-            single-line
-          ></v-select>
-          <v-btn style="margin-top:0" @click="saveDefaultOrganization">
-            Save Login Preferences
-          </v-btn>
-        </div>-->
+
         <div v-if="orgname && oid">
           <h2>Organization settings</h2>
           <v-divider></v-divider>
           <h3 v-if="orgname">Viewing organization: {{ orgname }}</h3>
           <br>
-          <br>
           <v-btn small outline color="red darken-1" @click="deleteOrgDialog = true;">Delete this organization</v-btn>
         </div>
       </section>
+
       <v-dialog v-model="deleteOrgDialog">
         <v-card>
           <v-card-title style="padding-bottom: 0;">
@@ -76,6 +65,7 @@
   import Axios from 'axios';
   import VuexLS from '@/store/persist';
   import gql from 'graphql-tag';
+  import SwitchAccount from '@/components/SwitchAccount';
 
   export default {
     props: ['command'],
@@ -88,6 +78,9 @@
         oid: null,
         deleteOrgDialog: false,
       };
+    },
+    components: {
+      SwitchAccount,
     },
     methods: {
       logout() {

@@ -57,7 +57,7 @@
                       <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
                     </v-list-tile>
                     <div v-else-if="subitem === 'SwitchAccount'">
-                      <SwitchAccount />
+                      <SwitchAccount :isNavbar="true"/>
                     </div>
                     <v-list-tile v-else-if="subitem === 'Logout'" @click="logout">
                       <v-list-tile-title style="font-size: 14px;">Log out</v-list-tile-title>
