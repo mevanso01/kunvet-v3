@@ -16,7 +16,7 @@
     font-size: 9pt;
     color: #9e9e9e;
 }
-.job-image {
+.job-detail-container .job-image {
     background-size: 8px 8px;
     background-position: center center;
     overflow: hidden;
@@ -26,7 +26,7 @@
     cursor: pointer;
     text-align: center;
 }
-.job-image img {
+.job-detail-container .job-image img {
     position: relative;
     top: 0;
     width: 100%;
@@ -36,10 +36,10 @@
     transform: scale(1);
     transition: all 0.2s ease;
 }
-.job-image img:hover {
+.job-detail-container .job-image img:hover {
     transform: scale(1.0625);
 }
-.post-title {
+.job-detail-container .post-title {
   font-size: 30px;
   line-height: 1.2;
   margin-top: 12px;
@@ -64,11 +64,11 @@
 .pr-8 {
   padding-right: 8px;
 }
-.top-container {
+.job-detail-container .top-container {
   width: 100%;
   height: 48px;
 }
-.bottom-container {
+.job-detail-container .bottom-container {
   display: flex;
   height: 48px;
 }
@@ -78,18 +78,18 @@
   padding: 4px;
   margin-bottom: 5px;
 }
-.bookmark-btn .icon {
+.job-detail-container .bookmark-btn .icon {
   font-size: 24px !important;
   height: 24px !important;
   width: 24px !important;
 }
-.bookmark-btn {
+.job-detail-container .bookmark-btn {
   height: 36px !important;
   width: 36px !important;
 }
-.svg-button {
-  width: 36px;
-  height: 28px;
+.job-detail-container .svg-button {
+  height: 36px;
+  margin: 2px 8px;
   display: inline-flex;
   flex: 0 1 auto;
 }
@@ -160,7 +160,7 @@
               <h3 style="color: #616161;" class="one-line ellipsis">{{ findJob.posted_by }}</h3>
             </div>
             <div class="float-right">
-              <a class="svg-button" flat style="margin: 6px 8px;" @click="saveJob(findJob._id)">
+              <a class="svg-button" flat @click="saveJob(findJob._id)">
                 <img v-if="saved" :src="svgs.savedIcon"/>
                 <img v-else :src="svgs.notSavedIcon"/>
               </a>

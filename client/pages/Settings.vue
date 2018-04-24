@@ -49,7 +49,7 @@
           <h3 v-if="orgname">Viewing organization: {{ orgname }}</h3>
           <br>
           <br>
-          <v-btn small outline color="red darken-1" @click="deleteOrgDialog = true;">Delete organization</v-btn>
+          <v-btn small outline color="red darken-1" @click="deleteOrgDialog = true;">Delete this organization</v-btn>
         </div>
       </section>
       <v-dialog v-model="deleteOrgDialog">

@@ -280,7 +280,7 @@
             <v-select class="no-padding"
               v-model="pay_denomination"
               :disabled = "salary_select != 'paid'"
-              :items="[ 'per hour', 'per week', 'per month', 'annually', 'per task' ]"
+              :items="[ 'per hour', 'per week', 'per month', 'per year', 'per task' ]"
               >
             </v-select>
           </v-flex>
