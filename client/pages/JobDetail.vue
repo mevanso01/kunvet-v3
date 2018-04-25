@@ -386,7 +386,7 @@ export default {
         major: null,
         student_type: null,
         email: null,
-        wechat_id,
+        wechat_id: null,
       },
       resumes: [],
       selectedResume: null,
