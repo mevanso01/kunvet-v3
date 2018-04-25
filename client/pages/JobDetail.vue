@@ -794,8 +794,10 @@ export default {
       Object.assign(this.$data, this.$options.data.call(this));
     },
   },
-  activated() {
+  created() {
     this.client = new FileClient();
+  },
+  activated() {
     this.resetData();
     this.getData();
     if (this.$store.state.userID) {
