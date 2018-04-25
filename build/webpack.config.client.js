@@ -10,6 +10,8 @@ const VisualizerPlugin = require('webpack-visualizer-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const utils = require('./utils');
 
+const ErrorCodeInternal = require('../common/ErrorCodeInternal');
+
 // Build static config
 const staticConfig = Object.assign({}, Config);
 delete staticConfig.private;
@@ -28,8 +30,10 @@ const wpconf = {
     alias: {
       vue$: 'vue/dist/vue.runtime.esm.js',
       '@': utils.resolve('client'),
+      '#': utils.resolve('common'),
       config$: path.resolve(__dirname, '../common/StaticConfigProvider.js'),
       static_config$: path.resolve(__dirname, '../virtual/staticConfig.client.json'),
+      static_error_code_internal$: path.resolve(__dirname, '../virtual/errorCodeInternal.json'),
     },
     unsafeCache: /data/,
   },
@@ -126,6 +130,10 @@ const wpconf = {
     new VirtualModulePlugin({
       moduleName: 'virtual/staticConfig.client.json',
       contents: JSON.stringify(staticConfig),
+    }),
+    new VirtualModulePlugin({
+      moduleName: 'virtual/errorCodeInternal.json',
+      contents: JSON.stringify(ErrorCodeInternal),
     }),
     new webpack.IgnorePlugin(/vertx/),
     new FaviconsWebpackPlugin('./client/assets/favicon.png'),
