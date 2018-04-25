@@ -246,6 +246,7 @@
                   :src="docurl"
                   style="width: 100%; height: 1200px; overflow: hidden">
                 </iframe>
+                <a v-if="docurl && fallback" :href="docurl">Download resume</a>
             </div>
           </section>
     </div>
