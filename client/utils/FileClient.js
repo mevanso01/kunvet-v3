@@ -35,7 +35,7 @@ export default class FileClient {
           await this._api.post(instructions.form.url, data);
         } catch (e) {
           const parser = new DOMParser();
-          const dom = parser.parseFromString(e.response.data);
+          const dom = parser.parseFromString(e.response.data, 'text/xml');
 
           const awsCodes = dom.getElementsByTagName('Code');
 
