@@ -23,6 +23,11 @@ if (process.env.NODE_ENV === 'development') {
   enabled.push(transports.sentry);
 }
 
+if (process.env.LAMBDA_TASK_ROOT && process.env.AWS_EXECUTION_ENV) {
+  // Log in JSON on AWS Lambda
+  transports.console.json = true;
+}
+
 Logger.configure({
   transports: enabled,
 });
