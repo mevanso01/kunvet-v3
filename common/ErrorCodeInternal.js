@@ -5,6 +5,7 @@ const errors = [
   ['RateLimit', 'Job search circuitry hot! Wait for cooldown to get another job'],
   ['BadRequest', 'Bad request. Naughty kid.'],
   ['UnsupportedFileType', 'Unsupported file type'],
+  ['FileTooLarge', 'File too large'],
 ];
 
 const result = {
