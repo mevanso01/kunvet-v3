@@ -278,7 +278,7 @@
             </v-radio>
           </v-radio-group>
           <p v-else>You have no resumes yet!</p>
-          <p v-if="state === 'ERROR'" style="color: red; font-size: 12px; text-align: center; margin-bottom: 5px;">Error uploading resume</p>
+          <p v-if="state === 'ERROR'" style="color: red; font-size: 12px; text-align: center; margin-bottom: 5px;">{{ errorMessage }}</p>
           <div class="new-resume-box">
             <input
               type="file"
@@ -399,6 +399,7 @@ export default {
       file: null,
       fileName: null,
       state: 'INITIAL',
+      errorMessage: '',
       client: null,
       email_verified: true,
     };
@@ -732,6 +733,7 @@ export default {
       } catch (e) {
         console.error(e);
         this.state = 'ERROR';
+        this.errorMessage = e.message;
         return;
       }
       try {
@@ -739,6 +741,7 @@ export default {
       } catch (e) {
         console.error(e);
         this.state = 'ERROR';
+        this.errorMessage = e.message;
         return;
       }
       this.resumes.push({
