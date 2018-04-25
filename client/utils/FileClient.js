@@ -1,3 +1,5 @@
+import KunvetError from '#/KunvetError';
+import ErrorCode from '#/ErrorCode';
 import Config from 'config';
 import Axios from 'axios';
 import https from 'https';
@@ -17,7 +19,7 @@ export default class FileClient {
         const response = await this._api.put(`/file/lupload/${instructions.id}`, data);
 
         if (!response.data.success) {
-          throw Error(`Uploading file failed: ${JSON.stringify(response.data)}`);
+          throw new KunvetError(response.data);
         }
 
         break;
@@ -32,8 +34,24 @@ export default class FileClient {
         try {
           await this._api.post(instructions.form.url, data);
         } catch (e) {
-          console.log(e);
-          throw e;
+          const parser = new DOMParser();
+          const dom = parser.parseFromString(e.response.data);
+
+          const awsCodes = dom.getElementsByTagName('Code');
+
+          if (awsCodes.length) {
+            const awsCode = awsCodes[0].textContent;
+            if (awsCode === 'EntityTooLarge') {
+              throw new KunvetError({
+                errorCode: ErrorCode.FileTooLarge,
+              });
+            }
+          }
+
+          console.error(e);
+          throw new KunvetError({
+            errorCode: ErrorCode.UnknownError,
+          });
         }
 
         break;
@@ -63,7 +81,7 @@ export default class FileClient {
     });
 
     if (!response.data.success) {
-      throw Error(`Creating file slot failed: ${JSON.stringify(response.data)}`);
+      throw new KunvetError(response.data);
     }
 
     return response.data.id;
