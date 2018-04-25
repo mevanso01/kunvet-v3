@@ -92,6 +92,7 @@ export default {
         await this.client.uploadFile(this.curId, this.file);
       } catch (e) {
         console.error(e);
+        this.state = 'FAILED';
         return;
       }
 
