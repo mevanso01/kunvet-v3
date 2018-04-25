@@ -13,7 +13,6 @@ class StringHelper {
     let mutableStr = '';
     for (let i = 0; i < strings.length - 1; ++i) {
       const str = shouldCapitalize ? StringHelper.capitalize(strings[i]) : strings[i];
-      console.log(str);
       mutableStr += str;
       if (delimiter === ',') mutableStr += `${delimiter} `;
       if (delimiter === '/') mutableStr += ` ${delimiter} `;
