@@ -55,7 +55,7 @@ ol, ul {
     font-size: 10px;
     position: absolute;
     text-align: center;
-    top: 40px;
+    top: 41px;
 }
 .nav-img {
     position: absolute;
@@ -64,7 +64,7 @@ ol, ul {
     width: 20px;
 }
 .nav-profile-pic {
-	width: 30px;
+	width: 28px;
 	border-radius: 50%;
 	left: 30px;
 	top: 10px;

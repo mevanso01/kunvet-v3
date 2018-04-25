@@ -17,7 +17,12 @@
   }
   .switchAccount .notNavbar .list__tile,
   .switchAccount .notNavbar .expansion-panel__header {
-    padding: 0 5px;
+    padding: 0 8px;
+  }
+  .switchAccount p.isNavbar {
+    font-size: 12px;
+    margin-left: 16px;
+    margin-top: 5px;
   }
 </style>
 <template>
@@ -31,7 +36,7 @@
         </v-list-tile-title>
       </v-list-tile>
     </v-list>-->
-    <p v-show="!isNavbar" style="margin-bottom: 0;">Signed in as:</p>
+    <p v-bind:class="{ 'isNavbar': isNavbar }" style="margin-bottom: 0;">Current account:</p>
     <v-expansion-panel class="switchAccount-expansion-panel" v-bind:class="{ 'notNavbar': !isNavbar }">
       <v-expansion-panel-content>
         <div slot="header" class="one-line">{{ selectedAccount }}</div>
@@ -220,6 +225,9 @@ export default {
       if (name === this.selectedAccount) return true;
       return false;
     },
+  },
+  activated() {
+    console.log('yay');
   },
   created() {
     EventBus.$on('changed_name', values => {
