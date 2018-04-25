@@ -36,8 +36,9 @@
       </div>
       <div style="min-height: 40px;" v-if="state === 'FAILED'">
         <h3 style="display: inline-block;">
-          Oops! Something went wrong on our end. Please try again later
+          Oops! Something went wrong.
         </h3>
+        <p>{{ errorMessage }}</p>
       </div>
       </v-card-title>
       <v-card-actions>
@@ -59,6 +60,7 @@ export default {
       chosenFile: null,
       client: null,
       resumeName: '',
+      errorMessage: '',
     };
   },
   mounted() {
@@ -83,6 +85,7 @@ export default {
         } catch (e) {
           console.error(e);
           this.state = 'FAILED';
+          this.errorMessage = e.message;
           return;
         }
 
@@ -93,6 +96,7 @@ export default {
       } catch (e) {
         console.error(e);
         this.state = 'FAILED';
+        this.errorMessage = e.message;
         return;
       }
 
