@@ -29,7 +29,12 @@ export default class FileClient {
           data.append(key, instructions.form.fields[key]);
         }
         data.append('file', file);
-        await this._api.post(instructions.form.url, data);
+        try {
+          await this._api.post(instructions.form.url, data);
+        } catch (e) {
+          console.log(e);
+          throw e;
+        }
 
         break;
       }
