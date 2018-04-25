@@ -31,7 +31,7 @@
   import queries from '@/constants/queries';
 
   const FindJobQuery = gql`query ($id: MongoID) {
-    findJob (filter: { _id: $id }) {
+    findJob (filter: { _id: $id, is_deleted: false }) {
       ${queries.FindJobRecordForJobCard}
     }
   }`;
@@ -84,7 +84,7 @@
                   variables: { id: jobid },
                 }).then((d) => {
                   const findJob = d.data.findJob;
-                  if (findJob && findJob._id === jobid) {
+                  if (findJob && !findJob.is_deleted) {
                     this.counter += 1;
                     // console.log(findJob.title, findJob.date);
                     this.findJobs.push(findJob);

@@ -433,6 +433,7 @@ const AccountSchema = Mongoose.Schema({
 });
 AccountSchema.plugin(PassportLocalMongoose, {
   usernameField: 'email',
+  usernameLowerCase: true,
 });
 
 export default {

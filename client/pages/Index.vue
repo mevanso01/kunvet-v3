@@ -75,6 +75,7 @@
 }
 .search .custom-select-2 .inner {
   padding: 0 16px;
+  cursor: pointer;
 }
 .search .custom-select-2 .custom-select-menu {
   overflow-y: scroll;
@@ -533,6 +534,7 @@ import positions from '@/constants/positions';
 import locations from '@/constants/locations';
 import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
+import findIndex from 'lodash/findIndex';
 import queries from '@/constants/queries';
 
 Vue.use(VueApollo);
@@ -648,47 +650,60 @@ export default {
           }
         }
       }
-      let sortedJobs = this.findJobs.concat();
+      let jobsToFetch = this.findJobs.concat();
       if (this.selectedLat && this.selectedLong) {
-        sortedJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+        // sortedJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+        jobsToFetch = jobsToFetch.filter(x => this.filterJobByDistance(x));
       }
-      let endIndex = sortedJobs.length;
+      let endIndex = jobsToFetch.length;
       if (endIndex > 99) {
         endIndex = 99;
       }
-      sortedJobs = sortedJobs.splice(0, endIndex);
+      jobsToFetch = jobsToFetch.splice(0, endIndex);
       if (endIndex > 0) {
-        const promises = Promise.all(
-          sortedJobs.map(({ _id: id }) =>
+        for (var i = 0; i < endIndex; i++) {
+          const index = findIndex(this.filteredJobs, { '_id': jobsToFetch[i]._id });
+          if (index === -1) {
             this.$apollo.query({
               query: findJobQuery,
               variables: {
-                id,
+                id: jobsToFetch[i]._id,
               },
-            }),
-          ),
-        );
-        this.filteredJobs = (await promises).map(el => el.data.findJob).filter((job) => {
-          if (
-            !intersection(selectedTypes, job.type).length &&
-            !intersection(selectedTypes2, job.type2).length
-          ) {
-            return false;
-          }
-          if (this.selectedPositions.length > 0) {
-            if (!intersection(this.selectedPositions, job.position_tags).length) {
-              return false;
+            }).then((data) => {
+              this.loadingJobs = false;
+              const job = data.data.findJob;
+              if (this.filterJobByInfo(job, selectedTypes, selectedTypes2)) {
+                this.filteredJobs.push(job);
+                this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+              }
+            });
+          } else {
+            const job = this.filteredJobs[index];
+            if (!this.filterJobByInfo(job, selectedTypes, selectedTypes2)) {
+              this.filteredJobs.splice(index, 1);
             }
           }
-          if (this.selectedShifts.length > 0) {
-            if (!intersection(this.selectedShifts, job.shift).length) {
-              return false;
-            }
-          }
-          return true;
-        });
+        }
       }
-      this.loadingJobs = false;
+    },
+    filterJobByInfo(job, selectedTypes, selectedTypes2) {
+      if (
+        !intersection(selectedTypes, job.type).length &&
+        !intersection(selectedTypes2, job.type2).length
+      ) {
+        return false;
+      }
+      if (this.selectedPositions.length > 0) {
+        if (!intersection(this.selectedPositions, job.position_tags).length) {
+          return false;
+        }
+      }
+      if (this.selectedShifts.length > 0) {
+        if (!intersection(this.selectedShifts, job.shift).length) {
+          return false;
+        }
+      }
+      return true;
     },
     reorderAvailablePositions() {
       var str = this.filterPositions;
@@ -730,15 +745,17 @@ export default {
       );
     },
     compareDistanceAndDate(a, b) {
-      // should we use the more accurate computeDistance function?
-      // const distanceA = Math.sqrt(((this.selectedLat - a.latitude) ** 2) + ((this.selectedLong - a.longitude) ** 2));
-      // const distanceB = Math.sqrt(((this.selectedLat - b.latitude) ** 2) + ((this.selectedLong - b.longitude) ** 2));
       const distanceA = this.computeDistance(a.latitude, a.longitude);
       const distanceB = this.computeDistance(b.latitude, b.longitude);
-      if (distanceA <= 6 && distanceB <= 6) {
-        return a.date < b.date;
+      if ((distanceA <= 6 && distanceB <= 6) || (distanceA > 6 && distanceB > 6)) {
+        return Date.parse(b.date) - Date.parse(a.date);
       }
       return distanceA - distanceB;
+    },
+    filterJobByDistance(job) {
+      const distance = this.computeDistance(job.latitude, job.longitude);
+      if (distance > 20) { return false; }
+      return true;
     },
     sanitizeSalary(salary) {
       if (typeof salary === 'number') {
@@ -831,19 +848,16 @@ export default {
       return this.saved_jobs.indexOf(id) > -1;
     },
     async loadInitialJobs() {
-      this.loadingJobs = true;
+      if (this.filteredJobs.length === 0) {
+        this.loadingJobs = true;
+      }
       const { data: { findJobs } } = await this.$apollo.query({
+        fetchPolicy: 'network-only',
         query: gql`{
           findJobs (filter: { active: true }){
             _id
             latitude
             longitude
-            type
-            studentfriendly
-            type2
-            shift
-            age
-            pay_type
             date
             is_deleted
           }

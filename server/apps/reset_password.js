@@ -53,7 +53,7 @@ router.post('/reset', async (ctx) => {
     ctx.body = JSON.stringify(response);
     return;
   }
-  const userEmail = resetInstance.email;
+  const userEmail = resetInstance.email.toLowerCase();
   let userAcct = null;
   try {
     userAcct = await Models.Account.findOne({

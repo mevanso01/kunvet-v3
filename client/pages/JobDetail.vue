@@ -61,9 +61,7 @@
   color: #9e9e9e;
   margin-bottom: 0px;
 }
-.pr-8 {
-  padding-right: 8px;
-}
+.pr-10 { padding-right: 10px; }
 .job-detail-container .top-container {
   width: 100%;
   height: 48px;
@@ -138,6 +136,10 @@
   .job-detail-posted-by {
     max-width: calc(99% - 204px);
   }
+  .job-detail-container .float-sm-up {
+    float: left;
+    padding-right: 10px;
+  }
 }
 @media (min-width: 961px) {
   .job-detail-container {
@@ -188,32 +190,40 @@
             </p>
           </div>
 
-          <div class="blue-row" style="margin-top: 8px;">
-            <span v-if="findJob.type2" class="pr-8">
+          <div style="margin-top: 8px;">
+            <div v-if="findJob.type2" class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.Internship"></img>
               <span v-for="type in findJob.type2"> {{ type }}</span>
-            </span>
-            <span v-if="findJob.studentfriendly" class="pr-8">
-              <img class="job-info-icon" :src="svgs.sfSvg"></img> student friendly
-            </span>
-            <span class="pr-8">
+            </div>
+            <div v-if="findJob.studentfriendly" class="blue-row float-left pr-10">
+              <img class="job-info-icon" :src="svgs.sfSvg"></img>
+              <span>student friendly</span>
+            </div>
+            <div class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.Clock"></img>
               <span v-for="(type, index) in jobType"> {{ type }}<span v-if="index + 1 < jobType.length">,</span></span>
-            </span>
-            <span>
-              <img class="job-info-icon" :src="svgs.sSvg"></img> {{ salary }}
-            </span>
+            </div>
+            <div class="blue-row">
+              <img class="job-info-icon" :src="svgs.sSvg"></img>
+              <span>{{ salary }}</span>
+            </div>
           </div>
 
-          <div v-show="(findJob.education && findJob.education !== 'None') || findJob.preferred_major">
+          <div v-show="
+            (findJob.education && findJob.education !== 'None')
+            || findJob.preferred_major || findJob.language">
             <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
-            <div v-show="findJob.education && findJob.education !== 'None'" class="blue-row" >
+            <div v-show="findJob.education && findJob.education !== 'None'" class="blue-row float-sm-up">
               <img class="job-info-icon" :src="svgs.degree"></img>
               <span v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</span>
             </div>
-            <div v-show="findJob.preferred_major" class="blue-row">
+            <div v-show="findJob.preferred_major" class="blue-row float-sm-up">
               <img class="job-info-icon" :src="svgs.majorPreferred"></img>
               <span>Majors preferred: {{ findJob.preferred_major }}</span>
+            </div>
+            <div v-show="findJob.language" class="blue-row">
+              <img class="job-info-icon" :src="svgs.languages"></img>
+              <span>Additional language: {{ findJob.language }}</span>
             </div>
           </div>
 
@@ -323,6 +333,7 @@ import degreeSvg from '@/assets/job_detail/degree.svg';
 import buildingSvg from '@/assets/icons/Asset(71).svg';
 import nsiSvg from '@/assets/icons/Asset(36).svg';
 import siSvg from '@/assets/icons/Asset(37).svg';
+import Asset46 from '@/assets/icons/Asset(46).svg';
 import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
 import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
@@ -354,6 +365,7 @@ export default {
         majorPreferred: majorPreferredSvg,
         degree: degreeSvg,
         building: buildingSvg,
+        languages: Asset46,
       },
       uid: null,
       applydialog: false,

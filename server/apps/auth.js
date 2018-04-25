@@ -209,6 +209,7 @@ router.post('/register', async (ctx) => {
   }
   const req = ctx.request.body;
   const promiseRegister = promisify(Models.Account.register, Models.Account);
+  const email = req.email.toLowerCase();
 
   let defaultOrg = null;
   let org = null;
@@ -216,7 +217,7 @@ router.post('/register', async (ctx) => {
     try {
       org = new Models.Organization({
         business_name: req.business_name,
-        email: req.email,
+        email: email,
       });
       await org.save();
       defaultOrg = org._id;
@@ -224,7 +225,7 @@ router.post('/register', async (ctx) => {
       console.log('Error when creating new org', err);
       if (err.name === 'BulkWriteError') {
         let response;
-        const isntVerified = await checkIsNotVerified(req.email);
+        const isntVerified = await checkIsNotVerified(email);
         if (isntVerified) {
           response = {
             success: false,
@@ -251,7 +252,7 @@ router.post('/register', async (ctx) => {
   try {
     user = await promiseRegister(
       {
-        email: req.email,
+        email: email,
         firstname: req.fname,
         lastname: req.lname,
         default_org: defaultOrg,
@@ -263,7 +264,7 @@ router.post('/register', async (ctx) => {
     console.log('Error when creating account', err);
     if (err.name === 'UserExistsError') {
       let response;
-      const isntVerified = await checkIsNotVerified(req.email);
+      const isntVerified = await checkIsNotVerified(email);
       if (isntVerified) {
         response = {
           success: false,
@@ -292,13 +293,13 @@ router.post('/register', async (ctx) => {
   const validationCode = uuidv1();
 
   const x = new Models.TempAccount({
-    email: req.email,
+    email: email,
     vcode: validationCode,
   });
   x.save();
   if (req.hdyh) {
     const y = new Models.HDYH({
-      email: req.email,
+      email: email,
       how_did_you_hear: req.hdyh,
     });
     y.save();
@@ -308,10 +309,10 @@ router.post('/register', async (ctx) => {
   const mailer = new Mailer();
   try {
     await mailer.sendTemplate(
-      req.email,
+      email,
       'email-verification',
       {
-        email: req.email,
+        email: email,
         code: validationCode,
       },
     );
