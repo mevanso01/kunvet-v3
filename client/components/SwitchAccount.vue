@@ -1,7 +1,7 @@
 <style>
   .switchAccount-expansion-panel .expansion-panel__header {
     height: 32px;
-    padding: 12px 16px;
+    padding: 0px 16px;
   }
   .switchAccount-expansion-panel {
     margin-bottom: 1px;
@@ -15,12 +15,9 @@
   .switchAccount-expansion-panel .list__tile {
     height: 32px !important;
   }
-  .switchAccount .list.notNavbar .list__tile {
+  .switchAccount .notNavbar .list__tile,
+  .switchAccount .notNavbar .expansion-panel__header {
     padding: 0 5px;
-  }
-  .switchAccount p.isNavbar {
-    padding: 0 16px;
-    font-size: 10px;
   }
 </style>
 <template>
@@ -34,7 +31,8 @@
         </v-list-tile-title>
       </v-list-tile>
     </v-list>-->
-    <v-expansion-panel class="switchAccount-expansion-panel">
+    <p v-show="!isNavbar" style="margin-bottom: 0;">Signed in as:</p>
+    <v-expansion-panel class="switchAccount-expansion-panel" v-bind:class="{ 'notNavbar': !isNavbar }">
       <v-expansion-panel-content>
         <div slot="header" class="one-line">{{ selectedAccount }}</div>
         <v-list dense style="background-color: #f4f4f4; padding: 0;">

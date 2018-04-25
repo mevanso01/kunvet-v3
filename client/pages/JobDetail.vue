@@ -790,9 +790,13 @@ export default {
         }],
       }).catch(console.error);
     },
+    resetData() {
+      Object.assign(this.$data, this.$options.data.call(this));
+    },
   },
   activated() {
     this.client = new FileClient();
+    this.resetData();
     this.getData();
     if (this.$store.state.userID) {
       this.uid = this.$store.state.userID;

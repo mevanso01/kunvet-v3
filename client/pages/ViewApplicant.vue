@@ -223,8 +223,7 @@
             <!-- style="border: 2px solid #D3D3D3;" -->
             <v-divider class="acct-divider"/>
 
-            <v-layout row wrap>
-              <v-flex>
+            <div style="width: 100%">
                 <account-header
                   :svg="svgs.resume"
                   :text="'Resume'"
@@ -247,8 +246,7 @@
                   :src="docurl"
                   style="width: 100%; height: 1200px; overflow: hidden">
                 </iframe>
-              </v-flex>
-            </v-layout>
+            </div>
           </section>
     </div>
     <v-dialog v-model="dialogs.showAccept">
