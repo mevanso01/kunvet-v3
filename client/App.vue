@@ -359,6 +359,7 @@ export default {
       });
       this.$store.commit('go');
       this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
+      this.setProfilePic();
     },
     l2() {
       this.acct = 2;
@@ -367,6 +368,7 @@ export default {
         acct: 2,
       });
       this.$store.commit('go');
+      this.setProfilePic();
     },
     routeTo(route) {
       this.$router.push(route);
