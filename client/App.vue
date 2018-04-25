@@ -48,7 +48,8 @@
 
               <template v-else>
                 <v-btn flat style="width: 10px;" slot="activator">
-                  <img class="nav-img notranslate" :src="item.icon"></img>
+                  <img v-if="['Account', 'My Profile'].includes(item.title)" class="nav-img nav-profile-pic" :src="profilePic"></img>
+                  <img v-else class="nav-img" :src="item.icon"></img>
                   <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
                 </v-btn>
                 <v-list v-if="item.subItems.length > 0" dense>
@@ -186,6 +187,7 @@ import VuexLS from '@/store/persist';
 import gql from 'graphql-tag';
 import axios from 'axios';
 import EventBus from '@/EventBus';
+import ProfilePicHelper from '@/utils/GetProfilePic';
 
 import StringHelper from '@/utils/StringHelper';
 import Notifications from '@/components/Notifications';
@@ -226,6 +228,7 @@ export default {
   data() {
     return {
       acct: 0,
+      profilePic: '',
       drawer: false,
       items: [
         [
@@ -456,7 +459,7 @@ export default {
       }
     });
 
-    axios.get('auth/status').then(res => {
+    axios.get('auth/status').then(async (res) => {
       if (res.data.success) {
         if (!res.data.status) {
           this.lo();
@@ -464,6 +467,10 @@ export default {
           this.l2();
         } else {
           this.l1();
+        }
+
+        if (res.data.status) {
+          this.profilePic = await ProfilePicHelper.getProfilePic(res.data.user._id);
         }
       } else {
         this.lo();

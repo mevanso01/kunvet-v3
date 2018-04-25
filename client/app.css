@@ -63,6 +63,12 @@ ol, ul {
     top: 12px;
     width: 20px;
 }
+.nav-profile-pic {
+	width: 30px;
+	border-radius: 50%;
+	left: 30px;
+	top: 10px;
+}
 .nav-notification-mark {
   position: absolute;
   min-width: 15px;
