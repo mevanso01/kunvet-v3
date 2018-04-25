@@ -34,6 +34,11 @@ function buildOptions(ctx) {
       Logger.error(e);
       return 'An error occured.';
     };
+  } else {
+    options.formatError = (e) => {
+      Logger.error(e);
+      return e;
+    };
   }
   return options;
 }
