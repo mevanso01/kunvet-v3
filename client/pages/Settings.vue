@@ -20,9 +20,8 @@
   <v-container fluid class="settings-page">
     <div class="main-cont-large">
       <section style="padding: 0; margin: 15px; width: auto;">
-        <SwitchAccount />
-        <br>
-        <br>
+
+        <SwitchAccount :bottomPadding="true"/>
 
         <h2>General Settings</h2>
         <v-divider></v-divider>

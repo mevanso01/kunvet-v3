@@ -12,7 +12,7 @@
       border: 1px solid #b4b4b4;
     }
     div {
-      padding: 30px;
+      padding: 20px;
       border-bottom: 1px solid #b4b4b4;
     }
     div:first-of-type {
@@ -25,10 +25,15 @@
     div:last-of-type p {
       font-size: 12px;
     }
+    img.header-img {
+      height: 50px;
+      margin: auto;
+    }
     h1 {
       margin: 0;
       color: #ef5350;
       font-weight: lighter;
+      font-size: 25px;
     }
     p {
       color: #787878;
@@ -57,7 +62,9 @@
 
 <body>
   <div>
-    <h1>{{> heading}}</h1>
+    {{#> heading}}
+      <img align="center" class="header-img" src="https://s3.amazonaws.com/kunvet-prod-assets/kunvetlogo.png" alt="kunvet logo"/>
+    {{/heading}}
   </div>
 
   <div>

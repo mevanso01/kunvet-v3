@@ -47,6 +47,9 @@
         </v-list>
       </v-expansion-panel-content>
     </v-expansion-panel>
+    <div v-show="bottomPadding">
+      <br><br>
+    </div>
   </div>
 </template>
 <script>
@@ -54,7 +57,7 @@ import gql from 'graphql-tag';
 import EventBus from '@/EventBus';
 
 export default {
-  props: ['isNavbar'],
+  props: ['isNavbar', 'bottomPadding'],
   data() {
     return {
       accountItems: [],

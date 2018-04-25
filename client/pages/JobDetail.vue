@@ -244,6 +244,15 @@
           <h2 style="margin-bottom: 8px;">Responsibilities:</h2>
           <div v-html="findJob.responsibilities"></div>
 
+          <v-container
+            v-if="findJob.images && findJob.images.length > 0" fluid grid-list-sm style="margin: 20px 0;">
+            <v-layout row wrap>
+              <v-flex xs4 md3 class="image-container" v-for="image in findJob.images">
+                <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image" width="100%">
+              </v-flex>
+            </v-layout>
+          </v-container>
+
           <div class="bottom-container">
               <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
                 outline class="red--text darken-1" @click="apply">
