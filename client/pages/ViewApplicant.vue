@@ -242,7 +242,7 @@
                   @failed="fallback = true"
                 />
                 <iframe
-                  ref="fallbackframe"
+                  ref="fallbackFrame"
                   v-if="docurl && fallback"
                   :src="docurl"
                   style="width: 100%; height: 1200px; overflow: hidden">
