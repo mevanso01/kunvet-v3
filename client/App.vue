@@ -347,8 +347,9 @@ export default {
     emitSetNumNotifications(n) {
       EventBus.$emit('setNotifications', n);
     },
-    async l() {
-      this.profilePic = await ProfilePicHelper.getProfilePic(Store.state.userID);
+    async setProfilePic(uid = null) {
+      const id = uid || this.$store.state.userID;
+      this.profilePic = await ProfilePicHelper.getProfilePic(id);
     },
     l1() {
       this.acct = 1;
@@ -451,7 +452,7 @@ export default {
   },
   created() {
     EventBus.$on('logout', this.lo);
-    EventBus.$on('login', this.l);
+    EventBus.$on('login', this.setProfilePic);
     EventBus.$on('individual', this.l1);
     EventBus.$on('business', this.l2);
     EventBus.$on('firstSearch', this.fs1);
@@ -475,7 +476,7 @@ export default {
         }
 
         if (res.data.status) {
-          this.profilePic = await ProfilePicHelper.getProfilePic(res.data.user._id);
+          this.setProfilePic(res.data.user._id);
         }
       } else {
         this.lo();
