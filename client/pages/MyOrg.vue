@@ -30,7 +30,7 @@
                   <v-flex xs12 sm10 class="no-padding">
                     <v-list>
                       <v-list-tile
-                      <v-list-tile v-if="!bdata.address" class="cust-tile-2 grey-color">
+                      <v-list-tile v-show="!bdata.address" class="cust-tile-2 grey-color">
                         <v-list-tile class="cust-tile-1">
                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </v-list-tile>
@@ -253,13 +253,6 @@
                     <v-card-title>
                       <div class="headline">Edit {{ editModal.title }}</div>
                       <div class="edit-modal-input-cont">
-                        <v-text-field v-if="editModal.property !== 'biography'"
-                          v-model="editModal.text"
-                          style="padding: 0 2px;"
-                          name="edit-modal-input"
-                          hide-details
-                          single-line
-                        ></v-text-field>
                         <v-text-field v-if="editModal.property === 'biography'"
                           v-model="editModal.text"
                           style="padding: 0 2px;"
@@ -268,6 +261,21 @@
                           hide-details
                           multi-line
                           rows=3
+                        ></v-text-field>
+                        <v-text-field v-else-if="editModal.property === 'address'"
+                          ref="addressModalField"
+                          v-model="editModal.text"
+                          style="padding: 0 2px;"
+                          name="edit-modal-input"
+                          hide-details
+                          single-line
+                        ></v-text-field>
+                        <v-text-field v-else
+                          v-model="editModal.text"
+                          style="padding: 0 2px;"
+                          name="edit-modal-input"
+                          hide-details
+                          single-line
                         ></v-text-field>
                       </div>
                     </v-card-title>
@@ -384,11 +392,20 @@
         this.editModal.text = text;
         this.editModal.property = property;
         this.editModal.show = true;
+
+        setImmediate(() => {
+          if (property === 'address') {
+            console.log('Attaching autocomplete');
+            GoogleMapsAutocomplete.attach(this.$refs.addressModalField);
+          }
+        });
       },
       destroyEditModal() {
         this.editModal.show = false;
         this.editModal.title = null;
         this.editModal.text = null;
+
+        GoogleMapsAutocomplete.detach(this.$refs.editModal);
       },
       saveFromEditModal() {
         const text = this.editModal.text;
