@@ -38,8 +38,10 @@ import KoaMulter from 'koa-multer';
 import Mongoose from 'mongoose';
 
 // Utils
+import ErrorCode from '#/ErrorCode';
 import Models from '@/mongodb/Models';
 import Middlewares from '@/utils/Middlewares';
+import ApiResponse from '@/utils/ApiResponse';
 import Config from 'config';
 import uuidv1 from 'uuid/v1';
 
@@ -92,11 +94,9 @@ router.post('/create', Middlewares.RequireAuth, async (ctx) => {
   const allowedMimeTypes = Config.get('private.files.allowedMimeTypes');
 
   if (!req.mimeType.startsWith('image/') && !allowedMimeTypes.includes(req.mimeType)) {
-    const response = {
-      success: false,
-      message: 'Unsupported file type',
-    };
-    ctx.body = JSON.stringify(response);
+    ctx.body = ApiResponse(
+      ErrorCode.UnsupportedFileType,
+    );
     return;
   }
 
