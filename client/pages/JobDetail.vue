@@ -205,7 +205,7 @@
             </div>
             <div class="blue-row">
               <img class="job-info-icon" :src="svgs.sSvg"></img>
-              <span>{{ salary }}</span>
+              <span>{{ salary }} </span>
             </div>
           </div>
 
@@ -244,10 +244,9 @@
           <h2 style="margin-bottom: 8px;">Responsibilities:</h2>
           <div v-html="findJob.responsibilities"></div>
 
-          <v-container
-            v-if="findJob.images && findJob.images.length > 0" fluid grid-list-sm style="margin: 20px 0;">
+          <v-container v-if="findJob.images && findJob.images.length > 0" fluid grid-list-sm style="margin: 20px 0;">
             <v-layout row wrap>
-              <v-flex xs4 md3 class="image-container" v-for="image in findJob.images">
+              <v-flex xs4 sm3 md2 class="image-container" v-for="image in findJob.images">
                 <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image" width="100%">
               </v-flex>
             </v-layout>
@@ -437,11 +436,9 @@ export default {
         }
         if (this.findJob.pay_type === 'paid') {
           const sal = this.findJob.salary.toFixed(2);
-          let pdenom = '';
+          let pdenom = ` ${this.findJob.pay_denomination}`;
           if (this.findJob.pay_denomination === 'per hour') {
-            pdenom = '/hour';
-          } else if (this.findJob.pay_denomination === 'per month') {
-            pdenom = '/month';
+            pdenom = '/hr';
           }
           this.salary = `${sal.toString()}${pdenom}`;
         } else if (this.findJob.pay_type === 'negotiable') {
@@ -453,9 +450,9 @@ export default {
       });
     },
     apply() {
-      this.applydialog = true;
-      this.state = 'INITIAL';
       if (this.uid) {
+        this.state = 'INITIAL';
+        this.applydialog = true;
         if (!this.userdatafetched) {
           this._getUserData();
         }
@@ -719,6 +716,7 @@ export default {
       }
     },
     async uploadResume() {
+      this.client = new FileClient();
       let curId = null;
       if (!this.file) {
         return;
@@ -784,6 +782,7 @@ export default {
                 degree
                 major
                 email
+                wechat_id
                 profile_pic
                 org_list
                 resumes {
@@ -802,9 +801,6 @@ export default {
     resetData() {
       Object.assign(this.$data, this.$options.data.call(this));
     },
-  },
-  created() {
-    this.client = new FileClient();
   },
   activated() {
     this.resetData();

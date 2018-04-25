@@ -11,6 +11,7 @@
   .switchAccount-expansion-panel .expansion-panel {
     margin: 0;
     box-shadow: none;
+    max-height: 500px;
   }
   .switchAccount-expansion-panel .list__tile {
     height: 32px !important;

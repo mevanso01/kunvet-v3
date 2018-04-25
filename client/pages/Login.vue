@@ -236,12 +236,7 @@ export default {
       });
     },
     resetData() {
-      this.e1 = true;
-      this.valid = false;
-      this.sent = false;
-      this.email = '';
-      this.password = '';
-      this.loading = false;
+      Object.assign(this.$data, this.$options.data.call(this));
     },
   },
   activated() {

@@ -195,6 +195,7 @@ const ApplicantSchema = Mongoose.Schema({
   },
   name: String,
   email: String,
+  wechat_id: String,
   school: String,
   degree: {
     type: String,
@@ -369,10 +370,8 @@ const AccountSchema = Mongoose.Schema({
     type: String,
     required: true,
   },
-  password: {
-    type: String,
-    // required: true,
-  },
+  wechat_id: String,
+  password: String,
   default_org: {
     type: String,
   },

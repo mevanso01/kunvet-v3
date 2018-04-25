@@ -32,11 +32,7 @@
 <script>
 import axios from 'axios';
 
-
 export default {
-  activated() {
-    this.validateCode();
-  },
   props: ['code'],
   data() {
     return {
@@ -44,6 +40,10 @@ export default {
       isvalid: false,
       dne: null,
     };
+  },
+  activated() {
+    Object.assign(this.$data, this.$options.data.call(this));
+    this.validateCode();
   },
   methods: {
     validateCode() {

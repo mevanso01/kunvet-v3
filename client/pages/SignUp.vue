@@ -436,6 +436,12 @@ export default {
         id: _id,
       });
     },
+    resetData() {
+      Object.assign(this.$data, this.$options.data.call(this));
+    },
+  },
+  activated() {
+    this.resetData();
   },
 };
 </script>

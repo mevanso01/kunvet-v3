@@ -193,6 +193,48 @@
                       </v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
+
+                  <v-list-tile v-if="!userdata.wechat_id" class="cust-tile-2 grey-color">
+                    <v-list-tile class="cust-tile-1">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </v-list-tile>
+                  <v-list-tile-content>
+                    <v-layout class="acct-page-container__input-field-layout">
+                      <v-flex xs10 class="no-padding">
+                        <v-text-field
+                          v-model="updateWechatId"
+                          class="no-padding no-underline"
+                          name="input-3"
+                          label="Add WeChat id"
+                          single-line
+                          @keyup.enter="saveWechatId"
+                        />
+                      </v-flex>
+                      <v-flex xs2 v-show="updateWechatId" class="no-padding">
+                        <v-btn small  center class="cust-btn-1" @click="saveWechatId">
+                          Save
+                        </v-btn>
+                      </v-flex>
+                    </v-layout>
+                  </v-list-tile-content>
+                </v-list-tile>
+                  <v-list-tile v-if="userdata.wechat_id" class="cust-tile-2">
+                    <v-list-tile class="cust-tile-1">
+                      <img
+                        :src="svgs.wechat"
+                        class="acct-page-container__display-text-icon"
+                      />
+                    </v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        <p>{{ userdata.wechat_id }}</p>
+                        <i
+                          class="fa fa-edit acct-page-container__edit-icon"
+                          @click="createEditModal('WeChat id', userdata.wechat_id, 'wechat_id')"
+                        />
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
                 </v-list>
               </v-flex>
             </v-layout>
@@ -503,6 +545,7 @@
   import SuitcaseSvg from '@/assets/navbar/suitcase_full_black.svg';
   import BuildingSvg from '@/assets/account/org_building_full_black.svg';
   import Asset31 from '@/assets/icons/Asset(31).svg';
+  import Asset76 from '@/assets/icons/Asset(76).svg';
 
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
   import DegreeConstants, { degreeDbToString, degreeSelectMaxWidths, degreeStringToDb } from '@/constants/degrees';
@@ -520,6 +563,7 @@
         updateEmail: '',
         updateDegree: '',
         updateMajor: '',
+        updateWechatId: '',
         editModal: {
           title: null,
           text: null,
@@ -562,6 +606,7 @@
           org_list: [],
           resumes: [],
           default_org: null,
+          wechat_id: null,
         },
         email_verified: true,
         emailSent: false,
@@ -583,6 +628,7 @@
           building: BuildingSvg,
           resume: ResumeSvg,
           suitcase: SuitcaseSvg,
+          wechat: Asset76,
         },
         loading: false,
       };
@@ -728,8 +774,14 @@
         this.saveUserdata();
       },
       saveEmail() {
-        this.userdata.display_email = this.updateEmail;
+        /* this.userdata.display_email = this.updateEmail;
+        this.userdata.email = this.updateEmail;
         this.updateEmail = '';
+        this.saveUserdata(); */
+      },
+      saveWechatId() {
+        this.userdata.wechat_id = this.updateWechatId;
+        this.updateWechatId = '';
         this.saveUserdata();
       },
       createEditModal(title, text, property, type = 'text', items = []) {
@@ -846,6 +898,7 @@
               degree: degreeStringToDb(this.userdata.degree),
               major: this.userdata.major,
               profile_pic: this.userdata.profile_pic,
+              wechat_id: this.userdata.wechat_id,
               resumes: _resumes,
               default_org: this.userdata.default_org,
             },
@@ -862,6 +915,7 @@
                   degree
                   major
                   email
+                  wechat_id
                   profile_pic
                   org_list
                   default_org
@@ -940,6 +994,7 @@
                         degree
                         major
                         email
+                        wechat_id
                         profile_pic
                         org_list
                         default_org
@@ -1032,6 +1087,7 @@
                 degree
                 major
                 email
+                wechat_id
                 org_list
                 profile_pic
                 default_org
@@ -1054,6 +1110,7 @@
           this.userdata.degree = res.degree ? degreeDbToString(res.degree) : null;
           this.userdata.major = res.major;
           this.userdata.email = res.email;
+          this.userdata.wechat_id = res.wechat_id;
           this.userdata.profile_pic = res.profile_pic;
           this.userdata.default_org = res.default_org;
           this.userdata.resumes = res.resumes.concat();

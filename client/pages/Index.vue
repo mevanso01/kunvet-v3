@@ -236,11 +236,15 @@
 }
 @media (max-width: 600px) {
   .firstSearch {
-    padding: 32px 10px;
+    padding: 32px 26px;
     height: calc(100vh - 65px);
   }
   #banner {
     display: none;
+  }
+  .home-page-cont {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 @media (min-width: 961px) {
@@ -425,11 +429,11 @@
                           </div>
 
                           <v-list dense class="custom-select-menu">
-                            <div class="listFilterContainer">
+                            <div class="listFilterContainer" v-if="openSelectField === 'positions'">
                               <i class="material-icons" style="font-size: 16px;">search</i>
                               <input placeholder="search..." class="filterInput" v-model="filterPositions"/>
                             </div>
-                            <v-list-tile v-for="(item, i) in filteredAvailablePositions" :key="i">
+                            <v-list-tile v-if="openSelectField === 'positions'" v-for="(item, i) in filteredAvailablePositions" :key="i">
                               <v-checkbox :label="item" v-model="selectedPositions" :value="item" hide-details></v-checkbox>
                             </v-list-tile>
                           </v-list>
@@ -578,7 +582,7 @@ export default {
       ],
       firstSearch: Store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
-      selectedCity: this.$store.state.selectedCity, // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
+      selectedCity: 'University of California, Irvine', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
       selectedTypes: Store.state.selectedTypes,
       selectedPositions: Store.state.selectedPositions,
       selectedShifts: Store.state.selectedShifts,

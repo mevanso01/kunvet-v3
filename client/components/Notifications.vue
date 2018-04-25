@@ -37,6 +37,7 @@ export default {
         this.notifications = [];
       }
       this.$apollo.query({
+        fetchPolicy: 'network-only',
         query: (gql`query ($uid: MongoID) {
           findAccount (filter: {
             _id: $uid

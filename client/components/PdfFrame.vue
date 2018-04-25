@@ -63,13 +63,15 @@ export default {
       this.$emit('loaded', this.pdf);
     },
     render() {
-      this.renderLock(async (release) => {
-        for (let i = 1; i <= this.pages; ++i) {
-          const pageId = `${this.prefix}-page-${i}`;
-          const pageCanvas = document.getElementById(pageId);
-          await this.renderPage(i, pageCanvas);
-        }
-        release();
+      window.setImmediate(() => {
+        this.renderLock(async (release) => {
+          for (let i = 1; i <= this.pages; ++i) {
+            const pageId = `${this.prefix}-page-${i}`;
+            const pageCanvas = document.getElementById(pageId);
+            await this.renderPage(i, pageCanvas);
+          }
+          release();
+        });
       });
     },
     async renderPage(n, canvas) {

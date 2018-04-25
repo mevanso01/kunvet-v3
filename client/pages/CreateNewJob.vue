@@ -454,6 +454,7 @@ const createJobMutation = gql`
       recordId
       record {
         user_id
+        business_id
         posted_by
         title
         description

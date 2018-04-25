@@ -65,6 +65,7 @@ const FindApplicantRecord = `
   user_id
   name
   email
+  wechat_id
   school
   degree
   major

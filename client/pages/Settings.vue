@@ -214,6 +214,7 @@
                     degree
                     major
                     email
+                    wechat_id
                     profile_pic
                     org_list
                     default_org

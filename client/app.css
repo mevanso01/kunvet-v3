@@ -167,6 +167,9 @@ main {
 main.dn {
   min-height: calc(100vh - 169px);
 }
+i.fa.fa-plus-circle {
+  transform: translateY(-2px);
+}
 .one-line {
   overflow: hidden;
   white-space: nowrap;

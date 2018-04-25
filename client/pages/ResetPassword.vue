@@ -112,5 +112,8 @@ export default {
       });
     },
   },
+  activated() {
+    Object.assign(this.$data, this.$options.data.call(this));
+  },
 };
 </script>
