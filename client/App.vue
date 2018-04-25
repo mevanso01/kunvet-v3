@@ -347,9 +347,10 @@ export default {
     emitSetNumNotifications(n) {
       EventBus.$emit('setNotifications', n);
     },
-    async setProfilePic(uid = null) {
-      const id = uid || this.$store.state.userID;
-      this.profilePic = await ProfilePicHelper.getProfilePic(id);
+    async setProfilePic(uid = null, bid = null) {
+      const userID = uid || this.$store.state.userID;
+      const businessID = bid || this.$store.state.default_org;
+      this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
     },
     l1() {
       this.acct = 1;
@@ -478,7 +479,7 @@ export default {
         }
 
         if (res.data.status) {
-          this.setProfilePic(res.data.user._id);
+          this.setProfilePic(res.data.user._id, res.data.user.default_org);
         }
       } else {
         this.lo();
