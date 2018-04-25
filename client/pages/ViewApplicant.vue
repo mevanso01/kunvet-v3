@@ -240,13 +240,16 @@
                   @loaded="resumeloading = false"
                   @failed="fallback = true"
                 />
-                <iframe
-                  ref="fallbackFrame"
-                  v-if="docurl && fallback"
-                  :src="docurl"
-                  style="width: 100%; height: 1200px; overflow: hidden">
-                </iframe>
-                <a v-if="docurl && fallback" :href="docurl">Download resume</a>
+                <template v-if="fallback">
+                  <iframe
+                    ref="fallbackFrame"
+                    v-if="docurl && iframeDisplayable"
+                    :src="docurl"
+                    style="width: 100%; height: 1200px; overflow: hidden">
+                  </iframe>
+                  <p v-if="!iframeDisplayable">This resume cannot be displayed. Please download.</p>
+                  <v-btn :href="docurl || src" target="_blank">Download resume</v-btn>
+                </template>
             </div>
           </section>
     </div>
@@ -295,6 +298,7 @@
 import axios from 'axios';
 import gql from 'graphql-tag';
 import Config from 'config';
+import Mime from 'mime-types';
 import PdfFrame from '@/components/PdfFrame';
 
 import { degreeDbToString } from '@/constants/degrees';
@@ -548,6 +552,10 @@ export default {
       return (
         status.charAt(0).toUpperCase() + status.substring(1, status.length)
       );
+    },
+    iframeDisplayable() {
+      const url = this.docurl.indexOf('#') !== -1 ? this.docurl.substring(0, this.docurl.indexOf('#')) : this.docurl;
+      return Mime.lookup(url) === 'application/pdf';
     },
   },
   activated() {
