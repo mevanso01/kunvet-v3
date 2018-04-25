@@ -66,7 +66,6 @@
                   </div>
                 </v-list>
               </template>
-
             </v-menu>
 
             <!--<v-btn v-else flat>
@@ -338,13 +337,18 @@ export default {
       this.$router.push('/');
     },
     login_i() {
+      EventBus.$emit('login');
       EventBus.$emit('individual');
     },
     login_b() {
+      EventBus.$emit('login');
       EventBus.$emit('business');
     },
     emitSetNumNotifications(n) {
       EventBus.$emit('setNotifications', n);
+    },
+    async l() {
+      this.profilePic = await ProfilePicHelper.getProfilePic(Store.state.userID);
     },
     l1() {
       this.acct = 1;
@@ -447,6 +451,7 @@ export default {
   },
   created() {
     EventBus.$on('logout', this.lo);
+    EventBus.$on('login', this.l);
     EventBus.$on('individual', this.l1);
     EventBus.$on('business', this.l2);
     EventBus.$on('firstSearch', this.fs1);
