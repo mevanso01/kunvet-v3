@@ -7,6 +7,7 @@ const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const utils = require('./utils');
 
 const staticConfig = Object.assign({}, Config);
+const ErrorCodeInternal = require('../common/ErrorCodeInternal');
 
 const basePackageValues = {
   dependencies: {
@@ -34,8 +35,10 @@ const wpconf = {
     unsafeCache: /data/,
     alias: {
       '@': utils.resolve('server'),
+      '#': utils.resolve('common'),
       config$: path.resolve(__dirname, '../common/StaticConfigProvider.js'),
       static_config$: path.resolve(__dirname, '../virtual/staticConfig.server.json'),
+      static_error_code_internal$: path.resolve(__dirname, '../virtual/errorCodeInternal.json'),
     },
   },
   node: {
@@ -68,6 +71,10 @@ const wpconf = {
     new VirtualModulePlugin({
       moduleName: 'virtual/staticConfig.server.json',
       contents: JSON.stringify(staticConfig),
+    }),
+    new VirtualModulePlugin({
+      moduleName: 'virtual/errorCodeInternal.json',
+      contents: JSON.stringify(ErrorCodeInternal),
     }),
     new webpack.IgnorePlugin(/vertx/),
     new webpack.IgnorePlugin(/^\.\/data\/parser$/), // for mimer
