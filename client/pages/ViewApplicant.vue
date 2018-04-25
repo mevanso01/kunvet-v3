@@ -216,6 +216,21 @@
                         </v-list-tile-title>
                       </v-list-tile-content>
                     </v-list-tile>
+                    <v-list-tile v-if="data.wechat" class="cust-tile-2">
+                      <v-list-tile class="cust-tile-1">
+                        <img
+                          :src="svgs.wechat"
+                          width=16
+                          height=16
+                          style="margin-left: 3px"
+                        />
+                      </v-list-tile>
+                      <v-list-tile-content>
+                        <v-list-tile-title>
+                          {{ data.wechat }}
+                        </v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
                   </v-list>
                 </div>
               </v-flex>
@@ -228,10 +243,11 @@
                   :svg="svgs.resume"
                   :text="'Resume'"
                 />
-                <p
-                  v-if="resumeloading"
-                >
+                <p v-if="resumeloading">
                   Loading...
+                </p>
+                <p v-if="!hasResume">
+                  This applicant has not provided a resume.
                 </p>
                 <PdfFrame
                   v-if="src"
@@ -311,6 +327,7 @@ import ResumeSvg from '@/assets/navbar/resume_full_black.svg';
 import SchoolSvg from '@/assets/account/account_school.svg';
 import MajorSvg from '@/assets/account/account_major.svg';
 import EmailSvg from '@/assets/account/account_email.svg';
+import Asset76 from '@/assets/icons/Asset(76).svg';
 
 import FileClient from '@/utils/FileClient';
 
@@ -329,6 +346,7 @@ export default {
         degree: null,
         major: null,
         email: null,
+        wechat: null,
         notes: null,
         status: null,
       },
@@ -344,6 +362,7 @@ export default {
         degree: DegreeSvg,
         school: SchoolSvg,
         email: EmailSvg,
+        wechat: Asset76,
       },
       dialogs: {
         showAccept: false,
@@ -356,6 +375,7 @@ export default {
       profile_pic_url: undefined,
       resumeloading: true,
       fallback: false,
+      hasResume: true,
     };
   },
   methods: {
@@ -425,12 +445,16 @@ export default {
           this.data.name = res.name;
           this.data.school = res.school;
           this.data.email = res.email;
+          this.data.wechat = res.wechat_id;
           this.data.notes = res.notes;
           this.data.status = res.status;
           this.data.degree = degreeDbToString(res.degree);
           this.data.major = res.major;
           if (res.resume && res.resume.filename) {
+            this.hasResume = true;
             this.loadResume(res.resume);
+          } else {
+            this.hasResume = false;
           }
           this.loadProfilePic(res.user_id);
           if (res.status === 'submitted') {

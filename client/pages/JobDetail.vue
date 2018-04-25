@@ -295,6 +295,7 @@
           <p style="margin-bottom: 2px;">My info:</p>
           <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
           <p class="small-p">{{ userdata.email }}</p>
+          <p class="small-p">{{ userdata.wechat_id }}</p>
           <p class="small-p">{{ userdata.school }}</p>
           <p class="small-p">{{ userdata.degree }}</p>
           <p class="small-p">{{ userdata.major }}</p>
@@ -385,6 +386,7 @@ export default {
         major: null,
         student_type: null,
         email: null,
+        wechat_id,
       },
       resumes: [],
       selectedResume: null,
@@ -551,6 +553,7 @@ export default {
             degree
             major
             email
+            wechat_id
             resumes {
               name
               filename
@@ -570,7 +573,7 @@ export default {
         this.userdata.degree = degreeDbToString(res.degree);
         this.userdata.major = res.major;
         this.userdata.email = res.email;
-        // this.resumes = res.resumes;
+        this.userdata.wechat_id = res.wechat_id;
         this.resumes = [];
         for (var r in res.resumes) {
           if (res.resumes[r].name) {
@@ -626,6 +629,7 @@ export default {
           degree: degreeStringToDb(this.userdata.degree),
           major: this.userdata.major,
           email: this.userdata.email,
+          wechat_id: this.userdata.wechat_id,
           resume: this.resumes.length > 0 ? ({
             filename: this.resumes[index].filename,
             resumeid: this.resumes[index].resumeid,
@@ -642,6 +646,7 @@ export default {
                 degree
                 major
                 email
+                wechat_id
                 resume {
                   filename
                   resumeid
