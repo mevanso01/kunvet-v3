@@ -250,7 +250,7 @@
                   This applicant has not provided a resume.
                 </p>
                 <PdfFrame
-                  v-if="src"
+                  v-if="hasResume && src"
                   :href="src"
                   :page="page"
                   @loaded="resumeloading = false"
