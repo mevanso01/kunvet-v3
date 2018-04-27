@@ -2,6 +2,7 @@ import KunvetError from '#/KunvetError';
 import ErrorCode from '#/ErrorCode';
 import Config from 'config';
 import Axios from 'axios';
+import Mime from 'mime-types';
 import https from 'https';
 
 export default class FileClient {
@@ -81,7 +82,13 @@ export default class FileClient {
     return this._fulfillRequest(instructions, file);
   }
 
-  async createFileSlot(filename, mimeType = 'application/octet-stream') {
+  async createFileSlot(filename, mimeType = '') {
+    if (!mimeType) {
+      // Guess the MIME type from the filename
+      // eslint-disable-next-line
+      mimeType = Mime.lookup(filename);
+    }
+
     const response = await this._api.post('/file/create', {
       filename,
       mimeType,
