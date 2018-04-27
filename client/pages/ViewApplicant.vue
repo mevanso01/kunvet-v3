@@ -561,7 +561,7 @@ export default {
     onResize() {
       if (this.fallback) {
         const ratio = 1.3;
-        const width = this.$refs.fallbackframe.clientWidth;
+        const width = this.$refs.fallbackFrame.clientWidth;
         this.$refs.fallbackFrame.style.height = `${width * ratio}px`;
       }
     },
