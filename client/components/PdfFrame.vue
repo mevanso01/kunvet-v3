@@ -53,12 +53,19 @@ export default {
       this.render();
     },
     async load() {
+      const href = this.href;
       try {
-        this.pdf = await PdfJs.getDocument(this.href);
+        this.pdf = await PdfJs.getDocument(href);
       } catch (e) {
         this.$emit('failed', e);
         throw e;
       }
+
+      if (this.href !== href) {
+        console.log('The URL changed while we were loading the PDF');
+        return;
+      }
+
       this.pages = this.pdf.numPages;
       this.$emit('loaded', this.pdf);
     },
