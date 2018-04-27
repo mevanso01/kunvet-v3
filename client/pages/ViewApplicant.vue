@@ -255,8 +255,9 @@
                     :href="src"
                     :page="page"
                     @loaded="onResumeLoaded"
-                    @failed="resumeloading = false; fallback = true"
+                    @failed="onResumeFailed"
                   />
+                  <p v-if="resumeGone">Resume not found.</p>
                   <template v-if="fallback">
                     <iframe
                       ref="fallbackFrame"
@@ -376,6 +377,7 @@ export default {
       serverUrl: Config.get('serverUrl'),
       profile_pic_url: undefined,
       resumeloading: true,
+      resumeGone: false,
       fallback: false,
       hasResume: true,
     };
@@ -387,6 +389,15 @@ export default {
     },
     onResumeLoaded(pdf) {
       this.resumeloading = false;
+      this.resumeGone = false;
+    },
+    onResumeFailed(e) {
+      this.resumeloading = false;
+      if (e.name === 'MissingPDFException') {
+        this.resumeGone = true;
+      } else {
+        this.fallback = true;
+      }
     },
     saveNotes(text) {
       this.editingNotes = false;
