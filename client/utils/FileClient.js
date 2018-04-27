@@ -34,6 +34,13 @@ export default class FileClient {
         try {
           await this._api.post(instructions.form.url, data);
         } catch (e) {
+          if (!e.response) {
+            // There isn't a response at all - CORS?
+            throw new KunvetError({
+              errorCode: ErrorCode.UnknownError,
+            });
+          }
+
           const parser = new DOMParser();
           const dom = parser.parseFromString(e.response.data, 'text/xml');
 
