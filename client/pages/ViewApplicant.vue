@@ -598,6 +598,11 @@ export default {
       return Mime.lookup(url) === 'application/pdf';
     },
   },
+  watch: {
+    src() {
+      this.resumeloading = true;
+    },
+  },
   activated() {
     this.errorOccured = false;
     this.getData();
