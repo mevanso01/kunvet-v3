@@ -396,7 +396,11 @@
         setImmediate(() => {
           if (property === 'address') {
             console.log('Attaching autocomplete');
-            GoogleMapsAutocomplete.attach(this.$refs.addressModalField);
+            GoogleMapsAutocomplete.attach(this.$refs.addressModalField, (place) => {
+              if (place.geometry) {
+                this.editModal.text = place.formatted_address;
+              }
+            });
           }
         });
       },
