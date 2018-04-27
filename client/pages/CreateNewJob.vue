@@ -325,19 +325,19 @@
 
         <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
         <p class="error_p" v-if="!description_valid">Required</p>
-        <vue-editor id="description" v-model="description" :editorOptions="shortTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+        <vue-editor id="description" v-model="description" placeholder="300 characters maximum" :editorOptions="shortTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
         <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
         <p class="error_p" v-if="!experience_valid">Required</p>
-        <vue-editor id="experience" v-model="experience" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+        <vue-editor id="experience" v-model="experience" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
         <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
         <p class="error_p" v-if="!responsibilities_valid">Required</p>
-        <vue-editor id="responsibilities" v-model="responsibilities" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+        <vue-editor id="responsibilities" v-model="responsibilities" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
