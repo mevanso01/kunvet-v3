@@ -288,6 +288,15 @@ router.get('/get/:id', async (ctx) => {
     return;
   }
 
+  if (!fileSlot) {
+    const response = {
+      success: false,
+      message: 'Invalid file slot',
+    };
+    ctx.status = 404;
+    ctx.body = JSON.stringify(response);
+  }
+
   let granted = false;
 
   if (fileSlot.owner.equals(userId)) {
