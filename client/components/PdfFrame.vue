@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :id="prefix + '-pdfframe'">
     <div v-for="n in pages">
       <canvas :id="prefix + '-page-' + n" class="page">
       </canvas>
@@ -63,6 +63,11 @@ export default {
 
       if (this.href !== href) {
         console.log('The URL changed while we were loading the PDF');
+        return;
+      }
+
+      if (!document.getElementById(`${this.prefix}-pdfframe`)) {
+        console.log('The frame is gone while we were loading the PDF');
         return;
       }
 
