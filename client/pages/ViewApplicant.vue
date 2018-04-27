@@ -249,22 +249,24 @@
                 <p v-if="!hasResume">
                   This applicant has not provided a resume.
                 </p>
-                <PdfFrame
-                  v-if="hasResume && src"
-                  :href="src"
-                  :page="page"
-                  @loaded="resumeloading = false"
-                  @failed="resumeloading = false; fallback = true"
-                />
-                <template v-if="fallback">
-                  <iframe
-                    ref="fallbackFrame"
-                    v-if="docurl && iframeDisplayable"
-                    :src="docurl"
-                    style="width: 100%; height: 1200px; overflow: hidden">
-                  </iframe>
-                  <p v-if="!iframeDisplayable">This resume cannot be displayed. Please download.</p>
-                  <v-btn :href="docurl || src" target="_blank">Download resume</v-btn>
+                <template v-else>
+                  <PdfFrame
+                    v-if="src"
+                    :href="src"
+                    :page="page"
+                    @loaded="onResumeLoaded"
+                    @failed="resumeloading = false; fallback = true"
+                  />
+                  <template v-if="fallback">
+                    <iframe
+                      ref="fallbackFrame"
+                      v-if="docurl && iframeDisplayable"
+                      :src="docurl"
+                      style="width: 100%; height: 1200px; overflow: hidden">
+                    </iframe>
+                    <p v-if="!iframeDisplayable">This resume cannot be displayed. Please download.</p>
+                    <v-btn :href="docurl || src" target="_blank">Download resume</v-btn>
+                  </template>
                 </template>
             </div>
           </section>
@@ -382,6 +384,9 @@ export default {
     updateNotes(currentNotes) {
       this.editingNotes = true;
       this.newNotes = currentNotes;
+    },
+    onResumeLoaded(pdf) {
+      this.resumeloading = false;
     },
     saveNotes(text) {
       this.editingNotes = false;
