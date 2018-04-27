@@ -325,19 +325,19 @@
 
         <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
         <p class="error_p" v-if="!description_valid">Required</p>
-        <vue-editor id="description" v-model="description" :editorToolbar="customEditorToolbar"></vue-editor>
+        <vue-editor id="description" v-model="description" :editorOptions="shortTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
         <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
         <p class="error_p" v-if="!experience_valid">Required</p>
-        <vue-editor id="experience" v-model="experience" :editorToolbar="customEditorToolbar"></vue-editor>
+        <vue-editor id="experience" v-model="experience" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
         <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
         <p class="error_p" v-if="!responsibilities_valid">Required</p>
-        <vue-editor id="responsibilities" v-model="responsibilities" :editorToolbar="customEditorToolbar"></vue-editor>
+        <vue-editor id="responsibilities" v-model="responsibilities" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
@@ -438,9 +438,10 @@
   </v-container>
 </template>
 <script>
-import { VueEditor } from 'vue2-editor';
+import { VueEditor, Quill } from 'vue2-editor';
 import gql from 'graphql-tag';
 import VuexLS from '@/store/persist';
+// import Delta from 'quill-delta';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
@@ -448,6 +449,25 @@ import Config from 'config';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 import positions from '@/constants/positions';
 import queries from '@/constants/queries';
+
+Quill.register('modules/wordLimit', (quill, options) => {
+  // Options!
+  // wordLimit: int
+  // charLimit: int
+  quill.on('text-change', () => {
+    const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
+
+    if (options.wordLimit) {
+      const wordCount = trimmedText.split(/\s+/).length;
+      if (wordCount > options.wordLimit) {
+        // TODO: Do something
+      }
+    }
+    if (options.charLimit && trimmedText.length > options.charLimit) {
+      quill.deleteText(options.charLimit, quill.getLength());
+    }
+  });
+});
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -604,6 +624,22 @@ export default {
       },
       email_verified: true,
       loading: false,
+      shortTextEditorOptions: {
+        modules: {
+          wordLimit: {
+            wordLimit: false,
+            charLimit: 300,
+          },
+        },
+      },
+      longTextEditorOptions: {
+        modules: {
+          wordLimit: {
+            wordLimit: false,
+            charLimit: 900,
+          },
+        },
+      },
     };
   },
   methods: {
