@@ -278,7 +278,10 @@
             </v-radio>
           </v-radio-group>
           <p v-else>You have no resumes yet!</p>
-          <p v-if="state === 'ERROR'" style="color: red; font-size: 12px; text-align: center; margin-bottom: 5px;">{{ errorMessage }}</p>
+          <div style="font-size: 12px; text-align: center; margin-bottom: 5px;">
+            <span v-if="state === 'ERROR'" style="color: red;">{{ errorMessage }}</span>
+            <span v-if="state === 'UPLOADING'">Uploading...</span>
+          </div>
           <div class="new-resume-box">
             <input
               type="file"
@@ -721,39 +724,42 @@ export default {
         this.uploadResume();
       }
     },
-    async uploadResume() {
+    uploadResume() {
       this.client = new FileClient();
       let curId = null;
       if (!this.file) {
         return;
       }
       this.state = 'UPLOADING';
-      try {
-        curId = await this.client.createFileSlot(this.file.name, this.file.type);
-      } catch (e) {
-        console.error(e);
-        this.state = 'ERROR';
-        this.errorMessage = e.message;
-        return;
-      }
-      try {
-        await this.client.uploadFile(curId, this.file);
-      } catch (e) {
-        console.error(e);
-        this.state = 'ERROR';
-        this.errorMessage = e.message;
-        return;
-      }
-      this.resumes.push({
-        name: this.file.name,
-        filename: curId,
-        resumeid: null,
+
+      setImmediate(async () => {
+        try {
+          curId = await this.client.createFileSlot(this.file.name, this.file.type);
+        } catch (e) {
+          console.error(e);
+          this.state = 'ERROR';
+          this.errorMessage = e.message;
+          return;
+        }
+        try {
+          await this.client.uploadFile(curId, this.file);
+        } catch (e) {
+          console.error(e);
+          this.state = 'ERROR';
+          this.errorMessage = e.message;
+          return;
+        }
+        this.resumes.push({
+          name: this.file.name,
+          filename: curId,
+          resumeid: null,
+        });
+        this.selectedResume = curId;
+        this.file = null;
+        this.fileName = null;
+        this.state = 'UPLOADED';
+        this.updateAccount();
       });
-      this.selectedResume = curId;
-      this.file = null;
-      this.fileName = null;
-      this.state = 'UPLOADED';
-      this.updateAccount();
     },
     updateAccount() {
       // this is weird. Not sure why it adds the property '__typename' if I dont do this
