@@ -243,7 +243,7 @@
                   :svg="svgs.resume"
                   :text="'Resume'"
                 />
-                <p v-if="resumeloading">
+                <p v-if="resumeloading && hasResume">
                   Loading...
                 </p>
                 <p v-if="!hasResume">
