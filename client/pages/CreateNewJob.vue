@@ -177,6 +177,7 @@
               ref="addressField"
               label="Address"
               required
+              @change="onAddressManuallyChanged"
               :rules="[() => !!(address) || !submitted || 'Required',
                        () => !!(latitude) && !!(longitude) || !submitted || 'Invalid address']"
             ></v-text-field>
@@ -613,6 +614,10 @@ export default {
       this.address = place.formatted_address;
       this.latitude = place.geometry.location.lat();
       this.longitude = place.geometry.location.lng();
+    },
+    onAddressManuallyChanged() {
+      this.latitude = null;
+      this.longitude = null;
     },
     sanitizeQuillInput(text, property) {
       if (text == null || typeof text !== 'string') {
