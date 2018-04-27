@@ -36,7 +36,7 @@ export default {
     const domel = getInputElement(el);
 
     if (domel.googleMapsAutocomplete) {
-      domel.googleMapsAutocomplete.unbindAll();
+      window.google.maps.event.clearInstanceListeners(domel);
     }
   },
 };
