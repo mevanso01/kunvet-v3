@@ -254,7 +254,7 @@
                   :href="src"
                   :page="page"
                   @loaded="resumeloading = false"
-                  @failed="fallback = true"
+                  @failed="resumeloading = false; fallback = true"
                 />
                 <template v-if="fallback">
                   <iframe
