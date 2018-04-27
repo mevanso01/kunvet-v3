@@ -387,7 +387,7 @@ export default {
       this.editingNotes = true;
       this.newNotes = currentNotes;
     },
-    onResumeLoaded(pdf) {
+    onResumeLoaded() {
       this.resumeloading = false;
       this.resumeGone = false;
     },
