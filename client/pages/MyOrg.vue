@@ -405,11 +405,13 @@
         });
       },
       destroyEditModal() {
+        if (this.$refs.addressModalField) {
+          GoogleMapsAutocomplete.detach(this.$refs.addressModalField);
+        }
+
         this.editModal.show = false;
         this.editModal.title = null;
         this.editModal.text = null;
-
-        GoogleMapsAutocomplete.detach(this.$refs.editModal);
       },
       saveFromEditModal() {
         const text = this.editModal.text;
