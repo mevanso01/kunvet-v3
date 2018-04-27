@@ -4,7 +4,7 @@ const errors = [
   ['InternalError', 'An internal error occurred'],
   ['RateLimit', 'Job search circuitry hot! Wait for cooldown to get another job'],
   ['BadRequest', 'Bad request. Naughty kid.'],
-  ['UnsupportedFileType', 'Unsupported file type'],
+  ['UnsupportedFileType', 'Unsupported file type. Kunvet only supports PDF, Word and image files.'],
   ['FileTooLarge', 'File too large'],
 ];
 
