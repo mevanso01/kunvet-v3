@@ -155,6 +155,7 @@ const wpconf = {
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
+        sourceMap: true,
         uglifyOptions: {
           compress: {
             warnings: false,
@@ -164,13 +165,17 @@ const wpconf = {
       }),
     ],
   },
-  devtool: 'cheap-module-eval-source-map',
 };
 
 if (process.env.NODE_ENV === 'development') {
   wpconf.plugins.push(new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"development"',
   }));
+  wpconf.devtool = 'cheap-module-eval-source-map';
+}
+
+if (process.env.NODE_ENV === 'production') {
+  wpconf.devtool = 'hidden-source-map';
 }
 
 if (process.env.ENABLE_WEBPACK_VISUALIZER) {
