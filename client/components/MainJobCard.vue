@@ -83,7 +83,6 @@ import YellowBookmarkSvg from '@/assets/icons/Asset(37).svg';
 import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
 
-
 export default {
   props: ['job', 'saveJobFunc', 'isSaved', 'defaultFromUCI', 'fromCoordinates'],
   components: {
@@ -133,8 +132,7 @@ export default {
     },
   },
   async created() {
-    const { business_id: businessID, user_id: userID } = this.job;
-    this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
+    this.profilePic = await ProfilePicHelper.getProfilePic(this.job.user_id, this.job.business_id);
   },
 };
 </script>

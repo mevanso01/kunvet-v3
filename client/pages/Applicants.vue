@@ -196,6 +196,10 @@
       }
     },
     activated() {
+      if (this.$store.state.acct === 0) {
+        this.$router.push('/login');
+        return;
+      }
       this.getData();
     },
     data() {

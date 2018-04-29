@@ -437,7 +437,7 @@
                       :items="degreeSelectItems"
                       label="Degree"
                       hide-details
-                      :placeholder="userdata.degree"
+                      placeholder="Select degree"
                     />
                     <v-text-field
                       v-model="createEditDegreeMajorInfo.major"
@@ -446,16 +446,16 @@
                       style="margin-top: 12px;"
                       label="In:"
                       hide-details
-                      :placeholder="userdata.major"
+                      placeholder="Type in major"
                     />
                   </div>
                 </v-card-title>
                 <v-card-actions>
                   <v-btn flat="flat" @click.native="destroyDegreeMajorModal">Cancel</v-btn>
                   <v-btn
-                    v-if="
-                    (createEditDegreeMajorInfo.degree === 'None' || createEditDegreeMajorInfo.degree === 'High school') ||
-                    (createEditDegreeMajorInfo.degree && createEditDegreeMajorInfo.major)
+                    :disabled="
+                    (createEditDegreeMajorInfo.degree !== 'None' && createEditDegreeMajorInfo.degree !== 'High school') ||
+                    !(createEditDegreeMajorInfo.degree && createEditDegreeMajorInfo.major)
                     "
                     flat="flat" @click.native="saveFromDegreeMajorModal"
                   >

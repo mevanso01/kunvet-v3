@@ -11,7 +11,7 @@
       </v-layout>
       <v-layout style="padding-bottom: 32px;">
         <v-flex xs12 class="no-padding">
-          <div v-for="job in findJobs" :index="job._id">
+          <div v-for="job in findJobs" :key="job._id">
             <MainJobCard
               :job="job"
               :saveJobFunc="unsaveJob"
@@ -93,6 +93,10 @@
                 });
               }
             }
+          } else {
+            this.saved_jobs = [];
+            this.findJobs = [];
+            this.counter = 0;
           }
         }).catch((error) => {
           console.error(error);
