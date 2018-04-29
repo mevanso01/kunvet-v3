@@ -375,7 +375,7 @@ router.post('/delete/:id', async (ctx) => {
   let usedInApplication = null;
   try {
     usedInApplication = await Models.Applicant.findOne({
-      resume: { filename: fileId },
+      'resume.filename': fileId,
     });
   } catch (e) {
     usedInApplication = null;
