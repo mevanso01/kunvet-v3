@@ -50,7 +50,7 @@
             <p style="color: #e53935;">This cannot be undone.</p>
           </v-card-text>
           <v-card-actions>
-            <v-btn flat @click.native="deleteOrgDialog = true;">Cancel</v-btn>
+            <v-btn flat @click.native="deleteOrgDialog = false">Cancel</v-btn>
             <v-btn flat color="red darken-1" @click.native="deleteOrganization">Delete anyway</v-btn>
           </v-card-actions>
         </v-card>
