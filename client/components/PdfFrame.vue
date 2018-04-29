@@ -103,6 +103,11 @@ export default {
       });
     },
     async renderPage(n, canvas) {
+      if (!canvas) {
+        console.log('The canvas is gone. Giving up...');
+        return;
+      }
+
       const context = canvas.getContext('2d');
 
       if (!this.pdf) {
