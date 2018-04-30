@@ -86,7 +86,6 @@
                   const findJob = d.data.findJob;
                   if (findJob && !findJob.is_deleted) {
                     this.counter += 1;
-                    // console.log(findJob.title, findJob.date);
                     this.findJobs.push(findJob);
                     this.findJobs = this.findJobs.sort((a, b) => this.sortFunction(a, b));
                   }
@@ -99,7 +98,7 @@
             this.counter = 0;
           }
         }).catch((error) => {
-          console.error(error);
+          this.$error(error);
         });
       },
       sortFunction(a, b) {
@@ -137,7 +136,7 @@
             },
           }],
         }).catch((error) => {
-          console.error(error);
+          this.$error(error);
         });
       },
       unsaveJob(id) {

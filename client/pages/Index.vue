@@ -781,7 +781,6 @@ export default {
     },
     saveJob(id) {
       if (!this.uid || this.$store.state.acct === 0) {
-        // console.log(this.uid, this.$store.state.acct);
         return;
       }
       if (this.saved_jobs.indexOf(id) === -1) {
@@ -823,7 +822,7 @@ export default {
           },
         }],
       }).catch((error) => {
-        console.error(error);
+        this.$error(error);
       });
     },
     getSavedJobs() {
@@ -845,7 +844,7 @@ export default {
           this.saved_jobs = res.saved_jobs.concat([]);
         }
       }).catch((error) => {
-        console.error(error);
+        this.$error(error);
       });
     },
     isSaved(id) {

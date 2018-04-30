@@ -238,6 +238,7 @@
 </template>
 <script>
 import axios from 'axios';
+import KunvetError from '#/KunvetError';
 import EventBus from '@/EventBus';
 
 export default {
@@ -319,7 +320,7 @@ export default {
         }
       }, (error) => {
         this.chosenForm = 'error';
-        console.error(error);
+        this.$error(error);
       });
     },
     createBusinessAcct() {
@@ -334,7 +335,7 @@ export default {
         reqtype: 'validate',
       };
       axios.post('/auth/register', bdata, headers).then((res) => {
-        console.log('RES', res);
+        this.$debug('RES', res);
         this.loading = false;
         if (res.data.success) {
           this.chosenForm = 'success';
@@ -346,11 +347,11 @@ export default {
           this.chosenForm = 'not verified';
         } else {
           this.chosenForm = 'error';
-          console.error(res);
+          this.$error(new KunvetError(res.data));
         }
       }, (error) => {
         this.chosenForm = 'error';
-        console.error(error);
+        this.$error(error);
       });
     },
     resendEmail() {
@@ -367,36 +368,35 @@ export default {
         }
       }, (error) => {
         this.chosenForm = 'error';
-        console.error(error);
+        this.$error(error);
         this.loading = false;
       });
     },
     logIntoAcct(email, password) {
-      console.log('trying to log into new account');
+      this.$debug('trying to log into new account');
       axios.post('/auth/login', {
         email: email,
         password: password,
       }).then((response) => {
-        console.log('login response', response);
+        this.$debug('login response', response);
         if (response.data.success) {
           // logged in successfully
           this.fetchAcctData();
         } else {
-          console.error(response);
+          this.$error(new KunvetError(response.data));
         }
-      }).catch(console.error);
+      }).catch(this.$error);
     },
     fetchAcctData() {
       axios.get('/auth/status').then((response) => {
-        console.log('acct data response', response);
         if (!response.data.success) {
           // Unsuccessful
-          console.error('Server error', response.data);
+          this.$error(new KunvetError(response.data));
           return;
         }
         if (!response.data.status) {
           // Logged out
-          console.error('Logged out', response.data);
+          this.$debug('Logged out', response.data);
           return;
         }
         const udata = response.data.user;
@@ -415,7 +415,7 @@ export default {
         }
       }).catch((error) => {
         // Network error
-        console.error(error);
+        this.$error(error);
       });
     },
     commitUserdata(udata) {

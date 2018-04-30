@@ -176,7 +176,6 @@ export default {
       } else {
         newHeight = Math.round(width * (img.height / img.width));
       }
-      console.log(img.width, img.height, width, newHeight);
       cc.style.height = `${newHeight}px`;
       const square = Math.min(width, newHeight);
       this.cropperOptions.autoCropWidth = square;
@@ -197,7 +196,7 @@ export default {
           this.curCroppedId = await this.client.createFileSlot(this.croppedFiles[0].name, this.croppedFiles[0].type);
         } catch (e) {
           this.state = 'FAILED';
-          console.error(e);
+          this.$error(e);
           return;
         }
         this.$emit('created', this.curCroppedId);
@@ -206,7 +205,7 @@ export default {
         await this.client.uploadFile(this.curCroppedId, this.croppedFiles[0]);
       } catch (e) {
         this.state = 'FAILED';
-        console.error(e);
+        this.$error(e);
         return;
       }
       this.state = 'SUCCESSFUL';
@@ -225,7 +224,7 @@ export default {
         await this.client.uploadFile(this.curId, this.files[0]);
       } catch (e) {
         this.state = 'FAILED';
-        console.error(e);
+        this.$error(e);
         return;
       }
       this.$emit('uploaded', { original: this.curId, cropped: this.curCroppedId });
@@ -235,13 +234,12 @@ export default {
       return new Promise((resolve, reject) => {
         try {
           this.$refs.cropper.getCropBlob((data) => {
-            console.log('BLOB DATA', data);
             const croppedfile = new File([data], originalFile.name, { type: originalFile.type, lastModified: Date.now() });
             // this.cropped = _URL.createObjectURL(data);
             resolve(croppedfile);
           });
         } catch (e) {
-          console.error(e);
+          this.$error(e);
           reject(e);
         }
       });

@@ -750,7 +750,7 @@
             this.userdata.resumes.splice(index, 1);
             this.saveUserdata();
           }, (error) => {
-            console.error(error);
+            this.$error(error);
           });
         } else {
           this.userdata.resumes.splice(index, 1);
@@ -931,11 +931,11 @@
             },
           }],
         }).catch((error) => {
-          console.error(error);
+          this.$error(error);
         });
       },
       async createOrganization() {
-        console.log('Email', this.userdata.email);
+        this.$debug('Email', this.userdata.email);
         if (!this.loading) {
           this.loading = true;
           try {
@@ -1037,7 +1037,7 @@
             // EventBus.$emit('new_org', { name: organizationName, _id: recordId });
             this.switchToOrg(recordId);
           } catch (e) {
-            console.error(e);
+            this.$error(e);
             this.loading = false;
             this.createOrganizationModal.show = false;
           }
@@ -1070,7 +1070,7 @@
           }).then((data) => {
             resolve(data.data.findOrganization);
           }).catch((error) => {
-            console.error(error);
+            this.$error(error);
           });
         });
       },
@@ -1120,7 +1120,7 @@
           }
           this.email_verified = res.email_verified;
         }).catch((error) => {
-          console.error('fetch data failed', error);
+          this.$error(error);
         });
       },
       switchToOrg(id) {
@@ -1153,7 +1153,7 @@
             this.emailSent = null;
           }
         }, (error) => {
-          console.error(error);
+          this.$error(error);
           this.emailSent = null;
           this.loading = false;
         });

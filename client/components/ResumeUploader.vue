@@ -83,7 +83,7 @@ export default {
         try {
           this.curId = await this.client.createFileSlot(this.file.name, this.file.type);
         } catch (e) {
-          console.error(e);
+          this.$error(e);
           this.state = 'FAILED';
           this.errorMessage = e.message;
           return;
@@ -94,7 +94,7 @@ export default {
       try {
         await this.client.uploadFile(this.curId, this.file);
       } catch (e) {
-        console.error(e);
+        this.$error(e);
         this.state = 'FAILED';
         this.errorMessage = e.message;
         return;

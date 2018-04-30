@@ -95,12 +95,11 @@ export default {
       }).then((data) => {
         const res = data.data.findAccount;
         this.default_org = res.default_org;
-        console.log(res.org_list);
         this.populateOrgList(res.org_list);
         this.fname = res.firstname;
         this.lname = res.lastname;
       }).catch((error) => {
-        console.error('fetch data failed', error);
+        this.$error(error);
       });
     },
     async populateOrgList(orgList) {
@@ -114,7 +113,6 @@ export default {
       }
       this.accountItems = [{ name: `${this.fname} ${this.lname}`, _id: null }].concat(this.org_list);
       const defaultOrg = this.$store.state.default_org;
-      // console.log(defaultOrg);
       if (defaultOrg) {
         let org =  this.accountItems.find(x => x._id === defaultOrg);
         if (org) {
@@ -128,7 +126,6 @@ export default {
       } else {
         this.selectedAccount = `${this.fname} ${this.lname}`;
       }
-      // console.log(this.selectedAccount);
     },
     getOrgByID(_oid) {
       return new Promise(resolve => {
@@ -147,7 +144,7 @@ export default {
         }).then((data) => {
           resolve(data.data.findOrganization);
         }).catch((error) => {
-          console.error(error);
+          this.$error(error);
         });
       });
     },
@@ -222,16 +219,13 @@ export default {
           },
         }],
       }).catch((error) => {
-        console.error(error);
+        this.$error(error);
       });
     },
     isSelected(name) {
       if (name === this.selectedAccount) return true;
       return false;
     },
-  },
-  activated() {
-    console.log('yay');
   },
   created() {
     EventBus.$on('changed_name', values => {

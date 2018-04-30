@@ -69,17 +69,18 @@ export default {
       try {
         this.pdf = await PdfJs.getDocument(href);
       } catch (e) {
+        this.$error(e);
         this.$emit('failed', e);
         throw e;
       }
 
       if (this.href !== href) {
-        console.log('The URL changed while we were loading the PDF');
+        this.$debug('The URL changed while we were loading the PDF');
         return;
       }
 
       if (!document.getElementById(`${this.prefix}-pdfframe`)) {
-        console.log('The frame is gone while we were loading the PDF');
+        this.$debug('The frame is gone while we were loading the PDF');
         return;
       }
 
@@ -104,7 +105,7 @@ export default {
     },
     async renderPage(n, canvas) {
       if (!canvas) {
-        console.log('The canvas is gone. Giving up...');
+        this.$debug('The canvas is gone. Giving up...');
         return;
       }
 

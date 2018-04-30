@@ -57,7 +57,7 @@ export default {
           this.curId = await this.client.createFileSlot(this.file.name, this.file.type);
         } catch (e) {
           this.state = 'FAILED';
-          console.error(e);
+          this.$error(e);
           return;
         }
 
@@ -68,7 +68,7 @@ export default {
         await this.client.uploadFile(this.curId, this.file);
       } catch (e) {
         this.state = 'FAILED';
-        console.error(e);
+        this.$error(e);
         return;
       }
 

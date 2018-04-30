@@ -117,6 +117,7 @@ a:hover{
 <script>
 // import App from '@/App';
 import Axios from 'axios';
+import KunvetError from '#/KunvetError';
 import EventBus from '@/EventBus';
 
 export default {
@@ -156,12 +157,11 @@ export default {
         if (err.message === 'Request failed with status code 401') {
           this.bad_login = true;
         } else {
-          console.error(err);
+          this.$error(err);
         }
       });
     },
     requestPasswordReset() {
-      console.log('TEST');
       if (!this.loading) {
         this.loading = true;
         Axios.post('/reset-password/request-reset', { email: this.email }).then((res) => {
@@ -175,7 +175,7 @@ export default {
         }).catch((error) => {
           // Network error
           this.loading = false;
-          console.error(error);
+          this.$error(error);
         });
       }
     },
@@ -183,12 +183,13 @@ export default {
       Axios.get('/auth/status').then((response) => {
         if (!response.data.success) {
           // Unsuccessful
-          console.error('Server error', response.data);
+          this.$debug('Server error');
+          this.$error(new KunvetError(response.data));
           EventBus.$emit('logout');
           return;
         } else if (!response.data.status) {
           // Logged out
-          console.error('Logged out', response.data);
+          this.$debug('Logged out', response.data);
           EventBus.$emit('logout');
           return;
         }
@@ -210,7 +211,7 @@ export default {
         }
       }).catch((error) => {
         // Network error
-        console.error(error);
+        this.$error(error);
       });
     },
     commitUserdata(udata) {

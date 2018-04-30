@@ -334,6 +334,8 @@ import Asset76 from '@/assets/icons/Asset(76).svg';
 
 import FileClient from '@/utils/FileClient';
 
+import KunvetError from '#/KunvetError';
+
 
 export default {
   props: ['id'],
@@ -433,9 +435,9 @@ export default {
             },
           ],
         }).then(data => {
-          console.log(data);
+          this.$debug(data);
         }).catch(error => {
-          console.error(error);
+          this.$error(error);
         });
     },
     getData() {
@@ -478,11 +480,11 @@ export default {
           }
         })
         .catch(error => {
-          console.error(error);
+          this.$error(error);
         });
     },
     async loadResume(resume) {
-      console.log('Loading resume:', resume);
+      this.$debug('Loading resume:', resume);
       const url = FileClient.getLink(resume.filename);
       this.docurl = `${url}#embedded=true`;
       this.src = url;
@@ -491,7 +493,7 @@ export default {
       try {
         this.profile_pic_url = await ProfilePicHelper.getProfilePic(userId, null);
       } catch (e) {
-        console.log(e);
+        this.$debug(e);
         this.profile_pic_url = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
       }
     },
@@ -512,23 +514,23 @@ export default {
       return job.user_id === this.$store.state.userID;
     },
     updateApplicantStatus(newStatus = 'submitted') {
-      console.log('Setting status to:', newStatus);
+      this.$debug('Setting status to:', newStatus);
       this.loading = true;
       axios.post(`/application/${this.id}/setStatus/${newStatus}`)
         .then((res) => {
-          console.log('RES', res);
           this.loading = false;
           this.data.status = newStatus;
           if (res.data.success) {
             this.closeDialogs();
             this.updateApplicantViaQuery(newStatus);
           } else {
+            this.$error(new KunvetError(res.data));
             this.errorOccured = true;
           }
         })
         .catch((err) => {
           this.errorOccured = true;
-          console.error(err);
+          this.$error(err);
         });
     },
     async onAccept() {
@@ -571,7 +573,7 @@ export default {
           variables: { aplId: this.id },
         }],
       }).catch(error => {
-        console.error(error);
+        this.$error(error);
       });
     },
     onResize() {

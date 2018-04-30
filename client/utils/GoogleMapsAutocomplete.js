@@ -17,7 +17,6 @@ function getInputElement(el) {
 
 export default {
   async attach(el, onchange = () => {}) {
-    console.log(el);
     if (!window.google || !window.google.maps) {
       await VueGoogleMaps.loaded;
     }

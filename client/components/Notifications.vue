@@ -70,7 +70,7 @@ export default {
         EventBus.$emit('setNotifications', notifications);
         // const maxNum = (this.max && typeof this.max === 'number') ? this.max : 8;
         // this.notifications = notifications.slice(0, maxNum);
-      }).catch(console.error);
+      }).catch(this.$error);
     },
     removeNotification(index) {
       this.notifications.splice(index, 1);
@@ -109,8 +109,8 @@ export default {
           },
         }],
       }).then(data => {
-        console.log(data);
-      }).catch(console.error);
+        this.$debug(data);
+      }).catch(this.$error);
     },
     routeTo(route, index) {
       this.removeNotification(index);

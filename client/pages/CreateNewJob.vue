@@ -666,6 +666,7 @@ export default {
         return false;
       }
       this[`${property}_valid`] = true;
+
       return true;
     },
     changeRadio(property) {
@@ -766,7 +767,7 @@ export default {
           }
         }).catch((err) => {
           this.loading = false;
-          console.error(err);
+          this.$error(err);
         });
       } else {
         const job = this.createJobArray();
@@ -840,7 +841,7 @@ export default {
           }
         }).catch((err) => {
           this.loading = false;
-          console.error(err);
+          this.$error(err);
         });
       }
     },
@@ -966,7 +967,7 @@ export default {
           }
         }
       }).catch((error) => {
-        console.error(error);
+        this.$error(error);
       });
     },
     picsUploaded(fileIds) {
@@ -1002,7 +1003,7 @@ export default {
         }).then((data) => {
           const res = data.data.findAccount;
           this.email_verified = res.email_verified;
-        }).catch(console.error);
+        }).catch(this.$error);
       }
     },
     resetData() {

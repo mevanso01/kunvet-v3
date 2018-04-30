@@ -325,13 +325,12 @@
           this.loading = false;
         } catch (exception) {
           this.loading = false;
-          console.log('could not do it:', exception);
+          this.$error(exception);
         }
         this.loading = false;
         this.resetDialogState();
       },
       updateApplicantViaQuery(id) {
-        // console.log('newStatus', newStatus);
         this.$apollo.mutate({
           mutation: gql`
             mutation($aplId: MongoID) {
@@ -359,7 +358,7 @@
             variables: { aplId: id },
           }],
         }).catch(error => {
-          console.error(error);
+          this.$error(error);
         });
       },
       async fetchProfilePic(id) {

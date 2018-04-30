@@ -332,7 +332,7 @@ export default {
       });
       axios.get('/auth/logout').then(() => {
       }, (error) => {
-        console.error(error);
+        this.$error(error);
       });
       this.$router.push('/');
     },
@@ -399,7 +399,7 @@ export default {
       }).then((res) => {
         const n = res.data.findAccount.notifications;
         this.numNotifications = n.length;
-      }).catch(console.error);
+      }).catch(this.$error);
     },
     isActiveJobPostLink(link) {
       return link === this.$route.path ? 'job-post__helper-nav-bar__active-link' : '';
@@ -449,7 +449,7 @@ export default {
           },
         }],
       }).catch((error) => {
-        console.error(error);
+        this.$error(error);
       });
     },
   },

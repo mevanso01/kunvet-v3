@@ -89,7 +89,7 @@
         });
         Axios.get('/auth/logout').then(() => {
         }, (error) => {
-          console.error(error);
+          this.$error(error);
         });
         this.$router.push('/');
       },
@@ -247,7 +247,7 @@
             },
           ],
         }).catch((error) => {
-          console.error(error);
+          this.$error(error);
         });
         EventBus.$emit('individual');
         this.$router.push('/');

@@ -491,7 +491,7 @@ export default {
           }
         }
       }).catch((error) => {
-        console.error(error);
+        this.$error(error);
       });
     },
     saveJob(id) {
@@ -536,7 +536,7 @@ export default {
             },
           }],
         }).catch((error) => {
-          console.error(error);
+          this.$error(error);
         });
       }
     },
@@ -590,7 +590,7 @@ export default {
         this.email_verified = res.email_verified;
         this.userdatafetched = true;
       }).catch((error) => {
-        console.error(error);
+        this.$error(error);
       });
     },
     _checkIsApplied() {
@@ -612,12 +612,12 @@ export default {
           uid: this.uid,
         },
       }).then((data) => {
-        console.log('my application data', data);
+        this.$debug('my application data', data);
         if (data.data.findMyApplication) {
           this.applied = true;
         }
       }).catch((error) => {
-        console.error(error);
+        this.$error(error);
       });
     },
     createApplication() {
@@ -706,12 +706,12 @@ export default {
             this.showSuccessMessage = true;
             this.applied = true;
           } else {
-            console.error('no data returned when creating application');
+            this.$debug('no data returned when creating application');
             this.applydialog = false;
           }
         }).catch((error) => {
           this.loading = false;
-          console.error(error);
+          this.$error(error);
         });
       }
     },
@@ -736,7 +736,7 @@ export default {
         try {
           curId = await this.client.createFileSlot(this.file.name, this.file.type);
         } catch (e) {
-          console.error(e);
+          this.$error(e);
           this.state = 'ERROR';
           this.errorMessage = e.message;
           return;
@@ -744,7 +744,7 @@ export default {
         try {
           await this.client.uploadFile(curId, this.file);
         } catch (e) {
-          console.error(e);
+          this.$error(e);
           this.state = 'ERROR';
           this.errorMessage = e.message;
           return;
@@ -810,7 +810,7 @@ export default {
             uid: this.uid,
           },
         }],
-      }).catch(console.error);
+      }).catch(this.$error);
     },
     resetData() {
       Object.assign(this.$data, this.$options.data.call(this));

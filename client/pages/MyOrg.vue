@@ -395,7 +395,6 @@
 
         setImmediate(() => {
           if (property === 'address') {
-            console.log('Attaching autocomplete');
             GoogleMapsAutocomplete.attach(this.$refs.addressModalField, (place) => {
               if (place.geometry) {
                 this.editModal.text = place.formatted_address;
@@ -476,7 +475,7 @@
             },
           }],
         }).catch((error) => {
-          console.error(error);
+          this.$error(error);
         });
       },
       commitBdata() {
@@ -486,7 +485,7 @@
         });
       },
       fetchBusinessData() {
-        console.log('fetching business data');
+        this.$debug('fetching business data');
         this.$apollo.query({
           query: (gql`query ($bid: MongoID) {
             findOrganization (filter: {
@@ -516,7 +515,7 @@
           this.bdata.profile_pic = res.profile_pic;
           this.commitBdata();
         }).catch((error) => {
-          console.error(error);
+          this.$error(error);
         });
       },
       async fillUpJobs() {
@@ -586,7 +585,7 @@
           const res = data.data.findAccount;
           this.email_verified = res.email_verified;
         }).catch((error) => {
-          console.error('fetch data failed', error);
+          this.$error(error);
         });
       },
       resendEmail() {
@@ -607,7 +606,7 @@
             this.emailSent = null;
           }
         }, (error) => {
-          console.error(error);
+          this.$error(error);
           this.emailSent = null;
           this.loading = false;
         });

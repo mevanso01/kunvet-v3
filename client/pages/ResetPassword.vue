@@ -108,7 +108,7 @@ export default {
       }).catch((err) => {
         this.loading = false;
         this.status = 'error';
-        console.error(err);
+        this.$error(err);
       });
     },
   },
