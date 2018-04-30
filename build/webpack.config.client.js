@@ -158,6 +158,7 @@ const wpconf = {
         sourceMap: true,
         uglifyOptions: {
           compress: {
+            pure_funcs: ['Logger.debug', 'this.$debug'],
             warnings: false,
             // drop_console: true,
           },
