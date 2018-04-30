@@ -171,6 +171,9 @@ const wpconf = {
         },
       }),
     ],
+    splitChunks: {
+      chunks: 'all',
+    },
   },
 };
 
