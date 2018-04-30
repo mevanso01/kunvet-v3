@@ -41,7 +41,7 @@ import Models from '@/mongodb/Models';
 // | Main |
 // ========
 
-Logger.info('Kunvet server');
+Logger.info(`Kunvet Server ${process.env.COMMIT} (${process.env.NODE_ENV})`);
 
 // const path = require('path');
 // let historyApiFallback = require('koa-history-api-fallback');
@@ -73,11 +73,7 @@ app.use(KoaMount('/reset-password', ResetPasswordApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
-  Logger.info('Running in development mode');
   app.use(KoaMount('/', DevToolsApp));
-} else {
-  // Production mode
-  Logger.info('Running in production mode');
 }
 
 // Let's get started!

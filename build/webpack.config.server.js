@@ -3,11 +3,14 @@ const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
 const Config = require('config');
 const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
+const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const utils = require('./utils');
 
 const staticConfig = Object.assign({}, Config);
 const ErrorCodeInternal = require('../common/ErrorCodeInternal');
+
+const gitRev = new GitRevisionPlugin();
 
 const basePackageValues = {
   dependencies: {
@@ -68,6 +71,9 @@ const wpconf = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.COMMIT': JSON.stringify(gitRev.commithash()),
+    }),
     new VirtualModulePlugin({
       moduleName: 'virtual/staticConfig.server.json',
       contents: JSON.stringify(staticConfig),

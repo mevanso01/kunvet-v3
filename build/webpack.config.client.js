@@ -3,6 +3,7 @@ const path = require('path');
 // const fs = require('fs');
 const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
+const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -15,6 +16,8 @@ const ErrorCodeInternal = require('../common/ErrorCodeInternal');
 // Build static config
 const staticConfig = Object.assign({}, Config);
 delete staticConfig.private;
+
+const gitRev = new GitRevisionPlugin();
 
 const wpconf = {
   entry: {
@@ -127,6 +130,9 @@ const wpconf = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.COMMIT': JSON.stringify(gitRev.commithash()),
+    }),
     new VirtualModulePlugin({
       moduleName: 'virtual/staticConfig.client.json',
       contents: JSON.stringify(staticConfig),
