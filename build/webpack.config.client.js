@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
@@ -156,6 +157,10 @@ const wpconf = {
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
+    }),
+    new PreloadWebpackPlugin({
+      rel: 'preload',
+      include: 'asyncChunks',
     }),
   ],
   optimization: {
