@@ -56,7 +56,6 @@ export default class FileClient {
             }
           }
 
-          console.error(e);
           throw new KunvetError({
             errorCode: ErrorCode.UnknownError,
           });
