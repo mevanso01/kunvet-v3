@@ -40,9 +40,17 @@ function logInternal(level = 'log', ...msg) {
   }
 }
 
-const log = (...msg) => logInternal('log', ...msg);
-const debug = (...msg) => logInternal('debug', ...msg);
+let log;
+let debug;
 const error = (...msg) => logInternal('error', ...msg);
+
+if (process.env.NODE_ENV === 'development') {
+  log = console.log;
+  debug = console.log.bind(console, 'DEBUG');
+} else {
+  log = (...msg) => logInternal('log', ...msg);
+  debug = (...msg) => logInternal('debug', ...msg);
+}
 
 export default {
   log,
