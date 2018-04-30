@@ -160,7 +160,7 @@ const wpconf = {
     }),
     new PreloadWebpackPlugin({
       rel: 'preload',
-      include: 'asyncChunks',
+      include: ['employee', 'auth', 'account'],
     }),
   ],
   optimization: {
