@@ -200,6 +200,10 @@ if (process.env.NODE_ENV === 'development') {
   ]);
 }
 
+// Recruitment ad
+Logger.log('Hey there! Interested in joining us? Shoot us an email at bz@kunvet.com.');
+Logger.log("Be sure to mention 'console.'");
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
