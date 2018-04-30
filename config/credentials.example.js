@@ -1,4 +1,9 @@
 module.exports = {
+  // API endpoint
+  // Only required if you are working with
+  // production.
+  serverUrl: '',
+
   // MongoDB database URI
   //
   // Only required if you are working with

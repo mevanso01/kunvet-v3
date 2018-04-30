@@ -41,7 +41,7 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  serverUrl: 'https://ds.kunvet.com',
+  serverUrl: Credentials.serverUrl,
   googleMapsKey: Credentials.googleMapsKey,
   sentry: {
     dsn: Credentials.sentryClientDsn,
