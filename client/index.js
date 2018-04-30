@@ -13,6 +13,7 @@ import '@/options/googleMaps';
 import '@/options/raven';
 
 import App from '@/App';
+import Logger from '@/Logger';
 import store from '@/store';
 
 import VueCroppie from 'vue-croppie';
@@ -47,6 +48,7 @@ function loadTheRest() {
   }
 }
 
+Vue.use(Logger);
 Vue.use(VueCroppie);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
