@@ -21,7 +21,7 @@
         >
           <div class="inner">
             <div class="new-applicant-card__info">
-              <router-link :to="`/jobdetail/${job._id}`">
+              <router-link :to="`/job/${job._id}`">
                 <h2 class="new-applicant-card__title">
                   {{ job.title }}
                 </h2>
@@ -57,7 +57,7 @@
         >
           <div class="inner">
             <div class="new-applicant-card__info">
-              <router-link :to="`/jobdetail/${job._id}`">
+              <router-link :to="`/job/${job._id}`">
                 <h2 class="new-applicant-card__title">
                   {{ job.title }}
                 </h2>
@@ -108,7 +108,7 @@
         >
           <div class="inner">
             <div class="new-applicant-card__info">
-              <router-link :to="`/jobdetail/${job._id}`">
+              <router-link :to="`/job/${job._id}`">
                 <h2 class="new-applicant-card__title">
                   {{ job.title }}
                 </h2>

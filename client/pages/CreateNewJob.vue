@@ -429,7 +429,7 @@
 
         <v-alert type="success" dismissible v-model="successAlert" style="position: fixed; bottom: 0; z-index: 5;">
           <p style="color: #fff; margin-bottom: 0; min-width: 250px;">
-            Saved! <router-link :to="`/jobdetail/${id}`">View job</router-link>
+            Saved! <router-link :to="`/job/${id}`">View job</router-link>
           </p>
         </v-alert>
 
@@ -760,7 +760,7 @@ export default {
           this.loading = false;
           const recordId = res.data.updateJob.recordId;
           if (viewJob) {
-            this.$router.push(`/jobdetail/${recordId}`);
+            this.$router.push(`/job/${recordId}`);
           } else {
             this.id = recordId;
             this.successAlert = true;
@@ -837,7 +837,7 @@ export default {
             this.id = recordId;
             this.successAlert = true;
           } else {
-            this.$router.push(`/jobdetail/${recordId}`);
+            this.$router.push(`/job/${recordId}`);
           }
         }).catch((err) => {
           this.loading = false;
