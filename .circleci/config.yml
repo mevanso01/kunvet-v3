@@ -61,6 +61,8 @@ jobs:
 
       - run: sudo apt -yqq update
       - run: sudo apt -yqq install awscli
+      - run: npm i -g @sentry/cli
+      - run: sentry-cli releases --org kunvet --project client files $CIRCLE_SHA1 upload-sourcemaps dist/client/
       - run: aws s3 sync --delete --exclude *.map dist/client s3://kunvet-prod-client/
       - run: aws --region us-east-1 lambda update-function-code --function-name arn:aws:lambda:us-east-1:796927832678:function:kunvet-default --zip-file fileb://dist/lambda.zip
 
