@@ -154,7 +154,7 @@ export default {
           this.bad_login = true;
         }
       }).catch((err) => {
-        if (err.message === 'Request failed with status code 401') {
+        if (err.response.status === 401) {
           this.bad_login = true;
         } else {
           this.$error(err);
