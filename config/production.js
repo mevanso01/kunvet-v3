@@ -41,7 +41,7 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  serverUrl: 'https://s.kunvet.com',
+  serverUrl: 'https://ds.kunvet.com',
   googleMapsKey: Credentials.googleMapsKey,
   sentry: {
     dsn: Credentials.sentryClientDsn,
@@ -63,7 +63,7 @@ module.exports = {
     files: {
       defaultStorage: 's3',
       s3: {
-        bucket: 'kunvet-testprod',
+        bucket: 'kunvet-dev-uploads',
       },
       // image/* is hardcoded to be allowed
       allowedMimeTypes: [
