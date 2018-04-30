@@ -33,7 +33,7 @@
               </v-flex>
             </v-layout>
 
-            <router-link :to="'JobDetail/'+job._id">
+            <router-link :to="'job/'+job._id">
               <v-layout>
                 <v-flex xs12 style="padding-top: 0px;">
                   <div class="new-applicant-card__info" style="padding-top: 0;">

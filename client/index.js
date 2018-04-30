@@ -92,7 +92,7 @@ const router = new VueRouter({
       component: () => import('@/pages/SignUp'),
     },
     {
-      path: '/jobdetail/:id',
+      path: '/job/:id',
       component: () => import('@/pages/JobDetail'),
       props: true,
     },
