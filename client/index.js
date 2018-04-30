@@ -42,116 +42,96 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/pages/Index'),
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
     },
     {
       path: '*',
-      component: () => import('@/pages/Index'),
-    },
-    {
-      path: '/employee',
-      component: () => import('@/pages/Employee'),
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
     },
     {
       path: '/login',
-      component: () => import('@/pages/Login'),
+      component: () => import(/* webpackChunkName: "auth" */ '@/pages/Login'),
     },
     {
       path: '/signup',
-      component: () => import('@/pages/SignUp'),
+      component: () => import(/* webpackChunkName: "auth" */ '@/pages/SignUp'),
     },
     {
       path: '/job/:id',
-      component: () => import('@/pages/JobDetail'),
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
       props: true,
     },
     {
       path: '/validate/:code',
-      component: () => import('@/pages/Validate'),
+      component: () => import(/* webpackChunkName: "auth" */ '@/pages/Validate'),
       props: true,
     },
     {
       path: '/reset-password/:code',
-      component: () => import('@/pages/ResetPassword'),
+      component: () => import(/* webpackChunkName: "auth" */ '@/pages/ResetPassword'),
       props: true,
     },
     {
-      path: '/resume',
-      component: () => import('@/pages/Resume'),
-    },
-    {
-      path: '/createresume',
-      component: () => import('@/pages/CreateResume'),
-    },
-    {
       path: '/myjobs',
-      component: () => import('@/pages/MyJobs'),
+      component: () => import(/* webpackChunkName: "poster" */ '@/pages/MyJobs'),
     },
     {
       path: '/savedjobs',
-      component: () => import('@/pages/SavedJobs'),
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/SavedJobs'),
     },
     {
       path: '/appliedjobs',
-      component: () => import('@/pages/AppliedJobs'),
-    },
-    {
-      path: '/messages',
-      component: () => import('@/pages/Messages'),
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/AppliedJobs'),
     },
     {
       path: '/notifications',
-      component: () => import('@/pages/NotificationPage'),
+      component: () => import(/* webpackChunkName: "notifications" */ '@/pages/NotificationPage'),
     },
     {
       path: '/account',
-      component: () => import('@/pages/Account'),
+      component: () => import(/* webpackChunkName: "account" */ '@/pages/Account'),
     },
     {
       path: '/settings',
-      component: () => import('@/pages/Settings'),
+      component: () => import(/* webpackChunkName: "settings" */ '@/pages/Settings'),
     },
     {
       path: '/settings/:command',
-      component: () => import('@/pages/Settings'),
+      component: () => import(/* webpackChunkName: "settings" */ '@/pages/Settings'),
     },
     {
       path: '/createnewjob/:id',
-      component: () => import('@/pages/CreateNewJob'),
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateNewJob'),
       props: { id: null },
     },
     {
       path: '/createnewjob',
-      component: () => import('@/pages/CreateNewJob'),
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateNewJob'),
     },
     {
       path: '/view-applicant/:id',
-      component: () => import('@/pages/ViewApplicant'),
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/ViewApplicant'),
       props: true,
     },
     {
       path: '/myorg',
-      component: () => import('@/pages/MyOrg'),
-    },
-    {
-      path: '/photogallery',
-      component: () => import('@/pages/PhotoGallery'),
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/MyOrg'),
     },
     {
       path: '/applicants',
-      component: () => import('@/pages/Applicants'),
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/Applicants'),
     },
     {
       path: '/about',
-      component: () => import('@/pages/AboutUs'),
+      component: () => import(/* webpackChunkName: "about" */ '@/pages/AboutUs'),
     },
     {
       path: '/terms',
-      component: () => import('@/pages/Terms'),
+      component: () => import(/* webpackChunkName: "about" */ '@/pages/Terms'),
     },
     {
       path: '/join',
-      component: () => import('@/pages/JoinUs'),
+      component: () => import(/* webpackChunkName: "about" */ '@/pages/JoinUs'),
     },
   ],
 });
