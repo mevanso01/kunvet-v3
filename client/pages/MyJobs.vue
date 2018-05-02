@@ -172,16 +172,15 @@
 <script>
   import gql from 'graphql-tag';
   import VuexLS from '@/store/persist';
-
   import InformationSvg from '@/assets/job_posts/information.svg';
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import StudentSvg from '@/assets/job_posts/user_1.svg';
-
   import DateHelper from '@/utils/DateHelper';
   import DisplayTextHelper from '@/utils/DisplayTextHelper';
   import JobHelper from '@/utils/JobHelper';
   import StringHelper from '@/utils/StringHelper';
   import queries from '@/constants/queries';
+  import EventBus from '@/EventBus';
 
   const findJobsQuery = gql`
     query($userId: MongoID, $businessId: MongoID) {
@@ -281,6 +280,7 @@
           ],
         });
         const { recordId } = res.data.updateJob;
+        EventBus.$emit('deletedJob', recordId);
         this.jobs = this.jobs.filter(({ _id }) => _id !== recordId);
         this.resetDialogState();
       },

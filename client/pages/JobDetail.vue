@@ -225,6 +225,10 @@
               <img class="job-info-icon" :src="svgs.languages"></img>
               <span>Additional language: {{ findJob.language }}</span>
             </div>
+            <div v-show="findJob.age" class="blue-row">
+              <img class="job-info-icon" :src="svgs.age"></img>
+              <span>Age: {{ findJob.age }}</span>
+            </div>
           </div>
 
           <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
@@ -346,6 +350,7 @@ import buildingSvg from '@/assets/icons/Asset(71).svg';
 import nsiSvg from '@/assets/icons/Asset(36).svg';
 import siSvg from '@/assets/icons/Asset(37).svg';
 import Asset46 from '@/assets/icons/Asset(46).svg';
+import Asset41 from '@/assets/icons/Asset(41).svg';
 import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
 import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
@@ -378,6 +383,7 @@ export default {
         degree: degreeSvg,
         building: buildingSvg,
         languages: Asset46,
+        age: Asset41,
       },
       uid: null,
       applydialog: false,

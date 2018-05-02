@@ -47,85 +47,6 @@
 .search .menu {
   width: 100%;
 }
-.search .custom-select {
-  height: 48px;
-  padding: 0 16px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  position: relative;
-}
-.search .custom-select .btn {
-  position: absolute;
-  right: 0;
-}
-.search .custom-select span,
-.search .custom-select-2 span {
-  color: #000;
-  line-height: 48px;
-}
-.search .custom-select-2-wrapper {
-  position: relative;
-  height: 48px;
-  width: 100%;
-}
-.search .custom-select-2 .btn {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.search .custom-select-2 .inner {
-  padding: 0 16px;
-  cursor: pointer;
-}
-.search .custom-select-2 .custom-select-menu {
-  overflow-y: scroll;
-  height: 212px;
-}
-.search .custom-select-2 {
-  position: absolute;
-  height: 48px;
-  width: 100%;
-  background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow-y: hidden;
-  transition: all 0.3s ease;
-  z-index: 2;
-}
-.search .custom-select-2.active {
-  /* height: auto; */
-  height: 260px;
-  z-index: 3;
-  /* overflow-y: scroll; */
-}
-.custom-select-menu {
-  max-height: 300px;
-  min-width: 220px;
-}
-.custom-select-menu,
-.custom-select-menu li {
-  background-color: #fff;
-}
-.listFilterContainer {
-  width: 100%;
-  padding: 0 16px;
-  height: 28px;
-  position: relative;
-  margin-bottom: 2px;
-}
-.listFilterContainer i {
-  line-height: 28px;
-  color: #616161;
-  color: rgba(0,0,0,0.54);
-}
-.filterInput {
-  width: calc(100% - 50px);
-  height: 20px;
-  margin: 4px 0 4px 3px;
-  outline: none !important;
-  position: absolute;
-  top: 0;
-}
 
 .input-group--text-field.input-group--dirty.input-group--select label,
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
@@ -190,6 +111,9 @@
 .fs-select-cities .input-group__input::before {
   display: none;
 }
+.small-thats-it, .large-thats-it {
+  background-color: #fafafa;
+}
 @media only screen and (max-width: 480px) {
   .fs-select-positions {
     display: none !important;
@@ -232,6 +156,9 @@
 @media (min-width: 601px) {
   .search .flex {
     padding: 10px 15px;
+  }
+  .large-thats-it {
+    width: 100% !important;
   }
 }
 @media (max-width: 600px) {
@@ -509,6 +436,18 @@
                 :fromCoordinates="selectedCoordinates"
               />
           </div>
+          <div v-if="!loadingJobs && filteredJobs.length > 0 && filteredJobs.length % 2 === 1" class="post-card small-thats-it">
+            <div style="width: 215px; margin: 32px auto;">
+              <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
+            </div>
+            <p class="center">That's all.</p>
+          </div>
+          <div v-if="!loadingJobs && filteredJobs.length > 0 && filteredJobs.length % 2 === 0" class="post-card large-thats-it">
+            <div style="width: 215px; margin: 32px auto;">
+              <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
+            </div>
+            <p class="center">That's all.</p>
+          </div>
         </v-flex>
         <div v-if="!loadingJobs && filteredJobs.length === 0"
           style="width: 100%; height: 125px; background: linear-gradient(135deg, #fafafa, #f5f5f5);
@@ -528,7 +467,7 @@ import VuexLS from '@/store/persist';
 import CitySvg from '@/assets/vc.svg';
 import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
-import StudentSvg from '@/assets/job_posts/user_1.svg';
+import Asset70 from '@/assets/icons/Asset(70).svg';
 import PromoTextContainer from '@/components/PromoTextContainer';
 import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
@@ -540,6 +479,7 @@ import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
 import findIndex from 'lodash/findIndex';
 import queries from '@/constants/queries';
+import EventBus from '@/EventBus';
 
 Vue.use(VueApollo);
 
@@ -592,7 +532,7 @@ export default {
         cityImage: CitySvg,
         information: InformationSvg,
         locationMarker: LocationMarkerSvg,
-        student: StudentSvg,
+        kunvetDude: Asset70,
       },
       selectedPositionsInital: 'All / Any',
       loadingJobs: false,
@@ -618,6 +558,7 @@ export default {
   },
   methods: {
     openSelect(name) {
+      this.filterPositions = null;
       if (this.openSelectField === name) {
         this.openSelectField = null;
       } else {
@@ -710,13 +651,7 @@ export default {
       return true;
     },
     reorderAvailablePositions() {
-      var str = this.filterPositions;
-      if (!str || str === '') {
-        this.availablePositions = this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
-      } else {
-        str = str.toLowerCase();
-        this.availablePositions = this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
-      }
+      this.availablePositions = this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
     },
     computeSelectString(property, original = null) {
       let items = property;
@@ -857,7 +792,7 @@ export default {
       const { data: { findJobs } } = await this.$apollo.query({
         fetchPolicy: 'network-only',
         query: gql`{
-          findJobs (filter: { active: true }){
+          findJobs (filter: { active: true, is_deleted: false }){
             _id
             latitude
             longitude
@@ -866,12 +801,21 @@ export default {
           }
         }`,
       });
-      this.findJobs = findJobs.filter(x => !x.is_deleted);
+      // this.findJobs = findJobs.filter(x => !x.is_deleted);
+      this.findJobs = findJobs;
       this.filterJobs();
     },
   },
   beforeDestroy() {
     this.commitData();
+  },
+  created() {
+    EventBus.$on('deletedJob', id => {
+      const index = findIndex(this.filteredJobs, { '_id': id });
+      if (index !== -1) {
+        this.filteredJobs.splice(index, 1);
+      }
+    });
   },
   activated() {
     this.loadInitialJobs();

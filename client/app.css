@@ -161,6 +161,89 @@ main {
   font-size: 18px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
+
+/*  ---- Custom selects ----  */
+.custom-select {
+  height: 48px;
+  padding: 0 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: relative;
+}
+.custom-select .btn {
+  position: absolute;
+  right: 0;
+}
+.custom-select span,
+.custom-select-2 span {
+  color: #000;
+  line-height: 48px;
+}
+.custom-select-2-wrapper {
+  position: relative;
+  height: 48px;
+  width: 100%;
+}
+.custom-select-2 .btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.custom-select-2 .inner {
+  padding: 0 16px;
+  cursor: pointer;
+}
+.custom-select-2 .custom-select-menu {
+  overflow-y: scroll;
+  height: 212px;
+}
+.custom-select-2 {
+  position: absolute;
+  height: 48px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow-y: hidden;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+.custom-select-2.active {
+  /* height: auto; */
+  height: 260px !important;
+  z-index: 3;
+  /* overflow-y: scroll; */
+}
+.custom-select-menu {
+  max-height: 300px;
+  min-width: 220px;
+}
+.custom-select-menu,
+.custom-select-menu li {
+  background-color: #fff;
+}
+.listFilterContainer {
+  width: 100%;
+  padding: 0 16px;
+  height: 28px;
+  position: relative;
+  margin-bottom: 2px;
+}
+.listFilterContainer i {
+  line-height: 28px;
+  color: #616161;
+  color: rgba(0,0,0,0.54);
+}
+.filterInput {
+  width: calc(100% - 50px);
+  height: 20px;
+  margin: 4px 0 4px 3px;
+  outline: none !important;
+  position: absolute;
+  top: 0;
+}
+/* ---- End of custom selects ----  */
+
 main {
   min-height: calc(100vh - 121px);
 }

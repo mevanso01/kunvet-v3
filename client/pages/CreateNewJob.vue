@@ -118,6 +118,24 @@
   right: 0;
   color: rgba(255,255,255,0.75);
 }
+.createnewjob-container .custom-select-2-wrapper {
+  height: auto;
+}
+.createnewjob-container .custom-select-2 {
+  box-shadow: none;
+  height: 48px;
+}
+.createnewjob-container .custom-select-2 .inner {
+  border-bottom: 1px solid rgba(0,0,0,.42);
+  height: 47px;
+  transition: border-color 0.3s ease-out;
+}
+.createnewjob-container .custom-select-2.active .inner {
+  border-bottom: solid 2px rgb(24,103,192);
+}
+.createnewjob-container .custom-select-2.error .inner {
+  border-bottom: solid 2px red !important;
+}
 @media (min-width: 600px) {
   .requirements .flex {
     padding: 0 15px;
@@ -370,10 +388,32 @@
 
         <h3 style="margin-bottom: 5px;">Position tags</h3>
         <p>Please select at least one category that is relevant to this job</p>
+
+        <div class="custom-select-2-wrapper" style="max-width: 500px;">
+          <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'positions', 'error': submitted && selectedPositions.length === 0 }">
+            <div class="inner" @click="reorderAvailablePositions(); openSelect('positions');">
+              <span v-if="this.selectedPositions.length > 0">{{ computeSelectString(this.selectedPositions) }}</span>
+              <span v-else style="color: rgba(0,0,0,.54);">Select one or more...</span>
+              <v-btn icon v-if="openSelectField === 'positions'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
+              <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
+            </div>
+
+            <v-list dense class="custom-select-menu">
+              <div class="listFilterContainer" v-if="openSelectField === 'positions'">
+                <i class="material-icons" style="font-size: 16px;">search</i>
+                <input placeholder="search..." class="filterInput" v-model="filterPositions"/>
+              </div>
+              <v-list-tile v-if="openSelectField === 'positions'" v-for="(item, i) in filteredAvailablePositions" :key="i">
+                <v-checkbox :label="item" v-model="selectedPositions" :value="item" hide-details></v-checkbox>
+              </v-list-tile>
+            </v-list>
+          </div>
+        </div>
+        <!--
         <v-select class="no-padding-select"
           label="Type here..."
           v-bind:items="tags"
-          v-model="selectedTags"
+          v-model="selectedPositions"
           autocomplete
           deletable-chips
           multiple
@@ -382,6 +422,7 @@
           required
           :rules="[(v) => (v.length > 0) || !submitted || 'Required']"
         ></v-select>
+      -->
         </v-form>
 
         <br>
@@ -397,6 +438,8 @@
         <p style="opacity: 0;" class="bottom-error-message" id="bottom-error-message">Looks like you still have a few invalid fields.</p>
         <!--<br>
         <p style="color: #f00;" v-show="submitted && !valid">There are still a few fields you need to fill out</p>-->
+
+        <br>
 
         <v-dialog class="no-border-radius" v-model="confirmPost">
           <v-card flat class="no-border-radius" style="max-width: 350px;">
@@ -449,6 +492,7 @@ import Config from 'config';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 import positions from '@/constants/positions';
 import queries from '@/constants/queries';
+import difference from 'lodash/difference';
 
 Quill.register('modules/wordLimit', (quill, options) => {
   // Options!
@@ -604,8 +648,10 @@ export default {
       howDidYouHear: null,
       schools: Schools.schools,
       images: [],
-      tags: positions,
-      selectedTags: [],
+      openSelectField: null,
+      availablePositions: positions,
+      filterPositions: null,
+      selectedPositions: [],
       picUploaderDialog: false,
       successAlert: false,
       showInvalidMessage: false,
@@ -642,7 +688,44 @@ export default {
       },
     };
   },
+  computed: {
+    filteredAvailablePositions() {
+      var str = this.filterPositions;
+      if (!str || str === '') {
+        return this.availablePositions;
+        // return this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
+      }
+      str = str.toLowerCase();
+      return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+    },
+  },
   methods: {
+    openSelect(name) {
+      this.filterPositions = null;
+      if (this.openSelectField === name) {
+        this.openSelectField = null;
+      } else {
+        this.openSelectField = name;
+      }
+    },
+    computeSelectString(property, original = null) {
+      let items = property;
+      if (typeof items[0] === 'object') {
+        items = items.map(x => x.text);
+      } else if (original && typeof original === 'string') {
+        items = property.map(val => {
+          const obj = this[original].find(el => el.value === val);
+          return obj.text;
+        });
+      }
+      if (items.length <= 2) {
+        return items.join(', ');
+      }
+      return `${items[0]}, ${items[1]}, +${items.length - 2}`;
+    },
+    reorderAvailablePositions() {
+      this.availablePositions = this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
+    },
     setPlace(place) {
       if (!place.geometry) {
         return;
@@ -698,6 +781,7 @@ export default {
       if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
       if (this.shift.length <= 0) { this.valid = false; }
       if (this.longitude == null || this.latitude == null) { this.valid = false; }
+      if (!this.selectedPositions || this.selectedPositions.length === 0) { this.valid = false; }
       if (showDialog && this.valid) {
         this.confirmPost = true;
       }
@@ -883,7 +967,7 @@ export default {
         responsibilities: this.responsibilities,
         notes: this.notes,
         images: this.images,
-        position_tags: this.selectedTags,
+        position_tags: this.selectedPositions,
       };
       return job;
     },
@@ -963,7 +1047,7 @@ export default {
             this.images.push({ original: image.original, cropped: image.cropped });
           }
           if (job.position_tags) {
-            this.selectedTags = job.position_tags.concat();
+            this.selectedPositions = job.position_tags.concat();
           }
         }
       }).catch((error) => {
