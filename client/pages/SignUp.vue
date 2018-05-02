@@ -94,6 +94,7 @@
                     label="E-mail"
                     v-model="email"
                     :rules="emailRules"
+                    type="email"
                     required
                   ></v-text-field>
                   <v-text-field

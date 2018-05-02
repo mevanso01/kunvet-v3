@@ -27,6 +27,7 @@ a:hover{
                     <v-text-field
                         label="E-mail"
                         v-model="email"
+                        type="email"
                         :rules="emailRules"
                         @change="bad_login = false;"
                         required

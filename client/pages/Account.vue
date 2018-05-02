@@ -454,8 +454,8 @@
                   <v-btn flat="flat" @click.native="destroyDegreeMajorModal">Cancel</v-btn>
                   <v-btn
                     :disabled="
-                    (createEditDegreeMajorInfo.degree !== 'None' && createEditDegreeMajorInfo.degree !== 'High school') ||
-                    !(createEditDegreeMajorInfo.degree && createEditDegreeMajorInfo.major)
+                    (createEditDegreeMajorInfo.degree !== 'None' && createEditDegreeMajorInfo.degree !== 'High school' && !createEditDegreeMajorInfo.major)
+                    || !createEditDegreeMajorInfo.degree
                     "
                     flat="flat" @click.native="saveFromDegreeMajorModal"
                   >
