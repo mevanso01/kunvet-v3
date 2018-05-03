@@ -133,7 +133,7 @@
 .createnewjob-container .custom-select-2.active .inner {
   border-bottom: solid 2px rgb(24,103,192);
 }
-.createnewjob-container .custom-select-2.error .inner {
+.createnewjob-container .custom-select-2.error-border .inner {
   border-bottom: solid 2px red !important;
 }
 @media (min-width: 600px) {
@@ -390,7 +390,7 @@
         <p>Please select at least one category that is relevant to this job</p>
 
         <div class="custom-select-2-wrapper" style="max-width: 500px;">
-          <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'positions', 'error': submitted && selectedPositions.length === 0 }">
+          <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'positions', 'error-border': submitted && selectedPositions.length === 0 }">
             <div class="inner" @click="reorderAvailablePositions(); openSelect('positions');">
               <span v-if="this.selectedPositions.length > 0">{{ computeSelectString(this.selectedPositions) }}</span>
               <span v-else style="color: rgba(0,0,0,.54);">Select one or more...</span>
