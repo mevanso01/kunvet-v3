@@ -157,6 +157,27 @@
 </style>
 <template>
   <v-container fluid class="createnewjob-container">
+    <v-dialog v-model="introDialog">
+      <v-card class="no-border-radius">
+        <v-card-title class="headline">By the way...</v-card-title>
+
+        <v-card-text>
+          <p>
+            For your safety, please try not to include any email address in your job.
+          </p>
+          <p>
+            Instead, we’ll email you whenever you receive a new applicant.
+          </p>
+          <p>
+            Your applicants’ info will be organized under the <router-link to="/applicants">Applicants</router-link> page.
+          </p>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn @click="introDialog = false" flat>Got it!</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <div class="main-cont-large">
       <section v-show="!email_verified" class="no-padding-xs" style="min-height: 350px; padding-top: 10px;">
         <h3>You need to verify your email before you can post a job!</h3>
@@ -608,6 +629,7 @@ export default {
   },
   data() {
     return {
+      introDialog: true,
       serverUrl: Config.get('serverUrl'),
       id: null,
       valid: false,
