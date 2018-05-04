@@ -249,11 +249,9 @@
               <div v-if="firstSearch">
                 <PromoTextContainer :image="require('@/assets/icons/Asset(66).svg')">
                   <h2>Why use Kunvet instead?</h2>
-                  <ul style="list-style: none;">
-                    <li>Kunvet is a safe platform with student-oriented jobs & opportunities!</li>
-                    <li>At Kunvet, small businesses and school clubs can locate students nearby quicker!</li>
-                    <li>Applications and resumes are easily managed via Kunvet, so no more paper hassle!</li>
-                  </ul>
+                  <p>
+                    All jobs displayed on Kunvet are the latest jobs on the market. We do not present jobs that are older than 30 days to applicants to show-off our database. Unless an organization re-post its job, we assure our users will not see any repetitive job. We too are tired of seeing outdated jobs on the internet.
+                  </p>
                 </PromoTextContainer>
 
                 <PromoTextContainer :image="require('@/assets/icons/Asset(67).svg')">
