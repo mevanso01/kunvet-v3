@@ -482,9 +482,13 @@
                       />
                     </v-card-text>
                     <v-card-actions>
-                      <!--<v-spacer></v-spacer>-->
-                      <v-btn flat="flat" @click.native="createOrganization">Continue</v-btn>
-                      <v-btn flat="flat" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
+                      <template v-if="loading">
+                        <v-progress-circular indeterminate :size="30" color="primary" class="pa-3"></v-progress-circular>
+                      </template>
+                      <template v-else>
+                        <v-btn flat="flat" @click.native="createOrganization">Continue</v-btn>
+                        <v-btn flat="flat" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
+                      </template>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
