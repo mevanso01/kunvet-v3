@@ -309,8 +309,9 @@
           <br>
         </div>
         <div style="padding: 20px;" v-else>
-          <h3>Success!</h3>
-          <p>You can track the status of your application in the <router-link to="/appliedjobs">applied jobs</router-link> page</p>
+          <h3>What's next?</h3>
+          <p>We’ll email you whether the employer accepts or declines your application.</p>
+          <p>You can also find out your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.</p>
         </div>
         <div v-if="!showSuccessMessage"
           class="bottom-dialog-button"
