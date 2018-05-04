@@ -1,4 +1,12 @@
 <style lang="scss">
+.promo-block {
+  p {
+    font-size: 1.2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+}
 .general-dropdown-items select, .general-dropdown-items label {
   width: 100%;
   height: 100%;
@@ -246,7 +254,7 @@
         </v-layout>
       </section>
     </div>
-    <div class="main-cont-large pa-3" style="max-width: 100%; background: #fafafa">
+    <div class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
       <div v-if="firstSearch" style="max-width: 960px; margin: 0 auto;">
         <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(66).svg')">
           <h2>Why use Kunvet instead?</h2>
