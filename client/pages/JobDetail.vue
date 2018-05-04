@@ -271,53 +271,64 @@
 
     <v-dialog v-model="applydialog">
       <v-card class="no-border-radius apply-card" v-show="email_verified">
-        <div style="padding: 20px;" v-if="!showSuccessMessage">
-          <h3>Select resume to send</h3>
-          <v-radio-group class="kunvet-red" v-if="resumes.length > 0" v-model="selectedResume" hide-details>
-            <v-radio v-for="(resume, index) in resumes"
-              class="kunvet-red"
-              :key="index"
-              :label="resume.name"
-              :value="resume.filename">
-            </v-radio>
-          </v-radio-group>
-          <p v-else>You have no resumes yet!</p>
-          <div style="font-size: 12px; text-align: center; margin-bottom: 5px;">
-            <span v-if="state === 'ERROR'" style="color: red;">{{ errorMessage }}</span>
-            <span v-if="state === 'UPLOADING'">Uploading...</span>
-          </div>
-          <div class="new-resume-box">
-            <input
-              type="file"
-              :disabled="state === 'UPLOADING'"
-              @change="updateFile($event.target.files)"
-              accept="application/pdf, application/msword,
-                application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                application/vnd.oasis.opendocument.text"
-              class="input-file"
-            >
-            <p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume</p>
-          </div>
-          <br>
-          <p style="margin-bottom: 2px;">My info:</p>
-          <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
-          <p class="small-p">{{ userdata.email }}</p>
-          <p class="small-p">{{ userdata.wechat_id }}</p>
-          <p class="small-p">{{ userdata.school }}</p>
-          <p class="small-p">{{ userdata.degree }}</p>
-          <p class="small-p">{{ userdata.major }}</p>
-          <br>
+        <div @click="applyDismissiveButton">
+          <v-btn icon v-if="applyState === 'CONFIRM'"><v-icon>arrow_back</v-icon></v-btn>
+          <v-btn icon v-else><v-icon>close</v-icon></v-btn>
         </div>
-        <div style="padding: 20px;" v-else>
-          <h3>What's next?</h3>
-          <p>We’ll email you whether the employer accepts or declines your application.</p>
-          <p>You can also find out your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.</p>
+        <div class="px-3">
+          <div v-if="applyState === 'MAIN'">
+            <h3>Select resume to send</h3>
+            <v-radio-group class="kunvet-red" v-if="resumes.length > 0" v-model="selectedResume" hide-details>
+              <v-radio v-for="(resume, index) in resumes"
+                class="kunvet-red"
+                :key="index"
+                :label="resume.name"
+                :value="resume.filename">
+              </v-radio>
+            </v-radio-group>
+            <p v-else>You have no resumes yet!</p>
+            <div style="font-size: 12px; text-align: center; margin-bottom: 5px;">
+              <span v-if="state === 'ERROR'" style="color: red;">{{ errorMessage }}</span>
+              <span v-if="state === 'UPLOADING'">Uploading...</span>
+            </div>
+            <div class="new-resume-box">
+              <input
+                type="file"
+                :disabled="state === 'UPLOADING'"
+                @change="updateFile($event.target.files)"
+                accept="application/pdf, application/msword,
+                  application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                  application/vnd.oasis.opendocument.text"
+                class="input-file"
+              >
+              <p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume</p>
+            </div>
+            <br>
+            <p style="margin-bottom: 2px;">My info:</p>
+            <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
+            <p class="small-p">{{ userdata.email }}</p>
+            <p class="small-p">{{ userdata.wechat_id }}</p>
+            <p class="small-p">{{ userdata.school }}</p>
+            <p class="small-p">{{ userdata.degree }}</p>
+            <p class="small-p">{{ userdata.major }}</p>
+            <br>
+          </div>
+          <div v-else-if="applyState === 'CONFIRM'">
+            <h3>Ready to go!</h3>
+            <p>When you click "Apply," your application will be submitted.</p>
+          </div>
+          <div v-else-if="applyState === 'SUCCESS'">
+            <h3>What's next?</h3>
+            <p>We’ll email you whether the employer accepts or declines your application.</p>
+            <p>You can also find out your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.</p>
+          </div>
         </div>
-        <div v-if="!showSuccessMessage"
+        <div v-if="applyState !== 'SUCCESS'"
           class="bottom-dialog-button"
           v-bind:class="{'disabled': loading}"
-          @click="createApplication">
-          Apply
+          @click="applyAffirmativeButton">
+          <v-progress-circular indeterminate v-if="loading" class="ma-3" size="30" color="primary"></v-progress-circular>
+          <span v-else>Apply</span>
         </div>
         <router-link v-else to="/">
           <div class="bottom-dialog-button">Keep browsing jobs</div>
@@ -405,7 +416,7 @@ export default {
       saved: false,
       saved_jobs: [],
       loading: false,
-      showSuccessMessage: false,
+      applyState: 'MAIN', // MAIN, CONFIRM, SUCCESS
       file: null,
       fileName: null,
       state: 'INITIAL',
@@ -465,6 +476,7 @@ export default {
     apply() {
       if (this.uid) {
         this.state = 'INITIAL';
+        this.applyState = 'MAIN';
         this.applydialog = true;
         if (!this.userdatafetched) {
           this._getUserData();
@@ -627,6 +639,22 @@ export default {
         this.$error(error);
       });
     },
+    applyAffirmativeButton() {
+      // When the affirmative button is clicked...
+      if (this.applyState === 'MAIN') {
+        this.applyState = 'CONFIRM';
+      } else {
+        this.createApplication();
+      }
+    },
+    applyDismissiveButton() {
+      // When the back/dismissive button is clicked...
+      if (this.applyState === 'CONFIRM') {
+        this.applyState = 'MAIN';
+      } else {
+        this.applydialog = false;
+      }
+    },
     createApplication() {
       // validate
       if (this.uid && this.userdata && !this.loading && !this.applied) {
@@ -710,7 +738,7 @@ export default {
         }).then((data) => {
           this.loading = false;
           if (data) {
-            this.showSuccessMessage = true;
+            this.applyState = 'SUCCESS';
             this.applied = true;
           } else {
             this.$debug('no data returned when creating application');
