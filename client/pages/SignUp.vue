@@ -34,17 +34,16 @@
             <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
               <v-card>
                 <v-card-text>
-                    <div style="margin-bottom: 64px;">
-                    <h2>Individual</h2>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Post individual jobs or requests for help</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Create your unique resume, share it through QRcode or personalized link</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Custom job search, now much easier to locate a match</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Save interested jobs, and review them later</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Your information is mobile optimized, view them or edit them on any devices without interruptions</p>
-                    </div>
-                    <div class="text-xs-center pos-bottom">
-                      <v-btn class="kunvet-red-bg" dark @click="chooseFormI()">Sign up as individual</v-btn>
-                    </div>
+                  <div style="margin-bottom: 64px;">
+                    <h2>Personal</h2>
+                    <p>Choose if you're:</p>
+                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A professor looking for an assistant</p>
+                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> An applicant searching for jobs</p>
+                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> An individual searching for a tutor</p>
+                  </div>
+                  <div class="text-xs-center pos-bottom">
+                    <v-btn class="kunvet-red-bg" dark @click="chooseFormI()">Get a personal account</v-btn>
+                  </div>
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -52,16 +51,15 @@
               <v-card>
                 <v-card-text>
                   <div style="margin-bottom: 64px;">
-                    <h2>Business</h2>
-                        <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Intelligent job posting system that will post a job for every address under your account</p>
-                        <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Share your job listing page, or individual job page through QRcode, let others locate your job easily</p>
-                        <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Save interested resumes, and review them later</p>
-                        <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Easily customize your business home page</p>
-                        <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Manage your account, view or edit your jobs on mobile devices without any interruptions</p>
+                    <h2>Organization</h2>
+                    <p>Choose if you're:</p>
+                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A school club offering a position</p>
+                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A startup searching for other students</p>
+                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A small business hiring students</p>
                   </div>
-                    <div class="text-xs-center pos-bottom">
-                      <v-btn class="kunvet-red-bg" dark @click="chooseFormB()">Sign up as business</v-btn>
-                    </div>
+                  <div class="text-xs-center pos-bottom">
+                    <v-btn class="kunvet-red-bg" dark @click="chooseFormB()">Get an organization account</v-btn>
+                  </div>
                 </v-card-text>
               </v-card>
             </v-flex>
