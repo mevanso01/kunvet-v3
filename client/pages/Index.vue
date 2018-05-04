@@ -238,7 +238,7 @@
                     >
                     </v-select>
                   </v-flex>
-                  <v-flex xs2 sm2 md1 class="no-padding fsGoBtn" @click="searchGo">
+                  <v-flex xs2 sm2 md1 class="no-padding fsGoBtn" @click="searchGo" v-ripple>
                     <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>
                   </v-flex>
                 </v-layout>
@@ -412,7 +412,7 @@
                 </section>
 
                 <input v-if="!firstSearch" class="hidden-input" id="submit" type="submit" value="GO">
-                <div v-if="!firstSearch" id="general-submit" @click="searchAndFilter">
+                <div v-if="!firstSearch" id="general-submit" @click="searchAndFilter" v-ripple>
                   <div id="general-submit-default">
                     <span>SEARCH</span>
                   </div>
