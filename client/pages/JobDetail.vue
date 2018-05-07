@@ -304,18 +304,19 @@
               <p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume</p>
             </div>
             <br>
-            <p style="margin-bottom: 2px;">My info:</p>
-            <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
-            <p class="small-p">{{ userdata.email }}</p>
-            <p class="small-p">{{ userdata.wechat_id }}</p>
-            <p class="small-p">{{ userdata.school }}</p>
-            <p class="small-p">{{ userdata.degree }}</p>
-            <p class="small-p">{{ userdata.major }}</p>
             <br>
           </div>
           <div v-else-if="applyState === 'CONFIRM'">
-            <h3>Ready to go!</h3>
-            <p>When you click "Apply," your application will be submitted.</p>
+            <h3>Review Application</h3>
+            <div class="pb-3">
+              My info:
+              <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
+              <p class="small-p">{{ userdata.email }}</p>
+              <p class="small-p">{{ userdata.wechat_id }}</p>
+              <p class="small-p">{{ userdata.school }}</p>
+              <p class="small-p">{{ userdata.degree }}</p>
+              <p class="small-p">{{ userdata.major }}</p>
+            </div>
           </div>
           <div v-else-if="applyState === 'SUCCESS'">
             <h3>What's next?</h3>
@@ -328,7 +329,8 @@
           v-bind:class="{'disabled': loading}"
           @click="applyAffirmativeButton">
           <v-progress-circular indeterminate v-if="loading" class="ma-3" size="30" color="primary"></v-progress-circular>
-          <span v-else>Apply</span>
+          <span v-else-if="applyState === 'CONFIRM'">Apply</span>
+          <span v-else>Continue</span>
         </div>
         <router-link v-else to="/">
           <div class="bottom-dialog-button">Keep browsing jobs</div>
