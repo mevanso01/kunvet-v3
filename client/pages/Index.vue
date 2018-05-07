@@ -239,7 +239,10 @@
             </v-select>
             <v-select class="no-padding fs-select-positions" style="border-left: 1px solid #eee; height: 46px;"
               label="All jobs nearby"
-              :items="availablePositions"
+              :items="availablePositionsObj"
+              item-text="text"
+              item-value="text"
+              item-disabled="disabled"
               v-model="selectedPositions"
               autocomplete
               single-line
@@ -551,6 +554,17 @@ export default {
       }
       str = str.toLowerCase();
       return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+    },
+    availablePositionsObj() {
+      return this.availablePositions.map((position) => {
+        const disabled = !this.filteredJobs.find(
+          job => job.position_tags.indexOf(position) !== -1,
+        );
+        return {
+          text: position,
+          disabled,
+        };
+      });
     },
     selectedCoordinates() {
       const selected = locations.search_locations.find(el => el.name === this.selectedCity);
