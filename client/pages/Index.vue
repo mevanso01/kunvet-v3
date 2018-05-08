@@ -371,8 +371,8 @@
                     <i class="material-icons" style="font-size: 16px;">search</i>
                     <input placeholder="search..." class="filterInput" v-model="filterPositions"/>
                   </div>
-                  <v-list-tile v-if="openSelectField === 'positions'" v-for="(item, i) in filteredAvailablePositions" :key="i">
-                    <v-checkbox :label="item" v-model="selectedPositions" :value="item" hide-details></v-checkbox>
+                  <v-list-tile v-if="openSelectField === 'positions'" v-for="(item, i) in filteredAvailablePositionsObj" :key="i">
+                    <v-checkbox :label="item.text" v-model="selectedPositions" :value="item.text" :disabled="item.disabled" hide-details></v-checkbox>
                   </v-list-tile>
                 </v-list>
               </div>
@@ -546,14 +546,14 @@ export default {
     };
   },
   computed: {
-    filteredAvailablePositions() {
-      var str = this.filterPositions;
+    filteredAvailablePositionsObj() {
+      let str = this.filterPositions;
       if (!str || str === '') {
-        return this.availablePositions;
+        return this.availablePositionsObj;
         // return this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
       }
       str = str.toLowerCase();
-      return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+      return this.availablePositionsObj.filter(item => item.text.toLowerCase().indexOf(str) !== -1);
     },
     availablePositionsObj() {
       return this.availablePositions.map((position) => {
