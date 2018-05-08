@@ -330,8 +330,8 @@
                 </div>
 
                 <v-list class="custom-select-menu">
-                  <v-list-tile v-for="(item, i) in availableTypes" :key="i">
-                    <v-checkbox :label="item.text" v-model="selectedTypes" :value="item.value" hide-details></v-checkbox>
+                  <v-list-tile v-for="(item, i) in availableTypesObj" :key="i">
+                    <v-checkbox :label="item.text" v-model="selectedTypes" :value="item.value" :disabled="item.disabled" hide-details></v-checkbox>
                   </v-list-tile>
                 </v-list>
               </div>
@@ -402,8 +402,8 @@
                 </div>
 
                 <v-list dense class="custom-select-menu">
-                  <v-list-tile v-for="(item, i) in availableShifts" :key="i">
-                    <v-checkbox :label="item.text" v-model="selectedShifts" :value="item.value" hide-details></v-checkbox>
+                  <v-list-tile v-for="(item, i) in availableShiftsObj" :key="i">
+                    <v-checkbox :label="item.text" v-model="selectedShifts" :value="item.value" :disabled="item.disabled" hide-details></v-checkbox>
                   </v-list-tile>
                 </v-list>
               </div>
@@ -564,6 +564,24 @@ export default {
           text: position,
           disabled,
         };
+      });
+    },
+    availableTypesObj() {
+      return this.availableTypes.map((typeObj) => {
+        typeObj.disabled = !this.filteredJobs.find(
+          job => job.type.indexOf(typeObj.value) !== -1 &&
+            (!job.type2 || job.type2.indexOf(typeObj.value) !== -1)
+          ,
+        );
+        return typeObj;
+      });
+    },
+    availableShiftsObj() {
+      return this.availableShifts.map((shiftObj) => {
+        shiftObj.disabled = !this.filteredJobs.find(
+          job => job.shift.indexOf(shiftObj.value) !== -1,
+        );
+        return shiftObj;
       });
     },
     selectedCoordinates() {
