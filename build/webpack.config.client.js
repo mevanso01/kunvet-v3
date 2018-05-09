@@ -3,6 +3,7 @@ const path = require('path');
 // const fs = require('fs');
 const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
@@ -144,6 +145,11 @@ const wpconf = {
     }),
     new webpack.IgnorePlugin(/vertx/),
     new FaviconsWebpackPlugin('./client/assets/favicon.png'),
+    new CopyWebpackPlugin([
+      {
+        from: './client/assets/favicon.png',
+      },
+    ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'client/index.html',
