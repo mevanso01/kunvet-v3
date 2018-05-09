@@ -447,6 +447,14 @@ export default {
         },
       }).then((data) => {
         this.findJob = data.data.findJob;
+
+        /*
+          Or better, including more details for SEO:
+
+          Node.js Developer at Kunvet in Irvine, CA
+        */
+        this.$setTitle(this.findJob.title);
+
         this.jobType = [];
         for (const i in this.findJob.type) {
           if (typeof this.findJob.type[i] === 'string') {

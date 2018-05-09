@@ -13,11 +13,13 @@ import '@/options/googleMaps';
 import '@/options/raven';
 
 import App from '@/App';
+import Title from '@/Title';
 import Logger from '@/Logger';
 import store from '@/store';
 
 import VueCroppie from 'vue-croppie';
 
+Vue.use(Title);
 Vue.use(Logger);
 Vue.use(VueCroppie);
 Vue.use(VueRouter);
@@ -134,6 +136,12 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "about" */ '@/pages/JoinUs'),
     },
   ],
+});
+
+router.beforeEach(() => {
+  Vue.nextTick(() => {
+    document.title = 'Kunvet';
+  });
 });
 
 if (process.env.NODE_ENV === 'development') {
