@@ -138,9 +138,9 @@ const router = new VueRouter({
   ],
 });
 
-router.beforeEach(() => {
+router.afterEach(() => {
   Vue.nextTick(() => {
-    document.title = 'Kunvet';
+    document.title = Title.getTitle('');
   });
 });
 
