@@ -149,6 +149,9 @@ const wpconf = {
       {
         from: './client/assets/favicon.png',
       },
+      {
+        from: './client/googleecb5d76c39b57652.html',
+      },
     ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
