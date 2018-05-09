@@ -175,7 +175,7 @@
   .firstSearch {
     padding-left: 26px;
     padding-right: 26px;
-    height: calc(100vh - 220px);
+    height: calc(100vh - 200px);
   }
   #banner {
     display: none;
@@ -187,7 +187,7 @@
 }
 @media (min-width: 961px) {
   .firstSearch {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 200px);
   }
   .city-img-holder {
     padding: 0 48px;
@@ -198,7 +198,7 @@
 }
 @media (min-width: 601px) and (max-width: 960px) {
   .firstSearch {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 200px);
   }
 }
 #rua {
@@ -217,8 +217,8 @@
 
 <template>
   <v-container fluid class="home-page-cont pa-0">
-    <div class="main-cont-large">
-      <section class="firstSearch" v-if="firstSearch">
+    <div class="main-cont-large" v-if="firstSearch">
+      <section class="firstSearch">
         <div style="padding-bottom: 30px; text-align: right;">
           <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
           <h2 style="color: #333;">Find nearby jobs for students like you</h2>
@@ -257,8 +257,8 @@
         </v-layout>
       </section>
     </div>
-    <div class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
-      <div v-if="firstSearch" style="max-width: 960px; margin: 0 auto;">
+    <div v-if="firstSearch" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
+      <div style="max-width: 960px; margin: 0 auto;">
         <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(66).svg')">
           <h2>Why use Kunvet instead?</h2>
           <p>
