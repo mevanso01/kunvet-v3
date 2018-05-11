@@ -6,19 +6,19 @@
                 <h1 style="margin-bottom: 20px;">About us</h1>
 
                 <h2 style="color: #969494;">What is kunvet.com?</h2>
-                <p>kunvet.com is a job platform, yet a new way of how jobs are being spread. At this stage, our focus is to help more students to find jobs.</p>
+                <p>Kunvet is a job platform that's designed for students. Our focus is to help students, including international students, to find jobs or opportunities immediately nearby.</p>
 
                 <h2 style="color: #969494;">Why use kunvet.com instead?</h2>
-                <p>Few years from now on, when you walk by any stores, you won't see a "Now Hiring" anymore. Instead, you see a QRcode and the position offered, and instantly you know they are hiring, through kunvet. You take out your phone and scan the code, you will see every single thing you need to know about this position, this company, who has applied, etc. You either apply on the spot, or save the job for later review. The business will receive a notification that you have saved the job.<br><br>Also, at kunvet.com, students can find plenty of jobs that are not posted anywhere else. Our job posts are much easier to read through, and there are clear instructions on how to apply to those jobs. For some of the jobs we posted, there are even applications attached.</p>
+                <p>We will provide the most recent and relevant opportunities for our students free of charge.<br>We will include as many unique opportunities, which you cannot find on any other platforms.</p>
 
                 <h2 style="color: #969494;">Who are we?</h2>
-                <p>We are a group of entrepreneurial students who build applications for commercial purposes. Currently our focus is on web applications, but in the soon future we will also target mobile and even desktop applications.</p>
+                <p>We are a group of entrepreneurial students who are sick and tired of the existing job platforms, flyers all around campus, and having to walk around the city to find jobs nearby!</p>
 
                 <h2 style="color: #969494;">What have we done?</h2>
-                <p>So far we have 1000+ unique visits from students per month, posted more than 150 jobs on our website, more than 60 registered students.</p>
+                <p>In the previous version of Kunvet, we had 3000+ unique visits from college students, posted more than 200 jobs on our website and more than 80 registered students.<br>These demands are the reason we created the current version of Kunvet.</p>
 
                 <h2 style="color: #969494;">What next?</h2>
-                <p>Our next step is to expand Kunvet throughout the entire UC campuses, constructing a safe, super easy-to-use, great user experience and all-purpose job ecosystem for university students. Kunvet Jobs will include university-offered jobs, volunteering opportunities with school-clubs, jobs surrounding university campuses, off-campus internships and basically every job opportunity that is suitable for students.</p>
+                <p>Many opportunities listed elsewhere are not student-friendly or unique. Instead, many of existing online jobs are repetitive and redundant.<br>So, our next step is to invite organizations, clubs and individuals from the local community to post student-friendly, unique and nearby jobs and opportunities on Kunvet.</p>
 
                 <h2 style="color: #969494;">We invite you to join us</h2>
                 <p>If you have experience with web development or marketing, we invite you to <router-link to="/join"><b><u>join our start-up group</u></b></router-link>.</p>
