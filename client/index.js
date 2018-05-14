@@ -1,5 +1,4 @@
 import Vue from 'vue';
-// import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
