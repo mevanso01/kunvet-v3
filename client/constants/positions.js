@@ -70,6 +70,7 @@ const positions = [
   'mortgage banker',
   'musician',
   'notetakers',
+  'nutrition specialist',
   'office assistant',
   'online marketer',
   'operations associate',
