@@ -165,7 +165,7 @@
             <router-link to="/join"><p style="color: #b3b3b3">Join Us</p></router-link>
           </v-flex>
           <v-flex>
-            <router-link to="/about"><p style="color: #b3b3b3">Contact Us</p></router-link>
+            <router-link to="/contact"><p style="color: #b3b3b3">Contact Us</p></router-link>
           </v-flex>
           <v-flex>
             <router-link to="/terms"><p style="color: #b3b3b3">Terms & Policy</p></router-link>
