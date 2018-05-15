@@ -127,6 +127,10 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "about" */ '@/pages/AboutUs'),
     },
     {
+      path: '/contact',
+      component: () => import(/* webpackChunkName: "about" */ '@/pages/Contact'),
+    },
+    {
       path: '/terms',
       component: () => import(/* webpackChunkName: "about" */ '@/pages/Terms'),
     },
