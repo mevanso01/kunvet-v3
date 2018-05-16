@@ -15,10 +15,11 @@
             </p>
 
             <p><router-link to="/signup"><b><u>I like it, take me to sign up!</u></b></router-link></p>
-            <v-btn class="kunvet-red-bg" dark @click=router.push("signup")>I like it, take me to sign up!</v-btn>
+            <v-btn class="kunvet-red-bg" dark @click="router.push('signup')">I like it, take me to sign up!</v-btn>
         </div>
     </div>
   </v-container>
 </template>
 <script>
+
 </script>
