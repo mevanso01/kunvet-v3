@@ -233,7 +233,7 @@ export default {
         [
           { title: 'Login', icon: null, href: '/login' },
           { title: 'Sign up', icon: null, href: '/signup' },
-          { title: 'Post job', icon: null, href: '/signup' },
+          { title: 'Post job', icon: null, href: '/hiring' },
         ],
         [
           {
@@ -270,7 +270,7 @@ export default {
           [
             { title: 'Login', icon: null, href: '/login' },
             { title: 'Sign up', icon: null, href: '/signup' },
-            { title: 'Post job', icon: null, href: '/signup' },
+            { title: 'Post job', icon: null, href: '/hiring' },
           ],
         ],
         [
