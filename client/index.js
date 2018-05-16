@@ -138,6 +138,10 @@ const router = new VueRouter({
       path: '/join',
       component: () => import(/* webpackChunkName: "about" */ '@/pages/JoinUs'),
     },
+    {
+      path: '/hiring',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/PostJob'),
+    },
   ],
 });
 
