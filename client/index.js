@@ -145,10 +145,15 @@ const router = new VueRouter({
   ],
 });
 
-router.afterEach(() => {
+router.afterEach((to) => {
   Vue.nextTick(() => {
     document.title = Title.getTitle('');
   });
+
+  if (window.ga) {
+    window.ga('set', 'page', to.path);
+    window.ga('send', 'pageview');
+  }
 });
 
 if (process.env.NODE_ENV === 'development') {
