@@ -163,6 +163,36 @@
   bottom: 0;
   left: 0;
 }
+.bottom-row {
+  position: absolute;
+  bottom: 30px;
+  width: calc(100% - 52px);
+}
+.bottom-img {
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 52px);
+}
+.bottom-row .skew-div {
+  margin: auto;
+  padding: 8px 0;
+  width: 400px;
+  position: relative;
+}
+.bottom-row .skew-div p {
+  margin: 0;
+}
+.bottom-row .skew-div::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: rgba(0,0,0,.05);
+  right: 0;
+  top: 0;
+  transform: skew(-30deg);
+}
 @media (min-width: 601px) {
   .search .flex {
     padding: 10px 15px;
@@ -170,12 +200,18 @@
   .large-thats-it {
     width: 100% !important;
   }
+  .bottom-row {
+    width: calc(100% - 128px);
+  }
+  .bottom-img {
+    width: calc(100% - 128px);
+  }
 }
 @media (max-width: 600px) {
   .firstSearch {
     padding-left: 26px;
     padding-right: 26px;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 56px);
   }
   #banner {
     display: none;
@@ -187,7 +223,7 @@
 }
 @media (min-width: 961px) {
   .firstSearch {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 64px);
   }
   .city-img-holder {
     padding: 0 48px;
@@ -195,10 +231,14 @@
   section.search {
     padding: 16px 16px 32px 16px;
   }
+  .bottom-img {
+    width: calc(100% - 208px);
+    margin: 0 40px;
+  }
 }
 @media (min-width: 601px) and (max-width: 960px) {
   .firstSearch {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 64px);
   }
 }
 #rua {
@@ -223,7 +263,7 @@
           <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
           <h2 style="color: #333;">Find nearby jobs for students like you</h2>
         </div>
-        <v-layout v-if="firstSearch" align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
+        <v-layout align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
           <v-flex xs10 sm10 md11 style="height: 48px;"
             no-wrap class="grey--text no-padding fsSelect">
             <v-select class="no-padding fs-select-cities" style="height: 46px;"
@@ -255,14 +295,33 @@
             <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>
           </v-flex>
         </v-layout>
+        <img class="bottom-img" :src="svgs.citySvg" />
+        <v-layout class="bottom-row">
+          <v-flex xs12 align-center>
+            <p class="center">
+              <v-btn class="kunvet-red-bg" dark to="/employers">Hire on Kunvet</v-btn>
+              <v-btn outline style="background-color: rgba(255,255,255,0.8) !important;"
+               @click="$vuetify.goTo('#promo', { duration: 750, offset: -64, easing: 'easeInOutCubic' })">How does it work?</v-btn>
+            </p>
+            <!--<div class="skew-div">
+              <p class="center">
+                <v-btn class="kunvet-red-bg" dark>Hire on Kunvet</v-btn>
+                <v-btn outline>How does it work?</v-btn>
+              </p>
+            </div>-->
+          </v-flex>
+        </v-layout>
       </section>
     </div>
-    <div v-if="firstSearch" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
+    <!--<div v-if="firstSearch"
+      style="postion: absolute; bottom: 0; left: 0; right: 0; width: 100%; height: 100px; background: linear-gradient(180deg, #fff, #fafafa);">
+    </div>-->
+    <div v-if="firstSearch" id="promo" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
       <div style="max-width: 960px; margin: 0 auto;">
         <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(66).svg')">
           <h2>Why use Kunvet instead?</h2>
           <p>
-            All jobs displayed on Kunvet are the latest jobs on the market. We do not present jobs that are older than 30 days to applicants to show-off our database. Unless an organization re-post its job, we assure our users will not see any repetitive job. We too are tired of seeing outdated jobs on the internet.
+            All jobs displayed on Kunvet are the latest jobs on the market. We do not present jobs that are older than 30 days to applicants to show-off our database. Unless an organization re-posts its job, we assure our users will not see any repetitive jobs. We too are tired of seeing outdated jobs on the internet.
           </p>
         </PromoTextContainer>
 
@@ -476,6 +535,7 @@ import VuexLS from '@/store/persist';
 import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Asset70 from '@/assets/icons/Asset(70).svg';
+import vc from '@/assets/vc.svg';
 import PromoTextContainer from '@/components/PromoTextContainer';
 import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
@@ -540,6 +600,7 @@ export default {
         information: InformationSvg,
         locationMarker: LocationMarkerSvg,
         kunvetDude: Asset70,
+        citySvg: vc,
       },
       selectedPositionsInital: 'All / Any',
       loadingJobs: false,

@@ -91,6 +91,12 @@ ol, ul {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.kunvet-red-bg.btn {
+  color: #fff !important;
+}
+.btn--outline .btn__content {
+  height: 34px;
+}
 .expansion-panel__container {
   overflow-y: hidden !important;
 }
@@ -244,6 +250,12 @@ main {
 }
 /* ---- End of custom selects ----  */
 
+.post-a-job-button {
+  height: 28px !important;
+}
+.post-a-job-button .btn__content {
+  height: 26px;
+}
 main {
   min-height: calc(100vh - 121px);
 }

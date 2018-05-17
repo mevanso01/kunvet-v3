@@ -66,7 +66,7 @@
           </v-layout>
       </section>
 
-      <section v-if="chosenForm === 'individual'">
+      <section style="padding-top: 0px" v-if="chosenForm === 'individual'">
         <v-layout>
           <v-flex xs12 sm8 offset-sm2>
             <v-card>
@@ -126,7 +126,7 @@
         </v-layout>
       </section>
 
-      <section v-if="chosenForm === 'business'">
+      <section style="padding-top: 0px" v-if="chosenForm === 'business'">
         <v-layout>
           <v-flex xs12 sm8 offset-sm2>
             <v-card>
@@ -241,6 +241,7 @@ import KunvetError from '#/KunvetError';
 import EventBus from '@/EventBus';
 
 export default {
+  props: ['stage'],
   data() {
     return {
       e1: true,
@@ -282,6 +283,13 @@ export default {
         } else {
           this.createIndividualAcct();
         }
+      }
+    },
+    checkStage() {
+      if (this.stage === 'personal') {
+        this.chooseFormI();
+      } else if (this.stage === 'organization') {
+        this.chooseFormB();
       }
     },
     chooseFormI() {
@@ -441,6 +449,7 @@ export default {
   },
   activated() {
     this.resetData();
+    this.checkStage();
   },
 };
 </script>

@@ -13,8 +13,8 @@
             After students apply, their information will be organized under the Applicants page. You may <b>Accept</b> or <b>Reject</b> her, whom we’ll notify for you.<br>
             If you found a good candidate, you may email her and continue your usual hiring process, after clicking on <b>Accept</b> or <b>Reject</b>.
             </p>
-            
-            <v-btn class="kunvet-red-bg" dark>I like it, take me to sign up!</v-btn>
+
+            <v-btn class="kunvet-red-bg" dark to="/signup/organization">I like it, take me to sign up!</v-btn>
         </div>
     </div>
   </v-container>

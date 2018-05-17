@@ -58,6 +58,11 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/SignUp'),
     },
     {
+      path: '/signup/:stage',
+      component: () => import(/* webpackChunkName: "auth" */ '@/pages/SignUp'),
+      props: true,
+    },
+    {
       path: '/job/:id',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
       props: true,
@@ -139,8 +144,8 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "about" */ '@/pages/JoinUs'),
     },
     {
-      path: '/hiring',
-      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/PostJob'),
+      path: '/employers',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Employers'),
     },
   ],
 });

@@ -30,6 +30,11 @@
           <router-link v-for="item in items[acct]" :to="item.href" class="toolbar__items">
             <v-btn flat>{{ item.title }}</v-btn>
           </router-link>
+          <div style="padding-top: 18px; padding-left: 16px;">
+            <router-link to="/employers">
+              <v-btn class="kunvet-red post-a-job-button" outline>Post a Job</v-btn>
+            </router-link>
+          </div>
         </v-toolbar-items>
 
         <v-toolbar-items v-else class="hidden-xs">
@@ -233,7 +238,6 @@ export default {
         [
           { title: 'Login', icon: null, href: '/login' },
           { title: 'Sign up', icon: null, href: '/signup' },
-          { title: 'Post job', icon: null, href: '/hiring' },
         ],
         [
           {
@@ -270,7 +274,7 @@ export default {
           [
             { title: 'Login', icon: null, href: '/login' },
             { title: 'Sign up', icon: null, href: '/signup' },
-            { title: 'Post job', icon: null, href: '/hiring' },
+            { title: 'Post a Job', icon: null, href: '/employers' },
           ],
         ],
         [
