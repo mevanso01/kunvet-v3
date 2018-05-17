@@ -182,3 +182,15 @@ new Vue({
   store,
   render: h => h(App),
 });
+
+if (navigator.userAgent.match(/MicroMessenger/i)) {
+  // HACK: Show thumbnail on WeChat
+  const logo = document.createElement('img');
+  logo.src = 'https://kunvet.com/favicon.png';
+  logo.width = 0;
+  logo.height = 0;
+  logo.style.width = 0;
+  logo.style.height = 0;
+  logo.style.display = 'none';
+  document.body.prepend(logo);
+}
