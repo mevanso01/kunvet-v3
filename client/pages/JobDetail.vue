@@ -242,7 +242,7 @@
           <h2 style="margin-bottom: 8px;">Job Overview:</h2>
           <div v-html="findJob.description"></div>
 
-          <h2 style="margin-bottom: 8px;">Needed Experience:</h2>
+          <h2 style="margin-bottom: 8px;">Experience & Requirements:</h2>
           <div v-html="findJob.experience"></div>
 
           <h2 style="margin-bottom: 8px;">Responsibilities:</h2>
