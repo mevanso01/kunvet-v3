@@ -53,6 +53,7 @@ const positions = [
   'insurance agent',
   'inventory associate',
   'investment banker',
+  'iOS developer',
   'IT assistant',
   'janitor',
   'kitchen staff',
