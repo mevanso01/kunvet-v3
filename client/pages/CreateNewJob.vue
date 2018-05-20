@@ -679,7 +679,7 @@ export default {
       showInvalidMessage: false,
       educationOptions: Object.keys(degreesReduced).map(key => degreesReduced[key]),
       howDidYouHearItems: [
-        'Flyers', 'Word of mouth', 'Email', 'Instagram', 'Wechat', 'Other',
+        'Posters', 'A representative walked-in', 'Word of mouth', 'Email', 'WeChat', 'Personal Connection', 'Other', 'Shut up!',
       ],
       customEditorToolbar: [
         ['bold', 'italic', 'underline'], // toggled buttons
