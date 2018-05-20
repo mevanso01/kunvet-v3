@@ -268,7 +268,7 @@ export default {
       error: null,
       howDidYouHear: null,
       howDidYouHearItems: [
-        'Flyers', 'Word of mouth', 'Email', 'Instagram', 'Wechat', 'Other',
+        'Posters', 'A representative walked-in', 'Word of mouth', 'Email', 'WeChat', 'Personal Connection', 'Other', 'Shut up!',
       ],
     };
   },
