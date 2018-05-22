@@ -1,18 +1,18 @@
 <template>
-  <v-container fluid class="pa-0 mt-5" style="max-width: 100%;">
+  <v-container fluid class="pa-0 mt-5" style="max-width: 100%; font-size: 1.2em;">
     <v-layout row wrap class="panel">
       <div style="max-width: 960px; margin: 0 auto;">
         <h2 class="black--text display-1 py-3">
           We're glad you're here
         </h2>
-        <p class="black--text" style="font-size: 1.3em;">
+        <p>
           Kunvet is designed for smaller organization and personal hiring. Kunvet acts as a pre-screening process for your hiring.
         </p>
 
         <h2 class="black--text display-1 py-3">
           Can I post on Kunvet?
         </h2>
-        <p class="black--text" style="font-size: 1.3em;">
+        <p>
           As long as you are requesting for help or offering opportunities that allow students to learn and build experience, you can post on Kunvet.
         </p>
       </div>
@@ -22,10 +22,11 @@
       <v-layout row wrap justify-center>
         <v-flex xs12 md3 v-for="type in accountTypes" class="ma-2">
           <v-card class="white pa-3">
-            <v-card-title class="display-1">
+            <img :src="type.image" class="image">
+            <v-card-title class="headline">
               {{ type.title }}
             </v-card-title>
-            <v-card-text style="font-size: 1.3em;">
+            <v-card-text>
               {{ type.description }}
               <ul>
                 <li v-for="scenario of type.scenarios">{{ scenario }}</li>
@@ -43,8 +44,8 @@
           <h2 class="black--text display-1 py-3">
             What if I change my mind later?
           </h2>
-          <p class="black--text" style="font-size: 1.3em;">
-            Kunvet has a flxible system. You can always create an organization page whenever you’re ready.
+          <p>
+            Kunvet has a flexible system. You can create an organization page whenever you’re ready.
           </p>
         </div>
       </v-layout>
@@ -55,9 +56,9 @@
         <h2 class="black--text display-1 py-3" style="text-align: center;">
           How does it work?
         </h2>
-        <ol class="black--text" style="font-size: 1.3em;">
+        <ol>
           <li>Create an account</li>
-          <li>Post a job and choose how you want to receive application:
+          <li>Post a job and choose how you want to receive application:</li>
             <ul>
               <li>apply directly via Kunvet</li>
               <li>or use your existing Google Form</li>
@@ -67,39 +68,41 @@
           </li>
           <li>That's it!</li>
         </ol>
-        <p class="black--text">
-        Note: your job expires in a month. If you’re still hiring, click <v-btn>Repost</v-btn> for that job. We do this because we want to make sure students are always looking at the latest job in the market.
+        <p>
+          Note: your job expires in a month. If you’re still hiring, click <v-btn small outline style="pointer-events: none;">Repost</v-btn> for that job. We do this because we want to make sure students are always looking at the latest job in the market.
         </p>
       </div>
     </v-layout>
   </v-container>
 </template>
 <script>
-// import ActionImage from '@/assets/icons/Asset(
+import ActionImage from '@/assets/Artboard 1.svg';
 
 export default {
   data() {
     return {
       accountTypes: [
         {
-          title: 'Hire as individual',
+          title: 'Hire as an individual',
           description: '',
           scenarios: [
             'Mom looking for babysitter',
             'Professor looking for assistant',
             'Student looking for tutor',
           ],
+          image: ActionImage,
           actionText: 'Create individual account',
           to: '/signup/personal',
         },
         {
-          title: 'Hire for organization',
+          title: 'Hire for an organization',
           description: '',
           scenarios: [
             'School club',
             'Business',
             'School program',
           ],
+          image: ActionImage,
           actionText: 'Create organization account',
           to: '/signup/organization',
         },
@@ -121,6 +124,12 @@ export default {
   box-shadow:
     inset 0px 11px 8px -10px #555,
     inset 0px -11px 8px -10px #555;
-    */
+  */
+}
+
+.image {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
 }
 </style>
