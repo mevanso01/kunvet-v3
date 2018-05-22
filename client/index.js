@@ -155,9 +155,8 @@ router.afterEach((to) => {
     document.title = Title.getTitle('');
   });
 
-  if (window.ga) {
-    window.ga('set', 'page', to.path);
-    window.ga('send', 'pageview');
+  if (window.gtag) {
+    window.gtag('config', 'UA-93340207-1', { 'page_path': to.path });
   }
 });
 
