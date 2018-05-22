@@ -131,7 +131,7 @@
 }
 @media (min-width: 601px) {
   .apply-card {
-    min-width: 350px !important;
+    min-width: 375px !important;
   }
   .job-detail-posted-by {
     max-width: calc(99% - 204px);
@@ -144,6 +144,9 @@
 @media (min-width: 961px) {
   .job-detail-container {
     border: 1px solid #e0e0e0;
+  }
+  .apply-card {
+    min-width: 400px !important;
   }
 }
 </style>
@@ -168,6 +171,13 @@
               </a>
             </div>
             <div class="float-right hidden-xs-only">
+              <!-- DELETE ME -->
+              <v-btn
+                outline class="red--text darken-1"
+                style="margin: 2px 8px;"
+                @click="apply">
+                {{ applied ? 'Applied' : 'Apply' }}
+              </v-btn>
               <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
                 outline class="red--text darken-1"
                 style="margin: 2px 8px;"
@@ -269,16 +279,43 @@
       </div>
     </div>
 
-    <v-dialog v-model="applydialog">
-      <v-card class="no-border-radius apply-card" v-show="email_verified">
+    <v-dialog v-model="applydialog" max-width="500">
+      <v-card v-if="findJob.apply_method === 'Through Google Forms' && findJob.gform_link"
+      class="no-border-radius apply-card" v-show="email_verified">
+        <div @click="applyDismissiveButton">
+          <v-btn icon><v-icon>close</v-icon></v-btn>
+        </div>
+        <div class="px-3 pb-4">
+          <div v-if="findJob.notes">
+            <p>{{ findJob.notes }}</p>
+          </div>
+          <p style="margin-bottom: 5px;">Please apply through the link below:</p>
+          <a :href="findJob.gform_link" target="_blank">{{ findJob.gform_link }}</a>
+        </div>
+      </v-card>
+      <v-card v-else class="no-border-radius apply-card" v-show="email_verified">
         <div @click="applyDismissiveButton">
           <v-btn icon v-if="applyState === 'CONFIRM'"><v-icon>arrow_back</v-icon></v-btn>
           <v-btn icon v-else><v-icon>close</v-icon></v-btn>
         </div>
         <div class="px-3">
           <div v-if="applyState === 'MAIN'">
+            <div v-if="findJob.notes">
+              <p>{{ findJob.notes }}</p>
+            </div>
+            <h3 style="margin-bottom: 4px;">Message body</h3>
+            <v-text-field
+              v-model="message"
+              class="no-padding" style="margin-bottom: 16px;"
+              name="message"
+              placeholder="Add a message to this application (optional unless specified otherwise)"
+              multi-line
+              auto-grow
+              rows=3
+              hide-details
+            ></v-text-field>
             <h3>Select resume to send</h3>
-            <v-radio-group class="kunvet-red" v-if="resumes.length > 0" v-model="selectedResume" hide-details>
+            <v-radio-group class="kunvet-red no-padding" v-if="resumes.length > 0" v-model="selectedResume" hide-details>
               <v-radio v-for="(resume, index) in resumes"
                 class="kunvet-red"
                 :key="index"
@@ -307,8 +344,11 @@
             <br>
           </div>
           <div v-else-if="applyState === 'CONFIRM'">
+            <div v-if="findJob.notes">
+              <p>{{ findJob.notes }}</p>
+            </div>
             <h3>Review Application</h3>
-            <div class="pb-3">
+            <div class="pb-2">
               My info:
               <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
               <p class="small-p">{{ userdata.email }}</p>
@@ -317,11 +357,29 @@
               <p class="small-p">{{ userdata.degree }}</p>
               <p class="small-p">{{ userdata.major }}</p>
             </div>
+            <div v-if="message" class="pb-2">
+              Message body:
+              <p class="small-p">{{ message }}</p>
+            </div>
+            <div v-else class="pb-2">
+              No message body
+            </div>
+            <div v-if="selectedResume" class="pb-3">
+              Selected resume:
+              <p class="small-p">{{ selectedResumeName }}</p>
+            </div>
+            <div v-else class="pb-3" style="color: #f00;">
+              No resume selected!
+            </div>
           </div>
           <div v-else-if="applyState === 'SUCCESS'">
             <h3>What's next?</h3>
-            <p>We’ll email you whether the employer accepts or declines your application.</p>
-            <p>You can also find out your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.</p>
+            <p>Look out for follow-up emails from the employer. You'll recieve an email from us if the employer accepts or declines your application.</p>
+            <p>You can find your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.</p>
+          </div>
+          <div v-else-if="applyState === 'ERROR'">
+            <h3>Oh no, an error occured!</h3>
+            <p>Please try again later.</p>
           </div>
         </div>
         <div v-if="applyState !== 'SUCCESS'"
@@ -412,7 +470,7 @@ export default {
         wechat_id: null,
       },
       resumes: [],
-      selectedResume: null,
+      selectedResume: null, // file id
       userdatafetched: false,
       applied: false,
       saved: false,
@@ -425,11 +483,21 @@ export default {
       errorMessage: '',
       client: null,
       email_verified: true,
+      message: null,
     };
   },
   computed: {
     sanitizedDescription() {
       return sanitizeHtml(this.findJob.description);
+    },
+    selectedResumeName() {
+      if (this.selectedResume) {
+        const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
+        if (index !== -1) {
+          return this.resumes[index].name;
+        }
+      }
+      return null;
     },
   },
   methods: {
@@ -683,6 +751,7 @@ export default {
             filename: this.resumes[index].filename,
             resumeid: this.resumes[index].resumeid,
           }) : null,
+          applicant_message: this.message,
         };
         this.$apollo.mutate({
           mutation: (gql`mutation ($application: CreateOneApplicantInput!) {
@@ -700,6 +769,7 @@ export default {
                   filename
                   resumeid
                 }
+                applicant_message
               }
             }
           }`),
@@ -756,6 +826,7 @@ export default {
           }
         }).catch((error) => {
           this.loading = false;
+          this.applyState = 'ERROR';
           this.$error(error);
         });
       }

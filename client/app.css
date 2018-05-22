@@ -97,6 +97,9 @@ ol, ul {
 .btn--outline .btn__content {
   height: 34px;
 }
+.btn--outline.btn--small .btn__content {
+  height: 27px;
+}
 .expansion-panel__container {
   overflow-y: hidden !important;
 }

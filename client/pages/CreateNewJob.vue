@@ -123,12 +123,22 @@
 }
 .createnewjob-container .custom-select-2 {
   box-shadow: none;
-  height: 48px;
+  height: 31px;
 }
 .createnewjob-container .custom-select-2 .inner {
   border-bottom: 1px solid rgba(0,0,0,.42);
-  height: 47px;
+  height: 30px;
   transition: border-color 0.3s ease-out;
+  padding: 0;
+}
+.createnewjob-container .custom-select-2 .inner span {
+  font-size: 16px;
+  line-height: 30px;
+}
+.createnewjob-container .custom-select-2 .inner .btn--icon {
+  height: 24px;
+  width: 24px;
+  margin: 3px 6px;
 }
 .createnewjob-container .custom-select-2.active .inner {
   border-bottom: solid 2px rgb(24,103,192);
@@ -163,13 +173,14 @@
 
         <v-card-text>
           <p>
-            For your safety, please try not to include any email address in your job.
+            For your safety, please try not to include any contact info in your job description.
+            Every time an applicant applies, their information and resume will be sent to your account's email.
           </p>
           <p>
-            Instead, we’ll email you whenever you receive a new applicant.
+            You can also view your applicants through Kunvet itself. Your applicants will be organized under the <router-link to="/applicants">Applicants</router-link> page.
           </p>
           <p>
-            Your applicants’ info will be organized under the <router-link to="/applicants">Applicants</router-link> page.
+            If you prefer recieving your applicants through Google Forms, scroll down to "Application options" and check the Google Forms checkbox.
           </p>
         </v-card-text>
 
@@ -430,20 +441,49 @@
             </v-list>
           </div>
         </div>
-        <!--
-        <v-select class="no-padding-select"
-          label="Type here..."
-          v-bind:items="tags"
-          v-model="selectedPositions"
-          autocomplete
-          deletable-chips
-          multiple
-          single-line
-          bottom
-          required
-          :rules="[(v) => (v.length > 0) || !submitted || 'Required']"
-        ></v-select>
-      -->
+        <br>
+        <br>
+        <div style="margin-top: 1em; margin-bottom: 5px;">
+          <h3 style="display: inline;">Application options</h3>
+        </div>
+        <p>The applicant's info and resume will be sent to your email when they apply.<br>
+           You can also browse through all your applicants in the applicants page.</p>
+        <!--<v-select class="no-padding-select"
+            v-bind:items="['Through Kunvet', 'Through Google Forms', 'Through email']"
+            v-model="applyMethod"
+            bottom
+            required
+            :rules="[(v) => !!v || !submitted || 'Required']">
+        </v-select>-->
+        <v-checkbox
+          class="optional"
+          label="Ask users to apply through Google Forms"
+          v-model="useGForm"
+          hide-details
+        ></v-checkbox>
+        <div v-if="applyMethod === 'Through Google Forms'">
+          <v-text-field
+            v-model="gformLink"
+            label="Google Form url"
+            placeholder="Paste Google Form url here"
+            required
+            :rules="[(v) => applyMethod != 'Through Google Forms' || !!v || 'Required']">
+          ></v-text-field>
+        </div>
+
+
+        <div>
+          <p class="optional" style="margin-top: 16px; margin-bottom: 0;">(Optional) Would you like to add some special instuctions to the apply dialog users will see?</p>
+          <v-text-field
+            v-model="notes"
+            style="padding: 0 2px;"
+            class="optional"
+            placeholder="Type here..."
+            hide-details
+            multi-line
+            rows=2
+          ></v-text-field>
+        </div>
         </v-form>
 
         <br>
@@ -561,7 +601,9 @@ const createJobMutation = gql`
         language
         experience
         responsibilities
+        apply_method
         notes
+        gform_link
         images {
           original
           cropped
@@ -597,7 +639,9 @@ const updateJobMutation = gql`
         language
         experience
         responsibilities
+        apply_method
         notes
+        gform_link
         images {
           original
           cropped
@@ -659,7 +703,6 @@ export default {
       responsibilities_valid: true,
       experience: null,
       experience_valid: true,
-      notes: '',
       studentfriendly: true,
       language: '',
       major: '',
@@ -677,6 +720,9 @@ export default {
       picUploaderDialog: false,
       successAlert: false,
       showInvalidMessage: false,
+      notes: '',
+      useGForm: false,
+      gformLink: '',
       educationOptions: Object.keys(degreesReduced).map(key => degreesReduced[key]),
       howDidYouHearItems: [
         'Posters', 'A representative walked-in', 'Word of mouth', 'Email', 'WeChat', 'Personal Connection', 'Other', 'Shut up!',
@@ -719,6 +765,12 @@ export default {
       }
       str = str.toLowerCase();
       return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+    },
+    applyMethod() {
+      if (this.useGForm) {
+        return 'Through Google Forms';
+      }
+      return 'Through Kunvet';
     },
   },
   methods: {
@@ -987,7 +1039,9 @@ export default {
         language: this.language,
         experience: this.experience,
         responsibilities: this.responsibilities,
+        apply_method: this.applyMethod,
         notes: this.notes,
+        gform_link: this.gformLink,
         images: this.images,
         position_tags: this.selectedPositions,
       };
@@ -1020,7 +1074,9 @@ export default {
             language
             experience
             responsibilities
+            apply_method
             notes
+            gform_link
             images {
               original
               cropped
@@ -1065,6 +1121,12 @@ export default {
           this.language = job.language;
           this.experience = job.experience;
           this.responsibilities = job.responsibilities;
+          this.notes = job.notes;
+          if (job.gform_link) {
+            this.gformLink = job.gform_link;
+            this.useGForm = true;
+          }
+          // this.applyMethod = job.applyMethod;
           for (const image of job.images) {
             this.images.push({ original: image.original, cropped: image.cropped });
           }

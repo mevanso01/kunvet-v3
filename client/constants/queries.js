@@ -25,7 +25,9 @@ const FindJobRecord = `
   language
   experience
   responsibilities
+  apply_method
   notes
+  gform_link
   images {
     original
     cropped
@@ -76,6 +78,7 @@ const FindApplicantRecord = `
     resumeid
   }
   status
+  applicant_message
 `;
 
 

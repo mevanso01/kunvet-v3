@@ -158,9 +158,6 @@ const JobSchema = Mongoose.Schema({
   qualifications: {
     type: String,
   },
-  notes: {
-    type: String,
-  },
   images: [{
     original: Mongoose.Schema.Types.ObjectId,
     cropped: Mongoose.Schema.Types.ObjectId,
@@ -169,6 +166,15 @@ const JobSchema = Mongoose.Schema({
   is_deleted: {
     type: Boolean,
     default: false,
+  },
+  apply_method: {
+    type: String,
+  },
+  notes: {
+    type: String,
+  },
+  gform_link: {
+    type: String,
   },
 });
 const ApplicantSchema = Mongoose.Schema({
@@ -218,6 +224,7 @@ const ApplicantSchema = Mongoose.Schema({
     filename: String,
     resumeid: String,
   },
+  applicant_message: String,
 });
 
 const ResumeSchema = Mongoose.Schema({
