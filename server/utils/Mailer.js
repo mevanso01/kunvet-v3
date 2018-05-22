@@ -41,13 +41,18 @@ export default class Mailer {
   }
   sendTemplate(recipient, template, locals) {
     const email = this.getEmailInstance();
-    return email.send({
+    const config = {
       message: {
         to: recipient,
+        headers: {},
       },
       template,
       locals,
-    });
+    };
+    if (locals.replyTo) {
+      config.message.headers['Reply-To'] = locals.replyTo;
+    }
+    return email.send(config);
   }
   async render(template, locals) {
     const email = this.getEmailInstance();
