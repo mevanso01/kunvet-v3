@@ -20,7 +20,7 @@
 
     <v-container fluid class="panel py-5 mt-5">
       <v-layout row wrap justify-center>
-        <v-flex xs12 md3 v-for="type in accountTypes" class="ma-2">
+        <v-flex xs12 md3 xl2 v-for="type in accountTypes" class="ma-2">
           <v-card class="white pa-3">
             <img :src="type.image" class="image">
             <v-card-title class="headline">
