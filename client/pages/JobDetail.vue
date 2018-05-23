@@ -350,13 +350,13 @@
               <p class="small-p">{{ userdata.degree }}</p>
               <p class="small-p">{{ userdata.major }}</p>
             </div>
-            <div v-if="message" class="pb-2">
+            <!--<div v-if="message" class="pb-2">
               Message body:
               <p class="small-p">{{ message }}</p>
             </div>
             <div v-else class="pb-2">
               No message body
-            </div>
+            </div>-->
             <div v-if="selectedResume" class="pb-3">
               Selected resume:
               <p class="small-p">{{ selectedResumeName }}</p>
