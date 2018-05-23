@@ -48,7 +48,7 @@
             Kunvet has a flexible system. You can create an organization page whenever you’re ready.
           </p>
           <p>
-            Just click <v-btn small outline style="pointer-events: none;">Create Organization</v-btn> under your profile page.
+            Just click <v-btn small flat outline class="fakebtn">Create Organization</v-btn> under your profile page.
           </p>
         </div>
       </v-layout>
@@ -61,20 +61,20 @@
         </h2>
         <p>
           It's as easy as 1, 2, 3!
-          <ol>
-            <li>Create an account</li>
-            <li>Post a job and choose how you want to receive application:</li>
-              <ul class="pl-3">
-                <li>receive resumes on Kunvet</li>
-                <li>or use your existing Google Form</li>
-                <li>or ask them to send their resume to your email</li>
-              </ul>
-            </li>
-            <li>That's it!</li>
-          </ol>
         </p>
+        <ol>
+          <li>Create an account</li>
+          <li>Post a job and choose how you want to receive application:</li>
+            <ul class="pl-3">
+              <li>receive resumes on Kunvet</li>
+              <li>or use your existing Google Form</li>
+              <li>or ask them to send their resume to your email</li>
+            </ul>
+          </li>
+          <li>That's it!</li>
+        </ol>
         <p>
-          Note: your job expires in a month. If you’re still hiring, click <v-btn small outline style="pointer-events: none;">Repost</v-btn> for that job. We do this because we want to make sure students are always looking at the latest job in the market.
+          Note: your job expires in a month. If you’re still hiring, click <v-btn small flat outline class="fakebtn">Repost</v-btn> for that job. We do this because we want to make sure students are always looking at the latest job in the market.
         </p>
       </div>
     </v-layout>
@@ -137,5 +137,11 @@ export default {
   display: block;
   width: 50%;
   margin: 0 auto;
+}
+
+.fakebtn {
+  pointer-events: none;
+  border: 1px solid #616161;
+  color: #616161;
 }
 </style>
