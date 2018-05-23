@@ -54,7 +54,7 @@
       </v-layout>
     </v-container>
 
-    <v-layout row wrap class="panel">
+    <v-layout row wrap class="panel my-5">
       <div style="width: 960px; max-width: 960px; margin: 0 auto;">
         <h2 class="black--text display-1 py-3" style="text-align: center;">
           How does it work?
