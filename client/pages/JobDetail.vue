@@ -303,7 +303,7 @@
             <div v-if="findJob.notes">
               <p>{{ findJob.notes }}</p>
             </div>
-            <h3 style="margin-bottom: 4px;">Message body</h3>
+            <!--<h3 style="margin-bottom: 4px;">Message body</h3>
             <v-text-field
               v-model="message"
               class="no-padding" style="margin-bottom: 16px;"
@@ -313,7 +313,7 @@
               auto-grow
               rows=3
               hide-details
-            ></v-text-field>
+            ></v-text-field>-->
             <h3>Select resume to send</h3>
             <v-radio-group class="kunvet-red no-padding" v-if="resumes.length > 0" v-model="selectedResume" hide-details>
               <v-radio v-for="(resume, index) in resumes"
