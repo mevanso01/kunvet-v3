@@ -457,7 +457,7 @@
         </v-select>-->
         <v-checkbox
           class="optional"
-          label="Ask users to apply through Google Forms"
+          label="Don't send resumes to my email. I have a Google Form."
           v-model="useGForm"
           hide-details
         ></v-checkbox>
@@ -473,12 +473,12 @@
 
 
         <div>
-          <p class="optional" style="margin-top: 16px; margin-bottom: 0;">(Optional) Would you like to add some special instuctions to the apply dialog users will see?</p>
+          <p class="optional" style="margin-top: 16px; margin-bottom: 0;">(Optional) Do you have any special instuction for applicants?</p>
           <v-text-field
             v-model="notes"
             style="padding: 0 2px;"
             class="optional"
-            placeholder="Type here..."
+            placeholder="e.g. Please apply on Mondays only."
             hide-details
             multi-line
             rows=2
