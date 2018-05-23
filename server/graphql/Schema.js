@@ -48,9 +48,13 @@ async function sendNewApplicationNotification(req, next) {
       employer.email,
       'application-created',
       {
+        replyTo: user.email,
         name: `${user.firstname} ${user.lastname}`,
         jobname: job.title,
-        replyTo: user.email,
+        employername: employer.firstname,
+        email: user.email,
+        degree: req.args.record.degree,
+        school: req.args.record.school,
       },
     );
   } catch (e) {
