@@ -50,6 +50,7 @@ async function sendNewApplicationNotification(req, next) {
       {
         replyTo: user.email,
         name: `${user.firstname} ${user.lastname}`,
+        fname: user.firstname,
         jobname: job.title,
         employername: employer.firstname,
         email: user.email,
