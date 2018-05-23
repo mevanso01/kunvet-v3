@@ -47,6 +47,9 @@
           <p>
             Kunvet has a flexible system. You can create an organization page whenever you’re ready.
           </p>
+          <p>
+            Just click <v-btn small outline style="pointer-events: none;">Create Organization</v-btn> under your profile page.
+          </p>
         </div>
       </v-layout>
     </v-container>
@@ -60,9 +63,8 @@
           <li>Create an account</li>
           <li>Post a job and choose how you want to receive application:</li>
             <ul>
-              <li>apply directly via Kunvet</li>
+              <li>receive resumes on Kunvet</li>
               <li>or use your existing Google Form</li>
-              <li>or ask applicants to fill out a form</li>
               <li>or ask them to send their resume to your email</li>
             </ul>
           </li>
