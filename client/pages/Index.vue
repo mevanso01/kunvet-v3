@@ -301,7 +301,7 @@
             <p class="center">
               <v-btn class="kunvet-red-bg" dark to="/employers">Hire on Kunvet</v-btn>
               <v-btn outline style="background-color: rgba(255,255,255,0.8) !important;"
-               @click="$vuetify.goTo('#promo', { duration: 750, offset: -64, easing: 'easeInOutCubic' })">How does it work?</v-btn>
+               @click="$vuetify.goTo('#promo', { duration: 750, offset: -64, easing: 'easeInOutCubic' })">Learn more</v-btn>
             </p>
             <!--<div class="skew-div">
               <p class="center">
