@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-0 mt-5" style="max-width: 100%; font-size: 1.2em;">
-    <v-layout row wrap class="panel">
+    <v-layout row wrap class="panel px-3">
       <div style="max-width: 960px; margin: 0 auto;">
         <h2 class="black--text display-1 py-3">
           We're glad you're here
@@ -20,7 +20,7 @@
 
     <v-container fluid class="panel py-5 mt-5">
       <v-layout row wrap justify-center>
-        <v-flex xs12 md3 xl2 v-for="type in accountTypes" class="ma-2">
+        <v-flex xs12 md5 lg3 xl2 v-for="type in accountTypes" class="ma-2">
           <v-card class="white pa-3">
             <img :src="type.image" class="image">
             <v-card-title class="headline">
@@ -54,7 +54,7 @@
       </v-layout>
     </v-container>
 
-    <v-layout row wrap class="panel my-5">
+    <v-layout row wrap class="panel px-3 my-5">
       <div style="width: 960px; max-width: 960px; margin: 0 auto;">
         <h2 class="black--text display-1 py-3" style="text-align: center;">
           How does it work?
