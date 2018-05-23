@@ -89,8 +89,12 @@ router.post('/verify', async (ctx) => {
 router.post('/resendVerificationEmail', async (ctx) => {
   const req = ctx.request.body;
   let tempAcct = null;
+  let acct = null;
   try {
     tempAcct = await Models.TempAccount.findOne({
+      email: req.email,
+    });
+    acct = await Models.Account.findOne({
       email: req.email,
     });
   } catch (e) {
@@ -117,6 +121,7 @@ router.post('/resendVerificationEmail', async (ctx) => {
       req.email,
       'email-verification',
       {
+        fname: acct.firstname,
         email: req.email,
         code: validationCode,
       },
@@ -312,6 +317,7 @@ router.post('/register', async (ctx) => {
       email,
       'email-verification',
       {
+        fname: req.fname,
         email: email,
         code: validationCode,
       },
