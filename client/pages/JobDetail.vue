@@ -367,7 +367,8 @@
           </div>
           <div v-else-if="applyState === 'SUCCESS'">
             <h3>What's next?</h3>
-            <p>Look out for follow-up emails from the employer. You'll recieve an email from us if the employer accepts or declines your application.</p>
+            <p>Look out for follow-up emails from the employer.</p>
+            <!--<p>You'll recieve an email from us if the employer accepts or declines your application.</p>-->
             <p>You can find your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.</p>
           </div>
           <div v-else-if="applyState === 'ERROR'">
