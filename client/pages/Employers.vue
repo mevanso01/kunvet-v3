@@ -78,7 +78,8 @@
   </v-container>
 </template>
 <script>
-import ActionImage from '@/assets/Artboard 1.svg';
+import PersonalImage from '@/assets/personal.svg';
+import OrganizationImage from '@/assets/organization.svg';
 
 export default {
   data() {
@@ -92,7 +93,7 @@ export default {
             'Professor looking for assistant',
             'Student looking for tutor',
           ],
-          image: ActionImage,
+          image: PersonalImage,
           actionText: 'Create individual account',
           to: '/signup/personal',
         },
@@ -104,7 +105,7 @@ export default {
             'Business',
             'School program',
           ],
-          image: ActionImage,
+          image: OrganizationImage,
           actionText: 'Create organization account',
           to: '/signup/organization',
         },
