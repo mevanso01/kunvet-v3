@@ -281,7 +281,7 @@
         <div class="px-3 pb-4">
           <div v-if="findJob.notes">
             <p>
-            <strong>Special Instruction from this employer</strong><br>
+            <strong>Special Instruction from this employer:</strong><br>
             {{ findJob.notes }}
             </p>
           </div>
@@ -298,7 +298,7 @@
           <div v-if="applyState === 'MAIN'">
             <div v-if="findJob.notes">
               <p>
-              <strong>Special Instruction from this employer</strong><br>
+              <strong>Special Instruction from this employer:</strong><br>
               {{ findJob.notes }}
               </p>
             </div>
@@ -345,7 +345,7 @@
           <div v-else-if="applyState === 'CONFIRM'">
             <div v-if="findJob.notes">
               <p>
-              <strong>Special Instruction from this employer</strong><br>
+              <strong>Special Instruction from this employer:</strong><br>
               {{ findJob.notes }}
               </p>
             </div>
