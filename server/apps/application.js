@@ -108,6 +108,7 @@ router.post('/:id/setStatus/:status', async (ctx) => {
         user.email,
         `application-${ctx.params.status}`,
         {
+          fname: user.firstname,
           name: application.name,
           jobname: job.title,
         },
