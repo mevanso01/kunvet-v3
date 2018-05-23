@@ -531,7 +531,7 @@
 <strong>{{ fname }}'s Information</strong><br>
 Name | {{ name }}<br>
 Email&nbsp;|&nbsp;{{ email }}<br>
-Education | {{ degree }}&nbsp;at {{ school }}</p>
+<span v-if="school">Education | {{ degree }}&nbsp;at {{ school }}</span></p>
 
                         </td>
                     </tr>
