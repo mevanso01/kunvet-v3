@@ -171,13 +171,6 @@
               </a>
             </div>
             <div class="float-right hidden-xs-only">
-              <!-- DELETE ME -->
-              <v-btn
-                outline class="red--text darken-1"
-                style="margin: 2px 8px;"
-                @click="apply">
-                {{ applied ? 'Applied' : 'Apply' }}
-              </v-btn>
               <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
                 outline class="red--text darken-1"
                 style="margin: 2px 8px;"
