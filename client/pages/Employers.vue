@@ -60,7 +60,7 @@
           How does it work?
         </h2>
         <p>
-          It's easy as 1, 2, 3!
+          It's as easy as 1, 2, 3!
           <ol>
             <li>Create an account</li>
             <li>Post a job and choose how you want to receive application:</li>
