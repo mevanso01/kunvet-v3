@@ -280,10 +280,13 @@
         </div>
         <div class="px-3 pb-4">
           <div v-if="findJob.notes">
-            <p>{{ findJob.notes }}</p>
+            <p>
+            <strong>Special Instruction from this employer</strong><br>
+            {{ findJob.notes }}
+            </p>
           </div>
-          <p style="margin-bottom: 5px;">Please apply through the link below:</p>
-          <a :href="findJob.gform_link" target="_blank">{{ findJob.gform_link }}</a>
+          <p style="margin-bottom: 5px;">This particular employer prefers you apply through this Google Form:</p>
+          <a :href="findJob.gform_link" target="_blank"><u>{{ findJob.gform_link }}</u></a>
         </div>
       </v-card>
       <v-card v-else class="no-border-radius apply-card" v-show="email_verified">
@@ -294,7 +297,10 @@
         <div class="px-3">
           <div v-if="applyState === 'MAIN'">
             <div v-if="findJob.notes">
-              <p>{{ findJob.notes }}</p>
+              <p>
+              <strong>Special Instruction from this employer</strong><br>
+              {{ findJob.notes }}
+              </p>
             </div>
             <!--<h3 style="margin-bottom: 4px;">Message body</h3>
             <v-text-field
@@ -338,7 +344,10 @@
           </div>
           <div v-else-if="applyState === 'CONFIRM'">
             <div v-if="findJob.notes">
-              <p>{{ findJob.notes }}</p>
+              <p>
+              <strong>Special Instruction from this employer</strong><br>
+              {{ findJob.notes }}
+              </p>
             </div>
             <h3>Review Application</h3>
             <div class="pb-2">
