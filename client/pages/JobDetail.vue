@@ -212,7 +212,7 @@
             </div>
           </div>
 
-          <div v-show="
+          <div style="min-height: 42px" v-show="
             (findJob.education && findJob.education !== 'None')
             || findJob.preferred_major || findJob.language">
             <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
@@ -234,7 +234,7 @@
             </div>
           </div>
 
-          <div class="blue-row" style="margin-bottom: 16px;">
+          <div class="blue-row" style="clear: both; margin-bottom: 16px;">
             <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
             <img class="job-info-icon" :src="svgs.Clock"></img>
             <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></span>

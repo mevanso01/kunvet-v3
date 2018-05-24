@@ -565,7 +565,7 @@ export default {
   data() {
     return {
       uid: null,
-      findJobs: undefined,
+      findJobs: [],
       saved_jobs: [],
       filteredJobs: [],
       openSelectField: null,
@@ -726,6 +726,8 @@ export default {
             }
           }
         }
+      } else {
+        this.loadingJobs = false;
       }
     },
     filterJobByInfo(job, selectedTypes, selectedTypes2) {
@@ -898,9 +900,13 @@ export default {
           }
         }`,
       });
-      // this.findJobs = findJobs.filter(x => !x.is_deleted);
-      this.findJobs = findJobs;
-      this.filterJobs();
+      if (findJobs && this.findJobs.length !== findJobs.length) {
+        this.findJobs = findJobs;
+        this.filterJobs();
+      } else {
+        this.loadingJobs = false;
+        this.filterJobs();
+      }
     },
   },
   beforeDestroy() {

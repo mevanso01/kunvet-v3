@@ -20,22 +20,25 @@
 
     <v-container fluid class="panel py-5">
       <v-layout row wrap justify-center>
-        <v-flex xs12 md5 lg3 xl2 v-for="type in accountTypes" class="ma-2">
-          <v-card class="white pa-3">
-            <img :src="type.image" class="image">
-            <v-card-title class="headline">
-              {{ type.title }}
-            </v-card-title>
-            <v-card-text>
-              {{ type.description }}
-              <ul>
-                <li v-for="scenario of type.scenarios">{{ scenario }}</li>
-              </ul>
-            </v-card-text>
-          </v-card>
-          <v-btn dark block class="kunvet-red-bg" :to="type.to">
-            {{ type.actionText }}
-          </v-btn>
+        <v-flex xs12 md5 lg4 xl3 v-for="type in accountTypes">
+          <div class="ma-2">
+            <v-card class="white pa-3">
+              <img :src="type.image" class="image">
+              <v-card-title class="headline">
+                {{ type.title }}
+              </v-card-title>
+              <v-card-text style="padding-top: 8px;">
+                {{ type.description }}
+                <p style="margin-bottom: 8px; color: rgb(150, 148, 148);">For example...</p>
+                <ul>
+                  <li v-for="scenario of type.scenarios">{{ scenario }}</li>
+                </ul>
+              </v-card-text>
+            </v-card>
+            <v-btn dark block class="kunvet-red-bg" :to="type.to">
+              {{ type.actionText }}
+            </v-btn>
+          </div>
         </v-flex>
       </v-layout>
 

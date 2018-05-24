@@ -478,7 +478,7 @@
             v-model="notes"
             style="padding: 0 2px;"
             class="optional"
-            placeholder="e.g. Please apply on Mondays only."
+            placeholder="e.g. In the message body, please answer if..."
             hide-details
             multi-line
             rows=2
@@ -847,6 +847,8 @@ export default {
       return null;
     },
     validateBeforePosting(showDialog = false) {
+      // DELETE ME
+      this.latitude = 33.6; this.longitude = -117.8;
       this.submitted = true;
       const f = this.$refs.form.validate();
       this.valid = f; // wierd workaround?
