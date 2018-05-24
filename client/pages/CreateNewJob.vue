@@ -472,7 +472,7 @@
         </div>
 
 
-        <div>
+        <!--<div>
           <p class="optional" style="margin-top: 16px; margin-bottom: 0;">(Optional) Do you have any special instuction for applicants?</p>
           <v-text-field
             v-model="notes"
@@ -483,7 +483,7 @@
             multi-line
             rows=2
           ></v-text-field>
-        </div>
+        </div>-->
         </v-form>
 
         <br>
