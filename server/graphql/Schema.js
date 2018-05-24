@@ -25,6 +25,19 @@ function wrapResolvers(fn, resolvers) {
   return resolvers;
 }
 
+const degrees = {
+  none: 'None',
+  high_school: 'High school',
+  pursuing_associate: 'Pursuing Associate\'s Degree',
+  associates: 'Associate\'s Degree',
+  pursuing_bachelor: 'Pursuing Bachelor\'s Degree',
+  bachelors: 'Bachelor\'s Degree',
+  pursuing_master: 'Pursuing Master\'s Degree',
+  masters: 'Master\'s Degree',
+  pursuing_phd: 'Pursuing PhD Degree',
+  phd: 'PhD degree',
+};
+
 async function sendNewApplicationNotification(req, next) {
   const mailer = new Mailer();
   const user = req.context.user;
@@ -43,6 +56,11 @@ async function sendNewApplicationNotification(req, next) {
     throw Error('Invalid job');
   }
 
+  var degree = degrees[req.args.record.degree];
+  if (degree === 'None') {
+    degree = null;
+  }
+
   try {
     await mailer.sendTemplate(
       employer.email,
@@ -54,8 +72,9 @@ async function sendNewApplicationNotification(req, next) {
         jobname: job.title,
         employername: employer.firstname,
         email: user.email,
-        degree: req.args.record.degree,
+        degree: degree,
         school: req.args.record.school,
+        message: req.args.record.applicant_message,
       },
     );
   } catch (e) {
