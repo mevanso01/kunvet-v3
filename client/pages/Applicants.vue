@@ -89,7 +89,7 @@
                     <span style="color: red;">
                       {{ getApplicantExpiringText(item) }}
                     </span>
-                    <v-btn
+                    <!--<v-btn
                       class="kunvet-accept-small-btn"
                       @click="onShowAcceptDialog(item)"
                     >
@@ -100,7 +100,7 @@
                       @click="onShowRejectDialog(item)"
                     >
                       Reject
-                    </v-btn>
+                    </v-btn>-->
                   </span>
                 </div>
               </div>

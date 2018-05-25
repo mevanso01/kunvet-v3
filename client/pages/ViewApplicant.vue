@@ -90,7 +90,7 @@
                 </div>
                 <div class="view-applicant-right-elements">
                   <span v-if="!isAcceptedOrRejected">
-                    <v-btn
+                    <!--<v-btn
                       class="kunvet-accept-large-btn"
                       @click.native.stop="dialogs.showAccept = true"
                     >
@@ -101,7 +101,7 @@
                       @click.native.stop="dialogs.showReject = true"
                     >
                       Reject
-                    </v-btn>
+                    </v-btn>-->
                   </span>
                   <span
                     v-else

@@ -472,16 +472,16 @@
         </div>
 
 
-        <!--<div>
-          <p class="optional" style="margin-top: 16px; margin-bottom: 0;">(Optional) Do you have any special instuction for applicants?</p>
+        <div>
+          <p class="optional" style="margin-top: 16px; margin-bottom: 0;">(Optional) Do you have any special instuctions for applicants?</p>
           <v-text-field
             v-model="notes"
             style="padding: 0 2px;"
             class="optional"
-            placeholder="e.g. In the message body, please answer if..."
+            placeholder="Type here..."
             hide-details
             multi-line
-            rows=2
+            rows=1
           ></v-text-field>
         </div>-->
         </v-form>
