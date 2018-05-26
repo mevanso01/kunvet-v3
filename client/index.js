@@ -18,6 +18,8 @@ import store from '@/store';
 
 import VueCroppie from 'vue-croppie';
 
+import gtagjs from 'vue-gtagjs';
+
 Vue.use(Title);
 Vue.use(Logger);
 Vue.use(VueCroppie);
@@ -154,11 +156,9 @@ router.afterEach((to) => {
   Vue.nextTick(() => {
     document.title = Title.getTitle('');
   });
-
-  if (window.gtag) {
-    window.gtag('config', 'UA-93340207-1', { 'page_path': to.path });
-  }
 });
+
+gtagjs(router, 'UA-93340207-1');
 
 if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line global-require

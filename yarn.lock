@@ -11058,6 +11058,10 @@ vue-croppie@^1.3.12:
   dependencies:
     croppie "^2.6.1"
 
+vue-gtagjs@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/vue-gtagjs/-/vue-gtagjs-1.0.7.tgz#9c40d25b382a63e83eed1777443ea0f8fb135600"
+
 vue-hot-reload-api@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.0.tgz#97976142405d13d8efae154749e88c4e358cf926"
