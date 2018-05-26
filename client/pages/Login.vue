@@ -202,13 +202,13 @@ export default {
           // login individual
           // App.methods.login_i();
           EventBus.$emit('individual');
-          this.$router.push('/');
+          this.triggerRedirect();
         } else {
           // login business
           this.commitBusinessID(udata.default_org);
           // App.methods.login_b();
           EventBus.$emit('business');
-          this.$router.push('/myorg');
+          this.triggerRedirect();
         }
       }).catch((error) => {
         // Network error
@@ -240,8 +240,20 @@ export default {
     resetData() {
       Object.assign(this.$data, this.$options.data.call(this));
     },
+    triggerRedirect() {
+      let target = this.$route.query.redirect;
+
+      if (!target) {
+        target = this.$store.state.acct === 2 ? '/myorg' : '/';
+      }
+
+      this.$router.push(target);
+    },
   },
   activated() {
+    if (this.$store.state.userID) {
+      this.triggerRedirect();
+    }
     this.resetData();
   },
 };
