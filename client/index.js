@@ -152,7 +152,7 @@ const router = new VueRouter({
   ],
 });
 
-router.afterEach((to) => {
+router.afterEach(() => {
   Vue.nextTick(() => {
     document.title = Title.getTitle('');
   });
