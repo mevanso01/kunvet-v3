@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import PdfJs from 'pdfjs-dist';
+import PdfJs from 'pdfjs-dist/webpack';
 import uuidv1 from 'uuid/v1';
 import mutexify from 'mutexify';
 import debounce from 'lodash/debounce';
