@@ -303,14 +303,14 @@
                 </p>
                 <v-list two-line class="acct-list" v-else>
                     <template v-for="({ _id, name }, index) in userdata.org_list">
-                    <v-list-tile :key="_id">
+                    <v-list-tile :key="_id" ripple @click="switchToOrg(_id)">
                       <v-list-tile-content>
                         <v-list-tile-title>
                           {{ name }}
                         </v-list-tile-title>
                       </v-list-tile-content>
                       <v-list-tile-action>
-                        <v-btn icon ripple @click="switchToOrg(_id)">
+                        <v-btn icon>
                           <v-icon color="grey lighten-1">keyboard_arrow_right</v-icon>
                         </v-btn>
                       </v-list-tile-action>
