@@ -283,21 +283,16 @@
         </v-flex>
 
         <br>
-        <h3 v-bind:class="{ 'error_h3_2': submitted && shift.length <= 0 }">Working Hours</h3>
+        <h3 class="optional">Working Hours</h3>
 
-        <div class="multi-checkbox work-hours">
+        <div class="multi-checkbox optional work-hours">
             <v-checkbox style="max-width: 110px;"
               label="morning" v-model="shift" value="morning"
-              v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"
               required></v-checkbox>
-            <v-checkbox style="max-width: 85px;" label="noon" v-model="shift" value="noon"
-              v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"></v-checkbox>
-            <v-checkbox style="max-width: 115px;" label="afternoon" v-model="shift" value="afternoon"
-              v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"></v-checkbox>
-            <v-checkbox style="max-width: 100px;" label="evening" v-model="shift" value="evening"
-              v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"></v-checkbox>
-            <v-checkbox label="night" v-model="shift" value="night"
-              v-bind:class="{ 'input-group--error': submitted && shift.length <= 0 }"></v-checkbox>
+            <v-checkbox style="max-width: 85px;" label="noon" v-model="shift" value="noon"></v-checkbox>
+            <v-checkbox style="max-width: 115px;" label="afternoon" v-model="shift" value="afternoon"></v-checkbox>
+            <v-checkbox style="max-width: 100px;" label="evening" v-model="shift" value="evening"></v-checkbox>
+            <v-checkbox label="night" v-model="shift" value="night"></v-checkbox>
         </div>
 
         <br>
@@ -853,7 +848,6 @@ export default {
       if (!this.sanitizeQuillInput(this.description, 'description')) { this.valid = false; }
       if (!this.sanitizeQuillInput(this.responsibilities, 'responsibilities')) { this.valid = false; }
       if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
-      if (this.shift.length <= 0) { this.valid = false; }
       if (this.longitude == null || this.latitude == null) { this.valid = false; }
       if (!this.selectedPositions || this.selectedPositions.length === 0) { this.valid = false; }
       if (showDialog && this.valid) {
