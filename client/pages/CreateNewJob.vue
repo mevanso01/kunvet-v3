@@ -473,12 +473,12 @@
             v-model="notes"
             style="padding: 0 2px;"
             class="optional"
-            placeholder="Type here..."
+            placeholder="e.g. Please walk-in from 11 - 2pm for interviews"
             hide-details
             multi-line
             rows=1
           ></v-text-field>
-        </div>-->
+        </div>
         </v-form>
 
         <br>
