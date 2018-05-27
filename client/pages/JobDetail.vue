@@ -285,7 +285,7 @@
             {{ findJob.notes }}
             </p>
           </div>
-          <p style="margin-bottom: 5px;">This particular employer prefers you apply through this Google Form:</p>
+          <p style="margin-bottom: 5px;">This particular employer prefers you apply through this simple form:</p>
           <a :href="findJob.gform_link" target="_blank"><u>{{ findJob.gform_link }}</u></a>
         </div>
       </v-card>
