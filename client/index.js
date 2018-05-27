@@ -152,6 +152,20 @@ const router = new VueRouter({
   ],
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.path !== '/login' || to.query.redirect) {
+    next();
+    return;
+  }
+
+  next({
+    path: '/login',
+    query: {
+      redirect: from.path,
+    },
+  });
+});
+
 router.afterEach(() => {
   Vue.nextTick(() => {
     document.title = Title.getTitle('');
