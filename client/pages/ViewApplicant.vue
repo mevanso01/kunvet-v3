@@ -468,9 +468,9 @@ export default {
           this.data.status = res.status;
           this.data.degree = degreeDbToString(res.degree);
           this.data.major = res.major;
-          if (res.resume && res.resume.filename) {
+          if (res.resumes && res.resumes[0].filename) {
             this.hasResume = true;
-            this.loadResume(res.resume);
+            this.loadResume(res.resumes[0]);
           } else {
             this.hasResume = false;
           }

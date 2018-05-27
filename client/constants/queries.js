@@ -73,7 +73,7 @@ const FindApplicantRecord = `
   major
   date
   expiry_date
-  resume {
+  resumes {
     filename
     resumeid
   }

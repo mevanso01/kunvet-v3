@@ -313,15 +313,20 @@
               rows=3
               hide-details
             ></v-text-field>-->
-            <h3>Select resume to send</h3>
-            <v-radio-group class="kunvet-red no-padding" v-if="resumes.length > 0" v-model="selectedResume" hide-details>
+            <h3>Select files to send</h3>
+            <div v-if="resumes.length > 0">
+              <v-checkbox v-for="resume in resumes" class="kunvet-red"
+                :label="resume.name" v-model="selectedResumes" :value="resume.filename" hide-details>
+              </v-checkbox>
+            </div>
+            <!--<v-radio-group class="kunvet-red no-padding"  v-model="selectedResume" hide-details>
               <v-radio v-for="(resume, index) in resumes"
                 class="kunvet-red"
                 :key="index"
                 :label="resume.name"
                 :value="resume.filename">
               </v-radio>
-            </v-radio-group>
+            </v-radio-group>-->
             <p v-else>You have no resumes yet!</p>
             <div style="font-size: 12px; text-align: center; margin-bottom: 5px;">
               <span v-if="state === 'ERROR'" style="color: red;">{{ errorMessage }}</span>
@@ -337,7 +342,7 @@
                   application/vnd.oasis.opendocument.text"
                 class="input-file"
               >
-              <p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume</p>
+              <p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume or cover letter</p>
             </div>
             <br>
             <br>
@@ -366,9 +371,9 @@
             <div v-else class="pb-2">
               No message body
             </div>-->
-            <div v-if="selectedResume" class="pb-3">
-              Selected resume:
-              <p class="small-p">{{ selectedResumeName }}</p>
+            <div v-if="selectedResumes.length > 0" class="pb-3">
+              Selected files:
+              <p class="small-p" v-for="file in selectedResumeNames">{{ file }}</p>
             </div>
             <div v-else class="pb-3" style="color: #f00;">
               No resume selected!
@@ -376,9 +381,10 @@
           </div>
           <div v-else-if="applyState === 'SUCCESS'">
             <h3>What's next?</h3>
-            <p>Look out for follow-up emails from the employer.</p>
-            <!--<p>You'll recieve an email from us if the employer accepts or declines your application.</p>-->
-            <p>You can find your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.</p>
+            <p>
+              Look out for follow-up emails from the employer.<br>
+              You can find your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.
+            </p>
           </div>
           <div v-else-if="applyState === 'ERROR'">
             <h3>Oh no, an error occured!</h3>
@@ -474,7 +480,7 @@ export default {
         wechat_id: null,
       },
       resumes: [],
-      selectedResume: null, // file id
+      selectedResumes: [], // file id
       userdatafetched: false,
       applied: false,
       saved: false,
@@ -494,14 +500,16 @@ export default {
     sanitizedDescription() {
       return sanitizeHtml(this.findJob.description);
     },
-    selectedResumeName() {
-      if (this.selectedResume) {
-        const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
+    selectedResumeNames() {
+      if (this.selectedResumes.length > 0) {
+        /* (const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
         if (index !== -1) {
           return this.resumes[index].name;
-        }
+        } */
+        return this.resumes.filter(r => this.selectedResumes.indexOf(r.filename) !== -1).map(r => r.name);
       }
-      return null;
+      return [];
+      // return null;
     },
     formattedFormLink() {
       if (!this.findJob.gform_link) {
@@ -531,10 +539,8 @@ export default {
         },
       }).then((data) => {
         this.findJob = data.data.findJob;
-
         /*
           Or better, including more details for SEO:
-
           Node.js Developer at Kunvet in Irvine, CA
         */
         this.$setTitle(this.findJob.title);
@@ -753,7 +759,15 @@ export default {
       // validate
       if (this.uid && this.userdata && !this.loading && !this.applied) {
         this.loading = true;
-        const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
+        // const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
+        /* resume: this.resumes.length > 0 ? ({
+          filename: this.resumes[index].filename,
+          resumeid: this.resumes[index].resumeid,
+        }) : null, */
+        const _resumes = this.resumes
+          .map(r => ({ filename: r.filename, resumeid: r.resumeid }))
+          .filter(r => this.selectedResumes.indexOf(r.filename) !== -1);
+        console.log(_resumes);
         const application = {
           user_id: this.uid,
           job_id: this.id,
@@ -762,11 +776,8 @@ export default {
           degree: degreeStringToDb(this.userdata.degree),
           major: this.userdata.major,
           email: this.userdata.email,
+          resumes: _resumes,
           wechat_id: this.userdata.wechat_id,
-          resume: this.resumes.length > 0 ? ({
-            filename: this.resumes[index].filename,
-            resumeid: this.resumes[index].resumeid,
-          }) : null,
           applicant_message: this.message,
         };
         this.$apollo.mutate({
@@ -781,7 +792,7 @@ export default {
                 major
                 email
                 wechat_id
-                resume {
+                resumes {
                   filename
                   resumeid
                 }
