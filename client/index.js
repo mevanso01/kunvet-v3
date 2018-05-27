@@ -172,7 +172,6 @@ router.afterEach(() => {
   });
 });
 
-gtagjs(router, 'UA-93340207-1');
 
 if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line global-require
@@ -183,6 +182,10 @@ if (process.env.NODE_ENV === 'development') {
       component: Sandbox,
     },
   ]);
+}
+
+if (process.env.NODE_ENV === 'production') {
+  gtagjs(router, 'UA-93340207-1');
 }
 
 // Version
