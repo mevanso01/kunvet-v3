@@ -46,6 +46,10 @@ module.exports = {
   sentry: {
     dsn: Credentials.sentryClientDsn,
   },
+  analytics: {
+    googleAnalytics: true,
+    hotjar: true,
+  },
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
 
