@@ -452,7 +452,7 @@
         </v-select>-->
         <v-checkbox
           class="optional"
-          label="Don't send resumes to my email. I have a Google Form."
+          label="Don't send resumes to my email. I have an online form. (This form doesn't ask students to sign-up)"
           v-model="useGForm"
           hide-details
         ></v-checkbox>
@@ -460,7 +460,7 @@
           <v-text-field
             v-model="gformLink"
             label="Google Form url"
-            placeholder="Paste Google Form url here"
+            placeholder="Paste your form url here"
             required
             :rules="[(v) => applyMethod != 'Through Google Forms' || !!v || 'Required']">
           ></v-text-field>
