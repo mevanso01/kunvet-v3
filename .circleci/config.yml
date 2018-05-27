@@ -41,9 +41,9 @@ jobs:
 
       # Make a production build
       - run:
-        command: |
-          if [[ "${CIRCLE_BRANCH}" == "master" ]]; then export NODE_CONFIG_ENV=staging; fi
-          yarn build
+          command: |
+            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then export NODE_CONFIG_ENV=staging; fi
+            yarn build
 
       # Store the artifacts to workspace
       - persist_to_workspace:
