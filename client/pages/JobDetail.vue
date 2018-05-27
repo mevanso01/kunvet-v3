@@ -286,7 +286,7 @@
             </p>
           </div>
           <p style="margin-bottom: 5px;">This particular employer prefers you apply through this simple form:</p>
-          <a :href="findJob.gform_link" target="_blank"><u>{{ findJob.gform_link }}</u></a>
+          <a :href="formattedFormLink" target="_blank"><u>{{ formattedFormLink }}</u></a>
         </div>
       </v-card>
       <v-card v-else class="no-border-radius apply-card" v-show="email_verified">
@@ -433,6 +433,7 @@ import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
 import FileClient from '@/utils/FileClient';
 import queries from '@/constants/queries';
+import parseUrl from 'url-parse';
 
 // const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
@@ -501,6 +502,18 @@ export default {
         }
       }
       return null;
+    },
+    formattedFormLink() {
+      if (!this.findJob.gform_link) {
+        return '';
+      }
+
+      const link = parseUrl(this.findJob.gform_link, {});
+      if (!link.protocol) {
+        link.set('protocol', 'http');
+      }
+
+      return link.href;
     },
   },
   methods: {
