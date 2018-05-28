@@ -452,7 +452,7 @@
         </v-select>-->
         <v-checkbox
           class="optional"
-          label="Don't send resumes to my email. I have an online form that doesn't require sign-up"
+          label="Don't send resumes to my email. I have an online form that doesn't require sign-up."
           v-model="useGForm"
           hide-details
         ></v-checkbox>
