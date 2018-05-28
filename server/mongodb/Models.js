@@ -220,10 +220,10 @@ const ApplicantSchema = Mongoose.Schema({
   },
   major: String,
   notes: String,
-  /* resume: {
+  resume: {
     filename: String,
     resumeid: String,
-  }, */
+  },
   resumes: [{
     filename: String,
     resumeid: String,
