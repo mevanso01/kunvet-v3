@@ -1174,14 +1174,14 @@ export default {
   },
   activated() {
     this.resetData();
-    if (this.$store.state.acct === 2) {
+    if (this.$store.state.acct === 2 && this.$store.state.bdata) {
       this.posted_by = this.$store.state.bdata.business_name;
       this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);
       }
       this.checkIfEmailVerified();
-    } else if (this.$store.state.acct === 1) {
+    } else if (this.$store.state.acct === 1 && this.$store.state.userdata) {
       this.posted_by = `${this.$store.state.userdata.firstname} ${this.$store.state.userdata.lastname}`;
       this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
