@@ -231,6 +231,13 @@
               :rules="[() => !!(address) || !submitted || 'Required',
                        () => !!(latitude) && !!(longitude) || !submitted || 'Invalid address']"
             ></v-text-field>
+            <v-text-field
+              class="optional"
+              v-model="address2"
+              ref="addressField2"
+              placeholder="Apt, Suite, Bldg. (Optional)"
+              label="Address Line 2"
+            ></v-text-field>
             <v-checkbox class="optional" style="margin-top: 16px;"
               label="Is this job on a school campus?"
               v-model="isUniversity"
@@ -580,6 +587,7 @@ const createJobMutation = gql`
         title
         description
         address
+        address2
         university
         latitude
         longitude
@@ -678,6 +686,7 @@ export default {
       title: '',
       date: null,
       address: '',
+      address2: null,
       autocomplete: null,
       latitude: null,
       longitude: null,
@@ -1017,6 +1026,7 @@ export default {
         date: doesJobActivelyExist ? this.date : Date.now(),
         description: this.description,
         address: this.address,
+        address2: this.address2,
         university: this.isUniversity ? this.university : null,
         latitude: this.latitude,
         longitude: this.longitude,
@@ -1052,6 +1062,7 @@ export default {
             date
             description
             address
+            address2
             university
             latitude
             longitude
@@ -1089,6 +1100,7 @@ export default {
           this.active = job.active;
           this.date = job.date;
           this.address = job.address;
+          this.address2 = job.address2;
           this.university = job.university;
           if (job.university) {
             this.isUniversity = true;
@@ -1176,6 +1188,10 @@ export default {
     this.resetData();
     if (this.$store.state.acct === 2 && this.$store.state.bdata) {
       this.posted_by = this.$store.state.bdata.business_name;
+      // Autofill address
+      /* if (this.$store.state.bdata.address) {
+        this.address = this.$store.state.bdata.address;
+      } */
       this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);

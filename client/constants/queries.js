@@ -9,6 +9,7 @@ const FindJobRecord = `
   date
   description
   address
+  address2
   university
   latitude
   longitude

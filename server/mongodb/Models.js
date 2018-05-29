@@ -98,7 +98,9 @@ const JobSchema = Mongoose.Schema({
     enum: ['internship', 'contract', 'other'],
   }],
   address: {
-    // Address
+    type: String,
+  },
+  address2: {
     type: String,
   },
   university: {
@@ -231,6 +233,7 @@ const ApplicantSchema = Mongoose.Schema({
   applicant_message: String,
 });
 
+// Currently Unused
 const ResumeSchema = Mongoose.Schema({
   name: {
     type: String,
