@@ -604,6 +604,8 @@ export default {
       },
       selectedPositionsInital: 'All / Any',
       loadingJobs: false,
+      inUsePositions: [],
+      inUseTypes: [],
     };
   },
   computed: {
@@ -617,6 +619,15 @@ export default {
       return this.availablePositionsObj.filter(item => item.text.toLowerCase().indexOf(str) !== -1);
     },
     availablePositionsObj() {
+      if (this.inUsePositions.length > 0) {
+        return this.availablePositions.map((position) => {
+          const disabled = (this.inUsePositions.indexOf(position) === -1);
+          return {
+            text: position,
+            disabled,
+          };
+        });
+      }
       return this.availablePositions.map((position) => {
         const disabled = !this.filteredJobs.find(
           job => job.position_tags.indexOf(position) !== -1,
@@ -628,10 +639,16 @@ export default {
       });
     },
     availableTypesObj() {
+      if (this.inUseTypes.length > 0) {
+        return this.availableTypes.map((typeObj) => {
+          typeObj.disabled = (this.inUseTypes.indexOf(typeObj.value) === -1);
+          return typeObj;
+        });
+      }
       return this.availableTypes.map((typeObj) => {
         typeObj.disabled = !this.filteredJobs.find(
-          job => job.type.indexOf(typeObj.value) !== -1 &&
-            (!job.type2 || job.type2.indexOf(typeObj.value) !== -1)
+          job => job.type.indexOf(typeObj.value) !== -1 ||
+            (job.type2 && job.type2.indexOf(typeObj.value) !== -1)
           ,
         );
         return typeObj;
@@ -884,6 +901,21 @@ export default {
     isSaved(id) {
       return this.saved_jobs.indexOf(id) > -1;
     },
+    fetchAvailableFilters() {
+      this.$apollo.query({
+        query: gql`{
+          findAvailableFilters(filter: {}){
+            in_use_positions
+            in_use_types
+          }
+        }`,
+      }).then(data => {
+        if (data.data.findAvailableFilters) {
+          this.inUsePositions = data.data.findAvailableFilters.in_use_positions;
+          this.inUseTypes = data.data.findAvailableFilters.in_use_types;
+        }
+      });
+    },
     async loadInitialJobs() {
       if (this.filteredJobs.length === 0) {
         this.loadingJobs = true;
@@ -903,9 +935,11 @@ export default {
       if (findJobs && this.findJobs.length !== findJobs.length) {
         this.findJobs = findJobs;
         this.filterJobs();
+        this.fetchAvailableFilters();
       } else {
         this.loadingJobs = false;
         this.filterJobs();
+        this.fetchAvailableFilters();
       }
     },
   },

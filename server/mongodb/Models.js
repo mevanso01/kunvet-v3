@@ -444,6 +444,10 @@ const AccountSchema = Mongoose.Schema({
     default: false,
   },
 });
+const AvailableFiltersSchema = Mongoose.Schema({
+  in_use_positions: [String],
+  in_use_types: [String],
+});
 AccountSchema.plugin(PassportLocalMongoose, {
   usernameField: 'email',
   usernameLowerCase: true,
@@ -459,4 +463,5 @@ export default {
   Organization: Mongoose.model('Organization', OrganizationSchema),
   File: Mongoose.model('File', FileSchema),
   HDYH: Mongoose.model('HDYH', HowDidYouHearSchema),
+  Filters: Mongoose.model('Filters', AvailableFiltersSchema),
 };

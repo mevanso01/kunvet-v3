@@ -11,6 +11,7 @@ const Account = composeWithMongoose(Models.Account);
 const Applicant = composeWithMongoose(Models.Applicant);
 const Organization = composeWithMongoose(Models.Organization);
 const HDYH = composeWithMongoose(Models.HDYH);
+const Filters = composeWithMongoose(Models.Filters);
 
 // Helper functions
 function wrapResolvers(fn, resolvers) {
@@ -107,8 +108,9 @@ GQC.rootQuery().addFields({
   findJob: Job.get('$findOne'),
   findJobs: Job.get('$findMany'),
 
-  // findAccount: Account.get('$findOne'),
-  // findAccounts: Account.get('$findMany'),
+  // Filters
+  findAvailableFilters: Filters.get('$findOne'),
+
   // Account
   ...wrapResolvers([
     Restrictions.getFilterByUserId('_id'),
