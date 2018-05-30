@@ -32,6 +32,9 @@
  *
  *  * deleteFile(file):          Deletes a file from the storage
  *                               backend.
+ *
+ *  * getBuffer(file):           Retrieves contents of a file as a Buffer.
+ *  * createAttachment(file):    Creates an attachment.
 */
 export default class Storage {
   constructor() {
@@ -58,5 +61,20 @@ export default class Storage {
   }
 
   async deleteFile(file) {
+  }
+
+  async getBuffer(file) {
+  }
+
+  async createAttachment(file) {
+    const buffer = await this.getBuffer(file);
+    const attachment = {
+      // filename: 'test.pdf',
+      contentType: file.mimeType,
+      contentDisposition: 'attachment',
+      content: buffer,
+    };
+    console.log(attachment);
+    return attachment;
   }
 }

@@ -62,4 +62,12 @@ export default class S3 extends Storage {
       Key: file.backendPath,
     }).promise();
   }
+
+  async getBuffer(file) {
+    const data = await this.s3.getObject({
+      Bucket: Config.get('private.files.s3.bucket'),
+      Key: file.backendPath,
+    }).promise();
+    return data.Body;
+  }
 }

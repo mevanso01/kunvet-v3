@@ -50,4 +50,9 @@ export default class Local extends Storage {
       });
     });
   }
+
+  async getBuffer(file) {
+    const lpath = `${this.path}/${file.backendPath}`;
+    return fs.readFileSync(lpath);
+  }
 }
