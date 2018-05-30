@@ -1189,9 +1189,12 @@ export default {
     if (this.$store.state.acct === 2 && this.$store.state.bdata) {
       this.posted_by = this.$store.state.bdata.business_name;
       // Autofill address
-      /* if (this.$store.state.bdata.address) {
+      if (this.$store.state.bdata.address) {
         this.address = this.$store.state.bdata.address;
-      } */
+        const p = this.autocomplete.getPlace();
+        console.log('P', p);
+        this.setPlace(p);
+      }
       this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);
