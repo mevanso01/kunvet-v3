@@ -2,6 +2,7 @@ import composeWithMongoose from 'graphql-compose-mongoose';
 import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
 import Mailer from '@/utils/Mailer';
+import Files from '@/utils/Files';
 import Models from '../mongodb/Models';
 import Restrictions from './Restrictions';
 
@@ -62,21 +63,35 @@ async function sendNewApplicationNotification(req, next) {
     degree = null;
   }
 
+  const locals = {
+    replyTo: user.email,
+    name: `${user.firstname} ${user.lastname}`,
+    fname: user.firstname,
+    jobname: job.title,
+    employername: employer.firstname,
+    email: user.email,
+    degree: degree,
+    school: req.args.record.school,
+    message: req.args.record.applicant_message,
+    attachments: [
+    ],
+  };
+
+  if (req.args.record.resumes) {
+    for (const resume of req.args.record.resumes) {
+      const fileSlot = await Files.get(resume.filename);
+      const backend = Files.getBackend(fileSlot.backend);
+      const attachment = await backend.createAttachment(fileSlot);
+
+      locals.attachments.push(attachment);
+    }
+  }
+
   try {
     await mailer.sendTemplate(
       employer.email,
       'application-created',
-      {
-        replyTo: user.email,
-        name: `${user.firstname} ${user.lastname}`,
-        fname: user.firstname,
-        jobname: job.title,
-        employername: employer.firstname,
-        email: user.email,
-        degree: degree,
-        school: req.args.record.school,
-        message: req.args.record.applicant_message,
-      },
+      locals,
     );
   } catch (e) {
     Logger.error(e);
