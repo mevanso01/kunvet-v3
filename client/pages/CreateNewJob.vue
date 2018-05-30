@@ -688,6 +688,7 @@ export default {
       address: '',
       address2: null,
       autocomplete: null,
+      placeDetails: null,
       latitude: null,
       longitude: null,
       type_str: null,
@@ -1231,11 +1232,14 @@ export default {
       const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
       input.setAttribute('placeholder', '');
       this.autocomplete = new window.google.maps.places.Autocomplete(input);
+      // this.placeDetails =  new window.google.maps.places.details;
       this.autocomplete.addListener('place_changed', () => {
         this.setPlace(this.autocomplete.getPlace());
       });
       /* if (this.address) {
-        const p = this.autocomplete.getPlace();
+        console.log('Address', this.address);
+        // window.google.maps.places.details;
+        const p = this.autocomplete.getPlace(this.address);
         console.log('P', p);
       } */
     });

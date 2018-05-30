@@ -802,7 +802,7 @@ export default {
     compareDistanceAndDate(a, b) {
       const distanceA = this.computeDistance(a.latitude, a.longitude);
       const distanceB = this.computeDistance(b.latitude, b.longitude);
-      if ((distanceA <= 6 && distanceB <= 6) || (distanceA > 6 && distanceB > 6)) {
+      if ((distanceA <= 10 && distanceB <= 10) || (distanceA > 10 && distanceB > 10)) {
         return Date.parse(b.date) - Date.parse(a.date);
       }
       return distanceA - distanceB;
