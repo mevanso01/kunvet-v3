@@ -52,6 +52,9 @@ export default class Mailer {
     if (locals.replyTo) {
       config.message.headers['Reply-To'] = locals.replyTo;
     }
+    if (locals.attachments) {
+      config.message.attachments = locals.attachments;
+    }
     return email.send(config);
   }
   async render(template, locals) {
