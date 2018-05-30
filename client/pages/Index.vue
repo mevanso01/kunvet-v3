@@ -731,7 +731,10 @@ export default {
             }).then((data) => {
               this.loadingJobs = false;
               const job = data.data.findJob;
-              if (this.filterJobByInfo(job, selectedTypes, selectedTypes2)) {
+              if (
+                this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
+                (findIndex(this.filteredJobs, { '_id': job._id }) === -1)
+              ) {
                 this.filteredJobs.push(job);
                 this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
               }
