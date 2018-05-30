@@ -190,7 +190,7 @@ if (process.env.NODE_ENV === 'development') {
 //
 // Always disabled for non-production NODE_ENVs
 // FIXME: Move all tracking IDs to config
-if (process.env.NODE_ENV === 'production' || Config.get('analytics')) {
+if (process.env.NODE_ENV === 'production' && Config.get('analytics')) {
   if (Config.get('analytics.googleAnalytics')) {
     gtagjs(router, 'UA-93340207-1');
   }
