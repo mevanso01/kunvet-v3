@@ -227,9 +227,9 @@
               ref="addressField"
               label="Address"
               required
-              @change="onAddressManuallyChanged"
+              @change="setLatLongs"
               :rules="[() => !!(address) || !submitted || 'Required',
-                       () => !!(latitude) && !!(longitude) || !submitted || 'Invalid address']"
+                       () => (!!(latitude) && !!(longitude)) || addressValid || 'Invalid address']"
             ></v-text-field>
             <v-text-field
               class="optional"
@@ -570,6 +570,7 @@ import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from
 import positions from '@/constants/positions';
 import queries from '@/constants/queries';
 import difference from 'lodash/difference';
+// import axios from 'axios';
 
 Quill.register('modules/wordLimit', (quill, options) => {
   // Options!
@@ -783,6 +784,9 @@ export default {
         biography: null,
         profile_pic: null,
       },
+      geocoder: null,
+      addressValid: true,
+      prevAutocompleteAddress: null,
     };
   },
   computed: {
@@ -831,15 +835,13 @@ export default {
     },
     setPlace(place) {
       if (!place.geometry) {
+        this.addressValid = false;
         return;
       }
+      this.addressValid = true;
       this.address = place.formatted_address;
       this.latitude = place.geometry.location.lat();
       this.longitude = place.geometry.location.lng();
-    },
-    onAddressManuallyChanged() {
-      this.latitude = null;
-      this.longitude = null;
     },
     sanitizeQuillInput(text, property) {
       if (text == null || typeof text !== 'string') {
@@ -1243,6 +1245,8 @@ export default {
         this.bdata.profile_pic = res.profile_pic;
 
         this.posted_by = res.business_name;
+        this.address = res.address;
+        this.setLatLongs();
         this.commitBdata();
       }).catch((error) => {
         this.$error(error);
@@ -1254,6 +1258,28 @@ export default {
         bdata: this.bdata,
       });
     },
+    setLatLongs() {
+      if (!this.geocoder) {
+        this.geocoder = new window.google.maps.Geocoder();
+      }
+      if (this.address !== this.prevAutocompleteAddress) {
+        this.geocoder.geocode({ 'address': this.address }, (results, status) => {
+          if (status === 'OK' && results.length === 1) {
+            console.log('res', results);
+            this.latitude = results[0].geometry.location.lat();
+            this.longitude = results[0].geometry.location.lng();
+            this.addressValid = true;
+            this.$refs.addressField.validate();
+          } else {
+            // console.log('Geocode was not successful for the following reason:', status);
+            this.latitude = null;
+            this.longitude = null;
+            this.addressValid = false;
+            this.$refs.addressField.validate();
+          }
+        });
+      }
+    },
   },
   activated() {
     this.resetData();
@@ -1264,9 +1290,9 @@ export default {
         this.fetchBusinessData(this.$store.state.businessID);
       }
       // Autofill address
-      /* if (this.$store.state.bdata.address && !this.$route.params.id) {
+      if (this.$store.state.bdata.address && !this.$route.params.id) {
         this.address = this.$store.state.bdata.address;
-      } */
+      }
       this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);
@@ -1312,14 +1338,12 @@ export default {
       this.autocomplete = new window.google.maps.places.Autocomplete(input);
       // this.placeDetails =  new window.google.maps.places.details;
       this.autocomplete.addListener('place_changed', () => {
+        this.prevAutocompleteAddress = this.address;
         this.setPlace(this.autocomplete.getPlace());
       });
-      /* if (this.address) {
-        console.log('Address', this.address);
-        // window.google.maps.places.details;
-        const p = this.autocomplete.getPlace(this.address);
-        console.log('P', p);
-      } */
+      if (this.address) {
+        this.setLatLongs();
+      }
     });
   },
 };
