@@ -513,10 +513,24 @@
             </v-card-title>
             <div class="bottom-dialog-button" @click="saveAndPost">
               Save and Post
+              <v-progress-circular indeterminate v-if="loading" class="ma-3" size="30" color="primary"></v-progress-circular>
             </div>
           </v-card>
         </v-dialog>
 
+        <v-dialog v-model="errorOccured">
+          <v-card>
+            <v-card-title>
+              Oh no, an error occured
+            </v-card-title>
+            <v-card-text>
+              Please try again later
+            </v-card-text>
+            <v-card-actions>
+              <v-btn flat="flat" @click.native="errorOccured = false;">Close</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
         <v-dialog v-model="deletePictureModal.show">
           <v-card>
@@ -759,6 +773,16 @@ export default {
           },
         },
       },
+      errorOccured: false,
+      bdata: {
+        business_name: null,
+        address: null,
+        display_email: null,
+        phone_number: null,
+        website: null,
+        biography: null,
+        profile_pic: null,
+      },
     };
   },
   computed: {
@@ -929,6 +953,8 @@ export default {
           }
         }).catch((err) => {
           this.loading = false;
+          this.confirmPost = false;
+          this.errorOccured = true;
           this.$error(err);
         });
       } else {
@@ -1003,6 +1029,8 @@ export default {
           }
         }).catch((err) => {
           this.loading = false;
+          this.confirmPost = false;
+          this.errorOccured = true;
           this.$error(err);
         });
       }
@@ -1184,11 +1212,57 @@ export default {
     resetData() {
       Object.assign(this.$data, this.$options.data.call(this));
     },
+    fetchBusinessData(id) {
+      // this.$debug('fetching business data');
+      this.$apollo.query({
+        query: (gql`query ($bid: MongoID) {
+          findOrganization (filter: {
+            _id: $bid
+          }) {
+            _id
+            business_name
+            address
+            email
+            phone_number
+            website
+            biography
+            profile_pic
+          }
+        }`),
+        variables: {
+          bid: id,
+        },
+      }).then((data) => {
+        const res = data.data.findOrganization;
+        this.bdata.business_name = res.business_name;
+        this.bdata.display_email = res.email;
+        this.bdata.address = res.address;
+        this.bdata.website = res.website;
+        this.bdata.phone_number = res.phone_number;
+        this.bdata.biography = res.biography;
+        this.bdata.profile_pic = res.profile_pic;
+
+        this.posted_by = res.business_name;
+        this.commitBdata();
+      }).catch((error) => {
+        this.$error(error);
+      });
+    },
+    commitBdata() {
+      this.$store.commit({
+        type: 'keepBdata',
+        bdata: this.bdata,
+      });
+    },
   },
   activated() {
     this.resetData();
-    if (this.$store.state.acct === 2 && this.$store.state.bdata) {
-      this.posted_by = this.$store.state.bdata.business_name;
+    if (this.$store.state.acct === 2 && this.$store.state.businessID) {
+      if (this.$store.state.bdata && this.$store.state.bdata.business_name) {
+        this.posted_by = this.$store.state.bdata.business_name;
+      } else {
+        this.fetchBusinessData(this.$store.state.businessID);
+      }
       // Autofill address
       /* if (this.$store.state.bdata.address && !this.$route.params.id) {
         this.address = this.$store.state.bdata.address;
@@ -1207,8 +1281,12 @@ export default {
       this.checkIfEmailVerified();
     } else {
       VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-        if (data.acct === 2) {
-          this.posted_by = data.bdata.business_name;
+        if (data.acct === 2 && data.businessID) {
+          if (data.bdata && data.bdata.business_name) {
+            this.posted_by = data.bdata.business_name;
+          } else {
+            this.fetchBusinessData(data.businessID);
+          }
           this.uid = data.userID;
           if (this.$route.params.id) {
             this.getEditJobData(this.$route.params.id);

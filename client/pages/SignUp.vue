@@ -154,6 +154,7 @@
                   <v-text-field
                     label="E-mail"
                     v-model="email"
+                    type="email"
                     :rules="emailRules"
                     required
                   ></v-text-field>
