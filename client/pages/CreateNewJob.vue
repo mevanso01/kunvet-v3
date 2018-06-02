@@ -1284,15 +1284,19 @@ export default {
   activated() {
     this.resetData();
     if (this.$store.state.acct === 2 && this.$store.state.businessID) {
-      if (this.$store.state.bdata && this.$store.state.bdata.business_name) {
-        this.posted_by = this.$store.state.bdata.business_name;
+      if (this.$store.state.bdata) {
+        if (this.$store.state.bdata.business_name) {
+          this.posted_by = this.$store.state.bdata.business_name;
+        }
+        // Autofill address
+        if (this.$store.state.bdata.address && !this.$route.params.id) {
+          this.address = this.$store.state.bdata.address;
+        }
       } else {
+        // no business data in localstorage
         this.fetchBusinessData(this.$store.state.businessID);
       }
-      // Autofill address
-      if (this.$store.state.bdata.address && !this.$route.params.id) {
-        this.address = this.$store.state.bdata.address;
-      }
+
       this.uid = this.$store.state.userID;
       if (this.$route.params.id) {
         this.getEditJobData(this.$route.params.id);

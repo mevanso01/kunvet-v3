@@ -6,7 +6,7 @@
           <h1 style="margin-bottom: 10px;">{{ title }}</h1>
           <div class="dropbox">
             <input
-              type="file" id="file-input"
+              type="file" ref="file_input"
               :disabled="state === 'UPLOADING'"
               @change="updateFile($event.target.files)"
               accept="image/*"
@@ -249,7 +249,8 @@ export default {
       this.reset();
     },
     reset() {
-      document.getElementById('file-input').value = '';
+      // document.getElementById('file-input').value = '';
+      this.$refs.file_input.value = '';
       this.curId = null;
       this.curCroppedId = null;
       this.files = [];

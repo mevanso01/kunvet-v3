@@ -69,6 +69,7 @@
 .job-detail-container .bottom-container {
   display: flex;
   height: 48px;
+  background-color: #fff;
 }
 .orange-row {
   /* color: white;
@@ -149,9 +150,19 @@
     min-width: 400px !important;
   }
 }
+@media (max-width: 960px) {
+  .job-detail-container .bottom-container.stick-to-bottom {
+    position: fixed;
+    bottom: 0;
+  }
+  .job-detail-container .height-helper {
+    height: 48px;
+    width: 100%;
+  }
+}
 </style>
 <template>
-  <v-container fluid style="padding-left: 0; padding-right: 0;">
+  <v-container fluid style="padding-left: 0; padding-right: 0;" id="job-detail-container">
     <div class="main-cont-large job-detail-container">
       <div class="sub-container">
           <!--<router-link to="/">Back</router-link>-->
@@ -259,7 +270,7 @@
             </v-layout>
           </v-container>
 
-          <div class="bottom-container">
+          <div class="bottom-container" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">
               <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
                 outline class="red--text darken-1" @click="apply">
                 {{ applied ? 'Applied' : 'Apply' }}
@@ -268,6 +279,9 @@
                 <img v-if="saved" :src="svgs.savedIcon"/>
                 <img v-else :src="svgs.notSavedIcon"/>
               </a>
+          </div>
+          <div class="height-helper" v-show="stickToBottom">
+
           </div>
       </div>
     </div>
@@ -494,6 +508,7 @@ export default {
       client: null,
       email_verified: true,
       message: null,
+      stickToBottom: true,
     };
   },
   computed: {
@@ -525,6 +540,26 @@ export default {
     },
   },
   methods: {
+    handleScroll() {
+      /* const el = document.getElementById('bottom-container');
+      // console.log(el);
+      if (el) {
+        if (this.isNotAtBottom()) {
+          el.classList.add('stick-to-bottom');
+        } else {
+          el.classList.remove('stick-to-bottom');
+        }
+      } */
+      this.stickToBottom = this.isNotAtBottom();
+    },
+    isNotAtBottom() {
+      const footer = document.getElementById('bottom');
+      var distanceToBottom = document.documentElement.scrollHeight - document.documentElement.offsetHeight - document.documentElement.scrollTop;
+      if (distanceToBottom < (footer.offsetHeight + 25)) {
+        return false;
+      }
+      return true;
+    },
     getData() {
       this.$apollo.query({
         query: (gql`query ($JobId: MongoID) {
@@ -962,6 +997,15 @@ export default {
   activated() {
     this.resetData();
     this.getData();
+    // HACK
+    // this.handleScroll();
+    // const cont = document.getElementById('job-detail-container');
+    if (document.documentElement.offsetWidth <= 960) {
+      this.stickToBottom = true;
+    } else {
+      this.stickToBottom = false;
+    }
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
     if (this.$store.state.userID) {
       this.uid = this.$store.state.userID;
       this._checkIsApplied();
@@ -974,6 +1018,9 @@ export default {
         }
       });
     }
+  },
+  deactivated() {
+    window.removeEventListener('scroll', this.handleScroll, { passive: true });
   },
 };
 </script>
