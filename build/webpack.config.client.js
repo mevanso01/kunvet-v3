@@ -29,6 +29,7 @@ const wpconf = {
     filename: '[name].[hash].js',
     path: utils.resolve('dist/client'),
     publicPath: '/',
+    globalObject: 'this',
   },
   resolve: {
     extensions: ['.mjs', '.js', '.vue', '.json'],
