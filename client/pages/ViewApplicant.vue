@@ -239,36 +239,24 @@
             <v-divider class="acct-divider"/>
 
             <div style="width: 100%">
-                <account-header
-                  :svg="svgs.resume"
-                  :text="'Resume'"
+              <account-header
+                :svg="svgs.resume"
+                :text="'Resume'"
+              />
+              <div v-if="resumes.length == 0">
+                This applicant has not provided a resume.
+              </div>
+              <div v-for="(resume, index) in resumes" :key="resume.src">
+                <span v-if="resumes.length > 1">
+                  {{ index + 1 }} of {{ resumes.length }}
+                </span>
+                <PdfFrame
+                  v-if="resume.src"
+                  :href="resume.src"
                 />
-                <p v-if="resumeloading && hasResume">
-                  Loading...
-                </p>
-                <p v-if="!hasResume">
-                  This applicant has not provided a resume.
-                </p>
-                <template v-else>
-                  <PdfFrame
-                    v-if="src"
-                    :href="src"
-                    :page="page"
-                    @loaded="onResumeLoaded"
-                    @failed="onResumeFailed"
-                  />
-                  <p v-if="resumeGone">Resume not found.</p>
-                  <template v-if="fallback">
-                    <iframe
-                      ref="fallbackFrame"
-                      v-if="docurl && iframeDisplayable"
-                      :src="docurl"
-                      style="width: 100%; height: 1200px; overflow: hidden">
-                    </iframe>
-                    <p v-if="!iframeDisplayable">This resume cannot be displayed. Please download.</p>
-                    <v-btn :href="docurl || src" target="_blank">Download resume</v-btn>
-                  </template>
-                </template>
+                <p v-else>Resume gone.</p>
+                <v-btn :href="resume.src" target="_blank">Download resume</v-btn>
+              </div>
             </div>
           </section>
     </div>
@@ -317,7 +305,6 @@
 import axios from 'axios';
 import gql from 'graphql-tag';
 import Config from 'config';
-import Mime from 'mime-types';
 import PdfFrame from '@/components/PdfFrame';
 
 import { degreeDbToString } from '@/constants/degrees';
@@ -373,33 +360,17 @@ export default {
         showAccept: false,
         showReject: false,
       },
-      page: 1,
       loading: false,
       errorOccured: false,
       serverUrl: Config.get('serverUrl'),
       profile_pic_url: undefined,
-      resumeloading: true,
-      resumeGone: false,
-      fallback: false,
-      hasResume: true,
+      rawResumes: [],
     };
   },
   methods: {
     updateNotes(currentNotes) {
       this.editingNotes = true;
       this.newNotes = currentNotes;
-    },
-    onResumeLoaded() {
-      this.resumeloading = false;
-      this.resumeGone = false;
-    },
-    onResumeFailed(e) {
-      this.resumeloading = false;
-      if (e.name === 'MissingPDFException') {
-        this.resumeGone = true;
-      } else {
-        this.fallback = true;
-      }
     },
     saveNotes(text) {
       this.editingNotes = false;
@@ -468,12 +439,7 @@ export default {
           this.data.status = res.status;
           this.data.degree = degreeDbToString(res.degree);
           this.data.major = res.major;
-          if (res.resumes && res.resumes[0].filename) {
-            this.hasResume = true;
-            this.loadResume(res.resumes[0]);
-          } else {
-            this.hasResume = false;
-          }
+          this.rawResumes = res.resumes;
           this.loadProfilePic(res.user_id);
           if (res.status === 'submitted') {
             this.updateApplicantStatus('opened');
@@ -482,12 +448,6 @@ export default {
         .catch(error => {
           this.$error(error);
         });
-    },
-    async loadResume(resume) {
-      this.$debug('Loading resume:', resume);
-      const url = FileClient.getLink(resume.filename);
-      this.docurl = `${url}#embedded=true`;
-      this.src = url;
     },
     async loadProfilePic(userId) {
       try {
@@ -576,13 +536,6 @@ export default {
         this.$error(error);
       });
     },
-    onResize() {
-      if (this.fallback) {
-        const ratio = 1.3;
-        const width = this.$refs.fallbackFrame.clientWidth;
-        this.$refs.fallbackFrame.style.height = `${width * ratio}px`;
-      }
-    },
   },
   computed: {
     isAcceptedOrRejected() {
@@ -595,14 +548,13 @@ export default {
         status.charAt(0).toUpperCase() + status.substring(1, status.length)
       );
     },
-    iframeDisplayable() {
-      const url = this.docurl.indexOf('#') !== -1 ? this.docurl.substring(0, this.docurl.indexOf('#')) : this.docurl;
-      return Mime.lookup(url) === 'application/pdf';
-    },
-  },
-  watch: {
-    src() {
-      this.resumeloading = true;
+    resumes() {
+      // eslint-disable-next-line
+      return this.rawResumes.map((resume) => {
+        return {
+          src: FileClient.getLink(resume.filename),
+        };
+      });
     },
   },
   activated() {
