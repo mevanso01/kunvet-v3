@@ -154,6 +154,9 @@
   .job-detail-container .bottom-container.stick-to-bottom {
     position: fixed;
     bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 15px;
   }
   .job-detail-container .height-helper {
     height: 48px;
