@@ -46,10 +46,6 @@ import ApiResponse from '@/utils/ApiResponse';
 import Config from 'config';
 import uuidv1 from 'uuid/v1';
 
-// Storage backend
-import LocalStorage from '@/storages/Local';
-import S3Storage from '@/storages/S3';
-
 // Node
 import path from 'path';
 import fs from 'fs';
@@ -303,7 +299,7 @@ router.get('/get/:id', async (ctx) => {
     await fileSlot.save();
   }
 
-  const backend = getBackend(fileSlot.backend);
+  const backend = Files.getBackend(fileSlot.backend);
 
   // Retrieve the URL from backend
   const url = await backend.getLink(fileSlot);
@@ -358,7 +354,7 @@ router.post('/delete/:id', async (ctx) => {
   }
 
   if (!usedInApplication && fileSlot) {
-    const backend = getBackend(fileSlot.backend);
+    const backend = Files.getBackend(fileSlot.backend);
     try {
       await backend.deleteFile(fileSlot);
     } catch (e) {
