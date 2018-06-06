@@ -11,6 +11,7 @@ const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const HappyPack = require('happypack');
 const utils = require('./utils');
 
 const ErrorCodeInternal = require('../common/ErrorCodeInternal');
@@ -108,7 +109,7 @@ const wpconf = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader?cacheDirectory',
+        loader: 'happypack/loader',
         exclude: /node_modules/,
         options: {
           plugins: ['@babel/plugin-transform-async-to-generator'],
@@ -133,6 +134,11 @@ const wpconf = {
     ],
   },
   plugins: [
+    new HappyPack({
+      loaders: [
+        'babel-loader?cacheDirectory',
+      ],
+    }),
     new webpack.DefinePlugin({
       'process.env.COMMIT': JSON.stringify(gitRev.commithash()),
     }),
