@@ -62,7 +62,7 @@
             <v-container fluid grid-list-sm style="margin-top: 8px;">
               <v-layout row wrap>
                 <v-flex v-if="job.images" xs4 v-for="image in job.images.concat().splice(0, 3)">
-                  <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="lorem" width="100%" height="100%">
+                  <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="Image" width="100%" height="100%">
                 </v-flex>
               </v-layout>
             </v-container>
