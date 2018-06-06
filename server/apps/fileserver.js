@@ -40,6 +40,7 @@ import Mongoose from 'mongoose';
 // Utils
 import ErrorCode from '#/ErrorCode';
 import Models from '@/mongodb/Models';
+import Files from '@/utils/Files';
 import Middlewares from '@/utils/Middlewares';
 import ApiResponse from '@/utils/ApiResponse';
 import Config from 'config';
@@ -66,27 +67,6 @@ const upload = KoaMulter({
     },
   }),
 });
-
-const backendCache = {};
-function getBackend(name) {
-  if (backendCache[name]) {
-    return backendCache[name];
-  }
-
-  let backend;
-  switch (name) {
-    case 'local':
-      backend = new LocalStorage();
-      break;
-    case 's3':
-      backend = new S3Storage();
-      break;
-    default:
-      throw Error('Unknown backend');
-  }
-  backendCache[name] = backend;
-  return backend;
-}
 
 router.post('/create', Middlewares.RequireAuth, async (ctx) => {
   const req = ctx.request.body;
@@ -155,7 +135,7 @@ router.get('/rupload/:id', Middlewares.RequireAuth, async (ctx) => {
     await fileSlot.save();
   }
 
-  const backend = getBackend(fileSlot.backend);
+  const backend = Files.getBackend(fileSlot.backend);
   const instructions = await backend.requestUpload(fileSlot);
 
   if (instructions.action !== 'localUpload') {
@@ -240,7 +220,7 @@ router.put('/lupload/:id', upload.single('file'), async (ctx) => {
     fileSlot.backend = Config.get('private.files.defaultStorage');
   }
 
-  const backend = getBackend(fileSlot.backend);
+  const backend = Files.getBackend(fileSlot.backend);
   try {
     fileSlot.backendPath = await backend.localUpload(fileSlot, file.path);
   } catch (e) {
@@ -272,9 +252,7 @@ router.get('/get/:id', async (ctx) => {
   const fileId = ctx.params.id;
   let fileSlot = null;
   try {
-    fileSlot = await Models.File.findOne({
-      _id: fileId,
-    });
+    fileSlot = await Files.get(fileId);
   } catch (e) {
     // Invalid slot
 
@@ -359,9 +337,7 @@ router.post('/delete/:id', async (ctx) => {
   const fileId = ctx.params.id;
   let fileSlot = null;
   try {
-    fileSlot = await Models.File.findOne({
-      _id: fileId,
-    });
+    fileSlot = await Files.get(fileId);
   } catch (e) {
     const response = {
       success: false,
