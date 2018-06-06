@@ -1000,9 +1000,6 @@ export default {
   activated() {
     this.resetData();
     this.getData();
-    // HACK
-    // this.handleScroll();
-    // const cont = document.getElementById('job-detail-container');
     if (document.documentElement.offsetWidth <= 960) {
       this.stickToBottom = true;
     } else {

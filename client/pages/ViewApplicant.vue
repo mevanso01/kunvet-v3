@@ -254,8 +254,9 @@
                   v-if="resume.src"
                   :href="resume.src"
                 />
-                <p v-else>Resume gone.</p>
-                <v-btn :href="resume.src" target="_blank">Download resume</v-btn>
+                <p v-else>File gone.</p>
+                <v-btn :href="resume.src" target="_blank" outline style="margin-left: 0;">Download file</v-btn>
+                <v-divider v-if="index < (resumes.length - 1)" style="margin-top: 16px; margin-bottom: 8px;"></v-divider>
               </div>
             </div>
           </section>
