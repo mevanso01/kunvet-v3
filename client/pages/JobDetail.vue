@@ -544,15 +544,6 @@ export default {
   },
   methods: {
     handleScroll() {
-      /* const el = document.getElementById('bottom-container');
-      // console.log(el);
-      if (el) {
-        if (this.isNotAtBottom()) {
-          el.classList.add('stick-to-bottom');
-        } else {
-          el.classList.remove('stick-to-bottom');
-        }
-      } */
       this.stickToBottom = this.isNotAtBottom();
     },
     isNotAtBottom() {
