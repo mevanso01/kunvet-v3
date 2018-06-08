@@ -79,13 +79,14 @@
 }
 .createnewjob-container .optional,
 .createnewjob-container .optional_p,
-.createnewjob-container .optional label,
+.createnewjob-container .optional .input-group:not(.input-group--error) label,
+.createnewjob-container .optional.input-group:not(.input-group--error) label,
 .createnewjob-container .optional i,
-.createnewjob-container .optional .input-group__input {
+.createnewjob-container .optional .input-group__input:not(.input-group--error) {
   color: #02bbd6 !important;
 }
 .createnewjob-container .optional.input-group:not(.input-group--error) .input-group__details:before,
-.createnewjob-container .optional.input-group--text-field .input-group__details:before {
+.createnewjob-container .optional.input-group--text-field:not(.input-group--error) .input-group__details:before {
   background-color: #02bbd6 !important;
 }
 .error_h3 {
