@@ -45,6 +45,7 @@ module.exports = {
   // Sentry
   sentryClientDsn: '',
   sentryServerDsn: '',
+  sentryAuthToken: '',
 
   // Please read on
   REMOVEMEPLS: `
