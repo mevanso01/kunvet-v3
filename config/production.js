@@ -63,7 +63,6 @@ module.exports = {
     },
     sentry: {
       dsn: Credentials.sentryServerDsn,
-      authToken: Credentials.sentryAuthToken,
     },
     files: {
       defaultStorage: 's3',

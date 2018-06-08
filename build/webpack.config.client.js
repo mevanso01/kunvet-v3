@@ -11,7 +11,6 @@ const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const SentryCliPlugin = require('@sentry/webpack-plugin');
 const HappyPack = require('happypack');
 const utils = require('./utils');
 
@@ -22,11 +21,6 @@ const staticConfig = Object.assign({}, Config);
 delete staticConfig.private;
 
 const gitRev = new GitRevisionPlugin();
-
-// Sentry environment variables
-process.env.SENTRY_AUTH_TOKEN = Config.private.sentry.authToken;
-process.env.SENTRY_ORG = 'kunvet';
-process.env.SENTRY_PROJECT = 'client';
 
 const wpconf = {
   entry: {
@@ -186,12 +180,6 @@ const wpconf = {
     new PreloadWebpackPlugin({
       rel: 'preload',
       include: ['employee', 'auth', 'account'],
-    }),
-    new SentryCliPlugin({
-      include: 'dist/client',
-      ignoreFile: '.sentrycliignore',
-      ignore: ['node_modules', 'webpack.config.js'],
-      debug: true,
     }),
   ],
   optimization: {
