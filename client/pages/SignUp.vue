@@ -325,6 +325,7 @@ export default {
           this.chosenForm = 'not verified';
         } else {
           this.chosenForm = 'error';
+          this.$error(new KunvetError(res.data));
         }
       }, (error) => {
         this.chosenForm = 'error';
