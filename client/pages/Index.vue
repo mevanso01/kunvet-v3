@@ -136,6 +136,9 @@
     float: left;
     display: inline-block;
   }
+  .fs-select-cities {
+    width: 100%; /* use only when positions is not present */
+  }
   .firstSearch .fsSelect .input-group__input {
     padding-top: 3px;
   }
@@ -259,13 +262,17 @@
   <v-container fluid class="home-page-cont pa-0">
     <div class="main-cont-large" v-if="firstSearch">
       <section class="firstSearch">
-        <div style="padding-bottom: 30px; text-align: right;">
-          <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
-          <h2 style="color: #333;">Find nearby jobs for students like you</h2>
-        </div>
-        <v-layout align-center justify-space-between row spacer slot="header" style="padding-bottom: 10px;">
-          <v-flex xs10 sm10 md11 style="height: 48px;"
-            no-wrap class="grey--text no-padding fsSelect">
+        <v-layout row wrap>
+          <v-flex xs12 sm11 md10>
+            <div style="padding-bottom: 15px; text-align: right;">
+              <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
+              <h2 style="color: #333;">Find nearby jobs for students like you</h2>
+            </div>
+          </v-flex>
+        </v-layout>
+        <v-layout row wrap style="padding-bottom: 10px;">
+          <v-flex xs10 offset-sm2 sm7 offset-md3 md6 style="height: 48px;"
+            class="grey--text no-padding fsSelect">
             <v-select class="no-padding fs-select-cities" style="height: 46px;"
               label="City or School"
               item-text="name"
@@ -277,7 +284,7 @@
               hide-details
             >
             </v-select>
-            <v-select class="no-padding fs-select-positions" style="border-left: 1px solid #eee; height: 46px;"
+            <!--<v-select class="no-padding fs-select-positions" style="border-left: 1px solid #eee; height: 46px;"
               label="All jobs nearby"
               :items="availablePositionsObj"
               item-text="text"
@@ -289,7 +296,7 @@
               hide-details
               multiple
             >
-            </v-select>
+            </v-select>-->
           </v-flex>
           <v-flex xs2 sm2 md1 class="no-padding fsGoBtn" @click="searchGo" v-ripple>
             <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>

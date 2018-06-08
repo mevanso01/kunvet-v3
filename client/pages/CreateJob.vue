@@ -5,6 +5,57 @@
   <v-container fluid class="create-job-container">
     <div class="main-cont-large">
 
+      <div style="width: auto; height: 80px;"></div>
+      <v-layout row wrap>
+        <v-flex xs12 sm9 md6 class="padding-15px-right-sm-up">
+          <v-text-field
+            v-model="address"
+            ref="addressField"
+            label="Address"
+            required
+            @change="setLatLongs"
+            :rules="[() => !!(address) || !submitted || 'Required',
+                     () => (!!(latitude) && !!(longitude)) || addressValid || 'Invalid address']"
+          ></v-text-field>
+          <v-text-field
+            class="optional"
+            v-model="address2"
+            ref="addressField2"
+            placeholder="Apt, Suite, Bldg. (Optional)"
+            label="Address Line 2"
+            hide-details
+          ></v-text-field>
+          <v-checkbox class="optional" style="margin-top: 16px;"
+            label="Is this job on a school campus?"
+            v-model="isUniversity"
+            hide-details
+          ></v-checkbox>
+          <v-select class="optional no-padding-select"
+            v-if="isUniversity"
+            label="Which one?"
+            v-model="university"
+            v-bind:items="schools"
+            autocomplete
+            hide-details
+            single-line
+          ></v-select>
+        </v-flex>
+      </v-layout>
+
+
+      <div style="max-width: 500px;">
+        <v-select
+          label="Position Tags"
+          :items="availablePositions"
+          autocomplete
+          multiple
+          attach
+        >
+        </v-select>
+        <!-- allow-overflow attach -->
+        <!--<div id="test" style="width: auto; height: auto;"></div>-->
+      </div>
+      <div style="width: auto; height: 300px;"></div>
     </div>
   </v-container>
 </template>

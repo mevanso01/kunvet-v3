@@ -119,6 +119,10 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateNewJob'),
     },
     {
+      path: '/createjob',
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
+    },
+    {
       path: '/view-applicant/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/ViewApplicant'),
       props: true,

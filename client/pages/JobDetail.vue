@@ -412,7 +412,7 @@
           class="bottom-dialog-button"
           v-bind:class="{'disabled': loading}"
           @click="applyAffirmativeButton">
-          <v-progress-circular indeterminate v-if="loading" class="ma-3" size="30" color="primary"></v-progress-circular>
+          <v-progress-circular indeterminate v-if="loading" class="ma-3" size="30" color="white"></v-progress-circular>
           <span v-else-if="applyState === 'CONFIRM'">Apply</span>
           <span v-else>Continue</span>
         </div>

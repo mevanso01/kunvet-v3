@@ -100,7 +100,7 @@ async function sendNewApplicationNotification(req, next) {
 
   try {
     employer.notifications.push({
-      text: `New applicant: ${user.firstname} ${user.lastname}`,
+      text: `New applicant: ${user.firstname} ${user.lastname}`, // Important: change code in applicants.vue before removing
       route: '/applicants',
       notification_type: 'application',
       date: Date.now,

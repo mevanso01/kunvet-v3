@@ -5,7 +5,13 @@
     <div class="main-cont-large">
       <v-layout row wrap>
         <v-flex xs12 v-if="jobs.length === 0">
-          You have no jobs.
+          <div v-if="pageLoading" style="margin-top: 48px;">
+            <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
+            style="display: block; margin: auto !important;"></v-progress-circular>
+          </div>
+          <div v-else>
+            You have no jobs.
+          </div>
         </v-flex>
         <template
           v-if="jobs.length > 0"
@@ -171,6 +177,7 @@
   import VuexLS from '@/store/persist';
   import axios from 'axios';
   import differenceBy from 'lodash/differenceBy';
+  import EventBus from '@/EventBus';
 
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import KunvetCharacterSvg from '@/assets/account/default_profile_picture.svg';
@@ -204,6 +211,7 @@
     },
     data() {
       return {
+        pageLoading: true,
         loading: false,
         // user: null,
         jobs: [],
@@ -254,6 +262,7 @@
         const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
         const applicants = resolved.reduce((total, curr) => total.concat(curr), []);
         this.jobs = jobs;
+        this.pageLoading = false; // make sure spinner is not spinning
         this.applicants = [];
         for (var i = 0; i < applicants.length; i++) {
           const applicant = applicants[i];
@@ -381,9 +390,9 @@
         this.updateApplicantStatus('rejected');
       },
       openApplication(item) {
-        /* if (item.status === 'submitted') {
-          this.updateApplicantStatus('opened', item._id);
-        } */
+        if (item.status === 'submitted') {
+          EventBus.$emit('removeNotification', `New applicant: ${item.name}`);
+        }
         this.$router.push(`view-applicant/${item._id}`);
       },
       resetDialogState() {

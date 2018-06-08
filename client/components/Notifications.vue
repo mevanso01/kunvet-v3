@@ -121,6 +121,13 @@ export default {
     EventBus.$on('setNotifications', notifications => {
       this.notifications = notifications;
     });
+    EventBus.$on('removeNotification', notificationText => {
+      const index = this.notifications.findIndex(n => n.text === notificationText);
+      if (index !== -1) {
+        this.notifications.splice(index, 1);
+        EventBus.$emit('setNotifications', this.notifications);
+      }
+    });
     if (!this.loaded) {
       this.getNotifications();
     }

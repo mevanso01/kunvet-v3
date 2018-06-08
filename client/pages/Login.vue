@@ -55,7 +55,8 @@ a:hover{
             </section>
             <div v-if="loggedIn==0" id="general-submit" @click="submit">
                 <div id="general-submit-default">
-                    <span>LOGIN</span>
+                    <v-progress-circular indeterminate v-if="loading" size="30" style="margin-top: 17px" color="white"></v-progress-circular>
+                    <span v-else>LOGIN</span>
                 </div>
             </div>
 
@@ -72,7 +73,7 @@ a:hover{
 
 
         <div v-show="forgetpwd==1">
-            <section class="login-section">
+            <section v-if="!sent" class="login-section">
                 <h2>Forgot Password?</h2>
                     <p>No worries! Simply fill out the email of your account to reset it.</p>
                     <v-form v-model="valid" ref="form2">
@@ -92,23 +93,33 @@ a:hover{
                     <p id="forgot-password" class="center" style="color: #616161;">
                       <a @click="forgetpwd=0" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
                     </p>
+            </section>
+
+            <section v-if="sent" class="login-section">
+                <p>
+                  Success! If <b>{{ email }}</b> exists in our database you will receive an email shortly.
+                </p>
+                <p id="forgot-password" class="center" style="color: #616161;">
+                  <a @click="forgetpwd=0;" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                </p>
 
             </section>
 
             <div v-show="!sent" id="general-submit" @click="requestPasswordReset">
                 <div id="general-submit-default">
-                    <span>Request password reset</span>
+                    <v-progress-circular indeterminate v-if="loading" size="30" style="margin-top: 17px" color="white"></v-progress-circular>
+                    <span v-else>Request password reset</span>
                 </div>
             </div>
 
-            <v-alert
+            <!--<v-alert
                 color="green darken-1" style="margin-bottom: 0;"
                 icon="check_circle"
                 :value="sent"
                 transition="slide-x-transition"
             >
                 Request password email sent.
-            </v-alert>
+            </v-alert>-->
 
         </div>
     </div>
@@ -144,6 +155,7 @@ export default {
   },
   methods: {
     submit() {
+      this.loading = true;
       Axios.post('/auth/login', {
         email: this.email,
         password: this.password,
@@ -153,8 +165,10 @@ export default {
           this.fetchData();
         } else {
           this.bad_login = true;
+          this.loading = false;
         }
       }).catch((err) => {
+        this.loading = false;
         if (err.response.status === 401) {
           this.bad_login = true;
         } else {
@@ -163,7 +177,8 @@ export default {
       });
     },
     requestPasswordReset() {
-      if (!this.loading) {
+      const valid = this.$refs.form2.validate();
+      if (!this.loading && valid) {
         this.loading = true;
         Axios.post('/reset-password/request-reset', { email: this.email }).then((res) => {
           this.loading = false;
@@ -171,7 +186,7 @@ export default {
             this.sent = true;
           } else {
             // not successful
-            this.forgetpwd = 0;
+            this.sent = true; // mark as true anyway
           }
         }).catch((error) => {
           // Network error
@@ -197,7 +212,7 @@ export default {
         const udata = response.data.user;
         this.commitUserdata(udata);
         this.commitID(udata._id);
-
+        this.loading = false; // dont forget to stop spinner
         if (udata.default_org === '' || !udata.default_org) {
           // login individual
           // App.methods.login_i();
