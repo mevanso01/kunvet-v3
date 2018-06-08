@@ -881,9 +881,9 @@ export default {
       this.submitted = true;
       const f = this.$refs.form.validate();
       this.valid = f; // wierd workaround?
-      if (!this.sanitizeQuillInput(this.description, 'description')) { this.valid = false; }
-      if (!this.sanitizeQuillInput(this.responsibilities, 'responsibilities')) { this.valid = false; }
-      if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
+      // if (!this.sanitizeQuillInput(this.description, 'description')) { this.valid = false; }
+      // if (!this.sanitizeQuillInput(this.responsibilities, 'responsibilities')) { this.valid = false; }
+      // if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
       if (this.longitude == null || this.latitude == null) { this.valid = false; }
       if (!this.selectedPositions || this.selectedPositions.length === 0) { this.valid = false; }
       if (showDialog && this.valid) {
