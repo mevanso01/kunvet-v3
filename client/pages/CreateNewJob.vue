@@ -378,19 +378,19 @@
 
         <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
         <p class="error_p" v-if="!description_valid">Required</p>
-        <vue-editor id="description" v-model="description" placeholder="300 characters maximum" :editorOptions="shortTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+        <QuillEditor v-model="description" charLimit="300"></QuillEditor>
 
         <br>
 
         <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
         <p class="error_p" v-if="!experience_valid">Required</p>
-        <vue-editor id="experience" v-model="experience" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+        <QuillEditor v-model="experience" charLimit="900"></QuillEditor>
 
         <br>
 
         <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
         <p class="error_p" v-if="!responsibilities_valid">Required</p>
-        <vue-editor id="responsibilities" v-model="responsibilities" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+        <QuillEditor v-model="responsibilities" charLimit="900"></QuillEditor>
 
         <br>
 
@@ -559,13 +559,13 @@
   </v-container>
 </template>
 <script>
-import { VueEditor, Quill } from 'vue2-editor';
 import gql from 'graphql-tag';
 // import VuexLS from '@/store/persist';
 // import Delta from 'quill-delta';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
+import QuillEditor from '@/components/QuillEditor';
 import Config from 'config';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 import positions from '@/constants/positions';
@@ -573,25 +573,6 @@ import queries from '@/constants/queries';
 import difference from 'lodash/difference';
 import userDataProvider from '@/userDataProvider';
 // import axios from 'axios';
-
-Quill.register('modules/wordLimit', (quill, options) => {
-  // Options!
-  // wordLimit: int
-  // charLimit: int
-  quill.on('text-change', () => {
-    const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
-
-    if (options.wordLimit) {
-      const wordCount = trimmedText.split(/\s+/).length;
-      if (wordCount > options.wordLimit) {
-        // TODO: Do something
-      }
-    }
-    if (options.charLimit && trimmedText.length > options.charLimit) {
-      quill.deleteText(options.charLimit, quill.getLength());
-    }
-  });
-});
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -688,7 +669,7 @@ const findJobsQuery = gql`
 
 export default {
   components: {
-    VueEditor,
+    QuillEditor,
     PicUploader,
   },
   data() {
@@ -749,33 +730,12 @@ export default {
       howDidYouHearItems: [
         'Posters', 'A representative walked-in', 'Word of mouth', 'Email', 'WeChat', 'Personal Connection', 'Other', 'Shut up!',
       ],
-      customEditorToolbar: [
-        ['bold', 'italic', 'underline'], // toggled buttons
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        ['clean'],
-      ],
       deletePictureModal: {
         show: false,
         croppedID: null,
       },
       email_verified: true,
       loading: false,
-      shortTextEditorOptions: {
-        modules: {
-          wordLimit: {
-            wordLimit: false,
-            charLimit: 300,
-          },
-        },
-      },
-      longTextEditorOptions: {
-        modules: {
-          wordLimit: {
-            wordLimit: false,
-            charLimit: 900,
-          },
-        },
-      },
       errorOccured: false,
       bdata: {
         business_name: null,
