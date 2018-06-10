@@ -231,6 +231,7 @@ export default {
       });
     },
     commitUserdata(udata) {
+      // IMPROVE
       this.$store.commit({
         type: 'keepUserdata',
         userdata: udata,

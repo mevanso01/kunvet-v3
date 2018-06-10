@@ -8,7 +8,11 @@
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
-    <div class="main-cont-large">
+    <div v-if="!userdata" style="margin-top: 48px;">
+      <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
+      style="display: block; margin: auto !important;"></v-progress-circular>
+    </div>
+    <div class="main-cont-large" v-if="userdata">
       <div v-if="!email_verified" style="width: 100%; height: 40px; background-color: #ef5350; margin-bottom: 10px;">
         <p style="text-align: center; line-height: 40px; color: #fff;">
           You have not verified your email yet!
@@ -22,6 +26,8 @@
       </div>
       <section style="padding: 0; margin: 15px; width: auto;">
         <v-layout row wrap style="padding-bottom: 15px">
+
+          <!-- userdata section -->
           <v-flex xs12 sm8>
             <v-layout row wrap>
               <v-flex xs12 class="acct-name-header-container">
@@ -239,6 +245,8 @@
               </v-flex>
             </v-layout>
           </v-flex>
+          <!-- end of userdata section -->
+
           <v-flex sm4 class="hidden-xs-only">
             <div class="profile-pic-cont hidden-xs-only">
               <img v-if="userdata.profile_pic" style="width: 100%; height: 100%;" :src="`${serverUrl}/file/get/${userdata.profile_pic}`"></img>
@@ -259,7 +267,7 @@
                   :svg="svgs.resume"
                   :text="'My Resumes'"
                 />
-                <p v-if="userdata.resumes.length === 0">
+                <p v-if="!userdata.resumes || userdata.resumes.length === 0">
                   Create a kunvet resume or upload your own. Use it to apply for any jobs on kunvet.
                 </p>
                 <v-list two-line class="acct-list" v-else>
@@ -301,7 +309,7 @@
                 <p v-if="userdata.org_list && userdata.org_list.length === 0">
                   If you own a business, school club, or other type of organization, then post your job here.
                 </p>
-                <v-list two-line class="acct-list" v-else>
+                <v-list two-line class="acct-list" v-else-if="userdata">
                     <template v-for="({ _id, name }, index) in userdata.org_list">
                     <v-list-tile :key="_id" ripple @click="switchToOrg(_id)">
                       <v-list-tile-content>
@@ -531,10 +539,11 @@
 <script>
   import App from '@/App';
   import gql from 'graphql-tag';
-  import VuexLS from '@/store/persist';
+  // import VuexLS from '@/store/persist';
   import axios from 'axios';
   import Config from 'config';
   import EventBus from '@/EventBus';
+  import userDataProvider from '@/userDataProvider';
 
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
@@ -598,7 +607,7 @@
           organizationName: null,
           aboutUs: null,
         },
-        userdata: {
+        /* userdata: {
           firstname: null,
           lastname: null,
           school: null,
@@ -611,7 +620,8 @@
           resumes: [],
           default_org: null,
           wechat_id: null,
-        },
+        }, */
+        userdata: null,
         email_verified: true,
         emailSent: false,
         settingsoption1: '',
@@ -1164,26 +1174,24 @@
       },
     },
     activated() {
-      VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
-        if (data.acct !== 0) {
-          this.fetchData(); // temp
-          this.uid = data.userID;
-          // this.userdata = data.userdata; // temp
-          if (data.acct === 1) { // Regular user. Should probably use constants soon.
-            await this.fillUpIndividualJobs();
-          }
-        } else {
+      // check userdata every time component is open
+      userDataProvider.getUserData().then(data => {
+        console.log('user data', data);
+        if (data.acct === 0) {
+          this.$store.commit({ type: 'setAcctID', id: null }); // reset userID to prevent infinite redirect loop
           this.$router.push('/login');
+        } else {
+          this.uid = data.uid;
+          this.userdata = data.userdata;
+          this.email_verified = data.userdata.email_verified;
+          if (data.acct === 1) {
+            // this.fillUpIndividualJobs();
+          }
+          if (data.userdata.org_list) {
+            // this.populateOrgList(data.userdata.org_list);
+          }
         }
       });
     },
-    /* beforeDestroy() {
-      this.$store.commit({
-        type: 'saveUserdata',
-        school: this.userdata.school,
-        degree: this.userdata.degree,
-        email: this.userdata.email,
-      });
-    }, */
   };
 </script>

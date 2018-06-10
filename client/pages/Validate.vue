@@ -68,6 +68,12 @@ export default {
       this.isvalid = success;
 
       if (this.isvalid && this.$store.state.userID) {
+        // update email verification status in store
+        if (this.$store.userdata) {
+          const udata = this.$store.userdata;
+          udata.email_verified = true;
+          this.$store.commit({ type: 'keepUserdata', userdata: udata });
+        }
         // Redirect to Account page
         this.redirecting = true;
         setTimeout(() => {

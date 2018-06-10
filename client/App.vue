@@ -342,14 +342,6 @@ export default {
       });
       this.$router.push('/');
     },
-    login_i() {
-      EventBus.$emit('login');
-      EventBus.$emit('individual');
-    },
-    login_b() {
-      EventBus.$emit('login');
-      EventBus.$emit('business');
-    },
     emitSetNumNotifications(n) {
       EventBus.$emit('setNotifications', n);
     },

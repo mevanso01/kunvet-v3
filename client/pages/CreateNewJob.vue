@@ -561,7 +561,7 @@
 <script>
 import { VueEditor, Quill } from 'vue2-editor';
 import gql from 'graphql-tag';
-import VuexLS from '@/store/persist';
+// import VuexLS from '@/store/persist';
 // import Delta from 'quill-delta';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Schools from '@/constants/schools';
@@ -571,6 +571,7 @@ import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from
 import positions from '@/constants/positions';
 import queries from '@/constants/queries';
 import difference from 'lodash/difference';
+import userDataProvider from '@/userDataProvider';
 // import axios from 'axios';
 
 Quill.register('modules/wordLimit', (quill, options) => {
@@ -1145,7 +1146,7 @@ export default {
           }
         }`),
         variables: {
-          user: this.user_id,
+          user: this.uid,
           id: _id,
         },
       }).then((data) => {
@@ -1215,26 +1216,6 @@ export default {
       this.images = this.images.filter(({ cropped }) => cropped !== this.deletePictureModal.croppedID);
       this.cancelDeletePictureModal();
     },
-    checkIfEmailVerified() {
-      if (this.uid) {
-        this.$apollo.query({
-          query: (gql`query ($uid: MongoID) {
-            findAccount (filter: {
-              _id: $uid
-            }) {
-                _id
-                email_verified
-            }
-          }`),
-          variables: {
-            uid: this.uid,
-          },
-        }).then((data) => {
-          const res = data.data.findAccount;
-          this.email_verified = res.email_verified;
-        }).catch(this.$error);
-      }
-    },
     resetData() {
       Object.assign(this.$data, this.$options.data.call(this));
     },
@@ -1286,57 +1267,33 @@ export default {
 
   activated() {
     this.resetData();
-    if (this.$store.state.acct === 2 && this.$store.state.businessID) {
-      if (this.$store.state.bdata) {
-        if (this.$store.state.bdata.business_name) {
-          this.posted_by = this.$store.state.bdata.business_name;
-        }
-        // Autofill address
-        if (this.$store.state.bdata.address && !this.$route.params.id) {
-          this.address = this.$store.state.bdata.address;
-        }
+    userDataProvider.getUserData().then(data => {
+      if (data.acct === 0) {
+        this.$store.commit({ type: 'setAcctID', id: null }); // reset userID to prevent infinite redirect loop
+        this.$router.push('/login');
       } else {
-        // no business data in localstorage
-        this.fetchBusinessData(this.$store.state.businessID);
-      }
-
-      this.uid = this.$store.state.userID;
-      if (this.$route.params.id) {
-        this.getEditJobData(this.$route.params.id);
-      }
-      this.checkIfEmailVerified();
-    } else if (this.$store.state.acct === 1 && this.$store.state.userdata) {
-      this.posted_by = `${this.$store.state.userdata.firstname} ${this.$store.state.userdata.lastname}`;
-      this.uid = this.$store.state.userID;
-      if (this.$route.params.id) {
-        this.getEditJobData(this.$route.params.id);
-      }
-      this.checkIfEmailVerified();
-    } else {
-      VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-        if (data.acct === 2 && data.businessID) {
-          if (data.bdata && data.bdata.business_name) {
-            this.posted_by = data.bdata.business_name;
+        this.uid = data.uid;
+        if (this.$route.params.id) {
+          this.getEditJobData(this.$route.params.id);
+        }
+        if (data.acct === 1) {
+          this.posted_by = `${data.userdata.firstname} ${data.userdata.lastname}`;
+        } else if (data.acct === 2) {
+          if (this.$store.state.bdata) {
+            // check if bdata exists in store
+            if (this.$store.state.bdata.business_name) {
+              this.posted_by = this.$store.state.bdata.business_name;
+            }
+            if (this.$store.state.bdata.address && !this.$route.params.id) {
+              this.address = this.$store.state.bdata.address; // Autofill address
+            }
           } else {
+            // otherwise, fetch it
             this.fetchBusinessData(data.businessID);
           }
-          this.uid = data.userID;
-          if (this.$route.params.id) {
-            this.getEditJobData(this.$route.params.id);
-          }
-          this.checkIfEmailVerified();
-        } else if (data.acct === 1) {
-          this.posted_by = `${data.userdata.firstname} ${data.userdata.lastname}`;
-          if (this.$route.params.id) {
-            this.getEditJobData(this.$route.params.id);
-          }
-          this.checkIfEmailVerified();
-        } else {
-          // not logged in
-          this.$router.push('/login');
         }
-      });
-    }
+      }
+    });
 
     VueGoogleMaps.loaded.then(() => {
       // HACK

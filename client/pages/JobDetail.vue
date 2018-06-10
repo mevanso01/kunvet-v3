@@ -248,11 +248,13 @@
             </div>
           </div>
 
-          <div class="blue-row" style="clear: both; margin-bottom: 16px;">
+          <div class="blue-row" style="clear: both; margin-bottom: 16px;" v-if="findJob.shift && findJob.shift.length > 0">
             <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
             <img class="job-info-icon" :src="svgs.Clock"></img>
             <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></span>
           </div>
+          <div v-else style="width: 100%; height: 16px;"></div>
+
           <v-divider></v-divider>
       </div>
       <div class="sub-container">
@@ -451,12 +453,13 @@ import Asset46 from '@/assets/icons/Asset(46).svg';
 import Asset41 from '@/assets/icons/Asset(41).svg';
 import sanitizeHtml from 'sanitize-html';
 import VuexLS from '@/store/persist';
-import { degreeDbToString, degreeStringToDb } from '@/constants/degrees';
+import { degreeStringToDb } from '@/constants/degrees';
 import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
 import FileClient from '@/utils/FileClient';
 import queries from '@/constants/queries';
 import parseUrl from 'url-parse';
+import userDataProvider from '@/userDataProvider';
 
 // const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
@@ -607,9 +610,7 @@ export default {
         this.state = 'INITIAL';
         this.applyState = 'MAIN';
         this.applydialog = true;
-        if (!this.userdatafetched) {
-          this._getUserData();
-        }
+        this._getUserData();
       } else {
         this.$router.push('/login');
       }
@@ -693,52 +694,19 @@ export default {
       this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
     },
     _getUserData() {
-      this.$apollo.query({
-        query: (gql`query ($uid: MongoID) {
-          findAccount (filter: {
-            _id: $uid
-          }) {
-            _id
-            firstname
-            lastname
-            school
-            degree
-            major
-            email
-            wechat_id
-            resumes {
-              name
-              filename
-              resumeid
-            }
-            email_verified
-          }
-        }`),
-        variables: {
-          uid: this.uid,
-        },
-      }).then((data) => {
-        const res = data.data.findAccount;
-        this.userdata.firstname = res.firstname;
-        this.userdata.lastname = res.lastname;
-        this.userdata.school = res.school;
-        this.userdata.degree = degreeDbToString(res.degree);
-        this.userdata.major = res.major;
-        this.userdata.email = res.email;
-        this.userdata.wechat_id = res.wechat_id;
-        this.resumes = [];
-        for (var r in res.resumes) {
-          if (res.resumes[r].name) {
-            this.resumes.push(res.resumes[r]);
+      userDataProvider.getUserData().then(data => {
+        if (data.acct === 0) {
+          this.$store.commit({ type: 'setAcctID', id: null }); // reset userID to prevent infinite redirect loop
+          this.$router.push('/login');
+        } else {
+          this.uid = data.uid;
+          this.userdata = data.userdata;
+          this.email_verified = data.userdata.email_verified;
+          this.resumes = this.userdata.resumes.concat(); // not sure if needed but just in case
+          if (this.resumes.length > 0) {
+            this.selectedResume = this.resumes[0].filename;
           }
         }
-        if (this.resumes.length > 0) {
-          this.selectedResume = this.resumes[0].filename;
-        }
-        this.email_verified = res.email_verified;
-        this.userdatafetched = true;
-      }).catch((error) => {
-        this.$error(error);
       });
     },
     _checkIsApplied() {

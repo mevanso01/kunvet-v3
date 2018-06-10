@@ -18,17 +18,8 @@ const Store = new Vuex.Store({
     selectedPositions: [],
     selectedShifts: [],
     bdata: null,
-    userdata: {
-      firstname: null,
-      lastname: null,
-      school: null,
-      degree: null,
-      email: null,
-      display_email: null,
-      profile_pic: null,
-      org_list: [],
-      resumes: [],
-    },
+    userdata: null,
+    // recheckLogin: null, // date object
   },
   mutations: {
     go(state) {
@@ -38,17 +29,7 @@ const Store = new Vuex.Store({
       state.acct = payload.acct;
       if (payload.acct === 0) {
         state.default_org = null;
-        state.userdata = {
-          firstname: null,
-          lastname: null,
-          school: null,
-          degree: null,
-          email: null,
-          display_email: null,
-          profile_pic: null,
-          org_list: [],
-          resumes: [],
-        };
+        state.userdata = null;
         state.bdata = null;
         state.userID = null;
       }
@@ -77,6 +58,16 @@ const Store = new Vuex.Store({
     keepBdata(state, payload) {
       state.bdata = payload.bdata;
     },
+    /* setRecheckLogin(state, payload) {
+      if (payload.recheckLogin) {
+        state.recheckLogin = payload.recheckLogin;
+      } else {
+        // two days by default
+        var d = new Date();
+        d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000));
+        state.recheckLogin = d;
+      }
+    }, */
     resetState(state) {
       state.userID = null;
       state.acct = 0;
@@ -87,14 +78,8 @@ const Store = new Vuex.Store({
       state.selectedPositions = [];
       state.selectedShifts = [];
       state.bdata = null;
-      state.userdata = {
-        firstname: null,
-        lastname: null,
-        school: null,
-        degree: null,
-        display_email: null,
-        org_list: [],
-      };
+      state.userdata = null;
+      // state.recheckLogin = null;
     },
   },
   plugins: [VuexLS.plugin],
