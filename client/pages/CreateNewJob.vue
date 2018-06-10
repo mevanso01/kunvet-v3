@@ -1260,10 +1260,10 @@ export default {
       });
     },
     setLatLongs() {
-      if (!this.geocoder) {
+      /* if (!this.geocoder) {
         this.geocoder = new window.google.maps.Geocoder();
-      }
-      if (this.address !== this.prevAutocompleteAddress) {
+      } */
+      if (this.geocoder && this.address !== this.prevAutocompleteAddress) {
         this.geocoder.geocode({ 'address': this.address }, (results, status) => {
           if (status === 'OK' && results.length === 1) {
             console.log('res', results);
@@ -1282,6 +1282,7 @@ export default {
       }
     },
   },
+
   activated() {
     this.resetData();
     if (this.$store.state.acct === 2 && this.$store.state.businessID) {
@@ -1341,6 +1342,7 @@ export default {
       const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
       input.setAttribute('placeholder', '');
       this.autocomplete = new window.google.maps.places.Autocomplete(input);
+      this.geocoder = new window.google.maps.Geocoder();
       // this.placeDetails =  new window.google.maps.places.details;
       this.autocomplete.addListener('place_changed', () => {
         this.prevAutocompleteAddress = this.address;
