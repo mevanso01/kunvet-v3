@@ -7,10 +7,10 @@
       :value="computedValue"
       @input="input"
     ></vue-editor>
-    <div v-if="charLimit">
+    <div v-if="charLimit" :class="{ 'red--text': charCount > charLimit }">
       {{ charCount }} / {{ charLimit }}
     </div>
-    <div v-if="wordLimit">
+    <div v-if="wordLimit" :class="{ 'red--text': wordCount > wordLimit }">
       {{ wordCount }} / {{ wordLimit }}
     </div>
   </div>
@@ -34,7 +34,7 @@ Quill.register('modules/wordLimit', (quill, options) => {
     }
     if (options.charLimit) {
       if (trimmedText.length > options.charLimit) {
-        quill.deleteText(options.charLimit, quill.getLength());
+        // quill.deleteText(options.charLimit, quill.getLength());
       }
       options.vueInstance.setCharCount(trimmedText.length);
     }
