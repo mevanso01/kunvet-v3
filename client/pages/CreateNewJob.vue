@@ -376,21 +376,21 @@
 
         <br>
 
-        <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
-        <p class="error_p" v-if="!description_valid">Required</p>
-        <QuillEditor v-model="description" charLimit="300"></QuillEditor>
+        <h3 v-bind:class="{ error_h3: !validations.description }">Description</h3>
+        <p class="error_p" v-if="!validations.description">Required</p>
+        <QuillEditor v-model="description" required :charLimit="300" @validate="v => validations.description = v"></QuillEditor>
 
         <br>
 
-        <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
-        <p class="error_p" v-if="!experience_valid">Required</p>
-        <QuillEditor v-model="experience" charLimit="900"></QuillEditor>
+        <h3 v-bind:class="{ error_h3: !validations.experience }">Required Experience / Qualifications</h3>
+        <p class="error_p" v-if="!validations.experience">Required</p>
+        <QuillEditor v-model="experience" required :charLimit="900" @validate="v => validations.experience = v"></QuillEditor>
 
         <br>
 
-        <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
-        <p class="error_p" v-if="!responsibilities_valid">Required</p>
-        <QuillEditor v-model="responsibilities" charLimit="900"></QuillEditor>
+        <h3 v-bind:class="{ error_h3: !validations.responsibilities }">Responsibilities</h3>
+        <p class="error_p" v-if="!validations.responsibilities">Required</p>
+        <QuillEditor v-model="responsibilities" required :charLimit="900" @validate="v => validations.responsibilities = v"></QuillEditor>
 
         <br>
 
@@ -572,7 +572,8 @@ import positions from '@/constants/positions';
 import queries from '@/constants/queries';
 import difference from 'lodash/difference';
 import userDataProvider from '@/userDataProvider';
-// import axios from 'axios';
+
+import every from 'lodash/every';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -701,11 +702,8 @@ export default {
       pay_denomination: 'per hour',
       education: '',
       description: null,
-      description_valid: true,
       responsibilities: null,
-      responsibilities_valid: true,
       experience: null,
-      experience_valid: true,
       studentfriendly: true,
       language: '',
       major: '',
@@ -749,6 +747,11 @@ export default {
       geocoder: null,
       addressValid: true,
       prevAutocompleteAddress: null,
+      validations: {
+        description: false,
+        experience: false,
+        responsibilities: false,
+      },
     };
   },
   computed: {
@@ -828,20 +831,6 @@ export default {
         }
       }, 600);
     },
-    sanitizeQuillInput(text, property) {
-      if (text == null || typeof text !== 'string') {
-        this[`${property}_valid`] = false;
-        return false;
-      }
-      const newtext = text.replace(/<p>|<\/p>|<br>|<h1>|<\/h1>/g, '');
-      if (newtext.length < 1) {
-        this[`${property}_valid`] = false;
-        return false;
-      }
-      this[`${property}_valid`] = true;
-
-      return true;
-    },
     changeRadio(property) {
       const properties = ['type2'];
       const p = properties[property];
@@ -866,9 +855,9 @@ export default {
       this.submitted = true;
       const f = this.$refs.form.validate();
       this.valid = f; // wierd workaround?
-      // if (!this.sanitizeQuillInput(this.description, 'description')) { this.valid = false; }
-      // if (!this.sanitizeQuillInput(this.responsibilities, 'responsibilities')) { this.valid = false; }
-      // if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
+      if (!every(this.validations)) {
+        this.valid = false;
+      }
       if (this.longitude == null || this.latitude == null) { this.valid = false; }
       if (!this.selectedPositions || this.selectedPositions.length === 0) { this.valid = false; }
       if (showDialog && this.valid) {
