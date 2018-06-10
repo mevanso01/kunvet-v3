@@ -4,7 +4,7 @@
       :placeholder="placeholder"
       :editorToolbar="editorToolbar"
       :editorOptions="editorOptions"
-      :value="value"
+      :value="computedValue"
       @input="input"
     ></vue-editor>
     <div v-if="charLimit">
@@ -59,6 +59,12 @@ export default {
     };
   },
   computed: {
+    computedValue() {
+      if (!this.value) {
+        return '';
+      }
+      return `${this.value}`;
+    },
     editorOptions() {
       return {
         modules: {
