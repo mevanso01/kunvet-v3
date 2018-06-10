@@ -1,6 +1,6 @@
 
 function getUserData() {
-  VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
+  /* VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
     if (data.acct !== 0) {
       this.fetchData(); // temp
       this.uid = data.userID;
@@ -11,7 +11,7 @@ function getUserData() {
     } else {
       this.$router.push('/login');
     }
-  });
+  }); */
 }
 
 export default {

@@ -840,9 +840,32 @@ export default {
         return;
       }
       this.addressValid = true;
+      this.prevAutocompleteAddress = place.formatted_address;
       this.address = place.formatted_address;
       this.latitude = place.geometry.location.lat();
       this.longitude = place.geometry.location.lng();
+    },
+    setLatLongs() {
+      setTimeout(() => {
+        // console.log('a1: ', this.address, 'a2: ', this.prevAutocompleteAddress);
+        if (this.geocoder && this.address !== this.prevAutocompleteAddress) {
+          this.geocoder.geocode({ 'address': this.address }, (results, status) => {
+            if (status === 'OK' && results.length === 1) {
+              // console.log('res', results);
+              this.latitude = results[0].geometry.location.lat();
+              this.longitude = results[0].geometry.location.lng();
+              this.addressValid = true;
+              this.$refs.addressField.validate();
+            } else {
+              // console.log('Geocode was not successful for the following reason:', status);
+              this.latitude = null;
+              this.longitude = null;
+              this.addressValid = false;
+              this.$refs.addressField.validate();
+            }
+          });
+        }
+      }, 600);
     },
     sanitizeQuillInput(text, property) {
       if (text == null || typeof text !== 'string') {
@@ -1259,28 +1282,6 @@ export default {
         bdata: this.bdata,
       });
     },
-    setLatLongs() {
-      /* if (!this.geocoder) {
-        this.geocoder = new window.google.maps.Geocoder();
-      } */
-      if (this.geocoder && this.address !== this.prevAutocompleteAddress) {
-        this.geocoder.geocode({ 'address': this.address }, (results, status) => {
-          if (status === 'OK' && results.length === 1) {
-            console.log('res', results);
-            this.latitude = results[0].geometry.location.lat();
-            this.longitude = results[0].geometry.location.lng();
-            this.addressValid = true;
-            this.$refs.addressField.validate();
-          } else {
-            // console.log('Geocode was not successful for the following reason:', status);
-            this.latitude = null;
-            this.longitude = null;
-            this.addressValid = false;
-            this.$refs.addressField.validate();
-          }
-        });
-      }
-    },
   },
 
   activated() {
@@ -1345,7 +1346,6 @@ export default {
       this.geocoder = new window.google.maps.Geocoder();
       // this.placeDetails =  new window.google.maps.places.details;
       this.autocomplete.addListener('place_changed', () => {
-        this.prevAutocompleteAddress = this.address;
         this.setPlace(this.autocomplete.getPlace());
       });
       if (this.address) {
