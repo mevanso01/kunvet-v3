@@ -23,26 +23,34 @@ Quill.register('modules/wordLimit', (quill, options) => {
   // wordLimit: int
   // charLimit: int
   quill.on('text-change', () => {
+    let validated = true;
     const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
 
+    if (options.required) {
+      validated = validated && trimmedText.length;
+    }
     if (options.wordLimit) {
-      const wordCount = trimmedText.split(/\s+/).length;
-      if (wordCount > options.wordLimit) {
-        // TODO: Do something
-      }
+      const wordCount = trimmedText ? trimmedText.split(/\s+/).length : 0;
+      validated = validated && wordCount <= options.wordLimit;
       options.vueInstance.setWordCount(wordCount);
     }
     if (options.charLimit) {
-      if (trimmedText.length > options.charLimit) {
-        // quill.deleteText(options.charLimit, quill.getLength());
-      }
+      validated = validated && trimmedText.length <= options.charLimit;
       options.vueInstance.setCharCount(trimmedText.length);
     }
+
+    options.vueInstance.setValidated(validated);
   });
 });
 
 export default {
-  props: ['placeholder', 'wordLimit', 'charLimit', 'value'],
+  props: {
+    placeholder: String,
+    wordLimit: Number,
+    charLimit: Number,
+    value: String,
+    required: Boolean,
+  },
   components: {
     VueEditor,
   },
@@ -56,14 +64,17 @@ export default {
       content: '',
       wordCount: 0,
       charCount: 0,
+      validated: false,
     };
   },
   computed: {
     computedValue() {
-      if (!this.value) {
-        return '';
+      const value = this.value ? `${this.value}` : '';
+      if (this.required && !value.length) {
+        this.validated = false;
+        this.$emit('validate', false);
       }
-      return `${this.value}`;
+      return value;
     },
     editorOptions() {
       return {
@@ -71,6 +82,7 @@ export default {
           wordLimit: {
             wordLimit: this.wordLimit,
             charLimit: this.charLimit,
+            required: this.required,
             vueInstance: this,
           },
         },
@@ -86,6 +98,12 @@ export default {
     },
     setCharCount(charCount) {
       this.charCount = charCount;
+    },
+    setValidated(validated) {
+      if (validated !== this.validated) {
+        this.validated = validated;
+        this.$emit('validate', validated);
+      }
     },
   },
 };
