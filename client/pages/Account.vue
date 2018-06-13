@@ -306,11 +306,11 @@
                   :svg="svgs.building"
                   :text="'My Organizations'"
                 />
-                <p v-if="userdata.org_list && userdata.org_list.length === 0">
+                <p v-if="orgList && orgList.length === 0">
                   If you own a business, school club, or other type of organization, then post your job here.
                 </p>
-                <v-list two-line class="acct-list" v-else-if="userdata">
-                    <template v-for="({ _id, name }, index) in userdata.org_list">
+                <v-list two-line class="acct-list" v-else-if="orgList">
+                  <template v-for="({ _id, name }, index) in orgList">
                     <v-list-tile :key="_id" ripple @click="switchToOrg(_id)">
                       <v-list-tile-content>
                         <v-list-tile-title>
@@ -323,7 +323,7 @@
                         </v-btn>
                       </v-list-tile-action>
                     </v-list-tile>
-                    <v-divider v-if="index + 1 < userdata.org_list.length" :key="index" />
+                    <v-divider v-if="index + 1 < orgList.length" :key="index" />
                   </template>
                 </v-list>
                 <div>
@@ -607,21 +607,8 @@
           organizationName: null,
           aboutUs: null,
         },
-        /* userdata: {
-          firstname: null,
-          lastname: null,
-          school: null,
-          degree: null,
-          major: null,
-          email: null,
-          display_email: null,
-          profile_pic: null,
-          org_list: [],
-          resumes: [],
-          default_org: null,
-          wechat_id: null,
-        }, */
         userdata: null,
+        orgList: [],
         email_verified: true,
         emailSent: false,
         settingsoption1: '',
@@ -949,7 +936,7 @@
         });
       },
       async createOrganization() {
-        this.$debug('Email', this.userdata.email);
+        // this.$debug('Email', this.userdata.email);
         if (!this.loading) {
           this.loading = true;
           try {
@@ -1059,12 +1046,14 @@
       },
       async populateOrgList(orgList) {
         if (Array.isArray(orgList) && orgList.length > 0 && orgList[0] !== null) {
-          this.userdata.org_list = (await Promise.all(
+          this.orgList = (await Promise.all(
             orgList.map(this.getOrgByID),
           )).map(({ business_name: name, _id }) => ({
             name, _id,
           }),
           );
+        } else {
+          this.orgList = [];
         }
       },
       getOrgByID(_oid) {
@@ -1082,6 +1071,7 @@
               oid: _oid,
             },
           }).then((data) => {
+            console.log(data.data.findOrganization);
             resolve(data.data.findOrganization);
           }).catch((error) => {
             this.$error(error);
@@ -1185,10 +1175,10 @@
           this.userdata = data.userdata;
           this.email_verified = data.userdata.email_verified;
           if (data.acct === 1) {
-            // this.fillUpIndividualJobs();
+            this.fillUpIndividualJobs();
           }
           if (data.userdata.org_list) {
-            // this.populateOrgList(data.userdata.org_list);
+            this.populateOrgList(data.userdata.org_list);
           }
         }
       });
