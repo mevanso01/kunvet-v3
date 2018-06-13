@@ -39,7 +39,7 @@
                   />
                 </h1>
               </v-flex>
-              <v-flex xs12 sm10 class="no-padding">
+              <v-flex xs12 sm11 md9 class="no-padding">
                 <v-list>
                   <v-list-tile v-if="!userdata.school" class="cust-tile-2 grey-color">
                     <v-list-tile class="cust-tile-1">
@@ -168,7 +168,7 @@
                       </v-list-tile>
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">
-                        <v-flex xs10 class="no-padding">
+                        <v-flex xs9 class="no-padding">
                           <v-text-field
                             v-model="updateEmail"
                             class="no-padding no-underline"
@@ -206,7 +206,7 @@
                     </v-list-tile>
                   <v-list-tile-content>
                     <v-layout class="acct-page-container__input-field-layout">
-                      <v-flex xs10 class="no-padding">
+                      <v-flex xs9 class="no-padding">
                         <v-text-field
                           v-model="updateWechatId"
                           class="no-padding no-underline"

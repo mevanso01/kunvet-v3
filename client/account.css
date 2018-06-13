@@ -224,4 +224,22 @@
     padding-left: 0;
     padding-right: 0;
   }
+  .cust-tile-1 {
+    width: 35px;
+  }
+  .cust-tile-1 > .list__tile {
+    padding-left: 0px;
+    padding-right: 10px;
+    width: 35px;
+  }
+  .cust-tile-1 > .list__tile > i {
+    margin: auto;
+  }
+  .cust-btn-1 {
+    margin: 2px 8px;
+    min-width: 50px;
+  }
+  .cust-btn-1 .btn__content {
+    padding: 0;
+  }
 }

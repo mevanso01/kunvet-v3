@@ -91,10 +91,7 @@
 }
 .error_h3 {
   color: #ff5252 !important;
-  margin-bottom: 0.5em !important;
-}
-.error_h3_2 {
-  color: #ff5252 !important;
+  margin-bottom: 0 !important;
 }
 .error_p {
   color: #ff5252;
@@ -580,37 +577,7 @@ const createJobMutation = gql`
     createJob (record: $job) {
       recordId
       record {
-        user_id
-        business_id
-        posted_by
-        title
-        description
-        address
-        address2
-        university
-        latitude
-        longitude
-        type
-        studentfriendly
-        type2
-        shift
-        age
-        pay_type
-        salary
-        pay_denomination
-        education
-        preferred_major
-        language
-        experience
-        responsibilities
-        apply_method
-        notes
-        gform_link
-        images {
-          original
-          cropped
-        }
-        position_tags
+        ${queries.FindJobRecord}
       }
     }
   }
@@ -620,35 +587,7 @@ const updateJobMutation = gql`
     updateJob (filter: {_id: $id}, record: $job) {
       recordId
       record {
-        user_id
-        posted_by
-        title
-        description
-        address
-        university
-        latitude
-        longitude
-        type
-        studentfriendly
-        type2
-        shift
-        age
-        pay_type
-        salary
-        pay_denomination
-        education
-        preferred_major
-        language
-        experience
-        responsibilities
-        apply_method
-        notes
-        gform_link
-        images {
-          original
-          cropped
-        }
-        position_tags
+        ${queries.FindJobRecord}
       }
     }
   }
@@ -1060,38 +999,7 @@ export default {
       this.$apollo.query({
         query: (gql`query ($id: MongoID, $user: MongoID) {
           findJob (filter: { _id: $id, user_id: $user }){
-            _id
-            posted_by
-            active
-            title
-            date
-            description
-            address
-            address2
-            university
-            latitude
-            longitude
-            type
-            studentfriendly
-            type2
-            shift
-            age
-            pay_type
-            salary
-            pay_denomination
-            education
-            preferred_major
-            language
-            experience
-            responsibilities
-            apply_method
-            notes
-            gform_link
-            images {
-              original
-              cropped
-            }
-            position_tags
+            ${queries.FindJobRecord}
           }
         }`),
         variables: {
@@ -1132,6 +1040,7 @@ export default {
           this.language = job.language;
           this.experience = job.experience;
           this.responsibilities = job.responsibilities;
+          console.log(this.responsibilities);
           this.notes = job.notes;
           if (job.gform_link) {
             this.gformLink = job.gform_link;
