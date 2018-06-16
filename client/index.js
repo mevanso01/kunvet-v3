@@ -50,6 +50,10 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
     },
     {
+      path: '/search',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
+    },
+    {
       path: '*',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
     },

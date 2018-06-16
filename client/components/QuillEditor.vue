@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import { VueEditor, Quill } from 'vue2-editor';
+/* import { VueEditor, Quill } from 'vue2-editor';
 
 Quill.register('modules/wordLimit', (quill, options) => {
   // Options!
@@ -106,5 +106,5 @@ export default {
       }
     },
   },
-};
+}; */
 </script>

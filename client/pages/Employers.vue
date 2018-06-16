@@ -1,3 +1,31 @@
+<style lang="scss" scoped>
+.panel:nth-child(odd) {
+  background-repeat: repeat;
+  background-color: #ff8000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 1000'%3E%3Cg %3E%3Ccircle fill='%23ff8000' cx='50' cy='0' r='50'/%3E%3Cg fill='%23ff8700' %3E%3Ccircle cx='0' cy='50' r='50'/%3E%3Ccircle cx='100' cy='50' r='50'/%3E%3C/g%3E%3Ccircle fill='%23ff8f02' cx='50' cy='100' r='50'/%3E%3Cg fill='%23ff9606' %3E%3Ccircle cx='0' cy='150' r='50'/%3E%3Ccircle cx='100' cy='150' r='50'/%3E%3C/g%3E%3Ccircle fill='%23ff9d0b' cx='50' cy='200' r='50'/%3E%3Cg fill='%23fea311' %3E%3Ccircle cx='0' cy='250' r='50'/%3E%3Ccircle cx='100' cy='250' r='50'/%3E%3C/g%3E%3Ccircle fill='%23feaa17' cx='50' cy='300' r='50'/%3E%3Cg fill='%23feb11e' %3E%3Ccircle cx='0' cy='350' r='50'/%3E%3Ccircle cx='100' cy='350' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fdb724' cx='50' cy='400' r='50'/%3E%3Cg fill='%23fdbe2a' %3E%3Ccircle cx='0' cy='450' r='50'/%3E%3Ccircle cx='100' cy='450' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fcc431' cx='50' cy='500' r='50'/%3E%3Cg fill='%23fbca37' %3E%3Ccircle cx='0' cy='550' r='50'/%3E%3Ccircle cx='100' cy='550' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fbd03e' cx='50' cy='600' r='50'/%3E%3Cg fill='%23fad645' %3E%3Ccircle cx='0' cy='650' r='50'/%3E%3Ccircle cx='100' cy='650' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f9dc4c' cx='50' cy='700' r='50'/%3E%3Cg fill='%23f9e253' %3E%3Ccircle cx='0' cy='750' r='50'/%3E%3Ccircle cx='100' cy='750' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f8e85b' cx='50' cy='800' r='50'/%3E%3Cg fill='%23f7ee62' %3E%3Ccircle cx='0' cy='850' r='50'/%3E%3Ccircle cx='100' cy='850' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f6f46a' cx='50' cy='900' r='50'/%3E%3Cg fill='%23f6f972' %3E%3Ccircle cx='0' cy='950' r='50'/%3E%3Ccircle cx='100' cy='950' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f5ff7a' cx='50' cy='1000' r='50'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: contain;
+  background-position: center;
+
+  /*
+  box-shadow:
+    inset 0px 11px 8px -10px #555,
+    inset 0px -11px 8px -10px #555;
+  */
+}
+
+.image {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.fakebtn {
+  pointer-events: none;
+  border: 1px solid #616161;
+  color: #616161;
+}
+</style>
 <template>
   <v-container fluid class="pa-0" style="max-width: 100%; font-size: 1.2em;">
     <v-layout row wrap class="panel px-3 py-5">
@@ -20,7 +48,7 @@
 
     <v-container fluid class="panel py-5">
       <v-layout row wrap justify-center>
-        <v-flex xs12 md5 lg4 xl3 v-for="type in accountTypes">
+        <v-flex xs12 md5 lg4 xl3 v-for="(type, index) in accountTypes" :key="index">
           <div class="ma-2">
             <v-card class="white pa-3">
               <img :src="type.image" class="image">
@@ -120,31 +148,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.panel:nth-child(odd) {
-  background-repeat: repeat;
-  background-color: #ff8000;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 1000'%3E%3Cg %3E%3Ccircle fill='%23ff8000' cx='50' cy='0' r='50'/%3E%3Cg fill='%23ff8700' %3E%3Ccircle cx='0' cy='50' r='50'/%3E%3Ccircle cx='100' cy='50' r='50'/%3E%3C/g%3E%3Ccircle fill='%23ff8f02' cx='50' cy='100' r='50'/%3E%3Cg fill='%23ff9606' %3E%3Ccircle cx='0' cy='150' r='50'/%3E%3Ccircle cx='100' cy='150' r='50'/%3E%3C/g%3E%3Ccircle fill='%23ff9d0b' cx='50' cy='200' r='50'/%3E%3Cg fill='%23fea311' %3E%3Ccircle cx='0' cy='250' r='50'/%3E%3Ccircle cx='100' cy='250' r='50'/%3E%3C/g%3E%3Ccircle fill='%23feaa17' cx='50' cy='300' r='50'/%3E%3Cg fill='%23feb11e' %3E%3Ccircle cx='0' cy='350' r='50'/%3E%3Ccircle cx='100' cy='350' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fdb724' cx='50' cy='400' r='50'/%3E%3Cg fill='%23fdbe2a' %3E%3Ccircle cx='0' cy='450' r='50'/%3E%3Ccircle cx='100' cy='450' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fcc431' cx='50' cy='500' r='50'/%3E%3Cg fill='%23fbca37' %3E%3Ccircle cx='0' cy='550' r='50'/%3E%3Ccircle cx='100' cy='550' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fbd03e' cx='50' cy='600' r='50'/%3E%3Cg fill='%23fad645' %3E%3Ccircle cx='0' cy='650' r='50'/%3E%3Ccircle cx='100' cy='650' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f9dc4c' cx='50' cy='700' r='50'/%3E%3Cg fill='%23f9e253' %3E%3Ccircle cx='0' cy='750' r='50'/%3E%3Ccircle cx='100' cy='750' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f8e85b' cx='50' cy='800' r='50'/%3E%3Cg fill='%23f7ee62' %3E%3Ccircle cx='0' cy='850' r='50'/%3E%3Ccircle cx='100' cy='850' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f6f46a' cx='50' cy='900' r='50'/%3E%3Cg fill='%23f6f972' %3E%3Ccircle cx='0' cy='950' r='50'/%3E%3Ccircle cx='100' cy='950' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f5ff7a' cx='50' cy='1000' r='50'/%3E%3C/g%3E%3C/svg%3E");
-  background-attachment: fixed;
-  background-size: contain;
-  background-position: center;
-
-  /*
-  box-shadow:
-    inset 0px 11px 8px -10px #555,
-    inset 0px -11px 8px -10px #555;
-  */
-}
-
-.image {
-  display: block;
-  width: 50%;
-  margin: 0 auto;
-}
-
-.fakebtn {
-  pointer-events: none;
-  border: 1px solid #616161;
-  color: #616161;
-}
-</style>

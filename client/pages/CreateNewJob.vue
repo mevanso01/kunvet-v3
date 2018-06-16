@@ -1040,7 +1040,6 @@ export default {
           this.language = job.language;
           this.experience = job.experience;
           this.responsibilities = job.responsibilities;
-          console.log(this.responsibilities);
           this.notes = job.notes;
           if (job.gform_link) {
             this.gformLink = job.gform_link;

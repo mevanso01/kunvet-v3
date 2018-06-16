@@ -52,7 +52,8 @@
         </v-flex>
         <v-flex xs12 sm6
           v-if="activeJobs.length > 0"
-          v-for="job in activeJobs"
+          v-for="(job, index) in activeJobs"
+          :key="`job-${index}`"
           class="new-applicant-card"
         >
           <div class="inner">
@@ -103,7 +104,8 @@
         </v-flex>
         <v-flex xs12 sm6
           v-if="expiredJobs.length > 0"
-          v-for="job in expiredJobs"
+          v-for="(job, index) in expiredJobs"
+          :key="`expiredjob-${index}`"
           class="new-applicant-card"
         >
           <div class="inner">
