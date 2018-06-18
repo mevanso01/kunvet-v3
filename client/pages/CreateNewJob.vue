@@ -91,7 +91,10 @@
 }
 .error_h3 {
   color: #ff5252 !important;
-  margin-bottom: 0 !important;
+  margin-bottom: 0.5em !important;
+}
+.error_h3_2 {
+  color: #ff5252 !important;
 }
 .error_p {
   color: #ff5252;
@@ -373,21 +376,21 @@
 
         <br>
 
-        <h3 v-bind:class="{ error_h3: !validations.description }">Description</h3>
-        <p class="error_p" v-if="!validations.description">Required</p>
-        <QuillEditor v-model="description" required :charLimit="300" @validate="v => validations.description = v"></QuillEditor>
+        <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
+        <p class="error_p" v-if="!description_valid">Required</p>
+        <vue-editor id="description" v-model="description" placeholder="300 characters maximum" :editorOptions="shortTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
-        <h3 v-bind:class="{ error_h3: !validations.experience }">Required Experience / Qualifications</h3>
-        <p class="error_p" v-if="!validations.experience">Required</p>
-        <QuillEditor v-model="experience" required :charLimit="900" @validate="v => validations.experience = v"></QuillEditor>
+        <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
+        <p class="error_p" v-if="!experience_valid">Required</p>
+        <vue-editor id="experience" v-model="experience" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
-        <h3 v-bind:class="{ error_h3: !validations.responsibilities }">Responsibilities</h3>
-        <p class="error_p" v-if="!validations.responsibilities">Required</p>
-        <QuillEditor v-model="responsibilities" required :charLimit="900" @validate="v => validations.responsibilities = v"></QuillEditor>
+        <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
+        <p class="error_p" v-if="!responsibilities_valid">Required</p>
+        <vue-editor id="responsibilities" v-model="responsibilities" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
         <br>
 
@@ -556,21 +559,39 @@
   </v-container>
 </template>
 <script>
+import { VueEditor, Quill } from 'vue2-editor';
 import gql from 'graphql-tag';
 // import VuexLS from '@/store/persist';
 // import Delta from 'quill-delta';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
-import QuillEditor from '@/components/QuillEditor';
 import Config from 'config';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 import positions from '@/constants/positions';
 import queries from '@/constants/queries';
 import difference from 'lodash/difference';
 import userDataProvider from '@/userDataProvider';
+// import axios from 'axios';
 
-import every from 'lodash/every';
+Quill.register('modules/wordLimit', (quill, options) => {
+  // Options!
+  // wordLimit: int
+  // charLimit: int
+  quill.on('text-change', () => {
+    const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
+
+    if (options.wordLimit) {
+      const wordCount = trimmedText.split(/\s+/).length;
+      if (wordCount > options.wordLimit) {
+        // TODO: Do something
+      }
+    }
+    if (options.charLimit && trimmedText.length > options.charLimit) {
+      quill.deleteText(options.charLimit, quill.getLength());
+    }
+  });
+});
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -609,7 +630,7 @@ const findJobsQuery = gql`
 
 export default {
   components: {
-    QuillEditor,
+    VueEditor,
     PicUploader,
   },
   data() {
@@ -641,8 +662,11 @@ export default {
       pay_denomination: 'per hour',
       education: '',
       description: null,
+      description_valid: true,
       responsibilities: null,
+      responsibilities_valid: true,
       experience: null,
+      experience_valid: true,
       studentfriendly: true,
       language: '',
       major: '',
@@ -667,12 +691,33 @@ export default {
       howDidYouHearItems: [
         'Posters', 'A representative walked-in', 'Word of mouth', 'Email', 'WeChat', 'Personal Connection', 'Other', 'Shut up!',
       ],
+      customEditorToolbar: [
+        ['bold', 'italic', 'underline'], // toggled buttons
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['clean'],
+      ],
       deletePictureModal: {
         show: false,
         croppedID: null,
       },
       email_verified: true,
       loading: false,
+      shortTextEditorOptions: {
+        modules: {
+          wordLimit: {
+            wordLimit: false,
+            charLimit: 300,
+          },
+        },
+      },
+      longTextEditorOptions: {
+        modules: {
+          wordLimit: {
+            wordLimit: false,
+            charLimit: 900,
+          },
+        },
+      },
       errorOccured: false,
       bdata: {
         business_name: null,
@@ -686,11 +731,6 @@ export default {
       geocoder: null,
       addressValid: true,
       prevAutocompleteAddress: null,
-      validations: {
-        description: false,
-        experience: false,
-        responsibilities: false,
-      },
     };
   },
   computed: {
@@ -770,6 +810,20 @@ export default {
         }
       }, 600);
     },
+    sanitizeQuillInput(text, property) {
+      if (text == null || typeof text !== 'string') {
+        this[`${property}_valid`] = false;
+        return false;
+      }
+      const newtext = text.replace(/<p>|<\/p>|<br>|<h1>|<\/h1>/g, '');
+      if (newtext.length < 1) {
+        this[`${property}_valid`] = false;
+        return false;
+      }
+      this[`${property}_valid`] = true;
+
+      return true;
+    },
     changeRadio(property) {
       const properties = ['type2'];
       const p = properties[property];
@@ -794,10 +848,14 @@ export default {
       this.submitted = true;
       const f = this.$refs.form.validate();
       this.valid = f; // wierd workaround?
-      if (!every(this.validations)) {
+      // if (!this.sanitizeQuillInput(this.description, 'description')) { this.valid = false; }
+      // if (!this.sanitizeQuillInput(this.responsibilities, 'responsibilities')) { this.valid = false; }
+      // if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
+      if (this.longitude == null || this.latitude == null) {
+        console.log('LATLONGS not set');
+        this.addressValid = false;
         this.valid = false;
       }
-      if (this.longitude == null || this.latitude == null) { this.valid = false; }
       if (!this.selectedPositions || this.selectedPositions.length === 0) { this.valid = false; }
       if (showDialog && this.valid) {
         this.confirmPost = true;
@@ -1105,7 +1163,6 @@ export default {
         this.bdata.phone_number = res.phone_number;
         this.bdata.biography = res.biography;
         this.bdata.profile_pic = res.profile_pic;
-
         this.posted_by = res.business_name;
         this.address = res.address;
         this.setLatLongs();
@@ -1143,6 +1200,7 @@ export default {
             }
             if (this.$store.state.bdata.address && !this.$route.params.id) {
               this.address = this.$store.state.bdata.address; // Autofill address
+              this.setLatLongs();
             }
           } else {
             // otherwise, fetch it

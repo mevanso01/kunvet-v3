@@ -14,7 +14,7 @@
           </span>
         </p>
       </div>
-          <section style="padding: 0; margin: 15px; width: auto;">
+      <section style="padding: 0; margin: 15px; width: auto;" v-if="bdata">
             <v-layout>
               <v-flex xs12 sm8>
                 <v-layout row wrap>
@@ -297,7 +297,7 @@
 
               </v-flex>
             </v-layout>
-          </section>
+      </section>
     </div>
   </v-container>
 </template>

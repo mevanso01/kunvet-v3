@@ -1071,7 +1071,6 @@
               oid: _oid,
             },
           }).then((data) => {
-            console.log(data.data.findOrganization);
             resolve(data.data.findOrganization);
           }).catch((error) => {
             this.$error(error);
@@ -1166,7 +1165,6 @@
     activated() {
       // check userdata every time component is open
       userDataProvider.getUserData().then(data => {
-        console.log('user data', data);
         if (data.acct === 0) {
           this.$store.commit({ type: 'setAcctID', id: null }); // reset userID to prevent infinite redirect loop
           this.$router.push('/login');
