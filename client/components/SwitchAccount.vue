@@ -40,7 +40,7 @@
     <p v-bind:class="{ 'isNavbar': isNavbar }" style="margin-bottom: 0;">Current account:</p>
     <v-expansion-panel class="switchAccount-expansion-panel" v-bind:class="{ 'notNavbar': !isNavbar }">
       <v-expansion-panel-content>
-        <div slot="header" class="one-line">{{ selectedAccount }}</div>
+        <div slot="header" class="one-line" @click="openSelectedAcct($event)">{{ selectedAccount }}</div>
         <v-list dense style="background-color: #f4f4f4; padding: 0;">
           <v-list-tile v-for="(item, i) in computedAccountItems" :key="i" @click="switchTo(item)">
             <v-list-tile-title class="one-line" style="font-size: 14px;">{{ item.name }}</v-list-tile-title>
@@ -75,9 +75,17 @@ export default {
     },
   },
   methods: {
+    openSelectedAcct(e) {
+      if (this.$store.state.acct === 0) {
+        this.$router.push('/account');
+      } else if (this.$store.state.acct > 0) {
+        this.$router.push('/myorg');
+      }
+      e.stopPropagation();
+    },
     fetchData() {
       this.$apollo.query({
-        fetchPolicy: 'network-only',
+        // fetchPolicy: 'network-only',
         query: (gql`query ($uid: MongoID) {
           findAccount (filter: {
             _id: $uid
