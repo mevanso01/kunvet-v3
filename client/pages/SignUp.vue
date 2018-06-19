@@ -25,7 +25,7 @@
 
 <template>
   <v-container fluid>
-    <div id="signup" class="main-cont-large-clear">
+    <div id="signup" class="main-cont-large-clear" v-show="!alreadyloggedin">
       <section v-if="chosenForm === ''">
           <div class="text-xs-center">
                <h1>Select an account</h1>
@@ -232,7 +232,25 @@
           </v-flex>
         </v-layout>
       </section>
+    </div>
 
+    <div class="main-cont-large-clear" v-show="alreadyloggedin">
+      <section>
+        <v-layout>
+          <v-flex xs12 sm8 offset-sm2>
+            <v-card>
+              <v-card-text>
+                <h2>You're already logged in!</h2>
+                <p>
+                  Please log out if you want to sign up with a new account.<br>
+                  If you need assistance, please <a href="/contact">contact support</a>.
+                </p>
+                <v-btn style="margin-left: 0;" outline @click="logout" :disabled="loading">Log out</v-btn>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </section>
     </div>
   </v-container>
 </template>
@@ -240,6 +258,7 @@
 import axios from 'axios';
 import KunvetError from '#/KunvetError';
 import EventBus from '@/EventBus';
+import userDataProvider from '@/userDataProvider';
 
 export default {
   props: ['stage'],
@@ -271,6 +290,7 @@ export default {
       howDidYouHearItems: [
         'Posters', 'A representative walked-in', 'Word of mouth', 'Email', 'WeChat', 'Personal Connection', 'Other', 'Shut up!',
       ],
+      alreadyloggedin: false,
     };
   },
   methods: {
@@ -445,6 +465,20 @@ export default {
         id: _id,
       });
     },
+    logout() {
+      this.loading = true;
+      EventBus.$emit('logout');
+      this.$store.commit({
+        type: 'resetState',
+      });
+      axios.get('/auth/logout').then(() => {
+        this.loading = false;
+        this.alreadyloggedin = false;
+      }, (error) => {
+        this.loading = false;
+        this.$error(error);
+      });
+    },
     resetData() {
       Object.assign(this.$data, this.$options.data.call(this));
     },
@@ -452,6 +486,13 @@ export default {
   activated() {
     this.resetData();
     this.checkStage();
+    userDataProvider.getUserData().then(data => {
+      if (data.acct !== 0) {
+        this.alreadyloggedin = true;
+      } else {
+        this.alreadyloggedin = false;
+      }
+    });
   },
 };
 </script>

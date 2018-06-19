@@ -193,6 +193,7 @@
     <div class="main-cont-large">
       <section v-show="!email_verified" class="no-padding-xs" style="min-height: 350px; padding-top: 10px;">
         <h3>You need to verify your email before you can post a job!</h3>
+        <p>Check your inbox. If you entered your email correctly you should've received a verification email from us</p>
       </section>
       <section v-show="email_verified" class="no-padding-xs" style="padding-top: 10px;">
         <div style="width: 100%; height: 50px;">
@@ -1187,6 +1188,8 @@ export default {
         this.$router.push('/login');
       } else {
         this.uid = data.uid;
+        this.email_verified = data.userdata.email_verified;
+        if (!this.email_verified) { this.introDialog = false; }
         if (this.$route.params.id) {
           this.getEditJobData(this.$route.params.id);
         }
