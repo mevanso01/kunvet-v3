@@ -4,7 +4,7 @@
       Development mode
     </div>
     <v-toolbar fixed class="main-navbar" height="64px" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
-      <router-link to="/">
+      <router-link to="/search">
             <div id="nav-logo">
               <!--<img id="nav-logo-svg" :src="svgs.kunvetLogoNav"></img>-->
                 <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">

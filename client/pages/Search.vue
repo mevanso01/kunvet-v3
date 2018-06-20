@@ -687,7 +687,6 @@ export default {
     },
     filterJobByDistance(job) {
       const distance = this.computeDistance(job.latitude, job.longitude);
-      console.log('distance', distance);
       if (distance > 20) {
         this.removeJob(job);
         return false;

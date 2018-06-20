@@ -200,7 +200,9 @@
             <p>
               <!--<v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon>-->
               <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
-              <span style="padding-top: 2px;">{{ findJob.address }}</span>
+              <span style="padding-top: 2px;">
+                {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
+              </span>
             </p>
             <p v-if="findJob.university" style="margin-left: 24px;">
               {{ findJob.university }}
