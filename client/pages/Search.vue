@@ -196,6 +196,12 @@
   top: 0;
   transform: skew(-30deg);
 }
+.no-jobs-found-box {
+  width: 100%;
+  height: 125px;
+  background: linear-gradient(135deg, #fafafa, #f5f5f5);
+  background-image: linear-gradient(135deg, rgb(250, 250, 250), rgb(245, 245, 245));
+}
 @media (min-width: 601px) {
   .search .flex {
     padding: 10px 15px;
@@ -222,6 +228,10 @@
   .home-page-cont {
     padding-left: 0;
     padding-right: 0;
+  }
+  .no-jobs-found-box {
+    padding: 0 20px;
+    height: 150px;
   }
 }
 @media (min-width: 961px) {
@@ -379,10 +389,8 @@
             <p class="center">That's all.</p>
           </div>
         </v-flex>
-        <div v-if="!loadingJobs && filteredJobs.length === 0"
-          style="width: 100%; height: 125px; background: linear-gradient(135deg, #fafafa, #f5f5f5);
-            background-image: linear-gradient(135deg, rgb(250, 250, 250), rgb(245, 245, 245));">
-          <h3 style="text-align: center; margin-top: 50px; color: #797979;">No jobs match those filters</h3>
+        <div v-if="!loadingJobs && filteredJobs.length === 0" class="no-jobs-found-box">
+          <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please select different filters or a different location.</h3>
         </div>
       </v-layout>
     </div>
@@ -505,13 +513,17 @@ export default {
         });
       }
       return this.availableTypes.map((typeObj) => {
+        typeObj.disabled = false;
+        return typeObj;
+      });
+      /* return this.availableTypes.map((typeObj) => {
         typeObj.disabled = !this.filteredJobs.find(
           job => job.type.indexOf(typeObj.value) !== -1 ||
             (job.type2 && job.type2.indexOf(typeObj.value) !== -1)
           ,
         );
         return typeObj;
-      });
+      }); */
     },
     availableShiftsObj() {
       return this.availableShifts.map((shiftObj) => {
@@ -522,11 +534,10 @@ export default {
       });
     },
     selectedCoordinates() {
-      const selected = locations.search_locations.find(el => el.name === this.selectedCity);
-      if (!selected) {
+      if (!this.selectedLat || !this.selectedLong) {
         return Coordinates.uci;
       }
-      return { latitude: selected.latitude, longitude: selected.longitude };
+      return { latitude: this.selectedLat, longitude: this.selectedLong };
     },
   },
   methods: {
@@ -538,17 +549,22 @@ export default {
         this.openSelectField = name;
       }
     },
-    searchGo() {
-      if (this.selectedCity && this.selectedCity[0]) {
-        this.filterJobs();
-        this.firstSearch = false;
-        this.$store.commit('go');
-        this.commitData();
-      }
-    },
     searchAndFilter() {
       this.openSelect(null);
+      this.setSelectedLatlongs();
       this.loadInitialJobs();
+    },
+    setSelectedLatlongs() {
+      const latlongs = this.getCityCoordinates();
+      this.selectedLat = latlongs.latitude;
+      this.selectedLong = latlongs.longitude;
+    },
+    getCityCoordinates() {
+      const selected = locations.search_locations.find(el => el.name === this.selectedCity);
+      if (!selected) {
+        return Coordinates.uci;
+      }
+      return { latitude: selected.latitude, longitude: selected.longitude };
     },
     async filterJobs() {
       // job types
@@ -671,8 +687,20 @@ export default {
     },
     filterJobByDistance(job) {
       const distance = this.computeDistance(job.latitude, job.longitude);
-      if (distance > 20) { return false; }
+      console.log('distance', distance);
+      if (distance > 20) {
+        this.removeJob(job);
+        return false;
+      }
       return true;
+    },
+    removeJob(job) {
+      if (this.filteredJobs) {
+        const index = findIndex(this.filteredJobs, { '_id': job._id });
+        if (index !== -1) {
+          this.filteredJobs.splice(index, 1);
+        }
+      }
     },
     sanitizeSalary(salary) {
       if (typeof salary === 'number') {
@@ -817,6 +845,7 @@ export default {
     });
   },
   activated() {
+    this.setSelectedLatlongs();
     this.loadInitialJobs();
     VuexLS.restoreState('vuex', window.localStorage).then((data) => {
       if (data) {
