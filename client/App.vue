@@ -86,7 +86,7 @@
       class="job-post__helper-nav-bar"
     >
       <v-toolbar-items>
-        <v-btn flat small :ripple="false" :to="'/'" :class="isActiveJobPostLink('/')">
+        <v-btn flat small :ripple="false" :to="'/search'" :class="isActiveJobPostLink('/search')">
           <span class="job-post__helper-nav-bar__btn-text">
             Search
           </span>
@@ -243,12 +243,8 @@ export default {
           {
             title: 'Jobs',
             icon: sfg,
-            href: '/',
-            subItems: [
-              /* { text: 'Search', route: '/' },
-              { text: 'Applied Jobs', route: '/appliedjobs' },
-              { text: 'Saved Jobs', route: '/savedjobs' }, */
-            ],
+            href: '/search',
+            subItems: [],
           },
           { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
           { title: 'My Profile', icon: personSvgG, href: '/account', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
@@ -258,13 +254,8 @@ export default {
             title: 'My Jobs',
             icon: sfw,
             href: '/myjobs',
-            subItems: [
-              /* { text: 'My Jobs',  route: '/myjobs' },
-              { text: 'Post New Job',  route: '/createnewjob' },
-              { text: 'Applicants', route: '/applicants' }, */
-            ],
+            subItems: [],
           },
-          // { title: 'Applicants', icon: null, href: '/applicants', subItems: [] },
           { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
           { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
         ],
@@ -279,7 +270,7 @@ export default {
         ],
         [
           [
-            { title: 'Search', href: '/' },
+            { title: 'Search', href: '/search' },
             { title: 'Applied Jobs', href: '/appliedjobs' },
             { title: 'Saved Jobs', href: '/savedjobs' },
           ],
@@ -500,11 +491,8 @@ export default {
       return process.env.NODE_ENV !== 'production';
     },
     isJobPostRoute() {
-      return (this.$route.path === '/myjobs') ||
-        (this.$route.path === '/applicants') ||
-        (this.$route.path === '/savedjobs') ||
-        (this.$route.path === '/appliedjobs') ||
-        (this.$route.path === '/');
+      const jobPostRoutes = ['/myjobs', '/applicants', '/savedjobs', '/appliedjobs', '/search', '/'];
+      return jobPostRoutes.indexOf(this.$route.path) !== -1;
     },
   },
 };
