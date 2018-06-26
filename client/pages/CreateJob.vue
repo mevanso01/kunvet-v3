@@ -1,57 +1,198 @@
 <style>
+.create-job-container .optional label::after {
+  content: ' - Optional';
+  font-style: italic;
+  /* opacity: 0.6; */
+  color: #979797;
+}
+.create-job-container .tabs__bar {
+  position: fixed;
+  top: 64px;
+  z-index: 5;
+  width: calc(100% - 32px);
+}
+.create-job-container .input-group {
+  padding-top: 12px;
+}
+.create-job-container .tabs__items .cust-spacer {
+  height: 50px;
+  width: 100%;
+}
+.create-job-container .input-group--text-field label {
+  top: 12px;
+}
+.create-job-container .input-group--required label:after {
+  content: '';
+}
+.create-job-container .no-padding-select {
+  padding-top: 0 !important;
+}
+.create-job-container .no-padding-select label {
+  top: 0 !important;
+}
+@media (max-width: 600px) {
+  .create-job-container .tabs__bar {
+    top: 56px;
+  }
+  .create-job-container .tabs__items .cust-spacer {
+    height: 40px;
+  }
+}
+@media (min-width: 961px) {
+  .create-job-container .tabs__bar {
+    width: 960px;
+    margin-left: calc(50% - 496px);
+  }
+}
 </style>
 
 <template>
   <v-container fluid class="create-job-container">
-    <div class="main-cont-large">
+      <v-tabs
+        slot="extension"
+        v-model="tab"
+        grow
+      >
+        <v-tabs-slider color="grey"></v-tabs-slider>
+        <v-tab v-for="item in tabItems" :key="item">
+          {{ item }}
+        </v-tab>
 
-      <div style="width: auto; height: 80px;"></div>
-      <v-layout row wrap>
-        <v-flex xs12 sm9 md6 class="padding-15px-right-sm-up">
-          <v-text-field
-            v-model="address"
-            ref="addressField"
-            label="Address"
-            required
-            @change="setLatLongs"
-            :rules="[() => !!(address) || !submitted || 'Required',
-                     () => (!!(latitude) && !!(longitude)) || addressValid || 'Invalid address']"
-          ></v-text-field>
-          <v-text-field
-            class="optional"
-            v-model="address2"
-            ref="addressField2"
-            placeholder="Apt, Suite, Bldg. (Optional)"
-            label="Address Line 2"
-            hide-details
-          ></v-text-field>
-          <v-checkbox class="optional" style="margin-top: 16px;"
-            label="Is this job on a school campus?"
-            v-model="isUniversity"
-            hide-details
-          ></v-checkbox>
-          <v-select class="optional no-padding-select"
-            v-if="isUniversity"
-            label="Which one?"
-            v-model="university"
-            v-bind:items="schools"
-            autocomplete
-            hide-details
-            single-line
-          ></v-select>
-        </v-flex>
-      </v-layout>
+        <v-tabs-items v-model="tab">
+          <v-tab-item>
+            <!-- SECTION 1 -->
+            <div class="main-cont-large">
+              <div class="cust-spacer"></div>
+
+              <v-form v-model="form1Valid" ref="form1">
+              <p>First, we need some basic information about who's posting:</p>
+              <v-layout row wrap>
+                <v-flex xs12 sm9 md6 class="padding-15px-right-sm-up">
+                  <v-text-field
+                    label="First name"
+                    v-model="fname"
+                    :rules="requiredRules"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="Last name"
+                    v-model="lname"
+                    :rules="requiredRules"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="Email"
+                    v-model="email"
+                    :rules="emailRules"
+                    type="email"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="Create password"
+                    v-model="password"
+                    :rules="passwordRules"
+                    min="8"
+                    :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                    :append-icon-cb="() => (e1 = !e1)"
+                    :type="e1 ? 'password' : 'text'"
+                    required
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+
+              <p class="mb-2 mt-2">Are you posting on behalf of a business, organization, or club? If so, enter it's name below:</p>
+              <v-layout row wrap>
+                <v-flex xs12 sm9 md6 class="padding-15px-right-sm-up">
+                  <v-text-field class="optional"
+                    label="Name of organization / business"
+                    v-model="business_name"
+                    :rules="requiredRules"
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+
+              <p class="mb-2 mt-2">Basic info about your job:</p>
+              <v-layout row wrap>
+                <v-flex xs12 sm9 md6 class="padding-15px-right-sm-up">
+                  <v-text-field
+                    v-model="title"
+                    label="Job Title"
+                    :rules="[(title) => !!(title) || 'Required']"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="address"
+                    ref="addressField"
+                    label="Address"
+                    required
+                    @change="setLatLongs"
+                    :rules="[() => !!(address) || !submitted || 'Required',
+                             () => (!!(latitude) && !!(longitude)) || addressValid || 'Invalid address']"
+                  ></v-text-field>
+                  <v-text-field
+                    class="optional"
+                    v-model="address2"
+                    ref="addressField2"
+                    label="Address Line 2"
+                    placeholder="Apt, Suite, Bldg."
+                    hide-details
+                  ></v-text-field>
+                  <v-checkbox class="optional" style="margin-top: 16px;"
+                    label="Is this job on a school campus?"
+                    v-model="isUniversity"
+                    hide-details
+                  ></v-checkbox>
+                  <v-select class="no-padding-select"
+                    v-if="isUniversity"
+                    label="Which one?"
+                    v-model="university"
+                    v-bind:items="schools"
+                    autocomplete
+                    hide-details
+                    single-line
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+              </v-form>
+
+              <v-layout row wrap>
+                <v-flex xs12 style="text-align: center;">
+                  <v-btn dark class="kunvet-red-bg" @click="next(1)">Continue</v-btn>
+                </v-flex>
+              </v-layout>
+            </div>
+          </v-tab-item>
+          <v-tab-item>
+            <!-- SECTION 2 -->
+            <div class="main-cont-large">
+              <div class="cust-spacer"></div>
+
+              <v-layout row wrap>
+                <v-flex xs12 style="text-align: center;">
+                  <v-btn dark class="kunvet-red-bg" @click="next(2)">Continue</v-btn>
+                </v-flex>
+              </v-layout>
+
+            </div>
+          </v-tab-item>
+          <v-tab-item>
+            <!-- SECTION 3 -->
+
+          </v-tab-item>
+        </v-tabs-items>
+
+      </v-tabs>
 
 
       <div style="max-width: 500px;">
-        <v-select
+        <!-- <v-select
           label="Position Tags"
           :items="availablePositions"
           autocomplete
           multiple
           attach
         >
-        </v-select>
+        </v-select> -->
         <!-- allow-overflow attach -->
         <!--<div id="test" style="width: auto; height: auto;"></div>-->
       </div>
@@ -136,8 +277,27 @@ export default {
   },
   data() {
     return {
+      tab: '0',
+      form1Valid: false,
+      tabItems: ['About you', 'Job details', 'Review and post'],
       introDialog: true,
       serverUrl: Config.get('serverUrl'),
+      // user info
+      business_name: null,
+      fname: null,
+      lname: null,
+      email: null,
+      password: null,
+      e1: true,
+      emailRules: [
+        v => !!v || 'Email is required',
+        v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w{2,3})+$/.test(v) || 'Invalid email format',
+      ],
+      passwordRules: [
+        v => !!v || 'Required',
+        v => (v && v.length >= 8) || 'Password must be at least 8 characters',
+      ],
+      requiredRules: [v => !!v || 'Required'],
       id: null,
       valid: false,
       submitted: false,
@@ -252,6 +412,11 @@ export default {
     },
   },
   methods: {
+    next(tabnum) {
+      console.log(tabnum);
+      const active = parseInt(this.tab, 10);
+      this.tab = (active < 2 ? active + 1 : 0).toString();
+    },
     openSelect(name) {
       this.filterPositions = null;
       if (this.openSelectField === name) {
@@ -673,29 +838,31 @@ export default {
       });
     },
     setLatLongs() {
-      if (!this.geocoder) {
-        this.geocoder = new window.google.maps.Geocoder();
-      }
-      if (this.address !== this.prevAutocompleteAddress) {
-        this.geocoder.geocode({ 'address': this.address }, (results, status) => {
-          if (status === 'OK' && results.length === 1) {
-            console.log('res', results);
-            this.latitude = results[0].geometry.location.lat();
-            this.longitude = results[0].geometry.location.lng();
-            this.addressValid = true;
-            this.$refs.addressField.validate();
-          } else {
-            // console.log('Geocode was not successful for the following reason:', status);
-            this.latitude = null;
-            this.longitude = null;
-            this.addressValid = false;
-            this.$refs.addressField.validate();
-          }
-        });
-      }
+      setTimeout(() => {
+        if (this.geocoder && this.address !== this.prevAutocompleteAddress) {
+          this.geocoder.geocode({ 'address': this.address }, (results, status) => {
+            if (status === 'OK' && results.length === 1) {
+              // console.log('res', results);
+              this.latitude = results[0].geometry.location.lat();
+              this.longitude = results[0].geometry.location.lng();
+              this.addressValid = true;
+              this.$refs.addressField.validate();
+            } else {
+              // console.log('Geocode was not successful for the following reason:', status);
+              this.latitude = null;
+              this.longitude = null;
+              this.addressValid = false;
+              this.$refs.addressField.validate();
+            }
+          });
+        }
+      }, 500);
     },
   },
   activated() {
+    if (process.env.NODE_ENV === 'production') {
+      this.$router.push('/createnewjob');
+    }
     this.resetData();
     if (this.$store.state.acct === 2 && this.$store.state.businessID) {
       if (this.$store.state.bdata) {
@@ -754,7 +921,7 @@ export default {
       const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
       input.setAttribute('placeholder', '');
       this.autocomplete = new window.google.maps.places.Autocomplete(input);
-      // this.placeDetails =  new window.google.maps.places.details;
+      this.geocoder = new window.google.maps.Geocoder();
       this.autocomplete.addListener('place_changed', () => {
         this.prevAutocompleteAddress = this.address;
         this.setPlace(this.autocomplete.getPlace());
