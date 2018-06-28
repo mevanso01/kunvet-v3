@@ -1091,6 +1091,7 @@ export default {
           if (job.pay_type && job.pay_type !== 'none') {
             this.salary_select = job.pay_type;
             this.salary = job.salary;
+            this.pay_denomination = job.pay_denomination;
           }
           this.description = job.description;
           this.education = job.education ? degreeReducedDbToString(job.education) : null;
