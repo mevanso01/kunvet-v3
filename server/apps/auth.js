@@ -338,6 +338,15 @@ router.post('/register', async (ctx) => {
   ctx.body = JSON.stringify(response);
 });
 
+router.post('/register2', (ctx) => {
+  console.log(ctx.request.body);
+  const response = {
+    success: true,
+    message: 'Check your mailbox!',
+  };
+  ctx.body = JSON.stringify(response);
+});
+
 router.get('/status', (ctx) => {
   if (ctx.isAuthenticated()) {
     const response = {
@@ -350,6 +359,26 @@ router.get('/status', (ctx) => {
     const response = {
       success: true,
       status: false,
+    };
+    ctx.body = JSON.stringify(response);
+  }
+});
+
+router.post('/checkIfExists', async (ctx) => {
+  const req = ctx.request.body;
+  const acct = await Models.Account.findOne({
+    email: req.email,
+  });
+  if (acct) {
+    const response = {
+      success: true,
+      exists: true,
+    };
+    ctx.body = JSON.stringify(response);
+  } else {
+    const response = {
+      success: true,
+      exists: false,
     };
     ctx.body = JSON.stringify(response);
   }
