@@ -169,10 +169,10 @@ main {
 .chip__close i.icon {
   font-size: 18px;
 }
-.menu__content--select .list--dense i {
+.menu__content--select .list .checkbox i {
   height: 24px !important;
 }
-.menu__content--select .list--dense .list__tile__action {
+.menu__content--select .list .list__tile__action {
   min-width: 36px;
 }
 .menu__content--select .list--dense .list__tile__title {

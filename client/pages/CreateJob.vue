@@ -28,7 +28,7 @@
   .tabs__item:not(.tabs__item--active) {
     opacity: 1;
   }
-  .input-group {
+  .input-group--text-field {
     padding-top: 12px;
   }
   .tabs__items .cust-spacer {
@@ -243,7 +243,7 @@
         fixed-tabs
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
-        <v-tab v-for="(item, i) in tabItems" :key="item" :disabled="i > furthest_tab" >
+        <v-tab v-for="(item, i) in tabItems" :key="item" :disabled="false && i > furthest_tab" >
           <div class="tab-text-container" style="width: 100%; height: 100%;"
             :class="{ 'no-error': isTabValid(i), 'error': isTabInvalid(i) }">
             <span style="line-height: 36px;">{{ item }}</span>
@@ -471,7 +471,7 @@
                     multiple>
                   </v-select>
                 </v-flex>
-                <v-flex xs4 sm3>
+                <v-flex xs4 sm3 lg2>
                   <v-text-field class="optional"
                     v-model="job.age"
                     label="Age"
@@ -497,16 +497,24 @@
 
               <!-- Pictures -->
               <br>
-              <div style="display: flex">
-              <h3 class="optional" style="margin: 7px 10px 6px 0;">Pictures</h3>
+              <!-- <h3 class="optional" style="margin: 7px 10px 6px 0;">Pictures</h3> -->
+              <h4 class="cust-subheader" :class="{ 'mb-1': job.images.length === 0 }">Pictures <span class="optional-color">(Optional)</span></h4>
+              <p v-show="job.images.length === 0">
+                Although not required, adding relevant pictures to your job builds trust and can attract more attention from potential applicants
+              </p>
               <v-btn v-if="job.images.length === 0"
                 @click="picUploaderDialog = true"
                 flat small outline
-                class="optional">Upload</v-btn>
+                style="margin: 0;"
+                class="optional">
+                Upload a picture
+              </v-btn>
               <v-btn v-else
                 @click="picUploaderDialog = true"
-                flat small outline class="optional">Upload Another</v-btn>
-              </div>
+                style="margin: 0;"
+                flat small outline class="optional">
+                Upload Another
+              </v-btn>
 
               <v-dialog v-model="picUploaderDialog" width="100%">
                 <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" keepOriginal />
@@ -534,22 +542,95 @@
           </v-tab-item>
           <v-tab-item>
             <!-- SECTION 3 -->
+            <div class="main-cont-large">
+              <div class="cust-spacer"></div>
+              <v-form v-model="form3Valid" ref="form3">
+              <!-- <h3 style="margin-bottom: 5px;">Position tags</h3> -->
+              <p style="color: blue;">I hope you didn't think this whole thing was done and ready to use! Nope. Not even close. Sorry :P</p>
+              <h4 class="cust-subheader mb-1">Position tags</h4>
+              <p>Please select at least one category that is relevant to this job</p>
 
+              <div style="max-width: 500px;">
+                <v-select
+                  label="Position Tags"
+                  :items="availablePositions"
+                  autocomplete
+                  multiple
+                  attach>
+                </v-select>
+              </div>
+              <br>
+              <!-- <div style="margin-top: 1em; margin-bottom: 5px;">
+                <h3 style="display: inline;">Application options</h3>
+              </div> -->
+              <h4 class="cust-subheader mb-1">Application options</h4>
+              <p>The applicant's info and resume will be sent to your email when they apply.<br>
+                 You can also browse through all your applicants in the applicants page.</p>
+              <v-checkbox
+                class="optional"
+                label="Don't send resumes to my email. I have an online form that doesn't require sign-up."
+                v-model="useGForm"
+                hide-details
+              ></v-checkbox>
+              <div v-if="applyMethod === 'Through Google Forms'">
+                <v-text-field
+                  v-model="gformLink"
+                  label="My form url"
+                  placeholder="Paste your form url here"
+                  required
+                  :rules="[(v) => applyMethod != 'Through Google Forms' || !!v || 'Required']">
+                ></v-text-field>
+              </div>
+              <div>
+                <p style="margin-top: 16px; margin-bottom: 0;">Do you have any special instuctions for applicants? (Optional)</p>
+                <v-text-field
+                  v-model="notes"
+                  style="padding: 0 2px;"
+                  class="optional"
+                  placeholder="e.g. Please walk-in from 11 - 2pm for interviews"
+                  hide-details
+                  multi-line
+                  rows=1
+                ></v-text-field>
+              </div>
+              </v-form>
+            </div>
           </v-tab-item>
         </v-tabs-items>
 
       </v-tabs>
 
+      <v-dialog v-model="errorOccured">
+        <v-card>
+          <v-card-title>
+            Oh no, an error occured
+          </v-card-title>
+          <v-card-text>
+            Please try again later
+          </v-card-text>
+          <v-card-actions>
+            <v-btn flat="flat" @click.native="errorOccured = false;">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="deletePictureModal.show">
+        <v-card>
+          <v-card-title>
+            <div class="headline" style="margin-bottom: 10px;">Delete this picture?</div>
+            <img v-if="deletePictureModal.croppedID"
+              class="image" :src="`${serverUrl}/file/get/${deletePictureModal.croppedID}`"
+              width="100%">
+          </v-card-title>
+          <v-card-actions>
+            <v-btn flat="flat" @click.native="cancelDeletePictureModal">Cancel</v-btn>
+            <v-btn flat="flat" @click.native="deletePicture">Delete</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
       <div style="max-width: 500px;">
-        <!-- <v-select
-          label="Position Tags"
-          :items="availablePositions"
-          autocomplete
-          multiple
-          attach
-        >
-        </v-select> -->
+        <!--  -->
         <!-- allow-overflow attach -->
         <!--<div id="test" style="width: auto; height: auto;"></div>-->
       </div>
@@ -1221,7 +1302,7 @@ export default {
     },
     picsUploaded(fileIds) {
       this.picUploaderDialog = false;
-      this.images.push(fileIds);
+      this.job.images.push(fileIds);
     },
     showDeletePictureModal(croppedID) {
       this.deletePictureModal.show = true;
@@ -1232,7 +1313,7 @@ export default {
       this.deletePictureModal.croppedID = null;
     },
     deletePicture() {
-      this.images = this.images.filter(({ cropped }) => cropped !== this.deletePictureModal.croppedID);
+      this.job.images = this.job.images.filter(({ cropped }) => cropped !== this.deletePictureModal.croppedID);
       this.cancelDeletePictureModal();
     },
     checkIfEmailVerified() {
@@ -1324,7 +1405,9 @@ export default {
     },
   },
   activated() {
-    if (process.env.NODE_ENV === 'production') {
+    // TO MAKE PAGE ACCESSIBLE ON DEV ONLY. REMOVE WHEN COMPLETE
+    if (window.location.href.indexOf('https://kunvet.com/') !== -1 ||
+        window.location.href.indexOf('http://kunvet.com/') !== -1) {
       this.$router.push('/create-job');
       return;
     }
