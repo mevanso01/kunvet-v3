@@ -178,6 +178,9 @@ main {
 .menu__content--select .list--dense .list__tile__title {
   font-size: 14px !important;
 }
+.checkbox.kunvet-red.input-group--selection-controls.input-group--active i {
+  color: #ef5350 !important;
+}
 /*  ---- End of Styles to globally override Vuetify ----  */
 
 /*  ---- Custom selects ----  */

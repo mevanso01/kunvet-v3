@@ -243,7 +243,7 @@
         fixed-tabs
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
-        <v-tab v-for="(item, i) in tabItems" :key="item" :disabled="false && i > furthest_tab" >
+        <v-tab v-for="(item, i) in tabItems" :key="item" :disabled="i > furthest_tab" >
           <div class="tab-text-container" style="width: 100%; height: 100%;"
             :class="{ 'no-error': isTabValid(i), 'error': isTabInvalid(i) }">
             <span style="line-height: 36px;">{{ item }}</span>
