@@ -184,6 +184,7 @@
 <script>
 import 'font-awesome/scss/font-awesome.scss';
 import '@/stylus/main.styl';
+// import 'app.css';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import Store from '@/store';
@@ -498,6 +499,7 @@ export default {
 };
 </script>
 <style lang="scss">
+/* @import 'stylus/main.styl'; gives error */
 @import 'app.css';
 @import 'account.css';
 @import 'applicants.css';
@@ -505,6 +507,21 @@ export default {
 @import 'job_pages.css';
 @import 'nav.css';
 @import 'postsAndSearch.css';
+// .material-icons {
+//   font-family: 'Material Icons';
+//   font-weight: normal;
+//   font-style: normal;
+//   font-size: 24px;
+//   line-height: 1;
+//   letter-spacing: normal;
+//   text-transform: none;
+//   display: inline-block;
+//   white-space: nowrap;
+//   word-wrap: normal;
+//   direction: ltr;
+//   -webkit-font-feature-settings: 'liga';
+//   -webkit-font-smoothing: antialiased;
+// }
 body, html {
   height: 100%;
   width: 100%;

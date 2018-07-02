@@ -1,212 +1,251 @@
-<style>
-.create-job-container .optional label::after {
-  content: ' - Optional';
-  font-style: italic;
-  /* opacity: 0.6; */
-  color: #979797;
-}
-.create-job-container .radio-group.optional label::after {
-  content: '';
-}
-.create-job-container .tabs__bar {
-  position: fixed;
-  top: 64px;
-  z-index: 5;
-  width: calc(100% - 32px);
-}
-.create-job-container .tabs__div {
-  padding: 0 8px;
-}
-.create-job-container .tabs__item {
-  padding: 0;
-  height: 38px;
-}
-.create-job-container .input-group {
-  padding-top: 12px;
-}
-.create-job-container .tabs__items .cust-spacer {
-  height: 50px;
-  width: 100%;
-}
-.create-job-container .input-group--text-field label {
-  top: 12px;
-}
-.create-job-container .input-group--required label:after {
-  content: '';
-}
-.create-job-container .no-padding-select {
-  padding-top: 0 !important;
-}
-.create-job-container .no-padding-select label {
-  top: 0 !important;
-}
-.color-red {
-  color: red;
-}
-.optional-color {
-  color: #979797;
-}
-.create-job-container .ql-editor {
-  min-height: 120px;
-}
-.ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
-  margin-bottom: 0;
-}
-.create-job-container h3 {
-  margin-top: 1em;
-  color: #4d4d4d;
-  font-size: 1.5em;
-}
-.create-job-container h4.cust-subheader {
-  font-size: 18px;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 12px;
-}
-.create-job-container .input-group--text-field {
-  max-width: 500px;
-}
-.create-job-container .input-group--required label:after {
-  content: '';
-}
-.create-job-container .cust-radio-box .input-group.radio-group.radio-group--row,
-.create-job-container .cust-radio-box .input-group__input {
-  display: block;
-}
-.create-job-container .cust-radio-box > p {
-  margin-bottom: 2px;
-  color: #999;
-}
-.create-job-container .cust-radio-box > div {
-  padding-top: 0;
-}
-.create-job-container .cust-radio-box .input-group.input-group--selection-controls.radio,
-.create-job-container .multi-checkbox .input-group.input-group--selection-controls {
-  padding-top: 4px;
-  max-width: 110px;
-  height: 34px;
-  float: left;
-  display: block !important;
-}
-.create-job-container .cust-radio-box .input-group.input-group--selection-controls label,
-.create-job-container .multi-checkbox .input-group.input-group--selection-controls label {
-  max-width: 100%;
-  padding-left: 32px;
-  text-align: left;
-  left: 0;
-}
-.work-hours {
-  min-height: 34px;
-}
-/* .requirements .flex {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.create-job-container .cflex_1 {
-  padding: 16px 0 0 0;
-} */
-.error_h3 {
-  color: #ff5252 !important;
-  margin-bottom: 0.5em !important;
-}
-.error_h3_2 {
-  color: #ff5252 !important;
-}
-.error_p {
-  color: #ff5252;
-  font-size: 12px;
-}
-.optional_p {
-  margin-bottom: 5px;
-}
-.input-group--error, .input-group--error label {
-  color: #f00 !important;
-}
-.bottom-error-message {
-  color: #f00;
-  transition: all 0.4s linear;
-}
-.create-job-container .image-container {
-  position: relative;
-}
-.create-job-container .image-container .delete-img-btn {
-  position: absolute;
-  top: 2px;
-  right: 0;
-  color: rgba(255,255,255,0.75);
-}
-.create-job-container .custom-select-2-wrapper {
-  height: auto;
-}
-.create-job-container .custom-select-2 {
-  box-shadow: none;
-  height: 31px;
-}
-.create-job-container .custom-select-2 .inner {
-  border-bottom: 1px solid rgba(0,0,0,.42);
-  height: 30px;
-  transition: border-color 0.3s ease-out;
-  padding: 0;
-}
-.create-job-container .custom-select-2 .inner span {
-  font-size: 16px;
-  line-height: 30px;
-}
-.create-job-container .custom-select-2 .inner .btn--icon {
-  height: 24px;
-  width: 24px;
-  margin: 3px 6px;
-}
-.create-job-container .custom-select-2.active .inner {
-  border-bottom: solid 2px rgb(24,103,192);
-}
-.create-job-container .custom-select-2.error-border .inner {
-  border-bottom: solid 2px red !important;
-}
-@media (max-width: 435px) {
-  .create-job-container .work-hours {
-    min-height: 114px;
+<style lang="scss">
+.create-job-container {
+  /* Vuetify overrides */
+  .tabs__bar {
+    position: fixed;
+    top: 64px;
+    z-index: 5;
+    width: calc(100% - 32px);
+    height: 43px;
   }
-}
-@media (max-width: 600px) {
-  .create-job-container .tabs__bar {
-    top: 56px;
+  .cust-tab-wrapper {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    width: 100%;
+    height: 43px;
+    background-color: #fff;
   }
-  .create-job-container .tabs__items .cust-spacer {
-    height: 40px;
+  .tabs__div {
+    padding: 0 8px;
   }
-}
-@media (max-width: 700px) {
-  .create-job-container .work-hours {
-    min-height: 76px;
+  .tabs__item {
+    padding: 0;
+    height: 38px;
   }
-}
-@media (min-width: 601px) {
-  .requirements .flex {
-    padding: 0 15px;
+  .tabs__item:not(.tabs__item--active) {
+    opacity: 1;
   }
-  .picUploaderDialog {
-    min-width: 450px;
+  .input-group {
+    padding-top: 12px;
   }
-}
-@media (min-width: 961px) {
-  .create-job-container .tabs__bar {
-    width: 960px;
-    margin-left: calc(50% - 496px);
+  .tabs__items .cust-spacer {
+    height: 50px;
+    width: 100%;
+  }
+  .input-group--text-field label {
+    top: 12px;
+  }
+  .input-group--required label:after {
+    content: '';
+  }
+  .input-group--error, .input-group--error label {
+    color: #f00 !important;
+  }
+  .radio-group .input-group__details {
+    padding-top: 0;
+  }
+  /* End of Vuetify overrides */
+  .optional label::after {
+    content: ' - Optional';
+    font-style: italic;
+    color: #979797;
+  }
+  .radio-group.optional label::after {
+    content: '';
+  }
+  .no-padding-select {
+    padding-top: 0 !important;
+  }
+  .no-padding-select label {
+    top: 0 !important;
+  }
+  .optional-color {
+    color: #979797;
+  }
+  .ql-editor {
+    min-height: 120px;
+  }
+  .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
+    margin-bottom: 0;
+  }
+  h3 {
+    margin-top: 1em;
+    color: #4d4d4d;
+    font-size: 1.5em;
+  }
+  h4.cust-subheader {
+    font-size: 20px;
+    line-height: normal;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 12px;
+  }
+  .input-group--text-field {
+    max-width: 500px;
+  }
+  .cust-radio-box .input-group.radio-group.radio-group--row,
+  .cust-radio-box .input-group__input {
+    display: block;
+  }
+  .cust-radio-box > p {
+    margin-bottom: 2px;
+    color: #999;
+  }
+  .cust-radio-box > div {
+    padding-top: 0;
+  }
+  .cust-radio-box .input-group.input-group--selection-controls.radio,
+  .multi-checkbox .input-group.input-group--selection-controls {
+    padding-top: 4px;
+    max-width: 110px;
+    height: 34px;
+    float: left;
+    display: block !important;
+  }
+  .cust-radio-box .input-group.input-group--selection-controls label,
+  .multi-checkbox .input-group.input-group--selection-controls label {
+    max-width: 100%;
+    padding-left: 32px;
+    text-align: left;
+    left: 0;
+  }
+  .work-hours {
+    min-height: 34px;
+  }
+  .error_h3 {
+    color: #ff5252 !important;
+    margin-bottom: 0.5em !important;
+  }
+  .error_h3_2 {
+    color: #ff5252 !important;
+  }
+  .error_p {
+    color: #ff5252;
+    font-size: 12px;
+  }
+  .optional_p {
+    margin-bottom: 5px;
+  }
+  .bottom-error-message {
+    color: #f00;
+    transition: all 0.4s linear;
+  }
+  .image-container {
+    position: relative;
+  }
+  .image-container .delete-img-btn {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    color: rgba(255,255,255,0.75);
+  }
+  .custom-select-2-wrapper {
+    height: auto;
+  }
+  .custom-select-2 {
+    box-shadow: none;
+    height: 31px;
+  }
+  .custom-select-2 .inner {
+    border-bottom: 1px solid rgba(0,0,0,.42);
+    height: 30px;
+    transition: border-color 0.3s ease-out;
+    padding: 0;
+  }
+  .custom-select-2 .inner span {
+    font-size: 16px;
+    line-height: 30px;
+  }
+  .custom-select-2 .inner .btn--icon {
+    height: 24px;
+    width: 24px;
+    margin: 3px 6px;
+  }
+  .custom-select-2.active .inner {
+    border-bottom: solid 2px rgb(24,103,192);
+  }
+  .custom-select-2.error-border .inner {
+    border-bottom: solid 2px red !important;
+  }
+  /* this is the grey disabled color */
+  .tab-text-container {
+    border-bottom: 2px solid #c7c7c7;
+    // color: #d1d1d1;
+  }
+  .tab-text-container.no-error {
+    // green:
+    border-bottom: 2px solid #43A047;
+    color: #43A047;
+    // blue-grey:
+    // border-bottom: 2px solid #607D8B;
+    // color: #607D8B;
+  }
+  .tab-text-container.error {
+    border-bottom: 2px solid red;
+    color: red;
+  }
+  .tabs__item--active .tab-text-container {
+    border-bottom: 2px solid #333; // 212121
+    color: #333;
+  }
+  .additional-requirements .flex {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  @media (max-width: 435px) {
+    .work-hours {
+      min-height: 114px;
+    }
+  }
+  @media (max-width: 600px) {
+    .tabs__bar {
+      top: 56px;
+    }
+    .cust-tab-wrapper {
+      top: 56px;
+    }
+    .tabs__items .cust-spacer {
+      height: 40px;
+    }
+  }
+  @media (max-width: 700px) {
+    .work-hours {
+      min-height: 76px;
+    }
+  }
+  @media (min-width: 601px) {
+    .additional-requirements .flex {
+      padding-right: 30px;
+    }
+    .picUploaderDialog {
+      min-width: 450px;
+    }
+  }
+  @media (min-width: 961px) {
+    .tabs__bar {
+      width: 960px;
+      margin-left: calc(50% - 496px);
+    }
   }
 }
 </style>
 
 <template>
   <v-container fluid class="create-job-container">
+      <div class="cust-tab-wrapper"></div>
       <v-tabs
         slot="extension"
         v-model="tab"
         grow
+        fixed-tabs
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
-        <v-tab v-for="item in tabItems" :key="item">
-          <div style="width: 100%; height: 100%; border-bottom: 2px solid #666;">
+        <v-tab v-for="(item, i) in tabItems" :key="item" :disabled="i > furthest_tab" >
+          <div class="tab-text-container" style="width: 100%; height: 100%;"
+            :class="{ 'no-error': isTabValid(i), 'error': isTabInvalid(i) }">
             <span style="line-height: 36px;">{{ item }}</span>
           </div>
         </v-tab>
@@ -326,12 +365,14 @@
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <v-form v-model="form2Valid" ref="form2">
+
+              <!-- Categories -->
+              <h4 class="cust-subheader">Categories</h4>
               <p>Is this a full-time or part-time job?</p>
               <v-radio-group v-model="job.type"
-                class="no-padding mb-3"
-                hide-details
-                :rules="[(type) => !!(type) || !submitted || 'Required']"
-                requred>
+                class="no-padding"
+                :rules="[(v) => !submit2Pressed || !!(v[0]) || 'Required']"
+                required>
                 <v-radio label="Full time" :value="['fulltime']" class="pt-0"></v-radio>
                 <v-radio label="Part time" :value="['parttime']" class="pt-0"></v-radio>
                 <v-radio label="Both" :value="['fulltime', 'parttime']" class="pt-0"></v-radio>
@@ -345,7 +386,6 @@
                 hide-details class="pt-0 mb-3"></v-checkbox>
 
               <p class="mb-2">Is this job student friendly?</p>
-
               <!-- the cust-radio-box class makes the radio input wrap on small screens -->
               <div class="cust-radio-box">
                 <v-radio-group v-model="job.studentfriendly" row required hide-details>
@@ -354,17 +394,7 @@
                 </v-radio-group>
               </div>
 
-              <br>
-              <h4 class="cust-subheader">Working Hours <span class="optional-color">(Optional)</span></h4>
-
-              <div>
-                  <v-checkbox label="morning" v-model="job.shift" value="morning" hide-details class="pt-0"></v-checkbox>
-                  <v-checkbox label="noon" v-model="job.shift" value="noon" hide-details class="pt-0"></v-checkbox>
-                  <v-checkbox label="afternoon" v-model="job.shift" value="afternoon" hide-details class="pt-0"></v-checkbox>
-                  <v-checkbox label="evening" v-model="job.shift" value="evening" hide-details class="pt-0"></v-checkbox>
-                  <v-checkbox label="night" v-model="job.shift" value="night" hide-details class="pt-0"></v-checkbox>
-              </div>
-
+              <!-- Salary -->
               <br>
               <h4 class="cust-subheader">Salary</h4>
               <v-layout row wrap>
@@ -373,11 +403,11 @@
                     <v-radio-group
                     v-model="salary_select"
                     row
-                    :rules="[v => !!(v) || !submitted || 'Required']"
-                    hide-details
+                    :rules="requiredRules"
+                    :hide-details="salary_select === 'paid'"
                     required>
-                      <v-radio style="max-width: 95px;" label="Paid" value="paid"></v-radio>
-                      <v-radio style="max-width: 120px;" label="Unpaid" value="unpaid"></v-radio>
+                      <v-radio style="max-width: 90px;" label="Paid" value="paid"></v-radio>
+                      <v-radio style="max-width: 110px;" label="Unpaid" value="unpaid"></v-radio>
                       <v-radio label="Negotiable" value="negotiable"></v-radio>
                     </v-radio-group>
                   </div>
@@ -402,10 +432,21 @@
                 </v-flex>
               </v-layout>
 
+              <!-- Working hours -->
+              <h4 class="cust-subheader">Working Hours <span class="optional-color">(Optional)</span></h4>
+              <div class="mb-3">
+                  <v-checkbox label="flexible" v-model="job.shift" value="flexible" hide-details class="pt-0"></v-checkbox>
+                  <v-divider style="margin-bottom: 8px; max-width: 230px;"></v-divider>
+                  <v-checkbox label="morning" v-model="job.shift" value="morning" hide-details class="pt-0"></v-checkbox>
+                  <v-checkbox label="noon" v-model="job.shift" value="noon" hide-details class="pt-0"></v-checkbox>
+                  <v-checkbox label="afternoon" v-model="job.shift" value="afternoon" hide-details class="pt-0"></v-checkbox>
+                  <v-checkbox label="evening" v-model="job.shift" value="evening" hide-details class="pt-0"></v-checkbox>
+                  <v-checkbox label="night" v-model="job.shift" value="night" hide-details class="pt-0"></v-checkbox>
+              </div>
 
-              <br>
-              <h3 class="optional" style="margin-bottom: 0.5em;">Optional requirements</h3>
-              <v-layout class="requirements" row wrap>
+              <!-- Additional requirements -->
+              <h4 class="cust-subheader">Additional requirements <span class="optional-color">(Optional)</span></h4>
+              <v-layout class="additional-requirements" row wrap>
                 <v-flex xs12 sm6 md5>
                   <v-select class="optional"
                     v-model="job.education"
@@ -421,41 +462,41 @@
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md5>
-                  <v-text-field class="optional"
-                    name="language"
+                  <v-select class="optional"
                     v-model="job.language"
                     label="Language"
-                  ></v-text-field>
+                    v-bind:items="languages"
+                    autocomplete
+                    dense
+                    multiple>
+                  </v-select>
                 </v-flex>
-                <v-flex xs4 sm2>
+                <v-flex xs4 sm3>
                   <v-text-field class="optional"
-                  v-model="job.age"
-                  label="Age"
-                  :rules="[(age) => (!!(age/1) || !age)  || 'Must be a number']">
-                </v-text-field>
+                    v-model="job.age"
+                    label="Age"
+                    :rules="[(age) => !(age) || !!(age/1) || 'Must be a number']">
+                  </v-text-field>
                 </v-flex>
               </v-layout>
 
-              <br>
-
+              <!-- Long text fields -->
               <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
               <p class="error_p" v-if="!description_valid">Required</p>
               <vue-editor id="description" v-model="description" placeholder="300 characters maximum" :editorOptions="shortTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
               <br>
-
               <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
               <p class="error_p" v-if="!experience_valid">Required</p>
               <vue-editor id="experience" v-model="experience" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
               <br>
-
               <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
               <p class="error_p" v-if="!responsibilities_valid">Required</p>
               <vue-editor id="responsibilities" v-model="responsibilities" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
 
+              <!-- Pictures -->
               <br>
-
               <div style="display: flex">
               <h3 class="optional" style="margin: 7px 10px 6px 0;">Pictures</h3>
               <v-btn v-if="job.images.length === 0"
@@ -527,6 +568,7 @@ import PicUploader from '@/components/PicUploader';
 import Config from 'config';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 import positions from '@/constants/positions';
+import languages from '@/constants/languages';
 import queries from '@/constants/queries';
 import difference from 'lodash/difference';
 import axios from 'axios';
@@ -593,9 +635,13 @@ export default {
   data() {
     return {
       tab: '0',
+      furthest_tab: 0,
       form1Valid: false,
       form2Valid: false,
       form3Valid: false,
+      submit1Pressed: false,
+      submit2Pressed: false,
+      submit3Pressed: false,
       tabItems: ['About you', 'Job details', 'Review and post'],
       introDialog: true,
       serverUrl: Config.get('serverUrl'),
@@ -626,6 +672,7 @@ export default {
         type: [], // fulltime, parttime
         type2: [], // internship, contract
         studentfriendly: true,
+        shift: [],
         salary: null,
         pay_denomination: 'per hour',
         education: null,
@@ -655,6 +702,7 @@ export default {
 
       openSelectField: null,
       availablePositions: positions,
+      languages: languages,
       filterPositions: null,
       selectedPositions: [],
       picUploaderDialog: false,
@@ -729,6 +777,7 @@ export default {
   methods: {
     next(n) {
       // this handles all the logic of moving from one step to the next
+      this[`submit${n}Pressed`] = true;
       this.$refs[`form${n}`].validate();
       if (n === 1 && (!this.job.longitude || !this.job.latitude)) {
         this.job.addressValid = false;
@@ -760,13 +809,26 @@ export default {
     },
     _moveToNextTab() {
       const active = parseInt(this.tab, 10);
-      if (active < 2) { this.tab = (active + 1).toString(); }
+      if (active < 2) {
+        this.tab = (active + 1).toString();
+        if (this.tab > this.furthest_tab) {
+          this.furthest_tab = this.tab;
+        }
+      }
       setTimeout(() => { this.scrollToTop(); }, 300);
+    },
+    isTabValid(n) {
+      const displaysError = (this[`submit${(n + 1)}Pressed`] && !this[`form${(n + 1)}Valid`]);
+      return !displaysError && (n <= this.furthest_tab);
+    },
+    isTabInvalid(n) {
+      if (n > this.furthest_tab) { return false; }
+      return !this.isTabValid(n);
     },
     scrollToTop(target = 0) {
       let offset = 0;
       /* 112 is the height of the navbar and tabs bar */
-      if (target !== 0) { offset = -130; }
+      if (target !== 0) { offset = -145; }
       this.$vuetify.goTo(target, { duration: 700, offset: offset, easing: 'easeInOutCubic' });
     },
     async createAccount() {

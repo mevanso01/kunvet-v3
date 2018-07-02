@@ -169,6 +169,15 @@ main {
 .chip__close i.icon {
   font-size: 18px;
 }
+.menu__content--select .list--dense i {
+  height: 24px !important;
+}
+.menu__content--select .list--dense .list__tile__action {
+  min-width: 36px;
+}
+.menu__content--select .list--dense .list__tile__title {
+  font-size: 14px !important;
+}
 /*  ---- End of Styles to globally override Vuetify ----  */
 
 /*  ---- Custom selects ----  */
