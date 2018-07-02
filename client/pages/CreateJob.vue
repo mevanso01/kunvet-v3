@@ -190,6 +190,7 @@
   .tab-text-container.error {
     border-bottom: 2px solid red;
     color: red;
+    background-color: #fff;
   }
   .tabs__item--active .tab-text-container {
     border-bottom: 2px solid #333; // 212121
