@@ -1,6 +1,10 @@
 <style lang="scss">
 .create-job-container {
   /* Vuetify overrides */
+  .tabs__slider-wrapper,
+  .tabs__slider {
+    display: none;
+  }
   .tabs__bar {
     position: fixed;
     top: 64px;
