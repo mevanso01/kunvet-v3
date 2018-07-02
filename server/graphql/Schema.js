@@ -1,4 +1,5 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
+import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
 import Mailer from '@/utils/Mailer';
@@ -45,6 +46,8 @@ async function sendNewApplicationNotification(req, next) {
   const user = req.context.user;
   let job = null;
   let employer = null;
+
+  req.args.record.tracking_token = uuidv1();
 
   try {
     job = await Models.Job.findOne({

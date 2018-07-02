@@ -196,6 +196,9 @@ const ApplicantSchema = Mongoose.Schema({
     type: Date,
     default: () => new Date(+new Date() + (1000 * 60 * 60 * 24 * 40)),
   },
+  tracking_token: {
+    type: String,
+  },
   status: {
     type: String,
     enum: ['submitted', 'opened', 'processing', 'processed', 'accepted', 'rejected', 'withdrawn', 'expired'],

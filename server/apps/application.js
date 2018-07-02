@@ -22,28 +22,20 @@ import Koa from 'koa';
 import KoaRouter from 'koa-router';
 
 // Utils
+import ErrorCode from '#/ErrorCode';
+import ApiResponse from '@/utils/ApiResponse';
 import Models from '@/mongodb/Models';
 import Mailer from '@/utils/Mailer';
+import Data from '@/utils/Data';
 
 const app = new Koa();
 const router = new KoaRouter();
 
-router.post('/:id/setStatus/:status', async (ctx) => {
-  if (!ctx.isAuthenticated()) {
-    // Unauthenticated
-    const response = {
-      success: false,
-      message: 'Authentication required',
-    };
-    ctx.status = 401;
-    ctx.body = JSON.stringify(response);
-    return;
-  }
-
-  const applicationId = ctx.params.id;
+async function setStatus(applicationId, status, ctx = null, token = null) {
   let application = null;
   let job = null;
   let user = null;
+  let employer = ctx ? ctx.state.user : null;
   try {
     application = await Models.Applicant.findOne({
       _id: applicationId,
@@ -54,61 +46,62 @@ router.post('/:id/setStatus/:status', async (ctx) => {
     user = await Models.Account.findOne({
       _id: application.user_id,
     });
+    if (!employer) {
+      employer = await Models.Account.findOne({
+        _id: job.user_id,
+      });
+    }
   } catch (e) {
-    // Invalid application
-    const response = {
-      success: false,
-      message: 'Invalid application',
-    };
-    ctx.status = 404;
-    ctx.body = JSON.stringify(response);
-    return;
+    return ApiResponse(
+      ErrorCode.InvalidApplication,
+    );
   }
 
-  if (!ctx.state.user._id.equals(job.user_id)) {
+  if (ctx && !ctx.state.user._id.equals(job.user_id)) {
     // Not the employer
-    const response = {
-      success: false,
-      message: 'Invalid application',
-    };
-    ctx.status = 404;
-    ctx.body = JSON.stringify(response);
-    return;
+    return ApiResponse(
+      ErrorCode.InvalidApplication,
+    );
   }
 
-  if (application.status === ctx.params.status) {
+  if (token && application.tracking_token !== token) {
+    // Token incorrect
+    return ApiResponse(
+      ErrorCode.InvalidApplication,
+    );
+  }
+
+  if (application.status === status) {
     // application status is already set
-    const response = {
-      success: true,
-      message: 'Status updated',
-    };
-    ctx.body = JSON.stringify(response);
-    return;
+    return ApiResponse();
+  }
+
+  if (application.status !== 'submitted' && status === 'opened') {
+    // application can only be set to 'opened' in the 'submitted' state
+    return ApiResponse(
+      ErrorCode.BadRequest,
+    );
   }
 
   // Set the status
-  application.status = ctx.params.status;
+  application.status = status;
   try {
     await application.save();
   } catch (e) {
-    const response = {
-      success: false,
-      message: 'Could not save - Invalid status?',
-    };
-    ctx.status = 500;
-    ctx.body = JSON.stringify(response);
-    return;
+    return ApiResponse(
+      ErrorCode.InternalError,
+    );
   }
 
   // Send notification to applicant
-  if (['accepted', 'rejected'].includes(ctx.params.status)) {
+  if (['accepted', 'rejected'].includes(status)) {
     const mailer = new Mailer();
     try {
       await mailer.sendTemplate(
         user.email,
-        `application-${ctx.params.status}`,
+        `application-${status}`,
         {
-          replyTo: ctx.state.user.email, // employer's email
+          replyTo: employer.email,
           fname: user.firstname,
           name: application.name,
           jobname: job.title,
@@ -116,12 +109,9 @@ router.post('/:id/setStatus/:status', async (ctx) => {
       );
     } catch (e) {
       console.log(e);
-      const response = {
-        success: false,
-        message: 'Email could not be sent',
-      };
-      ctx.body = JSON.stringify(response);
-      return;
+      return ApiResponse(
+        ErrorCode.InternalError,
+      );
     }
 
     try {
@@ -136,16 +126,39 @@ router.post('/:id/setStatus/:status', async (ctx) => {
       console.log('ERROR', e);
     }
   }
+
   // notification under special condition
-  if (ctx.params.status === 'opened') {
+  if (status === 'opened') {
     // if user has notifications enabled, send notification
   }
 
-  const response = {
-    success: true,
-    message: 'Status updated',
-  };
-  ctx.body = JSON.stringify(response);
+  return ApiResponse();
+}
+
+router.get('/:id/tracking/:token', async (ctx) => {
+  // Always return the tracking pixel, regardless of actual result
+  ctx.set('Content-Type', 'image/gif');
+  ctx.body = Data.TrackingGif;
+
+  const applicationId = ctx.params.id;
+  const token = ctx.params.token;
+  await setStatus(applicationId, 'opened', null, token);
+});
+
+router.post('/:id/setStatus/:status', async (ctx) => {
+  if (!ctx.isAuthenticated()) {
+    // Unauthenticated
+    const response = {
+      success: false,
+      message: 'Authentication required',
+    };
+    ctx.status = 401;
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+
+  const applicationId = ctx.params.id;
+  ctx.body = await setStatus(applicationId, ctx.params.status, ctx);
 });
 
 app.use(router.routes());
