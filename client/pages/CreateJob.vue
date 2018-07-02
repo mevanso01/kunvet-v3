@@ -178,8 +178,9 @@
   .tab-text-container {
     border-bottom: 2px solid #c7c7c7;
     // color: #d1d1d1;
+    background-color: #fff !important;
   }
-  .tab-text-container.no-error {
+  .tab-text-container.tab-no-error {
     // green:
     border-bottom: 2px solid #43A047;
     color: #43A047;
@@ -187,10 +188,9 @@
     // border-bottom: 2px solid #607D8B;
     // color: #607D8B;
   }
-  .tab-text-container.error {
+  .tab-text-container.tab-error {
     border-bottom: 2px solid red;
     color: red;
-    background-color: #fff;
   }
   .tabs__item--active .tab-text-container {
     border-bottom: 2px solid #333; // 212121
@@ -250,7 +250,7 @@
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
         <v-tab v-for="(item, i) in tabItems" :key="item" :disabled="i > furthest_tab" >
           <div class="tab-text-container" style="width: 100%; height: 100%;"
-            :class="{ 'no-error': isTabValid(i), 'error': isTabInvalid(i) }">
+            :class="{ 'tab-no-error': isTabValid(i), 'tab-error': isTabInvalid(i) }">
             <span style="line-height: 36px;">{{ item }}</span>
           </div>
         </v-tab>
