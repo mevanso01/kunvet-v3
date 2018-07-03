@@ -1413,7 +1413,7 @@ export default {
     // TO MAKE PAGE ACCESSIBLE ON DEV ONLY. REMOVE WHEN COMPLETE
     if (window.location.href.indexOf('https://kunvet.com/') !== -1 ||
         window.location.href.indexOf('http://kunvet.com/') !== -1) {
-      this.$router.push('/create-job');
+      this.$router.push('/createnewjob');
       return;
     }
     this.resetData();

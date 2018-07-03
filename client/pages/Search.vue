@@ -516,14 +516,6 @@ export default {
         typeObj.disabled = false;
         return typeObj;
       });
-      /* return this.availableTypes.map((typeObj) => {
-        typeObj.disabled = !this.filteredJobs.find(
-          job => job.type.indexOf(typeObj.value) !== -1 ||
-            (job.type2 && job.type2.indexOf(typeObj.value) !== -1)
-          ,
-        );
-        return typeObj;
-      }); */
     },
     availableShiftsObj() {
       return this.availableShifts.map((shiftObj) => {
@@ -542,7 +534,10 @@ export default {
   },
   methods: {
     openSelect(name) {
-      this.filterPositions = null;
+      this.filterPositions = null; // clear job filter text
+      if (this.openSelectField === 'city') {
+        this.filterJobs(); // filter jobs when city is closed
+      }
       if (this.openSelectField === name) {
         this.openSelectField = null;
       } else {
@@ -553,6 +548,14 @@ export default {
       this.openSelect(null);
       this.setSelectedLatlongs();
       this.loadInitialJobs();
+    },
+    documentClick(e) {
+      const selects = document.getElementsByClassName('custom-select-2-wrapper');
+      const target = e.target;
+      for (var el of selects) {
+        if (el === target || el.contains(target)) { return; } // do not close
+      }
+      this.openSelect(null); // otherwise, close
     },
     setSelectedLatlongs() {
       const latlongs = this.getCityCoordinates();
@@ -585,8 +588,8 @@ export default {
         }
       }
       let jobsToFetch = this.findJobs.concat();
-      if (this.selectedLat && this.selectedLong) {
-        // sortedJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+      if (this.selectedCity) { // should be always true?
+        this.setSelectedLatlongs();
         jobsToFetch = jobsToFetch.filter(x => this.filterJobByDistance(x));
       }
       let endIndex = jobsToFetch.length;
@@ -834,6 +837,7 @@ export default {
   },
   deactivated() {
     this.commitData();
+    document.removeEventListener('click', this.documentClick, { passive: true });
   },
   created() {
     EventBus.$on('deletedJob', id => {
@@ -846,6 +850,7 @@ export default {
   activated() {
     this.setSelectedLatlongs();
     this.loadInitialJobs();
+    document.addEventListener('click', this.documentClick, { passive: true });
     VuexLS.restoreState('vuex', window.localStorage).then((data) => {
       if (data) {
         if (data.firstSearch) {
