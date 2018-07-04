@@ -75,7 +75,7 @@
   overflow: hidden;
 }
 .btn-holder {
-  padding-top: 7px;
+  padding-top: 8px;
 }
 .new-applicant-card__info {
   padding-top: 7px;
@@ -109,11 +109,11 @@
 }
 .btn-holder__left-elements {
   float: left;
-  height: 44px;
+  min-height: 36px;
 }
 .btn-holder__right-elements {
   float: right;
-  height: 44px;
+  min-height: 36px;
 }
 .new-applicant-card__regular-icon {
   width: 15px;

@@ -138,7 +138,7 @@
           <div class="btn-holder">
             <div class="btn-holder__right-elements">
               <v-btn
-                class="kunvet-black-small-btn"
+                class="kunvet-black-small-btn" style="margin: 0 8px;"
                 @click="openRepostDialog(job._id)"
               >
                 Repost
