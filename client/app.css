@@ -213,6 +213,7 @@ main {
 .custom-select-2 .inner {
   padding: 0 16px;
   cursor: pointer;
+  max-height: 48px;
 }
 .custom-select-2 .custom-select-menu {
   overflow-y: scroll;
