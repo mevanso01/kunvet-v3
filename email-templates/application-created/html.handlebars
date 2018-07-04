@@ -525,7 +525,11 @@
 <br>
 {{ fname }} just applied to your job, <em>{{ jobname }}</em>, with&nbsp;Kunvet!<br>
 <br>
+{{#if attachments }}
 {{ fname }}'s resume and/or cover letter is attached in this email.<br>
+{{else}}
+{{ fname }} did not attach a resume.<br>
+{{/if}}
 <br>
 <em>You can also contact {{ fname }} by replying to this email.</em></p>
 
