@@ -8,9 +8,11 @@ class JobHelper {
     }
     return daysDiff > 0 && active && !isDeleted;
   }
-  static isJobExpired = ({ expiry_date: expiryDate, active }) => {
-    const daysDiff = DateHelper.getDifferenceInDays(Date.now(), new Date(expiryDate));
-    return daysDiff <= 0 && active; // daysDiff can be negative so this is good
+  static isJobExpired = (job) => {
+    console.log(job);
+    // const daysDiff = DateHelper.getDifferenceInDays(Date.now(), new Date(expiryDate));
+    // return daysDiff <= 0 && !active; // daysDiff can be negative so this is good
+    return false;
   }
 }
 

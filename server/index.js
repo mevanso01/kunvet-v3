@@ -30,6 +30,7 @@ import GraphQLApp from '@/apps/graphql';
 import DevToolsApp from '@/apps/devtools';
 import FileServerApp from '@/apps/fileserver';
 import ApplicationApp from '@/apps/application';
+import JobApp from '@/apps/job';
 import ProfilePicApp from '@/apps/profile_pic';
 import ResetPasswordApp from '@/apps/reset_password';
 
@@ -68,6 +69,7 @@ app.use(KoaMount('/data', GraphQLApp));
 app.use(KoaMount('/auth', AuthApp));
 app.use(KoaMount('/file', FileServerApp));
 app.use(KoaMount('/application', ApplicationApp));
+app.use(KoaMount('/job', JobApp));
 app.use(KoaMount('/profile-pic', ProfilePicApp));
 app.use(KoaMount('/reset-password', ResetPasswordApp));
 

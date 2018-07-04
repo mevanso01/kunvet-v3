@@ -9,7 +9,7 @@
     <div class="main-cont-large">
       <v-layout row wrap>
         <v-flex xs-12 v-if="unpostedJobs.length === 0 && activeJobs.length === 0">
-          You have no jobs.
+          You have no active jobs.
         </v-flex>
         <v-flex xs12 v-if="unpostedJobs.length > 0">
           <h1><span class="kunvet-red">{{ unpostedJobs.length }}</span> {{ getUnpostedJobsString }}</h1>
@@ -139,7 +139,7 @@
             <div class="btn-holder__right-elements">
               <v-btn
                 class="kunvet-black-small-btn"
-                click=""
+                @click="openRepostDialog(job._id)"
               >
                 Repost
               </v-btn>
@@ -169,6 +169,36 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="dialogs.showRepost">
+      <v-card>
+        <v-card-title class="headline">
+          Repost this job
+        </v-card-title>
+        <v-card-text class="pt-0">
+          This will re-activate your job and display it again for another 30 days
+        </v-card-text>
+        <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">
+          Some kind of error occured. Please try again later.
+        </v-card-text>
+        <v-card-text v-else-if="dialogs.success" class="pt-0" style="color: green;">
+          Successfully reposted!
+        </v-card-text>
+        <v-card-actions v-if="dialogs.success && !dialogs.errorOccured">
+          <v-btn flat="flat" @click.native="dialogs.showRepost = false">
+            Close
+          </v-btn>
+        </v-card-actions>
+        <v-card-actions v-else>
+          <v-btn flat="flat" @click.native="repostJob(dialogs.currentJobId)">
+            Repost
+          </v-btn>
+          <v-btn flat="flat" @click.native="dialogs.showRepost = false">
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -179,10 +209,12 @@
   import StudentSvg from '@/assets/job_posts/user_1.svg';
   import DateHelper from '@/utils/DateHelper';
   import DisplayTextHelper from '@/utils/DisplayTextHelper';
-  import JobHelper from '@/utils/JobHelper';
+  // import JobHelper from '@/utils/JobHelper';
   import StringHelper from '@/utils/StringHelper';
   import queries from '@/constants/queries';
   import EventBus from '@/EventBus';
+  import axios from 'axios';
+  // import findIndex from 'lodash/findIndex';
 
   const findJobsQuery = gql`
     query($userId: MongoID, $businessId: MongoID) {
@@ -214,6 +246,10 @@
         dialogs: {
           currentJob: null,
           showDelete: false,
+          currentJobId: null,
+          showRepost: false,
+          errorOccured: false,
+          success: false,
         },
         svgs: {
           information: InformationSvg,
@@ -223,17 +259,19 @@
       };
     },
     methods: {
-      async getData() {
+      async getData(networkOnly = false) {
         const { data } = await this.$apollo.query({
+          fetchPolicy: networkOnly ? 'network-only' : 'cache-first',
           query: findJobsQuery,
           variables: {
             userId: this.$store.state.userID,
             businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
           },
         });
-        this.jobs = data.findJobs;
+        this.jobs = data.findJobs.concat();
       },
       onShowJobDialog(job) {
+        this.dialogs.errorOccured = false;
         this.dialogs.currentJob = job;
         this.dialogs.showDelete = true;
       },
@@ -290,9 +328,13 @@
         this.dialogs.showDelete = false;
       },
       getRepostDaysString(date) {
-        const expiryDate = DateHelper.getExpiryDate(date);
-        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
+        const daysDiff = this.getExpiredDaysDiff(date);
         return `${daysDiff} ${StringHelper.pluralize('day', daysDiff)}`;
+      },
+      getExpiredDaysDiff(date) {
+        const expiryDate = DateHelper.getExpiryDate(date); // this is what determines if job is expired atm
+        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
+        return daysDiff;
       },
       parseJobIntoMainInfo(job) {
         return DisplayTextHelper.getMainJobInfo(job);
@@ -300,18 +342,37 @@
       getJobCountString(jobType, length) {
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
       },
+      openRepostDialog(jobId) {
+        this.dialogs.errorOccured = false;
+        this.dialogs.success = false;
+        this.dialogs.currentJobId = jobId;
+        this.dialogs.showRepost = true;
+      },
+      repostJob(jobId) {
+        axios.post(`job/repost/${jobId}`).then(res => {
+          if (res.data.success) {
+            this.dialogs.success = true;
+            this.getData(true); // fetches using networkOnly
+            window.setTimeout(() => { this.dialogs.showRepost = false; }, 2000);
+          } else {
+            this.dialogs.errorOccured = true;
+          }
+        }).catch(err => {
+          this.$error(err);
+          this.dialogs.showRepost = false;
+          this.dialogs.errorOccured = true;
+        });
+      },
     },
     computed: {
       activeJobs() { // and unexpired
-        const { jobs } = this;
-        return jobs.filter(JobHelper.isJobActive);
+        return this.jobs.filter(x => x.active && !x.is_deleted && this.getExpiredDaysDiff(x.date) > 0);
       },
       unpostedJobs() {
         return this.jobs.filter(x => !x.active && !x.is_deleted);
       },
       expiredJobs() {
-        const { jobs } = this;
-        return jobs.filter(JobHelper.isJobExpired);
+        return this.jobs.filter(x => this.getExpiredDaysDiff(x.date) <= 0 && !x.is_deleted);
       },
       getUnpostedJobsString() {
         return this.getJobCountString('Unposted', this.unpostedJobs.length);
