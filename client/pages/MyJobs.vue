@@ -220,6 +220,7 @@
     query($userId: MongoID, $businessId: MongoID) {
       findJobs(filter: { user_id: $userId, business_id: $businessId }) {
         ${queries.FindJobRecordForJobCard}
+        expired
       }
     }`;
 
@@ -260,6 +261,13 @@
     },
     methods: {
       async getData(networkOnly = false) {
+        console.log(`
+          query($userId: MongoID, $businessId: MongoID) {
+            findJobs(filter: { user_id: $userId, business_id: $businessId }) {
+              ${queries.FindJobRecordForJobCard}
+              expired
+            }
+          }`);
         const { data } = await this.$apollo.query({
           fetchPolicy: networkOnly ? 'network-only' : 'cache-first',
           query: findJobsQuery,
@@ -269,6 +277,7 @@
           },
         });
         this.jobs = data.findJobs.concat();
+        console.log(this.jobs);
       },
       onShowJobDialog(job) {
         this.dialogs.errorOccured = false;
@@ -369,7 +378,7 @@
         return this.jobs.filter(x => x.active && !x.is_deleted && this.getExpiredDaysDiff(x.date) > 0);
       },
       unpostedJobs() {
-        return this.jobs.filter(x => !x.active && !x.is_deleted);
+        return this.jobs.filter(x => !x.active && !x.is_deleted && !x.expired);
       },
       expiredJobs() {
         return this.jobs.filter(x => this.getExpiredDaysDiff(x.date) <= 0 && !x.is_deleted);

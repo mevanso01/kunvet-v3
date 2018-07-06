@@ -39,6 +39,7 @@ router.post('/repost/:id', async (ctx) => {
     job.date = currDate;
     job.expiry_date = expiryDate;
     job.active = true;
+    job.expired = false;
     job.save();
   } catch (e) {
     const response = {

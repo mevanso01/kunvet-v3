@@ -84,9 +84,16 @@ const Store = new Vuex.Store({
   },
   plugins: [VuexLS.plugin],
   getters: {
-    userdata(state) {
+    /* userdata(state) {
       return state.userdata;
-    },
+    }, */
+    /* LSstate() {
+      return new Promise(resolve => {
+        VuexLS.restoreState('vuex', window.localStorage).then((data) => {
+          resolve(data);
+        });
+      });
+    }, */
   },
 });
 
