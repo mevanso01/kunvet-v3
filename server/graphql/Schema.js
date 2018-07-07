@@ -66,6 +66,8 @@ async function sendNewApplicationNotification(req, next) {
     degree = null;
   }
 
+  const results = await next(req);
+
   const locals = {
     replyTo: user.email,
     name: `${user.firstname} ${user.lastname}`,
@@ -76,6 +78,8 @@ async function sendNewApplicationNotification(req, next) {
     degree: degree,
     school: req.args.record.school,
     message: req.args.record.applicant_message,
+    trackingToken: req.args.record.tracking_token,
+    appId: results.record._id,
     attachments: [
     ],
   };
@@ -114,7 +118,7 @@ async function sendNewApplicationNotification(req, next) {
     // throw Error('Employer could not be notified');
   }
 
-  return next(req);
+  return results;
 }
 
 // Redact fields from client
