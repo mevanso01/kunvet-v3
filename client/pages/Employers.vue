@@ -33,15 +33,15 @@
         <h2 class="black--text display-1 py-3">
           We're glad you're here
         </h2>
-        <p>
-          Kunvet is designed for smaller organization and personal hiring. Kunvet acts as a pre-screening process for your hiring.
+        <p style="color: #333;">
+          Kunvet is designed for students/gradutes, smaller organizations and personal hirings.
         </p>
 
         <h2 class="black--text display-1 py-3">
           Can I post on Kunvet?
         </h2>
-        <p>
-          As long as you are requesting for help or offering opportunities that allow students to learn and build experience, you can post on Kunvet.
+        <p style="color: #333;">
+          As long as you are requesting for help from students/graduates or offering opportunities that allow students to learn and build experience, you can post on Kunvet.
         </p>
       </div>
     </v-layout>
