@@ -507,23 +507,16 @@
                 </v-layout>
 
                 <!-- Long text fields -->
-                <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
-                <p class="error_p" v-if="!description_valid">Required</p>
-                <vue-editor id="description" v-model="description" placeholder="300 characters maximum" :editorOptions="shortTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+                <QuillEditor v-model="description" title="Description" id="editor1" required></QuillEditor>
 
-                <br>
-                <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
-                <p class="error_p" v-if="!experience_valid">Required</p>
-                <vue-editor id="experience" v-model="experience" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+                <QuillEditor v-model="experience" title="Required Experience" id="editor2" required
+                  placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
-                <br>
-                <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
-                <p class="error_p" v-if="!responsibilities_valid">Required</p>
-                <vue-editor id="responsibilities" v-model="responsibilities" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
+                <QuillEditor v-model="responsibilities" title="Responsibilities" id="editor3" required
+                  placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
                 <!-- Pictures -->
                 <br>
-                <!-- <h3 class="optional" style="margin: 7px 10px 6px 0;">Pictures</h3> -->
                 <h4 class="cust-subheader" :class="{ 'mb-1': job.images.length === 0 }">Pictures <span class="optional-color">(Optional)</span></h4>
                 <p v-show="job.images.length === 0">
                   Although not required, adding relevant pictures to your job builds trust and can attract more attention from potential applicants
@@ -548,7 +541,7 @@
 
                 <v-container fluid grid-list-sm style="margin-top: 8px;">
                   <v-layout row wrap>
-                    <v-flex xs4 md3 class="image-container" v-for="image in job.images">
+                    <v-flex xs4 md3 class="image-container" v-for="(image, i) in job.images" :key="`image-${i}`">
                       <v-btn icon small ripple class="delete-img-btn" @click="showDeletePictureModal(image.cropped)">
                         <v-icon>cancel</v-icon>
                       </v-btn>
@@ -577,6 +570,23 @@
                   <p class="small-p">Posted by: {{ job.posted_by }}</p>
                   <p class="small-p">Title: {{ job.title }}</p>
                   <p class="small-p">Address: {{ job.address }} {{ job.address2 }}</p>
+                  <p class="small-p">Categories: {{ selectedCategories }}</p>
+                  <p class="small-p" v-if="job.shift && job.shift.length > 0">Shifts: {{ selectedShifts }}</p>
+                  <p class="small-p">Salary:
+                    <span v-if="salary_select === 'paid'">
+                      ${{ job.salary }} {{ job.pay_denomination }}
+                    </span>
+                    <span v-else>
+                      {{ salary_select }}
+                    </span>
+                  </p>
+                  <p class="small-p" v-if="job.education">Education level: {{ job.education }}</p>
+                  <p class="small-p" v-if="job.major">Preferred major: {{ job.major }}</p>
+                  <p class="small-p" v-if="job.language">Additional language: {{ selectedLanguage }}</p>
+                  <p class="small-p" v-if="job.age">Age: {{ job.age }}</p>
+                  <p class="small-p" v-if="description_valid">Job description complete</p>
+                  <p class="small-p" v-if="experience_valid">Required experience complete</p>
+                  <p class="small-p" v-if="responsibilities_valid">Job responsibilities complete</p>
                 </v-flex>
               </v-layout>
               <v-form v-model="form3Valid" ref="form3">
@@ -593,9 +603,6 @@
                     </v-select>
                   </v-flex>
                 </v-layout>
-                <!-- <div style="margin-top: 1em; margin-bottom: 5px;">
-                  <h3 style="display: inline;">Application options</h3>
-                </div> -->
                 <h4 class="cust-subheader mb-1">Application options</h4>
                 <p>
                   The applicant's info and resume will be sent to your email when they apply.<br>
@@ -681,7 +688,6 @@
 </template>
 
 <script>
-import { VueEditor, Quill } from 'vue2-editor';
 import gql from 'graphql-tag';
 import VuexLS from '@/store/persist';
 // import Delta from 'quill-delta';
@@ -695,25 +701,28 @@ import languages from '@/constants/languages';
 import queries from '@/constants/queries';
 import difference from 'lodash/difference';
 import axios from 'axios';
+import QuillEditor from '@/components/QuillEditor';
+import EventBus from '@/EventBus';
 
-Quill.register('modules/wordLimit', (quill, options) => {
-  // Options!
-  // wordLimit: int
-  // charLimit: int
-  quill.on('text-change', () => {
-    const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
-
-    if (options.wordLimit) {
-      const wordCount = trimmedText.split(/\s+/).length;
-      if (wordCount > options.wordLimit) {
-        // TODO: Do something
-      }
-    }
-    if (options.charLimit && trimmedText.length > options.charLimit) {
-      quill.deleteText(options.charLimit, quill.getLength());
-    }
-  });
-});
+// Quill.register('modules/wordLimit', (quill, options) => {
+//   // Options!
+//   // wordLimit: int
+//   // charLimit: int
+//   quill.on('text-change', () => {
+//     console.log('TEXT CHANGE');
+//     const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
+//
+//     if (options.wordLimit) {
+//       const wordCount = trimmedText.split(/\s+/).length;
+//       if (wordCount > options.wordLimit) {
+//         // TODO: Do something
+//       }
+//     }
+//     if (options.charLimit && trimmedText.length > options.charLimit) {
+//       quill.deleteText(options.charLimit, quill.getLength());
+//     }
+//   });
+// });
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -752,8 +761,8 @@ const findJobsQuery = gql`
 
 export default {
   components: {
-    VueEditor,
     PicUploader,
+    QuillEditor,
   },
   data() {
     return {
@@ -765,7 +774,7 @@ export default {
       submit1Pressed: false,
       submit2Pressed: false,
       submit3Pressed: false,
-      tabItems: ['About you', 'Job details', 'Review and post'],
+      tabItems: ['About you', 'Job details', 'Post'],
       introDialog: true,
       serverUrl: Config.get('serverUrl'),
       // user info
@@ -896,6 +905,16 @@ export default {
       }
       return 'Through Kunvet';
     },
+    selectedCategories() {
+      const types = this.job.type.concat(this.job.type2);
+      return types.join(', ');
+    },
+    selectedShifts() {
+      return this.job.shift.join(', ');
+    },
+    selectedLanguage() {
+      return this.job.language.join(', ');
+    },
   },
   methods: {
     next(n) {
@@ -923,6 +942,7 @@ export default {
         let target = 0;
         for (var item of this.$refs[`form${n}`].$children) {
           if (item.hasError) {
+            console.log(item);
             target = item;
             break;
           }
@@ -946,6 +966,9 @@ export default {
         this.tab = (active - 1).toString();
       }
       setTimeout(() => { this.scrollToTop(); }, 300);
+    },
+    tabChanged() {
+      console.log('tab changed', this.tab);
     },
     isTabValid(n) {
       return this[`submit${(n + 1)}Pressed`] && this[`form${(n + 1)}Valid`];
@@ -1081,16 +1104,6 @@ export default {
       } else {
         this[p] = this[`${p}_current`];
       }
-    },
-    jobTypeStrToType(s) {
-      if (s === 'fulltime') {
-        return ['fulltime'];
-      } else if (s === 'parttime') {
-        return ['parttime'];
-      } else if (s === 'both') {
-        return ['fulltime', 'parttime'];
-      }
-      return null;
     },
     validateBeforePosting(showDialog = false) {
       this.submitted = true;
@@ -1268,7 +1281,7 @@ export default {
         business_id: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
         posted_by: this.job.posted_by,
         active: this.active,
-        title: this.title,
+        title: this.job.title,
         date: doesJobActivelyExist ? this.date : Date.now(),
         description: this.description,
         address: this.job.address,
@@ -1276,14 +1289,14 @@ export default {
         university: this.isUniversity ? this.university : null,
         latitude: this.job.latitude,
         longitude: this.job.longitude,
-        type: this.jobTypeStrToType(this.type),
-        studentfriendly: this.studentfriendly,
-        type2: this.type2,
-        shift: this.shift === [] ? null : this.shift,
-        age: this.age === '' ? null : parseInt(this.age, 10),
+        type: this.job.type,
+        studentfriendly: this.job.studentfriendly,
+        type2: this.job.type2,
+        shift: this.job.shift === [] ? null : this.job.shift,
+        age: this.job.age ? parseInt(this.job.age, 10) : null,
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
-        salary: this.salary_select !== 'paid' ? null : parseInt(this.salary, 10),
-        pay_denomination: this.salary_select !== 'paid' ? null : this.pay_denomination,
+        salary: this.salary_select === 'paid' ? parseInt(this.job.salary, 10) : null,
+        pay_denomination: this.salary_select === 'paid' ? this.job.pay_denomination : null,
         education: this.education ? degreeReducedStringToDb(this.education) : 'None',
         preferred_major: this.major,
         language: this.language,
@@ -1536,6 +1549,13 @@ export default {
       if (this.job.address) {
         this.setLatLongs();
       }
+    });
+  },
+  created() {
+    EventBus.$on('descriptionValid', value => {
+      this.description_valid = value;
+      console.log('content', this.description_valid);
+      // console.log('finale', this.$refs.form2.validate('description', ''));
     });
   },
 };

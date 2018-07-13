@@ -135,24 +135,24 @@ ol, ul {
 main {
   background-color: #fff;
 }
-.application.theme--light,
-.theme--light,
-.application--light .input-group--selection-controls .input-group__input,
-.input-group--selection-control .input-group__input,
 .application--light .input-group:not(.input-group--error) .input-group--selection-controls label,
-.theme--light .input-group:not(.input-group--error) label,
-.theme--light .card .input-group:not(.input-group--error) label,
-.theme--light .input-group--selection-controls .icon--selection-control,
+.input-group--text-field:not(.input-group--error) label,
+.radio-group:not(.input-group--error) label,
+.radio-group:not(.input-group--error) i,
+.input-group.checkbox:not(.input-group--error) label,
+.input-group.checkbox:not(.input-group--error) i {
+  color: #4d4d4d !important;
+}
 .accent--text {
   color: #4d4d4d;
 }
 .input-group--disabled .input-group__selections__comma:not(.input-group__selections__comma--active) {
   color: rgba(0,0,0,.38) !important;
 }
-.radio-group .radio label,
+/* .radio-group .radio label,
 .input-group.checkbox.input-group--selection-controls label {
   line-height: 24px;
-}
+} */
 .toolbar__content {
   max-width: 960px;
   margin: auto;
