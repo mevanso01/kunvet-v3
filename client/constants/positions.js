@@ -61,6 +61,7 @@ const positions = [
   'lead developer',
   'leadership',
   'library monitor',
+  'lifeguard',
   'manager',
   'marketer',
   'material science engineer',

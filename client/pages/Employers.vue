@@ -34,7 +34,7 @@
           We're glad you're here
         </h2>
         <p style="color: #333;">
-          Kunvet is designed for students/gradutes, smaller organizations and personal hirings.
+          Kunvet is designed for students/gradutes, smaller organizations and personal hirings. It's free.
         </p>
 
         <h2 class="black--text display-1 py-3">
