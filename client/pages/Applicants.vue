@@ -70,7 +70,7 @@
                   </v-flex>
                 </v-layout>
               </div>
-              <div class="btn-holder btn-holder--equal-height">
+              <!--<div class="btn-holder btn-holder--equal-height">
                 <div class="btn-holder__right-elements">
                   <span v-if="isAcceptedOrRejected(item)">
                     <span style="color: grey;">
@@ -83,19 +83,19 @@
                     >
                       Contact
                     </v-btn>
-                    <!--<v-btn
+                    <v-btn
                       v-if="item.status === 'accepted'"
                       class="kunvet-black-small-btn"
                       :href="`mailto:${item.email}`"
                     >
                       Send email
-                    </v-btn>-->
+                    </v-btn>
                   </span>
                   <span v-else>
                     <span style="color: red;">
                       {{ getApplicantExpiringText(item) }}
                     </span>
-                    <!--<v-btn
+                    <v-btn
                       class="kunvet-accept-small-btn"
                       @click="onShowAcceptDialog(item)"
                     >
@@ -106,10 +106,10 @@
                       @click="onShowRejectDialog(item)"
                     >
                       Reject
-                    </v-btn>-->
+                    </v-btn>
                   </span>
                 </div>
-              </div>
+              </div>-->
             </div>
           </v-flex>
         </template>

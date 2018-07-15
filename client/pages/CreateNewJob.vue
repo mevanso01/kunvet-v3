@@ -151,9 +151,9 @@
   .requirements .flex {
     padding: 0 15px;
   }
-  .picUploaderDialog {
+  /* .picUploaderDialog {
     min-width: 450px;
-  }
+  } */
 }
 @media (max-width: 700px) {
   .createnewjob-container .work-hours {
@@ -406,8 +406,8 @@
           flat small outline class="optional">Upload Another</v-btn>
         </div>
 
-        <v-dialog v-model="picUploaderDialog" width="100%">
-          <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" keepOriginal />
+        <v-dialog v-model="picUploaderDialog">
+          <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false"/>
         </v-dialog>
 
         <v-container fluid grid-list-sm style="margin-top: 8px;">
@@ -1107,7 +1107,7 @@ export default {
           }
           // this.applyMethod = job.applyMethod;
           for (const image of job.images) {
-            this.images.push({ original: image.original, cropped: image.cropped });
+            this.images.push({ original: null, cropped: image.cropped });
           }
           if (job.position_tags) {
             this.selectedPositions = job.position_tags.concat();
@@ -1117,9 +1117,9 @@ export default {
         this.$error(error);
       });
     },
-    picsUploaded(fileIds) {
+    picsUploaded(fileId) {
       this.picUploaderDialog = false;
-      this.images.push(fileIds);
+      this.images.push({ original: null, cropped: fileId });
     },
     showDeletePictureModal(croppedID) {
       this.deletePictureModal.show = true;

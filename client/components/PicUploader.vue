@@ -1,3 +1,17 @@
+<style>
+  .croppa-container {
+    /* background-color: #f0f0f0; */
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+  .croppa-container svg.icon-remove {
+    -webkit-filter: none !important;
+    filter: none !important;
+  }
+  .croppa-container svg.icon-remove path {
+    fill: #ef5350 !important;
+  }
+</style>
 <template>
   <v-card>
     <v-card-title>
@@ -10,6 +24,7 @@
           :height="300"
           :placeholder-font-size="14"
           v-model="cropper"
+          show-loading
           placeholder="Drag your pictures here or click to browse"
         >
         </VueCroppa>
@@ -117,10 +132,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.croppa-container {
-  background-color: #f0f0f0;
-  margin: 0 auto;
-  border-radius: 5px;
-}
-</style>
