@@ -1,55 +1,59 @@
+<style>
+  .quill-editor {
+    padding-top: 21px;
+    padding-bottom: 21px;
+  }
+  .quill-editor .ql-editor span,
+  .quill-editor .ql-editor p,
+  .quill-editor .ql-editor li {
+    color: #333;
+  }
+  .quill-editor .error-text {
+    color: red !important;
+  }
+</style>
 <template>
-  <div>
+  <div class="quill-editor">
+    <h3 v-if="title" style="margin-top: 0;" :class="{ 'error-text': hasError }">{{ title }}</h3>
     <vue-editor
-      :placeholder="placeholder"
-      :editorToolbar="editorToolbar"
+      ref="editor"
+      :id="id"
       :editorOptions="editorOptions"
+      :editorToolbar="editorToolbar"
       :value="computedValue"
       @input="input"
+      @blur="blur"
     ></vue-editor>
-    <div v-if="charLimit" :class="{ 'red--text': charCount > charLimit }">
+    <div class="error-text" style="float: left;" v-if="errorMsgs[0]">{{ errorMsgs[0] }}</div>
+    <div v-if="charLimit" style="float: right;" :class="{ 'error-text': charCount > charLimit }">
       {{ charCount }} / {{ charLimit }}
     </div>
-    <div v-if="wordLimit" :class="{ 'red--text': wordCount > wordLimit }">
+    <div v-if="wordLimit" style="float: right;" :class="{ 'error-text': wordCount > wordLimit }">
       {{ wordCount }} / {{ wordLimit }}
     </div>
   </div>
 </template>
 <script>
+/* eslint no-unused-vars: 0 */
 import { VueEditor, Quill } from 'vue2-editor';
+import VTextField from 'vuetify/src/components/VTextField';
 
-Quill.register('modules/wordLimit', (quill, options) => {
-  // Options!
-  // wordLimit: int
-  // charLimit: int
-  quill.on('text-change', () => {
-    let validated = true;
-    const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
-
-    if (options.required) {
-      validated = validated && trimmedText.length;
-    }
-    if (options.wordLimit) {
-      const wordCount = trimmedText ? trimmedText.split(/\s+/).length : 0;
-      validated = validated && wordCount <= options.wordLimit;
-      options.vueInstance.setWordCount(wordCount);
-    }
-    if (options.charLimit) {
-      validated = validated && trimmedText.length <= options.charLimit;
-      options.vueInstance.setCharCount(trimmedText.length);
-    }
-
-    options.vueInstance.setValidated(validated);
-  });
+Quill.register('modules/wordLimit', (quill) => {
+  // quill.on('text-change', () => {
+  // });
 });
 
 export default {
+  name: 'quill-editor',
+  extends: VTextField,
   props: {
-    placeholder: String,
-    wordLimit: Number,
-    charLimit: Number,
     value: String,
-    required: Boolean,
+    placeholder: String,
+    title: String,
+    charLimit: Number,
+    wordLimit: Number,
+    required: { type: Boolean, default: false },
+    id: String, // id is required if you have multiple editors on one page!
   },
   components: {
     VueEditor,
@@ -61,21 +65,14 @@ export default {
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
         ['clean'],
       ],
-      content: '',
       wordCount: 0,
       charCount: 0,
-      validated: false,
+      valid: false,
+      errorMsgs: [],
+      touched: false,
     };
   },
   computed: {
-    computedValue() {
-      const value = this.value ? `${this.value}` : '';
-      if (this.required && !value.length) {
-        this.validated = false;
-        this.$emit('validate', false);
-      }
-      return value;
-    },
     editorOptions() {
       return {
         modules: {
@@ -83,14 +80,27 @@ export default {
             wordLimit: this.wordLimit,
             charLimit: this.charLimit,
             required: this.required,
-            vueInstance: this,
           },
         },
       };
     },
+    computedValue() {
+      const value = this.value ? this.value : '';
+      return value;
+    },
+    hasError() {
+      return this.errorMsgs.length > 0;
+    },
   },
   methods: {
+    genInput() {
+      return this.$createElement('input', {
+        staticClass: 'quill-editor',
+      });
+    },
     input(v) {
+      this.touched = true;
+      this.validate();
       this.$emit('input', v);
     },
     setWordCount(wordCount) {
@@ -99,12 +109,46 @@ export default {
     setCharCount(charCount) {
       this.charCount = charCount;
     },
-    setValidated(validated) {
-      if (validated !== this.validated) {
-        this.validated = validated;
-        this.$emit('validate', validated);
+    // overrides VTextField validate function
+    validate(force = false, value = this.$refs.editor.editor.innerText) {
+      let validated = true;
+      this.errorMsgs = [];
+      if (!force && !this.touched) {
+        return true; // validate only after touch
       }
+      const trimmedText = value ? value.replace(/(\r\n|\n|\r)/gm, '').replace(/\s+/g, ' ') : '';
+      const options = {
+        required: this.required,
+        wordLimit: this.wordLimit,
+        charLimit: this.charLimit,
+      };
+      if (options.required) {
+        if (validated && trimmedText.length === 0) {
+          validated = false;
+          this.errorMsgs.push('Required');
+        }
+      }
+      if (options.wordLimit) {
+        const wordCount = trimmedText ? trimmedText.split(/\s+/).length : 0;
+        this.wordCount = wordCount;
+        if (validated && wordCount > options.wordLimit) {
+          validated = false;
+          this.errorMsgs.push('Text exceeds word limit');
+        }
+      }
+      if (options.charLimit) {
+        const charCount = trimmedText.length;
+        this.charCount = charCount;
+        if (validated && charCount > options.charLimit) {
+          validated = false;
+          this.errorMsgs.push('Text exceeds character limit');
+        }
+      }
+      this.valid = validated;
+      return validated;
     },
+  },
+  created() {
   },
 };
 </script>

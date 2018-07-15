@@ -182,9 +182,6 @@
 </template>
 
 <script>
-import 'font-awesome/scss/font-awesome.scss';
-import '@/stylus/main.styl';
-// import 'app.css';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import Store from '@/store';
@@ -197,6 +194,10 @@ import ProfilePicHelper from '@/utils/GetProfilePic';
 import StringHelper from '@/utils/StringHelper';
 import Notifications from '@/components/Notifications';
 import SwitchAccount from '@/components/SwitchAccount';
+
+import 'font-awesome/scss/font-awesome.scss';
+import '@/stylus/main.styl';
+// import 'vuetify/dist/vuetify.min.css';
 
 // svgs
 import sfw from './assets/navbar/suitcase_full_white.svg';
@@ -217,7 +218,7 @@ Vue.use(Vuetify, {
   },
   options: {
     minifyTheme(val) {
-      return process.env.NODE_ENV === 'production' ? val.replace(/[\s|\r\n|\r|\n]/g, '') : null;
+      return process.env.NODE_ENV === 'production' ? val.replace(/[\s|\r\n|\r|\n]/g, '') : val;
     },
   },
 });
@@ -227,7 +228,6 @@ Vue.mixin({
     capitalize: StringHelper.capitalize,
   },
 });
-
 
 export default {
   data() {
@@ -499,7 +499,7 @@ export default {
 };
 </script>
 <style lang="scss">
-/* @import 'stylus/main.styl'; gives error */
+// @import '../node_modules/vuetify/dist/vuetify.min.css';
 @import 'app.css';
 @import 'account.css';
 @import 'applicants.css';
@@ -507,21 +507,7 @@ export default {
 @import 'job_pages.css';
 @import 'nav.css';
 @import 'postsAndSearch.css';
-// .material-icons {
-//   font-family: 'Material Icons';
-//   font-weight: normal;
-//   font-style: normal;
-//   font-size: 24px;
-//   line-height: 1;
-//   letter-spacing: normal;
-//   text-transform: none;
-//   display: inline-block;
-//   white-space: nowrap;
-//   word-wrap: normal;
-//   direction: ltr;
-//   -webkit-font-feature-settings: 'liga';
-//   -webkit-font-smoothing: antialiased;
-// }
+
 body, html {
   height: 100%;
   width: 100%;

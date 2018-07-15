@@ -2315,6 +2315,10 @@ caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000821:
   version "1.0.30000830"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000830.tgz#cb96b8a2dd3cbfe04acea2af3c4e894249095328"
 
+canvas-exif-orientation@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/canvas-exif-orientation/-/canvas-exif-orientation-0.4.0.tgz#b487f3701998a9e879eb104010b2a58115368b6b"
+
 capture-stack-trace@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.0.tgz#4a6fa07399c26bba47f0b2496b4d0fb408c5550d"
@@ -2950,7 +2954,7 @@ cron-parser@^2.4.0:
     is-nan "^1.2.1"
     moment-timezone "^0.5.0"
 
-croppie@^2.6.1, croppie@^2.6.2:
+croppie@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/croppie/-/croppie-2.6.2.tgz#d605ceeffb4aea281f72a63c9a0a305db0a46e50"
 
@@ -4019,10 +4023,6 @@ execa@^0.7.0:
     p-finally "^1.0.0"
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
-
-exif-js@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/exif-js/-/exif-js-2.3.0.tgz#9d10819bf571f873813e7640241255ab9ce1a814"
 
 exif-parser@^0.1.9:
   version "0.1.12"
@@ -11067,17 +11067,12 @@ vue-apollo@^3.0.0-beta.5:
     lodash.omit "^4.5.0"
     lodash.throttle "^4.1.1"
 
-vue-cropper@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/vue-cropper/-/vue-cropper-0.2.9.tgz#5c91ce2474788ad4d0e9bdac0b6032005dcb7898"
+vue-croppa@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/vue-croppa/-/vue-croppa-1.3.6.tgz#9d363b340c7d931cd8c00efd21f75b9a0256806a"
   dependencies:
-    exif-js "^2.3.0"
-
-vue-croppie@^1.3.12:
-  version "1.3.12"
-  resolved "https://registry.yarnpkg.com/vue-croppie/-/vue-croppie-1.3.12.tgz#8efe784d58204f46fb358b07e2c79af8ff85bfc4"
-  dependencies:
-    croppie "^2.6.1"
+    canvas-exif-orientation "^0.4.0"
+    object-assign "^4.1.1"
 
 vue-gtagjs@^1.0.7:
   version "1.0.7"

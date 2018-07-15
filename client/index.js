@@ -16,15 +16,12 @@ import Title from '@/Title';
 import Logger from '@/Logger';
 import store from '@/store';
 
-import VueCroppie from 'vue-croppie';
-
 import Config from 'config';
 
 import gtagjs from 'vue-gtagjs';
 
 Vue.use(Title);
 Vue.use(Logger);
-Vue.use(VueCroppie);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(Vuex);
@@ -124,7 +121,7 @@ const router = new VueRouter({
     },
     {
       path: '/createjob',
-      component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
+      component: () => import('@/pages/CreateJob'),
     },
     {
       path: '/view-applicant/:id',

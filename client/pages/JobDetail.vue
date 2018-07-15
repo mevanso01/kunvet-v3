@@ -56,11 +56,6 @@
   font-size: 15px;
   color: #666;
 }
-.small-p {
-  font-size: 12px;
-  color: #9e9e9e;
-  margin-bottom: 0px;
-}
 .pr-10 { padding-right: 10px; }
 .job-detail-container .top-container {
   width: 100%;

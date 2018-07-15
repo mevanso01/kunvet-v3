@@ -69,6 +69,9 @@
   .optional-color {
     color: #979797;
   }
+  .red-text {
+    color: red;
+  }
   .ql-editor {
     min-height: 120px;
   }
@@ -196,9 +199,20 @@
     border-bottom: 2px solid #333; // 212121
     color: #333;
   }
+  .prev-btn {
+    color: #b0b0b0;
+  }
   .additional-requirements .flex {
     padding-top: 0;
     padding-bottom: 0;
+  }
+  .online-form-checkbox label {
+    white-space: normal !important;
+    height: auto !important;
+    min-height: 30px;
+  }
+  .small-p {
+    color: #616161;
   }
   @media (max-width: 435px) {
     .work-hours {
@@ -256,106 +270,113 @@
         </v-tab>
 
         <v-tabs-items v-model="tab">
-          <v-tab-item>
+          <v-tab-item id="0">
             <!-- SECTION 1 -->
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
 
               <v-form v-model="form1Valid" ref="form1">
-              <p>First, we need some basic information about who's posting:</p>
-              <v-layout row wrap>
-                <v-flex xs12 sm9 md6 class="padding-15px-right-sm-up">
-                  <v-text-field
-                    label="First name"
-                    v-model="fname"
-                    :rules="requiredRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Last name"
-                    v-model="lname"
-                    :rules="requiredRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Email"
-                    v-model="email" ref="emailField"
-                    :rules="[
-                      v => !!v || 'Email is required',
-                      v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w{2,3})+$/.test(v) || 'Invalid email format',
-                      () => !emailExists || 'An account with this email already exists',
-                    ]"
-                    type="email"
-                    @blur="checkIfEmailExists()"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Create password"
-                    v-model="password"
-                    :rules="passwordRules"
-                    min="8"
-                    :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                    :append-icon-cb="() => (e1 = !e1)"
-                    :type="e1 ? 'password' : 'text'"
-                    required
-                  ></v-text-field>
-                </v-flex>
-              </v-layout>
+                <p>First, we need some basic information about who's posting:</p>
+                <v-layout row wrap>
+                  <v-flex xs12 sm9 md6 class="no-padding">
+                    <v-text-field
+                      label="First name"
+                      v-model="fname"
+                      :rules="requiredRules"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      label="Last name"
+                      v-model="lname"
+                      :rules="requiredRules"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      label="Email"
+                      v-model="email" ref="emailField"
+                      :rules="[
+                        v => !!v || 'Email is required',
+                        v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w{2,3})+$/.test(v) || 'Invalid email format',
+                        () => !emailExists || 'An account with this email already exists',
+                      ]"
+                      type="email"
+                      @blur="checkIfEmailExists()"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      label="Create password"
+                      v-model="password"
+                      :rules="passwordRules"
+                      min="8"
+                      :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                      :append-icon-cb="() => (e1 = !e1)"
+                      :type="e1 ? 'password' : 'text'"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
 
-              <p class="mb-2 mt-2">Are you posting on behalf of a business, organization, or club? If so, enter it's name below:</p>
-              <v-layout row wrap>
-                <v-flex xs12 sm9 md6 class="padding-15px-right-sm-up">
-                  <v-text-field class="optional"
-                    label="Name of organization / business"
-                    v-model="business_name"
-                  ></v-text-field>
-                </v-flex>
-              </v-layout>
+                <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
+                <v-radio-group v-model="postingAs" column required class="pt-0" :rules="requiredRules">
+                    <v-radio label="No, I'm posting as an individual" value="individual"></v-radio>
+                    <v-radio label="Yes, I'm posting as a business or organization" value="business"></v-radio>
+                </v-radio-group>
+                <v-layout row wrap v-if="postingAs === 'business'">
+                  <v-flex xs12 sm9 md6 class="no-padding">
+                    <v-text-field
+                      placeholder="Please enter the name of your business / organization"
+                      label="Name of business / organization"
+                      v-model="business_name"
+                      :rules="requiredRules"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
 
-              <p class="mb-2 mt-2">Basic info about your job:</p>
-              <v-layout row wrap>
-                <v-flex xs12 sm9 md6 class="padding-15px-right-sm-up">
-                  <v-text-field
-                    v-model="job.title"
-                    label="Job Title"
-                    :rules="[(title) => !!(title) || 'Required']"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="job.address"
-                    ref="addressField"
-                    label="Address"
-                    required
-                    @change="setLatLongs"
-                    :rules="[() => !!(job.address) || 'Required',
-                             () => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
-                  ></v-text-field>
-                  <v-text-field
-                    class="optional"
-                    v-model="job.address2"
-                    ref="addressField2"
-                    label="Address Line 2"
-                    placeholder="Apt, Suite, Bldg."
-                    hide-details
-                  ></v-text-field>
-                  <div v-if="job.address">
-                    <v-checkbox class="optional" style="margin-top: 16px;"
-                      label="Is this job on a school campus?"
-                      v-model="job.isUniversity"
+                <p class="mb-2 mt-2">Basic info about your job:</p>
+                <v-layout row wrap>
+                  <v-flex xs12 sm9 md6 class="no-padding">
+                    <v-text-field
+                      v-model="job.title"
+                      label="Job Title"
+                      :rules="[(title) => !!(title) || 'Required']"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="job.address"
+                      ref="addressField"
+                      label="Address"
+                      required
+                      @change="setLatLongs"
+                      :rules="[() => !!(job.address) || 'Required',
+                               () => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+                    ></v-text-field>
+                    <v-text-field
+                      class="optional"
+                      v-model="job.address2"
+                      ref="addressField2"
+                      label="Address Line 2"
+                      placeholder="Apt, Suite, Bldg."
                       hide-details
-                    ></v-checkbox>
-                    <v-select class="no-padding-select"
-                      v-if="job.isUniversity"
-                      label="Which one?"
-                      v-model="job.university"
-                      v-bind:items="schools"
-                      autocomplete
-                      hide-details
-                      single-line
-                    ></v-select>
-                  </div>
-                </v-flex>
-              </v-layout>
+                    ></v-text-field>
+                    <div v-if="job.address">
+                      <v-checkbox class="optional" style="margin-top: 16px;"
+                        label="Is this job on a school campus?"
+                        v-model="job.isUniversity"
+                        hide-details
+                      ></v-checkbox>
+                      <v-select class="no-padding-select"
+                        v-if="job.isUniversity"
+                        label="Which one?"
+                        v-model="job.university"
+                        v-bind:items="availableSchools"
+                        autocomplete
+                        hide-details
+                        single-line
+                      ></v-select>
+                    </div>
+                  </v-flex>
+                </v-layout>
               </v-form>
 
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
@@ -365,240 +386,269 @@
               </v-layout>
             </div>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item id="1">
             <!-- SECTION 2 -->
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <v-form v-model="form2Valid" ref="form2">
 
-              <!-- Categories -->
-              <h4 class="cust-subheader">Categories</h4>
-              <p>Is this a full-time or part-time job?</p>
-              <v-radio-group v-model="job.type"
-                class="no-padding"
-                :rules="[(v) => !submit2Pressed || !!(v[0]) || 'Required']"
-                required>
-                <v-radio label="Full time" :value="['fulltime']" class="pt-0"></v-radio>
-                <v-radio label="Part time" :value="['parttime']" class="pt-0"></v-radio>
-                <v-radio label="Both" :value="['fulltime', 'parttime']" class="pt-0"></v-radio>
-              </v-radio-group>
-
-              <p>Is it also an internship or contract position? (Optional)</p>
-              <v-checkbox label="internship" v-model="job.type2" value="internship"
-                hide-details class="pt-0"></v-checkbox>
-              <v-checkbox
-                label="contract" v-model="job.type2" value="contract"
-                hide-details class="pt-0 mb-3"></v-checkbox>
-
-              <p class="mb-2">Is this job student friendly?</p>
-              <!-- the cust-radio-box class makes the radio input wrap on small screens -->
-              <div class="cust-radio-box">
-                <v-radio-group v-model="job.studentfriendly" row required hide-details>
-                    <v-radio label="Student friendly" :value="true" style="max-width: 160px;" selected></v-radio>
-                    <v-radio label="Not student friendly" :value="false" style="max-width: 180px;"></v-radio>
+                <!-- Categories -->
+                <h4 class="cust-subheader">Categories</h4>
+                <p>Is this a full-time or part-time job?</p>
+                <v-radio-group v-model="job.type"
+                  class="no-padding"
+                  :rules="[(v) => !submit2Pressed || !!(v[0]) || 'Required']"
+                  required>
+                  <v-radio label="Full time" :value="['fulltime']" class="pt-0"></v-radio>
+                  <v-radio label="Part time" :value="['parttime']" class="pt-0"></v-radio>
+                  <v-radio label="Both" :value="['fulltime', 'parttime']" class="pt-0"></v-radio>
                 </v-radio-group>
-              </div>
 
-              <!-- Salary -->
-              <br>
-              <h4 class="cust-subheader">Salary</h4>
-              <v-layout row wrap>
-                <v-flex xs12 class="no-padding">
-                  <div class="cust-radio-box">
-                    <v-radio-group
-                    v-model="salary_select"
-                    row
-                    :rules="requiredRules"
-                    :hide-details="salary_select === 'paid'"
-                    required>
-                      <v-radio style="max-width: 90px;" label="Paid" value="paid"></v-radio>
-                      <v-radio style="max-width: 110px;" label="Unpaid" value="unpaid"></v-radio>
-                      <v-radio label="Negotiable" value="negotiable"></v-radio>
-                    </v-radio-group>
-                  </div>
-                </v-flex>
-                <v-flex xs6 sm3 md2 v-if="salary_select === 'paid'">
-                  <v-text-field class="no-padding"
-                    v-model="job.salary"
-                    :disabled = "salary_select != 'paid'"
-                    prefix="$"
-                    :required = "salary_select === 'paid'"
-                    :rules="[(salary) => (!!(salary/1) || salary_select != 'paid') || 'Required, must be a number']"
-                    single-line
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs6 sm3 md2 style="padding-left: 15px !important;" v-if="salary_select === 'paid'">
-                  <v-select class="no-padding" style="max-width: 125px;"
-                    v-model="job.pay_denomination"
-                    :disabled = "salary_select != 'paid'"
-                    :items="[ 'per hour', 'per week', 'per month', 'per year', 'per task' ]"
-                    >
-                  </v-select>
-                </v-flex>
-              </v-layout>
+                <p>Is it also an internship or contract position? (Optional)</p>
+                <v-checkbox label="internship" v-model="job.type2" value="internship"
+                  hide-details class="pt-0"></v-checkbox>
+                <v-checkbox
+                  label="contract" v-model="job.type2" value="contract"
+                  hide-details class="pt-0 mb-3"></v-checkbox>
 
-              <!-- Working hours -->
-              <h4 class="cust-subheader">Working Hours <span class="optional-color">(Optional)</span></h4>
-              <div class="mb-3">
-                  <v-checkbox label="flexible" v-model="job.shift" value="flexible" hide-details class="pt-0"></v-checkbox>
-                  <v-divider style="margin-bottom: 8px; max-width: 230px;"></v-divider>
-                  <v-checkbox label="morning" v-model="job.shift" value="morning" hide-details class="pt-0"></v-checkbox>
-                  <v-checkbox label="noon" v-model="job.shift" value="noon" hide-details class="pt-0"></v-checkbox>
-                  <v-checkbox label="afternoon" v-model="job.shift" value="afternoon" hide-details class="pt-0"></v-checkbox>
-                  <v-checkbox label="evening" v-model="job.shift" value="evening" hide-details class="pt-0"></v-checkbox>
-                  <v-checkbox label="night" v-model="job.shift" value="night" hide-details class="pt-0"></v-checkbox>
-              </div>
+                <p class="mb-2">Is this job student friendly?</p>
+                <!-- the cust-radio-box class makes the radio input wrap on small screens -->
+                <div class="cust-radio-box">
+                  <v-radio-group v-model="job.studentfriendly" row required hide-details>
+                      <v-radio label="Student friendly" :value="true" style="max-width: 160px;" selected></v-radio>
+                      <v-radio label="Not student friendly" :value="false" style="max-width: 180px;"></v-radio>
+                  </v-radio-group>
+                </div>
 
-              <!-- Additional requirements -->
-              <h4 class="cust-subheader">Additional requirements <span class="optional-color">(Optional)</span></h4>
-              <v-layout class="additional-requirements" row wrap>
-                <v-flex xs12 sm6 md5>
-                  <v-select class="optional"
-                    v-model="job.education"
-                    label="Education"
-                    v-bind:items="educationOptions">
-                  </v-select>
-                </v-flex>
-                <v-flex xs12 sm6 md5>
-                  <v-text-field class="optional"
-                    name="preferred-major"
-                    v-model="job.major"
-                    label="Preferred major"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md5>
-                  <v-select class="optional"
-                    v-model="job.language"
-                    label="Language"
-                    v-bind:items="languages"
-                    autocomplete
-                    dense
-                    multiple>
-                  </v-select>
-                </v-flex>
-                <v-flex xs4 sm3 lg2>
-                  <v-text-field class="optional"
-                    v-model="job.age"
-                    label="Age"
-                    :rules="[(age) => !(age) || !!(age/1) || 'Must be a number']">
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-
-              <!-- Long text fields -->
-              <h3 v-bind:class="{ error_h3: !description_valid }">Description</h3>
-              <p class="error_p" v-if="!description_valid">Required</p>
-              <vue-editor id="description" v-model="description" placeholder="300 characters maximum" :editorOptions="shortTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
-
-              <br>
-              <h3 v-bind:class="{ error_h3: !experience_valid }">Required Experience / Qualifications</h3>
-              <p class="error_p" v-if="!experience_valid">Required</p>
-              <vue-editor id="experience" v-model="experience" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
-
-              <br>
-              <h3 v-bind:class="{ error_h3: !responsibilities_valid }">Responsibilities</h3>
-              <p class="error_p" v-if="!responsibilities_valid">Required</p>
-              <vue-editor id="responsibilities" v-model="responsibilities" placeholder="900 characters maximum" :editorOptions="longTextEditorOptions" :editorToolbar="customEditorToolbar"></vue-editor>
-
-              <!-- Pictures -->
-              <br>
-              <!-- <h3 class="optional" style="margin: 7px 10px 6px 0;">Pictures</h3> -->
-              <h4 class="cust-subheader" :class="{ 'mb-1': job.images.length === 0 }">Pictures <span class="optional-color">(Optional)</span></h4>
-              <p v-show="job.images.length === 0">
-                Although not required, adding relevant pictures to your job builds trust and can attract more attention from potential applicants
-              </p>
-              <v-btn v-if="job.images.length === 0"
-                @click="picUploaderDialog = true"
-                flat small outline
-                style="margin: 0;"
-                class="optional">
-                Upload a picture
-              </v-btn>
-              <v-btn v-else
-                @click="picUploaderDialog = true"
-                style="margin: 0;"
-                flat small outline class="optional">
-                Upload Another
-              </v-btn>
-
-              <v-dialog v-model="picUploaderDialog" width="100%">
-                <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" keepOriginal />
-              </v-dialog>
-
-              <v-container fluid grid-list-sm style="margin-top: 8px;">
+                <!-- Salary -->
+                <br>
+                <h4 class="cust-subheader">Salary</h4>
                 <v-layout row wrap>
-                  <v-flex xs4 md3 class="image-container" v-for="image in job.images">
-                    <v-btn icon small ripple class="delete-img-btn" @click="showDeletePictureModal(image.cropped)">
-                      <v-icon>cancel</v-icon>
-                    </v-btn>
-                    <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image" width="100%">
+                  <v-flex xs12 class="no-padding">
+                    <div class="cust-radio-box">
+                      <v-radio-group
+                      v-model="salary_select"
+                      row
+                      :rules="requiredRules"
+                      :hide-details="salary_select === 'paid'"
+                      required>
+                        <v-radio style="max-width: 90px;" label="Paid" value="paid"></v-radio>
+                        <v-radio style="max-width: 110px;" label="Unpaid" value="unpaid"></v-radio>
+                        <v-radio label="Negotiable" value="negotiable"></v-radio>
+                      </v-radio-group>
+                    </div>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 v-if="salary_select === 'paid'">
+                    <v-text-field class="no-padding"
+                      v-model="job.salary"
+                      :disabled = "salary_select !== 'paid'"
+                      prefix="$"
+                      required
+                      :rules="[(salary) => _isNumber(salary) || salary_select !== 'paid' || 'Required, must be a number']"
+                      single-line
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 style="padding-left: 15px !important;" v-if="salary_select === 'paid'">
+                    <v-select class="no-padding" style="max-width: 125px;"
+                      v-model="job.pay_denomination"
+                      :disabled = "salary_select != 'paid'"
+                      :items="[ 'per hour', 'per week', 'per month', 'per year', 'per task' ]"
+                      >
+                    </v-select>
                   </v-flex>
                 </v-layout>
-              </v-container>
+
+                <!-- Working hours -->
+                <h4 class="cust-subheader">Working Hours <span class="optional-color">(Optional)</span></h4>
+                <div class="mb-3">
+                    <v-checkbox label="flexible" v-model="job.shift" value="flexible" hide-details class="pt-0"></v-checkbox>
+                    <v-divider style="margin-bottom: 8px; max-width: 230px;"></v-divider>
+                    <v-checkbox label="morning" v-model="job.shift" value="morning" hide-details class="pt-0"></v-checkbox>
+                    <v-checkbox label="noon" v-model="job.shift" value="noon" hide-details class="pt-0"></v-checkbox>
+                    <v-checkbox label="afternoon" v-model="job.shift" value="afternoon" hide-details class="pt-0"></v-checkbox>
+                    <v-checkbox label="evening" v-model="job.shift" value="evening" hide-details class="pt-0"></v-checkbox>
+                    <v-checkbox label="night" v-model="job.shift" value="night" hide-details class="pt-0"></v-checkbox>
+                </div>
+
+                <!-- Additional requirements -->
+                <h4 class="cust-subheader">Additional requirements <span class="optional-color">(Optional)</span></h4>
+                <v-layout class="additional-requirements" row wrap>
+                  <v-flex xs12 sm6 md5>
+                    <v-select class="optional"
+                      v-model="job.education"
+                      label="Education"
+                      v-bind:items="educationOptions">
+                    </v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md5>
+                    <v-text-field class="optional"
+                      name="preferred-major"
+                      v-model="job.major"
+                      label="Preferred major"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md5>
+                    <v-select class="optional"
+                      v-model="job.language"
+                      label="Language"
+                      v-bind:items="languages"
+                      autocomplete
+                      dense
+                      multiple>
+                    </v-select>
+                  </v-flex>
+                  <v-flex xs4 sm3 lg2>
+                    <v-text-field class="optional"
+                      v-model="job.age"
+                      label="Age"
+                      :rules="[(age) => !(age) || _isNumber(age) || 'Must be a number']">
+                    </v-text-field>
+                  </v-flex>
+                </v-layout>
+
+                <!-- Long text fields -->
+                <QuillEditor v-model="description" title="Description" id="editor1" required></QuillEditor>
+
+                <QuillEditor v-model="experience" title="Required Experience" id="editor2" required
+                  placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
+
+                <QuillEditor v-model="responsibilities" title="Responsibilities" id="editor3" required
+                  placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
+
+                <!-- Pictures -->
+                <br>
+                <h4 class="cust-subheader" :class="{ 'mb-1': job.images.length === 0 }">Pictures <span class="optional-color">(Optional)</span></h4>
+                <p v-show="job.images.length === 0">
+                  Although not required, adding relevant pictures to your job builds trust and can attract more attention from potential applicants
+                </p>
+                <v-btn v-if="job.images.length === 0"
+                  @click="picUploaderDialog = true"
+                  flat small outline
+                  style="margin: 0;"
+                  class="optional">
+                  Upload a picture
+                </v-btn>
+                <v-btn v-else
+                  @click="picUploaderDialog = true"
+                  style="margin: 0;"
+                  flat small outline class="optional">
+                  Upload Another
+                </v-btn>
+
+                <v-dialog v-model="picUploaderDialog" width="100%">
+                  <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" keepOriginal />
+                </v-dialog>
+
+                <v-container fluid grid-list-sm style="margin-top: 8px;">
+                  <v-layout row wrap>
+                    <v-flex xs4 md3 class="image-container" v-for="(image, i) in job.images" :key="`image-${i}`">
+                      <v-btn icon small ripple class="delete-img-btn" @click="showDeletePictureModal(image.cropped)">
+                        <v-icon>cancel</v-icon>
+                      </v-btn>
+                      <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image" width="100%">
+                    </v-flex>
+                  </v-layout>
+                </v-container>
               </v-form>
 
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
                 <v-flex xs12 style="text-align: center;">
+                  <v-btn flat class="prev-btn" @click="_moveToPrevTab">Previous Step</v-btn>
                   <v-btn dark class="kunvet-red-bg" @click="next(2)">Save and Continue</v-btn>
                 </v-flex>
               </v-layout>
 
             </div>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item id="2">
             <!-- SECTION 3 -->
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
+              <v-layout row wrap class="mb-3">
+                <v-flex xs12 sm9 md6 style="background-color: #f7f7f7; padding: 10px 15px;">
+                  <p class="mb-2">Here's what you've entered so far:</p>
+                  <p class="small-p">Posted by: {{ job.posted_by }}</p>
+                  <p class="small-p">Title: {{ job.title }}</p>
+                  <p class="small-p">Address: {{ job.address }} {{ job.address2 }}</p>
+                  <p class="small-p">Categories: {{ selectedCategories }}</p>
+                  <p class="small-p" v-if="job.shift && job.shift.length > 0">Shifts: {{ selectedShifts }}</p>
+                  <p class="small-p">Salary:
+                    <span v-if="salary_select === 'paid'">
+                      ${{ job.salary }} {{ job.pay_denomination }}
+                    </span>
+                    <span v-else>
+                      {{ salary_select }}
+                    </span>
+                  </p>
+                  <p class="small-p" v-if="job.education">Education level: {{ job.education }}</p>
+                  <p class="small-p" v-if="job.major">Preferred major: {{ job.major }}</p>
+                  <p class="small-p" v-if="job.language">Additional language: {{ selectedLanguage }}</p>
+                  <p class="small-p" v-if="job.age">Age: {{ job.age }}</p>
+                  <p class="small-p" v-if="description_valid">Job description complete</p>
+                  <p class="small-p" v-if="experience_valid">Required experience complete</p>
+                  <p class="small-p" v-if="responsibilities_valid">Job responsibilities complete</p>
+                </v-flex>
+              </v-layout>
               <v-form v-model="form3Valid" ref="form3">
-              <!-- <h3 style="margin-bottom: 5px;">Position tags</h3> -->
-              <p style="color: blue;">I hope you didn't think this whole thing was done and ready to use! Nope. Not even close. Sorry :P</p>
-              <h4 class="cust-subheader mb-1">Position tags</h4>
-              <p>Please select at least one category that is relevant to this job</p>
-
-              <div style="max-width: 500px;">
-                <v-select
-                  label="Position Tags"
-                  :items="availablePositions"
-                  autocomplete
-                  multiple
-                  attach>
-                </v-select>
-              </div>
-              <br>
-              <!-- <div style="margin-top: 1em; margin-bottom: 5px;">
-                <h3 style="display: inline;">Application options</h3>
-              </div> -->
-              <h4 class="cust-subheader mb-1">Application options</h4>
-              <p>The applicant's info and resume will be sent to your email when they apply.<br>
-                 You can also browse through all your applicants in the applicants page.</p>
-              <v-checkbox
-                class="optional"
-                label="Don't send resumes to my email. I have an online form that doesn't require sign-up."
-                v-model="useGForm"
-                hide-details
-              ></v-checkbox>
-              <div v-if="applyMethod === 'Through Google Forms'">
-                <v-text-field
-                  v-model="gformLink"
-                  label="My form url"
-                  placeholder="Paste your form url here"
-                  required
-                  :rules="[(v) => applyMethod != 'Through Google Forms' || !!v || 'Required']">
-                ></v-text-field>
-              </div>
-              <div>
-                <p style="margin-top: 16px; margin-bottom: 0;">Do you have any special instuctions for applicants? (Optional)</p>
-                <v-text-field
-                  v-model="notes"
-                  style="padding: 0 2px;"
-                  class="optional"
-                  placeholder="e.g. Please walk-in from 11 - 2pm for interviews"
+                <h4 class="cust-subheader mb-1">Position tags</h4>
+                <p>Please select at least one category that is relevant to this job</p>
+                <v-layout row wrap>
+                  <v-flex xs12 sm9 md6 class="no-padding">
+                    <v-select
+                      label="Position Tags"
+                      :items="availablePositions"
+                      autocomplete
+                      multiple
+                      attach>
+                    </v-select>
+                  </v-flex>
+                </v-layout>
+                <h4 class="cust-subheader mb-1">Application options</h4>
+                <p>
+                  The applicant's info and resume will be sent to your email when they apply.<br>
+                  You can also browse through all your applicants in the applicants page.
+                 </p>
+                <p class="mb-1">If you would like to use an online form that doesn't require sign-up instead, check the box below.</p>
+                <v-checkbox
+                  class="optional online-form-checkbox"
+                  label="Don't send resumes to my email, I have an online form"
+                  v-model="useGForm"
                   hide-details
-                  multi-line
-                  rows=1
-                ></v-text-field>
-              </div>
+                ></v-checkbox>
+                <div v-if="applyMethod === 'Through Google Forms'">
+                  <v-text-field
+                    v-model="gformLink"
+                    label="My form url"
+                    placeholder="Paste your form url here"
+                    required
+                    :rules="[(v) => applyMethod != 'Through Google Forms' || !!v || 'Required']">
+                  ></v-text-field>
+                </div>
+                <div>
+                  <p style="margin-top: 16px; margin-bottom: 0;">Do you have any special instuctions for applicants? (Optional)</p>
+                  <v-text-field
+                    v-model="notes"
+                    style="padding: 0 2px;"
+                    class="optional"
+                    placeholder="e.g. Please walk-in from 11 - 2pm for interviews"
+                    hide-details
+                    multi-line
+                    rows=1
+                  ></v-text-field>
+                </div>
               </v-form>
+
+              <div style="width: 100%; margin-top: 16px;">
+                <p class="center red-text mb-0" v-show="!form1Valid">Section 1 is not valid. <a @click="tab = '0'">Go back</a></p>
+                <p class="center red-text mb-0" v-show="!form2Valid">Section 2 is not valid. <a @click="tab = '1'">Go back</a></p>
+              </div>
+
+              <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
+                <v-flex xs12 style="text-align: center;">
+                  <v-btn flat class="prev-btn" @click="_moveToPrevTab">Previous Step</v-btn>
+                  <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid)" @click="saveAndPost">Post my job</v-btn>
+                </v-flex>
+              </v-layout>
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -633,18 +683,11 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-      <div style="max-width: 500px;">
-        <!--  -->
-        <!-- allow-overflow attach -->
-        <!--<div id="test" style="width: auto; height: auto;"></div>-->
-      </div>
     </div>
   </v-container>
 </template>
 
 <script>
-import { VueEditor, Quill } from 'vue2-editor';
 import gql from 'graphql-tag';
 import VuexLS from '@/store/persist';
 // import Delta from 'quill-delta';
@@ -658,25 +701,28 @@ import languages from '@/constants/languages';
 import queries from '@/constants/queries';
 import difference from 'lodash/difference';
 import axios from 'axios';
+import QuillEditor from '@/components/QuillEditor';
+import EventBus from '@/EventBus';
 
-Quill.register('modules/wordLimit', (quill, options) => {
-  // Options!
-  // wordLimit: int
-  // charLimit: int
-  quill.on('text-change', () => {
-    const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
-
-    if (options.wordLimit) {
-      const wordCount = trimmedText.split(/\s+/).length;
-      if (wordCount > options.wordLimit) {
-        // TODO: Do something
-      }
-    }
-    if (options.charLimit && trimmedText.length > options.charLimit) {
-      quill.deleteText(options.charLimit, quill.getLength());
-    }
-  });
-});
+// Quill.register('modules/wordLimit', (quill, options) => {
+//   // Options!
+//   // wordLimit: int
+//   // charLimit: int
+//   quill.on('text-change', () => {
+//     console.log('TEXT CHANGE');
+//     const trimmedText = quill.getText().replace(/[ \r\n]$/, '');
+//
+//     if (options.wordLimit) {
+//       const wordCount = trimmedText.split(/\s+/).length;
+//       if (wordCount > options.wordLimit) {
+//         // TODO: Do something
+//       }
+//     }
+//     if (options.charLimit && trimmedText.length > options.charLimit) {
+//       quill.deleteText(options.charLimit, quill.getLength());
+//     }
+//   });
+// });
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -715,20 +761,20 @@ const findJobsQuery = gql`
 
 export default {
   components: {
-    VueEditor,
     PicUploader,
+    QuillEditor,
   },
   data() {
     return {
       tab: '0',
-      furthest_tab: 0,
+      furthest_tab: 3,
       form1Valid: false,
       form2Valid: false,
       form3Valid: false,
       submit1Pressed: false,
       submit2Pressed: false,
       submit3Pressed: false,
-      tabItems: ['About you', 'Job details', 'Review and post'],
+      tabItems: ['About you', 'Job details', 'Post'],
       introDialog: true,
       serverUrl: Config.get('serverUrl'),
       // user info
@@ -753,7 +799,6 @@ export default {
         longitude: null,
         isUniversity: false,
         university: null,
-        schools: Schools.schools,
         images: [],
         type: [], // fulltime, parttime
         type2: [], // internship, contract
@@ -785,8 +830,8 @@ export default {
       experience: null,
       experience_valid: true,
       confirmPost: false,
-
       openSelectField: null,
+      availableSchools: Schools.schools,
       availablePositions: positions,
       languages: languages,
       filterPositions: null,
@@ -841,6 +886,7 @@ export default {
       geocoder: null,
       addressValid: true,
       prevAutocompleteAddress: null,
+      postingAs: '',
     };
   },
   computed: {
@@ -859,16 +905,27 @@ export default {
       }
       return 'Through Kunvet';
     },
+    selectedCategories() {
+      const types = this.job.type.concat(this.job.type2);
+      return types.join(', ');
+    },
+    selectedShifts() {
+      return this.job.shift.join(', ');
+    },
+    selectedLanguage() {
+      return this.job.language.join(', ');
+    },
   },
   methods: {
     next(n) {
       // this handles all the logic of moving from one step to the next
       this[`submit${n}Pressed`] = true;
-      this.$refs[`form${n}`].validate();
+      const valid = this.$refs[`form${n}`].validate();
       if (n === 1 && (!this.job.longitude || !this.job.latitude)) {
         this.job.addressValid = false;
       }
-      if (this[`form${n}Valid`]) {
+      console.log(`form${n}Valid`, this[`form${n}Valid`], valid);
+      if (this[`form${n}Valid`] && valid) {
         // Form is valid
         if (n === 1) {
           this.createAccount().then(success => {
@@ -885,7 +942,7 @@ export default {
         let target = 0;
         for (var item of this.$refs[`form${n}`].$children) {
           if (item.hasError) {
-            console.log('ERROR FOUND', item);
+            console.log(item);
             target = item;
             break;
           }
@@ -903,19 +960,39 @@ export default {
       }
       setTimeout(() => { this.scrollToTop(); }, 300);
     },
+    _moveToPrevTab() {
+      const active = parseInt(this.tab, 10);
+      if (active > 0) {
+        this.tab = (active - 1).toString();
+      }
+      setTimeout(() => { this.scrollToTop(); }, 300);
+    },
+    tabChanged() {
+      console.log('tab changed', this.tab);
+    },
     isTabValid(n) {
-      const displaysError = (this[`submit${(n + 1)}Pressed`] && !this[`form${(n + 1)}Valid`]);
-      return !displaysError && (n <= this.furthest_tab);
+      return this[`submit${(n + 1)}Pressed`] && this[`form${(n + 1)}Valid`];
     },
     isTabInvalid(n) {
-      if (n > this.furthest_tab) { return false; }
-      return !this.isTabValid(n);
+      return this[`submit${(n + 1)}Pressed`] && !this[`form${(n + 1)}Valid`];
     },
     scrollToTop(target = 0) {
       let offset = 0;
       /* 112 is the height of the navbar and tabs bar */
       if (target !== 0) { offset = -145; }
       this.$vuetify.goTo(target, { duration: 700, offset: offset, easing: 'easeInOutCubic' });
+    },
+    _isNumber(val) {
+      if (typeof val === 'string') {
+        if (!parseFloat(val)) { return false; }
+        const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ','];
+        for (var i = 0; i < val.length; i++) {
+          var char = val.charAt(i);
+          if (allowedChars.indexOf(char) === -1) { return false; }
+        }
+        return true;
+      }
+      return typeof val === 'number';
     },
     async createAccount() {
       // const headers = { emulateJSON: true };
@@ -1027,16 +1104,6 @@ export default {
       } else {
         this[p] = this[`${p}_current`];
       }
-    },
-    jobTypeStrToType(s) {
-      if (s === 'fulltime') {
-        return ['fulltime'];
-      } else if (s === 'parttime') {
-        return ['parttime'];
-      } else if (s === 'both') {
-        return ['fulltime', 'parttime'];
-      }
-      return null;
     },
     validateBeforePosting(showDialog = false) {
       this.submitted = true;
@@ -1214,7 +1281,7 @@ export default {
         business_id: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
         posted_by: this.job.posted_by,
         active: this.active,
-        title: this.title,
+        title: this.job.title,
         date: doesJobActivelyExist ? this.date : Date.now(),
         description: this.description,
         address: this.job.address,
@@ -1222,14 +1289,14 @@ export default {
         university: this.isUniversity ? this.university : null,
         latitude: this.job.latitude,
         longitude: this.job.longitude,
-        type: this.jobTypeStrToType(this.type),
-        studentfriendly: this.studentfriendly,
-        type2: this.type2,
-        shift: this.shift === [] ? null : this.shift,
-        age: this.age === '' ? null : parseInt(this.age, 10),
+        type: this.job.type,
+        studentfriendly: this.job.studentfriendly,
+        type2: this.job.type2,
+        shift: this.job.shift === [] ? null : this.job.shift,
+        age: this.job.age ? parseInt(this.job.age, 10) : null,
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
-        salary: this.salary_select !== 'paid' ? null : parseInt(this.salary, 10),
-        pay_denomination: this.salary_select !== 'paid' ? null : this.pay_denomination,
+        salary: this.salary_select === 'paid' ? parseInt(this.job.salary, 10) : null,
+        pay_denomination: this.salary_select === 'paid' ? this.job.pay_denomination : null,
         education: this.education ? degreeReducedStringToDb(this.education) : 'None',
         preferred_major: this.major,
         language: this.language,
@@ -1482,6 +1549,13 @@ export default {
       if (this.job.address) {
         this.setLatLongs();
       }
+    });
+  },
+  created() {
+    EventBus.$on('descriptionValid', value => {
+      this.description_valid = value;
+      console.log('content', this.description_valid);
+      // console.log('finale', this.$refs.form2.validate('description', ''));
     });
   },
 };
