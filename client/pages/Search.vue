@@ -457,7 +457,7 @@ export default {
       ],
       // firstSearch: Store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
-      selectedCity: this.$store.state.selectedCity || 'University of California, Irvine', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
+      selectedCity: this.$store.state.selectedCity || 'Irvine - UC Irvine', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
       selectedTypes: this.$store.state.selectedTypes || [],
       selectedPositions: this.$store.state.selectedPositions || [],
       selectedShifts: this.$store.state.selectedShifts || [],
