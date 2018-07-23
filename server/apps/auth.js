@@ -202,6 +202,20 @@ async function checkIsNotVerified(email) {
   return true;
 }
 
+async function generateResponse(err, email = null, defaultResponse = null) {
+  if (err.name === 'UserExistsError' || err.name === 'BulkWriteError') {
+    let response;
+    const isntVerified = await checkIsNotVerified(email);
+    if (isntVerified) {
+      response = { success: false, message: 'Email exists but not verified' };
+    } else {
+      response = { success: false, message: 'User already exists' };
+    }
+    return response;
+  }
+  return defaultResponse;
+}
+
 router.post('/register', async (ctx) => {
   // FIXME: Input sanitization
   if (ctx.isAuthenticated()) {
@@ -338,11 +352,103 @@ router.post('/register', async (ctx) => {
   ctx.body = JSON.stringify(response);
 });
 
-router.post('/register2', (ctx) => {
+router.post('/register2', async (ctx) => {
   console.log(ctx.request.body);
+  const req = ctx.request.body;
+  const email = req.email.toLowerCase();
+  // here is what data will look like:
+  /* const data = {
+    email: this.email,
+    fname: this.fname,
+    lname: this.lname,
+    pwd: this.password,
+    business_name: this.business_name, // if user creates org
+    address: this.job.address,
+    jobInfo: { // if user creates job
+      address2: this.job.address2,
+      title: this.title,
+      university: this.university,
+      lat: this.job.latitude,
+      long: this.job.longitude,
+    },
+  }; */
+  var user;
+  try {
+    // TRY CREATE USER
+    const promiseRegister = promisify(Models.Account.register, Models.Account);
+    user = await promiseRegister(
+      {
+        email: email,
+        firstname: req.fname,
+        lastname: req.lname,
+      },
+      req.pwd,
+    );
+  } catch (err) {
+    console.log('Error when creating account', err);
+    let response = { success: false, message: 'Account creation failed' };
+    response = await generateResponse(err, email, response);
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+
+  console.log('USER', user);
+  var org;
+  if (req.business_name) {
+    try {
+      // TRY CREATE ORG
+      org = new Models.Organization({
+        business_name: req.business_name,
+        email: req.email.toLowerCase(),
+        user_id: user._id,
+      });
+      await org.save();
+      // Now add org to user's account
+      user.default_org = org._id;
+      user.org_list = [org._id];
+      await user.save();
+    } catch (err) {
+      console.log('Error when creating new org', err);
+      await Models.Account.remove({
+        _id: user._id,
+      });
+      let response = { success: false, message: 'Organization creation failed' };
+      response = await generateResponse(err, email, response);
+      ctx.body = JSON.stringify(response);
+      return;
+    }
+  }
+
+  var job;
+  if (req.jobInfo) {
+    const postedBy = req.business_name ? req.business_name : `${req.fname} ${req.lname}`;
+    try {
+      // TRY CREATE JOB
+      job = new Models.Job({
+        email: email,
+        posted_by: postedBy,
+        user_id: user._id,
+        business_id: org ? org._id : null,
+        title: req.jobInfo.title,
+        address: req.address,
+        address2: req.jobInfo.address2,
+        latitude: req.jobInfo.lat,
+        longitude: req.jobInfo.long,
+      });
+      await job.save();
+    } catch (err) {
+      console.log('Error when creating new job', err);
+      const response = { success: false, message: 'Job creation failed' };
+      ctx.body = JSON.stringify(response);
+      return;
+    }
+  }
   const response = {
     success: true,
-    message: 'Check your mailbox!',
+    message: {
+      orgId: org ? org._id : null,
+      jobId: job ? job._id : null,
+    },
   };
   ctx.body = JSON.stringify(response);
 });

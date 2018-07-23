@@ -9,7 +9,7 @@
     position: fixed;
     top: 64px;
     z-index: 5;
-    width: calc(100% - 32px);
+    width: 100%;
     height: 43px;
   }
   .cust-tab-wrapper {
@@ -214,6 +214,9 @@
   .small-p {
     color: #616161;
   }
+  .underline {
+    text-decoration: underline;
+  }
   @media (max-width: 435px) {
     .work-hours {
       min-height: 114px;
@@ -242,11 +245,24 @@
     .picUploaderDialog {
       min-width: 450px;
     }
+    .tabs__bar {
+      width: calc(100% - 32px);
+    }
   }
   @media (min-width: 961px) {
     .tabs__bar {
       width: 960px;
       margin-left: calc(50% - 496px);
+    }
+  }
+}
+@media (max-width: 600px) {
+  .create-job-container {
+    padding-left: 0;
+    padding-right: 0;
+    .main-cont-large {
+      padding-left: 16px;
+      padding-right: 16px;
     }
   }
 }
@@ -362,11 +378,11 @@
                     <div v-if="job.address">
                       <v-checkbox class="optional" style="margin-top: 16px;"
                         label="Is this job on a school campus?"
-                        v-model="job.isUniversity"
+                        v-model="isUniversity"
                         hide-details
                       ></v-checkbox>
                       <v-select class="no-padding-select"
-                        v-if="job.isUniversity"
+                        v-if="isUniversity"
                         label="Which one?"
                         v-model="job.university"
                         v-bind:items="availableSchools"
@@ -381,9 +397,40 @@
 
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
                 <v-flex xs12 style="text-align: center;">
-                  <v-btn dark class="kunvet-red-bg" @click="next(1)">Save and Continue</v-btn>
+                  <v-btn class="kunvet-red-bg" :disabled="loading" @click="next(1)">Save and Continue</v-btn>
+                  <p v-if="loading">
+                    <span style="padding: 0 4px;">
+                      <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1" style="top: 3px;"></v-progress-circular>
+                    </span>
+                    Loading...
+                  </p>
+                </v-flex>
+                <v-flex v-if="form1Error" xs12>
+                  <v-alert
+                   :value="true"
+                   color="error"
+                   icon="warning"
+                   outline
+                 >
+                   <span v-if="form1Error==='UserExists'">
+                     Error: A user with this email already exists. Would you like to <router-link class="underline" to="/login">login</router-link>?
+                   </span>
+                   <span v-else-if="form1Error==='LoginFailure'">
+                     Error: Your account has been registered, but somehow we could not log you in. This could be due to network issues.
+                     Please try to <router-link class="underline" to="/login">login</router-link> again.
+                   </span>
+                   <span v-else>
+                     An error occured: {{ form1Error }}
+                   </span>
+                 </v-alert>
                 </v-flex>
               </v-layout>
+              <v-switch
+                 :label="`Actually create new account: ${testCreateAcct.toString()}`"
+                 v-model="testCreateAcct"
+                 hide-details
+              ></v-switch>
+              <p>This is here only for testing</p>
             </div>
           </v-tab-item>
           <v-tab-item id="1">
@@ -536,7 +583,7 @@
                 </v-btn>
 
                 <v-dialog v-model="picUploaderDialog" width="100%">
-                  <PicUploader @uploaded="picsUploaded" @cancel="picUploaderDialog = false" keepOriginal />
+                  <PicUploader @uploaded="picUploaded" @cancel="picUploaderDialog = false" keepOriginal />
                 </v-dialog>
 
                 <v-container fluid grid-list-sm style="margin-top: 8px;">
@@ -562,33 +609,35 @@
           </v-tab-item>
           <v-tab-item id="2">
             <!-- SECTION 3 -->
-            <div class="main-cont-large">
+            <div class="main-cont-large no-padding">
               <div class="cust-spacer"></div>
               <v-layout row wrap class="mb-3">
-                <v-flex xs12 sm9 md6 style="background-color: #f7f7f7; padding: 10px 15px;">
+                <v-flex xs12 sm9 md6 style="background-color: #fafafa; padding: 10px 16px 16px 16px;">
                   <p class="mb-2">Here's what you've entered so far:</p>
+
+                  <p class="mb-1"><strong>Section 1:</strong></p>
                   <p class="small-p">Posted by: {{ job.posted_by }}</p>
                   <p class="small-p">Title: {{ job.title }}</p>
                   <p class="small-p">Address: {{ job.address }} {{ job.address2 }}</p>
+
+                  <p class="mt-3 mb-1"><strong>Section 2:</strong></p>
                   <p class="small-p">Categories: {{ selectedCategories }}</p>
                   <p class="small-p" v-if="job.shift && job.shift.length > 0">Shifts: {{ selectedShifts }}</p>
                   <p class="small-p">Salary:
-                    <span v-if="salary_select === 'paid'">
-                      ${{ job.salary }} {{ job.pay_denomination }}
-                    </span>
-                    <span v-else>
-                      {{ salary_select }}
-                    </span>
+                    <span v-if="salary_select === 'paid'">${{ job.salary }} {{ job.pay_denomination }}</span>
+                    <span v-else>{{ salary_select }}</span>
                   </p>
                   <p class="small-p" v-if="job.education">Education level: {{ job.education }}</p>
                   <p class="small-p" v-if="job.major">Preferred major: {{ job.major }}</p>
                   <p class="small-p" v-if="job.language">Additional language: {{ selectedLanguage }}</p>
                   <p class="small-p" v-if="job.age">Age: {{ job.age }}</p>
-                  <p class="small-p" v-if="description_valid">Job description complete</p>
-                  <p class="small-p" v-if="experience_valid">Required experience complete</p>
-                  <p class="small-p" v-if="responsibilities_valid">Job responsibilities complete</p>
+
+                  <p class="mt-3 mb-0"><strong>Job description, required experience, responisibilities</strong></p>
+                  <a @click="tab='review-tab'" style="color: #616161 !important;">- click here to review</a>
                 </v-flex>
               </v-layout>
+            </div>
+            <div class="main-cont-large">
               <v-form v-model="form3Valid" ref="form3">
                 <h4 class="cust-subheader mb-1">Position tags</h4>
                 <p>Please select at least one category that is relevant to this job</p>
@@ -649,6 +698,11 @@
                   <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid)" @click="saveAndPost">Post my job</v-btn>
                 </v-flex>
               </v-layout>
+            </div>
+          </v-tab-item>
+          <v-tab-item id="review-tab">
+            <div class="main-cont-large">
+              <div class="cust-spacer"></div>
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -774,7 +828,10 @@ export default {
       submit1Pressed: false,
       submit2Pressed: false,
       submit3Pressed: false,
-      tabItems: ['About you', 'Job details', 'Post'],
+      form1Error: '', // UserExists, LoginFailure
+      form2Error: '',
+      form3Error: '',
+      tabItems: ['About you', 'Job details', 'Review and post'],
       introDialog: true,
       serverUrl: Config.get('serverUrl'),
       // user info
@@ -797,7 +854,6 @@ export default {
         address2: null,
         latitude: null,
         longitude: null,
-        isUniversity: false,
         university: null,
         images: [],
         type: [], // fulltime, parttime
@@ -812,7 +868,8 @@ export default {
         age: null,
         active: false,
       },
-      id: null,
+      isUniversity: false,
+      jobId: null,
       submitted: false,
       uid: null,
       date: null,
@@ -887,6 +944,7 @@ export default {
       addressValid: true,
       prevAutocompleteAddress: null,
       postingAs: '',
+      testCreateAcct: false,
     };
   },
   computed: {
@@ -919,26 +977,36 @@ export default {
   methods: {
     next(n) {
       // this handles all the logic of moving from one step to the next
+      this.clearErrors();
       this[`submit${n}Pressed`] = true;
       const valid = this.$refs[`form${n}`].validate();
       if (n === 1 && (!this.job.longitude || !this.job.latitude)) {
         this.job.addressValid = false;
       }
-      console.log(`form${n}Valid`, this[`form${n}Valid`], valid);
       if (this[`form${n}Valid`] && valid) {
         // Form is valid
         if (n === 1) {
-          this.createAccount().then(success => {
-            console.log('success?', success);
-            if (success) {
+          this.createAccount().then(res => {
+            // console.log('success?', success);
+            if (res.registered && res.loggedIn) {
               this._moveToNextTab();
+            } else if (res.registered && !res.loggedIn) {
+              // Error: registered but not logged in
+              if (res.error === 'UserExists') {
+                this.form1Error = 'UserExists';
+              } else {
+                this.form1Error = 'LoginFailure';
+              }
+            } else {
+              // Error: some kind of error registering
+              this.form1Error = res.error ? res.error : 'Unknown error';
             }
           });
         } else {
           this._moveToNextTab();
         }
       } else {
-        // Form has errors
+        // Error: form not valid
         let target = 0;
         for (var item of this.$refs[`form${n}`].$children) {
           if (item.hasError) {
@@ -976,6 +1044,9 @@ export default {
     isTabInvalid(n) {
       return this[`submit${(n + 1)}Pressed`] && !this[`form${(n + 1)}Valid`];
     },
+    clearErrors() {
+      this.form1Error = ''; this.form2Error = ''; this.form3Error = '';
+    },
     scrollToTop(target = 0) {
       let offset = 0;
       /* 112 is the height of the navbar and tabs bar */
@@ -996,37 +1067,73 @@ export default {
     },
     async createAccount() {
       // const headers = { emulateJSON: true };
+      if (!this.testCreateAcct) { return { registered: true, loggedIn: true }; } // REMOVE ME
+      const isBusiness = Boolean(this.business_name);
       const data = {
         email: this.email,
-        business_name: this.business_name,
         fname: this.fname,
         lname: this.lname,
         pwd: this.password,
+        business_name: this.business_name,
         address: this.job.address,
         jobInfo: {
           address2: this.job.address2,
-          title: this.title,
-          university: this.university,
+          title: this.job.title,
+          university: this.job.university,
+          lat: this.job.latitude,
+          long: this.job.longitude,
         },
       };
-      var ret = false;
+      var registerSuccess = false;
+      var ret = { registered: false, loggedIn: false, error: null };
       this.loading = true;
       await axios.post('/auth/register2', data).then((res) => {
         this.loading = false;
+        console.log('RES', res);
         if (res.data.success) {
-          ret = true;
-        } else if (res.data.message === 'User already exists') {
-          this.error = 'UserExists';
+          this.jobId = res.message.jobId;
+          this.job.posted_by = data.business_name ? data.business_name : `${data.fname} ${data.lname}`;
+          registerSuccess = true;
+          ret.registered = true;
         } else if (res.data.message === 'Email exists but not verified') {
-          this.error = 'UserExists';
+          ret.registered = true;
+          ret.error = 'UserExists';
+        } else if (res.data.message === 'User already exists') {
+          ret.registered = true;
+          ret.error = 'UserExists';
         } else {
-          this.error = 'ServerError';
-          this.$error(res.data);
+          ret.error = res.data ? res.data : res;
+          this.$error(res);
         }
-      }, (error) => {
-        this.error = 'ServerError';
+      }).catch((error) => {
+        ret.error = error;
         this.$error(error);
       });
+      if (registerSuccess) {
+        // Log in after registering
+        this.$debug('trying to log into new account');
+        await axios.post('/auth/login', {
+          email: data.email,
+          password: data.pwd,
+        }).then((res) => {
+          this.$debug('login response', res);
+          if (res.data.success) {
+            // Logged in successfully
+            if (isBusiness) {
+              EventBus.$emit('business');
+            } else {
+              EventBus.$emit('individual');
+            }
+            ret.loggedIn = true;
+          } else {
+            ret.error = res.data ? res.data : res;
+            this.$error(res);
+          }
+        }).catch((error) => {
+          ret.error = error;
+          this.$error(error);
+        });
+      }
       return ret;
     },
     checkIfEmailExists() {
@@ -1372,9 +1479,9 @@ export default {
         this.$error(error);
       });
     },
-    picsUploaded(fileIds) {
+    picUploaded(fileId) {
       this.picUploaderDialog = false;
-      this.job.images.push(fileIds);
+      this.images.push({ original: null, cropped: fileId });
     },
     showDeletePictureModal(croppedID) {
       this.deletePictureModal.show = true;

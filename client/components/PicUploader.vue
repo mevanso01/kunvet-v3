@@ -25,6 +25,7 @@
           :placeholder-font-size="14"
           v-model="cropper"
           show-loading
+          remove-button-color="#ef5350"
           placeholder="Drag your pictures here or click to browse"
         >
         </VueCroppa>
