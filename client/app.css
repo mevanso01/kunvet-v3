@@ -135,12 +135,12 @@ ol, ul {
 main {
   background-color: #fff;
 }
-.application--light .input-group:not(.input-group--error) .input-group--selection-controls label,
-.input-group--text-field:not(.input-group--error) label,
-.radio-group:not(.input-group--error) label,
-.radio-group:not(.input-group--error) i,
-.input-group.checkbox:not(.input-group--error) label,
-.input-group.checkbox:not(.input-group--error) i {
+.application--light .input-group:not(.input-group--error):not(.input-group--disabled) .input-group--selection-controls label,
+.input-group--text-field:not(.input-group--error):not(.input-group--disabled) label,
+.radio-group:not(.input-group--error):not(.input-group--disabled) label,
+.radio-group:not(.input-group--error):not(.input-group--disabled) i,
+.input-group.checkbox:not(.input-group--error):not(.input-group--disabled) label,
+.input-group.checkbox:not(.input-group--error):not(.input-group--disabled) i {
   color: #4d4d4d !important;
 }
 .accent--text {
@@ -223,6 +223,12 @@ main {
 .custom-select-2 .custom-select-menu {
   overflow-y: scroll;
   height: 212px;
+}
+.custom-select-menu.list--dense i.icon--selection-control {
+  line-height: 28px;
+}
+.custom-select-menu .input-group--selection-controls.input-group--disabled .input-group__input i.icon--selection-control {
+  color: rgba(0,0,0,0.38) !important;
 }
 .custom-select-2 {
   position: absolute;
