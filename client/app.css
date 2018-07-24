@@ -96,6 +96,9 @@ ol, ul {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+i.icon--selection-control {
+  line-height: 28px;
+}
 .kunvet-red-bg.btn {
   color: #fff !important;
 }
@@ -141,7 +144,7 @@ main {
 .radio-group:not(.input-group--error):not(.input-group--disabled) i,
 .input-group.checkbox:not(.input-group--error):not(.input-group--disabled) label,
 .input-group.checkbox:not(.input-group--error):not(.input-group--disabled) i {
-  color: #4d4d4d !important;
+  color: #4d4d4d;
 }
 .accent--text {
   color: #4d4d4d;
