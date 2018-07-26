@@ -122,6 +122,7 @@ export default {
         wordLimit: this.wordLimit,
         charLimit: this.charLimit,
       };
+      console.log(this.computedValue, this.computedValue.length);
       if (options.required) {
         if (validated && trimmedText.length === 0) {
           validated = false;
@@ -145,10 +146,9 @@ export default {
         }
       }
       this.valid = validated;
+      console.log(validated);
       return validated;
     },
-  },
-  created() {
   },
 };
 </script>

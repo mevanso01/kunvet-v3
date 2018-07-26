@@ -217,6 +217,24 @@
   .underline {
     text-decoration: underline;
   }
+  .job-detail-container {
+    .long-text-cont {
+      margin-bottom: 16px;
+    }
+    .long-text-cont,
+    .long-text-cont span,
+    .long-text-cont p,
+    .long-text-cont li {
+      color: #616161 !important;
+    }
+  }
+  .preview-top h3 {
+    font-weight: 400;
+    font-size: 17px;
+    color: rgba(0,0,0,0.87);
+    margin: 6px 8px;
+    line-height: 36px;
+  }
   @media (max-width: 435px) {
     .work-hours {
       min-height: 114px;
@@ -225,6 +243,10 @@
   @media (max-width: 600px) {
     .tabs__bar {
       top: 56px;
+      padding: 0 3px;
+    }
+    .tabs__div {
+      padding: 0 3px;
     }
     .cust-tab-wrapper {
       top: 56px;
@@ -233,9 +255,12 @@
       height: 40px;
     }
   }
-  @media (max-width: 700px) {
-    .work-hours {
-      min-height: 76px;
+  @media (max-width: 960px) {
+    .preview-top .btn {
+      margin-left: 0;
+    }
+    .preview-top h3 span {
+      display: none;
     }
   }
   @media (min-width: 601px) {
@@ -253,6 +278,12 @@
     .tabs__bar {
       width: 960px;
       margin-left: calc(50% - 496px);
+    }
+    .job-detail-container {
+      border: 1px solid #e0e0e0;
+      .sub-container {
+        padding: 10px 15px;
+      }
     }
   }
 }
@@ -554,12 +585,12 @@
                 </v-layout>
 
                 <!-- Long text fields -->
-                <QuillEditor v-model="description" title="Description" id="editor1" required></QuillEditor>
+                <QuillEditor v-model="job.description" title="Description" id="editor1" required></QuillEditor>
 
-                <QuillEditor v-model="experience" title="Required Experience" id="editor2" required
+                <QuillEditor v-model="job.experience" title="Required Experience" id="editor2" required
                   placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
-                <QuillEditor v-model="responsibilities" title="Responsibilities" id="editor3" required
+                <QuillEditor v-model="job.responsibilities" title="Responsibilities" id="editor3" required
                   placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
                 <!-- Pictures -->
@@ -701,8 +732,26 @@
             </div>
           </v-tab-item>
           <v-tab-item id="review-tab">
-            <div class="main-cont-large">
+            <div class="main-cont-large" style="margin-bottom: 16px;">
               <div class="cust-spacer"></div>
+              <div class="preview-top" style="display: flex;">
+                <v-btn outline @click="tab = '2'">Go back</v-btn>
+                <h3>
+                  This is a preview<span> of what the long text portion of your job will look like</span>
+                </h3>
+              </div>
+            </div>
+            <div class="main-cont-large job-detail-container">
+              <div class="sub-container">
+                <h2 style="margin-bottom: 8px;">Job Overview:</h2>
+                <div class="long-text-cont" v-html="job.description"></div>
+
+                <h2 style="margin-bottom: 8px;">Experience & Requirements:</h2>
+                <div class="long-text-cont" v-html="job.experience"></div>
+
+                <h2 style="margin-bottom: 8px;">Responsibilities:</h2>
+                <div class="long-text-cont" v-html="job.responsibilities"></div>
+              </div>
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -866,6 +915,9 @@ export default {
         major: null,
         language: null,
         age: null,
+        description: null,
+        experience: null,
+        responsibilities: null,
         active: false,
       },
       isUniversity: false,
@@ -880,11 +932,8 @@ export default {
       type2_current: null,
       salary_select: null,
       pay_denomination: 'per hour',
-      description: null,
       description_valid: true,
-      responsibilities: null,
       responsibilities_valid: true,
-      experience: null,
       experience_valid: true,
       confirmPost: false,
       openSelectField: null,

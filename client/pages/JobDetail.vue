@@ -109,6 +109,15 @@
 .job-detail-posted-by {
   max-width: calc(99% - 100px);
 }
+.job-detail-container .long-text-cont {
+  margin-bottom: 16px;
+}
+.job-detail-container .long-text-cont,
+.job-detail-container .long-text-cont span,
+.job-detail-container .long-text-cont p,
+.job-detail-container .long-text-cont li {
+  color: #616161 !important;
+}
 @media (max-width: 600px) {
   .flex {
     padding: 10px 1px;
@@ -256,13 +265,13 @@
       </div>
       <div class="sub-container">
           <h2 style="margin-bottom: 8px;">Job Overview:</h2>
-          <div v-html="findJob.description"></div>
+          <div class="long-text-cont" v-html="findJob.description"></div>
 
           <h2 style="margin-bottom: 8px;">Experience & Requirements:</h2>
-          <div v-html="findJob.experience"></div>
+          <div class="long-text-cont" v-html="findJob.experience"></div>
 
           <h2 style="margin-bottom: 8px;">Responsibilities:</h2>
-          <div v-html="findJob.responsibilities"></div>
+          <div class="long-text-cont" v-html="findJob.responsibilities"></div>
 
           <v-container v-if="findJob.images && findJob.images.length > 0" fluid grid-list-sm style="margin: 20px 0;">
             <v-layout row wrap>
@@ -335,14 +344,6 @@
                 :label="resume.name" v-model="selectedResumes" :value="resume.filename" hide-details>
               </v-checkbox>
             </div>
-            <!--<v-radio-group class="kunvet-red no-padding"  v-model="selectedResume" hide-details>
-              <v-radio v-for="(resume, index) in resumes"
-                class="kunvet-red"
-                :key="index"
-                :label="resume.name"
-                :value="resume.filename">
-              </v-radio>
-            </v-radio-group>-->
             <p v-else>You have no resumes yet!</p>
             <div style="font-size: 12px; text-align: center; margin-bottom: 5px;">
               <span v-if="state === 'ERROR'" style="color: red;">{{ errorMessage }}</span>

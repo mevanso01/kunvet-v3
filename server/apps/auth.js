@@ -428,7 +428,7 @@ router.post('/register2', async (ctx) => {
         email: email,
         posted_by: postedBy,
         user_id: user._id,
-        business_id: org ? org._id : null,
+        business_id: req.business_name ? org._id : null,
         title: req.jobInfo.title,
         address: req.address,
         address2: req.jobInfo.address2,
