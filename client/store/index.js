@@ -19,7 +19,7 @@ const Store = new Vuex.Store({
     selectedShifts: [],
     bdata: null,
     userdata: null,
-    // recheckLogin: null, // date object
+    currentJobId: null, // for keeping track of what job you're editing.
   },
   mutations: {
     go(state) {
@@ -58,16 +58,9 @@ const Store = new Vuex.Store({
     keepBdata(state, payload) {
       state.bdata = payload.bdata;
     },
-    /* setRecheckLogin(state, payload) {
-      if (payload.recheckLogin) {
-        state.recheckLogin = payload.recheckLogin;
-      } else {
-        // two days by default
-        var d = new Date();
-        d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000));
-        state.recheckLogin = d;
-      }
-    }, */
+    setCurrentJobId(state, payload) {
+      state.currentJobId = payload.id;
+    },
     resetState(state) {
       state.userID = null;
       state.acct = 0;
@@ -79,7 +72,7 @@ const Store = new Vuex.Store({
       state.selectedShifts = [];
       state.bdata = null;
       state.userdata = null;
-      // state.recheckLogin = null;
+      state.currentJobId = null;
     },
   },
   plugins: [VuexLS.plugin],

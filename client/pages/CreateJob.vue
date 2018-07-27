@@ -282,7 +282,7 @@
     .job-detail-container {
       border: 1px solid #e0e0e0;
       .sub-container {
-        padding: 10px 15px;
+        padding: 18px 15px 8px 15px;
       }
     }
   }
@@ -806,6 +806,7 @@ import difference from 'lodash/difference';
 import axios from 'axios';
 import QuillEditor from '@/components/QuillEditor';
 import EventBus from '@/EventBus';
+import userDataProvider from '@/userDataProvider';
 
 // Quill.register('modules/wordLimit', (quill, options) => {
 //   // Options!
@@ -1141,6 +1142,7 @@ export default {
         console.log('RES', res);
         if (res.data.success) {
           this.jobId = res.message.jobId;
+          this.$store.commit({ type: 'setCurrentJobId', id: res.message.jobId });
           this.job.posted_by = data.business_name ? data.business_name : `${data.fname} ${data.lname}`;
           registerSuccess = true;
           ret.registered = true;
@@ -1474,12 +1476,13 @@ export default {
           }
         }`),
         variables: {
-          user: this.user_id,
+          user: this.uid,
           id: _id,
         },
       }).then((data) => {
         const job = data.data.findJob;
         if (job) {
+          this.$store.commit({ type: 'setCurrentJobId', id: _id });
           this.title = job.title;
           this.active = job.active;
           this.date = job.date;
@@ -1567,7 +1570,7 @@ export default {
     resetData() {
       Object.assign(this.$data, this.$options.data.call(this));
     },
-    fetchBusinessData(id) {
+    fetchAndSetBusinessData(id) {
       // this.$debug('fetching business data');
       this.$apollo.query({
         query: (gql`query ($bid: MongoID) {
@@ -1639,58 +1642,30 @@ export default {
       this.$router.push('/createnewjob');
       return;
     }
-    this.resetData();
-    if (this.$store.state.acct === 2 && this.$store.state.businessID) {
-      if (this.$store.state.bdata) {
-        if (this.$store.state.bdata.business_name) {
-          this.job.posted_by = this.$store.state.bdata.business_name;
-        }
-        // Autofill address
-        if (this.$store.state.bdata.address && !this.$route.params.id) {
-          this.job.address = this.$store.state.bdata.address;
-        }
-      } else {
-        // no business data in localstorage
-        this.fetchBusinessData(this.$store.state.businessID);
-      }
-
-      this.uid = this.$store.state.userID;
-      if (this.$route.params.id) {
-        this.getEditJobData(this.$route.params.id);
-      }
-      this.checkIfEmailVerified();
-    } else if (this.$store.state.acct === 1 && this.$store.state.userdata) {
-      this.job.posted_by = `${this.$store.state.userdata.firstname} ${this.$store.state.userdata.lastname}`;
-      this.uid = this.$store.state.userID;
-      if (this.$route.params.id) {
-        this.getEditJobData(this.$route.params.id);
-      }
-      this.checkIfEmailVerified();
-    } else {
-      VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-        if (data.acct === 2 && data.businessID) {
-          if (data.bdata && data.bdata.business_name) {
-            this.job.posted_by = data.bdata.business_name;
-          } else {
-            this.fetchBusinessData(data.businessID);
+    userDataProvider.getUserData().then(res => {
+      this.uid = res.uid;
+      if (res.acct === 0) {
+        // logged out
+        this.email_verified = false;
+      } else if (res.acct === 1) {
+        // individual
+        this.job.posted_by = `${res.userdata.firstname} ${res.userdata.lastname}`;
+      } else if (res.acct === 2) {
+        // business
+        var orgId;
+        if (res.userdata.default_org) {
+          orgId = res.userdata.default_org;
+        } else if (res.userdata.org_list.length > 0) { // fallback if default_org is not set for some reason
+          for (var i = 0; i < res.userdata.org_list.length; i++) {
+            if (res.userdata.org_list[i]) {
+              orgId = res.userdata.org_list[i];
+              break;
+            }
           }
-          this.uid = data.userID;
-          if (this.$route.params.id) {
-            this.getEditJobData(this.$route.params.id);
-          }
-          this.checkIfEmailVerified();
-        } else if (data.acct === 1) {
-          this.job.posted_by = `${data.userdata.firstname} ${data.userdata.lastname}`;
-          if (this.$route.params.id) {
-            this.getEditJobData(this.$route.params.id);
-          }
-          this.checkIfEmailVerified();
-        } else {
-          // not logged in
-          // this.$router.push('/login');
         }
-      });
-    }
+        this.fetchAndSetBusinessData(orgId);
+      }
+    });
 
     VueGoogleMaps.loaded.then(() => {
       // HACK
@@ -1708,11 +1683,17 @@ export default {
     });
   },
   created() {
-    EventBus.$on('descriptionValid', value => {
-      this.description_valid = value;
-      console.log('content', this.description_valid);
-      // console.log('finale', this.$refs.form2.validate('description', ''));
-    });
+    if (this.$route.params.id) {
+      this.getEditJobData(this.$route.params.id);
+    } else if (this.$store.state && this.$store.state.currentJobId) {
+      this.getEditJobData(this.$store.state.currentJobId);
+    } else {
+      VuexLS.restoreState('vuex', window.localStorage).then((data) => {
+        if (data.currentJobId) {
+          this.getEditJobData(data.currentJobId);
+        }
+      });
+    }
   },
 };
 </script>
