@@ -181,6 +181,7 @@ GQC.rootMutation().addFields({
     ...wrapResolvers([
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.Verified,
+      Restrictions.IsNotBanned,
     ], {
       createJob: Job.get('$createOne'),
       ...wrapResolvers(sendNewApplicationNotification, {

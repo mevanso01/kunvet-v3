@@ -441,6 +441,10 @@ const AccountSchema = Mongoose.Schema({
       default: Date.now,
     },
   }],
+  banned: {
+    type: Boolean,
+    default: false,
+  },
   is_developer: {
     type: Boolean,
     required: true,
