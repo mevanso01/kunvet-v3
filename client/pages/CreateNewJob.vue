@@ -690,7 +690,7 @@ export default {
       gformLink: '',
       educationOptions: Object.keys(degreesReduced).map(key => degreesReduced[key]),
       howDidYouHearItems: [
-        'Posters', 'A representative walked-in', 'Word of mouth', 'Email', 'WeChat', 'Personal Connection', 'Other', 'Shut up!',
+        'Flyers & posters', 'Social media', 'Word of mouth', 'Email campaign', 'Other',
       ],
       customEditorToolbar: [
         ['bold', 'italic', 'underline'], // toggled buttons
