@@ -128,8 +128,12 @@ async function getUserData() {
     if (userdata.org_list && userdata.org_list[0] === null) { userdata.org_list = []; }
     if (userdata.resumes && userdata.resumes[0] === null) { userdata.resumes = []; }
     // commit some essential things of other pages to use
+    Store.commit({ type: 'setAcct', acct: acct });
     Store.commit({ type: 'setAcctID', id: userdata._id });
     Store.commit({ type: 'setDefaultOrg', id: userdata.default_org });
+    if (acct === 2) {
+      Store.commit({ type: 'setBusinessID', id: userdata.default_org });
+    }
     return {
       acct: acct,
       uid: userdata._id,

@@ -101,6 +101,7 @@ export default {
     input(v) {
       this.touched = true;
       this.validate();
+      console.log('emitting', v);
       this.$emit('input', v);
     },
     setWordCount(wordCount) {

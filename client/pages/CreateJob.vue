@@ -1,6 +1,13 @@
 <style lang="scss">
 .create-job-container {
-  /* Vuetify overrides */
+  /* ---- Vuetify overrides ---- */
+  .input-group--text-field:not(.input-group--error):not(.input-group--disabled) label,
+  .radio-group:not(.input-group--error):not(.input-group--disabled) label,
+  .radio-group:not(.input-group--error):not(.input-group--disabled) i,
+  .input-group.checkbox:not(.input-group--error):not(.input-group--disabled) label,
+  .input-group.checkbox:not(.input-group--error):not(.input-group--disabled) i {
+    color: #4d4d4d;
+  }
   .tabs__slider-wrapper,
   .tabs__slider {
     display: none;
@@ -51,7 +58,7 @@
   .radio-group .input-group__details {
     padding-top: 0;
   }
-  /* End of Vuetify overrides */
+  /* ---- End of Vuetify overrides ---- */
   .optional label::after {
     content: ' - Optional';
     font-style: italic;
@@ -323,62 +330,71 @@
               <div class="cust-spacer"></div>
 
               <v-form v-model="form1Valid" ref="form1">
-                <p>First, we need some basic information about who's posting:</p>
-                <v-layout row wrap>
-                  <v-flex xs12 sm9 md6 class="no-padding">
-                    <v-text-field
-                      label="First name"
-                      v-model="fname"
-                      :rules="requiredRules"
-                      required
-                    ></v-text-field>
-                    <v-text-field
-                      label="Last name"
-                      v-model="lname"
-                      :rules="requiredRules"
-                      required
-                    ></v-text-field>
-                    <v-text-field
-                      label="Email"
-                      v-model="email" ref="emailField"
-                      :rules="[
-                        v => !!v || 'Email is required',
-                        v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w{2,3})+$/.test(v) || 'Invalid email format',
-                        () => !emailExists || 'An account with this email already exists',
-                      ]"
-                      type="email"
-                      @blur="checkIfEmailExists()"
-                      required
-                    ></v-text-field>
-                    <v-text-field
-                      label="Create password"
-                      v-model="password"
-                      :rules="passwordRules"
-                      min="8"
-                      :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                      :append-icon-cb="() => (e1 = !e1)"
-                      :type="e1 ? 'password' : 'text'"
-                      required
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
+                <template v-if="!email_verified">
+                  <p>
+                    First, we need some basic information about who's posting.<br>
+                    You will receive your applicants' information through email, unless you opt out of this feature at the end of this form.<br>
+                  </p>
+                  <v-layout row wrap>
+                    <v-flex xs12 sm9 md6 class="no-padding">
+                      <v-text-field
+                        label="First name"
+                        v-model="fname"
+                        :rules="requiredRules"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Last name"
+                        v-model="lname"
+                        :rules="requiredRules"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Email"
+                        v-model="email" ref="emailField"
+                        :rules="[
+                          v => !!v || 'Email is required',
+                          v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w{2,3})+$/.test(v) || 'Invalid email format',
+                          () => !emailExists || 'An account with this email already exists',
+                        ]"
+                        type="email"
+                        @blur="checkIfEmailExists()"
+                        required
+                      ></v-text-field>
+                      <v-text-field v-if="!uid"
+                        label="Create password"
+                        v-model="password"
+                        :rules="passwordRules"
+                        min="8"
+                        :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                        :append-icon-cb="() => (e1 = !e1)"
+                        :type="e1 ? 'password' : 'text'"
+                        required
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
 
-                <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
-                <v-radio-group v-model="postingAs" column required class="pt-0" :rules="requiredRules">
-                    <v-radio label="No, I'm posting as an individual" value="individual"></v-radio>
-                    <v-radio label="Yes, I'm posting as a business or organization" value="business"></v-radio>
-                </v-radio-group>
-                <v-layout row wrap v-if="postingAs === 'business'">
-                  <v-flex xs12 sm9 md6 class="no-padding">
-                    <v-text-field
-                      placeholder="Please enter the name of your business / organization"
-                      label="Name of business / organization"
-                      v-model="business_name"
-                      :rules="requiredRules"
-                      required
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
+                  <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
+                  <v-radio-group v-model="postingAs" column required class="pt-0" :rules="requiredRules">
+                      <v-radio label="No, I'm posting as an individual" value="individual"></v-radio>
+                      <v-radio label="Yes, I'm posting as a business or organization" value="business"></v-radio>
+                  </v-radio-group>
+                  <v-layout row wrap v-if="postingAs === 'business'">
+                    <v-flex xs12 sm9 md6 class="no-padding">
+                      <v-text-field
+                        placeholder="Please enter the name of your business / organization"
+                        label="Name of business / organization"
+                        v-model="business_name"
+                        :rules="requiredRules"
+                        required
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                </template>
+                <template v-else>
+                  <p class="mb-2">Welcome back {{ userdata.firstname }} {{ userdata.lastname }}</p>
+                  <h3 class="mt-0 mb-4">Posting as: {{ job.posted_by }}</h3>
+                </template>
 
                 <p class="mb-2 mt-2">Basic info about your job:</p>
                 <v-layout row wrap>
@@ -477,9 +493,9 @@
                   class="no-padding"
                   :rules="[(v) => !submit2Pressed || !!(v[0]) || 'Required']"
                   required>
-                  <v-radio label="Full time" :value="['fulltime']" class="pt-0"></v-radio>
-                  <v-radio label="Part time" :value="['parttime']" class="pt-0"></v-radio>
-                  <v-radio label="Both" :value="['fulltime', 'parttime']" class="pt-0"></v-radio>
+                  <v-radio label="Full time" value="fulltime" class="pt-0"></v-radio>
+                  <v-radio label="Part time" value="parttime" class="pt-0"></v-radio>
+                  <v-radio label="Both" value="both" class="pt-0"></v-radio>
                 </v-radio-group>
 
                 <p>Is it also an internship or contract position? (Optional)</p>
@@ -540,7 +556,7 @@
                 <h4 class="cust-subheader">Working Hours <span class="optional-color">(Optional)</span></h4>
                 <div class="mb-3">
                     <v-checkbox label="flexible" v-model="job.shift" value="flexible" hide-details class="pt-0"></v-checkbox>
-                    <v-divider style="margin-bottom: 8px; max-width: 230px;"></v-divider>
+                    <v-divider style="margin-bottom: 6px; margin-top: 3px; max-width: 230px;"></v-divider>
                     <v-checkbox label="morning" v-model="job.shift" value="morning" hide-details class="pt-0"></v-checkbox>
                     <v-checkbox label="noon" v-model="job.shift" value="noon" hide-details class="pt-0"></v-checkbox>
                     <v-checkbox label="afternoon" v-model="job.shift" value="afternoon" hide-details class="pt-0"></v-checkbox>
@@ -677,9 +693,13 @@
                     <v-select
                       label="Position Tags"
                       :items="availablePositions"
+                      v-model="job.position_tags"
                       autocomplete
                       multiple
-                      attach>
+                      attach
+                      required
+                      :rules="[(v) => (v && v.length > 0) || 'required']"
+                      >
                     </v-select>
                   </v-flex>
                 </v-layout>
@@ -695,13 +715,13 @@
                   v-model="useGForm"
                   hide-details
                 ></v-checkbox>
-                <div v-if="applyMethod === 'Through Google Forms'">
+                <div v-if="useGForm">
                   <v-text-field
                     v-model="gformLink"
                     label="My form url"
                     placeholder="Paste your form url here"
                     required
-                    :rules="[(v) => applyMethod != 'Through Google Forms' || !!v || 'Required']">
+                    :rules="[(v) => !useGForm || !!v || 'Required']">
                   ></v-text-field>
                 </div>
                 <div>
@@ -726,9 +746,29 @@
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
                 <v-flex xs12 style="text-align: center;">
                   <v-btn flat class="prev-btn" @click="_moveToPrevTab">Previous Step</v-btn>
-                  <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid)" @click="saveAndPost">Post my job</v-btn>
+                  <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid) || loading" @click="submitLastForm">
+                    <span v-if="!job.active">Post my job</span>
+                    <span v-else>Save Job</span>
+                  </v-btn>
                 </v-flex>
+                <p v-if="loading">
+                  <span style="padding: 0 4px;">
+                    <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1" style="top: 3px;"></v-progress-circular>
+                  </span>
+                  Loading...
+                </p>
               </v-layout>
+              <v-flex v-if="form3Error" xs12>
+                <v-alert
+                 :value="true"
+                 color="error"
+                 icon="warning"
+                 outline>
+                  <span>
+                    Error: {{ form3Error }}
+                  </span>
+                </v-alert>
+              </v-flex>
             </div>
           </v-tab-item>
           <v-tab-item id="review-tab">
@@ -758,7 +798,7 @@
 
       </v-tabs>
 
-      <v-dialog v-model="errorOccured">
+      <v-dialog v-model="dialogs.errorOccured">
         <v-card>
           <v-card-title>
             Oh no, an error occured
@@ -767,8 +807,22 @@
             Please try again later
           </v-card-text>
           <v-card-actions>
-            <v-btn flat="flat" @click.native="errorOccured = false;">Close</v-btn>
+            <v-btn flat="flat" @click.native="dialogs.errorOccured = false;">Close</v-btn>
           </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog class="no-border-radius" v-model="dialogs.confirmPost">
+        <v-card flat class="no-border-radius" style="max-width: 350px;">
+          <v-card-title>
+            <div class="headline">All seems good, you can now post your job!</div>
+            <br>
+            <p>(You can still edit certain parts of your job even when it's active)</p>
+          </v-card-title>
+          <div class="bottom-dialog-button" @click="postJob">
+            Save and Post
+            <v-progress-circular indeterminate v-if="loading" class="ma-3" size="30" color="primary"></v-progress-circular>
+          </div>
         </v-card>
       </v-dialog>
 
@@ -871,7 +925,7 @@ export default {
   data() {
     return {
       tab: '0',
-      furthest_tab: 3,
+      furthest_tab: 0, // 0 - 2
       form1Valid: false,
       form2Valid: false,
       form3Valid: false,
@@ -881,7 +935,6 @@ export default {
       form1Error: '', // UserExists, LoginFailure
       form2Error: '',
       form3Error: '',
-      tabItems: ['About you', 'Job details', 'Review and post'],
       introDialog: true,
       serverUrl: Config.get('serverUrl'),
       // user info
@@ -906,7 +959,7 @@ export default {
         longitude: null,
         university: null,
         images: [],
-        type: [], // fulltime, parttime
+        type: null, // string: fulltime, parttime, both
         type2: [], // internship, contract
         studentfriendly: true,
         shift: [],
@@ -920,11 +973,15 @@ export default {
         experience: null,
         responsibilities: null,
         active: false,
+        date: null,
+        position_tags: [],
       },
+      userdata: {},
       isUniversity: false,
-      jobId: null,
-      submitted: false,
+      acct: 0,
       uid: null,
+      jobId: null,
+      orgId: null,
       date: null,
       autocomplete: null,
       placeDetails: null,
@@ -936,7 +993,6 @@ export default {
       description_valid: true,
       responsibilities_valid: true,
       experience_valid: true,
-      confirmPost: false,
       openSelectField: null,
       availableSchools: Schools.schools,
       availablePositions: positions,
@@ -953,34 +1009,12 @@ export default {
       howDidYouHearItems: [
         'Flyers & posters', 'Social media', 'Word of mouth', 'Email campaign', 'Other',
       ],
-      customEditorToolbar: [
-        ['bold', 'italic', 'underline'], // toggled buttons
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        ['clean'],
-      ],
       deletePictureModal: {
         show: false,
         croppedID: null,
       },
       email_verified: true,
       loading: false,
-      shortTextEditorOptions: {
-        modules: {
-          wordLimit: {
-            wordLimit: false,
-            charLimit: 300,
-          },
-        },
-      },
-      longTextEditorOptions: {
-        modules: {
-          wordLimit: {
-            wordLimit: false,
-            charLimit: 900,
-          },
-        },
-      },
-      errorOccured: false,
       bdata: {
         business_name: null,
         address: null,
@@ -995,9 +1029,20 @@ export default {
       prevAutocompleteAddress: null,
       postingAs: '',
       testCreateAcct: false,
+      dialogs: {
+        reopeningJob: false,
+        confirmPost: false,
+        errorOccured: false,
+      },
     };
   },
   computed: {
+    tabItems() {
+      if (this.email_verified) {
+        return ['Job basics', 'Job details', 'Review and post'];
+      }
+      return ['About you', 'Job details', 'Review and post'];
+    },
     filteredAvailablePositions() {
       var str = this.filterPositions;
       if (!str || str === '') {
@@ -1014,7 +1059,7 @@ export default {
       return 'Through Kunvet';
     },
     selectedCategories() {
-      const types = this.job.type.concat(this.job.type2);
+      const types = this._jobType().concat(this.job.type2);
       return types.join(', ');
     },
     selectedShifts() {
@@ -1035,7 +1080,7 @@ export default {
       }
       if (this[`form${n}Valid`] && valid) {
         // Form is valid
-        if (n === 1) {
+        if (n === 1 && !this.uid) {
           this.createAccount().then(res => {
             // console.log('success?', success);
             if (res.registered && res.loggedIn) {
@@ -1053,6 +1098,7 @@ export default {
             }
           });
         } else {
+          this.saveJob();
           this._moveToNextTab();
         }
       } else {
@@ -1067,6 +1113,7 @@ export default {
         }
         this.scrollToTop(target);
       }
+      setTimeout(() => { this.setJobProgress(); }, 300);
     },
     _moveToNextTab() {
       const active = parseInt(this.tab, 10);
@@ -1115,6 +1162,14 @@ export default {
       }
       return typeof val === 'number';
     },
+    _jobType() {
+      if (this.job.type === 'both') {
+        return ['fulltime', 'parttime'];
+      } else if (this.job.type) {
+        return [this.job.type];
+      }
+      return [];
+    },
     async createAccount() {
       // const headers = { emulateJSON: true };
       if (!this.testCreateAcct) { return { registered: true, loggedIn: true }; } // REMOVE ME
@@ -1135,12 +1190,16 @@ export default {
         },
       };
       var registerSuccess = false;
+      var userId;
+      var orgId;
       var ret = { registered: false, loggedIn: false, error: null };
       this.loading = true;
       await axios.post('/auth/register2', data).then((res) => {
         this.loading = false;
         console.log('RES', res);
         if (res.data.success) {
+          userId = res.message.userId;
+          orgId = res.message.orgId;
           this.jobId = res.message.jobId;
           this.$store.commit({ type: 'setCurrentJobId', id: res.message.jobId });
           this.job.posted_by = data.business_name ? data.business_name : `${data.fname} ${data.lname}`;
@@ -1170,6 +1229,8 @@ export default {
           this.$debug('login response', res);
           if (res.data.success) {
             // Logged in successfully
+            this.uid = userId;
+            this.orgId = orgId;
             if (isBusiness) {
               EventBus.$emit('business');
             } else {
@@ -1202,30 +1263,6 @@ export default {
         this.emailExists = false;
       });
     },
-    // old code below
-    openSelect(name) {
-      this.filterPositions = null;
-      if (this.openSelectField === name) {
-        this.openSelectField = null;
-      } else {
-        this.openSelectField = name;
-      }
-    },
-    computeSelectString(property, original = null) {
-      let items = property;
-      if (typeof items[0] === 'object') {
-        items = items.map(x => x.text);
-      } else if (original && typeof original === 'string') {
-        items = property.map(val => {
-          const obj = this[original].find(el => el.value === val);
-          return obj.text;
-        });
-      }
-      if (items.length <= 2) {
-        return items.join(', ');
-      }
-      return `${items[0]}, ${items[1]}, +${items.length - 2}`;
-    },
     reorderAvailablePositions() {
       this.availablePositions = this.selectedPositions.concat(difference(this.availablePositions, this.selectedPositions));
     },
@@ -1239,87 +1276,72 @@ export default {
       this.job.latitude = place.geometry.location.lat();
       this.job.longitude = place.geometry.location.lng();
     },
-    sanitizeQuillInput(text, property) {
-      if (text == null || typeof text !== 'string') {
-        this[`${property}_valid`] = false;
-        return false;
-      }
-      const newtext = text.replace(/<p>|<\/p>|<br>|<h1>|<\/h1>/g, '');
-      if (newtext.length < 1) {
-        this[`${property}_valid`] = false;
-        return false;
-      }
-      this[`${property}_valid`] = true;
-
-      return true;
-    },
-    changeRadio(property) {
-      const properties = ['type2'];
-      const p = properties[property];
-      if (this[p] === this[`${p}_current`]) {
-        this[p] = null;
-        this[`${p}_current`] = null;
-      } else {
-        this[p] = this[`${p}_current`];
-      }
-    },
-    validateBeforePosting(showDialog = false) {
-      this.submitted = true;
-      const f = this.$refs.form.validate();
-      this.valid = f; // wierd workaround?
-      if (!this.sanitizeQuillInput(this.description, 'description')) { this.valid = false; }
-      if (!this.sanitizeQuillInput(this.responsibilities, 'responsibilities')) { this.valid = false; }
-      if (!this.sanitizeQuillInput(this.experience, 'experience')) { this.valid = false; }
-      if (this.job.longitude == null || this.job.latitude == null) { this.valid = false; }
-      if (!this.selectedPositions || this.selectedPositions.length === 0) { this.valid = false; }
-      if (showDialog && this.valid) {
-        this.confirmPost = true;
-      }
-      if (!this.valid) {
-        var msg = document.getElementById('bottom-error-message');
-        msg.style.opacity = 1;
-        setTimeout(() => { msg.style.opacity = 0; }, 4000);
-      }
-    },
     saveForLater() {
-      this.active = false;
       this.loading = true;
-      this._save();
+      this.job.active = false;
+      this.saveJob();
     },
-    saveAndPost() {
-      this.validateBeforePosting();
+    postJob() {
       if (!this.loading) {
-        if (this.valid) {
-          this.active = true;
-          this.loading = true;
-          this._save(true);
-        } else {
-          this.confirmPost = false;
-          this.saveForLater();
+        this.loading = true;
+        this.job.active = this.email_verified; // should be true
+        this.saveJob(true); // pass in true to view job
+      }
+    },
+    validateFullJob() {
+      for (var i = 2; i >= 0; i--) {
+        const valid = this.$refs[`form${i + 1}`].validate();
+        console.log(`form ${i + 1}`, valid);
+        if (!valid) {
+          if (i === 2) {
+            let target = 0;
+            for (var item of this.$refs.form3.$children) {
+              if (item.hasError) { target = item; break; }
+            }
+            this.scrollToTop(target);
+            return [false, ''];
+          }
+          return [false, `Section ${i + 1} is not valid. Please correct errors and try again.`];
         }
+      }
+      if (this.job.longitude == null || this.job.latitude == null) {
+        return [false, 'Job latitude and longitude not set. Please try to re-enter address and try again.'];
+      }
+      return [true, ''];
+    },
+    submitLastForm() {
+      this.clearErrors();
+      const validation = this.validateFullJob();
+      if (validation[0]) {
+        this.postJob();
+      } else if (validation[1]) {
+        this.form3Error = validation[1];
+        // var msgEl = document.getElementById('bottom-error-message');
+        // msgEl.style.opacity = 1;
+        // setTimeout(() => { msgEl.style.opacity = 0; }, 4000);
       }
     },
     updateActiveJob() {
       this.validateBeforePosting();
       if (this.valid && this.$route.params.id) {
         this.active = true;
-        this._save();
+        this.saveJob();
       }
     },
-    _save(viewJob = false) {
-      if (this.$route.params.id) {
+    saveJob(viewJob = false) {
+      if (this.jobId) {
+        // SAVE EXISTING JOB
         const job = this.createJobArray();
-        const id = this.$route.params.id;
         this.$apollo.mutate({
           mutation: updateJobMutation,
           variables: {
-            id: id,
+            id: this.jobId,
             job: job,
           },
           refetchQueries: [
             {
               query: findJobQuery,
-              variables: { id: id },
+              variables: { id: this.jobId },
             },
             {
               query: gql`query($userId: MongoID, $businessId: MongoID) {
@@ -1333,19 +1355,22 @@ export default {
         }).then((res) => {
           this.loading = false;
           const recordId = res.data.updateJob.recordId;
+          this.setJobProgress();
           if (viewJob) {
-            this.$router.push(`/job/${recordId}`);
-          } else {
-            this.id = recordId;
-            this.successAlert = true;
+            if (this.email_verified) {
+              this.$router.push(`/job/${recordId}`);
+            } else {
+              this.tab = 'verify-email';
+            }
           }
         }).catch((err) => {
           this.loading = false;
-          this.confirmPost = false;
-          this.errorOccured = true;
+          this.dialogs.confirmPost = false;
+          this.dialogs.errorOccured = true;
           this.$error(err);
         });
       } else {
+        // CREATE NEW JOB
         const job = this.createJobArray();
         this.$apollo.mutate({
           mutation: createJobMutation,
@@ -1408,18 +1433,24 @@ export default {
         }).then((res) => {
           this.loading = false;
           const recordId = res.data.createJob.recordId;
-          if (!viewJob) {
-            this.$router.push({ path: `/create-job/${recordId}` });
-            this.id = recordId;
-            this.successAlert = true;
-          } else {
-            this.$router.push(`/job/${recordId}`);
-          }
+          this.jobId = recordId;
+          this.setJobProgress();
         }).catch((err) => {
           this.loading = false;
-          this.confirmPost = false;
-          this.errorOccured = true;
+          this.dialogs.confirmPost = false;
+          this.dialogs.errorOccured = true;
           this.$error(err);
+        });
+      }
+    },
+    setJobProgress() {
+      if (this.jobId) {
+        this.$store.commit({
+          type: 'setJobProgress',
+          id: this.jobId,
+          part1: this.form1Valid,
+          part2: this.form2Valid,
+          part3: this.form3Valid,
         });
       }
     },
@@ -1429,100 +1460,136 @@ export default {
       // It's important to use both `this.active` and `this.date` to determine that this is an
       // already-existing job.
       const doesJobActivelyExist = this.active && this.date;
+
       const job = {
-        // user_name: State.userdata.username,
-        // TODO: Make sure this user_id line is correct.
-        // $store.state.userID vs $store.state.businessID
-        // Do we have to differentiate between this?
-        // Because on the backend, ctx only cares about user._id.
         user_id: this.uid,
-        business_id: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+        business_id: this.orgId,
         posted_by: this.job.posted_by,
-        active: this.active,
+        active: this.job.active,
         title: this.job.title,
         date: doesJobActivelyExist ? this.date : Date.now(),
-        description: this.description,
         address: this.job.address,
         address2: this.job.address2,
         university: this.isUniversity ? this.university : null,
         latitude: this.job.latitude,
         longitude: this.job.longitude,
-        type: this.job.type,
-        studentfriendly: this.job.studentfriendly,
+        type: this._jobType(),
         type2: this.job.type2,
+        studentfriendly: this.job.studentfriendly,
         shift: this.job.shift === [] ? null : this.job.shift,
         age: this.job.age ? parseInt(this.job.age, 10) : null,
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
         salary: this.salary_select === 'paid' ? parseInt(this.job.salary, 10) : null,
         pay_denomination: this.salary_select === 'paid' ? this.job.pay_denomination : null,
-        education: this.education ? degreeReducedStringToDb(this.education) : 'None',
-        preferred_major: this.major,
-        language: this.language,
-        experience: this.experience,
-        responsibilities: this.responsibilities,
+        education: this.job.education ? degreeReducedStringToDb(this.job.education) : 'None',
+        preferred_major: this.job.major,
+        language: this.job.language,
+        description: this.job.description,
+        experience: this.job.experience,
+        responsibilities: this.job.responsibilities,
         apply_method: this.applyMethod,
         notes: this.notes,
         gform_link: this.gformLink,
-        images: this.images,
-        position_tags: this.selectedPositions,
+        images: this.job.images,
+        position_tags: this.job.position_tags,
       };
       return job;
     },
-    getEditJobData(_id) {
+    checkForUnpostedJobs() {
       this.$apollo.query({
+        query: (gql`query ($user: MongoID) {
+          findJobs(filter: { user_id: $user, active: false, is_deleted: false, expired: false }){
+            ${queries.FindJobRecord}
+          }
+        }`),
+        variables: {
+          user: this.uid,
+        },
+      }).then((data) => {
+        console.log(data.data.findJobs);
+      }).catch((err) => {
+        console.log('ERROR', err);
+      });
+    },
+    async reopenExistingJob(_id) {
+      this.dialogs.reopeningJob = true;
+      await this.getJobData(_id);
+      let tabToOpen = '2'; // open last tab in case all tabs are valid
+      for (var i = 0; i < 3; i++) {
+        const valid = this.$refs[`form${i + 1}`].validate();
+        if (i > this.furthest_tab) { this.furthest_tab = i; }
+        if (valid) {
+          this[`submit${i + 1}Pressed`] = true;
+        } else {
+          tabToOpen = `${i}`;
+          break;
+        }
+      }
+      this.tab = tabToOpen;
+      this.dialogs.reopeningJob = false;
+    },
+    async getJobData(_id) {
+      const uid = this.uid ? this.uid : this.$store.state.userID;
+      await this.$apollo.query({
         query: (gql`query ($id: MongoID, $user: MongoID) {
           findJob (filter: { _id: $id, user_id: $user }){
             ${queries.FindJobRecord}
           }
         }`),
         variables: {
-          user: this.uid,
+          user: uid,
           id: _id,
         },
       }).then((data) => {
         const job = data.data.findJob;
         if (job) {
-          this.$store.commit({ type: 'setCurrentJobId', id: _id });
-          this.title = job.title;
-          this.active = job.active;
-          this.date = job.date;
+          this.jobId = _id;
+          this.job.title = job.title;
+          this.job.active = job.active;
+          this.job.date = job.date;
           this.job.address = job.address;
           this.job.address2 = job.address2;
-          this.university = job.university;
+          this.job.university = job.university;
           if (job.university) {
             this.isUniversity = true;
           }
           this.job.latitude = job.latitude;
           this.job.longitude = job.longitude;
-          if (job.type && job.type.length > 1) {
-            this.type = 'both';
-          } else if (job.type) {
-            this.type = job.type[0];
+          this.job.education = job.education ? degreeReducedDbToString(job.education) : null;
+          if (job.type) {
+            if (job.type.length === 2) {
+              this.job.type = 'both';
+            } else {
+              this.job.type = job.type[0];
+            }
+          } else {
+            this.job.type = null;
           }
-          this.studentfriendly = job.studentfriendly;
-          this.type2 = job.type2;
-          this.type2_current = job.type2;
-          if (job.shift) { this.shift = job.shift; }
+          this.job.type2 = job.type2 ? job.type2.concat() : [];
+          this.job.studentfriendly = job.studentfriendly;
+          this.job.shift = job.shift ? job.shift : [];
           if (job.pay_type && job.pay_type !== 'none') {
             this.salary_select = job.pay_type;
-            this.salary = job.salary;
+            this.job.salary = job.salary;
           }
-          this.description = job.description;
-          this.education = job.education ? degreeReducedDbToString(job.education) : null;
-          this.major = job.preferred_major;
-          this.age = job.age;
-          this.language = job.language;
-          this.experience = job.experience;
-          this.responsibilities = job.responsibilities;
-          this.notes = job.notes;
+          this.job.major = job.preferred_major;
+          this.job.age = job.age;
+          this.job.language = job.language ? job.language : null;
+
+          this.job.description = job.description;
+          this.job.experience = job.experience;
+          this.job.responsibilities = job.responsibilities;
+
+          this.job.position_tags = job.position_tags ? job.position_tags.concat() : [];
           if (job.gform_link) {
             this.gformLink = job.gform_link;
             this.useGForm = true;
           }
-          // this.applyMethod = job.applyMethod;
-          for (const image of job.images) {
-            this.images.push({ original: image.original, cropped: image.cropped });
-          }
+          // if ()
+          // for (const image of job.images) {
+          //   this.job.images.push({ original: image.original, cropped: image.cropped });
+          // }
+          this.job.images = job.images.concat();
           if (job.position_tags) {
             this.selectedPositions = job.position_tags.concat();
           }
@@ -1571,7 +1638,6 @@ export default {
       Object.assign(this.$data, this.$options.data.call(this));
     },
     fetchAndSetBusinessData(id) {
-      // this.$debug('fetching business data');
       this.$apollo.query({
         query: (gql`query ($bid: MongoID) {
           findOrganization (filter: {
@@ -1593,12 +1659,7 @@ export default {
       }).then((data) => {
         const res = data.data.findOrganization;
         this.business_name = res.business_name;
-        // this.bdata.display_email = res.email;
-        // this.bdata.address = res.address;
-        // this.bdata.website = res.website;
-        // this.bdata.phone_number = res.phone_number;
-        // this.bdata.biography = res.biography;
-        // this.bdata.profile_pic = res.profile_pic;
+        this.orgId = res._id;
         this.job.posted_by = res.business_name;
         this.job.address = res.address;
         this.setLatLongs();
@@ -1642,31 +1703,46 @@ export default {
       this.$router.push('/createnewjob');
       return;
     }
+    this.furthest_tab = 2; // also for testing, plz remove
+
     userDataProvider.getUserData().then(res => {
       this.uid = res.uid;
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
-      } else if (res.acct === 1) {
-        // individual
-        this.job.posted_by = `${res.userdata.firstname} ${res.userdata.lastname}`;
-      } else if (res.acct === 2) {
-        // business
-        var orgId;
-        if (res.userdata.default_org) {
-          orgId = res.userdata.default_org;
-        } else if (res.userdata.org_list.length > 0) { // fallback if default_org is not set for some reason
-          for (var i = 0; i < res.userdata.org_list.length; i++) {
-            if (res.userdata.org_list[i]) {
-              orgId = res.userdata.org_list[i];
-              break;
+      } else {
+        this.email_verified = res.userdata.email_verified;
+        this.userdata = res.userdata;
+        if (res.acct === 1) {
+          // individual
+          this.orgId = null;
+          this.job.posted_by = `${res.userdata.firstname} ${res.userdata.lastname}`;
+        } else if (res.acct === 2) {
+          // business
+          var orgId;
+          if (res.userdata.default_org) {
+            orgId = res.userdata.default_org;
+          } else if (res.userdata.org_list.length > 0) { // fallback if default_org is not set for some reason
+            for (var i = 0; i < res.userdata.org_list.length; i++) {
+              if (res.userdata.org_list[i]) {
+                orgId = res.userdata.org_list[i];
+                break;
+              }
             }
           }
+          this.fetchAndSetBusinessData(orgId);
         }
-        this.fetchAndSetBusinessData(orgId);
+        if (this.$route.params.id) {
+          this.reopenExistingJob(this.$route.params.id);
+        }
+        if (this.email_verified) {
+          this.furthest_tab = 2;
+        }
+        if (!this.$store.state.currentJobId) {
+          this.checkForUnpostedJobs();
+        }
       }
     });
-
     VueGoogleMaps.loaded.then(() => {
       // HACK
       const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
@@ -1682,15 +1758,15 @@ export default {
       }
     });
   },
-  created() {
+  mounted() {
     if (this.$route.params.id) {
-      this.getEditJobData(this.$route.params.id);
+      this.reopenExistingJob(this.$route.params.id);
     } else if (this.$store.state && this.$store.state.currentJobId) {
-      this.getEditJobData(this.$store.state.currentJobId);
+      this.reopenExistingJob(this.$store.state.currentJobId);
     } else {
       VuexLS.restoreState('vuex', window.localStorage).then((data) => {
         if (data.currentJobId) {
-          this.getEditJobData(data.currentJobId);
+          this.reopenExistingJob(data.currentJobId);
         }
       });
     }

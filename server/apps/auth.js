@@ -434,6 +434,7 @@ router.post('/register2', async (ctx) => {
         address2: req.jobInfo.address2,
         latitude: req.jobInfo.lat,
         longitude: req.jobInfo.long,
+        active: false,
       });
       await job.save();
     } catch (err) {
@@ -446,6 +447,7 @@ router.post('/register2', async (ctx) => {
   const response = {
     success: true,
     message: {
+      userId: user._id,
       orgId: org ? org._id : null,
       jobId: job ? job._id : null,
     },

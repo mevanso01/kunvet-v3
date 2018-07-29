@@ -19,7 +19,12 @@ const Store = new Vuex.Store({
     selectedShifts: [],
     bdata: null,
     userdata: null,
-    currentJobId: null, // for keeping track of what job you're editing.
+    currentJobProgress: {
+      jobId: null,
+      part1Complete: false,
+      part2Complete: false,
+      part3Complete: false,
+    },
   },
   mutations: {
     go(state) {
@@ -58,8 +63,19 @@ const Store = new Vuex.Store({
     keepBdata(state, payload) {
       state.bdata = payload.bdata;
     },
-    setCurrentJobId(state, payload) {
-      state.currentJobId = payload.id;
+    setJobProgress(state, payload) {
+      state.currentJobProgress.jobId = payload.id;
+      state.currentJobProgress.part1Complete = payload.part1;
+      state.currentJobProgress.part2Complete = payload.part2;
+      state.currentJobProgress.part3Complete = payload.part3;
+    },
+    resetJobProgress(state) {
+      state.currentJobProgress = {
+        jobId: null,
+        part1Complete: false,
+        part2Complete: false,
+        part3Complete: false,
+      };
     },
     resetState(state) {
       state.userID = null;
@@ -72,7 +88,12 @@ const Store = new Vuex.Store({
       state.selectedShifts = [];
       state.bdata = null;
       state.userdata = null;
-      state.currentJobId = null;
+      state.currentJobProgress = {
+        jobId: null,
+        part1Complete: false,
+        part2Complete: false,
+        part3Complete: false,
+      };
     },
   },
   plugins: [VuexLS.plugin],
