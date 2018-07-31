@@ -259,7 +259,7 @@ export default {
     triggerRedirect() {
       let target = this.$route.query.redirect;
       // check if target is a restricted redirect page
-      const i = ['/signup', '/login'].indexOf(target);
+      const i = ['/signup', '/login', '/validate'].indexOf(target);
       if (!target || i !== -1) {
         target = this.$store.state.acct === 2 ? '/myorg' : '/';
       }

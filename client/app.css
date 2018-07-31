@@ -878,8 +878,7 @@ body {
     line-height: 64px;
     cursor: pointer;
 }
-#general-submit-error,
-.general-submit-default {
+#general-submit-error {
     position: absolute;
     left: 100%;
     width: 100%;
