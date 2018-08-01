@@ -64,7 +64,7 @@
                 </h2>
               </router-link>
               <div class="new-applicant-card__time-ago">
-                <timeago :since="job.date" />
+                <timeago :datetime="job.date" />
               </div>
               <div class="post-address-container">
                 <p class="new-applicant-card__address">
@@ -116,7 +116,7 @@
                 </h2>
               </router-link>
             <div class="new-applicant-card__time-ago">
-              <timeago :since="job.date" />
+              <timeago :datetime="job.date" />
             </div>
             <p class="post-intro">
               <span class="new-applicant-card__address">

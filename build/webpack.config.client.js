@@ -11,6 +11,7 @@ const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HappyPack = require('happypack');
 const utils = require('./utils');
 
@@ -50,7 +51,10 @@ const wpconf = {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        exclude: /node_modules/,
+        exclude: (file) => (
+          /node_modules/.test(file) &&
+          !/\.vue\.js/.test(file)
+        ),
         options: {
           formatter: eslintFormatter,
         },
@@ -134,6 +138,7 @@ const wpconf = {
     ],
   },
   plugins: [
+    new VueLoaderPlugin(),
     new HappyPack({
       loaders: [
         'babel-loader?cacheDirectory',
