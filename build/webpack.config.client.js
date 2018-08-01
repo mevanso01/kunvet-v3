@@ -1,4 +1,4 @@
-const Config = require('config');
+const Config = require(`../config/${process.env.NODE_ENV}.js`);
 const path = require('path');
 // const fs = require('fs');
 const webpack = require('webpack');
