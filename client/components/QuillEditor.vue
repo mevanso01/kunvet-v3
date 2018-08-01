@@ -36,7 +36,7 @@
 <script>
 /* eslint no-unused-vars: 0 */
 import { VueEditor, Quill } from 'vue2-editor';
-import VTextField from 'vuetify/src/components/VTextField';
+import VTextField from 'vuetify/es5/components/VTextField';
 
 Quill.register('modules/wordLimit', (quill) => {
   // quill.on('text-change', () => {

@@ -1,4 +1,4 @@
-import composeWithMongoose from 'graphql-compose-mongoose';
+import { composeWithMongoose } from 'graphql-compose-mongoose';
 import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
