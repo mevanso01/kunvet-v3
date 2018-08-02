@@ -31,7 +31,7 @@
         <v-flex xs12 style="padding-top: 0px;">
           <div><h3 class="post-title">{{ job.title }}</h3></div>
           <div class="carditem" style="color: #A7A7A7">
-            <timeago :since="job.date" />
+            <timeago :datetime="job.date" />
           </div>
           <div class="carditem">
             <div class="post-address-container">

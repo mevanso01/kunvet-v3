@@ -11,7 +11,7 @@
         <v-flex xs-12 v-if="unpostedJobs.length === 0 && activeJobs.length === 0">
           You have no active jobs.
         </v-flex>
-        <v-flex xs12 v-if="unpostedJobs.length > 0">
+        <v-flex xs12 v-if="unpostedJobs.length > 0" class="job-page-headline">
           <h1><span class="kunvet-red">{{ unpostedJobs.length }}</span> {{ getUnpostedJobsString }}</h1>
         </v-flex>
         <v-flex xs12 sm6
@@ -47,7 +47,7 @@
       </v-layout>
 
       <v-layout row wrap>
-        <v-flex xs12 v-if="activeJobs.length > 0">
+        <v-flex xs12 v-if="activeJobs.length > 0" class="job-page-headline">
           <h1><span class="kunvet-red">{{ activeJobs.length }}</span> {{ getActiveJobsString }}</h1>
         </v-flex>
         <v-flex xs12 sm6
@@ -99,7 +99,7 @@
       </v-layout>
 
       <v-layout row wrap>
-        <v-flex xs12 v-if="expiredJobs.length > 0">
+        <v-flex xs12 v-if="expiredJobs.length > 0" class="job-page-headline">
           <h1><span class="kunvet-red">{{ expiredJobs.length }}</span> {{ getExpiredJobsString }}</h1>
         </v-flex>
         <v-flex xs12 sm6

@@ -358,14 +358,14 @@
               </v-flex>
             </v-layout>
 
-            <v-dialog v-model="showFileModal" class="auto-dialog">
+            <v-dialog v-model="showFileModal" content-class="auto-dialog">
               <ResumeUploader
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
               />
             </v-dialog>
 
-            <v-dialog v-model="showPicUploaderDialog" class="auto-dialog">
+            <v-dialog v-model="showPicUploaderDialog" content-class="auto-dialog">
               <PicUploader
                 @uploaded="profilePicUploaded"
                 @cancel="showPicUploaderDialog = false"
@@ -444,7 +444,6 @@
                       v-model="createEditDegreeMajorInfo.degree"
                       :items="degreeSelectItems"
                       label="Degree"
-                      hide-details
                       placeholder="Select degree"
                     />
                     <v-text-field

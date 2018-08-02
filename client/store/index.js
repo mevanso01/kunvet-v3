@@ -79,6 +79,7 @@ const Store = new Vuex.Store({
     },
     resetState(state) {
       state.userID = null;
+      state.businessID = null;
       state.acct = 0;
       state.default_org = null;
       state.firstSearch = true;
