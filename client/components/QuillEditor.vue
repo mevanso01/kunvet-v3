@@ -22,7 +22,6 @@
       :editorToolbar="editorToolbar"
       :value="computedValue"
       @input="input"
-      @blur="blur"
     ></vue-editor>
     <div class="error-text" style="float: left;" v-if="errorMsgs[0]">{{ errorMsgs[0] }}</div>
     <div v-if="charLimit" style="float: right;" :class="{ 'error-text': charCount > charLimit }">
@@ -36,7 +35,7 @@
 <script>
 /* eslint no-unused-vars: 0 */
 import { VueEditor, Quill } from 'vue2-editor';
-import VTextField from 'vuetify/es5/components/VTextField';
+import VInput from 'vuetify/es5/components/VInput';
 
 Quill.register('modules/wordLimit', (quill) => {
   // quill.on('text-change', () => {
@@ -45,7 +44,7 @@ Quill.register('modules/wordLimit', (quill) => {
 
 export default {
   name: 'quill-editor',
-  extends: VTextField,
+  extends: VInput,
   props: {
     value: String,
     placeholder: String,
@@ -93,15 +92,9 @@ export default {
     },
   },
   methods: {
-    genInput() {
-      return this.$createElement('input', {
-        staticClass: 'quill-editor',
-      });
-    },
     input(v) {
       this.touched = true;
       this.validate();
-      console.log('emitting', v);
       this.$emit('input', v);
     },
     setWordCount(wordCount) {
@@ -111,7 +104,16 @@ export default {
       this.charCount = charCount;
     },
     // overrides VTextField validate function
-    validate(force = false, value = this.$refs.editor.editor.innerText) {
+    validate(force = false, value = null) {
+      var _value = value;
+      if (_value === null) {
+        if (this.$refs.editor && this.$refs.editor.$el.innerText !== undefined) {
+          _value = this.$refs.editor.$el.innerText;
+        } else {
+          this.errorMsgs = [];
+          return true;
+        }
+      }
       let validated = true;
       this.errorMsgs = [];
       if (!force && !this.touched) {
@@ -123,7 +125,6 @@ export default {
         wordLimit: this.wordLimit,
         charLimit: this.charLimit,
       };
-      console.log(this.computedValue, this.computedValue.length);
       if (options.required) {
         if (validated && trimmedText.length === 0) {
           validated = false;
@@ -147,7 +148,6 @@ export default {
         }
       }
       this.valid = validated;
-      console.log(validated);
       return validated;
     },
   },

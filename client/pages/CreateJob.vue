@@ -15,11 +15,11 @@
     input:-ms-input-placeholder {color: #f00; }
     input::placeholder { color: #f00 !important; }
   }
-  .tabs__slider-wrapper,
-  .tabs__slider {
+  .v-tabs__slider-wrapper,
+  .v-tabs__slider {
     display: none;
   }
-  .tabs__bar {
+  .v-tabs__bar {
     position: fixed;
     top: 64px;
     z-index: 5;
@@ -36,33 +36,33 @@
     height: 43px;
     background-color: #fff;
   }
-  .tabs__div {
+  .v-tabs__div {
     padding: 0 8px;
   }
-  .tabs__item {
+  .v-tabs__item {
     padding: 0;
     height: 38px;
   }
-  .tabs__item:not(.tabs__item--active) {
+  .v-tabs__item:not(.v-tabs__item--active) {
     opacity: 1;
   }
-  .input-group--text-field {
+  .v-input-group--text-field {
     padding-top: 12px;
   }
-  .tabs__items .cust-spacer {
+  .v-tabs__items .cust-spacer {
     height: 50px;
     width: 100%;
   }
-  .input-group--text-field label {
+  .v-input-group--text-field label {
     top: 12px;
   }
-  .input-group--required label:after {
+  .v-input-group--required label:after {
     content: '';
   }
-  .input-group--error, .input-group--error label {
+  .v-input-group--error, .v-input-group--error label {
     color: #f00 !important;
   }
-  .radio-group .input-group__details {
+  .radio-group .v-input-group__details {
     padding-top: 0;
   }
   /* ---- End of Vuetify overrides ---- */
@@ -104,7 +104,7 @@
     color: #333;
     margin-bottom: 12px;
   }
-  .input-group--text-field {
+  .v-input-group--text-field {
     max-width: 500px;
   }
   .cust-radio-box .input-group.radio-group.radio-group--row,
@@ -118,16 +118,16 @@
   .cust-radio-box > div {
     padding-top: 0;
   }
-  .cust-radio-box .input-group.input-group--selection-controls.radio,
-  .multi-checkbox .input-group.input-group--selection-controls {
+  .cust-radio-box .v-input-group.v-input-group--selection-controls.radio,
+  .multi-checkbox .v-input-group.v-input-group--selection-controls {
     padding-top: 4px;
     max-width: 110px;
     height: 34px;
     float: left;
     display: block !important;
   }
-  .cust-radio-box .input-group.input-group--selection-controls label,
-  .multi-checkbox .input-group.input-group--selection-controls label {
+  .cust-radio-box .v-input-group.v-input-group--selection-controls label,
+  .multi-checkbox .v-input-group.v-input-group--selection-controls label {
     max-width: 100%;
     padding-left: 32px;
     text-align: left;
@@ -209,7 +209,7 @@
     border-bottom: 2px solid red;
     color: red;
   }
-  .tabs__item--active .tab-text-container {
+  .v-tabs__item--active .tab-text-container {
     border-bottom: 2px solid #333; // 212121
     color: #333;
   }
@@ -255,17 +255,17 @@
     }
   }
   @media (max-width: 600px) {
-    .tabs__bar {
+    .v-tabs__bar {
       top: 56px;
       padding: 0 3px;
     }
-    .tabs__div {
+    .v-tabs__div {
       padding: 0 3px;
     }
     .cust-tab-wrapper {
       top: 56px;
     }
-    .tabs__items .cust-spacer {
+    .v-tabs__items .cust-spacer {
       height: 40px;
     }
   }
@@ -284,12 +284,12 @@
     .picUploaderDialog {
       min-width: 450px;
     }
-    .tabs__bar {
+    .v-tabs__bar {
       width: calc(100% - 32px);
     }
   }
   @media (min-width: 961px) {
-    .tabs__bar {
+    .v-tabs__bar {
       width: 960px;
       margin-left: calc(50% - 496px);
     }
@@ -437,15 +437,14 @@
                         v-model="isUniversity"
                         hide-details
                       ></v-checkbox>
-                      <v-select class="no-padding-select"
+                      <v-autocomplete class="no-padding-select"
                         v-if="isUniversity"
                         label="Which one?"
                         v-model="job.university"
                         v-bind:items="availableSchools"
-                        autocomplete
                         hide-details
                         single-line
-                      ></v-select>
+                      ></v-autocomplete>
                     </div>
                   </v-flex>
                 </v-layout>
@@ -591,13 +590,13 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md5>
-                    <v-select class="optional"
+                    <v-autocomplete class="optional"
                       v-model="job.language"
                       label="Language"
                       v-bind:items="languages"
                       autocomplete
                       dense>
-                    </v-select>
+                    </v-autocomplete>
                   </v-flex>
                   <v-flex xs4 sm3 lg2>
                     <v-text-field class="optional"
@@ -699,17 +698,16 @@
                 <p class="mb-0">Please select at least one category that is relevant to this job</p>
                 <v-layout row wrap>
                   <v-flex xs12 sm9 md6 class="no-padding">
-                    <v-select
+                    <v-autocomplete
                       :items="availablePositions"
                       v-model="job.position_tags"
-                      autocomplete
                       multiple
                       attach
                       required
                       placeholder="Select one or more..."
                       :rules="[(v) => !submit3Pressed || (v && v.length > 0) || 'required']"
                       >
-                    </v-select>
+                    </v-autocomplete>
                   </v-flex>
                 </v-layout>
                 <br>
@@ -891,12 +889,8 @@
 
 <script>
 import gql from 'graphql-tag';
-import VuexLS from '@/store/persist';
-// import Delta from 'quill-delta';
-import * as VueGoogleMaps from 'vue2-google-maps';
 import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
-import Config from 'config';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 import positions from '@/constants/positions';
 import languages from '@/constants/languages';
@@ -906,6 +900,16 @@ import axios from 'axios';
 import QuillEditor from '@/components/QuillEditor';
 import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
+import Config from 'config';
+import * as VueGoogleMaps from 'vue2-google-maps';
+// import Vue from 'vue';
+
+// Vue.use(VueGoogleMaps, {
+//   load: {
+//     key: Config.get('googleMapsKey'),
+//     libraries: 'places',
+//   },
+// });
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -1730,6 +1734,19 @@ export default {
         }
       }, 500);
     },
+    initGoogleMaps() {
+      const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
+      input.setAttribute('placeholder', '');
+      this.autocomplete = new window.google.maps.places.Autocomplete(input);
+      this.geocoder = new window.google.maps.Geocoder();
+      this.autocomplete.addListener('place_changed', () => {
+        this.prevAutocompleteAddress = this.job.address;
+        this.setPlace(this.autocomplete.getPlace());
+      });
+      if (this.job.address) {
+        this.setLatLongs();
+      }
+    },
   },
   activated() {
     // TO MAKE PAGE ACCESSIBLE ON DEV ONLY. REMOVE WHEN COMPLETE
@@ -1784,12 +1801,16 @@ export default {
           this.furthest_tab = 2;
         }
       }
+      // if (!this.autocomplete || !this.geocoder) {
+      //   setTimeout(this.initGoogleMaps(), 500);
+      // }
     });
     VueGoogleMaps.loaded.then(() => {
       // HACK
       const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
       input.setAttribute('placeholder', '');
       this.autocomplete = new window.google.maps.places.Autocomplete(input);
+      console.log(this.autocomplete);
       this.geocoder = new window.google.maps.Geocoder();
       this.autocomplete.addListener('place_changed', () => {
         this.prevAutocompleteAddress = this.job.address;
@@ -1805,12 +1826,6 @@ export default {
       this.reopenExistingJob(this.$route.params.id);
     } else if (this.$store.state && this.$store.state.currentJobProgress.jobId) {
       this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
-    } else {
-      VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-        if (data.currentJobProgress.jobId) {
-          this.reopenExistingJob(data.currentJobProgress.jobId);
-        }
-      });
     }
   },
 };
