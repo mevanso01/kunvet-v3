@@ -191,6 +191,13 @@ main {
 .checkbox.kunvet-red.input-group--selection-controls.input-group--active i {
   color: #ef5350 !important;
 }
+.v-autocomplete__content .v-input__slot:after,
+.v-autocomplete__content .v-input__slot:before {
+  display: none;
+}
+.v-autocomplete__content .v-list__tile__action {
+  min-width: 40px;
+}
 /*  ---- End of Styles to globally override Vuetify ----  */
 
 /*  ---- Custom selects ----  */

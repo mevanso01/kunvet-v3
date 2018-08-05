@@ -25,6 +25,7 @@ const Store = new Vuex.Store({
       part2Complete: false,
       part3Complete: false,
     },
+    newUser: true,
   },
   mutations: {
     go(state) {
@@ -37,10 +38,14 @@ const Store = new Vuex.Store({
         state.userdata = null;
         state.bdata = null;
         state.userID = null;
+        state.newUser = true;
+      } else {
+        state.newUser = false;
       }
     },
     setAcctID(state, payload) {
       state.userID = payload.id;
+      state.newUser = false;
     },
     setBusinessID(state, payload) {
       state.businessID = payload.id;
@@ -59,6 +64,7 @@ const Store = new Vuex.Store({
     },
     keepUserdata(state, payload) {
       state.userdata = payload.userdata;
+      state.newUser = false;
     },
     keepBdata(state, payload) {
       state.bdata = payload.bdata;
@@ -95,6 +101,10 @@ const Store = new Vuex.Store({
         part2Complete: false,
         part3Complete: false,
       };
+      state.newUser = true;
+    },
+    notNewUser(state) {
+      state.newUser = false;
     },
   },
   plugins: [VuexLS.plugin],

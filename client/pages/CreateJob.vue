@@ -1,12 +1,23 @@
 <style lang="scss">
 .create-job-container {
   /* ---- Vuetify overrides ---- */
-  .input-group--text-field:not(.input-group--error):not(.input-group--disabled) label,
-  .radio-group:not(.input-group--error):not(.input-group--disabled) label,
-  .radio-group:not(.input-group--error):not(.input-group--disabled) i,
-  .input-group.checkbox:not(.input-group--error):not(.input-group--disabled) label,
-  .input-group.checkbox:not(.input-group--error):not(.input-group--disabled) i {
+  .v-text-field:not(.input-group--error):not(.input-group--disabled) label,
+  .v-input--radio-group:not(.input-group--error):not(.input-group--disabled) label,
+  .v-input--radio-group:not(.input-group--error):not(.input-group--disabled) i,
+  .v-input--checkbox:not(.input-group--error):not(.input-group--disabled) label,
+  .v-input--checkbox:not(.input-group--error):not(.input-group--disabled) i,
+  .v-input-group.checkbox:not(.input-group--error):not(.input-group--disabled) label,
+  .v-input-group.checkbox:not(.input-group--error):not(.input-group--disabled) i {
     color: #4d4d4d;
+  }
+  .v-text-field:not(.error--text):not(.input-group--disabled) .v-input__slot:before {
+    border-color: #4d4d4d;
+  }
+  .v-input--radio-group .v-input__slot {
+    margin-bottom: 0;
+  }
+  .v-messages.error--text {
+    margin-bottom: 8px;
   }
   .input-group--error {
     input::-webkit-input-placeholder { color: #f00; }
@@ -161,7 +172,11 @@
     position: absolute;
     top: 2px;
     right: 0;
-    color: rgba(255,255,255,0.75);
+    i {
+      color: #ef5350;
+      background-color: #fff;
+      border-radius: 50%;
+    }
   }
   .custom-select-2-wrapper {
     height: auto;
@@ -299,6 +314,9 @@
         padding: 18px 15px 8px 15px;
       }
     }
+    .special-flex-1 {
+      padding: 0 10px;
+    }
   }
 }
 @media (max-width: 600px) {
@@ -323,12 +341,14 @@
         fixed-tabs
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
-        <v-tab v-for="(item, i) in tabItems" :href="`#${i}`" :key="`${i}`" :disabled="i > furthest_tab" >
-          <div class="tab-text-container" style="width: 100%; height: 100%;"
-            :class="{ 'tab-no-error': isTabValid(i), 'tab-error': isTabInvalid(i) }">
-            <span style="line-height: 36px;">{{ item }}</span>
-          </div>
-        </v-tab>
+        <template v-if="tab !== 'success-tab'">
+          <v-tab v-for="(item, i) in tabItems" :href="`#${i}`" :key="`${i}`" :disabled="i > furthest_tab" >
+            <div class="tab-text-container" style="width: 100%; height: 100%;"
+              :class="{ 'tab-no-error': isTabValid(i), 'tab-error': isTabInvalid(i) }">
+              <span style="line-height: 36px;">{{ item }}</span>
+            </div>
+          </v-tab>
+        </template>
 
         <v-tabs-items v-model="tab">
           <v-tab-item id="0">
@@ -362,7 +382,7 @@
                         v-model="email" ref="emailField"
                         :rules="[
                           v => !!v || 'Email is required',
-                          v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w{2,3})+$/.test(v) || 'Invalid email format',
+                          v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w+)+$/.test(v) || 'Invalid email format',
                           () => !emailExists || 'An account with this email already exists',
                         ]"
                         type="email"
@@ -383,7 +403,7 @@
                   </v-layout>
 
                   <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
-                  <v-radio-group v-model="postingAs" column required class="pt-0" required
+                  <v-radio-group v-model="postingAs" column required class="pt-0 mb-0" required
                     :rules="[(v) => !submit1Pressed || !!(v) || 'Required']">
                       <v-radio label="No, I'm posting as an individual" value="individual"></v-radio>
                       <v-radio label="Yes, I'm posting as a business or organization" value="business"></v-radio>
@@ -405,7 +425,7 @@
                   <h3 class="mt-0 mb-4">Posting as: {{ job.posted_by }}</h3>
                 </template>
 
-                <p class="mb-2 mt-2">Basic info about your job:</p>
+                <p class="mb-1 mt-2">Basic info about your job:</p>
                 <v-layout row wrap>
                   <v-flex xs12 sm9 md6 class="no-padding">
                     <v-text-field
@@ -455,7 +475,7 @@
                   <v-btn class="kunvet-red-bg" :disabled="loading" @click="next(1)">Save and Continue</v-btn>
                   <p v-if="loading">
                     <span style="padding: 0 4px;">
-                      <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1" style="top: 3px;"></v-progress-circular>
+                      <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
                     </span>
                     Loading...
                   </p>
@@ -480,12 +500,9 @@
                  </v-alert>
                 </v-flex>
               </v-layout>
-              <v-switch
-                 :label="`Actually create new account: ${testCreateAcct.toString()}`"
-                 v-model="testCreateAcct"
-                 hide-details
-              ></v-switch>
-              <p>This is here only for testing</p>
+              <p class="mb-1">This is here only for testing</p>
+              <a @click="tab = 'verify-email'">Test verify</a>
+              <a @click="tab = 'success-tab'">Test success</a>
             </div>
           </v-tab-item>
           <v-tab-item id="1">
@@ -511,12 +528,12 @@
                   hide-details class="pt-0"></v-checkbox>
                 <v-checkbox
                   label="contract" v-model="job.type2" value="contract"
-                  hide-details class="pt-0 mb-3"></v-checkbox>
+                  hide-details class="pt-0 mt-1 mb-3"></v-checkbox>
 
-                <p class="mb-2">Is this job student friendly?</p>
+                <p>Is this job student friendly?</p>
                 <!-- the cust-radio-box class makes the radio input wrap on small screens -->
                 <div class="cust-radio-box">
-                  <v-radio-group v-model="job.studentfriendly" row required hide-details>
+                  <v-radio-group v-model="job.studentfriendly" row required hide-details class="mt-0">
                       <v-radio label="Student friendly" :value="true" style="max-width: 160px;" selected></v-radio>
                       <v-radio label="Not student friendly" :value="false" style="max-width: 180px;"></v-radio>
                   </v-radio-group>
@@ -528,7 +545,7 @@
                 <v-layout row wrap>
                   <v-flex xs12 class="no-padding">
                     <div class="cust-radio-box">
-                      <v-radio-group
+                      <v-radio-group class="mt-0"
                       v-model="salary_select"
                       row
                       :rules="requiredRules"
@@ -541,7 +558,7 @@
                     </div>
                   </v-flex>
                   <v-flex xs6 sm3 md2 v-if="salary_select === 'paid'">
-                    <v-text-field class="no-padding"
+                    <v-text-field class="pa-0 ma-0"
                       v-model="job.salary"
                       :disabled = "salary_select !== 'paid'"
                       prefix="$"
@@ -551,7 +568,7 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs6 sm3 md2 style="padding-left: 15px !important;" v-if="salary_select === 'paid'">
-                    <v-select class="no-padding" style="max-width: 125px;"
+                    <v-select class="pa-0 ma-0" style="max-width: 125px;"
                       v-model="job.pay_denomination"
                       :disabled = "salary_select != 'paid'"
                       :items="[ 'per hour', 'per week', 'per month', 'per year', 'per task' ]"
@@ -563,13 +580,13 @@
                 <!-- Working hours -->
                 <h4 class="cust-subheader">Working Hours <span class="optional-color">(Optional)</span></h4>
                 <div class="mb-3">
-                    <v-checkbox label="flexible" v-model="job.shift" value="flexible" hide-details class="pt-0"></v-checkbox>
+                    <v-checkbox label="flexible" v-model="job.shift" value="flexible" hide-details class="pt-0 mt-1"></v-checkbox>
                     <v-divider style="margin-bottom: 6px; margin-top: 3px; max-width: 230px;"></v-divider>
-                    <v-checkbox label="morning" v-model="job.shift" value="morning" hide-details class="pt-0"></v-checkbox>
-                    <v-checkbox label="noon" v-model="job.shift" value="noon" hide-details class="pt-0"></v-checkbox>
-                    <v-checkbox label="afternoon" v-model="job.shift" value="afternoon" hide-details class="pt-0"></v-checkbox>
-                    <v-checkbox label="evening" v-model="job.shift" value="evening" hide-details class="pt-0"></v-checkbox>
-                    <v-checkbox label="night" v-model="job.shift" value="night" hide-details class="pt-0"></v-checkbox>
+                    <v-checkbox label="morning" v-model="job.shift" value="morning" hide-details class="pt-0 mt-1"></v-checkbox>
+                    <v-checkbox label="noon" v-model="job.shift" value="noon" hide-details class="pt-0 mt-1"></v-checkbox>
+                    <v-checkbox label="afternoon" v-model="job.shift" value="afternoon" hide-details class="pt-0 mt-1"></v-checkbox>
+                    <v-checkbox label="evening" v-model="job.shift" value="evening" hide-details class="pt-0 mt-1"></v-checkbox>
+                    <v-checkbox label="night" v-model="job.shift" value="night" hide-details class="pt-0 mt-1"></v-checkbox>
                 </div>
 
                 <!-- Additional requirements -->
@@ -594,7 +611,7 @@
                       v-model="job.language"
                       label="Language"
                       v-bind:items="languages"
-                      autocomplete
+                      attach
                       dense>
                     </v-autocomplete>
                   </v-flex>
@@ -608,12 +625,12 @@
                 </v-layout>
 
                 <!-- Long text fields -->
-                <QuillEditor v-model="job.description" title="Description" id="editor1" required></QuillEditor>
+                <QuillEditor v-model="job.description" @blur="updateJob" title="Description" id="editor1" required></QuillEditor>
 
-                <QuillEditor v-model="job.experience" title="Required Experience" id="editor2" required
+                <QuillEditor v-model="job.experience" @blur="updateJob" title="Required Experience" id="editor2" required
                   placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
-                <QuillEditor v-model="job.responsibilities" title="Responsibilities" id="editor3" required
+                <QuillEditor v-model="job.responsibilities" @blur="updateJob" title="Responsibilities" id="editor3" required
                   placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
                 <!-- Pictures -->
@@ -636,7 +653,7 @@
                   Upload Another
                 </v-btn>
 
-                <v-dialog v-model="picUploaderDialog" width="100%">
+                <v-dialog v-model="picUploaderDialog">
                   <PicUploader @uploaded="picUploaded" @cancel="picUploaderDialog = false" keepOriginal />
                 </v-dialog>
 
@@ -687,7 +704,18 @@
                   <p class="small-p" v-if="job.age">Age: {{ job.age }}</p>
 
                   <p class="mt-3 mb-0"><strong>Job description, required experience, responisibilities</strong></p>
-                  <a @click="tab='review-tab'" style="color: #616161 !important;">- click here to review</a>
+                  <a @click="tab='review-tab'" style="color: #616161 !important;">
+                    <i class="material-icons" style="font-size: 21px; vertical-align: bottom;">arrow_right_alt</i>
+                    Click here to review
+                  </a>
+                </v-flex>
+                <v-flex xs12 sm9 md6 v-if="job.active" class="special-flex-1">
+                  <v-card>
+                    <v-card-text>
+                      This job is now active!<br>
+                      You can click any of the above sections to go back and edit them.
+                    </v-card-text>
+                  </v-card>
                 </v-flex>
               </v-layout>
             </div>
@@ -695,10 +723,10 @@
               <v-form v-model="form3Valid" ref="form3">
                 <br>
                 <h4 class="cust-subheader mb-1">Position tags</h4>
-                <p class="mb-0">Please select at least one category that is relevant to this job</p>
+                <p class="mb-0" :class="{ 'error--text': (submit3Pressed && job.position_tags.length === 0) }">Please select at least one category that is relevant to this job</p>
                 <v-layout row wrap>
                   <v-flex xs12 sm9 md6 class="no-padding">
-                    <v-autocomplete
+                    <v-autocomplete class="mt-0"
                       :items="availablePositions"
                       v-model="job.position_tags"
                       multiple
@@ -711,20 +739,20 @@
                   </v-flex>
                 </v-layout>
                 <br>
-                <h4 class="cust-subheader mb-1">Application options</h4>
+                <h4 class="cust-subheader mb-1">Application options <span class="optional-color">(Optional)</span></h4>
                 <p>
                   The applicant's info and resume will be sent to your email when they apply.<br>
                   You can also browse through all your applicants in the applicants page.
-                 </p>
+                </p>
                 <p class="mb-1">If you would like to use an online form that doesn't require sign-up instead, check the box below.</p>
                 <v-checkbox
-                  class="optional online-form-checkbox"
-                  label="Don't send resumes to my email, I have an online form"
+                  class="optional online-form-checkbox mt-0"
+                  label="Don't send resumes to my email, I have an online form "
                   v-model="useGForm"
                   hide-details
                 ></v-checkbox>
                 <div v-if="useGForm">
-                  <v-text-field
+                  <v-text-field style="max-width: 500px;"
                     v-model="gformLink"
                     label="My form url"
                     placeholder="Paste your form url here"
@@ -734,15 +762,14 @@
                 </div>
                 <div>
                   <p style="margin-top: 16px; margin-bottom: 0;">Do you have any special instuctions for applicants? (Optional)</p>
-                  <v-text-field
+                  <v-textarea
                     v-model="notes"
-                    style="padding: 0 2px;"
-                    class="optional"
+                    style="padding: 0 2px; max-width: 500px;"
+                    class="optional mt-0"
                     placeholder="e.g. Please walk-in from 11 - 2pm for interviews"
                     hide-details
-                    multi-line
                     rows=1
-                  ></v-text-field>
+                  ></v-textarea>
                 </div>
               </v-form>
 
@@ -762,7 +789,7 @@
                 </v-flex>
                 <p v-if="loading">
                   <span style="padding: 0 4px;">
-                    <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1" style="top: 3px;"></v-progress-circular>
+                    <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
                   </span>
                   Loading...
                 </p>
@@ -804,37 +831,46 @@
             </div>
           </v-tab-item>
           <v-tab-item id="verify-email">
-            <div class="main-cont-large" style="margin-bottom: 16px;">
+            <div class="main-cont-large">
               <div class="cust-spacer"></div>
-              <h4 class="cust-subheader mb-1">Your job is ready to post! Just one last thing:</h4>
+              <br>
+              <h4 class="cust-subheader mb-2">Your job is saved and ready to post! Just one last thing:</h4>
               <p>Before we can display your job, we need you to verify your email.
-                Please check your inbox for an email from us.</p>
-              <p>We've sent an email to <strong>{{ this.email }}</strong>
-              <p>If you haven't received a verification email, please check that the email address above is correct.<br>
-                 You can request to <a>resend email</a>, or <a>edit email address</a></p>
+                Please check your inbox for an email from us with a special link to verify your email.
+                Once you've verified your email, you should be able to post your job.</p>
+              <br>
+              <p>We've sent a verification email to <strong style="color: #333;">{{ this.email }}</strong></p>
+
+              <br>
+              <p>If you haven't received it yet, please check that the email address above is correct.<br>
+                 You can request to <a @click="resendEmail">resend email</a>, or <a @click="openChangeEmail">edit email address</a></p>
+              <p style="opacity: 0.45">If you've already verified your email, simply refresh this page.</p>
+              <p v-if="loading">
+                <span style="padding: 0 4px;">
+                  <v-progress-circular indeterminate :size="16" :width="2" color="red darken-1"></v-progress-circular>
+                </span>
+                Loading...
+              </p>
+              <p v-else-if="emailSent">Email sent!</p>
             </div>
           </v-tab-item>
           <v-tab-item id="success-tab">
-            <div class="main-cont-large" style="margin-bottom: 16px;">
+            <div class="main-cont-large" style="max-width: 620px;">
               <div class="cust-spacer"></div>
-              <div class="preview-top" style="display: flex;">
-                <v-btn outline @click="tab = '2'">Go back</v-btn>
-                <h3>
-                  This is a preview<span> of what the long text portion of your job will look like</span>
-                </h3>
-              </div>
-            </div>
-            <div class="main-cont-large job-detail-container">
-              <div class="sub-container">
-                <h2 style="margin-bottom: 8px;">Job Overview:</h2>
-                <div class="long-text-cont" v-html="job.description"></div>
+              <h4 class="cust-subheader mb-2">Success! Your job is now posted!</h4>
+              <p>
+                <span v-show="postingAs === 'business' && !userdata.profile_pic">
+                  What next? To make your listings look even better, we suggest you head over to your account and set a logo for your company<br>
+                </span>
+                Click the button below to view your job. If you need to make edits, you can do so in the Jobs tab.
+              </p>
 
-                <h2 style="margin-bottom: 8px;">Experience & Requirements:</h2>
-                <div class="long-text-cont" v-html="job.experience"></div>
-
-                <h2 style="margin-bottom: 8px;">Responsibilities:</h2>
-                <div class="long-text-cont" v-html="job.responsibilities"></div>
-              </div>
+              <v-layout row wrap>
+                <v-flex xs12 class="no-padding">
+                  <v-btn class="ml-0 kunvet-red-bg" dark :href="`/job/${jobId}`">View your job</v-btn>
+                  <v-btn v-show="postingAs === 'business' && !userdata.profile_pic" class="kunvet-red-bg" dark href="/account">Go to your account</v-btn>
+                </v-flex>
+              </v-layout>
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -869,6 +905,35 @@
         </v-card>
       </v-dialog>
 
+      <v-dialog class="no-border-radius" v-model="dialogs.changeEmail">
+        <v-card flat class="no-border-radius" style="max-width: 350px;">
+          <v-card-title>
+            <div class="headline" style="margin-bottom: 16px !important;">Enter a new email</div>
+            <div style="width: 100%;">
+              <v-text-field
+                label="Email"
+                type="email"
+                :rules="[
+                  v => !!v || 'Email is required',
+                  v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w+)+$/.test(v) || 'Invalid email format'
+                ]"
+                v-model="newEmail">
+              </v-text-field>
+            </div>
+            <p v-if="loading">
+              <span style="padding: 0 4px;">
+                <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
+              </span>
+              Loading...
+            </p>
+          </v-card-title>
+          <v-card-actions>
+            <v-btn :disabled="loading" @click="dialogs.changeEmail = false;" flat>Cancel</v-btn>
+            <v-btn :disabled="disableChangeEmail || loading" @click="changeEmail" flat>Submit</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-dialog v-model="deletePictureModal.show">
         <v-card>
           <v-card-title>
@@ -883,6 +948,19 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <v-snackbar
+        v-model="snackbar"
+        bottom
+        left
+        :timeout="5000"
+        color="green darken-1"
+        >
+        {{ snackbarText }}
+        <v-btn color="white" flat @click="snackbar = false">
+          Close
+        </v-btn>
+    </v-snackbar>
     </div>
   </v-container>
 </template>
@@ -1057,12 +1135,16 @@ export default {
       addressValid: true,
       prevAutocompleteAddress: null,
       postingAs: '',
-      testCreateAcct: false,
+      newEmail: null,
+      emailSent: null,
       dialogs: {
         reopeningJob: false,
         confirmPost: false,
         errorOccured: false,
+        changeEmail: false,
       },
+      snackbar: false,
+      snackbarText: '',
     };
   },
   computed: {
@@ -1096,6 +1178,9 @@ export default {
     },
     selectedLanguage() {
       return this.job.language;
+    },
+    disableChangeEmail() {
+      return (this.newEmail === this.email);
     },
   },
   methods: {
@@ -1135,7 +1220,6 @@ export default {
         let target = 0;
         for (var item of this.$refs[`form${n}`].$children) {
           if (item.hasError) {
-            console.log(item);
             target = item;
             break;
           }
@@ -1201,7 +1285,6 @@ export default {
     },
     async createAccount() {
       // const headers = { emulateJSON: true };
-      if (!this.testCreateAcct) { return { registered: true, loggedIn: true }; } // REMOVE ME
       const isBusiness = Boolean(this.business_name);
       const data = {
         email: this.email,
@@ -1357,6 +1440,11 @@ export default {
         setTimeout(() => { msgEl.style.opacity = 0; }, 4000);
       }
     },
+    updateJob() {
+      if (this.jobId && this.job.title && !this.job.active) {
+        this.saveJob();
+      }
+    },
     updateActiveJob() {
       this.validateBeforePosting();
       if (this.valid && this.$route.params.id) {
@@ -1388,13 +1476,17 @@ export default {
               variables: { userId: this.$store.state.userID, businessId: this.$store.state.businessID },
             },
           ],
-        }).then((res) => {
+        }).then(() => {
           this.loading = false;
-          const recordId = res.data.updateJob.recordId;
-          this.setJobProgress();
+          // const recordId = res.data.updateJob.recordId;
+          if (!job.active) {
+            this.setJobProgress();
+          } else {
+            this.$store.commit({ type: 'resetJobProgress' });
+          }
           if (viewJob) {
             if (this.email_verified) {
-              this.$router.push(`/job/${recordId}`);
+              this.tab = 'success-tab';
             } else {
               this.tab = 'verify-email';
             }
@@ -1491,12 +1583,7 @@ export default {
       }
     },
     createJobArray() {
-      // Note: this.active is always true at this point if you're clicking Save Post,
-      // whether it's a already-existing job or not.
-      // It's important to use both `this.active` and `this.date` to determine that this is an
-      // already-existing job.
       const doesJobActivelyExist = this.active && this.date;
-
       const job = {
         user_id: this.uid,
         business_id: this.orgId,
@@ -1618,9 +1705,9 @@ export default {
           this.job.age = job.age;
           this.job.language = job.language ? job.language : null;
 
-          this.job.description = job.description;
-          this.job.experience = job.experience;
-          this.job.responsibilities = job.responsibilities;
+          this.job.description = job.description ? job.description : null;
+          this.job.experience = job.experience ? job.experience : null;
+          this.job.responsibilities = job.responsibilities ? job.responsibilities : null;
 
           this.job.position_tags = job.position_tags ? job.position_tags.concat() : [];
           if (job.gform_link) {
@@ -1638,7 +1725,8 @@ export default {
     },
     picUploaded(fileId) {
       this.picUploaderDialog = false;
-      this.images.push({ original: null, cropped: fileId });
+      this.job.images.push({ original: null, cropped: fileId });
+      this.updateJob();
     },
     showDeletePictureModal(croppedID) {
       this.deletePictureModal.show = true;
@@ -1713,6 +1801,54 @@ export default {
         bdata: this.bdata,
       });
     },
+    openChangeEmail() {
+      this.newEmail = this.email;
+      this.dialogs.changeEmail = true;
+    },
+    resendEmail() {
+      if (this.loading) { return; }
+      const data = {
+        email: this.email,
+      };
+      this.loading = true;
+      axios.post('/auth/resendVerificationEmail', data).then((res) => {
+        this.loading = false;
+        if (res.data.noUnverified) {
+          this.email_verified = true;
+        } else if (res.data.success) {
+          this.emailSent = true;
+        } else {
+          this.emailSent = null;
+        }
+      }, (error) => {
+        this.$error(error);
+        this.emailSent = null;
+        this.loading = false;
+      });
+    },
+    changeEmail() {
+      if (this.loading) { return; }
+      const data = {
+        newemail: this.newEmail,
+      };
+      this.loading = true;
+      axios.post('/auth/changeEmail', data).then((res) => {
+        this.loading = false;
+        this.dialogs.changeEmail = false;
+        if (res.data.success) {
+          this.email = this.newEmail;
+          this.snackbarText = 'Success! Check your inbox.';
+          this.snackbar = true;
+        } else {
+          this.dialogs.errorOccured = true;
+        }
+      }, (error) => {
+        this.loading = false;
+        this.dialogs.changeEmail = false;
+        this.dialogs.errorOccured = true;
+        this.$error(error);
+      });
+    },
     setLatLongs() {
       setTimeout(() => {
         if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
@@ -1755,8 +1891,10 @@ export default {
       this.$router.push('/createnewjob');
       return;
     }
-    this.furthest_tab = 2; // also for testing, plz remove
 
+    if (this.tab === 'success-tab') {
+      this.resetData();
+    }
     userDataProvider.getUserData().then(res => {
       this.uid = res.uid;
       if (res.acct === 0) {
@@ -1771,6 +1909,9 @@ export default {
         if (res.acct === 1) {
           // individual
           this.orgId = null;
+          this.business_name = null;
+          this.orgId = null;
+          this.postingAs = 'individual';
           this.job.posted_by = `${res.userdata.firstname} ${res.userdata.lastname}`;
         } else if (res.acct === 2) {
           // business
@@ -1801,21 +1942,19 @@ export default {
           this.furthest_tab = 2;
         }
       }
-      // if (!this.autocomplete || !this.geocoder) {
-      //   setTimeout(this.initGoogleMaps(), 500);
-      // }
     });
     VueGoogleMaps.loaded.then(() => {
-      // HACK
-      const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
-      input.setAttribute('placeholder', '');
-      this.autocomplete = new window.google.maps.places.Autocomplete(input);
-      console.log(this.autocomplete);
-      this.geocoder = new window.google.maps.Geocoder();
-      this.autocomplete.addListener('place_changed', () => {
-        this.prevAutocompleteAddress = this.job.address;
-        this.setPlace(this.autocomplete.getPlace());
-      });
+      if (!this.autocomplete || !this.geocoder) {
+        console.log('Test', window.google);
+        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
+        input.setAttribute('placeholder', '');
+        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        this.geocoder = new window.google.maps.Geocoder();
+        this.autocomplete.addListener('place_changed', () => {
+          this.prevAutocompleteAddress = this.job.address;
+          this.setPlace(this.autocomplete.getPlace());
+        });
+      }
       if (this.job.address) {
         this.setLatLongs();
       }
@@ -1827,6 +1966,9 @@ export default {
     } else if (this.$store.state && this.$store.state.currentJobProgress.jobId) {
       this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
     }
+  },
+  deactivated() {
+    this.updateJob();
   },
 };
 </script>

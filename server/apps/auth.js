@@ -216,6 +216,25 @@ async function generateResponse(err, email = null, defaultResponse = null) {
   return defaultResponse;
 }
 
+async function sendVerificationEmail(fname, email) {
+  const validationCode = uuidv1();
+  const tempAcct = new Models.TempAccount({
+    email: email,
+    vcode: validationCode,
+  });
+  await tempAcct.save();
+  const mailer = new Mailer();
+  await mailer.sendTemplate(
+    email,
+    'email-verification',
+    {
+      fname: fname,
+      email: email,
+      code: validationCode,
+    },
+  );
+}
+
 router.post('/register', async (ctx) => {
   // FIXME: Input sanitization
   if (ctx.isAuthenticated()) {
@@ -478,7 +497,6 @@ router.post('/register2', async (ctx) => {
     ctx.body = JSON.stringify(response);
     return;
   }
-  // if (email) { return; }
 
   var user;
   try {
@@ -554,22 +572,7 @@ router.post('/register2', async (ctx) => {
   }
 
   try {
-    const validationCode = uuidv1();
-    const tempAcct = new Models.TempAccount({
-      email: email,
-      vcode: validationCode,
-    });
-    tempAcct.save();
-    const mailer = new Mailer();
-    mailer.sendTemplate(
-      email,
-      'email-verification',
-      {
-        fname: req.fname,
-        email: email,
-        code: validationCode,
-      },
-    );
+    sendVerificationEmail(req.fname, email);
   } catch (err) {
     console.error('Verification email could not be set:', err);
   }
@@ -583,6 +586,41 @@ router.post('/register2', async (ctx) => {
     },
   };
   ctx.body = JSON.stringify(response);
+});
+
+router.post('/changeEmail', async (ctx) => {
+  if (ctx.isAuthenticated()) {
+    if (!ctx.state.user.email_verified && ctx.request.body.newemail) {
+      const oldEmail = ctx.state.user.email;
+      const newEmail = ctx.request.body.newemail.toLowerCase();
+      const user = await Models.Account.findOne({
+        email: oldEmail,
+        email_verified: false,
+      });
+      if (!user) {
+        ctx.status = 500;
+        ctx.body = 'Internal server error';
+        return;
+      }
+      user.email = newEmail;
+      await user.save();
+      await sendVerificationEmail(user.firstname, newEmail);
+      const response = {
+        success: true,
+        message: 'Changed email successfully',
+      };
+      ctx.body = JSON.stringify(response);
+    } else {
+      ctx.status = 400;
+      ctx.body = 'Bad request';
+    }
+  } else {
+    const response = {
+      success: false,
+      message: 'Must be authenticated',
+    };
+    ctx.body = JSON.stringify(response);
+  }
 });
 
 router.get('/status', (ctx) => {

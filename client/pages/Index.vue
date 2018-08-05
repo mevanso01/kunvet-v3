@@ -58,7 +58,7 @@
 
 .input-group--text-field.input-group--dirty.input-group--select label,
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
-      transform: translate3d(0,-28px,0) scale(.75);
+  transform: translate3d(0,-28px,0) scale(.75);
 }
 .chip--select-multi {
   margin: 5px 5px 5px 0;
