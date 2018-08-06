@@ -17,6 +17,7 @@ h1 {
 h2 {
   font-size: 1.5em;
   font-weight: bold;
+  line-height: 1.2;
 }
 h3 {
   color: #b0b0b0;
@@ -50,6 +51,9 @@ ol, ul {
   height: 64px;
   z-index: 100;
 }
+.main-navbar .v-menu__activator {
+  height: 64px;
+}
 .mobile-menu {
   position: fixed;
 }
@@ -57,21 +61,19 @@ ol, ul {
   z-index: 101;
 }
 .nav-text {
-    font-size: 10px;
-    position: absolute;
-    text-align: center;
-    top: 41px;
+  font-size: 10px;
+  position: absolute;
+  text-align: center;
+  top: 41px;
 }
 .nav-img {
-    position: absolute;
-    left: 35px;
-    top: 12px;
-    width: 20px;
+  position: absolute;
+  top: 12px;
+  width: 20px;
 }
 .nav-profile-pic {
 	width: 28px;
 	border-radius: 50%;
-	left: 30px;
 	top: 10px;
 }
 .nav-notification-mark {
@@ -91,7 +93,7 @@ ol, ul {
   background-color: #222 !important;
   border-color: #222 !important;
 }
-.black .btn__content {
+.black .v-btn__content {
   color: #fff;
 }
 
@@ -99,13 +101,13 @@ ol, ul {
 i.icon--selection-control {
   line-height: 28px;
 }
-.kunvet-red-bg.btn {
+.kunvet-red-bg.v-btn {
   color: #fff !important;
 }
-.btn--outline .btn__content {
+.v-btn--outline .v-btn__content {
   height: 34px;
 }
-.btn--outline.btn--small .btn__content {
+.v-btn--outline.v-btn--small .v-btn__content {
   height: 27px;
 }
 .expansion-panel__container {
@@ -126,12 +128,12 @@ i.icon--selection-control {
 .input-group--error .input-group__details {
   color: #f00;
 }
-.dialog {
+.v-dialog {
   max-width: 420px;
   border-radius: 0;
   width: auto;
 }
-.dialog > div {
+.v-dialog > div {
   min-width: 250px;
 }
 .application,
@@ -156,8 +158,8 @@ main {
 .input-group.checkbox.input-group--selection-controls label {
   line-height: 24px;
 } */
-.toolbar__content {
-  max-width: 960px;
+.v-toolbar__content {
+  max-width: 1008px; /* 960 + 48 */
   margin: auto;
 }
 .tabs__item {
@@ -188,6 +190,13 @@ main {
 }
 .checkbox.kunvet-red.input-group--selection-controls.input-group--active i {
   color: #ef5350 !important;
+}
+.v-autocomplete__content .v-input__slot:after,
+.v-autocomplete__content .v-input__slot:before {
+  display: none;
+}
+.v-autocomplete__content .v-list__tile__action {
+  min-width: 40px;
 }
 /*  ---- End of Styles to globally override Vuetify ----  */
 
@@ -245,10 +254,8 @@ main {
   z-index: 2;
 }
 .custom-select-2.active {
-  /* height: auto; */
   height: 260px !important;
   z-index: 3;
-  /* overflow-y: scroll; */
 }
 .custom-select-menu {
   max-height: 300px;
@@ -279,11 +286,10 @@ main {
   top: 0;
 }
 /* ---- End of custom selects ----  */
-
 .post-a-job-button {
   height: 28px !important;
 }
-.post-a-job-button .btn__content {
+.post-a-job-button .v-btn__content {
   height: 26px;
 }
 main {
@@ -877,8 +883,7 @@ body {
     line-height: 64px;
     cursor: pointer;
 }
-#general-submit-error,
-.general-submit-default {
+#general-submit-error {
     position: absolute;
     left: 100%;
     width: 100%;

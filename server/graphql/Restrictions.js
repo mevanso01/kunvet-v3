@@ -25,6 +25,12 @@ export default {
     }
     return next(req);
   },
+  IsNotBanned: (req, next) => {
+    if (req.context.user.banned) {
+      throw Error('You are not allowed to perform this action.');
+    }
+    return next(req);
+  },
   // TODO: Implement business account restrictions
   // eslint-disable-next-line
   BusinessAccount: (req, next) => {
@@ -89,7 +95,7 @@ export default {
     };
   },
   getForbiddenRecordFields(forbiddenFields) {
-    // Restricts allowed fields in the record
+    // Restricts forbidden fields in the record
     return async (req, next) => {
       req.args.record = omit(req.args.record, forbiddenFields);
       return next(req);

@@ -214,7 +214,7 @@
           </div>
 
           <div style="margin-top: 8px;">
-            <div v-if="findJob.type2" class="blue-row float-left pr-10">
+            <div v-if="findJob.type2 && findJob.type2.length > 0" class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.Internship"></img>
               <span v-for="type in findJob.type2"> {{ type }}</span>
             </div>

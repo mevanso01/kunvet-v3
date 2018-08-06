@@ -277,7 +277,7 @@ export default {
       ],
       emailRules: [
         v => !!v || 'E-mail is required',
-        v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+        v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w+)+$/.test(v) || 'E-mail must be valid',
       ],
       password: '',
       passwordRules: [
@@ -288,7 +288,7 @@ export default {
       error: null,
       howDidYouHear: null,
       howDidYouHearItems: [
-        'Posters', 'A representative walked-in', 'Word of mouth', 'Email', 'WeChat', 'Personal Connection', 'Other', 'Shut up!',
+        'Flyers & posters', 'Social media', 'Word of mouth', 'Email campaign', 'Other',
       ],
       alreadyloggedin: false,
     };
