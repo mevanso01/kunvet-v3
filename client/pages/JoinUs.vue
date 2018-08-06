@@ -2,7 +2,7 @@
   <v-container fluid>
     <div class="main-cont-large">
         <div style="padding: 20px;">
-            <h1>We'd like to invite you to join us our startup group</h1>
+            <h1>We'd like to invite you to join us our startup group</h1><br>
 
             <p>Hello, thank you for your interest in the Kunvet Team.</p>
 
