@@ -891,6 +891,12 @@
         </v-card>
       </v-dialog>
 
+      <v-dialog v-model="dialogs.welcome">
+        <v-card>
+        </v-card>
+      </v-dialog>
+
+
       <v-dialog class="no-border-radius" v-model="dialogs.confirmPost">
         <v-card flat class="no-border-radius" style="max-width: 350px;">
           <v-card-title>
@@ -1142,6 +1148,7 @@ export default {
         confirmPost: false,
         errorOccured: false,
         changeEmail: false,
+        welcome: false,
       },
       snackbar: false,
       snackbarText: '',
