@@ -58,7 +58,7 @@
 
 .input-group--text-field.input-group--dirty.input-group--select label,
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
-  transform: translate3d(0,-28px,0) scale(.75);
+      transform: translate3d(0,-28px,0) scale(.75);
 }
 .chip--select-multi {
   margin: 5px 5px 5px 0;
@@ -70,64 +70,55 @@
   position: relative;
 }
 .fsGoBtn {
-  display: block;
   height: 48px;
   background-color: #ef5350;
   text-align: center;
   border-radius: 0 6px 6px 0;
   cursor: pointer;
 }
-.firstSearch .fsSelect {
-  .v-input__slot {
-    height: 48px;
-    padding-left: 16px;
-    border-top: 1px solid #eee;
-    border-left: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    border-radius: 6px 0px 0px 6px;
-  }
-  .v-input__control::before,
-  .v-input__slot::before,
-  .v-input__slot::after {
-    display: none;
-  }
-  .v-input-group__input {
-    padding-left: 16px !important;
-  }
-  .v-input-group__input .v-input-group__selections {
-    padding-top: 2px;
-  }
-  .v-input__append-inner {
-    margin-right: 8px;
-  }
-  // label {
-  //   top: 9px;
-  //   left: 16px;
-  // }
+.fsSelect {
+  /* height: 48px; */
+  border-top: 1px solid #eee;
+  border-left: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  border-radius: 6px 0px 0px 6px;
 }
-.fsSelect-menu .v-list {
-  padding-top: 0;
+.firstSearch .fsSelect .input-group__input {
+  padding-left: 16px !important;
+}
+.firstSearch .fsSelect .input-group__input .input-group__selections {
+  padding-top: 2px;
+}
+.firstSearch .fsSelect label {
+  top: 9px;
+  left: 16px;
+}
+.firstSearch .fsSelect i {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  width: 36px !important;
+  padding: 0 6px !important;
 }
 .firstSearch h1 {
   font-weight: 300;
   font-size: 32px;
   margin-bottom: 0;
 }
-.fs-select-cities.v-input {
-  margin-top: 0;
+.fs-select-cities .input-group__input {
   height: 46px;
   box-shadow: none !important;
   border-radius: 6px 0px 0px 6px;
 }
-.fs-select-cities .v-input-group__selections {
+.fs-select-cities .input-group__selections {
   padding: 0 !important;
   width: calc(100% - 36px) !important;
   text-overflow: ellipsis;
 }
-.fs-select-cities .v-input-group__input > div > div {
+.fs-select-cities .input-group__input > div > div {
   padding: 0 !important;
 }
-.fs-select-cities .v-input-group__input::before {
+.fs-select-cities .input-group__input::before {
   display: none;
 }
 .small-thats-it, .large-thats-it {
@@ -148,7 +139,7 @@
   .fs-select-cities {
     width: 100%; /* use only when positions is not present */
   }
-  .firstSearch .fsSelect .v-input-group__input {
+  .firstSearch .fsSelect .input-group__input {
     padding-top: 3px;
   }
   .fs-select-cities .input-group__selections {
@@ -159,14 +150,14 @@
   width: 50%;
   display: inline-block;
 }
-.fs-select-positions .v-input-group__selections {
+.fs-select-positions .input-group__selections {
   height: 38px;
   overflow: auto !important;
 }
 .no-padding {
   padding: 0;
 }
-.search .v-input-group__details {
+.search .input-group__details {
   display: none;
 }
 .city-img-holder {
@@ -289,17 +280,13 @@
               v-bind:items="availableCities"
               v-model="selectedCity"
               single-line
-              attach
-              content-class="fsSelect-menu"
+              overflow
               hide-details
-              autocomplete
             >
             </v-select>
           </v-flex>
-          <v-flex xs2 sm2 md1 class="no-padding" v-ripple>
-            <a class="fsGoBtn" @click="searchGo">
-              <span style="color: white !important; line-height: 48px; text-decoration: none; font-size: 16px;">Go</span>
-            </a>
+          <v-flex xs2 sm2 md1 class="no-padding fsGoBtn" @click="searchGo" v-ripple>
+            <p style="color: white; line-height: 48px; font-size: 16px;">Go</p>
           </v-flex>
         </v-layout>
         <img class="bottom-img" :src="svgs.citySvg" />
@@ -343,7 +330,7 @@
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-// import VuexLS from '@/store/persist';
+import VuexLS from '@/store/persist';
 import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Asset70 from '@/assets/icons/Asset(70).svg';
@@ -515,6 +502,16 @@ export default {
     },
   },
   activated() {
+    VuexLS.restoreState('vuex', window.localStorage).then((data) => {
+      if (data) {
+        if (data.firstSearch) {
+          this.firstSearch = data.firstSearch;
+        }
+        if (data.selectedCity && data.selectedCity.length > 0) {
+          this.selectedCity = data.selectedCity;
+        }
+      }
+    });
   },
 };
 

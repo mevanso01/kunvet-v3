@@ -17,7 +17,7 @@
 .kunvet-reject-large-btn,
 .kunvet-promote-large-btn {
   height: 36px !important;
-  margin: 15px 5px 15px 5px !important;
+  margin: 15px 0px 15px 5px !important;
 }
 .kunvet-black-small-btn,
 .kunvet-accept-small-btn,
@@ -46,3 +46,4 @@
   border-color: #8aacb8;
   color: #8aacb8 !important;
 }
+

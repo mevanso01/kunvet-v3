@@ -1,7 +1,7 @@
 <style>
 </style>
 <template>
-  <v-container fluid class="applicant-page job-post__container" style="padding-top: 8px;">
+  <v-container fluid class="applicant-page job-post__container">
     <div class="main-cont-large">
       <v-layout row wrap>
         <v-flex xs12 v-if="jobs.length === 0">
@@ -17,9 +17,9 @@
           v-if="jobs.length > 0"
           v-for="job in jobs"
         >
-          <v-flex xs12 style="margin-top: 12px" class="job-page-headline">
+          <v-flex xs12>
             <h1>{{ job.title }}</h1>
-            <p class="mb-1">
+            <p>
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
               </span> {{ getApplicantsCountString }} in total
@@ -40,7 +40,7 @@
                         <div v-if="item.status === 'submitted'" class="new-applicant-card__unread-circle" />
                           <img :src="item.profilePic" style="min-height: 50px;"/>
                           <div class="new-applicant-card__time-ago" style="margin-left: 5px;">
-                            <timeago :datetime="item.date" />
+                            <timeago :since="item.date" />
                           </div>
                       </figure>
                     </div>

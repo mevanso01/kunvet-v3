@@ -5,7 +5,8 @@ import Sanitizers from './Sanitizers';
 
 class DisplayTextHelper {
   static getJobTypeString(jobTypes) {
-    if (!jobTypes || jobTypes.length === 0) return '';
+    if (!jobTypes) return '';
+    if (jobTypes.length === 0) return 'Unknown'; // probably unnecessary
     return StringHelper.listToSlashString(Sanitizers.sanitizeJobTypes(jobTypes));
     // return this.sanitizeTypes(jobTypes);
   }

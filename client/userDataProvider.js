@@ -1,11 +1,19 @@
+import gql from 'graphql-tag';
+import VuexLS from '@/store/persist';
 import Store from '@/store';
 import EventBus from '@/EventBus';
 import axios from 'axios';
 import { degreeDbToString } from '@/constants/degrees';
 
-// import apolloClient from '@/apollo/client';
-// import gql from 'graphql-tag';
-/*
+import apolloClient from '@/apollo/client';
+
+function commitUserdata(udata) {
+  Store.commit({
+    type: 'keepUserdata',
+    userdata: udata,
+  });
+}
+
 function fetchUserData(userID) {
   apolloClient.query({
     query: (gql`query ($uid: MongoID) {
@@ -57,17 +65,9 @@ function fetchUserData(userID) {
     return null;
   });
 }
-*/
-
-function commitUserdata(udata) {
-  Store.commit({
-    type: 'keepUserdata',
-    userdata: udata,
-  });
-}
 
 // Returns acct, uid, and userdata
-function getUserDataFromLS() {
+async function getUserDataFromLS() {
   var ret = {};
   // console.log(Store.state.userID, Store);
   if (Store.state.userID && Store.state.userdata && Store.state.acct) {
@@ -77,7 +77,44 @@ function getUserDataFromLS() {
       uid: Store.state.userID,
       userdata: Store.state.userdata,
     };
+    return ret;
   }
+  await VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
+    if (data.acct !== 0 && data.userID) {
+      // acct is not 0
+      if (data.userdata) {
+        ret = {
+          acct: data.acct,
+          uid: data.userID,
+          userdata: data.userdata,
+        };
+      }
+      // else, try to fetch userdata from db
+      const userdata = await fetchUserData(data.userID);
+      if (userdata) {
+        ret = {
+          acct: data.acct,
+          uid: data.userID,
+          userdata: userdata,
+        };
+      } else {
+        // some kind of error happened when fetching account, log user out
+        EventBus.$emit('logout');
+        ret = {
+          acct: 0,
+          uid: null,
+          userdata: null,
+        };
+      }
+    } else {
+      // acct is 0 or there is no userID
+      ret = {
+        acct: 0,
+        uid: null,
+        userdata: null,
+      };
+    }
+  });
   return ret;
 }
 
@@ -91,13 +128,8 @@ async function getUserData() {
     if (userdata.org_list && userdata.org_list[0] === null) { userdata.org_list = []; }
     if (userdata.resumes && userdata.resumes[0] === null) { userdata.resumes = []; }
     // commit some essential things of other pages to use
-    Store.commit({ type: 'setAcct', acct: acct });
     Store.commit({ type: 'setAcctID', id: userdata._id });
     Store.commit({ type: 'setDefaultOrg', id: userdata.default_org });
-    if (acct === 2) {
-      Store.commit({ type: 'setBusinessID', id: userdata.default_org });
-    }
-    commitUserdata(userdata);
     return {
       acct: acct,
       uid: userdata._id,

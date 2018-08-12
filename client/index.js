@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
 import VueTimeago from 'vue-timeago';
+import TimeagoLocale from 'vue-timeago/locales/en-US.json';
 
 import Client from '@/apollo/client';
 
@@ -26,6 +27,9 @@ Vue.use(VueApollo);
 Vue.use(Vuex);
 Vue.use(VueTimeago, {
   locale: 'en-US',
+  locales: {
+    'en-US': TimeagoLocale,
+  },
 });
 
 const apolloProvider = new VueApollo({
@@ -118,11 +122,6 @@ const router = new VueRouter({
     {
       path: '/createjob',
       component: () => import('@/pages/CreateJob'),
-    },
-    {
-      path: '/createjob/:id',
-      component: () => import('@/pages/CreateJob'),
-      props: { id: null },
     },
     {
       path: '/view-applicant/:id',

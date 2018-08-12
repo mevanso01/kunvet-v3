@@ -216,25 +216,6 @@ async function generateResponse(err, email = null, defaultResponse = null) {
   return defaultResponse;
 }
 
-async function sendVerificationEmail(fname, email) {
-  const validationCode = uuidv1();
-  const tempAcct = new Models.TempAccount({
-    email: email,
-    vcode: validationCode,
-  });
-  await tempAcct.save();
-  const mailer = new Mailer();
-  await mailer.sendTemplate(
-    email,
-    'email-verification',
-    {
-      fname: fname,
-      email: email,
-      code: validationCode,
-    },
-  );
-}
-
 router.post('/register', async (ctx) => {
   // FIXME: Input sanitization
   if (ctx.isAuthenticated()) {
@@ -371,102 +352,8 @@ router.post('/register', async (ctx) => {
   ctx.body = JSON.stringify(response);
 });
 
-async function handleUpdatingUnverifiedUser(email, req) {
-  try {
-    var orgId = null;
-    var jobId = null;
-    var user = await Models.Account.findOne({
-      email: email,
-      email_verified: false,
-    });
-    if (!user) { return { success: false, message: 'Could not update user data' }; }
-    if (req.fname) { user.firstname = req.fname; }
-    if (req.lname) { user.lastname = req.lname; }
-    // Change email
-    if (req.email && req.email.toLowerCase() !== user.email) {
-      user.email = req.email.toLowerCase();
-      const validationCode = uuidv1();
-      const tempAcct = new Models.TempAccount({
-        email: user.email,
-        vcode: validationCode,
-      });
-      tempAcct.save();
-      const mailer = new Mailer();
-      mailer.sendTemplate(
-        email,
-        'email-verification',
-        {
-          fname: user.firstname,
-          email: user.email,
-          code: validationCode,
-        },
-      );
-    }
-    // Change org
-    if (req.business_name && user.default_org) {
-      const org = await Models.Organization.findById(user.default_org);
-      if (org) {
-        org.email = user.email;
-        org.business_name = req.business_name;
-        await org.save();
-        orgId = org._id;
-      } else {
-        user.default_org = null; // in case finding org backfires
-        console.log('Error finding org');
-      }
-    }
-    if (req.business_name && !user.default_org) {
-      const org = new Models.Organization({
-        business_name: req.business_name,
-        email: user.email,
-        user_id: user._id,
-      });
-      await org.save();
-      user.default_org = org._id;
-      user.org_list = [org._id];
-      orgId = org._id;
-    }
-    await user.save();
-
-    if (req.jobInfo && req.address && req.jobInfo.title) {
-      var job = await Models.Job.findOne({
-        user_id: user._id,
-      });
-      if (!job) {
-        job = new Models.Job({
-          user_id: user._id,
-          posted_by: user.default_org ? req.business_name : `${user.firstname} ${user.lastname}`,
-        });
-      } else {
-        job.posted_by = user.default_org ? req.business_name : `${user.firstname} ${user.lastname}`;
-      }
-      job.business_id = user.default_org ? user.default_org : null;
-      job.title = req.jobInfo.title;
-      job.address = req.address;
-      job.latitude = req.jobInfo.lat;
-      job.longitude = req.jobInfo.long;
-      job.address2 = req.jobInfo.address2;
-      job.university = req.jobInfo.university;
-      await job.save();
-      jobId = job._id;
-    }
-
-    const response = {
-      success: true,
-      message: {
-        userId: user._id,
-        orgId: orgId,
-        jobId: jobId,
-      },
-    };
-    return response;
-  } catch (err) {
-    console.log('ERROR', err);
-    return { success: false, message: err };
-  }
-}
-
 router.post('/register2', async (ctx) => {
+  console.log(ctx.request.body);
   const req = ctx.request.body;
   const email = req.email.toLowerCase();
   // here is what data will look like:
@@ -485,19 +372,6 @@ router.post('/register2', async (ctx) => {
       long: this.job.longitude,
     },
   }; */
-  if (ctx.isAuthenticated()) {
-    console.log('I\'m authenticated!', ctx.state.user);
-    if (ctx.state.user && !ctx.state.user.email_verified) {
-      const response = await handleUpdatingUnverifiedUser(ctx.state.user.email, req);
-      console.log('response', response);
-      ctx.body = JSON.stringify(response);
-      return;
-    }
-    const response = { success: false, message: 'User already exists' };
-    ctx.body = JSON.stringify(response);
-    return;
-  }
-
   var user;
   try {
     // TRY CREATE USER
@@ -560,7 +434,6 @@ router.post('/register2', async (ctx) => {
         address2: req.jobInfo.address2,
         latitude: req.jobInfo.lat,
         longitude: req.jobInfo.long,
-        active: false,
       });
       await job.save();
     } catch (err) {
@@ -570,57 +443,14 @@ router.post('/register2', async (ctx) => {
       return;
     }
   }
-
-  try {
-    sendVerificationEmail(req.fname, email);
-  } catch (err) {
-    console.error('Verification email could not be set:', err);
-  }
-
   const response = {
     success: true,
     message: {
-      userId: user._id,
       orgId: org ? org._id : null,
       jobId: job ? job._id : null,
     },
   };
   ctx.body = JSON.stringify(response);
-});
-
-router.post('/changeEmail', async (ctx) => {
-  if (ctx.isAuthenticated()) {
-    if (!ctx.state.user.email_verified && ctx.request.body.newemail) {
-      const oldEmail = ctx.state.user.email;
-      const newEmail = ctx.request.body.newemail.toLowerCase();
-      const user = await Models.Account.findOne({
-        email: oldEmail,
-        email_verified: false,
-      });
-      if (!user) {
-        ctx.status = 500;
-        ctx.body = 'Internal server error';
-        return;
-      }
-      user.email = newEmail;
-      await user.save();
-      await sendVerificationEmail(user.firstname, newEmail);
-      const response = {
-        success: true,
-        message: 'Changed email successfully',
-      };
-      ctx.body = JSON.stringify(response);
-    } else {
-      ctx.status = 400;
-      ctx.body = 'Bad request';
-    }
-  } else {
-    const response = {
-      success: false,
-      message: 'Must be authenticated',
-    };
-    ctx.body = JSON.stringify(response);
-  }
 });
 
 router.get('/status', (ctx) => {

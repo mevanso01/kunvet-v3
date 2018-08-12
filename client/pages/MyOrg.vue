@@ -623,9 +623,9 @@
       VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
         if (data.acct === 2) {
           this.fetchAcctData();
-          if (data.bdata && data.bdata.business_name) {
+          if (data.bdata) {
             this.bdata = data.bdata;
-          } else if (data.businessID) {
+          } else if (this.$store.state.businessID) {
             this.fetchBusinessData();
           }
           await this.fillUpJobs(); // Depends on this.b_data being filled.

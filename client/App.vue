@@ -3,7 +3,7 @@
     <div v-if="devmode" class="devmode">
       Development mode
     </div>
-    <v-toolbar fixed class="main-navbar" :height="64" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
+    <v-toolbar fixed class="main-navbar" height="64px" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
       <router-link to="/search">
             <div id="nav-logo">
               <!--<img id="nav-logo-svg" :src="svgs.kunvetLogoNav"></img>-->
@@ -27,7 +27,7 @@
           <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </div>
         <v-toolbar-items v-if="acct === 0" class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="v-toolbar__items">
+          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
             <v-btn flat>{{ item.title }}</v-btn>
           </router-link>
           <div style="padding-top: 18px; padding-left: 16px;">
@@ -38,7 +38,7 @@
         </v-toolbar-items>
 
         <v-toolbar-items v-else class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="v-toolbar__items">
+          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
 
             <v-menu fixed offset-y v-if="item.subItems" left open-on-hover :close-on-content-click="false">
 
@@ -104,12 +104,12 @@
         <span class="job-post__helper-nav-bar__divider" />
         <v-btn flat small :ripple="false" :to="'/myjobs'" :class="isActiveJobPostLink('/myjobs')">
           <span class="job-post__helper-nav-bar__btn-text">
-            My Jobs
+            Posted
           </span>
         </v-btn>
         <v-btn flat small :ripple="false" :to="'/applicants'" :class="isActiveJobPostLink('/applicants')">
           <span class="job-post__helper-nav-bar__btn-text">
-            My Applicants
+            Applicants
           </span>
         </v-btn>
       </v-toolbar-items>

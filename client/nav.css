@@ -12,15 +12,17 @@
 .job-post__helper-nav-bar .btn:hover .btn__content span {
   color: red;
 }
-.job-post__helper-nav-bar .v-btn--active::before {
-  /* background-color: #f5f5f5 !important; */
-  display: none;
-}
-
-.job-post__helper-nav-bar .v-toolbar__items .v-btn {
-  text-transform: none;
+.job-post__helper-nav-bar .btn {
   color: #616161;
   border-radius: 0;
+}
+.job-post__helper-nav-bar .btn--active .btn__content:before {
+  /* background-color: #f5f5f5 !important; */
+  opacity: 0;
+}
+
+.job-post__helper-nav-bar .toolbar__items .btn {
+  text-transform: none;
 }
 
 .job-post__helper-nav-bar__divider {
@@ -38,13 +40,12 @@
   color: #ef5350 !important;
 }
 
-.job-post__helper-nav-bar__post-a-job .v-btn__content {
+.job-post__helper-nav-bar__post-a-job .btn__content {
   color: #ef5350 !important;
 }
 
-.job-post__helper-nav-bar__post-a-job:hover .v-btn__content:before {
+.job-post__helper-nav-bar__post-a-job:hover .btn__content:before {
   background-color: transparent;
-  display: none;
 }
 
 .job-post__helper-nav-bar__post-a-job__icon {

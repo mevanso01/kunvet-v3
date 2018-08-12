@@ -11,18 +11,10 @@
   .quill-editor .error-text {
     color: red !important;
   }
-  h4.quill-subheader {
-    font-size: 20px;
-    line-height: normal;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 12px;
-  }
 </style>
 <template>
   <div class="quill-editor">
     <h3 v-if="title" style="margin-top: 0;" :class="{ 'error-text': hasError }">{{ title }}</h3>
-    <!--<h4 v-if="title" class="quill-subheader" style="margin-top: 0;" :class="{ 'error-text': hasError }">{{ title }}</h4>-->
     <vue-editor
       ref="editor"
       :id="id"
@@ -44,7 +36,7 @@
 <script>
 /* eslint no-unused-vars: 0 */
 import { VueEditor, Quill } from 'vue2-editor';
-import VInput from 'vuetify/es5/components/VInput';
+import VTextField from 'vuetify/src/components/VTextField';
 
 Quill.register('modules/wordLimit', (quill) => {
   // quill.on('text-change', () => {
@@ -53,7 +45,7 @@ Quill.register('modules/wordLimit', (quill) => {
 
 export default {
   name: 'quill-editor',
-  extends: VInput,
+  extends: VTextField,
   props: {
     value: String,
     placeholder: String,
@@ -101,13 +93,15 @@ export default {
     },
   },
   methods: {
+    genInput() {
+      return this.$createElement('input', {
+        staticClass: 'quill-editor',
+      });
+    },
     input(v) {
       this.touched = true;
       this.validate();
       this.$emit('input', v);
-    },
-    blur() {
-      this.$emit('blur');
     },
     setWordCount(wordCount) {
       this.wordCount = wordCount;
@@ -116,16 +110,7 @@ export default {
       this.charCount = charCount;
     },
     // overrides VTextField validate function
-    validate(force = false, _value = null) {
-      var value = _value;
-      if (value === null) {
-        if (this.$refs.editor && this.$refs.editor.$el.innerText !== undefined) {
-          value = this.$refs.editor.$el.innerText;
-        } else {
-          this.errorMsgs = [];
-          return true;
-        }
-      }
+    validate(force = false, value = this.$refs.editor.editor.innerText) {
       let validated = true;
       this.errorMsgs = [];
       if (!force && !this.touched) {
@@ -137,6 +122,7 @@ export default {
         wordLimit: this.wordLimit,
         charLimit: this.charLimit,
       };
+      console.log(this.computedValue, this.computedValue.length);
       if (options.required) {
         if (validated && trimmedText.length === 0) {
           validated = false;
@@ -153,7 +139,6 @@ export default {
       }
       if (options.charLimit) {
         const charCount = trimmedText.length;
-        console.log(charCount);
         this.charCount = charCount;
         if (validated && charCount > options.charLimit) {
           validated = false;
@@ -161,6 +146,7 @@ export default {
         }
       }
       this.valid = validated;
+      console.log(validated);
       return validated;
     },
   },

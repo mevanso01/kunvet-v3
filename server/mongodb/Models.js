@@ -430,8 +430,8 @@ const AccountSchema = Mongoose.Schema({
     type: String,
     resume: Mongoose.model('Resume', ResumeSchema),
   },
-  saved_jobs: [Mongoose.Schema.Types.ObjectId],
-  org_list: [Mongoose.Schema.Types.ObjectId],
+  saved_jobs: [],
+  org_list: [],
   notifications: [{
     text: String,
     route: String,
@@ -441,10 +441,6 @@ const AccountSchema = Mongoose.Schema({
       default: Date.now,
     },
   }],
-  banned: {
-    type: Boolean,
-    default: false,
-  },
   is_developer: {
     type: Boolean,
     required: true,
