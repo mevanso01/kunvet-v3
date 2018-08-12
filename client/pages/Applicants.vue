@@ -40,7 +40,7 @@
                         <div v-if="item.status === 'submitted'" class="new-applicant-card__unread-circle" />
                           <img :src="item.profilePic" style="min-height: 50px;"/>
                           <div class="new-applicant-card__time-ago" style="margin-left: 5px;">
-                            <timeago :datetime="item.date" />
+                            <timeago :since="item.date" />
                           </div>
                       </figure>
                     </div>

@@ -27,7 +27,7 @@
           <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </div>
         <v-toolbar-items v-if="acct === 0" class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="v-toolbar__items">
+          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">
             <v-btn flat>{{ item.title }}</v-btn>
           </router-link>
           <div style="padding-top: 18px; padding-left: 16px;">
@@ -38,7 +38,7 @@
         </v-toolbar-items>
 
         <v-toolbar-items v-else class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="v-toolbar__items">
+          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">
 
             <v-menu fixed offset-y v-if="item.subItems" left open-on-hover :close-on-content-click="false">
 

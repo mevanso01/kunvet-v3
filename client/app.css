@@ -54,6 +54,9 @@ ol, ul {
 .main-navbar .v-menu__activator {
   height: 64px;
 }
+.main-navbar .nav-items .v-btn > .v-btn__content {
+  height: 64px;
+}
 .mobile-menu {
   position: fixed;
 }
