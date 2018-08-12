@@ -51,10 +51,6 @@ ol, ul {
   height: 64px;
   z-index: 100;
 }
-
-.main-navbar .nav-items .v-btn > .v-btn__content {
-  height: 64px;
-}
 .main-navbar .v-menu__activator {
   height: 64px;
 }

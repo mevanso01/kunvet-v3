@@ -123,7 +123,7 @@
     "vue-gtagjs": "^1.0.7",
     "vue-resource": "^1.3.4",
     "vue-router": "^2.7.0",
-    "vue-timeago": "^5.0.0",
+    "vue-timeago": "^3.4.4",
     "vue2-editor": "^2.4.2",
     "vue2-google-maps": "^0.8.4",
     "vuetify": "^1.1.9",
