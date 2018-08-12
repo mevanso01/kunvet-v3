@@ -19,7 +19,13 @@ const Store = new Vuex.Store({
     selectedShifts: [],
     bdata: null,
     userdata: null,
-    // recheckLogin: null, // date object
+    currentJobProgress: {
+      jobId: null,
+      part1Complete: false,
+      part2Complete: false,
+      part3Complete: false,
+    },
+    newUser: true,
   },
   mutations: {
     go(state) {
@@ -32,10 +38,14 @@ const Store = new Vuex.Store({
         state.userdata = null;
         state.bdata = null;
         state.userID = null;
+        state.newUser = true;
+      } else {
+        state.newUser = false;
       }
     },
     setAcctID(state, payload) {
       state.userID = payload.id;
+      state.newUser = false;
     },
     setBusinessID(state, payload) {
       state.businessID = payload.id;
@@ -54,22 +64,28 @@ const Store = new Vuex.Store({
     },
     keepUserdata(state, payload) {
       state.userdata = payload.userdata;
+      state.newUser = false;
     },
     keepBdata(state, payload) {
       state.bdata = payload.bdata;
     },
-    /* setRecheckLogin(state, payload) {
-      if (payload.recheckLogin) {
-        state.recheckLogin = payload.recheckLogin;
-      } else {
-        // two days by default
-        var d = new Date();
-        d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000));
-        state.recheckLogin = d;
-      }
-    }, */
+    setJobProgress(state, payload) {
+      state.currentJobProgress.jobId = payload.id;
+      state.currentJobProgress.part1Complete = payload.part1;
+      state.currentJobProgress.part2Complete = payload.part2;
+      state.currentJobProgress.part3Complete = payload.part3;
+    },
+    resetJobProgress(state) {
+      state.currentJobProgress = {
+        jobId: null,
+        part1Complete: false,
+        part2Complete: false,
+        part3Complete: false,
+      };
+    },
     resetState(state) {
       state.userID = null;
+      state.businessID = null;
       state.acct = 0;
       state.default_org = null;
       state.firstSearch = true;
@@ -79,7 +95,16 @@ const Store = new Vuex.Store({
       state.selectedShifts = [];
       state.bdata = null;
       state.userdata = null;
-      // state.recheckLogin = null;
+      state.currentJobProgress = {
+        jobId: null,
+        part1Complete: false,
+        part2Complete: false,
+        part3Complete: false,
+      };
+      state.newUser = true;
+    },
+    notNewUser(state) {
+      state.newUser = false;
     },
   },
   plugins: [VuexLS.plugin],

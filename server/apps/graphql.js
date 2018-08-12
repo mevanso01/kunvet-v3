@@ -5,7 +5,7 @@ import KoaBody from 'koa-bodyparser';
 
 // GraphQL and Apollo
 import { graphqlKoa } from 'apollo-server-koa';
-import NoIntrospection from 'graphql-disable-introspection';
+// import NoIntrospection from 'graphql-disable-introspection';
 
 // Logger
 import Logger from 'winston';
@@ -29,7 +29,7 @@ function buildOptions(ctx) {
     process.env.NODE_ENV === 'production' ||
     process.env.GRAPHQL_PRODUCTION
   ) {
-    options.validationRules.push(NoIntrospection);
+    // options.validationRules.push(NoIntrospection);
     options.formatError = (e) => {
       Logger.error(e);
       return 'An error occured.';

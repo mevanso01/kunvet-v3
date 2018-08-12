@@ -1,11 +1,12 @@
+const Config = require(`../config/${process.env.NODE_ENV}.js`);
 const path = require('path');
 const webpack = require('webpack');
 const eslintFormatter = require('eslint-friendly-formatter');
-const Config = require('config');
 const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const utils = require('./utils');
+const nodeExternals = require('webpack-node-externals');
 
 const staticConfig = Object.assign({}, Config);
 const ErrorCodeInternal = require('../common/ErrorCodeInternal');
@@ -22,11 +23,7 @@ const wpconf = {
   // Server
   target: 'node',
   entry: './server/index.js',
-  externals: {
-    // The root of all evils :(
-    'email-templates': 'commonjs email-templates',
-    'consolidate': 'commonjs consolidate',
-  },
+  externals: [nodeExternals()],
   output: {
     path: path.resolve(__dirname, '../dist/server'),
     filename: 'index.js',

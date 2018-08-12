@@ -1,12 +1,15 @@
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 601px) {
   .job-post__container .main-cont-large {
-    max-width: 890px !important;
+    max-width: 900px !important;
+  }
+  .job-post__container .job-page-headline {
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
-
 .job-post__container h1 {
+  margin: 0;
 }
-
 .job-post__container h2 {
   font-weight: normal;
 }
