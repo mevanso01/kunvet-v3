@@ -1802,8 +1802,10 @@ export default {
         this.orgId = res._id;
         this.postingAs = 'business';
         this.job.posted_by = res.business_name;
-        this.job.address = res.address;
-        this.setLatLongs();
+        if (!this.job.address && res.address) {
+          this.job.address = res.address;
+          this.setLatLongs();
+        }
         this.commitBdata();
       }).catch((error) => {
         this.$error(error);
