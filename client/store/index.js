@@ -24,6 +24,7 @@ const Store = new Vuex.Store({
       part1Complete: false,
       part2Complete: false,
       part3Complete: false,
+      postOnOpen: false,
     },
     newUser: true,
   },
@@ -74,6 +75,7 @@ const Store = new Vuex.Store({
       state.currentJobProgress.part1Complete = payload.part1;
       state.currentJobProgress.part2Complete = payload.part2;
       state.currentJobProgress.part3Complete = payload.part3;
+      state.currentJobProgress.postOnOpen = payload.postOnOpen;
     },
     resetJobProgress(state) {
       state.currentJobProgress = {
@@ -81,6 +83,7 @@ const Store = new Vuex.Store({
         part1Complete: false,
         part2Complete: false,
         part3Complete: false,
+        postOnOpen: false,
       };
     },
     resetState(state) {
@@ -100,6 +103,7 @@ const Store = new Vuex.Store({
         part1Complete: false,
         part2Complete: false,
         part3Complete: false,
+        postOnOpen: false,
       };
       state.newUser = true;
     },

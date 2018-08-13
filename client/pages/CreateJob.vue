@@ -332,7 +332,12 @@
 </style>
 
 <template>
-  <v-container fluid class="create-job-container">
+  <v-container fluid class="create-job-container" v-show="!pageloading">
+    <div v-if="pageloading" style="margin-top: 48px;">
+      <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
+      style="display: block; margin: auto !important;"></v-progress-circular>
+    </div>
+    <div v-show="!pageloading">
       <div class="cust-tab-wrapper"></div>
       <v-tabs
         slot="extension"
@@ -359,7 +364,7 @@
               <v-form v-model="form1Valid" ref="form1">
                 <template v-if="!email_verified">
                   <!-- Email not verified -->
-                  <p>
+                  <p class="mb-0">
                     First, we need some basic information about who's posting.<br>
                     You will receive your applicants' information through email, unless you opt out of this feature at the end of this form.<br>
                   </p>
@@ -425,7 +430,7 @@
                   <h3 class="mt-0 mb-4">Posting as: {{ job.posted_by }}</h3>
                 </template>
 
-                <p class="mb-1 mt-2">Basic info about your job:</p>
+                <p class="mb-0 mt-2">Basic info about your job:</p>
                 <v-layout row wrap>
                   <v-flex xs12 sm9 md6 class="no-padding">
                     <v-text-field
@@ -457,13 +462,11 @@
                         v-model="isUniversity"
                         hide-details
                       ></v-checkbox>
-                      <v-autocomplete class="no-padding-select"
+                      <v-autocomplete
                         v-if="isUniversity"
                         label="Which one?"
                         v-model="job.university"
                         v-bind:items="availableSchools"
-                        hide-details
-                        single-line
                       ></v-autocomplete>
                     </div>
                   </v-flex>
@@ -893,6 +896,7 @@
 
       <v-dialog v-model="dialogs.welcome">
         <v-card>
+          <div class="headline">Welcome!></div>
         </v-card>
       </v-dialog>
 
@@ -966,7 +970,7 @@
         <v-btn color="white" flat @click="snackbar = false">
           Close
         </v-btn>
-    </v-snackbar>
+      </v-snackbar>
     </div>
   </v-container>
 </template>
@@ -1126,7 +1130,7 @@ export default {
         show: false,
         croppedID: null,
       },
-      email_verified: true,
+      email_verified: false,
       loading: false,
       bdata: {
         business_name: null,
@@ -1152,6 +1156,7 @@ export default {
       },
       snackbar: false,
       snackbarText: '',
+      pageloading: true,
     };
   },
   computed: {
@@ -1495,6 +1500,7 @@ export default {
             if (this.email_verified) {
               this.tab = 'success-tab';
             } else {
+              this.setJobProgress(true);
               this.tab = 'verify-email';
             }
           }
@@ -1578,7 +1584,7 @@ export default {
         });
       }
     },
-    setJobProgress() {
+    setJobProgress(postOnOpen = false) {
       if (this.jobId) {
         this.$store.commit({
           type: 'setJobProgress',
@@ -1586,6 +1592,7 @@ export default {
           part1: this.form1Valid,
           part2: this.form2Valid,
           part3: this.form3Valid,
+          postOnOpen: postOnOpen,
         });
       }
     },
@@ -1903,6 +1910,7 @@ export default {
       this.resetData();
     }
     userDataProvider.getUserData().then(res => {
+      this.pageloading = false;
       this.uid = res.uid;
       if (res.acct === 0) {
         // logged out
@@ -1971,6 +1979,7 @@ export default {
     if (this.$route.params.id) {
       this.reopenExistingJob(this.$route.params.id);
     } else if (this.$store.state && this.$store.state.currentJobProgress.jobId) {
+      console.log('Reopening', this.$store.state.currentJobProgress.jobId);
       this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
     }
   },
