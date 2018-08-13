@@ -896,7 +896,9 @@
 
       <v-dialog v-model="dialogs.welcome">
         <v-card>
-          <div class="headline">Welcome!></div>
+          <v-card-text>
+            <div class="headline">Welcome to Kunvet!</div>
+          </v-card-text>
         </v-card>
       </v-dialog>
 
@@ -977,6 +979,7 @@
 
 <script>
 import gql from 'graphql-tag';
+import VuexLS from '@/store/persist';
 import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
@@ -1643,7 +1646,6 @@ export default {
           user: this.uid,
         },
       }).then((data) => {
-        console.log(data.data.findJobs);
         this.unpostedJobs = [];
         if (data.data.findJobs && data.data.findJobs.length > 0) {
           for (var i = 0; i < data.data.findJobs.length; i++) {
@@ -1651,7 +1653,7 @@ export default {
           }
         }
       }).catch((err) => {
-        console.log('ERROR', err);
+        this.$error('ERROR', err);
       });
     },
     async reopenExistingJob(_id) {
@@ -1917,6 +1919,14 @@ export default {
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
+        VuexLS.restoreState('vuex', window.localStorage).then((data) => {
+          console.log('LS data', data);
+        });
+        if (this.$store.state && this.$store.state.newUser) {
+          console.log(this.$store.state);
+          this.dialogs.welcome = true;
+          this.$store.commit({ type: 'notNewUser' });
+        }
       } else {
         this.email_verified = res.userdata.email_verified;
         this.email = res.userdata.email;
@@ -1977,7 +1987,7 @@ export default {
       }
     });
   },
-  mounted() {
+  created() {
     if (this.$route.params.id) {
       this.reopenExistingJob(this.$route.params.id);
     } else if (this.$store.state && this.$store.state.currentJobProgress.jobId) {

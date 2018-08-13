@@ -97,7 +97,7 @@
   width: 100%;
   position: relative;
   border: 1px solid rgb(231, 231, 231);
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .new-resume-box .input-file {
   opacity: 0;

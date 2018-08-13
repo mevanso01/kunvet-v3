@@ -101,6 +101,10 @@ ol, ul {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.v-input.v-input--checkbox,
+.v-input--radio-group {
+  margin-top: 0;
+}
 i.icon--selection-control {
   line-height: 28px;
 }
@@ -147,8 +151,8 @@ main {
 .input-group--text-field:not(.input-group--error):not(.input-group--disabled) label,
 .radio-group:not(.input-group--error):not(.input-group--disabled) label,
 .radio-group:not(.input-group--error):not(.input-group--disabled) i,
-.input-group.checkbox:not(.input-group--error):not(.input-group--disabled) label,
-.input-group.checkbox:not(.input-group--error):not(.input-group--disabled) i {
+.v-input:not(.input-group--error):not(.v-input--is-disabled) label,
+.v-input:not(.input-group--error):not(.v-input--is-disabled) i {
   color: #4d4d4d;
 }
 .accent--text {
@@ -191,7 +195,8 @@ main {
 .menu__content--select .list--dense .list__tile__title {
   font-size: 14px !important;
 }
-.checkbox.kunvet-red.input-group--selection-controls.input-group--active i {
+.v-input.v-input--checkbox.kunvet-red.v-input--is-label-active i,
+.v-input.v-input--checkbox.kunvet-red.v-input--is-label-active label {
   color: #ef5350 !important;
 }
 .v-autocomplete__content .v-input__slot:after,
@@ -211,7 +216,7 @@ main {
   width: 100%;
   position: relative;
 }
-.custom-select .btn {
+.custom-select .v-btn {
   position: absolute;
   right: 0;
 }
@@ -225,7 +230,7 @@ main {
   height: 48px;
   width: 100%;
 }
-.custom-select-2 .btn {
+.custom-select-2 .v-btn {
   position: absolute;
   right: 0;
   top: 0;
@@ -239,7 +244,7 @@ main {
   overflow-y: scroll;
   height: 212px;
 }
-.custom-select-menu.list--dense i.icon--selection-control {
+.custom-select-menu.v-list--dense i.v-icon--selection-control {
   line-height: 28px;
 }
 .custom-select-menu .input-group--selection-controls.input-group--disabled .input-group__input i.icon--selection-control {

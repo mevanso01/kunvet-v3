@@ -86,6 +86,10 @@ const Store = new Vuex.Store({
         postOnOpen: false,
       };
     },
+    notNewUser(state) {
+      console.log('TESTING');
+      state.newUser = false;
+    },
     resetState(state) {
       state.userID = null;
       state.businessID = null;
@@ -107,22 +111,16 @@ const Store = new Vuex.Store({
       };
       state.newUser = true;
     },
-    notNewUser(state) {
-      state.newUser = false;
-    },
   },
   plugins: [VuexLS.plugin],
   getters: {
-    /* userdata(state) {
-      return state.userdata;
-    }, */
-    /* LSstate() {
+    LSstate() {
       return new Promise(resolve => {
         VuexLS.restoreState('vuex', window.localStorage).then((data) => {
           resolve(data);
         });
       });
-    }, */
+    },
   },
 });
 
