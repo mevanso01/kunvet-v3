@@ -979,7 +979,6 @@
 
 <script>
 import gql from 'graphql-tag';
-import VuexLS from '@/store/persist';
 import Schools from '@/constants/schools';
 import PicUploader from '@/components/PicUploader';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
@@ -1919,13 +1918,10 @@ export default {
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
-        VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-          console.log('LS data', data);
-        });
-        if (this.$store.state && this.$store.state.newUser) {
-          console.log(this.$store.state);
+        console.log('new user', this.$store.state.newUser);
+        if (this.$store.state.newUser) {
           this.dialogs.welcome = true;
-          this.$store.commit({ type: 'notNewUser' });
+          this.$store.commit('notNewUser');
         }
       } else {
         this.email_verified = res.userdata.email_verified;

@@ -336,7 +336,6 @@
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import VuexLS from '@/store/persist';
 import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Asset70 from '@/assets/icons/Asset(70).svg';
@@ -391,7 +390,7 @@ export default {
         { text: 'Evening', value: 'evening' },
         { text: 'Mid-night', value: 'midnight' },
       ],
-      // firstSearch: Store.state.firstSearch,
+      // firstSearch: this.$store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
       selectedCity: this.$store.state.selectedCity || 'Irvine - UC Irvine', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
       selectedTypes: this.$store.state.selectedTypes || [],
@@ -787,33 +786,36 @@ export default {
     this.setSelectedLatlongs();
     this.loadInitialJobs();
     document.addEventListener('click', this.documentClick, { passive: true });
-    VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-      console.log('LS data', data);
-      if (data) {
-        if (data.firstSearch) {
-          this.firstSearch = data.firstSearch;
-        }
-        if (data.selectedCity && data.selectedCity.length > 0) {
-          this.selectedCity = data.selectedCity;
-        }
-        if (data.selectedPositions) {
-          this.selectedPositions = data.selectedPositions;
-        }
-        if (data.selectedShifts) {
-          this.selectedShifts = data.selectedShifts;
-        }
-        if (data.selectedTypes) {
-          this.selectedTypes = data.selectedTypes;
-        }
-        if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
-          this.selectedPositions = data.selectedPositions;
-        }
-        if (data.userID && data.acct !== 0) {
-          this.uid = data.userID;
-          this.getSavedJobs();
-        }
+    // VuexLS.restoreState('vuex', window.localStorage).then((data) => {
+    const LSdata = this.$store.getters.LS;
+    const data = this.$store.state;
+    console.log('data', data);
+    console.log('LS data', LSdata);
+    if (data) {
+      if (data.firstSearch) {
+        this.firstSearch = data.firstSearch;
       }
-    });
+      if (data.selectedCity && data.selectedCity.length > 0) {
+        this.selectedCity = data.selectedCity;
+      }
+      if (data.selectedPositions) {
+        this.selectedPositions = data.selectedPositions;
+      }
+      if (data.selectedShifts) {
+        this.selectedShifts = data.selectedShifts;
+      }
+      if (data.selectedTypes) {
+        this.selectedTypes = data.selectedTypes;
+      }
+      if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
+        this.selectedPositions = data.selectedPositions;
+      }
+      if (data.userID && data.acct !== 0) {
+        this.uid = data.userID;
+        this.getSavedJobs();
+      }
+    }
+    // });
     // const data = this.$store.state;
     // console.log(data);
   },

@@ -184,8 +184,6 @@
 <script>
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import Store from '@/store';
-import VuexLS from '@/store/persist';
 import gql from 'graphql-tag';
 import axios from 'axios';
 import EventBus from '@/EventBus';
@@ -320,14 +318,12 @@ export default {
     },
     lo() {
       this.acct = 0;
-      this.$store.commit({ type: 'resetState' });
+      this.$store.commit({ type: 'logout' });
       this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
     },
     logout() {
       EventBus.$emit('logout');
-      this.$store.commit({
-        type: 'resetState',
-      });
+      this.$store.commit({ type: 'resetState' });
       axios.get('/auth/logout').then(() => {
       }, (error) => {
         this.$error(error);
@@ -344,7 +340,7 @@ export default {
     },
     l1() {
       this.acct = 1;
-      Store.commit({
+      this.$store.commit({
         type: 'setAcct',
         acct: 1,
       });
@@ -354,7 +350,7 @@ export default {
     },
     l2() {
       this.acct = 2;
-      Store.commit({
+      this.$store.commit({
         type: 'setAcct',
         acct: 2,
       });
@@ -365,7 +361,7 @@ export default {
       this.$router.push(route);
     },
     getNumNotifications() {
-      if (this.acct === 0 || !Store.state.userID) {
+      if (this.acct === 0 || !this.$store.state.userID) {
         this.numNotifications = 0;
         return;
       }
@@ -384,7 +380,7 @@ export default {
           }
         }`),
         variables: {
-          uid: Store.state.userID,
+          uid: this.$store.state.userID,
         },
       }).then((res) => {
         const n = res.data.findAccount.notifications;
@@ -475,17 +471,6 @@ export default {
         this.lo();
       }
     });
-    VuexLS.restoreState('vuex',  window.localStorage);
-
-    /* .then((data) => {
-      if (data) {
-        if (data.acct) {
-          this.acct = data.acct;
-        } else {
-          this.acct = 0;
-        }
-      }
-    }); */
   },
   computed: {
     devmode() {

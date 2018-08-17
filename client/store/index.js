@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexLS from './persist';
+// import VuexPersistence from 'vuex-persist';
 // import Cookies from 'js-cookie';
 
 Vue.use(Vuex);
@@ -87,8 +88,14 @@ const Store = new Vuex.Store({
       };
     },
     notNewUser(state) {
-      console.log('TESTING');
       state.newUser = false;
+    },
+    logout(state) {
+      state.userID = null;
+      state.businessID = null;
+      state.acct = 0;
+      state.bdata = null;
+      state.userdata = null;
     },
     resetState(state) {
       state.userID = null;
@@ -114,12 +121,8 @@ const Store = new Vuex.Store({
   },
   plugins: [VuexLS.plugin],
   getters: {
-    LSstate() {
-      return new Promise(resolve => {
-        VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-          resolve(data);
-        });
-      });
+    LS() {
+      return VuexLS.restoreState('vuex', window.localStorage);
     },
   },
 });
