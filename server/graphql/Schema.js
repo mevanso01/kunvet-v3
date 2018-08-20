@@ -182,7 +182,9 @@ GQC.rootMutation().addFields({
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.Verified,
     ], {
-      createJob: Job.get('$createOne'),
+      ...wrapResolvers(Restrictions.LogRecord, {
+        createJob: Job.get('$createOne'),
+      }),
       ...wrapResolvers(sendNewApplicationNotification, {
         createApplication: Applicant.get('$createOne'),
       }),
