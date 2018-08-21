@@ -1776,6 +1776,7 @@ export default {
       }
     },
     resetData() {
+      this.$store.commit('resetJobProgress');
       Object.assign(this.$data, this.$options.data.call(this));
     },
     fetchAndSetBusinessData(id) {
@@ -1918,7 +1919,6 @@ export default {
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
-        console.log('new user', this.$store.state.newUser);
         if (this.$store.state.newUser) {
           this.dialogs.welcome = true;
           this.$store.commit('notNewUser');
@@ -1968,7 +1968,6 @@ export default {
     });
     VueGoogleMaps.loaded.then(() => {
       if (!this.autocomplete || !this.geocoder) {
-        console.log('Test', window.google);
         const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
         input.setAttribute('placeholder', '');
         this.autocomplete = new window.google.maps.places.Autocomplete(input);

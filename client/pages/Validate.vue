@@ -26,7 +26,8 @@
           <template v-if="isLoggedIn">
             <div  v-if="wasEditingJob" class="general-submit" @click="goTo('/createjob')">
               <div class="general-submit-default">
-                  <span>CONTINUE EDITING YOUR JOB</span>
+                  <span v-if="readyToPost">POST YOUR JOB</span>
+                  <span v-else>CONTINUE EDITING YOUR JOB</span>
               </div>
             </div>
             <div v-else class="general-submit" @click="goTo('/account')">
@@ -49,7 +50,6 @@
 </template>
 <script>
 import axios from 'axios';
-import VuexLS from '@/store/persist';
 
 export default {
   props: ['code'],
@@ -60,6 +60,7 @@ export default {
       isLoggedIn: true,
       dne: null,
       wasEditingJob: false,
+      readyToPost: false,
     };
   },
   activated() {
@@ -67,13 +68,10 @@ export default {
     if (this.$store.state) {
       if (this.$store.state.currentJobProgress.jobId) {
         this.wasEditingJob = true;
-      }
-    } else {
-      VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-        if (data.currentJobProgress.jobId) {
-          this.wasEditingJob = true;
+        if (this.$store.state.currentJobProgress.postOnOpen) {
+          this.readyToPost = true;
         }
-      });
+      }
     }
     this.validateCode();
   },
