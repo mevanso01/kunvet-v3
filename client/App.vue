@@ -336,7 +336,11 @@ export default {
     async setProfilePic(uid = null, bid = null) {
       const userID = uid || this.$store.state.userID;
       const businessID = bid || this.$store.state.default_org;
-      this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
+      if (userID) {
+        this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
+      } else {
+        this.profilePic = '';
+      }
     },
     l1() {
       this.acct = 1;

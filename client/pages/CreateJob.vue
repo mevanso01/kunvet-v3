@@ -329,6 +329,22 @@
     }
   }
 }
+table.welcome-table {
+  padding-left: 8px;
+  padding-right: 16px;
+}
+table.welcome-table td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+table.welcome-table td.image-td {
+  min-width: 68px;
+}
+table.welcome-table img {
+  height: 38px;
+  display: block;
+  margin: auto;
+}
 </style>
 
 <template>
@@ -503,9 +519,9 @@
                  </v-alert>
                 </v-flex>
               </v-layout>
-              <p class="mb-1">This is here only for testing</p>
+              <!-- <p class="mb-1">This is here only for testing</p>
               <a @click="tab = 'verify-email'">Test verify</a>
-              <a @click="tab = 'success-tab'">Test success</a>
+              <a @click="tab = 'success-tab'">Test success</a> -->
             </div>
           </v-tab-item>
           <v-tab-item id="1">
@@ -837,24 +853,22 @@
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <br>
-              <h4 class="cust-subheader mb-2">Your job is saved and ready to post! Just one last thing:</h4>
-              <p>Before we can display your job, we need you to verify your email.
-                Please check your inbox for an email from us with a special link to verify your email.
-                Once you've verified your email, you should be able to post your job.</p>
+              <h4 class="cust-subheader mb-2 center">Verify your email</h4>
+              <p class="center">
+                Before we can display your job, we need you to verify your email.<br>
+                We've sent a verification email to <strong style="color: #333;">{{ this.email }}</strong> to make sure you own it.
+              </p>
               <br>
-              <p>We've sent a verification email to <strong style="color: #333;">{{ this.email }}</strong></p>
-
-              <br>
-              <p>If you haven't received it yet, please check that the email address above is correct.<br>
-                 You can request to <a @click="resendEmail">resend email</a>, or <a @click="openChangeEmail">edit email address</a></p>
-              <p style="opacity: 0.45">If you've already verified your email, simply refresh this page.</p>
-              <p v-if="loading">
+              <p class="center">
+                If you haven't received it yet, please check that the email address above is correct.<br>
+                You can request to <a @click="resendEmail">resend email</a>, or <a @click="openChangeEmail">edit email address</a>
+              </p>
+              <p style="opacity: 0.45" class="center">If you've already verified your email, simply refresh this page.</p>
+              <p v-if="loading" class="center">
                 <span style="padding: 0 4px;">
                   <v-progress-circular indeterminate :size="16" :width="2" color="red darken-1"></v-progress-circular>
                 </span>
-                Loading...
               </p>
-              <p v-else-if="emailSent">Email sent!</p>
             </div>
           </v-tab-item>
           <v-tab-item id="success-tab">
@@ -896,9 +910,41 @@
 
       <v-dialog v-model="dialogs.welcome">
         <v-card>
-          <v-card-text>
-            <div class="headline">Welcome to Kunvet!</div>
+          <v-card-text style="padding-bottom: 24px;">
+            <img :src="welcomeImg" style="display: block; margin: auto; max-height: 42px; max-width: 100%;" alt="welcome"/>
+            <p class="center mb-0 mt-3">How it works:</p>
+            <table class="welcome-table">
+              <tr>
+                <td class="image-td">
+                  <img :src="svgs.pencil" alt=""/>
+                </td>
+                <td>
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Fill out job description</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img :src="svgs.paper" alt=""/>
+                </td>
+                <td>
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0; line-height: 20px;">Choose how you want students to apply</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img :src="svgs.handshake" alt=""/>
+                </td>
+                <td>
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your job (for free!)</p>
+                </td>
+              </tr>
+            </table>
           </v-card-text>
+          <div class="general-submit small" @click="dialogs.welcome = false;">
+            <div class="general-submit-default" >
+              <span style="font-size: 18px; font-weight: 400;">Okay, lets get started</span>
+            </div>
+          </div>
         </v-card>
       </v-dialog>
 
@@ -992,14 +1038,10 @@ import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
 import Config from 'config';
 import * as VueGoogleMaps from 'vue2-google-maps';
-// import Vue from 'vue';
-
-// Vue.use(VueGoogleMaps, {
-//   load: {
-//     key: Config.get('googleMapsKey'),
-//     libraries: 'places',
-//   },
-// });
+import Asset59 from '@/assets/icons/Asset(59).svg';
+import Asset77 from '@/assets/icons/Asset77.svg';
+import Asset78 from '@/assets/icons/Asset78.svg';
+import Welcome3 from '@/assets/images/welcome3.jpg';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -1156,9 +1198,16 @@ export default {
         changeEmail: false,
         welcome: false,
       },
+      svgs: {
+        pencil: Asset77,
+        paper: Asset78,
+        handshake: Asset59,
+      },
+      welcomeImg: Welcome3,
       snackbar: false,
       snackbarText: '',
       pageloading: true,
+      previouslyEnteredEmail: null,
     };
   },
   computed: {
@@ -1298,7 +1347,6 @@ export default {
       return [];
     },
     async createAccount() {
-      // const headers = { emulateJSON: true };
       const isBusiness = Boolean(this.business_name);
       const data = {
         email: this.email,
@@ -1319,16 +1367,19 @@ export default {
       var userId;
       var orgId;
       var ret = { registered: false, loggedIn: false, error: null };
+      // sending jobInfo will create a new job
+      if (this.jobId) { data.jobInfo = null; }
       this.loading = true;
       await axios.post('/auth/register2', data).then((res) => {
+        console.log('REGISTER RES', res);
         this.loading = false;
-        console.log('RES', res);
         if (res.data.success) {
           userId = res.data.message.userId;
           orgId = res.data.message.orgId;
-          this.jobId = res.data.message.jobId;
+          this.jobId = res.data.message.jobId ? res.data.message.jobId : this.jobId;
           this.setJobProgress();
           this.job.posted_by = data.business_name ? data.business_name : `${data.fname} ${data.lname}`;
+          this.previouslyEnteredEmail = data.email;
           registerSuccess = true;
           ret.registered = true;
         } else if (res.data.message === 'Email exists but not verified') {
@@ -1347,17 +1398,18 @@ export default {
       });
       if (registerSuccess) {
         // Log in after registering
-        if (!this.uid) {
+        if (!this.uid || this.previouslyEnteredEmail !== data.email) {
           this.$debug('trying to log into new account');
           await axios.post('/auth/login', {
             email: data.email,
             password: data.pwd,
           }).then((res) => {
-            this.$debug('login response', res);
+            console.log('LOGIN RES', res);
             if (res.data.success) {
               // Logged in successfully
               this.uid = userId;
               this.orgId = orgId;
+              this.$store.commit({ type: 'setAcctID', id: userId });
               if (isBusiness) {
                 EventBus.$emit('business');
               } else {
@@ -1370,7 +1422,7 @@ export default {
             }
           }).catch((error) => {
             ret.error = error;
-            this.$error(error);
+            this.$error('Error logging into an account after register', error);
           });
         } else {
           this.orgId = orgId;
@@ -1455,7 +1507,7 @@ export default {
       }
     },
     updateJob() {
-      if (this.jobId && this.job.title && !this.job.active) {
+      if (this.jobId && this.job.title && !this.job.active && this.$store.state.userID) {
         this.saveJob();
       }
     },
@@ -1496,7 +1548,7 @@ export default {
           if (!job.active) {
             this.setJobProgress();
           } else {
-            this.$store.commit({ type: 'resetJobProgress' });
+            this.$store.commit('resetJobProgress');
           }
           if (viewJob) {
             if (this.email_verified) {
@@ -1669,7 +1721,16 @@ export default {
           break;
         }
       }
-      this.tab = tabToOpen;
+      if (this.$store.state.currentJobProgress.postOnOpen) {
+        try {
+          this.postJob();
+        } catch (e) {
+          this.$error('Error posting job on reopen', e);
+          this.tab = tabToOpen;
+        }
+      } else {
+        this.tab = tabToOpen;
+      }
       this.dialogs.reopeningJob = false;
     },
     async getJobData(_id) {
@@ -1834,7 +1895,7 @@ export default {
         if (res.data.noUnverified) {
           this.email_verified = true;
         } else if (res.data.success) {
-          this.emailSent = true;
+          this.openSnackbar('Email sent');
         } else {
           this.emailSent = null;
         }
@@ -1855,8 +1916,7 @@ export default {
         this.dialogs.changeEmail = false;
         if (res.data.success) {
           this.email = this.newEmail;
-          this.snackbarText = 'Success! Check your inbox.';
-          this.snackbar = true;
+          this.openSnackbar('Success! Check your inbox.');
         } else {
           this.dialogs.errorOccured = true;
         }
@@ -1900,6 +1960,10 @@ export default {
       if (this.job.address) {
         this.setLatLongs();
       }
+    },
+    openSnackbar(text) {
+      this.snackbarText = text;
+      this.snackbar = true;
     },
   },
   activated() {

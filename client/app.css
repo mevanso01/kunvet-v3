@@ -880,6 +880,11 @@ body {
     text-align: center;
     overflow: hidden;
 }
+.general-submit.small {
+  height: 50px;
+  line-height: 50px;
+  font-weight: 400;
+}
 #general-submit-default,
 .general-submit-default {
     position: absolute;
@@ -890,6 +895,10 @@ body {
     height: 64px;
     line-height: 64px;
     cursor: pointer;
+}
+.general-submit.small .general-submit-default {
+  height: 50px;
+  line-height: 50px;
 }
 #general-submit-error {
     position: absolute;

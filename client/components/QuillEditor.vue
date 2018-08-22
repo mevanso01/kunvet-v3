@@ -153,7 +153,6 @@ export default {
       }
       if (options.charLimit) {
         const charCount = trimmedText.length;
-        console.log(charCount);
         this.charCount = charCount;
         if (validated && charCount > options.charLimit) {
           validated = false;
