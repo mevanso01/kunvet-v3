@@ -627,7 +627,7 @@
         } else if (data.businessID) {
           this.fetchBusinessData();
         }
-        await this.fillUpJobs(); // Depends on this.b_data being filled.
+        this.fillUpJobs(); // Depends on this.bdata being filled.
       } else if (data.acct === 1) {
         this.$router.push('/account');
       } else {
