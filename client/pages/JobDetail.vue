@@ -450,7 +450,6 @@ import siSvg from '@/assets/icons/Asset(37).svg';
 import Asset46 from '@/assets/icons/Asset(46).svg';
 import Asset41 from '@/assets/icons/Asset(41).svg';
 import sanitizeHtml from 'sanitize-html';
-import VuexLS from '@/store/persist';
 import { degreeStringToDb } from '@/constants/degrees';
 import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
@@ -967,13 +966,6 @@ export default {
       this.uid = this.$store.state.userID;
       this._checkIsApplied();
       this.getSavedJobs();
-    } else {
-      VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-        if (data.userID) {
-          this.uid = data.userID;
-          this._checkIsApplied();
-        }
-      });
     }
   },
   deactivated() {

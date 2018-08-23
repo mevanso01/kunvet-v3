@@ -1908,7 +1908,7 @@ export default {
         if (res.data.noUnverified) {
           this.email_verified = true;
         } else if (res.data.success) {
-          this.openSnackbar('Email sent');
+          this.openSnackbar('Email sent.');
         } else {
           this.emailSent = null;
         }

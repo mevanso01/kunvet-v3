@@ -81,8 +81,6 @@
 </template>
 <script>
   import gql from 'graphql-tag';
-  import VuexLS from '@/store/persist';
-
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import ReviewsSvg from '@/assets/job_posts/messages_1.svg';
   import StudentSvg from '@/assets/job_posts/user_1.svg';
@@ -178,26 +176,16 @@
       },
     },
     created() {
-      if (!this.$store.state.acct) {
-        VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-          if (data.bdata && data.acct === 2) {
-            // this.user = data.bdata.business_name;
-            this.getData();
-          } else if (data.userdata && data.acct === 1) {
-            // this.user = `${data.userdata.firstname} ${data.userdata.lastname}`;
-            this.getData();
-          } else {
-            this.$router.push('/login');
-          }
-        });
-      } else if (this.$store.state.acct === 2) {
-        // this.user = this.$store.state.bdata.business_name;
-        this.getData();
-      } else if (this.$store.state.acct === 1) {
-        // this.user = this.$store.state.userdata.firstname + this.$store.state.userdata.lastname;
-        this.getData();
-      } else {
-        this.$router.push('/login');
+      if (this.$store.state.acct) {
+        if (this.$store.state.acct === 2) {
+          // this.user = this.$store.state.bdata.business_name;
+          this.getData();
+        } else if (this.$store.state.acct === 1) {
+          // this.user = this.$store.state.userdata.firstname + this.$store.state.userdata.lastname;
+          this.getData();
+        } else {
+          this.$router.push('/login');
+        }
       }
     },
   };

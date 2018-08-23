@@ -203,7 +203,6 @@
 </template>
 <script>
   import gql from 'graphql-tag';
-  import VuexLS from '@/store/persist';
   import InformationSvg from '@/assets/job_posts/information.svg';
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import StudentSvg from '@/assets/job_posts/user_1.svg';
@@ -225,18 +224,11 @@
     }`;
 
   export default {
-    created() {
-      if (!this.$store.state.acct) {
-        VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-          if (data.bdata && data.acct === 0) {
-            this.$router.push('/login');
-          }
-        });
-      } else if (this.$store.state.acct === 0) {
-        this.$router.push('/login');
-      }
-    },
     activated() {
+      if (this.$store.state.acct === 0) {
+        this.$router.push('/login');
+        return;
+      }
       this.getData();
     },
     data() {

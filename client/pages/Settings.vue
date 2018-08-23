@@ -62,7 +62,6 @@
 <script>
   import EventBus from '@/EventBus';
   import Axios from 'axios';
-  import VuexLS from '@/store/persist';
   import gql from 'graphql-tag';
   import SwitchAccount from '@/components/SwitchAccount';
 
@@ -324,18 +323,7 @@
         this.uid = this.$store.state.userID;
         this.loadAcctData();
       } else {
-        VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
-          if (data.acct === 2) {
-            this.uid = data.userID;
-            this.loadOrgData(data.businessID);
-            this.loadAcctData();
-          } else if (data.acct === 1) {
-            this.loadAcctData();
-          } else {
-            // not logged in
-            this.$router.push('/login');
-          }
-        });
+        this.$router.push('/login');
       }
     },
   };

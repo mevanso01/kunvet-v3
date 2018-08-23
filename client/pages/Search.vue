@@ -786,11 +786,7 @@ export default {
     this.setSelectedLatlongs();
     this.loadInitialJobs();
     document.addEventListener('click', this.documentClick, { passive: true });
-    // VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-    const LSdata = this.$store.getters.LS;
     const data = this.$store.state;
-    console.log('data', data);
-    console.log('LS data', LSdata);
     if (data) {
       if (data.firstSearch) {
         this.firstSearch = data.firstSearch;

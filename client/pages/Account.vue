@@ -538,7 +538,6 @@
 <script>
   import App from '@/App';
   import gql from 'graphql-tag';
-  // import VuexLS from '@/store/persist';
   import axios from 'axios';
   import Config from 'config';
   import EventBus from '@/EventBus';
