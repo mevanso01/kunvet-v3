@@ -264,6 +264,9 @@
     margin: 6px 8px;
     line-height: 36px;
   }
+  .hide-error-messages .v-text-field__details {
+    display: none;
+  }
   @media (max-width: 435px) {
     .work-hours {
       min-height: 114px;
@@ -319,6 +322,8 @@
     }
   }
 }
+/* End of create-job-container scope */
+
 @media (max-width: 600px) {
   .create-job-container {
     padding-left: 0;
@@ -399,7 +404,7 @@ table.welcome-table img {
                         required
                       ></v-text-field>
                       <v-text-field
-                        label="Email"
+                        label="Email" :class="{ 'hide-error-messages': emailExists }"
                         v-model="email" ref="emailField"
                         :rules="[
                           v => !!v || 'Email is required',
@@ -410,6 +415,13 @@ table.welcome-table img {
                         @blur="checkIfEmailExists()"
                         required
                       ></v-text-field>
+                      <div v-show="emailExists" class="v-text-field__details">
+                        <div class="v-messages error--text">
+                          <div class="v-messages__wrapper">
+                            <div class="v-messages__message">An account with this email already exists <router-link to="/login" style="text-decoration: underline;">Login</router-link></div>
+                          </div>
+                        </div>
+                      </div>
                       <v-text-field v-if="!uid"
                         label="Create password"
                         v-model="password"
@@ -932,7 +944,7 @@ table.welcome-table img {
               </tr>
               <tr>
                 <td>
-                  <img :src="svgs.handshake" alt=""/>
+                  <img :src="svgs.paperAirplane" alt=""/>
                 </td>
                 <td>
                   <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your job (for free!)</p>
@@ -1038,9 +1050,9 @@ import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
 import Config from 'config';
 import * as VueGoogleMaps from 'vue2-google-maps';
-import Asset59 from '@/assets/icons/Asset(59).svg';
 import Asset77 from '@/assets/icons/Asset77.svg';
 import Asset78 from '@/assets/icons/Asset78.svg';
+import Asset79 from '@/assets/icons/Asset79.svg';
 import Welcome3 from '@/assets/images/welcome3.jpg';
 
 const createJobMutation = gql`
@@ -1201,7 +1213,7 @@ export default {
       svgs: {
         pencil: Asset77,
         paper: Asset78,
-        handshake: Asset59,
+        paperAirplane: Asset79,
       },
       welcomeImg: Welcome3,
       snackbar: false,
@@ -1433,6 +1445,7 @@ export default {
     },
     checkIfEmailExists() {
       const data = { email: this.email };
+      this.emailExists = false;
       axios.post('/auth/checkIfExists', data).then((res) => {
         if (res.data.success) {
           this.emailExists = res.data.exists;
