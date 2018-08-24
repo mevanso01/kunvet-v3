@@ -88,7 +88,7 @@
                 <span style="color: grey;">
                   Repost in {{ getRepostDaysString(job.date) }}
                 </span>
-                <router-link :to="`/createnewjob/${job._id}`">
+                <router-link :to="`/editjob/${job._id}`">
                   <v-icon style="margin-left: 5px;">edit</v-icon>
                 </router-link>
                 <v-icon style="cursor: pointer; margin-left: 5px;" @click="onShowJobDialog(job)">delete</v-icon>
@@ -143,7 +143,7 @@
               >
                 Repost
               </v-btn>
-              <router-link :to="`/createnewjob/${job._id}`">
+              <router-link :to="`/editjob/${job._id}`">
                 <v-icon>edit</v-icon>
               </router-link>
               <v-icon @click="onShowJobDialog(job)">delete</v-icon>

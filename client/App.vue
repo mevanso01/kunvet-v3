@@ -115,7 +115,7 @@
       </v-toolbar-items>
       <v-spacer />
       <v-toolbar-items>
-        <v-btn flat small :ripple="false" class="job-post__helper-nav-bar__post-a-job" :to="'/createnewjob'">
+        <v-btn flat small :ripple="false" class="job-post__helper-nav-bar__post-a-job" :to="'/createjob'">
           <i class="fa fa-edit job-post__helper-nav-bar__post-a-job__icon" /><span>Post a Job</span>
         </v-btn>
       </v-toolbar-items>
@@ -279,14 +279,14 @@ export default {
             { title: 'Settings', href: '/settings' },
           ],
           [
-            { title: 'Post Individual Job',  href: '/createnewjob' },
+            { title: 'Post Individual Job',  href: '/createjob' },
             { title: 'My Posted Jobs', href: '/myjobs' },
             { title: 'My Applicants', href: '/applicants' },
           ],
         ],
         [
           [
-            { title: 'Post New Job',  href: '/createnewjob' },
+            { title: 'Post New Job',  href: '/createjob' },
             { title: 'My Posted Jobs', href: '/myjobs' },
             { title: 'Applicants', href: '/applicants' },
           ],
@@ -489,13 +489,13 @@ export default {
 </script>
 <style lang="scss">
 // @import '../node_modules/vuetify/dist/vuetify.min.css';
-@import 'app.css';
-@import 'account.css';
-@import 'applicants.css';
-@import 'buttons.css';
-@import 'job_pages.css';
-@import 'nav.css';
-@import 'postsAndSearch.css';
+@import 'css/app.css';
+@import 'css/account.css';
+@import 'css/applicants.css';
+@import 'css/buttons.css';
+@import 'css/job_pages.css';
+@import 'css/nav.css';
+@import 'css/postsAndSearch.css';
 
 body, html {
   height: 100%;
