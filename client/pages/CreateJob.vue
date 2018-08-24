@@ -1373,7 +1373,12 @@ export default {
       this.dialogs.reopeningJob = true;
       await this.getJobData(_id);
       if (this.job.active && this.jobId) {
-        this.$router.push(`/editjob/${this.jobId}`);
+        if (this.$route.params.id) {
+          this.$router.push(`/editjob/${this.jobId}`);
+        } else {
+          this.resetData();
+        }
+        return;
       }
       let tabToOpen = '2'; // open last tab in case all tabs are valid
       for (var i = 0; i < 3; i++) {
