@@ -29,7 +29,7 @@
             </div>
             <div class="btn-holder">
               <div class="btn-holder__right-elements">
-                <router-link :to="`/createnewjob/${job._id}`">
+                <router-link :to="`/createjob/${job._id}`">
                   <v-btn class="kunvet-accept-small-btn">
                     Continue Editing
                   </v-btn>

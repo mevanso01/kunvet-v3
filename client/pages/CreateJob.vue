@@ -1632,13 +1632,6 @@ export default {
     },
   },
   activated() {
-    // TO MAKE PAGE ACCESSIBLE ON DEV ONLY. REMOVE WHEN COMPLETE
-    if (window.location.href.indexOf('https://kunvet.com/') !== -1 ||
-        window.location.href.indexOf('http://kunvet.com/') !== -1) {
-      this.$router.push('/createnewjob');
-      return;
-    }
-
     if (this.tab === 'success-tab') {
       this.resetData();
     }
