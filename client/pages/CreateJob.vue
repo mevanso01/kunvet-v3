@@ -1176,7 +1176,7 @@ export default {
     updateActiveJob() {
       this.validateBeforePosting();
       if (this.valid && this.$route.params.id) {
-        this.active = true;
+        this.job.active = true;
         this.saveJob();
       }
     },
@@ -1372,6 +1372,9 @@ export default {
     async reopenExistingJob(_id) {
       this.dialogs.reopeningJob = true;
       await this.getJobData(_id);
+      if (this.job.active && this.jobId) {
+        this.$router.push(`/editjob/${this.jobId}`);
+      }
       let tabToOpen = '2'; // open last tab in case all tabs are valid
       for (var i = 0; i < 3; i++) {
         const valid = this.$refs[`form${i + 1}`].validate();
@@ -1712,7 +1715,6 @@ export default {
     if (this.$route.params.id) {
       this.reopenExistingJob(this.$route.params.id);
     } else if (this.$store.state && this.$store.state.currentJobProgress.jobId) {
-      console.log('Reopening', this.$store.state.currentJobProgress.jobId);
       this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
     }
   },
