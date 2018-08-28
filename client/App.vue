@@ -31,7 +31,7 @@
             <v-btn flat>{{ item.title }}</v-btn>
           </router-link>
           <div style="padding-top: 18px; padding-left: 16px;">
-            <router-link to="/employers">
+            <router-link to="/createjob">
               <v-btn class="kunvet-red post-a-job-button" outline>Post a Job</v-btn>
             </router-link>
           </div>
@@ -264,7 +264,7 @@ export default {
           [
             { title: 'Login', icon: null, href: '/login' },
             { title: 'Sign up', icon: null, href: '/signup' },
-            { title: 'Post a Job', icon: null, href: '/employers' },
+            { title: 'Post a Job', icon: null, href: '/createjob' },
           ],
         ],
         [

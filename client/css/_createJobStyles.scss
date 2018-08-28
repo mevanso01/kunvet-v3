@@ -320,6 +320,11 @@
     .special-flex-1 {
       padding: 0 10px;
     }
+    .use-a-form-option label::after {
+      content: '(e.g. Google Forms)';
+      padding-left: 5px;
+      color: #979797;
+    }
   }
 }
 /* End of create-job-container scope */

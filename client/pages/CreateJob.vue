@@ -420,18 +420,22 @@
                   </v-flex>
                 </v-layout>
                 <br>
-                <h4 class="cust-subheader mb-1">Application options <span class="optional-color">(Optional)</span></h4>
-                <p>
-                  The applicant's info and resume will be sent to your email when they apply.<br>
-                  You can also browse through all your applicants in the applicants page.
+                <h4 class="cust-subheader mb-1">Application options</h4>
+                <p class="mb-2">
+                  By default, the applicant's info and resume will be sent to your email when they apply.<br>
+                  <span style="color: #333; font-weight: 500;">Note:</span> You can also browse through all your applicants in the applicants page.
                 </p>
-                <p class="mb-1">If you would like to use an online form that doesn't require sign-up instead, check the box below.</p>
+                <v-radio-group class="mt-0" v-model="useGForm" hide-details>
+                  <v-radio label="Send resumes to my email" :value="false"></v-radio>
+                  <v-radio label="Use a form that doesn't require signup instead" :value="true" class="mb-0 use-a-form-option"></v-radio>
+                </v-radio-group>
+                <!-- <p class="mb-1">If you would like to use an online form that doesn't require sign-up instead, check the box below.</p>
                 <v-checkbox
                   class="optional online-form-checkbox mt-0"
                   label="Don't send resumes to my email, I have an online form "
                   v-model="useGForm"
                   hide-details
-                ></v-checkbox>
+                ></v-checkbox> -->
                 <div v-if="useGForm">
                   <v-text-field style="max-width: 500px;"
                     v-model="gformLink"
