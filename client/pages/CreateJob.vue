@@ -390,14 +390,6 @@
                     Click here to review
                   </a>
                 </v-flex>
-                <v-flex xs12 sm9 md6 v-if="job.active" class="special-flex-1">
-                  <v-card>
-                    <v-card-text>
-                      This job is now active!<br>
-                      You can click any of the above sections to go back and edit them.
-                    </v-card-text>
-                  </v-card>
-                </v-flex>
               </v-layout>
             </div>
             <div class="main-cont-large">
