@@ -1125,7 +1125,7 @@ export default {
     postJob() {
       if (!this.loading) {
         this.loading = true;
-        this.job.active = this.email_verified; // should be true
+        this.job.active = true; // this.email_verified; // should be true
         this.saveJob(true); // pass in true to view job
       }
     },
@@ -1368,12 +1368,13 @@ export default {
     async reopenExistingJob(_id) {
       this.dialogs.reopeningJob = true;
       await this.getJobData(_id);
-      if (this.job.active && this.jobId) {
+      if (this.job.active && this.jobId && (!this.$store.state.currentJobProgress || !this.$store.state.currentJobProgress.postOnOpen)) {
         if (this.$route.params.id) {
           this.$router.push(`/editjob/${this.jobId}`);
         } else {
           this.resetData();
         }
+        this.dialogs.reopeningJob = false;
         return;
       }
       let tabToOpen = '2'; // open last tab in case all tabs are valid
@@ -1387,7 +1388,7 @@ export default {
           break;
         }
       }
-      if (this.$store.state.currentJobProgress.postOnOpen) {
+      if (tabToOpen === '2' && this.$store.state.currentJobProgress.postOnOpen) {
         try {
           this.postJob();
         } catch (e) {
@@ -1415,6 +1416,9 @@ export default {
         const job = data.data.findJob;
         if (job) {
           this.jobId = _id;
+          if (!this.job.posted_by) {
+            this.job.posted_by = job.posted_by;
+          }
           this.job.title = job.title;
           this.job.active = job.active;
           this.job.date = job.date;
@@ -1704,13 +1708,6 @@ export default {
         this.setLatLongs();
       }
     });
-  },
-  created() {
-    if (this.$route.params.id) {
-      this.reopenExistingJob(this.$route.params.id);
-    } else if (this.$store.state && this.$store.state.currentJobProgress.jobId) {
-      this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
-    }
   },
   deactivated() {
     this.updateJob();

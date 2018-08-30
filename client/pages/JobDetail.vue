@@ -956,7 +956,7 @@ export default {
   activated() {
     this.resetData();
     this.getData();
-    if (document.documentElement.offsetWidth <= 960) {
+    if (document.documentElement.offsetWidth <= 600) {
       this.stickToBottom = true;
     } else {
       this.stickToBottom = false;

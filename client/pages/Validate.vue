@@ -21,12 +21,12 @@
         </div>
         <div v-else class="main-cont-small" style="max-width: 420px;">
           <div style="padding: 25px 20px">
-            <h3 class="headline mb-0 mt-0 center" style="color: #4d4d4d;">Thanks for verifying! You're all set!</h3>
+            <h3 class="headline mb-1 mt-0 center" style="color: #4d4d4d;">Thanks for verifying! You're all set!</h3>
           </div>
           <template v-if="isLoggedIn">
             <div  v-if="wasEditingJob" class="general-submit" @click="goTo('/createjob')">
               <div class="general-submit-default">
-                  <span v-if="readyToPost">POST YOUR JOB</span>
+                  <span v-if="readyToPost">FINISH POSTING MY JOB</span>
                   <span v-else>CONTINUE EDITING YOUR JOB</span>
               </div>
             </div>
@@ -61,12 +61,14 @@ export default {
       dne: null,
       wasEditingJob: false,
       readyToPost: false,
+      jobId: null,
     };
   },
   activated() {
     Object.assign(this.$data, this.$options.data.call(this));
     if (this.$store.state) {
       if (this.$store.state.currentJobProgress.jobId) {
+        this.jobId = this.$store.state.currentJobProgress.jobId;
         this.wasEditingJob = true;
         if (this.$store.state.currentJobProgress.postOnOpen) {
           this.readyToPost = true;
@@ -102,7 +104,13 @@ export default {
         // }, 1000);
       }
     },
-    goTo(route) {
+    goTo(_route) {
+      var route = '/';
+      if (_route === '/createjob' && this.jobId) {
+        route = `/createjob/${this.jobId}`;
+      } else {
+        route = _route;
+      }
       this.$router.push(route);
     },
   },
