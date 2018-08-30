@@ -536,8 +536,8 @@
               <div class="cust-spacer"></div>
               <h4 class="cust-subheader mb-2">Success! Your job is now posted!</h4>
               <p>
-                <span v-show="postingAs === 'business' && !userdata.profile_pic">
-                  What next? To make your listings look even better, we suggest you head over to your account and set a logo for your company<br>
+                <span v-show="postingAs === 'business' && !bdata.profile_pic">
+                  <span style="color: #333; font-weight: 500;">What next?</span> To make your listings look even better, we suggest you head over to your account and set a logo for your company.<br>
                 </span>
                 Click the button below to view your job. If you need to make edits, you can do so in the Jobs tab.
               </p>
@@ -545,7 +545,7 @@
               <v-layout row wrap>
                 <v-flex xs12 class="no-padding">
                   <v-btn class="ml-0 kunvet-red-bg" dark :href="`/job/${jobId}`">View your job</v-btn>
-                  <v-btn v-show="postingAs === 'business' && !userdata.profile_pic" class="kunvet-red-bg" dark href="/account">Go to your account</v-btn>
+                  <v-btn v-show="postingAs === 'business' && !bdata.profile_pic" class="kunvet-red-bg" dark href="/myorg">Go to your account</v-btn>
                 </v-flex>
               </v-layout>
             </div>
