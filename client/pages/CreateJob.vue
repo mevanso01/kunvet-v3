@@ -484,6 +484,7 @@
               </v-flex>
             </div>
           </v-tab-item>
+
           <v-tab-item id="review-tab">
             <div class="main-cont-large" style="margin-bottom: 16px;">
               <div class="cust-spacer"></div>
@@ -507,13 +508,14 @@
               </div>
             </div>
           </v-tab-item>
+
           <v-tab-item id="verify-email">
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <br>
               <h4 class="cust-subheader mb-2 center">Verify your email</h4>
               <p class="center">
-                Before we can display your job, we need you to verify your email.<br>
+                Before we can display your job, we need you to verify your email.<span class="hidden-xs" hidden-xs><br></span>
                 We've sent a verification email to <strong style="color: #333;">{{ this.email }}</strong> to make sure you own it.
               </p>
               <br>
@@ -1125,7 +1127,7 @@ export default {
     postJob() {
       if (!this.loading) {
         this.loading = true;
-        this.job.active = true; // this.email_verified; // should be true
+        this.job.active = this.email_verified; // should be true
         this.saveJob(true); // pass in true to view job
       }
     },
