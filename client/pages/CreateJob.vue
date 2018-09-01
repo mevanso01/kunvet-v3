@@ -1311,7 +1311,7 @@ export default {
       }
     },
     createJobArray() {
-      const doesJobActivelyExist = this.job.active;
+      const doesJobActivelyExist = this.job.active && this.job.date;
       const job = {
         user_id: this.uid,
         business_id: this.orgId,
