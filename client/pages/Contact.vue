@@ -7,7 +7,7 @@
                 <p>
                   If you have any questions about Kunvet or need assistance,
                   please don't hesitate to reach us at <a href="mailto:bz@kunvet.com"><b>bz@kunvet.com</b></a> or
-                  call us at <b>949-861-1085</b>
+                  call us at <b>949...</b> actually please email us instead, and we'll get back to you shortly!
                 </p>
             </div>
         </div>
