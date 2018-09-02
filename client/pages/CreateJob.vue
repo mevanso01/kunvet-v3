@@ -1210,14 +1210,19 @@ export default {
             if (this.email_verified) {
               this.tab = 'success-tab';
             } else {
-              this.setJobProgress(true);
+              this.setJobProgress(true); // set postOnOpen to true
               this.tab = 'verify-email';
             }
           }
         }).catch((err) => {
           this.loading = false;
           this.dialogs.confirmPost = false;
-          this.dialogs.errorOccured = true;
+          if (this.$store.state && this.$store.state.currentJobProgress && this.$store.state.currentJobProgress.postOnOpen) {
+            this.setJobProgress(); // set postOnOpen back to false
+            this.tab = '2';
+          } else {
+            this.dialogs.errorOccured = true;
+          }
           this.$error(err);
         });
       } else {
