@@ -121,16 +121,16 @@ const router = new VueRouter({
     },
     {
       path: '/createjob',
-      component: () => import('@/pages/CreateJob'),
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
     },
     {
       path: '/createjob/:id',
-      component: () => import('@/pages/CreateJob'),
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
       props: { id: null },
     },
     {
       path: '/editjob/:id',
-      component: () => import('@/pages/EditJob'),
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/EditJob'),
       props: { id: null },
     },
     {
