@@ -918,7 +918,6 @@ export default {
         // Form is valid
         if (n === 1 && !this.email_verified) {
           this.createAccount().then(res => {
-            // console.log('success?', success);
             if (res.registered && res.loggedIn) {
               this._moveToNextTab();
             } else if (res.registered && !res.loggedIn) {
@@ -966,9 +965,6 @@ export default {
         this.tab = (active - 1).toString();
       }
       setTimeout(() => { this.scrollToTop(); }, 300);
-    },
-    tabChanged() {
-      console.log('tab changed', this.tab);
     },
     isTabValid(n) {
       return this[`submit${(n + 1)}Pressed`] && this[`form${(n + 1)}Valid`];
@@ -1030,7 +1026,6 @@ export default {
       if (this.jobId) { data.jobInfo = null; }
       this.loading = true;
       await axios.post('/auth/register2', data).then((res) => {
-        console.log('REGISTER RES', res);
         this.loading = false;
         if (res.data.success) {
           userId = res.data.message.userId;
@@ -1063,7 +1058,6 @@ export default {
             email: data.email,
             password: data.pwd,
           }).then((res) => {
-            console.log('LOGIN RES', res);
             if (res.data.success) {
               // Logged in successfully
               this.uid = userId;
@@ -1182,6 +1176,8 @@ export default {
       if (this.jobId) {
         // SAVE EXISTING JOB
         const job = this.createJobArray();
+        this.$debug('Job info:', job);
+        this.$debug('Email verified:', this.email_verified);
         this.$apollo.mutate({
           mutation: updateJobMutation,
           variables: {
@@ -1604,13 +1600,11 @@ export default {
         if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
           this.geocoder.geocode({ 'address': this.job.address }, (results, status) => {
             if (status === 'OK' && results.length === 1) {
-              // console.log('res', results);
               this.job.latitude = results[0].geometry.location.lat();
               this.job.longitude = results[0].geometry.location.lng();
               this.job.addressValid = true;
               this.$refs.addressField.validate();
             } else {
-              // console.log('Geocode was not successful for the following reason:', status);
               this.job.latitude = null;
               this.job.longitude = null;
               this.job.addressValid = false;
