@@ -228,7 +228,7 @@
 
         <v-container fluid grid-list-sm style="margin-top: 8px;">
           <v-layout row wrap>
-            <v-flex xs4 md3 class="image-container" v-for="image in job.images">
+            <v-flex xs4 md3 class="image-container" v-for="image in job.images" :key="image.cropped">
               <v-btn icon small ripple class="delete-img-btn" @click="showDeletePictureModal(image.cropped)">
                 <v-icon>cancel</v-icon>
               </v-btn>

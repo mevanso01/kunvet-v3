@@ -78,7 +78,7 @@
                         :rules="passwordRules"
                         min="8"
                         :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                        :append-icon-cb="() => (e1 = !e1)"
+                        @click:append="() => (e1 = !e1)"
                         :type="e1 ? 'password' : 'text'"
                         required
                       ></v-text-field>
@@ -1344,7 +1344,7 @@ export default {
       return job;
     },
     async checkForUnpostedJobs() {
-      this.unpostedJobs = [];
+      var unpostedJobs = [];
       await this.$apollo.query({
         // fetchPolicy: 'network-only',
         query: (gql`query ($uid: MongoID, $oid: MongoID) {
@@ -1359,13 +1359,14 @@ export default {
       }).then((data) => {
         if (data.data.findJobs && data.data.findJobs.length > 0) {
           for (var i = 0; i < data.data.findJobs.length; i++) {
-            this.unpostedJobs.push({ title: data.data.findJobs[i].title, id: data.data.findJobs[i]._id });
+            unpostedJobs.push({ title: data.data.findJobs[i].title, id: data.data.findJobs[i]._id });
           }
         }
       }).catch((err) => {
         this.$error(err);
       });
-      return this.unpostedJobs;
+      this.unpostedJobs = unpostedJobs;
+      return unpostedJobs;
     },
     async reopenExistingJob(_id) {
       this.dialogs.reopeningJob = true;
@@ -1471,9 +1472,10 @@ export default {
             this.selectedPositions = job.position_tags.concat();
           }
         } else {
-          this.$error('Tried to reopen existing job but no job found');
+          this.$debug('Tried to reopen existing job but no job found');
           if (!fallback) {
             const unpostedJobs = await this.checkForUnpostedJobs();
+            console.log('unposted jobs', unpostedJobs);
             if (unpostedJobs.length === 1) {
               await this.getJobData(unpostedJobs[0].id, true);
             }
