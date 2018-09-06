@@ -241,7 +241,7 @@
                 />
                 <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/createnewjob">
+                  <router-link to="/createjob">
                     <v-btn class="acct-btn">
                       Post a Job
                     </v-btn>

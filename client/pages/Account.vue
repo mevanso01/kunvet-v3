@@ -349,7 +349,7 @@
                 </p>
                 <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/createnewjob">
+                  <router-link to="/createjob">
                     <v-btn class="acct-btn">
                       Post Personal Jobs
                     </v-btn>

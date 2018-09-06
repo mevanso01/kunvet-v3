@@ -809,9 +809,6 @@ export default {
       type_current: null,
       type2_current: null,
       salary_select: null,
-      description_valid: true,
-      responsibilities_valid: true,
-      experience_valid: true,
       openSelectField: null,
       availableSchools: Schools.schools,
       availablePositions: positions,
@@ -1346,26 +1343,29 @@ export default {
       };
       return job;
     },
-    checkForUnpostedJobs() {
-      this.$apollo.query({
-        query: (gql`query ($user: MongoID) {
-          findJobs(filter: { user_id: $user, active: false, is_deleted: false, expired: false }){
+    async checkForUnpostedJobs() {
+      this.unpostedJobs = [];
+      await this.$apollo.query({
+        // fetchPolicy: 'network-only',
+        query: (gql`query ($uid: MongoID, $oid: MongoID) {
+          findJobs(filter: { user_id: $uid, business_id: $oid, active: false, is_deleted: false, expired: false }){
             ${queries.FindJobRecord}
           }
         }`),
         variables: {
-          user: this.uid,
+          uid: this.uid,
+          oid: this.orgId,
         },
       }).then((data) => {
-        this.unpostedJobs = [];
         if (data.data.findJobs && data.data.findJobs.length > 0) {
           for (var i = 0; i < data.data.findJobs.length; i++) {
             this.unpostedJobs.push({ title: data.data.findJobs[i].title, id: data.data.findJobs[i]._id });
           }
         }
       }).catch((err) => {
-        this.$error('ERROR', err);
+        this.$error(err);
       });
+      return this.unpostedJobs;
     },
     async reopenExistingJob(_id) {
       this.dialogs.reopeningJob = true;
@@ -1402,7 +1402,7 @@ export default {
       }
       this.dialogs.reopeningJob = false;
     },
-    async getJobData(_id) {
+    async getJobData(_id, fallback = false) {
       const uid = this.uid ? this.uid : this.$store.state.userID;
       await this.$apollo.query({
         query: (gql`query ($id: MongoID, $user: MongoID) {
@@ -1414,7 +1414,7 @@ export default {
           user: uid,
           id: _id,
         },
-      }).then((data) => {
+      }).then(async (data) => {
         const job = data.data.findJob;
         if (job) {
           this.jobId = _id;
@@ -1469,6 +1469,14 @@ export default {
           }
           if (job.position_tags) {
             this.selectedPositions = job.position_tags.concat();
+          }
+        } else {
+          this.$error('Tried to reopen existing job but no job found');
+          if (!fallback) {
+            const unpostedJobs = await this.checkForUnpostedJobs();
+            if (unpostedJobs.length === 1) {
+              await this.getJobData(unpostedJobs[0].id, true);
+            }
           }
         }
       }).catch((error) => {
@@ -1644,7 +1652,7 @@ export default {
     if (this.tab === 'success-tab') {
       this.resetData();
     }
-    userDataProvider.getUserData().then(res => {
+    userDataProvider.getUserData().then(async res => {
       this.pageloading = false;
       this.uid = res.uid;
       if (res.acct === 0) {
@@ -1672,7 +1680,8 @@ export default {
           var orgId;
           if (res.userdata.default_org) {
             orgId = res.userdata.default_org;
-          } else if (res.userdata.org_list.length > 0) { // fallback if default_org is not set for some reason
+          } else if (res.userdata.org_list.length > 0) {
+            // fallback if default_org is not set for some reason
             for (var i = 0; i < res.userdata.org_list.length; i++) {
               if (res.userdata.org_list[i]) {
                 orgId = res.userdata.org_list[i];
@@ -1680,6 +1689,7 @@ export default {
               }
             }
           }
+          this.orgId = orgId; // make sure orgId is correctly set before loading unposted jobs
           this.fetchAndSetBusinessData(orgId);
         }
         // See if job progress needs to be restored
@@ -1688,9 +1698,9 @@ export default {
         } else if (this.$store.state && this.$store.state.currentJobProgress.jobId
           && this.$store.state.currentJobProgress.part1Complete && !this.job.title) {
           this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
-        } else {
-          this.checkForUnpostedJobs();
         }
+        // Load unposted jobs
+        this.checkForUnpostedJobs();
         // See if user is returning user. Ideally should be if user has posted job or not.
         if (this.email_verified) {
           this.furthest_tab = 2;
@@ -1715,6 +1725,9 @@ export default {
   },
   deactivated() {
     this.updateJob();
+  },
+  created() {
+    EventBus.$on('logout', this.resetData);
   },
 };
 </script>
