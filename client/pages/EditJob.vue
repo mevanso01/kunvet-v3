@@ -859,6 +859,7 @@ export default {
           if (job.pay_type && job.pay_type !== 'none') {
             this.salary_select = job.pay_type;
             this.job.salary = job.salary;
+            this.job.pay_denomination = job.pay_denomination;
           }
           this.job.major = job.preferred_major;
           this.job.age = job.age;
@@ -873,7 +874,10 @@ export default {
             this.gformLink = job.gform_link;
             this.useGForm = true;
           }
-          this.job.images = job.images.concat();
+          this.job.images = [];
+          for (const image of job.images) {
+            this.job.images.push({ original: null, cropped: image.cropped });
+          }
           if (job.position_tags) {
             this.selectedPositions = job.position_tags.concat();
           }
