@@ -1726,7 +1726,10 @@ export default {
     this.updateJob();
   },
   created() {
-    EventBus.$on('logout', this.resetData);
+    EventBus.$on('logout', () => {
+      console.log('logout');
+      this.resetData();
+    });
   },
 };
 </script>
