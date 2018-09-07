@@ -1523,6 +1523,7 @@ export default {
       }
     },
     resetData() {
+      console.log('Resetting data');
       this.$store.commit('resetJobProgress');
       Object.assign(this.$data, this.$options.data.call(this));
     },
@@ -1701,10 +1702,13 @@ export default {
       if (!this.autocomplete || !this.geocoder) {
         const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
         input.setAttribute('placeholder', '');
-        this.autocomplete = new window.google.maps.places.Autocomplete(input, { types: ['geocode'] });
+        this.autocomplete = new window.google.maps.places.Autocomplete(input);
         this.geocoder = new window.google.maps.Geocoder();
         console.log('google autocomplete', this.autocomplete);
         this.autocomplete.addListener('place_changed', () => {
+          if (!this.autocomplete) {
+            this.autocomplete = new window.google.maps.places.Autocomplete(this.$refs.addressField.$el.getElementsByTagName('input')[0]);
+          }
           this.prevAutocompleteAddress = this.job.address;
           console.log('google autocomplete 2', this.autocomplete);
           console.log('typeof getPlace:', typeof this.autocomplete.getPlace);
