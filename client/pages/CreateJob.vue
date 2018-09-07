@@ -1703,6 +1703,7 @@ export default {
         input.setAttribute('placeholder', '');
         this.autocomplete = new window.google.maps.places.Autocomplete(input);
         this.geocoder = new window.google.maps.Geocoder();
+        console.log('google autocomplete', this.autocomplete);
         this.autocomplete.addListener('place_changed', () => {
           this.prevAutocompleteAddress = this.job.address;
           this.setPlace(this.autocomplete.getPlace());
