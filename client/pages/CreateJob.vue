@@ -1632,19 +1632,6 @@ export default {
         }
       }, 500);
     },
-    initGoogleMaps() {
-      const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
-      input.setAttribute('placeholder', '');
-      this.autocomplete = new window.google.maps.places.Autocomplete(input);
-      this.geocoder = new window.google.maps.Geocoder();
-      this.autocomplete.addListener('place_changed', () => {
-        this.prevAutocompleteAddress = this.job.address;
-        this.setPlace(this.autocomplete.getPlace());
-      });
-      if (this.job.address) {
-        this.setLatLongs();
-      }
-    },
     openSnackbar(text) {
       this.snackbarText = text;
       this.snackbar = true;
@@ -1709,6 +1696,7 @@ export default {
         }
       }
     });
+    // Initialize Google maps
     VueGoogleMaps.loaded.then(() => {
       if (!this.autocomplete || !this.geocoder) {
         const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
