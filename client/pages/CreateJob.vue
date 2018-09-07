@@ -1701,12 +1701,16 @@ export default {
       if (!this.autocomplete || !this.geocoder) {
         const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
         input.setAttribute('placeholder', '');
-        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        this.autocomplete = new window.google.maps.places.Autocomplete(input, { types: ['geocode'] });
         this.geocoder = new window.google.maps.Geocoder();
         console.log('google autocomplete', this.autocomplete);
         this.autocomplete.addListener('place_changed', () => {
           this.prevAutocompleteAddress = this.job.address;
-          this.setPlace(this.autocomplete.getPlace());
+          console.log('google autocomplete 2', this.autocomplete);
+          console.log('typeof getPlace:', typeof this.autocomplete.getPlace);
+          const place = this.autocomplete.getPlace();
+          console.log('place', place);
+          this.setPlace(place);
         });
       }
       if (this.job.address) {
