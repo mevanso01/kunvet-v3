@@ -913,7 +913,9 @@ export default {
       if (this[`form${n}Valid`] && valid) {
         // Form is valid
         if (n === 1 && !this.email_verified) {
+          this.loading = true;
           this.createAccount().then(res => {
+            this.loading = false;
             if (res.registered && res.loggedIn) {
               this._moveToNextTab();
             } else if (res.registered && !res.loggedIn) {
@@ -1020,9 +1022,7 @@ export default {
       var ret = { registered: false, loggedIn: false, error: null };
       // sending jobInfo will create a new job
       if (this.jobId) { data.jobInfo = null; }
-      this.loading = true;
       await axios.post('/auth/register2', data).then((res) => {
-        this.loading = false;
         if (res.data.success) {
           userId = res.data.message.userId;
           orgId = res.data.message.orgId;
@@ -1726,7 +1726,6 @@ export default {
   },
   created() {
     EventBus.$on('logout', () => {
-      console.log('logout');
       if (this.jobId || this.job.title) {
         this.resetData();
       }
