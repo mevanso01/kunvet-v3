@@ -3,7 +3,7 @@
     <div v-if="devmode" class="devmode">
       Development mode
     </div>
-    <v-toolbar fixed class="main-navbar" :height="64" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
+    <v-toolbar fixed class="main-navbar" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
       <router-link to="/search">
             <div id="nav-logo">
               <!--<img id="nav-logo-svg" :src="svgs.kunvetLogoNav"></img>-->
