@@ -1525,7 +1525,7 @@ export default {
     resetData() {
       console.log('Resetting data');
       this.$store.commit('resetJobProgress');
-      Object.assign(this.$data, this.$options.data.call(this));
+      Object.assign(this.$data, this.$options.data.call(this), { autocomplete: this.autocomplete, geocoder: this.geocoder });
     },
     fetchAndSetBusinessData(id) {
       this.$apollo.query({
@@ -1637,6 +1637,25 @@ export default {
       this.snackbarText = text;
       this.snackbar = true;
     },
+    initGoogleMaps() {
+      if (!this.autocomplete || !this.geocoder) {
+        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
+        input.setAttribute('placeholder', '');
+        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        this.geocoder = new window.google.maps.Geocoder();
+        this.autocomplete.addListener('place_changed', () => {
+          this.prevAutocompleteAddress = this.job.address;
+          if (this.autocomplete === null) {
+            this.initGoogleMaps();
+            return;
+          }
+          this.setPlace(this.autocomplete.getPlace());
+        });
+      }
+      if (this.job.address) {
+        this.setLatLongs();
+      }
+    },
   },
   activated() {
     if (this.tab === 'success-tab') {
@@ -1699,27 +1718,7 @@ export default {
     });
     // Initialize Google maps
     VueGoogleMaps.loaded.then(() => {
-      if (!this.autocomplete || !this.geocoder) {
-        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
-        input.setAttribute('placeholder', '');
-        this.autocomplete = new window.google.maps.places.Autocomplete(input);
-        this.geocoder = new window.google.maps.Geocoder();
-        console.log('google autocomplete', this.autocomplete);
-        this.autocomplete.addListener('place_changed', () => {
-          if (!this.autocomplete) {
-            this.autocomplete = new window.google.maps.places.Autocomplete(this.$refs.addressField.$el.getElementsByTagName('input')[0]);
-          }
-          this.prevAutocompleteAddress = this.job.address;
-          console.log('google autocomplete 2', this.autocomplete);
-          console.log('typeof getPlace:', typeof this.autocomplete.getPlace);
-          const place = this.autocomplete.getPlace();
-          console.log('place', place);
-          this.setPlace(place);
-        });
-      }
-      if (this.job.address) {
-        this.setLatLongs();
-      }
+      this.initGoogleMaps();
     });
   },
   deactivated() {
@@ -1728,7 +1727,9 @@ export default {
   created() {
     EventBus.$on('logout', () => {
       console.log('logout');
-      this.resetData();
+      if (this.jobId || this.job.title) {
+        this.resetData();
+      }
     });
   },
 };
