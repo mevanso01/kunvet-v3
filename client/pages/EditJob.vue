@@ -525,6 +525,13 @@ export default {
       }
       return typeof val === 'number';
     },
+    _getNumber(val) {
+      if (typeof val === 'string') {
+        const newVal = val.replace(/,/g, ''); // remove commas
+        return parseFloat(newVal);
+      }
+      return parseFloat(val);
+    },
     _jobType() {
       if (this.job.type === 'both') {
         return ['fulltime', 'parttime'];
@@ -797,7 +804,7 @@ export default {
         shift: this.job.shift === [] ? null : this.job.shift,
         age: this.job.age ? parseInt(this.job.age, 10) : null,
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
-        salary: this.salary_select === 'paid' ? parseInt(this.job.salary, 10) : null,
+        salary: this.salary_select === 'paid' ? this._getNumber(this.job.salary) : null,
         pay_denomination: this.salary_select === 'paid' ? this.job.pay_denomination : null,
         education: this.job.education ? degreeReducedStringToDb(this.job.education) : 'None',
         preferred_major: this.job.major,
@@ -859,7 +866,7 @@ export default {
           if (job.pay_type && job.pay_type !== 'none') {
             this.salary_select = job.pay_type;
             this.job.salary = job.salary;
-            this.job.pay_denomination = job.pay_denomination;
+            this.job.pay_denomination = job.pay_denomination || 'per hour';
           }
           this.job.major = job.preferred_major;
           this.job.age = job.age;
@@ -881,6 +888,7 @@ export default {
           if (job.position_tags) {
             this.selectedPositions = job.position_tags.concat();
           }
+          console.log(this.job, job);
         }
       }).catch((error) => {
         this.$error(error);
