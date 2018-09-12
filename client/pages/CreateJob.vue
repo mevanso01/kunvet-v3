@@ -1325,7 +1325,7 @@ export default {
         date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
         address2: this.job.address2,
-        university: this.isUniversity ? this.university : null,
+        university: this.isUniversity ? this.job.university : null,
         latitude: this.job.latitude,
         longitude: this.job.longitude,
         type: this._jobType(),
