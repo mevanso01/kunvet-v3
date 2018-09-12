@@ -299,8 +299,8 @@
           </v-container>
 
           <div class="bottom-container" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">
-            <div class="gradient-bar" v-show="stickToBottom">
-            </div>
+            <!-- <div class="gradient-bar" v-show="stickToBottom">
+            </div> -->
             <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
               outline class="red--text darken-1" @click="apply">
               {{ applied ? 'Applied' : 'Apply' }}
