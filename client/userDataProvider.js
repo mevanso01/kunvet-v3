@@ -104,8 +104,11 @@ async function getUserData() {
       userdata: userdata,
     };
   }
-  // if not successful or not logged in according to server
-  EventBus.$emit('logout');
+  // if not successful or not logged in according to server:
+  if (Store.state.acct !== 0 || Store.state.userID) {
+    // Emit logout event if local state is not in sync with server
+    EventBus.$emit('logout');
+  }
   return {
     acct: 0,
     uid: null,

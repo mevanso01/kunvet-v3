@@ -220,6 +220,7 @@
       findJobs(filter: { user_id: $userId, business_id: $businessId }) {
         ${queries.FindJobRecordForJobCard}
         expired
+        expiry_date
       }
     }`;
 
@@ -253,13 +254,14 @@
     },
     methods: {
       async getData(networkOnly = false) {
-        console.log(`
-          query($userId: MongoID, $businessId: MongoID) {
-            findJobs(filter: { user_id: $userId, business_id: $businessId }) {
-              ${queries.FindJobRecordForJobCard}
-              expired
-            }
-          }`);
+        // console.log(`
+        //   query($userId: MongoID, $businessId: MongoID) {
+        //     findJobs(filter: { user_id: $userId, business_id: $businessId }) {
+        //       ${queries.FindJobRecordForJobCard}
+        //       expired
+        //       expiry_date
+        //     }
+        //   }`);
         const { data } = await this.$apollo.query({
           fetchPolicy: networkOnly ? 'network-only' : 'cache-first',
           query: findJobsQuery,
@@ -269,7 +271,7 @@
           },
         });
         this.jobs = data.findJobs.concat();
-        console.log(this.jobs);
+        // console.log(this.jobs);
       },
       onShowJobDialog(job) {
         this.dialogs.errorOccured = false;
@@ -333,7 +335,7 @@
         return `${daysDiff} ${StringHelper.pluralize('day', daysDiff)}`;
       },
       getExpiredDaysDiff(date) {
-        const expiryDate = DateHelper.getExpiryDate(date); // this is what determines if job is expired atm
+        const expiryDate = DateHelper.getExpiryDate(date, 30); // this is what determines if job is expired atm
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return daysDiff;
       },
@@ -373,6 +375,7 @@
         return this.jobs.filter(x => !x.active && !x.is_deleted && !x.expired);
       },
       expiredJobs() {
+        // you can also use JobHelper.isJobExpired if you have expiry_date
         return this.jobs.filter(x => this.getExpiredDaysDiff(x.date) <= 0 && !x.is_deleted);
       },
       getUnpostedJobsString() {

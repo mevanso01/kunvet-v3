@@ -674,6 +674,7 @@
             findJobs (filter: { user_id: $user, business_id: $businessId, is_deleted: false  }){
               _id
               active
+              expiry_date
             }
           }`),
           variables: {

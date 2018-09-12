@@ -188,7 +188,7 @@ import gql from 'graphql-tag';
 import axios from 'axios';
 import EventBus from '@/EventBus';
 import ProfilePicHelper from '@/utils/GetProfilePic';
-
+import userDataProvider from '@/userDataProvider';
 import StringHelper from '@/utils/StringHelper';
 import Notifications from '@/components/Notifications';
 import SwitchAccount from '@/components/SwitchAccount';
@@ -458,23 +458,38 @@ export default {
       }
     });
 
-    axios.get('auth/status').then(async (res) => {
-      if (res.data.success) {
-        if (!res.data.status) {
-          this.lo();
-        } else if (res.data.user.default_org) {
-          this.l2();
-        } else {
-          this.l1();
-        }
-
-        if (res.data.status) {
-          this.setProfilePic(res.data.user._id, res.data.user.default_org);
-        }
-      } else {
+    userDataProvider.getUserData().then((res) => {
+      if (res.acct === 0) { // userDataProvider returns acct = 0 by default
+        // user not logged in
         this.lo();
+      } else {
+        // user logged in
+        if (res.acct === 1) {
+          this.l1();
+        } else if (res.acct === 2) {
+          this.l2();
+        }
+        if (res.userdata && res.userdata._id) {
+          this.setProfilePic(res.userdata._id, res.userdata.default_org);
+        }
       }
     });
+    // axios.get('auth/status').then(async (res) => {
+    //   if (res.data.success) {
+    //     if (!res.data.status) {
+    //       this.lo();
+    //     } else if (res.data.user.default_org) {
+    //       this.l2();
+    //     } else {
+    //       this.l1();
+    //     }
+    //     if (res.data.status) {
+    //       this.setProfilePic(res.data.user._id, res.data.user.default_org);
+    //     }
+    //   } else {
+    //     this.lo();
+    //   }
+    // });
   },
   computed: {
     devmode() {

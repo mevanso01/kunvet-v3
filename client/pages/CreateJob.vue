@@ -1091,11 +1091,10 @@ export default {
       const data = { email: this.email };
       this.emailExists = false;
       axios.post('/auth/checkIfExists', data).then((res) => {
-        if (res.data.success) {
+        if (res.data.success && this.$refs.emailField) {
           this.emailExists = res.data.exists;
           this.$refs.emailField.validate();
         } else {
-          this.$error('Could not check if email exists');
           this.emailExists = false;
         }
       }, (error) => {
