@@ -55,6 +55,7 @@
 .blue-row {
   font-size: 15px;
   color: #666;
+  display: inline-block;
 }
 .pr-10 { padding-right: 10px; }
 .job-detail-container .top-container {
@@ -133,6 +134,29 @@
   .apply-card {
     min-width: 300px !important;
   }
+  .job-detail-container .bottom-container {
+    height: 56px;
+  }
+  .job-detail-container .bottom-container.stick-to-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    padding: 0 15px 8px 15px;
+  }
+  .job-detail-container .height-helper {
+    width: 100%;
+    height: 56px;
+  }
+  .job-detail-container .bottom-container.stick-to-bottom .gradient-bar {
+    position:absolute;
+    top: -4px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(transparent, #fff);
+  }
 }
 @media (min-width: 601px) {
   .apply-card {
@@ -155,17 +179,6 @@
   }
 }
 @media (max-width: 960px) {
-  .job-detail-container .bottom-container.stick-to-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 0 15px;
-  }
-  .job-detail-container .height-helper {
-    height: 48px;
-    width: 100%;
-  }
 }
 </style>
 <template>
@@ -214,9 +227,9 @@
           </div>
 
           <div style="margin-top: 8px;">
-            <div v-if="findJob.type2 && findJob.type2.length > 0" class="blue-row float-left pr-10">
+            <div v-if="findJob.type2 && computedType2" class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.Internship"></img>
-              <span v-for="type in findJob.type2"> {{ type }}</span>
+              <span> {{ computedType2 }}</span>
             </div>
             <div v-if="findJob.studentfriendly" class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.sfSvg"></img>
@@ -282,18 +295,20 @@
           </v-container>
 
           <div class="bottom-container" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">
-              <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
-                outline class="red--text darken-1" @click="apply">
-                {{ applied ? 'Applied' : 'Apply' }}
-              </v-btn>
-              <a class="svg-button" style="margin: 6px 8px;" @click="saveJob(findJob._id)">
-                <img v-if="saved" :src="svgs.savedIcon"/>
-                <img v-else :src="svgs.notSavedIcon"/>
-              </a>
+            <div class="gradient-bar" v-show="stickToBottom">
+            </div>
+            <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
+              outline class="red--text darken-1" @click="apply">
+              {{ applied ? 'Applied' : 'Apply' }}
+            </v-btn>
+            <a class="svg-button" style="margin: 6px 8px;" @click="saveJob(findJob._id)">
+              <img v-if="saved" :src="svgs.savedIcon"/>
+              <img v-else :src="svgs.notSavedIcon"/>
+            </a>
           </div>
-          <div class="height-helper" v-show="stickToBottom">
 
-          </div>
+          <!-- in order to retain document height when bottom container is fixed -->
+          <div class="height-helper" v-show="stickToBottom"></div>
       </div>
     </div>
 
@@ -533,13 +548,17 @@ export default {
       if (!this.findJob.gform_link) {
         return '';
       }
-
       const link = parseUrl(this.findJob.gform_link, {});
       if (!link.protocol) {
         link.set('protocol', 'http');
       }
-
       return link.href;
+    },
+    computedType2() {
+      if (Array.isArray(this.findJob.type2) && this.findJob.type2.length > 0) {
+        return this.findJob.type2.join(', ');
+      }
+      return '';
     },
   },
   methods: {
@@ -549,7 +568,7 @@ export default {
     isNotAtBottom() {
       const footer = document.getElementById('bottom');
       var distanceToBottom = document.documentElement.scrollHeight - document.documentElement.offsetHeight - document.documentElement.scrollTop;
-      if (distanceToBottom < (footer.offsetHeight + 25)) {
+      if (distanceToBottom < (footer.offsetHeight + 26)) {
         return false;
       }
       return true;
@@ -761,7 +780,6 @@ export default {
         const _resumes = this.resumes
           .map(r => ({ filename: r.filename, resumeid: r.resumeid }))
           .filter(r => this.selectedResumes.indexOf(r.filename) !== -1);
-        console.log(_resumes);
         const application = {
           user_id: this.uid,
           job_id: this.id,
@@ -958,6 +976,9 @@ export default {
     this.getData();
     if (document.documentElement.offsetWidth <= 600) {
       this.stickToBottom = true;
+      setTimeout(() => {
+        this.stickToBottom = this.isNotAtBottom();
+      }, 150);
     } else {
       this.stickToBottom = false;
     }
