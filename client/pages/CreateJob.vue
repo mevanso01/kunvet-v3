@@ -1667,6 +1667,9 @@ export default {
     if (this.tab === 'success-tab') {
       this.resetData();
     }
+    if (this.$store.state && this.$store.state.userdata) {
+      this.email_verified = Boolean(this.$store.state.userdata.email_verified);
+    }
     userDataProvider.getUserData().then(async res => {
       this.pageloading = false;
       this.uid = res.uid;
