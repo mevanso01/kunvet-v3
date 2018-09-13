@@ -49,6 +49,9 @@
 .view-applicant-page iframe body {
   background-color: #fff !important;
 }
+.view-applicant-page .v-toolbar__content {
+  padding: 0 !important;
+}
 @media only screen and (min-width: 320px) {
   .view-applicant-left-elements {
     float: left;
@@ -81,9 +84,7 @@
               <v-toolbar-items style="width: 100%; display: block;">
                 <div class="view-applicant-left-elements">
                   <router-link :to="'/applicants'">
-                    <v-btn
-                      class="kunvet-black-large-btn"
-                    >
+                    <v-btn class="kunvet-black-large-btn">
                       Back
                     </v-btn>
                   </router-link>
@@ -236,7 +237,7 @@
               </v-flex>
             </v-layout>
             <!-- style="border: 2px solid #D3D3D3;" -->
-            <v-divider class="acct-divider"/>
+            <v-divider class="acct-divider" style="margin-bottom: 5px;"/>
 
             <div style="width: 100%">
               <account-header

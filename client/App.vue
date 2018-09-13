@@ -3,7 +3,7 @@
     <div v-if="devmode" class="devmode">
       Development mode
     </div>
-    <v-toolbar fixed class="main-navbar" height="64px" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
+    <v-toolbar fixed class="main-navbar" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
       <router-link to="/search">
             <div id="nav-logo">
               <!--<img id="nav-logo-svg" :src="svgs.kunvetLogoNav"></img>-->
@@ -27,18 +27,18 @@
           <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </div>
         <v-toolbar-items v-if="acct === 0" class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
+          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">
             <v-btn flat>{{ item.title }}</v-btn>
           </router-link>
           <div style="padding-top: 18px; padding-left: 16px;">
-            <router-link to="/employers">
+            <router-link to="/createjob">
               <v-btn class="kunvet-red post-a-job-button" outline>Post a Job</v-btn>
             </router-link>
           </div>
         </v-toolbar-items>
 
         <v-toolbar-items v-else class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="toolbar__items">
+          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">
 
             <v-menu fixed offset-y v-if="item.subItems" left open-on-hover :close-on-content-click="false">
 
@@ -104,18 +104,18 @@
         <span class="job-post__helper-nav-bar__divider" />
         <v-btn flat small :ripple="false" :to="'/myjobs'" :class="isActiveJobPostLink('/myjobs')">
           <span class="job-post__helper-nav-bar__btn-text">
-            Posted
+            My Jobs
           </span>
         </v-btn>
         <v-btn flat small :ripple="false" :to="'/applicants'" :class="isActiveJobPostLink('/applicants')">
           <span class="job-post__helper-nav-bar__btn-text">
-            Applicants
+            My Applicants
           </span>
         </v-btn>
       </v-toolbar-items>
       <v-spacer />
       <v-toolbar-items>
-        <v-btn flat small :ripple="false" class="job-post__helper-nav-bar__post-a-job" :to="'/createnewjob'">
+        <v-btn flat small :ripple="false" class="job-post__helper-nav-bar__post-a-job" :to="'/createjob'">
           <i class="fa fa-edit job-post__helper-nav-bar__post-a-job__icon" /><span>Post a Job</span>
         </v-btn>
       </v-toolbar-items>
@@ -184,13 +184,11 @@
 <script>
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import Store from '@/store';
-import VuexLS from '@/store/persist';
 import gql from 'graphql-tag';
 import axios from 'axios';
 import EventBus from '@/EventBus';
 import ProfilePicHelper from '@/utils/GetProfilePic';
-
+import userDataProvider from '@/userDataProvider';
 import StringHelper from '@/utils/StringHelper';
 import Notifications from '@/components/Notifications';
 import SwitchAccount from '@/components/SwitchAccount';
@@ -266,7 +264,7 @@ export default {
           [
             { title: 'Login', icon: null, href: '/login' },
             { title: 'Sign up', icon: null, href: '/signup' },
-            { title: 'Post a Job', icon: null, href: '/employers' },
+            { title: 'Post a Job', icon: null, href: '/createjob' },
           ],
         ],
         [
@@ -281,14 +279,14 @@ export default {
             { title: 'Settings', href: '/settings' },
           ],
           [
-            { title: 'Post Individual Job',  href: '/createnewjob' },
+            { title: 'Post Individual Job',  href: '/createjob' },
             { title: 'My Posted Jobs', href: '/myjobs' },
             { title: 'My Applicants', href: '/applicants' },
           ],
         ],
         [
           [
-            { title: 'Post New Job',  href: '/createnewjob' },
+            { title: 'Post New Job',  href: '/createjob' },
             { title: 'My Posted Jobs', href: '/myjobs' },
             { title: 'Applicants', href: '/applicants' },
           ],
@@ -320,14 +318,12 @@ export default {
     },
     lo() {
       this.acct = 0;
-      this.$store.commit({ type: 'resetState' });
+      this.$store.commit({ type: 'logout' });
       this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
     },
     logout() {
       EventBus.$emit('logout');
-      this.$store.commit({
-        type: 'resetState',
-      });
+      this.$store.commit({ type: 'resetState' });
       axios.get('/auth/logout').then(() => {
       }, (error) => {
         this.$error(error);
@@ -340,11 +336,15 @@ export default {
     async setProfilePic(uid = null, bid = null) {
       const userID = uid || this.$store.state.userID;
       const businessID = bid || this.$store.state.default_org;
-      this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
+      if (userID) {
+        this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
+      } else {
+        this.profilePic = '';
+      }
     },
     l1() {
       this.acct = 1;
-      Store.commit({
+      this.$store.commit({
         type: 'setAcct',
         acct: 1,
       });
@@ -354,7 +354,7 @@ export default {
     },
     l2() {
       this.acct = 2;
-      Store.commit({
+      this.$store.commit({
         type: 'setAcct',
         acct: 2,
       });
@@ -365,7 +365,7 @@ export default {
       this.$router.push(route);
     },
     getNumNotifications() {
-      if (this.acct === 0 || !Store.state.userID) {
+      if (this.acct === 0 || !this.$store.state.userID) {
         this.numNotifications = 0;
         return;
       }
@@ -384,7 +384,7 @@ export default {
           }
         }`),
         variables: {
-          uid: Store.state.userID,
+          uid: this.$store.state.userID,
         },
       }).then((res) => {
         const n = res.data.findAccount.notifications;
@@ -458,34 +458,38 @@ export default {
       }
     });
 
-    axios.get('auth/status').then(async (res) => {
-      if (res.data.success) {
-        if (!res.data.status) {
-          this.lo();
-        } else if (res.data.user.default_org) {
-          this.l2();
-        } else {
-          this.l1();
-        }
-
-        if (res.data.status) {
-          this.setProfilePic(res.data.user._id, res.data.user.default_org);
-        }
-      } else {
+    userDataProvider.getUserData().then((res) => {
+      if (res.acct === 0) { // userDataProvider returns acct = 0 by default
+        // user not logged in
         this.lo();
+      } else {
+        // user logged in
+        if (res.acct === 1) {
+          this.l1();
+        } else if (res.acct === 2) {
+          this.l2();
+        }
+        if (res.userdata && res.userdata._id) {
+          this.setProfilePic(res.userdata._id, res.userdata.default_org);
+        }
       }
     });
-    VuexLS.restoreState('vuex',  window.localStorage);
-
-    /* .then((data) => {
-      if (data) {
-        if (data.acct) {
-          this.acct = data.acct;
-        } else {
-          this.acct = 0;
-        }
-      }
-    }); */
+    // axios.get('auth/status').then(async (res) => {
+    //   if (res.data.success) {
+    //     if (!res.data.status) {
+    //       this.lo();
+    //     } else if (res.data.user.default_org) {
+    //       this.l2();
+    //     } else {
+    //       this.l1();
+    //     }
+    //     if (res.data.status) {
+    //       this.setProfilePic(res.data.user._id, res.data.user.default_org);
+    //     }
+    //   } else {
+    //     this.lo();
+    //   }
+    // });
   },
   computed: {
     devmode() {
@@ -500,13 +504,13 @@ export default {
 </script>
 <style lang="scss">
 // @import '../node_modules/vuetify/dist/vuetify.min.css';
-@import 'app.css';
-@import 'account.css';
-@import 'applicants.css';
-@import 'buttons.css';
-@import 'job_pages.css';
-@import 'nav.css';
-@import 'postsAndSearch.css';
+@import 'css/app.css';
+@import 'css/account.css';
+@import 'css/applicants.css';
+@import 'css/buttons.css';
+@import 'css/job_pages.css';
+@import 'css/nav.css';
+@import 'css/postsAndSearch.css';
 
 body, html {
   height: 100%;

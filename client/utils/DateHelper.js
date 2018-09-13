@@ -1,7 +1,7 @@
 class DateHelper {
-  static getExpiryDate(date) {
+  static getExpiryDate(date, num = 30) {
     const expiryDate = new Date(date);
-    expiryDate.setDate(expiryDate.getDate() + 30);
+    expiryDate.setDate(expiryDate.getDate() + num);
     return expiryDate;
   }
 

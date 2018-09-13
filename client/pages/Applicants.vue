@@ -1,7 +1,7 @@
 <style>
 </style>
 <template>
-  <v-container fluid class="applicant-page job-post__container">
+  <v-container fluid class="applicant-page job-post__container" style="padding-top: 8px;">
     <div class="main-cont-large">
       <v-layout row wrap>
         <v-flex xs12 v-if="jobs.length === 0">
@@ -17,9 +17,9 @@
           v-if="jobs.length > 0"
           v-for="job in jobs"
         >
-          <v-flex xs12>
+          <v-flex xs12 style="margin-top: 12px" class="job-page-headline">
             <h1>{{ job.title }}</h1>
-            <p>
+            <p class="mb-1">
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
               </span> {{ getApplicantsCountString }} in total
@@ -174,7 +174,6 @@
 </template>
 <script>
   import gql from 'graphql-tag';
-  import VuexLS from '@/store/persist';
   import axios from 'axios';
   import differenceBy from 'lodash/differenceBy';
   import EventBus from '@/EventBus';
@@ -192,13 +191,7 @@
 
   export default {
     created() {
-      if (!this.$store.state.acct) {
-        VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-          if (data.acct === 0) {
-            this.$router.push('/login');
-          }
-        });
-      } else if (this.$store.state.acct === 0) {
+      if (this.$store.state.acct === 0) {
         this.$router.push('/login');
       }
     },

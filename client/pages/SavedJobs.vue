@@ -25,7 +25,6 @@
 </template>
 <script>
   import gql from 'graphql-tag';
-  import VuexLS from '@/store/persist';
   import StudentSvg from '@/assets/job_posts/user_1.svg';
   import MainJobCard from '@/components/MainJobCard';
   import queries from '@/constants/queries';
@@ -153,13 +152,6 @@
       if (this.$store.state.userID) {
         this.uid = this.$store.state.userID;
         this.getSavedJobs();
-      } else {
-        VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-          if (data.userID) {
-            this.uid = data.userID;
-            this.getSavedJobs();
-          }
-        });
       }
     },
   };

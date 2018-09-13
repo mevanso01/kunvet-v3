@@ -1,4 +1,4 @@
-// import Logger from 'winston';
+import Logger from 'winston';
 import Models from '@/mongodb/Models';
 import set from 'lodash/set';
 import get from 'lodash/get';
@@ -12,6 +12,10 @@ export default {
     const result = await next(req);
     // Logger.debug(result);
     return result;
+  },
+  LogRecord: async (req, next) => {
+    Logger.info(req.args.record);
+    return next(req);
   },
   LoggedIn: (req, next) => {
     if (!req.context.user || !req.context.user._id) {

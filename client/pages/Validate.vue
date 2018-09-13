@@ -19,20 +19,30 @@
             your email. In that case, you are good to go!
           </p>
         </div>
-        <div v-else style="max-width: 600px; margin: auto;">
-          <v-card style="margin: 15px;">
-            <v-card-text>
-              You're all set!
-              <template v-if="redirecting">
-                We are taking you to the account page where you can finish
-                creating your account.
-              </template>
-              <template v-else>
-                Now you can log in with the email and password you provided,
-                and finish creating your account.
-              </template>
-            </v-card-text>
-          </v-card>
+        <div v-else class="main-cont-small" style="max-width: 420px;">
+          <div style="padding: 25px 20px">
+            <h3 class="headline mb-1 mt-0 center" style="color: #4d4d4d;">Thanks for verifying! You're all set!</h3>
+          </div>
+          <template v-if="isLoggedIn">
+            <div  v-if="wasEditingJob" class="general-submit" @click="goTo('/createjob')">
+              <div class="general-submit-default">
+                  <span v-if="readyToPost">FINISH POSTING MY JOB</span>
+                  <span v-else>CONTINUE EDITING YOUR JOB</span>
+              </div>
+            </div>
+            <div v-else class="general-submit" @click="goTo('/account')">
+              <div class="general-submit-default">
+                  <span>GO TO YOUR ACCOUNT</span>
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="general-submit" @click="goTo('/login')">
+              <div class="general-submit-default">
+                  <span>LOG INTO YOUR ACCOUNT</span>
+              </div>
+            </div>
+          </template>
         </div>
       </template>
     </div>
@@ -47,12 +57,24 @@ export default {
     return {
       loading: true,
       isvalid: false,
-      redirecting: false,
+      isLoggedIn: true,
       dne: null,
+      wasEditingJob: false,
+      readyToPost: false,
+      jobId: null,
     };
   },
   activated() {
     Object.assign(this.$data, this.$options.data.call(this));
+    if (this.$store.state) {
+      if (this.$store.state.currentJobProgress.jobId) {
+        this.jobId = this.$store.state.currentJobProgress.jobId;
+        this.wasEditingJob = true;
+        if (this.$store.state.currentJobProgress.postOnOpen) {
+          this.readyToPost = true;
+        }
+      }
+    }
     this.validateCode();
   },
   methods: {
@@ -74,12 +96,22 @@ export default {
           udata.email_verified = true;
           this.$store.commit({ type: 'keepUserdata', userdata: udata });
         }
+        this.isLoggedIn = true;
         // Redirect to Account page
-        this.redirecting = true;
-        setTimeout(() => {
-          this.$router.push('/account');
-        }, 1000);
+        // this.redirecting = true;
+        // setTimeout(() => {
+        //   this.$router.push('/account');
+        // }, 1000);
       }
+    },
+    goTo(_route) {
+      var route = '/';
+      if (_route === '/createjob' && this.jobId) {
+        route = `/createjob/${this.jobId}`;
+      } else {
+        route = _route;
+      }
+      this.$router.push(route);
     },
   },
 };

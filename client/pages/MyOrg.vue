@@ -241,7 +241,7 @@
                 />
                 <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/createnewjob">
+                  <router-link to="/createjob">
                     <v-btn class="acct-btn">
                       Post a Job
                     </v-btn>
@@ -305,7 +305,6 @@
 <script>
   import App from '@/App';
   import gql from 'graphql-tag';
-  import VuexLS from '@/store/persist';
   import Config from 'config';
   import EventBus from '@/EventBus';
   import axios from 'axios';
@@ -620,21 +619,20 @@
     },
     activated() {
       EventBus.$on('business', this.fetchBusinessData);
-      VuexLS.restoreState('vuex',  window.localStorage).then(async (data) => {
-        if (data.acct === 2) {
-          this.fetchAcctData();
-          if (data.bdata) {
-            this.bdata = data.bdata;
-          } else if (this.$store.state.businessID) {
-            this.fetchBusinessData();
-          }
-          await this.fillUpJobs(); // Depends on this.b_data being filled.
-        } else if (data.acct === 1) {
-          this.$router.push('/account');
-        } else {
-          this.$router.push('/login');
+      const data = this.$store.state;
+      if (data.acct === 2) {
+        this.fetchAcctData();
+        if (data.bdata && data.bdata.business_name) {
+          this.bdata = data.bdata;
+        } else if (data.businessID) {
+          this.fetchBusinessData();
         }
-      });
+        this.fillUpJobs(); // Depends on this.bdata being filled.
+      } else if (data.acct === 1) {
+        this.$router.push('/account');
+      } else {
+        this.$router.push('/login');
+      }
     },
     mounted() {
       GoogleMapsAutocomplete.attach(this.$refs.addressField, (place) => {

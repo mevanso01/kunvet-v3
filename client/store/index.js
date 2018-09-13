@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexLS from './persist';
+// import VuexPersistence from 'vuex-persist';
 // import Cookies from 'js-cookie';
 
 Vue.use(Vuex);
@@ -19,7 +20,14 @@ const Store = new Vuex.Store({
     selectedShifts: [],
     bdata: null,
     userdata: null,
-    // recheckLogin: null, // date object
+    currentJobProgress: {
+      jobId: null,
+      part1Complete: false,
+      part2Complete: false,
+      part3Complete: false,
+      postOnOpen: false,
+    },
+    newUser: true,
   },
   mutations: {
     go(state) {
@@ -32,10 +40,14 @@ const Store = new Vuex.Store({
         state.userdata = null;
         state.bdata = null;
         state.userID = null;
+        state.newUser = true;
+      } else {
+        state.newUser = false;
       }
     },
     setAcctID(state, payload) {
       state.userID = payload.id;
+      state.newUser = false;
     },
     setBusinessID(state, payload) {
       state.businessID = payload.id;
@@ -54,22 +66,40 @@ const Store = new Vuex.Store({
     },
     keepUserdata(state, payload) {
       state.userdata = payload.userdata;
+      state.newUser = false;
     },
     keepBdata(state, payload) {
       state.bdata = payload.bdata;
     },
-    /* setRecheckLogin(state, payload) {
-      if (payload.recheckLogin) {
-        state.recheckLogin = payload.recheckLogin;
-      } else {
-        // two days by default
-        var d = new Date();
-        d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000));
-        state.recheckLogin = d;
-      }
-    }, */
+    setJobProgress(state, payload) {
+      state.currentJobProgress.jobId = payload.id;
+      state.currentJobProgress.part1Complete = payload.part1;
+      state.currentJobProgress.part2Complete = payload.part2;
+      state.currentJobProgress.part3Complete = payload.part3;
+      state.currentJobProgress.postOnOpen = payload.postOnOpen;
+    },
+    resetJobProgress(state) {
+      state.currentJobProgress = {
+        jobId: null,
+        part1Complete: false,
+        part2Complete: false,
+        part3Complete: false,
+        postOnOpen: false,
+      };
+    },
+    notNewUser(state) {
+      state.newUser = false;
+    },
+    logout(state) {
+      state.userID = null;
+      state.businessID = null;
+      state.acct = 0;
+      state.bdata = null;
+      state.userdata = null;
+    },
     resetState(state) {
       state.userID = null;
+      state.businessID = null;
       state.acct = 0;
       state.default_org = null;
       state.firstSearch = true;
@@ -79,21 +109,21 @@ const Store = new Vuex.Store({
       state.selectedShifts = [];
       state.bdata = null;
       state.userdata = null;
-      // state.recheckLogin = null;
+      state.currentJobProgress = {
+        jobId: null,
+        part1Complete: false,
+        part2Complete: false,
+        part3Complete: false,
+        postOnOpen: false,
+      };
+      state.newUser = true;
     },
   },
   plugins: [VuexLS.plugin],
   getters: {
-    /* userdata(state) {
-      return state.userdata;
-    }, */
-    /* LSstate() {
-      return new Promise(resolve => {
-        VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-          resolve(data);
-        });
-      });
-    }, */
+    LS() {
+      return VuexLS.restoreState('vuex', window.localStorage);
+    },
   },
 });
 

@@ -349,7 +349,7 @@
                 </p>
                 <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/createnewjob">
+                  <router-link to="/createjob">
                     <v-btn class="acct-btn">
                       Post Personal Jobs
                     </v-btn>
@@ -358,14 +358,14 @@
               </v-flex>
             </v-layout>
 
-            <v-dialog v-model="showFileModal" class="auto-dialog">
+            <v-dialog v-model="showFileModal" content-class="auto-dialog">
               <ResumeUploader
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
               />
             </v-dialog>
 
-            <v-dialog v-model="showPicUploaderDialog" class="auto-dialog">
+            <v-dialog v-model="showPicUploaderDialog" content-class="auto-dialog">
               <PicUploader
                 @uploaded="profilePicUploaded"
                 @cancel="showPicUploaderDialog = false"
@@ -444,7 +444,6 @@
                       v-model="createEditDegreeMajorInfo.degree"
                       :items="degreeSelectItems"
                       label="Degree"
-                      hide-details
                       placeholder="Select degree"
                     />
                     <v-text-field
@@ -539,7 +538,6 @@
 <script>
   import App from '@/App';
   import gql from 'graphql-tag';
-  // import VuexLS from '@/store/persist';
   import axios from 'axios';
   import Config from 'config';
   import EventBus from '@/EventBus';
@@ -676,6 +674,7 @@
             findJobs (filter: { user_id: $user, business_id: $businessId, is_deleted: false  }){
               _id
               active
+              expiry_date
             }
           }`),
           variables: {

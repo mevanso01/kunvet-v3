@@ -16,38 +16,32 @@
   margin: 0;
   max-width: 100%;
 }
-/* .input-group--select {
-  height: 66px;
-} */
-.firstSearch .input-group__details{
-  display: none !important;
-}
 /* --- old selects --- */
-.search .input-group--select .input-group__input {
+.search .v-input-group--select .v-input-group__input {
   padding: 0 16px;
   height: 48px;
   flex: 1 0 100%;
 }
-.search .input-group--select {
+.search .v-input-group--select {
   padding-top: 0;
   height: 48px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-.list__tile__action .checkbox .input-group__input {
+.v-list__tile__action .checkbox .v-input-group__input {
   padding-top: 6px;
 }
 .home-page-cont .list__tile__title {
   color: #616161 !important;
 }
-.search .input-group--select i.icon {
+.search .v-input-group--select i.icon {
   padding: 8px 0;
 }
-.search .input-group__selections {
+.search .v-input-group__selections {
   padding-top: 3px;
   padding-bottom: 3px;
   overflow: auto !important;
 }
-.search .input-group--select.input-group--single-line label {
+.search .v-input-group--select.v-input-group--single-line label {
   top: 8px;
   left: 16px;
 }
@@ -62,64 +56,6 @@
 }
 .chip--select-multi {
   margin: 5px 5px 5px 0;
-}
-.firstSearch {
-  padding-top: 20vh !important;
-  padding-left: 64px;
-  padding-right: 64px;
-  position: relative;
-}
-.fsGoBtn {
-  height: 48px;
-  background-color: #ef5350;
-  text-align: center;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
-}
-.fsSelect {
-  /* height: 48px; */
-  border-top: 1px solid #eee;
-  border-left: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  border-radius: 6px 0px 0px 6px;
-}
-.firstSearch .fsSelect .input-group__input {
-  padding-left: 16px !important;
-}
-.firstSearch .fsSelect .input-group__input .input-group__selections {
-  padding-top: 2px;
-}
-.firstSearch .fsSelect label {
-  top: 9px;
-  left: 16px;
-}
-.firstSearch .fsSelect i {
-  position: absolute;
-  right: 0;
-  top: 10px;
-  width: 36px !important;
-  padding: 0 6px !important;
-}
-.firstSearch h1 {
-  font-weight: 300;
-  font-size: 32px;
-  margin-bottom: 0;
-}
-.fs-select-cities .input-group__input {
-  height: 46px;
-  box-shadow: none !important;
-  border-radius: 6px 0px 0px 6px;
-}
-.fs-select-cities .input-group__selections {
-  padding: 0 !important;
-  width: calc(100% - 36px) !important;
-  text-overflow: ellipsis;
-}
-.fs-select-cities .input-group__input > div > div {
-  padding: 0 !important;
-}
-.fs-select-cities .input-group__input::before {
-  display: none;
 }
 .small-thats-it, .large-thats-it {
   background-color: #fafafa;
@@ -400,7 +336,6 @@
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import VuexLS from '@/store/persist';
 import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Asset70 from '@/assets/icons/Asset(70).svg';
@@ -455,7 +390,7 @@ export default {
         { text: 'Evening', value: 'evening' },
         { text: 'Mid-night', value: 'midnight' },
       ],
-      // firstSearch: Store.state.firstSearch,
+      // firstSearch: this.$store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
       selectedCity: this.$store.state.selectedCity || 'Irvine - UC Irvine', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
       selectedTypes: this.$store.state.selectedTypes || [],
@@ -851,32 +786,34 @@ export default {
     this.setSelectedLatlongs();
     this.loadInitialJobs();
     document.addEventListener('click', this.documentClick, { passive: true });
-    VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-      if (data) {
-        if (data.firstSearch) {
-          this.firstSearch = data.firstSearch;
-        }
-        if (data.selectedCity && data.selectedCity.length > 0) {
-          this.selectedCity = data.selectedCity;
-        }
-        if (data.selectedPositions) {
-          this.selectedPositions = data.selectedPositions;
-        }
-        if (data.selectedShifts) {
-          this.selectedShifts = data.selectedShifts;
-        }
-        if (data.selectedTypes) {
-          this.selectedTypes = data.selectedTypes;
-        }
-        if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
-          this.selectedPositions = data.selectedPositions;
-        }
-        if (data.userID && data.acct !== 0) {
-          this.uid = data.userID;
-          this.getSavedJobs();
-        }
+    const data = this.$store.state;
+    if (data) {
+      if (data.firstSearch) {
+        this.firstSearch = data.firstSearch;
       }
-    });
+      if (data.selectedCity && data.selectedCity.length > 0) {
+        this.selectedCity = data.selectedCity;
+      }
+      if (data.selectedPositions) {
+        this.selectedPositions = data.selectedPositions;
+      }
+      if (data.selectedShifts) {
+        this.selectedShifts = data.selectedShifts;
+      }
+      if (data.selectedTypes) {
+        this.selectedTypes = data.selectedTypes;
+      }
+      if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
+        this.selectedPositions = data.selectedPositions;
+      }
+      if (data.userID && data.acct !== 0) {
+        this.uid = data.userID;
+        this.getSavedJobs();
+      }
+    }
+    // });
+    // const data = this.$store.state;
+    // console.log(data);
   },
 };
 
