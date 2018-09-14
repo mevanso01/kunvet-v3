@@ -104,6 +104,35 @@ export default {
         // }, 1000);
       }
     },
+    /* async checkForUnpostedJobs() {
+      var unpostedJobs = [];
+      await this.$apollo.query({
+        // fetchPolicy: 'network-only',
+        query: (gql`query ($uid: MongoID, $oid: MongoID) {
+          findJobs(filter: { user_id: $uid, business_id: $oid, active: false, is_deleted: false, expired: false }){
+            _id
+            user_id
+            business_id
+            active
+            is_deleted
+            expired
+          }
+        }`),
+        variables: {
+          uid: this.uid,
+          oid: this.orgId,
+        },
+      }).then((data) => {
+        if (data.data.findJobs && data.data.findJobs.length > 0) {
+          for (var i = 0; i < data.data.findJobs.length; i++) {
+            unpostedJobs.push(data.data.findJobs[i]._id);
+          }
+        }
+      }).catch((err) => {
+        this.$error(err);
+      });
+      return unpostedJobs;
+    }, */
     goTo(_route) {
       var route = '/';
       if (_route === '/createjob' && this.jobId) {
