@@ -295,6 +295,20 @@
                   />
                 </v-dialog>
 
+                <v-dialog v-model="showJobToPostDialog">
+                  <v-card>
+                    <v-card-title>
+                      <div class="headline">You have an unfinished job!</div>
+                    </v-card-title>
+                    <a @click="jobToPost = null" class="center" style="display: block; color: #616161 !important; margin-bottom: 12px;">continue later</a>
+                    <div class="general-submit" @click="goToCreateJob">
+                      <div class="general-submit-default">
+                        <span>CONTINUE EDITING MY JOB</span>
+                      </div>
+                    </div>
+                  </v-card>
+                </v-dialog>
+
               </v-flex>
             </v-layout>
       </section>
@@ -312,7 +326,7 @@
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
   import PicUploader from '@/components/PicUploader';
-
+  import DateHelper from '@/utils/DateHelper';
   import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
   import GoogleMapsAutocomplete from '@/utils/GoogleMapsAutocomplete';
 
@@ -361,6 +375,7 @@
         jobs: [],
         applications: [],
         showPicUploaderDialog: false,
+        showJobToPostDialog: false,
         svgs: {
           accountEmail: AccountEmailSvg,
           accountGlobe: AccountGlobeSvg,
@@ -371,9 +386,14 @@
         },
         email_verified: true,
         emailSent: false,
+        jobToPost: null,
       };
     },
     methods: {
+      goToCreateJob() {
+        // Used for reopening unfinished job
+        this.$router.push(`/createjob/${this.jobToPost}`);
+      },
       logout() {
         App.methods.logout();
       },
@@ -406,7 +426,6 @@
         if (this.$refs.addressModalField) {
           GoogleMapsAutocomplete.detach(this.$refs.addressModalField);
         }
-
         this.editModal.show = false;
         this.editModal.title = null;
         this.editModal.text = null;
@@ -517,6 +536,14 @@
           this.$error(error);
         });
       },
+      isJobExpired(job) {
+        if (!job.date) {
+          return false;
+        }
+        const expiryDate = job.expiry_date ? new Date(job.expiry_date) : DateHelper.getExpiryDate(job.date, 30);
+        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
+        return daysDiff <= 0;
+      },
       async fillUpJobs() {
         const { data: { findJobs: jobs } } = await this.$apollo.query({
           // this.$store.state.businessID
@@ -524,6 +551,8 @@
             findJobs (filter: { user_id: $userId, business_id: $businessId, is_deleted: false }){
               _id
               active
+              expiry_date
+              date
             }
           }`),
           variables: {
@@ -532,6 +561,13 @@
           },
         });
         this.jobs = jobs.concat([]);
+        if (this.jobs.length === 1 && !this.jobs[0].active && !this.isJobExpired(this.jobs[0])) {
+          this.jobToPost = this.jobs[0]._id;
+          this.showJobToPostDialog = true;
+        } else {
+          this.jobToPost = null;
+          this.showJobToPostDialog = false;
+        }
         this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
           .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
       },
