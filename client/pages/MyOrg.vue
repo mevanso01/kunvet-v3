@@ -537,8 +537,10 @@
         });
       },
       isJobExpired(job) {
-        const date = job.date ? job.date : Date.now();
-        const expiryDate = job.expiry_date ? job.expiry_date : DateHelper.getExpiryDate(date, 30);
+        if (!job.date) {
+          return false;
+        }
+        const expiryDate = job.expiry_date ? new Date(job.expiry_date) : DateHelper.getExpiryDate(job.date, 30);
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return daysDiff <= 0;
       },
