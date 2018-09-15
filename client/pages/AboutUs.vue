@@ -14,9 +14,6 @@
                 <h2 style="color: #969494;">Who are we?</h2>
                 <p>We are a group of entrepreneurial students who are sick and tired of the existing job platforms, flyers all around on-campus, and having to walk around the city to find jobs nearby!</p>
 
-                <h2 style="color: #969494;">What have we done?</h2>
-                <p>In the previous version of Kunvet, we had 3000+ unique visits from college students, posted more than 200 jobs and more than 80 registered students.<br>These demands are the reason we created the current version of Kunvet.</p>
-
                 <h2 style="color: #969494;">What next?</h2>
                 <p>Many opportunities listed elsewhere are not student-friendly or unique. Instead, many of existing online jobs are repetitive and redundant.<br>So, our next step is to invite organizations, clubs and individuals from the local community to post student-friendly, unique and nearby jobs and opportunities on Kunvet.</p>
 
