@@ -300,7 +300,7 @@
                     <v-card-title>
                       <div class="headline">You have an unfinished job!</div>
                     </v-card-title>
-                    <a @click="jobToPost = null" class="center" style="display: block; color: #616161 !important; margin-bottom: 12px;">continue later</a>
+                    <a @click="showJobToPostDialog = false" class="center" style="display: block; color: #616161 !important; margin-bottom: 12px;">continue later</a>
                     <div class="general-submit" @click="goToCreateJob">
                       <div class="general-submit-default">
                         <span>CONTINUE EDITING MY JOB</span>
