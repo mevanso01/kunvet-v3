@@ -1,4 +1,4 @@
-import { composeWithMongoose } from 'graphql-compose-mongoose';
+import composeWithMongoose from 'graphql-compose-mongoose';
 import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
@@ -181,9 +181,10 @@ GQC.rootMutation().addFields({
     ...wrapResolvers([
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.Verified,
-      Restrictions.IsNotBanned,
     ], {
-      createJob: Job.get('$createOne'),
+      ...wrapResolvers(Restrictions.LogRecord, {
+        createJob: Job.get('$createOne'),
+      }),
       ...wrapResolvers(sendNewApplicationNotification, {
         createApplication: Applicant.get('$createOne'),
       }),

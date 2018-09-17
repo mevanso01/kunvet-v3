@@ -4,13 +4,13 @@ import Config from 'config';
 
 const transports = {
   console: new Logger.transports.Console({
-    level: 'warn',
+    level: 'info',
     handleExceptions: true,
     json: false,
   }),
   sentry: new Sentry({
     dsn: Config.get('private.sentry.dsn'),
-    level: 'warn',
+    level: 'info',
   }),
 };
 

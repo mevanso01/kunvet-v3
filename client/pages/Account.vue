@@ -349,7 +349,7 @@
                 </p>
                 <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/createnewjob">
+                  <router-link to="/createjob">
                     <v-btn class="acct-btn">
                       Post Personal Jobs
                     </v-btn>
@@ -530,6 +530,19 @@
               </v-card>
             </v-dialog>
 
+            <v-dialog v-model="showJobToPostDialog">
+              <v-card>
+                <v-card-title>
+                  <div class="headline">You have an unfinished job!</div>
+                </v-card-title>
+                <a @click="showJobToPostDialog = false" class="center" style="display: block; color: #616161 !important; margin-bottom: 12px;">continue later</a>
+                <div class="general-submit" @click="goToCreateJob">
+                  <div class="general-submit-default">
+                    <span>CONTINUE EDITING MY JOB</span>
+                  </div>
+                </div>
+              </v-card>
+            </v-dialog>
           </section>
     </div>
   </v-container>
@@ -538,12 +551,11 @@
 <script>
   import App from '@/App';
   import gql from 'graphql-tag';
-  // import VuexLS from '@/store/persist';
   import axios from 'axios';
   import Config from 'config';
   import EventBus from '@/EventBus';
   import userDataProvider from '@/userDataProvider';
-
+  import DateHelper from '@/utils/DateHelper';
   import AccountHeader from '@/components/AccountHeader';
   import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
   import ResumeUploader from '@/components/ResumeUploader';
@@ -618,6 +630,7 @@
         deleteResumeName: null,
         showDeleteResumeDialog: false,
         showPicUploaderDialog: false,
+        showJobToPostDialog: false,
         jobs: [],
         applications: [],
         svgs: {
@@ -631,6 +644,7 @@
           wechat: Asset76,
         },
         loading: false,
+        jobToPost: null,
       };
     },
     components: {
@@ -640,15 +654,6 @@
       PicUploader,
     },
     computed: {
-      // TODO
-      // All this stuffs might be over-coding, but it's an experiment.
-      // My idea is that I want to keep the state as simple as possible
-      // (just a simple `jobs` and `applicants` property.
-      // I want to try to not break it up into multiple arrays because
-      // that increases the surface area for bugs.
-      // Furthermore I can use computed properties to cache the lengths
-      // of these arrays which should improve performance.
-      // Let me know what you think (if this is bad practice etc).
       doesNotHaveJobs() {
         const { jobs } = this;
         return jobs.length === 0;
@@ -669,12 +674,26 @@
       },
     },
     methods: {
+      goToCreateJob() {
+        // Used for reopening unfinished job
+        this.$router.push(`/createjob/${this.jobToPost}`);
+      },
+      isJobExpired(job) {
+        if (!job.date) {
+          return false;
+        }
+        const expiryDate = job.expiry_date ? new Date(job.expiry_date) : DateHelper.getExpiryDate(job.date, 30);
+        const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
+        return daysDiff <= 0;
+      },
       async fillUpIndividualJobs() {
         const { data: { findJobs: jobs } } = await this.$apollo.query({
           query: (gql`query ($user: MongoID, $businessId: MongoID) {
             findJobs (filter: { user_id: $user, business_id: $businessId, is_deleted: false  }){
               _id
               active
+              expiry_date
+              date
             }
           }`),
           variables: {
@@ -685,6 +704,13 @@
         // TODO: Temporary concat for testing with base jobs state.
         // This doesn't do any parsing at the moment since I don't know the complete object state yet.
         this.jobs = jobs.concat([]);
+        if (this.jobs.length === 1 && !this.jobs[0].active && !this.isJobExpired(this.jobs[0])) {
+          this.jobToPost = this.jobs[0]._id;
+          this.showJobToPostDialog = true;
+        } else {
+          this.jobToPost = null;
+          this.showJobToPostDialog = false;
+        }
         this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
           .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
       },

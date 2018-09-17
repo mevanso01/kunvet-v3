@@ -1,5 +1,5 @@
 <style>
-  .switchAccount-expansion-panel .expansion-panel__header {
+  .switchAccount-expansion-panel .v-expansion-panel__header {
     height: 32px;
     padding: 0px 16px;
   }
@@ -7,17 +7,17 @@
     margin-bottom: 1px;
     box-shadow: none !important;
   }
-  .switchAccount-expansion-panel .expansion-panel__container,
-  .switchAccount-expansion-panel .expansion-panel {
+  .switchAccount-expansion-panel .v-expansion-panel__container,
+  .switchAccount-expansion-panel .v-expansion-panel {
     margin: 0;
     box-shadow: none;
     max-height: 500px;
   }
-  .switchAccount-expansion-panel .list__tile {
+  .switchAccount-expansion-panel .v-list__tile {
     height: 32px !important;
   }
-  .switchAccount .notNavbar .list__tile,
-  .switchAccount .notNavbar .expansion-panel__header {
+  .switchAccount .notNavbar .v-list__tile,
+  .switchAccount .notNavbar .v-expansion-panel__header {
     padding: 0 8px;
   }
   .switchAccount p.isNavbar {
@@ -103,9 +103,9 @@ export default {
       }).then((data) => {
         const res = data.data.findAccount;
         this.default_org = res.default_org;
-        this.populateOrgList(res.org_list);
         this.fname = res.firstname;
         this.lname = res.lastname;
+        this.populateOrgList(res.org_list);
       }).catch((error) => {
         this.$error(error);
       });

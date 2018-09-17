@@ -1,338 +1,14 @@
 <style lang="scss">
-.create-job-container {
-  /* ---- Vuetify overrides ---- */
-  .v-text-field:not(.input-group--error):not(.input-group--disabled) label,
-  .v-input--radio-group:not(.input-group--error):not(.input-group--disabled) label,
-  .v-input--radio-group:not(.input-group--error):not(.input-group--disabled) i,
-  .v-input--checkbox:not(.input-group--error):not(.input-group--disabled) label,
-  .v-input--checkbox:not(.input-group--error):not(.input-group--disabled) i,
-  .v-input-group.checkbox:not(.input-group--error):not(.input-group--disabled) label,
-  .v-input-group.checkbox:not(.input-group--error):not(.input-group--disabled) i {
-    color: #4d4d4d;
-  }
-  .v-text-field:not(.error--text):not(.input-group--disabled) .v-input__slot:before {
-    border-color: #4d4d4d;
-  }
-  .v-input--radio-group .v-input__slot {
-    margin-bottom: 0;
-  }
-  .v-messages.error--text {
-    margin-bottom: 8px;
-  }
-  .input-group--error {
-    input::-webkit-input-placeholder { color: #f00; }
-    input:-moz-placeholder { color: #f00; }
-    input::-moz-placeholder { color: #f00; }
-    input:-ms-input-placeholder {color: #f00; }
-    input::placeholder { color: #f00 !important; }
-  }
-  .v-tabs__slider-wrapper,
-  .v-tabs__slider {
-    display: none;
-  }
-  .v-tabs__bar {
-    position: fixed;
-    top: 64px;
-    z-index: 5;
-    width: 100%;
-    height: 43px;
-  }
-  .cust-tab-wrapper {
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    z-index: 4;
-    width: 100%;
-    height: 43px;
-    background-color: #fff;
-  }
-  .v-tabs__div {
-    padding: 0 8px;
-  }
-  .v-tabs__item {
-    padding: 0;
-    height: 38px;
-  }
-  .v-tabs__item:not(.v-tabs__item--active) {
-    opacity: 1;
-  }
-  .v-input-group--text-field {
-    padding-top: 12px;
-  }
-  .v-tabs__items .cust-spacer {
-    height: 50px;
-    width: 100%;
-  }
-  .v-input-group--text-field label {
-    top: 12px;
-  }
-  .v-input-group--required label:after {
-    content: '';
-  }
-  .v-input-group--error, .v-input-group--error label {
-    color: #f00 !important;
-  }
-  .radio-group .v-input-group__details {
-    padding-top: 0;
-  }
-  /* ---- End of Vuetify overrides ---- */
-  .optional label::after {
-    content: ' - Optional';
-    font-style: italic;
-    color: #979797;
-  }
-  .radio-group.optional label::after {
-    content: '';
-  }
-  .no-padding-select {
-    padding-top: 0 !important;
-  }
-  .no-padding-select label {
-    top: 0 !important;
-  }
-  .optional-color {
-    color: #979797;
-  }
-  .red-text {
-    color: red;
-  }
-  .ql-editor {
-    min-height: 120px;
-  }
-  .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
-    margin-bottom: 0;
-  }
-  h3 {
-    margin-top: 1em;
-    color: #4d4d4d;
-    font-size: 1.5em;
-  }
-  h4.cust-subheader {
-    font-size: 20px;
-    line-height: normal;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 12px;
-  }
-  .v-input-group--text-field {
-    max-width: 500px;
-  }
-  .cust-radio-box .input-group.radio-group.radio-group--row,
-  .cust-radio-box .input-group__input {
-    display: block;
-  }
-  .cust-radio-box > p {
-    margin-bottom: 2px;
-    color: #999;
-  }
-  .cust-radio-box > div {
-    padding-top: 0;
-  }
-  .cust-radio-box .v-input-group.v-input-group--selection-controls.radio,
-  .multi-checkbox .v-input-group.v-input-group--selection-controls {
-    padding-top: 4px;
-    max-width: 110px;
-    height: 34px;
-    float: left;
-    display: block !important;
-  }
-  .cust-radio-box .v-input-group.v-input-group--selection-controls label,
-  .multi-checkbox .v-input-group.v-input-group--selection-controls label {
-    max-width: 100%;
-    padding-left: 32px;
-    text-align: left;
-    left: 0;
-  }
-  .work-hours {
-    min-height: 34px;
-  }
-  .error_h3 {
-    color: #ff5252 !important;
-    margin-bottom: 0.5em !important;
-  }
-  .error_h3_2 {
-    color: #ff5252 !important;
-  }
-  .error_p {
-    color: #ff5252;
-    font-size: 12px;
-  }
-  .optional_p {
-    margin-bottom: 5px;
-  }
-  #bottom-error-message {
-    color: #f00;
-    transition: all 0.4s linear;
-  }
-  .image-container {
-    position: relative;
-  }
-  .image-container .delete-img-btn {
-    position: absolute;
-    top: 2px;
-    right: 0;
-    i {
-      color: #ef5350;
-      background-color: #fff;
-      border-radius: 50%;
-    }
-  }
-  .custom-select-2-wrapper {
-    height: auto;
-  }
-  .custom-select-2 {
-    box-shadow: none;
-    height: 31px;
-  }
-  .custom-select-2 .inner {
-    border-bottom: 1px solid rgba(0,0,0,.42);
-    height: 30px;
-    transition: border-color 0.3s ease-out;
-    padding: 0;
-  }
-  .custom-select-2 .inner span {
-    font-size: 16px;
-    line-height: 30px;
-  }
-  .custom-select-2 .inner .btn--icon {
-    height: 24px;
-    width: 24px;
-    margin: 3px 6px;
-  }
-  .custom-select-2.active .inner {
-    border-bottom: solid 2px rgb(24,103,192);
-  }
-  .custom-select-2.error-border .inner {
-    border-bottom: solid 2px red !important;
-  }
-  /* this is the grey disabled color */
-  .tab-text-container {
-    border-bottom: 2px solid #c7c7c7;
-    // color: #d1d1d1;
-    background-color: #fff !important;
-  }
-  .tab-text-container.tab-no-error {
-    // green:
-    border-bottom: 2px solid #43A047;
-    color: #43A047;
-    // blue-grey:
-    // border-bottom: 2px solid #607D8B;
-    // color: #607D8B;
-  }
-  .tab-text-container.tab-error {
-    border-bottom: 2px solid red;
-    color: red;
-  }
-  .v-tabs__item--active .tab-text-container {
-    border-bottom: 2px solid #333; // 212121
-    color: #333;
-  }
-  .prev-btn {
-    color: #b0b0b0;
-  }
-  .additional-requirements .flex {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  .online-form-checkbox label {
-    white-space: normal !important;
-    height: auto !important;
-    min-height: 30px;
-  }
-  .small-p {
-    color: #616161;
-  }
-  .underline {
-    text-decoration: underline;
-  }
-  .job-detail-container {
-    .long-text-cont {
-      margin-bottom: 16px;
-    }
-    .long-text-cont,
-    .long-text-cont span,
-    .long-text-cont p,
-    .long-text-cont li {
-      color: #616161 !important;
-    }
-  }
-  .preview-top h3 {
-    font-weight: 400;
-    font-size: 17px;
-    color: rgba(0,0,0,0.87);
-    margin: 6px 8px;
-    line-height: 36px;
-  }
-  @media (max-width: 435px) {
-    .work-hours {
-      min-height: 114px;
-    }
-  }
-  @media (max-width: 600px) {
-    .v-tabs__bar {
-      top: 56px;
-      padding: 0 3px;
-    }
-    .v-tabs__div {
-      padding: 0 3px;
-    }
-    .cust-tab-wrapper {
-      top: 56px;
-    }
-    .v-tabs__items .cust-spacer {
-      height: 40px;
-    }
-  }
-  @media (max-width: 960px) {
-    .preview-top .btn {
-      margin-left: 0;
-    }
-    .preview-top h3 span {
-      display: none;
-    }
-  }
-  @media (min-width: 601px) {
-    .additional-requirements .flex {
-      padding-right: 30px;
-    }
-    .picUploaderDialog {
-      min-width: 450px;
-    }
-    .v-tabs__bar {
-      width: calc(100% - 32px);
-    }
-  }
-  @media (min-width: 961px) {
-    .v-tabs__bar {
-      width: 960px;
-      margin-left: calc(50% - 496px);
-    }
-    .job-detail-container {
-      border: 1px solid #e0e0e0;
-      .sub-container {
-        padding: 18px 15px 8px 15px;
-      }
-    }
-    .special-flex-1 {
-      padding: 0 10px;
-    }
-  }
-}
-@media (max-width: 600px) {
-  .create-job-container {
-    padding-left: 0;
-    padding-right: 0;
-    .main-cont-large {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-  }
-}
+  @import "../css/_createJobStyles";
 </style>
 
 <template>
-  <v-container fluid class="create-job-container">
+  <v-container fluid class="create-job-container" v-show="!pageloading">
+    <div v-if="pageloading" style="margin-top: 48px;">
+      <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
+      style="display: block; margin: auto !important;"></v-progress-circular>
+    </div>
+    <div v-show="!pageloading">
       <div class="cust-tab-wrapper"></div>
       <v-tabs
         slot="extension"
@@ -359,7 +35,7 @@
               <v-form v-model="form1Valid" ref="form1">
                 <template v-if="!email_verified">
                   <!-- Email not verified -->
-                  <p>
+                  <p class="mb-0">
                     First, we need some basic information about who's posting.<br>
                     You will receive your applicants' information through email, unless you opt out of this feature at the end of this form.<br>
                   </p>
@@ -378,7 +54,7 @@
                         required
                       ></v-text-field>
                       <v-text-field
-                        label="Email"
+                        label="Email" :class="{ 'hide-error-messages': emailExists }"
                         v-model="email" ref="emailField"
                         :rules="[
                           v => !!v || 'Email is required',
@@ -389,13 +65,20 @@
                         @blur="checkIfEmailExists()"
                         required
                       ></v-text-field>
+                      <div v-show="emailExists" class="v-text-field__details">
+                        <div class="v-messages error--text">
+                          <div class="v-messages__wrapper">
+                            <div class="v-messages__message">An account with this email already exists <router-link to="/login" style="text-decoration: underline;">Login</router-link></div>
+                          </div>
+                        </div>
+                      </div>
                       <v-text-field v-if="!uid"
                         label="Create password"
                         v-model="password"
                         :rules="passwordRules"
                         min="8"
                         :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                        :append-icon-cb="() => (e1 = !e1)"
+                        @click:append="() => (e1 = !e1)"
                         :type="e1 ? 'password' : 'text'"
                         required
                       ></v-text-field>
@@ -425,7 +108,7 @@
                   <h3 class="mt-0 mb-4">Posting as: {{ job.posted_by }}</h3>
                 </template>
 
-                <p class="mb-1 mt-2">Basic info about your job:</p>
+                <p class="mb-0 mt-2">Basic info about your job:</p>
                 <v-layout row wrap>
                   <v-flex xs12 sm9 md6 class="no-padding">
                     <v-text-field
@@ -457,13 +140,11 @@
                         v-model="isUniversity"
                         hide-details
                       ></v-checkbox>
-                      <v-autocomplete class="no-padding-select"
+                      <v-autocomplete
                         v-if="isUniversity"
                         label="Which one?"
                         v-model="job.university"
                         v-bind:items="availableSchools"
-                        hide-details
-                        single-line
                       ></v-autocomplete>
                     </div>
                   </v-flex>
@@ -500,9 +181,9 @@
                  </v-alert>
                 </v-flex>
               </v-layout>
-              <p class="mb-1">This is here only for testing</p>
+              <!-- <p class="mb-1">This is here only for testing</p>
               <a @click="tab = 'verify-email'">Test verify</a>
-              <a @click="tab = 'success-tab'">Test success</a>
+              <a @click="tab = 'success-tab'">Test success</a> -->
             </div>
           </v-tab-item>
           <v-tab-item id="1">
@@ -709,14 +390,6 @@
                     Click here to review
                   </a>
                 </v-flex>
-                <v-flex xs12 sm9 md6 v-if="job.active" class="special-flex-1">
-                  <v-card>
-                    <v-card-text>
-                      This job is now active!<br>
-                      You can click any of the above sections to go back and edit them.
-                    </v-card-text>
-                  </v-card>
-                </v-flex>
               </v-layout>
             </div>
             <div class="main-cont-large">
@@ -739,18 +412,22 @@
                   </v-flex>
                 </v-layout>
                 <br>
-                <h4 class="cust-subheader mb-1">Application options <span class="optional-color">(Optional)</span></h4>
-                <p>
-                  The applicant's info and resume will be sent to your email when they apply.<br>
-                  You can also browse through all your applicants in the applicants page.
+                <h4 class="cust-subheader mb-1">Application options</h4>
+                <p class="mb-2">
+                  By default, the applicant's info and resume will be sent to your email when they apply.<br>
+                  <span style="color: #333; font-weight: 500;">Note:</span> You can also browse through all your applicants in the applicants page.
                 </p>
-                <p class="mb-1">If you would like to use an online form that doesn't require sign-up instead, check the box below.</p>
+                <v-radio-group class="mt-0" v-model="useGForm" hide-details>
+                  <v-radio label="Send resumes to my email" :value="false"></v-radio>
+                  <v-radio label="Use a form that doesn't require signup instead" :value="true" class="mb-0 use-a-form-option"></v-radio>
+                </v-radio-group>
+                <!-- <p class="mb-1">If you would like to use an online form that doesn't require sign-up instead, check the box below.</p>
                 <v-checkbox
                   class="optional online-form-checkbox mt-0"
                   label="Don't send resumes to my email, I have an online form "
                   v-model="useGForm"
                   hide-details
-                ></v-checkbox>
+                ></v-checkbox> -->
                 <div v-if="useGForm">
                   <v-text-field style="max-width: 500px;"
                     v-model="gformLink"
@@ -807,6 +484,7 @@
               </v-flex>
             </div>
           </v-tab-item>
+
           <v-tab-item id="review-tab">
             <div class="main-cont-large" style="margin-bottom: 16px;">
               <div class="cust-spacer"></div>
@@ -830,28 +508,27 @@
               </div>
             </div>
           </v-tab-item>
+
           <v-tab-item id="verify-email">
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <br>
-              <h4 class="cust-subheader mb-2">Your job is saved and ready to post! Just one last thing:</h4>
-              <p>Before we can display your job, we need you to verify your email.
-                Please check your inbox for an email from us with a special link to verify your email.
-                Once you've verified your email, you should be able to post your job.</p>
+              <h4 class="cust-subheader mb-2 center">Verify your email</h4>
+              <p class="center">
+                Before we can display your job, we need you to verify your email.<span class="hidden-xs" hidden-xs><br></span>
+                We've sent a verification email to <strong style="color: #333;">{{ this.email }}</strong> to make sure you own it.
+              </p>
               <br>
-              <p>We've sent a verification email to <strong style="color: #333;">{{ this.email }}</strong></p>
-
-              <br>
-              <p>If you haven't received it yet, please check that the email address above is correct.<br>
-                 You can request to <a @click="resendEmail">resend email</a>, or <a @click="openChangeEmail">edit email address</a></p>
-              <p style="opacity: 0.45">If you've already verified your email, simply refresh this page.</p>
-              <p v-if="loading">
+              <p class="center">
+                If you haven't received it yet, please check that the email address above is correct.<br>
+                You can request to <a @click="resendEmail">resend email</a>, or <a @click="openChangeEmail">edit email address</a>
+              </p>
+              <p style="opacity: 0.45" class="center">If you've already verified your email, simply refresh this page.</p>
+              <p v-if="loading" class="center">
                 <span style="padding: 0 4px;">
                   <v-progress-circular indeterminate :size="16" :width="2" color="red darken-1"></v-progress-circular>
                 </span>
-                Loading...
               </p>
-              <p v-else-if="emailSent">Email sent!</p>
             </div>
           </v-tab-item>
           <v-tab-item id="success-tab">
@@ -859,8 +536,8 @@
               <div class="cust-spacer"></div>
               <h4 class="cust-subheader mb-2">Success! Your job is now posted!</h4>
               <p>
-                <span v-show="postingAs === 'business' && !userdata.profile_pic">
-                  What next? To make your listings look even better, we suggest you head over to your account and set a logo for your company<br>
+                <span v-show="postingAs === 'business' && !bdata.profile_pic">
+                  <span style="color: #333; font-weight: 500;">What next?</span> To make your listings look even better, we suggest you head over to your account and set a logo for your company.<br>
                 </span>
                 Click the button below to view your job. If you need to make edits, you can do so in the Jobs tab.
               </p>
@@ -868,7 +545,7 @@
               <v-layout row wrap>
                 <v-flex xs12 class="no-padding">
                   <v-btn class="ml-0 kunvet-red-bg" dark :href="`/job/${jobId}`">View your job</v-btn>
-                  <v-btn v-show="postingAs === 'business' && !userdata.profile_pic" class="kunvet-red-bg" dark href="/account">Go to your account</v-btn>
+                  <v-btn v-show="postingAs === 'business' && !bdata.profile_pic" class="kunvet-red-bg" dark href="/myorg">Go to your account</v-btn>
                 </v-flex>
               </v-layout>
             </div>
@@ -890,6 +567,47 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <v-dialog v-model="dialogs.welcome">
+        <v-card>
+          <v-card-text style="padding-bottom: 24px;">
+            <img :src="welcomeImg" style="display: block; margin: auto; max-height: 42px; max-width: 100%;" alt="welcome"/>
+            <p class="center mb-0 mt-3">How it works:</p>
+            <table class="welcome-table">
+              <tr>
+                <td class="image-td">
+                  <img :src="svgs.pencil" alt=""/>
+                </td>
+                <td>
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Fill out job description</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img :src="svgs.paper" alt=""/>
+                </td>
+                <td>
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0; line-height: 20px;">Choose how you want students to apply</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img :src="svgs.paperAirplane" alt=""/>
+                </td>
+                <td>
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your job (for free!)</p>
+                </td>
+              </tr>
+            </table>
+          </v-card-text>
+          <div class="general-submit small" @click="dialogs.welcome = false;">
+            <div class="general-submit-default" >
+              <span style="font-size: 18px; font-weight: 400;">Okay, lets get started</span>
+            </div>
+          </div>
+        </v-card>
+      </v-dialog>
+
 
       <v-dialog class="no-border-radius" v-model="dialogs.confirmPost">
         <v-card flat class="no-border-radius" style="max-width: 350px;">
@@ -960,7 +678,7 @@
         <v-btn color="white" flat @click="snackbar = false">
           Close
         </v-btn>
-    </v-snackbar>
+      </v-snackbar>
     </div>
   </v-container>
 </template>
@@ -980,14 +698,10 @@ import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
 import Config from 'config';
 import * as VueGoogleMaps from 'vue2-google-maps';
-// import Vue from 'vue';
-
-// Vue.use(VueGoogleMaps, {
-//   load: {
-//     key: Config.get('googleMapsKey'),
-//     libraries: 'places',
-//   },
-// });
+import Asset77 from '@/assets/icons/Asset77.svg';
+import Asset78 from '@/assets/icons/Asset78.svg';
+import Asset79 from '@/assets/icons/Asset79.svg';
+import Welcome3 from '@/assets/images/welcome3.jpg';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -1089,17 +803,12 @@ export default {
       uid: null,
       jobId: null,
       orgId: null,
-      date: null,
       autocomplete: null,
       placeDetails: null,
       type_str: null,
       type_current: null,
       type2_current: null,
       salary_select: null,
-      pay_denomination: 'per hour',
-      description_valid: true,
-      responsibilities_valid: true,
-      experience_valid: true,
       openSelectField: null,
       availableSchools: Schools.schools,
       availablePositions: positions,
@@ -1120,7 +829,7 @@ export default {
         show: false,
         croppedID: null,
       },
-      email_verified: true,
+      email_verified: false,
       loading: false,
       bdata: {
         business_name: null,
@@ -1142,9 +851,18 @@ export default {
         confirmPost: false,
         errorOccured: false,
         changeEmail: false,
+        welcome: false,
       },
+      svgs: {
+        pencil: Asset77,
+        paper: Asset78,
+        paperAirplane: Asset79,
+      },
+      welcomeImg: Welcome3,
       snackbar: false,
       snackbarText: '',
+      pageloading: true,
+      previouslyEnteredEmail: null,
     };
   },
   computed: {
@@ -1195,8 +913,9 @@ export default {
       if (this[`form${n}Valid`] && valid) {
         // Form is valid
         if (n === 1 && !this.email_verified) {
+          this.loading = true;
           this.createAccount().then(res => {
-            // console.log('success?', success);
+            this.loading = false;
             if (res.registered && res.loggedIn) {
               this._moveToNextTab();
             } else if (res.registered && !res.loggedIn) {
@@ -1245,9 +964,6 @@ export default {
       }
       setTimeout(() => { this.scrollToTop(); }, 300);
     },
-    tabChanged() {
-      console.log('tab changed', this.tab);
-    },
     isTabValid(n) {
       return this[`submit${(n + 1)}Pressed`] && this[`form${(n + 1)}Valid`];
     },
@@ -1283,8 +999,14 @@ export default {
       }
       return [];
     },
+    _getNumber(val) {
+      if (typeof val === 'string') {
+        const newVal = val.replace(/,/g, ''); // remove commas
+        return parseFloat(newVal);
+      }
+      return parseFloat(val);
+    },
     async createAccount() {
-      // const headers = { emulateJSON: true };
       const isBusiness = Boolean(this.business_name);
       const data = {
         email: this.email,
@@ -1305,16 +1027,16 @@ export default {
       var userId;
       var orgId;
       var ret = { registered: false, loggedIn: false, error: null };
-      this.loading = true;
+      // sending jobInfo will create a new job
+      if (this.jobId) { data.jobInfo = null; }
       await axios.post('/auth/register2', data).then((res) => {
-        this.loading = false;
-        console.log('RES', res);
         if (res.data.success) {
           userId = res.data.message.userId;
           orgId = res.data.message.orgId;
-          this.jobId = res.data.message.jobId;
+          this.jobId = res.data.message.jobId ? res.data.message.jobId : this.jobId;
           this.setJobProgress();
           this.job.posted_by = data.business_name ? data.business_name : `${data.fname} ${data.lname}`;
+          this.previouslyEnteredEmail = data.email;
           registerSuccess = true;
           ret.registered = true;
         } else if (res.data.message === 'Email exists but not verified') {
@@ -1333,17 +1055,17 @@ export default {
       });
       if (registerSuccess) {
         // Log in after registering
-        if (!this.uid) {
+        if (!this.uid || this.previouslyEnteredEmail !== data.email) {
           this.$debug('trying to log into new account');
           await axios.post('/auth/login', {
             email: data.email,
             password: data.pwd,
           }).then((res) => {
-            this.$debug('login response', res);
             if (res.data.success) {
               // Logged in successfully
               this.uid = userId;
               this.orgId = orgId;
+              this.$store.commit({ type: 'setAcctID', id: userId });
               if (isBusiness) {
                 EventBus.$emit('business');
               } else {
@@ -1356,7 +1078,7 @@ export default {
             }
           }).catch((error) => {
             ret.error = error;
-            this.$error(error);
+            this.$error('Error logging into an account after register', error);
           });
         } else {
           this.orgId = orgId;
@@ -1367,12 +1089,12 @@ export default {
     },
     checkIfEmailExists() {
       const data = { email: this.email };
+      this.emailExists = false;
       axios.post('/auth/checkIfExists', data).then((res) => {
-        if (res.data.success) {
+        if (res.data.success && this.$refs.emailField) {
           this.emailExists = res.data.exists;
           this.$refs.emailField.validate();
         } else {
-          this.$error('Could not check if email exists');
           this.emailExists = false;
         }
       }, (error) => {
@@ -1441,14 +1163,14 @@ export default {
       }
     },
     updateJob() {
-      if (this.jobId && this.job.title && !this.job.active) {
+      if (this.jobId && this.job.title && !this.job.active && this.$store.state.userID) {
         this.saveJob();
       }
     },
     updateActiveJob() {
       this.validateBeforePosting();
       if (this.valid && this.$route.params.id) {
-        this.active = true;
+        this.job.active = true;
         this.saveJob();
       }
     },
@@ -1456,6 +1178,8 @@ export default {
       if (this.jobId) {
         // SAVE EXISTING JOB
         const job = this.createJobArray();
+        this.$debug('Job info:', job);
+        this.$debug('Email verified:', this.email_verified);
         this.$apollo.mutate({
           mutation: updateJobMutation,
           variables: {
@@ -1482,19 +1206,25 @@ export default {
           if (!job.active) {
             this.setJobProgress();
           } else {
-            this.$store.commit({ type: 'resetJobProgress' });
+            this.$store.commit('resetJobProgress');
           }
           if (viewJob) {
             if (this.email_verified) {
               this.tab = 'success-tab';
             } else {
+              this.setJobProgress(true); // set postOnOpen to true
               this.tab = 'verify-email';
             }
           }
         }).catch((err) => {
           this.loading = false;
           this.dialogs.confirmPost = false;
-          this.dialogs.errorOccured = true;
+          if (this.$store.state && this.$store.state.currentJobProgress && this.$store.state.currentJobProgress.postOnOpen) {
+            this.setJobProgress(); // set postOnOpen back to false
+            this.tab = '2';
+          } else {
+            this.dialogs.errorOccured = true;
+          }
           this.$error(err);
         });
       } else {
@@ -1571,7 +1301,7 @@ export default {
         });
       }
     },
-    setJobProgress() {
+    setJobProgress(postOnOpen = false) {
       if (this.jobId) {
         this.$store.commit({
           type: 'setJobProgress',
@@ -1579,21 +1309,22 @@ export default {
           part1: this.form1Valid,
           part2: this.form2Valid,
           part3: this.form3Valid,
+          postOnOpen: postOnOpen,
         });
       }
     },
     createJobArray() {
-      const doesJobActivelyExist = this.active && this.date;
+      const doesJobActivelyExist = this.job.active && this.job.date;
       const job = {
         user_id: this.uid,
         business_id: this.orgId,
         posted_by: this.job.posted_by,
         active: this.job.active,
         title: this.job.title,
-        date: doesJobActivelyExist ? this.date : Date.now(),
+        date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
         address2: this.job.address2,
-        university: this.isUniversity ? this.university : null,
+        university: this.isUniversity ? this.job.university : null,
         latitude: this.job.latitude,
         longitude: this.job.longitude,
         type: this._jobType(),
@@ -1602,7 +1333,7 @@ export default {
         shift: this.job.shift === [] ? null : this.job.shift,
         age: this.job.age ? parseInt(this.job.age, 10) : null,
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
-        salary: this.salary_select === 'paid' ? parseInt(this.job.salary, 10) : null,
+        salary: this.salary_select === 'paid' ? this._getNumber(this.job.salary) : null,
         pay_denomination: this.salary_select === 'paid' ? this.job.pay_denomination : null,
         education: this.job.education ? degreeReducedStringToDb(this.job.education) : 'None',
         preferred_major: this.job.major,
@@ -1618,31 +1349,43 @@ export default {
       };
       return job;
     },
-    checkForUnpostedJobs() {
-      this.$apollo.query({
-        query: (gql`query ($user: MongoID) {
-          findJobs(filter: { user_id: $user, active: false, is_deleted: false, expired: false }){
+    async checkForUnpostedJobs() {
+      var unpostedJobs = [];
+      await this.$apollo.query({
+        // fetchPolicy: 'network-only',
+        query: (gql`query ($uid: MongoID, $oid: MongoID) {
+          findJobs(filter: { user_id: $uid, business_id: $oid, active: false, is_deleted: false, expired: false }){
             ${queries.FindJobRecord}
           }
         }`),
         variables: {
-          user: this.uid,
+          uid: this.uid,
+          oid: this.orgId,
         },
       }).then((data) => {
-        console.log(data.data.findJobs);
-        this.unpostedJobs = [];
         if (data.data.findJobs && data.data.findJobs.length > 0) {
           for (var i = 0; i < data.data.findJobs.length; i++) {
-            this.unpostedJobs.push({ title: data.data.findJobs[i].title, id: data.data.findJobs[i]._id });
+            unpostedJobs.push({ title: data.data.findJobs[i].title, id: data.data.findJobs[i]._id });
           }
         }
       }).catch((err) => {
-        console.log('ERROR', err);
+        this.$error(err);
       });
+      this.unpostedJobs = unpostedJobs;
+      return unpostedJobs;
     },
     async reopenExistingJob(_id) {
       this.dialogs.reopeningJob = true;
       await this.getJobData(_id);
+      if (this.job.active && this.jobId && (!this.$store.state.currentJobProgress || !this.$store.state.currentJobProgress.postOnOpen)) {
+        if (this.$route.params.id) {
+          this.$router.push(`/editjob/${this.jobId}`);
+        } else {
+          this.resetData();
+        }
+        this.dialogs.reopeningJob = false;
+        return;
+      }
       let tabToOpen = '2'; // open last tab in case all tabs are valid
       for (var i = 0; i < 3; i++) {
         const valid = this.$refs[`form${i + 1}`].validate();
@@ -1654,10 +1397,19 @@ export default {
           break;
         }
       }
-      this.tab = tabToOpen;
+      if (tabToOpen === '2' && this.$store.state.currentJobProgress.postOnOpen) {
+        try {
+          this.postJob();
+        } catch (e) {
+          this.$error('Error posting job on reopen', e);
+          this.tab = tabToOpen;
+        }
+      } else {
+        this.tab = tabToOpen;
+      }
       this.dialogs.reopeningJob = false;
     },
-    async getJobData(_id) {
+    async getJobData(_id, fallback = false) {
       const uid = this.uid ? this.uid : this.$store.state.userID;
       await this.$apollo.query({
         query: (gql`query ($id: MongoID, $user: MongoID) {
@@ -1669,10 +1421,13 @@ export default {
           user: uid,
           id: _id,
         },
-      }).then((data) => {
+      }).then(async (data) => {
         const job = data.data.findJob;
         if (job) {
           this.jobId = _id;
+          if (!this.job.posted_by) {
+            this.job.posted_by = job.posted_by;
+          }
           this.job.title = job.title;
           this.job.active = job.active;
           this.job.date = job.date;
@@ -1700,6 +1455,7 @@ export default {
           if (job.pay_type && job.pay_type !== 'none') {
             this.salary_select = job.pay_type;
             this.job.salary = job.salary;
+            this.job.pay_denomination = job.pay_denomination || 'per hour';
           }
           this.job.major = job.preferred_major;
           this.job.age = job.age;
@@ -1714,9 +1470,21 @@ export default {
             this.gformLink = job.gform_link;
             this.useGForm = true;
           }
-          this.job.images = job.images.concat();
+          this.job.images = [];
+          for (const image of job.images) {
+            this.job.images.push({ original: null, cropped: image.cropped });
+          }
           if (job.position_tags) {
             this.selectedPositions = job.position_tags.concat();
+          }
+        } else {
+          this.$debug('Tried to reopen existing job but no job found');
+          if (!fallback) {
+            const unpostedJobs = await this.checkForUnpostedJobs();
+            console.log('unposted jobs', unpostedJobs);
+            if (unpostedJobs.length === 1) {
+              await this.getJobData(unpostedJobs[0].id, true);
+            }
           }
         }
       }).catch((error) => {
@@ -1761,7 +1529,9 @@ export default {
       }
     },
     resetData() {
-      Object.assign(this.$data, this.$options.data.call(this));
+      console.log('Resetting data');
+      this.$store.commit('resetJobProgress');
+      Object.assign(this.$data, this.$options.data.call(this), { autocomplete: this.autocomplete, geocoder: this.geocoder });
     },
     fetchAndSetBusinessData(id) {
       this.$apollo.query({
@@ -1788,8 +1558,10 @@ export default {
         this.orgId = res._id;
         this.postingAs = 'business';
         this.job.posted_by = res.business_name;
-        this.job.address = res.address;
-        this.setLatLongs();
+        if (!this.job.address && res.address) {
+          this.job.address = res.address;
+          this.setLatLongs();
+        }
         this.commitBdata();
       }).catch((error) => {
         this.$error(error);
@@ -1816,7 +1588,7 @@ export default {
         if (res.data.noUnverified) {
           this.email_verified = true;
         } else if (res.data.success) {
-          this.emailSent = true;
+          this.openSnackbar('Email sent.');
         } else {
           this.emailSent = null;
         }
@@ -1837,8 +1609,7 @@ export default {
         this.dialogs.changeEmail = false;
         if (res.data.success) {
           this.email = this.newEmail;
-          this.snackbarText = 'Success! Check your inbox.';
-          this.snackbar = true;
+          this.openSnackbar('Success! Check your inbox.');
         } else {
           this.dialogs.errorOccured = true;
         }
@@ -1854,13 +1625,11 @@ export default {
         if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
           this.geocoder.geocode({ 'address': this.job.address }, (results, status) => {
             if (status === 'OK' && results.length === 1) {
-              // console.log('res', results);
               this.job.latitude = results[0].geometry.location.lat();
               this.job.longitude = results[0].geometry.location.lng();
               this.job.addressValid = true;
               this.$refs.addressField.validate();
             } else {
-              // console.log('Geocode was not successful for the following reason:', status);
               this.job.latitude = null;
               this.job.longitude = null;
               this.job.addressValid = false;
@@ -1870,36 +1639,47 @@ export default {
         }
       }, 500);
     },
+    openSnackbar(text) {
+      this.snackbarText = text;
+      this.snackbar = true;
+    },
     initGoogleMaps() {
-      const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
-      input.setAttribute('placeholder', '');
-      this.autocomplete = new window.google.maps.places.Autocomplete(input);
-      this.geocoder = new window.google.maps.Geocoder();
-      this.autocomplete.addListener('place_changed', () => {
-        this.prevAutocompleteAddress = this.job.address;
-        this.setPlace(this.autocomplete.getPlace());
-      });
+      if (!this.autocomplete || !this.geocoder) {
+        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
+        input.setAttribute('placeholder', '');
+        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        this.geocoder = new window.google.maps.Geocoder();
+        this.autocomplete.addListener('place_changed', () => {
+          this.prevAutocompleteAddress = this.job.address;
+          if (this.autocomplete === null) {
+            this.initGoogleMaps();
+            return;
+          }
+          this.setPlace(this.autocomplete.getPlace());
+        });
+      }
       if (this.job.address) {
         this.setLatLongs();
       }
     },
   },
   activated() {
-    // TO MAKE PAGE ACCESSIBLE ON DEV ONLY. REMOVE WHEN COMPLETE
-    if (window.location.href.indexOf('https://kunvet.com/') !== -1 ||
-        window.location.href.indexOf('http://kunvet.com/') !== -1) {
-      this.$router.push('/createnewjob');
-      return;
-    }
-
     if (this.tab === 'success-tab') {
       this.resetData();
     }
-    userDataProvider.getUserData().then(res => {
+    if (this.$store.state && this.$store.state.userdata) {
+      this.email_verified = Boolean(this.$store.state.userdata.email_verified);
+    }
+    userDataProvider.getUserData().then(async res => {
+      this.pageloading = false;
       this.uid = res.uid;
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
+        if (this.$store.state.newUser) {
+          this.dialogs.welcome = true;
+          this.$store.commit('notNewUser');
+        }
       } else {
         this.email_verified = res.userdata.email_verified;
         this.email = res.userdata.email;
@@ -1918,7 +1698,8 @@ export default {
           var orgId;
           if (res.userdata.default_org) {
             orgId = res.userdata.default_org;
-          } else if (res.userdata.org_list.length > 0) { // fallback if default_org is not set for some reason
+          } else if (res.userdata.org_list.length > 0) {
+            // fallback if default_org is not set for some reason
             for (var i = 0; i < res.userdata.org_list.length; i++) {
               if (res.userdata.org_list[i]) {
                 orgId = res.userdata.org_list[i];
@@ -1926,6 +1707,7 @@ export default {
               }
             }
           }
+          this.orgId = orgId; // make sure orgId is correctly set before loading unposted jobs
           this.fetchAndSetBusinessData(orgId);
         }
         // See if job progress needs to be restored
@@ -1934,41 +1716,29 @@ export default {
         } else if (this.$store.state && this.$store.state.currentJobProgress.jobId
           && this.$store.state.currentJobProgress.part1Complete && !this.job.title) {
           this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
-        } else {
-          this.checkForUnpostedJobs();
         }
+        // Load unposted jobs
+        this.checkForUnpostedJobs();
         // See if user is returning user. Ideally should be if user has posted job or not.
         if (this.email_verified) {
           this.furthest_tab = 2;
         }
       }
     });
+    // Initialize Google maps
     VueGoogleMaps.loaded.then(() => {
-      if (!this.autocomplete || !this.geocoder) {
-        console.log('Test', window.google);
-        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
-        input.setAttribute('placeholder', '');
-        this.autocomplete = new window.google.maps.places.Autocomplete(input);
-        this.geocoder = new window.google.maps.Geocoder();
-        this.autocomplete.addListener('place_changed', () => {
-          this.prevAutocompleteAddress = this.job.address;
-          this.setPlace(this.autocomplete.getPlace());
-        });
-      }
-      if (this.job.address) {
-        this.setLatLongs();
-      }
+      this.initGoogleMaps();
     });
-  },
-  mounted() {
-    if (this.$route.params.id) {
-      this.reopenExistingJob(this.$route.params.id);
-    } else if (this.$store.state && this.$store.state.currentJobProgress.jobId) {
-      this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
-    }
   },
   deactivated() {
     this.updateJob();
+  },
+  created() {
+    EventBus.$on('logout', () => {
+      if (this.jobId || this.job.title) {
+        this.resetData();
+      }
+    });
   },
 };
 </script>

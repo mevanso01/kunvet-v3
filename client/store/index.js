@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexLS from './persist';
+// import VuexPersistence from 'vuex-persist';
 // import Cookies from 'js-cookie';
 
 Vue.use(Vuex);
@@ -24,6 +25,7 @@ const Store = new Vuex.Store({
       part1Complete: false,
       part2Complete: false,
       part3Complete: false,
+      postOnOpen: false,
     },
     newUser: true,
   },
@@ -74,6 +76,7 @@ const Store = new Vuex.Store({
       state.currentJobProgress.part1Complete = payload.part1;
       state.currentJobProgress.part2Complete = payload.part2;
       state.currentJobProgress.part3Complete = payload.part3;
+      state.currentJobProgress.postOnOpen = payload.postOnOpen;
     },
     resetJobProgress(state) {
       state.currentJobProgress = {
@@ -81,7 +84,18 @@ const Store = new Vuex.Store({
         part1Complete: false,
         part2Complete: false,
         part3Complete: false,
+        postOnOpen: false,
       };
+    },
+    notNewUser(state) {
+      state.newUser = false;
+    },
+    logout(state) {
+      state.userID = null;
+      state.businessID = null;
+      state.acct = 0;
+      state.bdata = null;
+      state.userdata = null;
     },
     resetState(state) {
       state.userID = null;
@@ -100,25 +114,16 @@ const Store = new Vuex.Store({
         part1Complete: false,
         part2Complete: false,
         part3Complete: false,
+        postOnOpen: false,
       };
       state.newUser = true;
-    },
-    notNewUser(state) {
-      state.newUser = false;
     },
   },
   plugins: [VuexLS.plugin],
   getters: {
-    /* userdata(state) {
-      return state.userdata;
-    }, */
-    /* LSstate() {
-      return new Promise(resolve => {
-        VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-          resolve(data);
-        });
-      });
-    }, */
+    LS() {
+      return VuexLS.restoreState('vuex', window.localStorage);
+    },
   },
 });
 

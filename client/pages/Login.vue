@@ -55,7 +55,7 @@ a:hover{
             </section>
             <div v-if="loggedIn==0" id="general-submit" @click="submit">
                 <div id="general-submit-default">
-                    <v-progress-circular indeterminate v-if="loading" size="30" style="margin-top: 17px" color="white"></v-progress-circular>
+                    <v-progress-circular indeterminate v-if="loading" size="30" color="white"></v-progress-circular>
                     <span v-else>LOGIN</span>
                 </div>
             </div>

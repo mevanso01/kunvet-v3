@@ -21,12 +21,13 @@
         </div>
         <div v-else class="main-cont-small" style="max-width: 420px;">
           <div style="padding: 25px 20px">
-            <h3 class="headline mb-0 mt-0 center" style="color: #4d4d4d;">Thanks for verifying! You're all set!</h3>
+            <h3 class="headline mb-1 mt-0 center" style="color: #4d4d4d;">Thanks for verifying! You're all set!</h3>
           </div>
           <template v-if="isLoggedIn">
             <div  v-if="wasEditingJob" class="general-submit" @click="goTo('/createjob')">
               <div class="general-submit-default">
-                  <span>CONTINUE EDITING YOUR JOB</span>
+                  <span v-if="readyToPost">FINISH POSTING MY JOB</span>
+                  <span v-else>CONTINUE EDITING YOUR JOB</span>
               </div>
             </div>
             <div v-else class="general-submit" @click="goTo('/account')">
@@ -49,7 +50,6 @@
 </template>
 <script>
 import axios from 'axios';
-import VuexLS from '@/store/persist';
 
 export default {
   props: ['code'],
@@ -60,20 +60,20 @@ export default {
       isLoggedIn: true,
       dne: null,
       wasEditingJob: false,
+      readyToPost: false,
+      jobId: null,
     };
   },
   activated() {
     Object.assign(this.$data, this.$options.data.call(this));
     if (this.$store.state) {
       if (this.$store.state.currentJobProgress.jobId) {
+        this.jobId = this.$store.state.currentJobProgress.jobId;
         this.wasEditingJob = true;
-      }
-    } else {
-      VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-        if (data.currentJobProgress.jobId) {
-          this.wasEditingJob = true;
+        if (this.$store.state.currentJobProgress.postOnOpen) {
+          this.readyToPost = true;
         }
-      });
+      }
     }
     this.validateCode();
   },
@@ -104,7 +104,42 @@ export default {
         // }, 1000);
       }
     },
-    goTo(route) {
+    /* async checkForUnpostedJobs() {
+      var unpostedJobs = [];
+      await this.$apollo.query({
+        // fetchPolicy: 'network-only',
+        query: (gql`query ($uid: MongoID, $oid: MongoID) {
+          findJobs(filter: { user_id: $uid, business_id: $oid, active: false, is_deleted: false, expired: false }){
+            _id
+            user_id
+            business_id
+            active
+            is_deleted
+            expired
+          }
+        }`),
+        variables: {
+          uid: this.uid,
+          oid: this.orgId,
+        },
+      }).then((data) => {
+        if (data.data.findJobs && data.data.findJobs.length > 0) {
+          for (var i = 0; i < data.data.findJobs.length; i++) {
+            unpostedJobs.push(data.data.findJobs[i]._id);
+          }
+        }
+      }).catch((err) => {
+        this.$error(err);
+      });
+      return unpostedJobs;
+    }, */
+    goTo(_route) {
+      var route = '/';
+      if (_route === '/createjob' && this.jobId) {
+        route = `/createjob/${this.jobId}`;
+      } else {
+        route = _route;
+      }
       this.$router.push(route);
     },
   },

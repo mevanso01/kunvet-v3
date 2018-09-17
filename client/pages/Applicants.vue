@@ -40,7 +40,7 @@
                         <div v-if="item.status === 'submitted'" class="new-applicant-card__unread-circle" />
                           <img :src="item.profilePic" style="min-height: 50px;"/>
                           <div class="new-applicant-card__time-ago" style="margin-left: 5px;">
-                            <timeago :datetime="item.date" />
+                            <timeago :since="item.date" />
                           </div>
                       </figure>
                     </div>
@@ -174,7 +174,6 @@
 </template>
 <script>
   import gql from 'graphql-tag';
-  import VuexLS from '@/store/persist';
   import axios from 'axios';
   import differenceBy from 'lodash/differenceBy';
   import EventBus from '@/EventBus';
@@ -192,13 +191,7 @@
 
   export default {
     created() {
-      if (!this.$store.state.acct) {
-        VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-          if (data.acct === 0) {
-            this.$router.push('/login');
-          }
-        });
-      } else if (this.$store.state.acct === 0) {
+      if (this.$store.state.acct === 0) {
         this.$router.push('/login');
       }
     },

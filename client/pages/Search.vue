@@ -17,31 +17,31 @@
   max-width: 100%;
 }
 /* --- old selects --- */
-.search .input-group--select .input-group__input {
+.search .v-input-group--select .v-input-group__input {
   padding: 0 16px;
   height: 48px;
   flex: 1 0 100%;
 }
-.search .input-group--select {
+.search .v-input-group--select {
   padding-top: 0;
   height: 48px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-.list__tile__action .checkbox .input-group__input {
+.v-list__tile__action .checkbox .v-input-group__input {
   padding-top: 6px;
 }
 .home-page-cont .list__tile__title {
   color: #616161 !important;
 }
-.search .input-group--select i.icon {
+.search .v-input-group--select i.icon {
   padding: 8px 0;
 }
-.search .input-group__selections {
+.search .v-input-group__selections {
   padding-top: 3px;
   padding-bottom: 3px;
   overflow: auto !important;
 }
-.search .input-group--select.input-group--single-line label {
+.search .v-input-group--select.v-input-group--single-line label {
   top: 8px;
   left: 16px;
 }
@@ -336,7 +336,6 @@
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-// import VuexLS from '@/store/persist';
 import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Asset70 from '@/assets/icons/Asset(70).svg';
@@ -391,7 +390,7 @@ export default {
         { text: 'Evening', value: 'evening' },
         { text: 'Mid-night', value: 'midnight' },
       ],
-      // firstSearch: Store.state.firstSearch,
+      // firstSearch: this.$store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
       selectedCity: this.$store.state.selectedCity || 'Irvine - UC Irvine', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
       selectedTypes: this.$store.state.selectedTypes || [],
@@ -787,11 +786,7 @@ export default {
     this.setSelectedLatlongs();
     this.loadInitialJobs();
     document.addEventListener('click', this.documentClick, { passive: true });
-    // VuexLS.restoreState('vuex', window.localStorage).then((data) => {
-    //
-    // });
     const data = this.$store.state;
-    console.log(data);
     if (data) {
       if (data.firstSearch) {
         this.firstSearch = data.firstSearch;
@@ -816,6 +811,9 @@ export default {
         this.getSavedJobs();
       }
     }
+    // });
+    // const data = this.$store.state;
+    // console.log(data);
   },
 };
 

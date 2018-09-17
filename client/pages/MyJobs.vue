@@ -29,7 +29,7 @@
             </div>
             <div class="btn-holder">
               <div class="btn-holder__right-elements">
-                <router-link :to="`/createnewjob/${job._id}`">
+                <router-link :to="`/createjob/${job._id}`">
                   <v-btn class="kunvet-accept-small-btn">
                     Continue Editing
                   </v-btn>
@@ -64,7 +64,7 @@
                 </h2>
               </router-link>
               <div class="new-applicant-card__time-ago">
-                <timeago :datetime="job.date" />
+                <timeago :since="job.date" />
               </div>
               <div class="post-address-container">
                 <p class="new-applicant-card__address">
@@ -88,7 +88,7 @@
                 <span style="color: grey;">
                   Repost in {{ getRepostDaysString(job.date) }}
                 </span>
-                <router-link :to="`/createnewjob/${job._id}`">
+                <router-link :to="`/editjob/${job._id}`">
                   <v-icon style="margin-left: 5px;">edit</v-icon>
                 </router-link>
                 <v-icon style="cursor: pointer; margin-left: 5px;" @click="onShowJobDialog(job)">delete</v-icon>
@@ -116,7 +116,7 @@
                 </h2>
               </router-link>
             <div class="new-applicant-card__time-ago">
-              <timeago :datetime="job.date" />
+              <timeago :since="job.date" />
             </div>
             <p class="post-intro">
               <span class="new-applicant-card__address">
@@ -143,7 +143,7 @@
               >
                 Repost
               </v-btn>
-              <router-link :to="`/createnewjob/${job._id}`">
+              <router-link :to="`/editjob/${job._id}`">
                 <v-icon>edit</v-icon>
               </router-link>
               <v-icon @click="onShowJobDialog(job)">delete</v-icon>
@@ -203,7 +203,6 @@
 </template>
 <script>
   import gql from 'graphql-tag';
-  import VuexLS from '@/store/persist';
   import InformationSvg from '@/assets/job_posts/information.svg';
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import StudentSvg from '@/assets/job_posts/user_1.svg';
@@ -221,22 +220,16 @@
       findJobs(filter: { user_id: $userId, business_id: $businessId }) {
         ${queries.FindJobRecordForJobCard}
         expired
+        expiry_date
       }
     }`;
 
   export default {
-    created() {
-      if (!this.$store.state.acct) {
-        VuexLS.restoreState('vuex',  window.localStorage).then((data) => {
-          if (data.bdata && data.acct === 0) {
-            this.$router.push('/login');
-          }
-        });
-      } else if (this.$store.state.acct === 0) {
-        this.$router.push('/login');
-      }
-    },
     activated() {
+      if (this.$store.state.acct === 0) {
+        this.$router.push('/login');
+        return;
+      }
       this.getData();
     },
     data() {
@@ -261,13 +254,14 @@
     },
     methods: {
       async getData(networkOnly = false) {
-        console.log(`
-          query($userId: MongoID, $businessId: MongoID) {
-            findJobs(filter: { user_id: $userId, business_id: $businessId }) {
-              ${queries.FindJobRecordForJobCard}
-              expired
-            }
-          }`);
+        // console.log(`
+        //   query($userId: MongoID, $businessId: MongoID) {
+        //     findJobs(filter: { user_id: $userId, business_id: $businessId }) {
+        //       ${queries.FindJobRecordForJobCard}
+        //       expired
+        //       expiry_date
+        //     }
+        //   }`);
         const { data } = await this.$apollo.query({
           fetchPolicy: networkOnly ? 'network-only' : 'cache-first',
           query: findJobsQuery,
@@ -277,7 +271,7 @@
           },
         });
         this.jobs = data.findJobs.concat();
-        console.log(this.jobs);
+        // console.log(this.jobs);
       },
       onShowJobDialog(job) {
         this.dialogs.errorOccured = false;
@@ -341,7 +335,7 @@
         return `${daysDiff} ${StringHelper.pluralize('day', daysDiff)}`;
       },
       getExpiredDaysDiff(date) {
-        const expiryDate = DateHelper.getExpiryDate(date); // this is what determines if job is expired atm
+        const expiryDate = DateHelper.getExpiryDate(date, 30); // this is what determines if job is expired atm
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return daysDiff;
       },
@@ -381,6 +375,7 @@
         return this.jobs.filter(x => !x.active && !x.is_deleted && !x.expired);
       },
       expiredJobs() {
+        // you can also use JobHelper.isJobExpired if you have expiry_date
         return this.jobs.filter(x => this.getExpiredDaysDiff(x.date) <= 0 && !x.is_deleted);
       },
       getUnpostedJobsString() {

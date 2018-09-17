@@ -371,7 +371,8 @@ router.post('/register', async (ctx) => {
   ctx.body = JSON.stringify(response);
 });
 
-async function handleUpdatingUnverifiedUser(email, req) {
+async function handleUpdatingUnverifiedUser(ctx, req) {
+  const email = ctx.state.user.email;
   try {
     var orgId = null;
     var jobId = null;
@@ -427,6 +428,7 @@ async function handleUpdatingUnverifiedUser(email, req) {
       orgId = org._id;
     }
     await user.save();
+    ctx.login(user);
 
     if (req.jobInfo && req.address && req.jobInfo.title) {
       var job = await Models.Job.findOne({
@@ -466,6 +468,25 @@ async function handleUpdatingUnverifiedUser(email, req) {
   }
 }
 
+// Use with caution
+async function createNewJob(email, req, userId, orgId = null) {
+  const postedBy = req.business_name ? req.business_name : `${req.fname} ${req.lname}`;
+  var job = new Models.Job({
+    email: email,
+    posted_by: postedBy,
+    user_id: userId,
+    business_id: req.business_name ? orgId : null,
+    title: req.jobInfo.title,
+    address: req.address,
+    address2: req.jobInfo.address2,
+    latitude: req.jobInfo.lat,
+    longitude: req.jobInfo.long,
+    active: false,
+  });
+  await job.save();
+  return job;
+}
+
 router.post('/register2', async (ctx) => {
   const req = ctx.request.body;
   const email = req.email.toLowerCase();
@@ -486,9 +507,10 @@ router.post('/register2', async (ctx) => {
     },
   }; */
   if (ctx.isAuthenticated()) {
+    // If the user is already authenticated, update account instead
     console.log('I\'m authenticated!', ctx.state.user);
     if (ctx.state.user && !ctx.state.user.email_verified) {
-      const response = await handleUpdatingUnverifiedUser(ctx.state.user.email, req);
+      const response = await handleUpdatingUnverifiedUser(ctx, req);
       console.log('response', response);
       ctx.body = JSON.stringify(response);
       return;
@@ -517,7 +539,6 @@ router.post('/register2', async (ctx) => {
     ctx.body = JSON.stringify(response);
     return;
   }
-
   console.log('USER', user);
   var org;
   if (req.business_name) {
@@ -547,22 +568,9 @@ router.post('/register2', async (ctx) => {
 
   var job;
   if (req.jobInfo) {
-    const postedBy = req.business_name ? req.business_name : `${req.fname} ${req.lname}`;
     try {
       // TRY CREATE JOB
-      job = new Models.Job({
-        email: email,
-        posted_by: postedBy,
-        user_id: user._id,
-        business_id: req.business_name ? org._id : null,
-        title: req.jobInfo.title,
-        address: req.address,
-        address2: req.jobInfo.address2,
-        latitude: req.jobInfo.lat,
-        longitude: req.jobInfo.long,
-        active: false,
-      });
-      await job.save();
+      job = await createNewJob(email, req, user._id, org ? org._id : null);
     } catch (err) {
       console.log('Error when creating new job', err);
       const response = { success: false, message: 'Job creation failed' };
@@ -602,8 +610,15 @@ router.post('/changeEmail', async (ctx) => {
         ctx.body = 'Internal server error';
         return;
       }
-      user.email = newEmail;
-      await user.save();
+      try {
+        user.email = newEmail;
+        await user.save();
+        ctx.login(user);
+      } catch (err) {
+        ctx.status = 400;
+        ctx.body = 'Bad request';
+        return;
+      }
       await sendVerificationEmail(user.firstname, newEmail);
       const response = {
         success: true,
@@ -622,6 +637,7 @@ router.post('/changeEmail', async (ctx) => {
     ctx.body = JSON.stringify(response);
   }
 });
+
 
 router.get('/status', (ctx) => {
   if (ctx.isAuthenticated()) {
