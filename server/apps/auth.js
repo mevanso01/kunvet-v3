@@ -21,6 +21,172 @@ import uuidv1 from 'uuid/v1';
 const app = new Koa();
 const router = new KoaRouter();
 
+function generateCodeString(numDigits = 4) {
+  var code = '';
+  for (var i = 0; i < numDigits; i++) {
+    code += Math.floor((Math.random() * 10)).toString();
+  }
+  return code;
+}
+
+async function createAndSendVerificationCode(email, firstname) {
+  const code = generateCodeString();
+  const VerificationCode = new Models.VerificationCode({
+    email: email,
+    code: code,
+    // createdAt: set in model as Date.now()
+    // expiresAt: set in model, should be 45 minutes after Date.now()
+  });
+  await VerificationCode.save();
+  try {
+    const mailer = new Mailer();
+    await mailer.sendTemplate(
+      email,
+      'email-verification',
+      {
+        fname: firstname,
+        email: email,
+        code: code,
+      },
+    );
+  } catch (err) {
+    return {
+      success: false,
+      message: 'Email could not be sent',
+      status: 500,
+    };
+  }
+  return {
+    success: true,
+    message: 'success',
+    status: 200,
+  };
+}
+
+function deleteVerificationCodeInstance(email, code) {
+  try {
+    Models.VerificationCode.deleteOne({
+      email: email,
+      code: code,
+    });
+  } catch (err) {
+    console.log('Error deleting verification code:', err);
+  }
+}
+
+/** Request to create and send a verification code */
+router.post('/sendVerificationCode', async (ctx) => {
+  if (!ctx.isAuthenticated() || !ctx.state.user) {
+    ctx.status = 400;
+    ctx.body = JSON.stringify({
+      success: false,
+      message: 'Must be authenticated',
+    });
+    return;
+  }
+  const user = ctx.state.user;
+  if (user.email_verified) {
+    ctx.status = 400;
+    ctx.body = JSON.stringify({
+      success: false,
+      message: 'Your account is already verified',
+    });
+    return;
+  }
+  const response = await createAndSendVerificationCode(user.email, user.firstname);
+  ctx.status = response.status;
+  ctx.body = JSON.stringify(response);
+});
+
+
+/** Verify email using code instead of link in email */
+router.post('/verifyUsingCode', async (ctx) => {
+  if (!ctx.isAuthenticated() || !ctx.state.user) {
+    ctx.status = 400;
+    ctx.body = JSON.stringify({
+      success: false,
+      message: 'Must be authenticated',
+    });
+    return;
+  }
+  const user = ctx.state.user;
+  if (user.email_verified) {
+    ctx.status = 400;
+    ctx.body = JSON.stringify({
+      success: false,
+      message: 'Your account is already verified',
+    });
+    return;
+  }
+  const req = ctx.request.body;
+  let codeInstance = null;
+  try {
+    codeInstance = await Models.VerificationCode.findOne({
+      email: user.email,
+      code: req.code,
+    });
+  } catch (err) {
+    console.error(err);
+    ctx.status = 500;
+    ctx.body = 'Internal server error';
+    return;
+  }
+  if (!codeInstance || codeInstance.expiresAt < Date.now()) {
+    ctx.body = JSON.stringify({
+      success: false,
+      message: 'Invalid code',
+    });
+    return;
+  }
+  // Change user account to verify user
+  try {
+    const userAcct = await Models.Account.findOne({
+      email: user.email,
+    });
+    userAcct.email_verified = true;
+    await userAcct.save();
+  } catch (err) {
+    console.error(err);
+    ctx.status = 500;
+    ctx.body = 'Internal server error';
+    return;
+  }
+  // Success
+  ctx.body = JSON.stringify({
+    success: true,
+    message: 'success',
+  });
+  deleteVerificationCodeInstance(user.email, req.code);
+});
+
+/** Check if user has a currently unused verification code */
+router.get('/hasVerificationCode', ctx => {
+  if (!ctx.isAuthenticated() || !ctx.state.user) {
+    ctx.status = 400;
+    ctx.body = JSON.stringify({ success: false, message: 'Must be authenticated' });
+    return;
+  }
+  const user = ctx.state.user;
+  const verificationCodes = Models.VerificationCode.find({
+    email: user.email,
+  });
+  const currentDate = Date.now();
+  for (var item of verificationCodes) {
+    if (item.expiresAt > currentDate) {
+      ctx.body = JSON.stringify({
+        success: true,
+        hasVerificationCode: true,
+      });
+      return;
+    }
+  }
+  ctx.body = JSON.stringify({
+    success: true,
+    hasVerificationCode: false,
+  });
+});
+
+
 router.post('/verify', async (ctx) => {
   const req = ctx.request.body;
   console.log(req);
