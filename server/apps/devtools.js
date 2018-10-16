@@ -1,6 +1,6 @@
 // Koa
 import Koa from 'koa';
-import KoaRouter from 'koa-router';
+/* import KoaRouter from 'koa-router';
 
 // GraphiQL
 import { graphiqlKoa } from 'apollo-server-koa';
@@ -11,10 +11,10 @@ import Mailer from '@/utils/Mailer';
 // Scheduler
 import Scheduler from '@/Scheduler';
 
-const bodyParser = require('koa-bodyparser');
+const bodyParser = require('koa-bodyparser'); */
 
 const app = new Koa();
-const router = new KoaRouter();
+/* const router = new KoaRouter();
 
 app.use(bodyParser());
 
@@ -104,6 +104,6 @@ router.get('/trigger_scheduler', async (ctx) => {
 });
 
 app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(router.allowedMethods()); */
 
 export default app;
