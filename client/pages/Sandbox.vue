@@ -4,21 +4,54 @@
     <div>
       Play with me on <code>client/pages/Sandbox.vue</code>!
     </div>
-    <PdfFrame href="https://s3.amazonaws.com/kunvet-prod-assets/HW1.pdf" page="1">
-    </PdfFrame>
+    <h2>List of jobs</h2>
+    <p>Page {{ page }} - Displaying {{ pageSize }} jobs at a time</p>
+    <ul>
+      <li v-for="job in findJobs">
+        {{ job.title }}
+      </li>
+    </ul>
+    <v-btn @click="page--; reloadPage()" v-if="page > 0">Prev</v-btn>
+    <v-btn @click="page++; reloadPage()">Next</v-btn>
   </v-container>
 </template>
 <script>
-import PdfFrame from '@/components/PdfFrame';
+import gql from 'graphql-tag';
 
 export default {
-  components: {
-    PdfFrame,
-  },
   data() {
     return {
-      text: 'Default text',
+      pageSize: 10,
+      page: 0,
     };
+  },
+  apollo: {
+    findJobs: {
+      query: gql`
+        query ($limit: Int!, $skip: Int!) {
+          findJobs (limit: $limit, skip: $skip) {
+            _id
+            title
+          }
+        }`,
+      variables: {
+        limit: 10,
+        skip: 0,
+      },
+    },
+  },
+  methods: {
+    reloadPage() {
+      this.$apollo.queries.findJobs.fetchMore({
+        variables: {
+          limit: this.pageSize,
+          skip: this.pageSize * this.page,
+        },
+        updateQuery(previousResult, { fetchMoreResult }) {
+          return fetchMoreResult;
+        },
+      });
+    },
   },
 };
 </script>
