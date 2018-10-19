@@ -4,6 +4,9 @@
     <div>
       Play with me on <code>client/pages/Sandbox.vue</code>!
     </div>
+    <br>
+    <CodeVerification />
+    <br>
     <h2>List of jobs</h2>
     <p>Page {{ page }} - Displaying {{ pageSize }} jobs at a time</p>
     <ul>
@@ -17,6 +20,7 @@
 </template>
 <script>
 import gql from 'graphql-tag';
+import CodeVerification from '@/components/CodeVerification';
 
 export default {
   data() {
@@ -39,6 +43,9 @@ export default {
         skip: 0,
       },
     },
+  },
+  components: {
+    CodeVerification,
   },
   methods: {
     reloadPage() {

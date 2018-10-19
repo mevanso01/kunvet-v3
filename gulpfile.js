@@ -68,7 +68,7 @@ gulp.task('server', () => {
 
 // Install node_modules for server artifact
 gulp.task('server-node-modules', ['server'],
-  shell.task('yarn install', {
+  shell.task('npm install', {
     cwd: 'dist/server',
   }),
 );

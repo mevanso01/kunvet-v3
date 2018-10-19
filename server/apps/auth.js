@@ -21,6 +21,7 @@ import uuidv1 from 'uuid/v1';
 const app = new Koa();
 const router = new KoaRouter();
 
+
 function generateCodeString(numDigits = 4) {
   var code = '';
   for (var i = 0; i < numDigits; i++) {
@@ -42,7 +43,7 @@ async function createAndSendVerificationCode(email, firstname) {
     const mailer = new Mailer();
     await mailer.sendTemplate(
       email,
-      'email-verification',
+      'email-code-verification',
       {
         fname: firstname,
         email: email,
@@ -50,6 +51,7 @@ async function createAndSendVerificationCode(email, firstname) {
       },
     );
   } catch (err) {
+    console.log('Error sending email in createAndSendVerificationCode()', err);
     return {
       success: false,
       message: 'Email could not be sent',
@@ -74,10 +76,42 @@ function deleteVerificationCodeInstance(email, code) {
   }
 }
 
+async function hasVerificationCode(user) {
+  if (user.email_verified) {
+    return {
+      success: true,
+      hasVerificationCode: false,
+      alreadyVerified: true,
+    };
+  }
+  const verificationCodes = await Models.VerificationCode.find({
+    email: user.email,
+  });
+  console.log(verificationCodes);
+  if (verificationCodes) {
+    const currentDate = Date.now();
+    console.log('Current date', currentDate);
+    console.log('Verification codes', verificationCodes);
+    for (var item of verificationCodes) {
+      if (item.expiresAt > currentDate) {
+        return {
+          success: true,
+          hasVerificationCode: true,
+        };
+      }
+    }
+  }
+  return {
+    success: true,
+    hasVerificationCode: false,
+  };
+}
+
+
 /** Request to create and send a verification code */
 router.post('/sendVerificationCode', async (ctx) => {
   if (!ctx.isAuthenticated() || !ctx.state.user) {
-    ctx.status = 400;
+    ctx.status = 401;
     ctx.body = JSON.stringify({
       success: false,
       message: 'Must be authenticated',
@@ -86,18 +120,71 @@ router.post('/sendVerificationCode', async (ctx) => {
   }
   const user = ctx.state.user;
   if (user.email_verified) {
-    ctx.status = 400;
     ctx.body = JSON.stringify({
       success: false,
-      message: 'Your account is already verified',
+      message: 'Already verified',
     });
     return;
   }
-  const response = await createAndSendVerificationCode(user.email, user.firstname);
-  ctx.status = response.status;
-  ctx.body = JSON.stringify(response);
+  try {
+    const response = await createAndSendVerificationCode(user.email, user.firstname);
+    ctx.status = response.status;
+    ctx.body = JSON.stringify(response);
+  } catch (err) {
+    console.log('Error in auth/sendVerificationCode', err);
+    ctx.status = 500;
+  }
 });
 
+/** Check if user has a currently unused verification code */
+router.get('/hasVerificationCode', async (ctx) => {
+  if (!ctx.isAuthenticated() || !ctx.state.user) {
+    ctx.status = 401;
+    ctx.body = JSON.stringify({ success: false, message: 'Must be authenticated' });
+    return;
+  }
+  const user = ctx.state.user;
+  const ret = await hasVerificationCode(user);
+  ctx.body = JSON.stringify(ret);
+});
+
+/** Combination of hasVerificationCode and sendVerificationCode */
+router.post('/lookForAndSendCode', async (ctx) => {
+  if (!ctx.isAuthenticated() || !ctx.state.user) {
+    ctx.status = 401;
+    ctx.body = JSON.stringify({ success: false, message: 'Must be authenticated' });
+    return;
+  }
+  const user = ctx.state.user;
+  console.log('user', user);
+  if (user.email_verified) {
+    ctx.body = JSON.stringify({
+      success: true,
+      hasVerificationCode: false,
+      alreadyVerified: true,
+    });
+    return;
+  }
+  try {
+    const res1 = await hasVerificationCode(user);
+    console.log('res1', res1);
+    if (res1.success && res1.hasVerificationCode === false) {
+      // send verification code if user doesnt have one
+      const res2 = await createAndSendVerificationCode(user.email, user.firstname);
+      console.log('res2', res2);
+      ctx.status = res2.status;
+      res2.email = user.email;
+      ctx.body = JSON.stringify(res2);
+    } else {
+      // send appropriate response if user does have verification code
+      res1.email = user.email;
+      ctx.body = JSON.stringify(res1);
+    }
+  } catch (err) {
+    console.log('Error in auth/lookForAndSendCode', err);
+    ctx.status = 500;
+  }
+});
 
 /** Verify email using code instead of link in email */
 router.post('/verifyUsingCode', async (ctx) => {
@@ -158,34 +245,6 @@ router.post('/verifyUsingCode', async (ctx) => {
   });
   deleteVerificationCodeInstance(user.email, req.code);
 });
-
-/** Check if user has a currently unused verification code */
-router.get('/hasVerificationCode', ctx => {
-  if (!ctx.isAuthenticated() || !ctx.state.user) {
-    ctx.status = 400;
-    ctx.body = JSON.stringify({ success: false, message: 'Must be authenticated' });
-    return;
-  }
-  const user = ctx.state.user;
-  const verificationCodes = Models.VerificationCode.find({
-    email: user.email,
-  });
-  const currentDate = Date.now();
-  for (var item of verificationCodes) {
-    if (item.expiresAt > currentDate) {
-      ctx.body = JSON.stringify({
-        success: true,
-        hasVerificationCode: true,
-      });
-      return;
-    }
-  }
-  ctx.body = JSON.stringify({
-    success: true,
-    hasVerificationCode: false,
-  });
-});
-
 
 router.post('/verify', async (ctx) => {
   const req = ctx.request.body;
