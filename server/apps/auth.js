@@ -30,7 +30,7 @@ function generateCodeString(numDigits = 4) {
   return code;
 }
 
-async function createAndSendVerificationCode(email, firstname) {
+async function sendVerificationCode(email, firstname) {
   const code = generateCodeString();
   const VerificationCode = new Models.VerificationCode({
     email: email,
@@ -51,7 +51,7 @@ async function createAndSendVerificationCode(email, firstname) {
       },
     );
   } catch (err) {
-    console.log('Error sending email in createAndSendVerificationCode()', err);
+    console.log('Error sending email in sendVerificationCode()', err);
     return {
       success: false,
       message: 'Email could not be sent',
@@ -87,11 +87,8 @@ async function hasVerificationCode(user) {
   const verificationCodes = await Models.VerificationCode.find({
     email: user.email,
   });
-  console.log(verificationCodes);
   if (verificationCodes) {
     const currentDate = Date.now();
-    console.log('Current date', currentDate);
-    console.log('Verification codes', verificationCodes);
     for (var item of verificationCodes) {
       if (item.expiresAt > currentDate) {
         return {
@@ -105,6 +102,55 @@ async function hasVerificationCode(user) {
     success: true,
     hasVerificationCode: false,
   };
+}
+
+async function checkIsNotVerified(email) {
+  let acct = null;
+  try {
+    acct = await Models.Account.findOne({
+      email: email,
+    });
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+  if (acct.email_verified) {
+    return false;
+  }
+  return true;
+}
+
+async function generateResponse(err, email = null, defaultResponse = null) {
+  if (err.name === 'UserExistsError' || err.name === 'BulkWriteError') {
+    let response;
+    const isntVerified = await checkIsNotVerified(email);
+    if (isntVerified) {
+      response = { success: false, message: 'Email exists but not verified' };
+    } else {
+      response = { success: false, message: 'User already exists' };
+    }
+    return response;
+  }
+  return defaultResponse;
+}
+
+async function sendVerificationEmail(email, fname) {
+  const validationCode = uuidv1();
+  const tempAcct = new Models.TempAccount({
+    email: email,
+    vcode: validationCode,
+  });
+  await tempAcct.save();
+  const mailer = new Mailer();
+  await mailer.sendTemplate(
+    email,
+    'email-verification',
+    {
+      fname: fname,
+      email: email,
+      code: validationCode,
+    },
+  );
 }
 
 
@@ -127,7 +173,7 @@ router.post('/sendVerificationCode', async (ctx) => {
     return;
   }
   try {
-    const response = await createAndSendVerificationCode(user.email, user.firstname);
+    const response = await sendVerificationCode(user.email, user.firstname);
     ctx.status = response.status;
     ctx.body = JSON.stringify(response);
   } catch (err) {
@@ -170,7 +216,7 @@ router.post('/lookForAndSendCode', async (ctx) => {
     console.log('res1', res1);
     if (res1.success && res1.hasVerificationCode === false) {
       // send verification code if user doesnt have one
-      const res2 = await createAndSendVerificationCode(user.email, user.firstname);
+      const res2 = await sendVerificationCode(user.email, user.firstname);
       console.log('res2', res2);
       ctx.status = res2.status;
       res2.email = user.email;
@@ -410,55 +456,6 @@ router.get('/status', (ctx) => {
     ctx.body = JSON.stringify(response);
   }
 });
-
-async function checkIsNotVerified(email) {
-  let acct = null;
-  try {
-    acct = await Models.Account.findOne({
-      email: email,
-    });
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
-  if (acct.email_verified) {
-    return false;
-  }
-  return true;
-}
-
-async function generateResponse(err, email = null, defaultResponse = null) {
-  if (err.name === 'UserExistsError' || err.name === 'BulkWriteError') {
-    let response;
-    const isntVerified = await checkIsNotVerified(email);
-    if (isntVerified) {
-      response = { success: false, message: 'Email exists but not verified' };
-    } else {
-      response = { success: false, message: 'User already exists' };
-    }
-    return response;
-  }
-  return defaultResponse;
-}
-
-async function sendVerificationEmail(fname, email) {
-  const validationCode = uuidv1();
-  const tempAcct = new Models.TempAccount({
-    email: email,
-    vcode: validationCode,
-  });
-  await tempAcct.save();
-  const mailer = new Mailer();
-  await mailer.sendTemplate(
-    email,
-    'email-verification',
-    {
-      fname: fname,
-      email: email,
-      code: validationCode,
-    },
-  );
-}
 
 router.post('/register', async (ctx) => {
   // FIXME: Input sanitization
@@ -805,7 +802,7 @@ router.post('/register2', async (ctx) => {
   }
 
   try {
-    sendVerificationEmail(req.fname, email);
+    sendVerificationEmail(email, req.fname);
   } catch (err) {
     console.error('Verification email could not be set:', err);
   }
@@ -830,7 +827,7 @@ router.post('/changeEmail', async (ctx) => {
         email: oldEmail,
         email_verified: false,
       });
-      if (!user) {
+      if (!user) { // user should always be found
         ctx.status = 500;
         ctx.body = 'Internal server error';
         return;
@@ -840,11 +837,23 @@ router.post('/changeEmail', async (ctx) => {
         await user.save();
         ctx.login(user);
       } catch (err) {
-        ctx.status = 400;
-        ctx.body = 'Bad request';
+        console.log('Error updating user', err.code, err);
+        if (err.code === 11000) { // duplicate key error
+          ctx.body = JSON.stringify({
+            success: false,
+            message: 'User already exists',
+          });
+        } else {
+          ctx.status = 500;
+          ctx.body = 'Internal server error';
+        }
         return;
       }
-      await sendVerificationEmail(user.firstname, newEmail);
+      if (ctx.request.body.sendcode) {
+        await sendVerificationCode(newEmail, user.firstname);
+      } else {
+        await sendVerificationEmail(newEmail, user.firstname);
+      }
       const response = {
         success: true,
         message: 'Changed email successfully',
