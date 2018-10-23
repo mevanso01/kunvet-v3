@@ -211,23 +211,23 @@
         <v-layout row wrap>
           <v-flex xs12 md6>
             <div class="custom-select-2-wrapper">
-              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'city' }">
-                <div class="inner" @click="openSelect('city');">
+
+              <div class="custom-select-2"
+                   v-bind:class="{ 'active': openSelectField === 'city' }">
+
+                <div class="inner" @click="openSelect('city')">
                   <span v-if="this.selectedCity">{{ selectedCity }}</span>
                   <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
                   <v-btn icon v-if="openSelectField === 'city'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
                   <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
                 </div>
 
-                <v-radio-group v-model="selectedCity" hide-details style="padding-top: 0;">
-                  <v-list dense class="custom-select-menu">
-                    <v-list-tile v-for="(item, i) in availableCities" :key="i">
-                      <v-radio :label="item.name" :value="item.name"
-                      ></v-radio>
-                    </v-list-tile>
-                  </v-list>
-                </v-radio-group>
+                <v-list
+                  dense class="custom-select-menu">
+                  <v-list-tile  @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
+                </v-list>
               </div>
+
             </div>
           </v-flex>
           <v-flex xs12 md6>
@@ -468,6 +468,10 @@ export default {
     },
   },
   methods: {
+    updateAndClose(city) {
+      this.selectedCity = city;
+      this.openSelectField = null;
+    },
     openSelect(name) {
       this.filterPositions = null; // clear job filter text
       if (this.openSelectField === 'city') {
