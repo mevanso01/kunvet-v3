@@ -565,27 +565,27 @@ router.post('/register', async (ctx) => {
     y.save();
   }
   // Remove me when email is complete
-  console.log(`Go to localhost:8080/validate/${validationCode}`);
-  const mailer = new Mailer();
-  try {
-    await mailer.sendTemplate(
-      email,
-      'email-verification',
-      {
-        fname: req.fname,
-        email: email,
-        code: validationCode,
-      },
-    );
-  } catch (err) {
-    const response = {
-      success: false,
-      message: 'Email could not be sent',
-    };
-    ctx.status = 500;
-    ctx.body = JSON.stringify(response);
-    return;
-  }
+  // console.log(`Go to localhost:8080/validate/${validationCode}`);
+  // const mailer = new Mailer();
+  // try {
+  //   await mailer.sendTemplate(
+  //     email,
+  //     'email-verification',
+  //     {
+  //       fname: req.fname,
+  //       email: email,
+  //       code: validationCode,
+  //     },
+  //   );
+  // } catch (err) {
+  //   const response = {
+  //     success: false,
+  //     message: 'Email could not be sent',
+  //   };
+  //   ctx.status = 500;
+  //   ctx.body = JSON.stringify(response);
+  //   return;
+  // }
   const response = {
     success: true,
     message: 'Check your mailbox!',
@@ -614,16 +614,17 @@ async function handleUpdatingUnverifiedUser(ctx, req) {
         vcode: validationCode,
       });
       tempAcct.save();
-      const mailer = new Mailer();
-      mailer.sendTemplate(
-        email,
-        'email-verification',
-        {
-          fname: user.firstname,
-          email: user.email,
-          code: validationCode,
-        },
-      );
+      // Note: email verification is now done via code
+      // const mailer = new Mailer();
+      // mailer.sendTemplate(
+      //   email,
+      //   'email-verification',
+      //   {
+      //     fname: user.firstname,
+      //     email: user.email,
+      //     code: validationCode,
+      //   },
+      // );
     }
     // Change org
     if (req.business_name && user.default_org) {
@@ -800,13 +801,12 @@ router.post('/register2', async (ctx) => {
       return;
     }
   }
-
-  try {
-    sendVerificationEmail(email, req.fname);
-  } catch (err) {
-    console.error('Verification email could not be set:', err);
-  }
-
+  // Note: email verification is now handles via code. This is the old logic:
+  // try {
+  //   sendVerificationEmail(email, req.fname);
+  // } catch (err) {
+  //   console.error('Verification email could not be set:', err);
+  // }
   const response = {
     success: true,
     message: {

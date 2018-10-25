@@ -280,7 +280,7 @@
 
           <v-divider></v-divider>
       </div>
-      <div class="sub-container">
+      <div class="sub-container job-desc-subcontainer">
           <h2 style="margin-bottom: 8px;">Job Overview:</h2>
           <div class="long-text-cont" v-html="findJob.description"></div>
 

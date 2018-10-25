@@ -129,7 +129,6 @@ GQC.rootQuery().addFields({
   // Job
   findJob: Job.get('$findOne'),
   findJobs: Job.get('$findMany'),
-  findAccounts: Account.get('$findMany'),
   // Filters
   findAvailableFilters: Filters.get('$findOne'),
 
@@ -139,7 +138,7 @@ GQC.rootQuery().addFields({
     Restrictions.LoggedIn,
   ], {
     findAccount: Account.get('$findOne'),
-
+    findAccounts: Account.get('$findMany'),
   }),
   // Applicants
   ...wrapResolvers([

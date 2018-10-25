@@ -173,13 +173,14 @@ export default {
         console.log(err);
       });
     },
+    /** sends a new verification code regardless of status */
     sendVerificationCode() {
       this.loading = true;
       axios.post('/auth/sendVerificationCode').then((res) => {
         this.loading = false;
         if (res.data.success) {
           this.loading = false;
-          this.email = res.data.email;
+          // if (res.data.email) { this.email = res.data.email; }
         } else if (res.data.message && res.data.message === 'Already verified') {
           this.isVerified = true;
           this.$emit('verified');
@@ -235,6 +236,9 @@ export default {
         this.changeEmailError = 'Something went wrong, please try again.';
         this.$error(error);
       });
+    },
+    init() {
+      this.lookForAndSendCode();
     },
   },
 };

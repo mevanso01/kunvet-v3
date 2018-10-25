@@ -435,13 +435,14 @@ export default {
         if (udata.default_org === '' || !udata.default_org) {
           // login individual
           EventBus.$emit('individual');
-          this.$router.push('/account');
+          // this.$router.push('/account');
         } else {
           // login business
           this.commitBusinessID(udata.default_org);
           EventBus.$emit('business');
-          this.$router.push('/myorg');
+          // this.$router.push('/myorg');
         }
+        this.$router.push('/validate'); // make all users verify their email with code immediately
       }).catch((error) => {
         // Network error
         this.$error(error);
