@@ -43,6 +43,7 @@ jobs:
       - run:
           command: |
             if [[ "${CIRCLE_BRANCH}" == "master" ]]; then export NODE_CONFIG_ENV=staging; fi
+            if [[ -z "${SENTRY_AUTH_TOKEN}" ]]; then export UPLOAD_SENTRY_SOURCEMAP=true; fi
             npm run build
 
       # Store the artifacts to workspace
