@@ -138,8 +138,8 @@
     "vuex-persist": "^1.7.2",
     "webpack-material-design-icons": "^0.1.0",
     "whatwg-fetch": "^2.0.4",
-    "winston": "^2.4.4",
-    "winston-raven-sentry": "^1.0.1"
+    "winston": "^3.1.0",
+    "winston-raven-sentry": "^2.0.0"
   },
   "esm": {
     "mode": "auto"
