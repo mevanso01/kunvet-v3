@@ -298,6 +298,8 @@
             </v-layout>
           </v-container>
 
+          <!--find-->
+
           <div class="bottom-container" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">
             <!-- <div class="gradient-bar" v-show="stickToBottom">
             </div> -->
@@ -571,7 +573,10 @@ export default {
     },
     isNotAtBottom() {
       const footer = document.getElementById('bottom');
-      var distanceToBottom = document.documentElement.scrollHeight - document.documentElement.offsetHeight - document.documentElement.scrollTop;
+
+      const el = document.scrollingElement || document.documentElement;
+      var distanceToBottom = document.documentElement.scrollHeight - document.documentElement.offsetHeight - el.scrollTop;
+
       if (distanceToBottom < (footer.offsetHeight + 26)) {
         return false;
       }
