@@ -94,7 +94,7 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
   }
 
   // Send notification to applicant
-  if (['accepted', 'rejected'].includes(status)) {
+  if (['opened', 'accepted', 'rejected'].includes(status)) {
     const mailer = new Mailer();
     try {
       await mailer.sendTemplate(
