@@ -15,6 +15,7 @@ import Mailer from '@/utils/Mailer';
 import Models from '@/mongodb/Models';
 
 // Other
+import Logger from 'winston';
 import promisify from 'es6-promisify';
 import uuidv1 from 'uuid/v1';
 
@@ -259,7 +260,7 @@ router.post('/verifyUsingCode', async (ctx) => {
       code: req.code,
     });
   } catch (err) {
-    console.error(err);
+    Logger.error(err);
     ctx.status = 500;
     ctx.body = 'Internal server error';
     return;
@@ -279,7 +280,7 @@ router.post('/verifyUsingCode', async (ctx) => {
     userAcct.email_verified = true;
     await userAcct.save();
   } catch (err) {
-    console.error(err);
+    Logger.error(err);
     ctx.status = 500;
     ctx.body = 'Internal server error';
     return;
@@ -294,14 +295,13 @@ router.post('/verifyUsingCode', async (ctx) => {
 
 router.post('/verify', async (ctx) => {
   const req = ctx.request.body;
-  console.log(req);
   let tempAcct = null;
   try {
     tempAcct = await Models.TempAccount.findOne({
       vcode: req.code,
     });
   } catch (e) {
-    console.error(e);
+    Logger.error(e);
     ctx.status = 500;
     ctx.body = 'Internal server error';
     return;
@@ -323,7 +323,7 @@ router.post('/verify', async (ctx) => {
       email_verified: false,
     });
   } catch (e) {
-    console.error(e);
+    Logger.error(e);
     ctx.status = 500;
     ctx.body = 'Internal server error';
     return;
@@ -345,7 +345,7 @@ router.post('/verify', async (ctx) => {
       email: userEmail,
     });
   } catch (e) {
-    console.error(e);
+    Logger.error(e);
     ctx.status = 500;
     ctx.body = 'Internal server error';
     return;
@@ -482,7 +482,7 @@ router.post('/register', async (ctx) => {
       await org.save();
       defaultOrg = org._id;
     } catch (err) {
-      console.log('Error when creating new org', err);
+      Logger.error('Error when creating new org', err);
       if (err.name === 'BulkWriteError') {
         let response;
         const isntVerified = await checkIsNotVerified(email);
@@ -521,7 +521,7 @@ router.post('/register', async (ctx) => {
       req.pwd,
     );
   } catch (err) {
-    console.log('Error when creating account', err);
+    Logger.error('Error when creating account', err);
     if (err.name === 'UserExistsError') {
       let response;
       const isntVerified = await checkIsNotVerified(email);
@@ -805,7 +805,7 @@ router.post('/register2', async (ctx) => {
   // try {
   //   sendVerificationEmail(email, req.fname);
   // } catch (err) {
-  //   console.error('Verification email could not be set:', err);
+  //   Logger.error('Verification email could not be set:', err);
   // }
   const response = {
     success: true,
