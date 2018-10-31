@@ -46,7 +46,7 @@
   }
 </style>
 <template>
-  <div class="codeverbox">
+  <div class="codeverbox" v-on:keyup.enter="verifyCode">
     <div class="inner" v-show="isVerified">
       <h2 style="margin-bottom: 16px; margin-top: 16px; color: #333; font-weight: 500;">Your email is verified.</h2>
     </div>
@@ -64,11 +64,11 @@
         </div>
         <div v-show="email">
           <p>We sent a temporary code to <strong>{{ email }}</strong> to make<span class="l-break"><br></span> sure you own it. Please enter it below:</p>
-          <div class="input-container">
-            <input id="box1" v-model="box1" maxlength="1" @input="inputEntered" />
-            <input id="box2" v-model="box2" maxlength="1" @input="inputEntered" />
-            <input id="box3" v-model="box3" maxlength="1" @input="inputEntered" />
-            <input id="box4" v-model="box4" maxlength="1" @input="inputEntered" />
+          <div class="input-container" v-on:keydown.delete="backspace">
+            <input id="box1" v-model="box1" ref="box1" maxlength="1" @input="inputEntered" />
+            <input id="box2" v-model="box2" ref="box2" maxlength="1" @input="inputEntered" />
+            <input id="box3" v-model="box3" ref="box3" maxlength="1" @input="inputEntered" />
+            <input id="box4" v-model="box4" ref="box4" maxlength="1" @input="inputEntered" />
           </div>
           <a @click="sendVerificationCode" style="color: gray !important; margin-top: 16px; display: inline-block;">
             <i class="material-icons" style="margin-right: 3px;">refresh</i>Send a new code
@@ -150,10 +150,18 @@ export default {
       if ('0123456789'.indexOf(input) !== -1 && srcId) {
         if (srcId !== 'box4') {
           const srcIdNum = parseInt(srcId.slice(3), 10); // strip 'box' from the id
-          const nextInput = document.getElementById(`box${srcIdNum + 1}`);
-          if (nextInput) { // should always be true, but just in case
-            nextInput.focus();
-          }
+          console.log(this.$refs[`box${srcIdNum + 1}`]);
+          this.$refs[`box${srcIdNum + 1}`].focus();
+        }
+      }
+    },
+    backspace(e) {
+      const input = e.key;
+      const srcId = e.srcElement.id;
+      if (input === 'Backspace' && srcId) {
+        const srcIdNum = parseInt(srcId.slice(3), 10); // strip 'box' from the id
+        if (srcIdNum > 1 && (!this[srcId] || this[srcId].length === 0)) {
+          this.$refs[`box${srcIdNum - 1}`].focus();
         }
       }
     },
@@ -192,6 +200,7 @@ export default {
     },
     verifyCode() {
       const code = `${this.box1}${this.box2}${this.box3}${this.box4}`; // should be a 4-character string
+      if (code.length !== 4) { return; }
       this.loading = true;
       this.invalidCode = false;
       axios.post('/auth/verifyUsingCode', { code: code }).then((res) => {
@@ -239,6 +248,9 @@ export default {
     },
     init() {
       this.lookForAndSendCode();
+    },
+    showLoadingIcon() {
+      this.loading = true; // force loading icon to show
     },
   },
 };

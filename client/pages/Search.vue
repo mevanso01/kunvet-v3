@@ -367,7 +367,7 @@ export default {
   data() {
     return {
       uid: null,
-      findJobs: [],
+      // findJobs: [],
       saved_jobs: [],
       filteredJobs: [],
       openSelectField: null,
@@ -408,7 +408,22 @@ export default {
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
+      pageSize: 20,
+      page: 0,
     };
+  },
+  apollo: {
+    findJobs: {
+      query: gql`query ($limit: Int!, $skip: Int!) {
+        findJobs (filter: { active: true }, limit: $limit, skip: $skip ){
+          ${queries.FindJobRecordForJobCard}
+        }
+      }`,
+      variables: {
+        limit: 20,
+        skip: 0,
+      },
+    },
   },
   computed: {
     filteredAvailablePositionsObj() {
@@ -486,7 +501,9 @@ export default {
     searchAndFilter() {
       this.openSelect(null);
       this.setSelectedLatlongs();
-      this.loadInitialJobs();
+      this.page = 0;
+      this.findAndFilterJobs();
+      // this.loadInitialJobs();
     },
     documentClick(e) {
       const selects = document.getElementsByClassName('custom-select-2-wrapper');
@@ -507,6 +524,56 @@ export default {
         return Coordinates.uci;
       }
       return { latitude: selected.latitude, longitude: selected.longitude };
+    },
+    findAndFilterJobs() {
+      // process user's filters
+      this.commitData();
+      let selectedTypes = [];
+      let selectedTypes2 = [];
+      if (this.selectedTypes.length === 0) {
+        selectedTypes = ['fulltime', 'parttime'];
+        selectedTypes2 = ['internship', 'contract'];
+      } else {
+        for (let i = 0; i < this.selectedTypes.length; i++) {
+          if (['fulltime', 'parttime'].indexOf(this.selectedTypes[i]) >= 0) {
+            selectedTypes.push(this.selectedTypes[i]);
+          }
+          if (['internship', 'contract'].indexOf(this.selectedTypes[i]) >= 0) {
+            selectedTypes2.push(this.selectedTypes[i]);
+          }
+        }
+      }
+      // fetch the jobs
+      this.$apollo.queries.findJobs.fetchMore({
+        variables: {
+          limit: this.pageSize,
+          skip: this.pageSize * this.page,
+        },
+        updateQuery(previousResult, { fetchMoreResult }) {
+          return fetchMoreResult;
+        },
+      }).then((res) => {
+        const fetchedJobs = res.data.findJobs;
+        this.page += 1;
+        if (fetchedJobs.length > 0) {
+          console.log('fetchedJobs', fetchedJobs);
+          const newFilteredJobs = [];
+          for (var job of fetchedJobs) {
+            if (
+              this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
+              (findIndex(this.filteredJobs, { '_id': job._id }) === -1)
+            ) {
+              newFilteredJobs.push(job);
+            }
+          }
+          this.filteredJobs = this.filteredJobs.concat(newFilteredJobs);
+          this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+          // find more jobs there are more to be found
+          if (fetchedJobs.length === this.pageSize) {
+            this.findAndFilterJobs();
+          }
+        }
+      });
     },
     async filterJobs() {
       // job types
@@ -788,7 +855,8 @@ export default {
   },
   activated() {
     this.setSelectedLatlongs();
-    this.loadInitialJobs();
+    // this.loadInitialJobs();
+    this.findAndFilterJobs();
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
     if (data) {

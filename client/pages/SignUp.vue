@@ -363,20 +363,23 @@ export default {
         pwd: this.password,
         reqtype: 'validate',
       };
+        // step 1 of signing up
       axios.post('/auth/register', bdata, headers).then((res) => {
         this.$debug('RES', res);
-        this.loading = false;
         if (res.data.success) {
           this.chosenForm = 'success';
           this.logIntoAcct(this.email, this.password);
-        } else if (res.data.message === 'User already exists') {
-          this.error = 'UserExistsError';
-        } else if (res.data.message === 'Email exists but not verified') {
-          this.error = 'Not Verified';
-          this.chosenForm = 'not verified';
         } else {
-          this.chosenForm = 'error';
-          this.$error(new KunvetError(res.data));
+          this.loading = false;
+          if (res.data.message === 'User already exists') {
+            this.error = 'UserExistsError';
+          } else if (res.data.message === 'Email exists but not verified') {
+            this.error = 'Not Verified';
+            this.chosenForm = 'not verified';
+          } else {
+            this.chosenForm = 'error';
+            this.$error(new KunvetError(res.data));
+          }
         }
       }, (error) => {
         this.chosenForm = 'error';
@@ -402,7 +405,7 @@ export default {
       });
     },
     logIntoAcct(email, password) {
-      this.$debug('trying to log into new account');
+      // step 2 of signing up
       axios.post('/auth/login', {
         email: email,
         password: password,
@@ -412,12 +415,18 @@ export default {
           // logged in successfully
           this.fetchAcctData();
         } else {
+          this.loading = false;
           this.$error(new KunvetError(response.data));
         }
-      }).catch(this.$error);
+      }).catch((err) => {
+        this.loading = false;
+        this.$error(err);
+      });
     },
     fetchAcctData() {
+      // step 3 of signing up (final step)
       axios.get('/auth/status').then((response) => {
+        this.loading = false;
         if (!response.data.success) {
           // Unsuccessful
           this.$error(new KunvetError(response.data));
@@ -444,7 +453,7 @@ export default {
         }
         this.$router.push('/validate'); // make all users verify their email with code immediately
       }).catch((error) => {
-        // Network error
+        this.loading = false;
         this.$error(error);
       });
     },
