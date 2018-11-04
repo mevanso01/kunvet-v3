@@ -14,6 +14,7 @@
       width: 200px;
       height: 60px;
       margin: auto;
+      margin-bottom: 16px;
       input {
         border: 1px solid #c8c8c8;
         border-radius: 4px;
@@ -64,13 +65,14 @@
         </div>
         <div v-show="email">
           <p>We sent a temporary code to <strong>{{ email }}</strong> to make<span class="l-break"><br></span> sure you own it. Please enter it below:</p>
-          <div class="input-container" v-on:keydown.delete="backspace">
+          <div class="input-container" v-on:keydown.delete="backspace" v-on:keydown.enter="verifyCode">
             <input id="box1" v-model="box1" ref="box1" maxlength="1" @input="inputEntered" />
             <input id="box2" v-model="box2" ref="box2" maxlength="1" @input="inputEntered" />
             <input id="box3" v-model="box3" ref="box3" maxlength="1" @input="inputEntered" />
             <input id="box4" v-model="box4" ref="box4" maxlength="1" @input="inputEntered" />
           </div>
-          <a @click="sendVerificationCode" style="color: gray !important; margin-top: 16px; display: inline-block;">
+          <p v-show="invalidCode" style="color: red;">Invalid code. Please try again.</p>
+          <a @click="sendVerificationCode" style="color: gray !important; display: inline-block;">
             <i class="material-icons" style="margin-right: 3px;">refresh</i>Send a new code
           </a><br>
           <a @click="openChangeEmail" style="color: gray !important; margin-top: 4px; display: inline-block;">
@@ -150,7 +152,6 @@ export default {
       if ('0123456789'.indexOf(input) !== -1 && srcId) {
         if (srcId !== 'box4') {
           const srcIdNum = parseInt(srcId.slice(3), 10); // strip 'box' from the id
-          console.log(this.$refs[`box${srcIdNum + 1}`]);
           this.$refs[`box${srcIdNum + 1}`].focus();
         }
       }
@@ -167,7 +168,6 @@ export default {
     },
     lookForAndSendCode() {
       axios.post('/auth/lookForAndSendCode').then((res) => {
-        console.log('res', res.data);
         if (res.data.success) {
           this.loading = false;
           if (res.data.alreadyVerified) {
@@ -178,7 +178,7 @@ export default {
           this.email = res.data.email;
         }
       }).catch((err) => {
-        console.log(err);
+        this.$error(err);
       });
     },
     /** sends a new verification code regardless of status */
@@ -195,7 +195,7 @@ export default {
         }
       }).catch((err) => {
         this.loading = false;
-        console.log(err);
+        this.$error(err);
       });
     },
     verifyCode() {
@@ -216,13 +216,14 @@ export default {
         }
       }).catch((err) => {
         this.loading = false;
-        console.log(err);
+        this.$error(err);
       });
     },
     openChangeEmail() {
       this.newEmail = this.email;
       this.changeEmailError = '';
       this.changingEmail = true;
+      this.invalidCode = false;
     },
     changeEmail() {
       if (this.loading) { return; }

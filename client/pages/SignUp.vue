@@ -73,7 +73,7 @@
               <v-card-text>
                 <h2>Just enter your name and email to get started</h2>
                 <p v-if="error === 'UserExistsError'" style="color: #f00">
-                  Someone is using this email already. Would you like to <router-link to="/login" style="text-decoration: underline;">login?</router-link>
+                  An account with this email already exists. Would you like to <router-link to="/login" style="text-decoration: underline;">login?</router-link>
                 </p>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
@@ -219,6 +219,7 @@
         </v-layout>
       </section>
 
+      <!-- with code verification, this section should no longer be used -->
       <section v-if="chosenForm === 'not verified'">
         <v-layout>
           <v-flex xs12 sm8 offset-sm2>
@@ -226,7 +227,7 @@
               <v-card-text>
                 <p style="margin-bottom: 8px;">It looks like <strong>{{ email }}</strong> already exists, but is not verified.</p>
                 <p>Would you like us to send verification another email?</p>
-                <v-btn style="margin-left: 0;" flat @click="resendEmail" :disabled="loading">Send another email</v-btn>
+                <v-btn style="margin-left: 0;" flat @click="goToLogin" :disabled="loading">Send another email</v-btn>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -341,8 +342,9 @@ export default {
         } else if (res.data.message === 'User already exists') {
           this.error = 'UserExistsError';
         } else if (res.data.message === 'Email exists but not verified') {
-          this.error = 'Not Verified';
-          this.chosenForm = 'not verified';
+          // this.error = 'Not Verified';
+          // this.chosenForm = 'not verified';
+          this.error = 'UserExistsError';
         } else {
           this.chosenForm = 'error';
           this.$error(new KunvetError(res.data));
@@ -384,24 +386,6 @@ export default {
       }, (error) => {
         this.chosenForm = 'error';
         this.$error(error);
-      });
-    },
-    resendEmail() {
-      const data = {
-        email: this.email,
-      };
-      this.loading = true;
-      axios.post('/auth/resendVerificationEmail', data).then((res) => {
-        this.loading = false;
-        if (res.data.success) {
-          this.chosenForm = 'success';
-        } else {
-          this.chosenForm = 'error';
-        }
-      }, (error) => {
-        this.chosenForm = 'error';
-        this.$error(error);
-        this.loading = false;
       });
     },
     logIntoAcct(email, password) {
@@ -457,6 +441,27 @@ export default {
         this.$error(error);
       });
     },
+    goToLogin() {
+      this.$router.push('/login');
+    },
+    // resendEmail() {
+    //   const data = {
+    //     email: this.email,
+    //   };
+    //   this.loading = true;
+    //   axios.post('/auth/resendVerificationEmail', data).then((res) => {
+    //     this.loading = false;
+    //     if (res.data.success) {
+    //       this.chosenForm = 'success';
+    //     } else {
+    //       this.chosenForm = 'error';
+    //     }
+    //   }, (error) => {
+    //     this.chosenForm = 'error';
+    //     this.$error(error);
+    //     this.loading = false;
+    //   });
+    // },
     commitUserdata(udata) {
       this.$store.commit({
         type: 'keepUserdata',
