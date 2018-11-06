@@ -553,10 +553,10 @@ export default {
           return fetchMoreResult;
         },
       }).then((res) => {
+        this.loading = true;
         const fetchedJobs = res.data.findJobs;
         this.page += 1;
         if (fetchedJobs.length > 0) {
-          console.log('fetchedJobs', fetchedJobs);
           const newFilteredJobs = [];
           for (var job of fetchedJobs) {
             if (
@@ -855,7 +855,9 @@ export default {
   },
   activated() {
     this.setSelectedLatlongs();
-    // this.loadInitialJobs();
+    if (this.filteredJobs.length === 0) {
+      this.loadingJobs = true;
+    }
     this.findAndFilterJobs();
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
