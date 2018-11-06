@@ -553,7 +553,7 @@ export default {
           return fetchMoreResult;
         },
       }).then((res) => {
-        this.loading = true;
+        this.loading = false;
         const fetchedJobs = res.data.findJobs;
         this.page += 1;
         if (fetchedJobs.length > 0) {
