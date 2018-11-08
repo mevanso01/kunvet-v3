@@ -349,6 +349,7 @@ import locations from '@/constants/locations';
 import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
 import findIndex from 'lodash/findIndex';
+import uniq from 'lodash/uniq';
 import queries from '@/constants/queries';
 import EventBus from '@/EventBus';
 
@@ -436,7 +437,9 @@ export default {
       return this.availablePositionsObj.filter(item => item.text.toLowerCase().indexOf(str) !== -1);
     },
     availablePositionsObj() {
-      if (this.inUsePositions.length > 0) {
+      // if we are manually supplying the positions in use
+      // also gets updated by jobs that are fetched
+      if (this.inUsePositions.length > 10) {
         return this.availablePositions.map((position) => {
           const disabled = (this.inUsePositions.indexOf(position) === -1);
           return {
@@ -445,15 +448,8 @@ export default {
           };
         });
       }
-      return this.availablePositions.map((position) => {
-        const disabled = !this.filteredJobs.find(
-          job => job.position_tags.indexOf(position) !== -1,
-        );
-        return {
-          text: position,
-          disabled,
-        };
-      });
+      // default return: return everything
+      return this.availablePositions.map((position) => ({ text: position, disabled: false }));
     },
     availableTypesObj() {
       if (this.inUseTypes.length > 0) {
@@ -543,6 +539,20 @@ export default {
           }
         }
       }
+      // refilter filteredJobs
+      if (this.filteredJobs && this.filteredJobs.length > 0) {
+        for (var index = 0; index < this.filteredJobs.length; index++) {
+          const job = this.filteredJobs[index];
+          if (!job) {
+            this.$debug('filteredJobs index out of bounds');
+            break;
+          }
+          if (!this.filterJobByInfo(job, selectedTypes, selectedTypes2)) {
+            this.filteredJobs.splice(index, 1);
+            index -= 1;
+          }
+        }
+      }
       // fetch the jobs
       this.$apollo.queries.findJobs.fetchMore({
         variables: {
@@ -558,6 +568,7 @@ export default {
         this.page += 1;
         if (fetchedJobs.length > 0) {
           const newFilteredJobs = [];
+          const newPositions = [];
           for (var job of fetchedJobs) {
             if (
               this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
@@ -565,7 +576,11 @@ export default {
             ) {
               newFilteredJobs.push(job);
             }
+            for (var pos of job.position_tags) {
+              newPositions.push(pos);
+            }
           }
+          this.inUsePositions = uniq(this.inUsePositions.concat(newPositions));
           this.filteredJobs = this.filteredJobs.concat(newFilteredJobs);
           this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
           // find more jobs there are more to be found
