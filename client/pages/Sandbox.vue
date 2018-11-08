@@ -5,7 +5,7 @@
       Play with me on <code>client/pages/Sandbox.vue</code>!
     </div>
     <br>
-    <CodeVerification />
+    <CodeVerification email="test" />
     <br>
     <h2>List of jobs</h2>
     <p>Page {{ page }} - Displaying {{ pageSize }} jobs at a time</p>

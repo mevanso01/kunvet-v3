@@ -129,7 +129,7 @@
 import axios from 'axios';
 
 export default {
-  // props: [],
+  props: ['email'],
   data() {
     return {
       box1: '',
@@ -167,6 +167,7 @@ export default {
       }
     },
     lookForAndSendCode() {
+      this.loading = true;
       axios.post('/auth/lookForAndSendCode').then((res) => {
         if (res.data.success) {
           this.loading = false;
@@ -249,9 +250,6 @@ export default {
     },
     init() {
       this.lookForAndSendCode();
-    },
-    showLoadingIcon() {
-      this.loading = true; // force loading icon to show
     },
   },
 };

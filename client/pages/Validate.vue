@@ -43,7 +43,6 @@ export default {
       this.$refs.codever.init();
     } else {
       // must be authenticated
-      this.$refs.codever.showLoadingIcon();
       userDataProvider.getUserData().then(data => {
         if (data.acct !== 0) {
           this.$refs.codever.init();

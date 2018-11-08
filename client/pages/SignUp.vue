@@ -365,7 +365,7 @@ export default {
         pwd: this.password,
         reqtype: 'validate',
       };
-        // step 1 of signing up
+      // step 1 of signing up
       axios.post('/auth/register', bdata, headers).then((res) => {
         this.$debug('RES', res);
         if (res.data.success) {
