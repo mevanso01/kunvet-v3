@@ -409,7 +409,7 @@ export default {
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
-      pageSize: 20,
+      pageSize: 12,
       page: 0,
     };
   },
