@@ -416,7 +416,7 @@ export default {
   apollo: {
     findJobs: {
       query: gql`query ($limit: Int!, $skip: Int!) {
-        findJobs (filter: { active: true }, limit: $limit, skip: $skip ){
+        findJobs (filter: { active: true, is_deleted: false, expired: false }, limit: $limit, skip: $skip ){
           ${queries.FindJobRecordForJobCard}
         }
       }`,
