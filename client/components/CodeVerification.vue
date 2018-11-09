@@ -129,7 +129,7 @@
 import axios from 'axios';
 
 export default {
-  props: ['email'],
+  props: ['emailProp'],
   data() {
     return {
       box1: '',
