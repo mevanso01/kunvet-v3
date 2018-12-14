@@ -70,6 +70,11 @@
                   </v-flex>
                 </v-layout>
               </div>
+              <!-- {{ item.resumeSrc }}
+              <PdfFrame
+                v-if="item.resumeSrc"
+                :href="item.resumeSrc"
+              /> -->
               <!--<div class="btn-holder btn-holder--equal-height">
                 <div class="btn-holder__right-elements">
                   <span v-if="isAcceptedOrRejected(item)">
@@ -233,7 +238,16 @@
         },
       };
     },
+    components: {
+      // PdfFrame,
+    },
     methods: {
+      // async getSrc(resume) {
+      //   // eslint-disable-next-line
+      //   console.log('Test', resume);
+      //   const src = await FileClient.getLink(resume.filename);
+      //   return src;
+      // },
       async getData() {
         const { data } = await this.$apollo.query({
           query: (gql`query ($userId: MongoID, $businessId: MongoID) {
@@ -260,6 +274,7 @@
         for (var i = 0; i < applicants.length; i++) {
           const applicant = applicants[i];
           applicant.profilePic = await this.fetchProfilePic(applicant.user_id);
+          // applicant.resumeSrc = await this.getSrc(applicant.resumes[1]);
           this.applicants.push(applicant);
         }
         this.loadFromNetwork();
@@ -274,6 +289,7 @@
             for (var i = 0; i < diff.length; i++) {
               const applicant = diff[i];
               applicant.profilePic = await this.fetchProfilePic(applicant.user_id);
+              // applicant.resumeSrc = await this.getSrc(applicant.resumes[0]);
               this.applicants.push(applicant);
             }
           }

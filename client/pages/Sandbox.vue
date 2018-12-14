@@ -33,7 +33,8 @@
     <br>
 
     <div class="main-cont-large">
-      <div v-for="applicant in mockApplicants" style="width: 100%; padding: 20px; margin-bottom: 16px; background-color: #f1f3f4">
+      <h1>Version 1</h1>
+      <div v-for="applicant in mockApplicants" style="width: 100%; padding: 20px; margin-bottom: 16px; background-color: #f2f7ff">
         <h2>Name: {{ applicant.name }}</h2>
         <p>Resume: {{ applicant.resume }}</p>
         <v-btn flat class="ml-0" @click="applicant.showResume = !applicant.showResume;">
@@ -49,6 +50,44 @@
         </div>
       </div>
     </div>
+
+    <div class="main-cont-large">
+      <br>
+      <h1>Version 2</h1>
+      <div v-for="applicant in mockApplicants" style="width: 100%; padding: 20px; margin-bottom: 16px; background-color: #f2f7ff">
+        <h2>Name: {{ applicant.name }}</h2>
+        <p>Resume: {{ applicant.resume }}</p>
+        <v-btn flat class="ml-0" @click="showSideResume = true;">
+          Show Resume
+        </v-btn>
+        <br>
+      </div>
+    </div>
+    <!-- /*background-color: #ef5350;*/ -->
+    <v-navigation-drawer
+       v-model="showSideResume"
+       absolute right width="900"
+       temporary>
+       <div style="height: auto;
+          width: 100%;
+          background-color: #ef5350;
+          z-index: 9;
+          position: fixed;
+          top: 316px;
+          padding: 0;
+          overflow: hidden;">
+         <div style="position: fixed; width: 100%; padding: 18px 120px 0px 32px; background-color: #ef5350;">
+           <h2 v-if="mockApplicants[0]" style="color: white; text-align: center;">{{ mockApplicants[0].name }}</h2>
+         </div>
+         <div style="height: 95vh; padding: 0px 120px 32px 32px; overflow: scroll;">
+           <PdfFrame
+             v-if="mockApplicants[0] && mockApplicants[0].resume && mockApplicants[0].resume.filename"
+             :href="getSrc(mockApplicants[0].resume)"
+           />
+           <v-btn flat class="ml-0" @click="showSideResume = false;">Hide Resume</v-btn>
+         </div>
+       </div>
+    </v-navigation-drawer>
     <!-- <h2>List of jobs</h2>
     <p>Page {{ page }} - Displaying {{ pageSize }} jobs at a time</p>
     <ul>
@@ -82,6 +121,7 @@ export default {
       showFileModal: false,
       pageSize: 10,
       page: 0,
+      showSideResume: false,
     };
   },
   apollo: {
