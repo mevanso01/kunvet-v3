@@ -14,7 +14,7 @@ module.exports = {
   //
   // Get yours from
   // https://developers.google.com/maps/documentation/javascript/get-api-key
-  googleMapsKey: 'AIzaSyAFF15NpEK9amIidp280tcnj0vWsK1PWF4',
+  googleMapsKey: '',
 
   // AWS
   //
@@ -34,11 +34,11 @@ module.exports = {
   //
   // Get yours from https://ethereal.email/create
   mailTransport: {
-    host: 'smtp.ethereal.email',
-    port: 587,
+    host: '',
+    port: ,
     auth: {
-      user: 'ooufshpyxgxyybfu@ethereal.email',
-      pass: 's4jgjHBCXJzWHDHCTc',
+      user: '',
+      pass: '',
     },
   },
 
