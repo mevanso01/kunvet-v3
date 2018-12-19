@@ -211,23 +211,23 @@
         <v-layout row wrap>
           <v-flex xs12 md6>
             <div class="custom-select-2-wrapper">
-              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'city' }">
-                <div class="inner" @click="openSelect('city');">
+
+              <div class="custom-select-2"
+                   v-bind:class="{ 'active': openSelectField === 'city' }">
+
+                <div class="inner" @click="openSelect('city')">
                   <span v-if="this.selectedCity">{{ selectedCity }}</span>
                   <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
                   <v-btn icon v-if="openSelectField === 'city'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
                   <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
                 </div>
 
-                <v-radio-group v-model="selectedCity" hide-details style="padding-top: 0;">
-                  <v-list dense class="custom-select-menu">
-                    <v-list-tile v-for="(item, i) in availableCities" :key="i">
-                      <v-radio :label="item.name" :value="item.name"
-                      ></v-radio>
-                    </v-list-tile>
-                  </v-list>
-                </v-radio-group>
+                <v-list
+                  dense class="custom-select-menu">
+                  <v-list-tile  @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
+                </v-list>
               </div>
+
             </div>
           </v-flex>
           <v-flex xs12 md6>
@@ -349,6 +349,7 @@ import locations from '@/constants/locations';
 import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
 import findIndex from 'lodash/findIndex';
+import uniq from 'lodash/uniq';
 import queries from '@/constants/queries';
 import EventBus from '@/EventBus';
 
@@ -367,7 +368,7 @@ export default {
   data() {
     return {
       uid: null,
-      findJobs: [],
+      // findJobs: [],
       saved_jobs: [],
       filteredJobs: [],
       openSelectField: null,
@@ -408,7 +409,22 @@ export default {
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
+      pageSize: 12,
+      page: 0,
     };
+  },
+  apollo: {
+    findJobs: {
+      query: gql`query ($limit: Int!, $skip: Int!) {
+        findJobs (filter: { active: true, is_deleted: false, expired: false }, limit: $limit, skip: $skip ){
+          ${queries.FindJobRecordForJobCard}
+        }
+      }`,
+      variables: {
+        limit: 20,
+        skip: 0,
+      },
+    },
   },
   computed: {
     filteredAvailablePositionsObj() {
@@ -421,7 +437,9 @@ export default {
       return this.availablePositionsObj.filter(item => item.text.toLowerCase().indexOf(str) !== -1);
     },
     availablePositionsObj() {
-      if (this.inUsePositions.length > 0) {
+      // if we are manually supplying the positions in use
+      // also gets updated by jobs that are fetched
+      if (this.inUsePositions.length > 10) {
         return this.availablePositions.map((position) => {
           const disabled = (this.inUsePositions.indexOf(position) === -1);
           return {
@@ -430,15 +448,8 @@ export default {
           };
         });
       }
-      return this.availablePositions.map((position) => {
-        const disabled = !this.filteredJobs.find(
-          job => job.position_tags.indexOf(position) !== -1,
-        );
-        return {
-          text: position,
-          disabled,
-        };
-      });
+      // default return: return everything
+      return this.availablePositions.map((position) => ({ text: position, disabled: false }));
     },
     availableTypesObj() {
       if (this.inUseTypes.length > 0) {
@@ -468,6 +479,10 @@ export default {
     },
   },
   methods: {
+    updateAndClose(city) {
+      this.selectedCity = city;
+      this.openSelectField = null;
+    },
     openSelect(name) {
       this.filterPositions = null; // clear job filter text
       if (this.openSelectField === 'city') {
@@ -482,7 +497,9 @@ export default {
     searchAndFilter() {
       this.openSelect(null);
       this.setSelectedLatlongs();
-      this.loadInitialJobs();
+      this.page = 0;
+      this.findAndFilterJobs();
+      // this.loadInitialJobs();
     },
     documentClick(e) {
       const selects = document.getElementsByClassName('custom-select-2-wrapper');
@@ -503,6 +520,75 @@ export default {
         return Coordinates.uci;
       }
       return { latitude: selected.latitude, longitude: selected.longitude };
+    },
+    findAndFilterJobs() {
+      // process user's filters
+      this.commitData();
+      let selectedTypes = [];
+      let selectedTypes2 = [];
+      if (this.selectedTypes.length === 0) {
+        selectedTypes = ['fulltime', 'parttime'];
+        selectedTypes2 = ['internship', 'contract'];
+      } else {
+        for (let i = 0; i < this.selectedTypes.length; i++) {
+          if (['fulltime', 'parttime'].indexOf(this.selectedTypes[i]) >= 0) {
+            selectedTypes.push(this.selectedTypes[i]);
+          }
+          if (['internship', 'contract'].indexOf(this.selectedTypes[i]) >= 0) {
+            selectedTypes2.push(this.selectedTypes[i]);
+          }
+        }
+      }
+      // refilter filteredJobs
+      if (this.filteredJobs && this.filteredJobs.length > 0) {
+        for (var index = 0; index < this.filteredJobs.length; index++) {
+          const job = this.filteredJobs[index];
+          if (!job) {
+            this.$debug('filteredJobs index out of bounds');
+            break;
+          }
+          if (!this.filterJobByInfo(job, selectedTypes, selectedTypes2)) {
+            this.filteredJobs.splice(index, 1);
+            index -= 1;
+          }
+        }
+      }
+      // fetch the jobs
+      this.$apollo.queries.findJobs.fetchMore({
+        variables: {
+          limit: this.pageSize,
+          skip: this.pageSize * this.page,
+        },
+        updateQuery(previousResult, { fetchMoreResult }) {
+          return fetchMoreResult;
+        },
+      }).then((res) => {
+        this.loadingJobs = false;
+        const fetchedJobs = res.data.findJobs;
+        this.page += 1;
+        if (fetchedJobs.length > 0) {
+          const newFilteredJobs = [];
+          const newPositions = [];
+          for (var job of fetchedJobs) {
+            if (
+              this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
+              (findIndex(this.filteredJobs, { '_id': job._id }) === -1)
+            ) {
+              newFilteredJobs.push(job);
+            }
+            for (var pos of job.position_tags) {
+              newPositions.push(pos);
+            }
+          }
+          this.inUsePositions = uniq(this.inUsePositions.concat(newPositions));
+          this.filteredJobs = this.filteredJobs.concat(newFilteredJobs);
+          this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+          // find more jobs there are more to be found
+          if (fetchedJobs.length === this.pageSize) {
+            this.findAndFilterJobs();
+          }
+        }
+      });
     },
     async filterJobs() {
       // job types
@@ -784,7 +870,10 @@ export default {
   },
   activated() {
     this.setSelectedLatlongs();
-    this.loadInitialJobs();
+    if (this.filteredJobs.length === 0) {
+      this.loadingJobs = true;
+    }
+    this.findAndFilterJobs();
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
     if (data) {

@@ -16,8 +16,10 @@ h1 {
 }
 h2 {
   font-size: 1.5em;
-  font-weight: bold;
   line-height: 1.2;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
 }
 h3 {
   color: #b0b0b0;
@@ -43,7 +45,7 @@ ol, ul {
   position: absolute;
 }
 
-/*  ---- Navbar ----  */
+/*  ---- Main navbar ----  */
 .application--wrap {
   padding-top: 64px;
 }
@@ -101,6 +103,13 @@ ol, ul {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.v-text-field {
+  padding-top: 0 !important;
+  margin-top: 12px;
+}
+.v-menu__content.v-autocomplete__content .v-input__slot {
+  margin-bottom: 0;
+}
 .v-input.v-input--checkbox,
 .v-input--radio-group {
   margin-top: 0;

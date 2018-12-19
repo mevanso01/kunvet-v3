@@ -2,9 +2,6 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
 
-// GraphiQL
-import { graphiqlKoa } from 'apollo-server-koa';
-
 // Mailer
 import Mailer from '@/utils/Mailer';
 
@@ -32,7 +29,7 @@ router.get('/', (ctx) => {
           Running in development mode. Useful tools:
           <ul>
             <li><a href="/login">Log in</li>
-            <li><a href="/graphiql">Graph<em>i</em>QL</a></li>
+            <li><a href="/data">GraphQL Playground</a></li>
             <li><a href="/trigger_scheduler">Trigger scheduler</li>
             <li><a href="/preview_email">Preview email</li>
           </ul>
@@ -41,11 +38,6 @@ router.get('/', (ctx) => {
     </html>
   `;
 });
-
-// Interactive GraphiQL interface
-router.get('/graphiql', graphiqlKoa({
-  endpointURL: '/data',
-}));
 
 // Login form
 router.get('/login', (ctx) => {

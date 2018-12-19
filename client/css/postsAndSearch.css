@@ -13,6 +13,9 @@
   background: linear-gradient(135deg, #fafafa, #f1f1f1);
   overflow: hidden;
 }
+.job-desc-subcontainer h2 {
+  color: #616161;
+}
 .post-title {
   margin-top: 4px;
   margin-bottom: 2px;

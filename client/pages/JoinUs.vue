@@ -7,8 +7,10 @@
             <p>Hello, thank you for your interest in the Kunvet Team.</p>
 
             <p>Currently, we are looking for the following people:<br><br>
-                <u><a href="https://kunvet.com/job/5af16eac00eeccb516706027" target="_blank">Awesome Designer</a></u>
-                <u><a href="https://kunvet.com/job/5b6909f71f621047bb756b12" target="_blank">Awesome Web Developer</a></u>
+                <ul>
+                <li><u><a href="https://kunvet.com/job/5af16eac00eeccb516706027" target="_blank">Awesome Designer</a></u></li>
+                <li><u><a href="https://kunvet.com/job/5b6909f71f621047bb756b12" target="_blank">Awesome Web Developer</a></u></li>
+                </ul>
             </p>
         </div>
     </div>

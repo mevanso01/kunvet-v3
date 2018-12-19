@@ -16,6 +16,25 @@ const PasswordResetInstance = Mongoose.Schema({
   },
 });
 
+const VerificationCodeSchema = Mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  code: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  expiresAt: {
+    type: Date,
+    default: () => new Date(+new Date() + (1000 * 60 * 45)), // 45 minutes
+  },
+});
+
 const TempAccountSchema = Mongoose.Schema({
   email: {
     type: String,
@@ -462,6 +481,7 @@ export default {
   Account: Mongoose.model('Account', AccountSchema),
   Applicant: Mongoose.model('Applicant', ApplicantSchema),
   TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
+  VerificationCode: Mongoose.model('VerificationCode', VerificationCodeSchema),
   PasswordResetInstance: Mongoose.model('PasswordResetInstance', PasswordResetInstance),
   Organization: Mongoose.model('Organization', OrganizationSchema),
   File: Mongoose.model('File', FileSchema),

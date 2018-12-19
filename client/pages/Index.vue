@@ -306,7 +306,7 @@
         <v-layout class="bottom-row">
           <v-flex xs12 align-center>
             <p class="center">
-              <v-btn class="kunvet-red-bg" dark to="/employers">Hire on Kunvet</v-btn>
+              <v-btn class="kunvet-red-bg" dark to="/createjob">Hire on Kunvet</v-btn>
               <v-btn outline style="background-color: rgba(255,255,255,0.8) !important;"
                @click="$vuetify.goTo('#promo', { duration: 750, offset: -64, easing: 'easeInOutCubic' })">Learn more</v-btn>
             </p>

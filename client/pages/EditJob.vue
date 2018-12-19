@@ -888,7 +888,7 @@ export default {
           if (job.position_tags) {
             this.selectedPositions = job.position_tags.concat();
           }
-          console.log(this.job, job);
+          this.notes = job.notes;
         }
       }).catch((error) => {
         this.$error(error);

@@ -68,6 +68,11 @@ const wpconf = {
         loader: 'babel-loader?cacheDirectory',
         exclude: /node_modules/,
       },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
     ],
   },
   plugins: [
