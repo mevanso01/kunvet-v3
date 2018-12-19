@@ -153,17 +153,22 @@
       <div class="d-menu-inner">
         <div v-for="(item, idx) in dmenuItems" style="background-color: #fff">
           <div class="d-menu-item" @click="handleDMenuClick(item)" :class="`idx-${idx}`" :key="item.title">
-            {{ item.title }} {{ idx }}
+            {{ item.title }}
+            <!--replace with user's name-->
+            <p v-if="item.isTop" style="font-size: 16px; margin: 0; color: white; font-weight: normal">Edit Profile</p>
           </div>
           <div v-if="item.subItems">
             <div v-for="subItem in item.subItems" v-show="openSubitem === item.title"
-            @click="drawer = false;" :key="subItem.title" class="d-menu-item" :class="`idx-${idx}`">
+                 @click="drawer = false;" :key="subItem.title" class="d-menu-item" :class="`idx-${idx}`">
               {{ subItem.title }} {{ idx }}
             </div>
           </div>
         </div>
         <div class="d-menu-close">
-          <v-btn class="" @click="drawer = false;">Close</v-btn>
+          <button style="background-color: gray; width: 50px; height: 50px" @click="drawer = false;">
+            <img style="" src="assets/mobile/grayclose.svg" alt="">
+            <!--button not done-->
+          </button>
         </div>
       </div>
     </div>
@@ -279,6 +284,7 @@ export default {
         ],
       ],
       dmenuItems: [
+        { title: 'User\'s Name', href: '/account', isTop: true },
         { title: 'Search', href: '/search' },
         {
           title: 'My Jobs',
@@ -287,8 +293,17 @@ export default {
             { title: 'Applied Jobs', href: '/appliedjobs' },
           ],
         },
-        { title: 'Profile', href: '/account' },
-        { title: 'Something else', href: '/' },
+        { title: 'Notifications', href: '/account' },
+        {
+          title: 'Settings',
+          subItems: [
+            { title: 'Email & Password' },
+            { title: 'Email Preferences' },
+            { title: 'Billing Info' },
+            { title: 'Delete Account' },
+          ],
+        },
+        { title: 'Log Out', href: '/account' },
       ],
       sidebarItems: [
         [
