@@ -16,12 +16,13 @@
       <div v-if="!email_verified" style="width: 100%; height: 40px; background-color: #ef5350; margin-bottom: 10px;">
         <p style="text-align: center; line-height: 40px; color: #fff;">
           You have not verified your email yet!
-          <a style="text-decoration: underline;" @click="resendEmail"
+          <router-link to="/validate">Verify your email</router-link>
+          <!-- <a style="text-decoration: underline;" @click="resendEmail"
             v-if="emailSent === false">Resend
           </a>
           <span v-if="emailSent === true">
             Sent.
-          </span>
+          </span> -->
         </p>
       </div>
       <section style="padding: 0; margin: 15px; width: auto;">

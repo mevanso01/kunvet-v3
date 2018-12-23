@@ -1,5 +1,6 @@
 <style>
   .switchAccount-expansion-panel .v-expansion-panel__header {
+    min-height: 32px;
     height: 32px;
     padding: 0px 16px;
   }
@@ -14,11 +15,15 @@
     max-height: 500px;
   }
   .switchAccount-expansion-panel .v-list__tile {
+    min-height: 32px;
     height: 32px !important;
   }
   .switchAccount .notNavbar .v-list__tile,
   .switchAccount .notNavbar .v-expansion-panel__header {
     padding: 0 8px;
+  }
+  .switchAccount .v-expansion-panel__header__icon {
+    max-height: 24px;
   }
   .switchAccount p.isNavbar {
     font-size: 12px;

@@ -85,6 +85,7 @@
                     </v-flex>
                   </v-layout>
 
+                  <!--
                   <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
                   <v-radio-group v-model="postingAs" column required class="pt-0 mb-0" required
                     :rules="[(v) => !submit1Pressed || !!(v) || 'Required']">
@@ -102,6 +103,7 @@
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
+                  -->
                 </template>
                 <template v-else>
                   <p class="mb-2">Welcome back {{ userdata.firstname }} {{ userdata.lastname }}</p>
@@ -513,7 +515,7 @@
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <br>
-              <h4 class="cust-subheader mb-2 center">Verify your email</h4>
+              <!-- <h4 class="cust-subheader mb-2 center">Verify your email</h4>
               <p class="center">
                 Before we can display your job, we need you to verify your email.<span class="hidden-xs" hidden-xs><br></span>
                 We've sent a verification email to <strong style="color: #333;">{{ this.email }}</strong> to make sure you own it.
@@ -528,7 +530,8 @@
                 <span style="padding: 0 4px;">
                   <v-progress-circular indeterminate :size="16" :width="2" color="red darken-1"></v-progress-circular>
                 </span>
-              </p>
+              </p> -->
+              <CodeVerification ref="codever" @verified="codeValidated" />
             </div>
           </v-tab-item>
           <v-tab-item id="success-tab">
@@ -697,6 +700,7 @@ import QuillEditor from '@/components/QuillEditor';
 import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
 import Config from 'config';
+import CodeVerification from '@/components/CodeVerification';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Asset77 from '@/assets/icons/Asset77.svg';
 import Asset78 from '@/assets/icons/Asset78.svg';
@@ -742,6 +746,7 @@ export default {
   components: {
     PicUploader,
     QuillEditor,
+    CodeVerification,
   },
   data() {
     return {
@@ -843,7 +848,7 @@ export default {
       geocoder: null,
       addressValid: true,
       prevAutocompleteAddress: null,
-      postingAs: '',
+      postingAs: 'individual',
       newEmail: null,
       emailSent: null,
       dialogs: {
@@ -1213,6 +1218,7 @@ export default {
               this.tab = 'success-tab';
             } else {
               this.setJobProgress(true); // set postOnOpen to true
+              this.$refs.codever.init();
               this.tab = 'verify-email';
             }
           }
@@ -1527,6 +1533,15 @@ export default {
           this.email_verified = res.email_verified;
         }).catch(this.$error);
       }
+    },
+    codeValidated() {
+      this.email_verified = true;
+      if (this.$store.state.userID && this.$store.state.userdata) {
+        const udata = this.$store.state.userdata;
+        udata.email_verified = true;
+        this.$store.commit({ type: 'keepUserdata', userdata: udata });
+      }
+      this.postJob(); // try to post job again
     },
     resetData() {
       console.log('Resetting data');

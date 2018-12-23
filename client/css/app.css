@@ -16,8 +16,10 @@ h1 {
 }
 h2 {
   font-size: 1.5em;
-  font-weight: bold;
   line-height: 1.2;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
 }
 h3 {
   color: #b0b0b0;
@@ -43,7 +45,7 @@ ol, ul {
   position: absolute;
 }
 
-/*  ---- Navbar ----  */
+/*  ---- Main navbar ----  */
 .application--wrap {
   padding-top: 64px;
 }
@@ -101,6 +103,13 @@ ol, ul {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.v-text-field {
+  padding-top: 0 !important;
+  margin-top: 12px;
+}
+.v-menu__content.v-autocomplete__content .v-input__slot {
+  margin-bottom: 0;
+}
 .v-input.v-input--checkbox,
 .v-input--radio-group {
   margin-top: 0;
@@ -1083,5 +1092,71 @@ body {
     }
     #bottom-content {
         padding: 0px 16px;
+    }
+    .iconRedButton {
+      display: block;
+      height: 72px;
+      width: 64px;
+      background-color:#FF6969;
+      text-align: center;
+      box-shadow: 0 10px 12px -4px #F3E1E1;
+      font-family: "Roboto";
+      outline: none !important;
+    }
+    
+    .iconRedButton:hover {
+      background-color:#ef5350;
+    }
+    
+    .loginRedButton {
+      display: inline-block;
+      height: 48px;
+      width: 120px;
+      color: #FFFFFF;
+      background-color:#FF6969;
+      text-align: center;
+      box-shadow: 0 10px 12px -4px #eaeaf9;
+      font-family: 'Roboto', sans-serif;
+      vertical-align: center;
+      outline: none !important;
+      font-size: 1.1em;
+    }
+    
+    .loginRedButton:hover {
+      background-color:#ef5350;
+    }
+    
+    .loginRedButton:disabled{
+      color: #ACAEB1;
+      background-color:#EBEBEC;
+      box-shadow: none !important;
+    }
+    
+    .disabledButton{
+      display: inline-block;
+      height: 48px;
+      width: 120px;
+      color: #ACAEB1;
+      background-color:#EBEBEC;
+      text-align: center;
+      box-shadow: none !important;
+      font-family: 'Roboto', sans-serif;
+      vertical-align: center;
+      outline: none !important;
+      font-size: 1.1em; 
+    }
+    
+    .errorButton{
+      display: inline-block;
+      height: 48px;
+      width: 120px;
+      color: #FFFFFF;
+      background-color:#FFBA5A;
+      text-align: center;
+      box-shadow: none;
+      font-family: 'Roboto', sans-serif;
+      vertical-align: center;
+      outline: none !important;
+      font-size: 1.1em;
     }
 }

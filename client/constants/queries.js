@@ -5,6 +5,8 @@ const FindJobRecord = `
   posted_by
   active
   is_deleted
+  expired
+  expiry_date
   title
   date
   description
@@ -39,6 +41,7 @@ const FindJobRecordForJobCard = `
   _id
   active
   is_deleted
+  expired
   posted_by
   user_id
   business_id

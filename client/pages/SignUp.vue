@@ -73,7 +73,7 @@
               <v-card-text>
                 <h2>Just enter your name and email to get started</h2>
                 <p v-if="error === 'UserExistsError'" style="color: #f00">
-                  Someone is using this email already. Would you like to <router-link to="/login" style="text-decoration: underline;">login?</router-link>
+                  An account with this email already exists. Would you like to <router-link to="/login" style="text-decoration: underline;">login?</router-link>
                 </p>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
@@ -219,6 +219,7 @@
         </v-layout>
       </section>
 
+      <!-- with code verification, this section should no longer be used -->
       <section v-if="chosenForm === 'not verified'">
         <v-layout>
           <v-flex xs12 sm8 offset-sm2>
@@ -226,7 +227,7 @@
               <v-card-text>
                 <p style="margin-bottom: 8px;">It looks like <strong>{{ email }}</strong> already exists, but is not verified.</p>
                 <p>Would you like us to send verification another email?</p>
-                <v-btn style="margin-left: 0;" flat @click="resendEmail" :disabled="loading">Send another email</v-btn>
+                <v-btn style="margin-left: 0;" flat @click="goToLogin" :disabled="loading">Send another email</v-btn>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -341,8 +342,9 @@ export default {
         } else if (res.data.message === 'User already exists') {
           this.error = 'UserExistsError';
         } else if (res.data.message === 'Email exists but not verified') {
-          this.error = 'Not Verified';
-          this.chosenForm = 'not verified';
+          // this.error = 'Not Verified';
+          // this.chosenForm = 'not verified';
+          this.error = 'UserExistsError';
         } else {
           this.chosenForm = 'error';
           this.$error(new KunvetError(res.data));
@@ -363,46 +365,31 @@ export default {
         pwd: this.password,
         reqtype: 'validate',
       };
+      // step 1 of signing up
       axios.post('/auth/register', bdata, headers).then((res) => {
         this.$debug('RES', res);
-        this.loading = false;
         if (res.data.success) {
           this.chosenForm = 'success';
           this.logIntoAcct(this.email, this.password);
-        } else if (res.data.message === 'User already exists') {
-          this.error = 'UserExistsError';
-        } else if (res.data.message === 'Email exists but not verified') {
-          this.error = 'Not Verified';
-          this.chosenForm = 'not verified';
         } else {
-          this.chosenForm = 'error';
-          this.$error(new KunvetError(res.data));
+          this.loading = false;
+          if (res.data.message === 'User already exists') {
+            this.error = 'UserExistsError';
+          } else if (res.data.message === 'Email exists but not verified') {
+            this.error = 'Not Verified';
+            this.chosenForm = 'not verified';
+          } else {
+            this.chosenForm = 'error';
+            this.$error(new KunvetError(res.data));
+          }
         }
       }, (error) => {
         this.chosenForm = 'error';
         this.$error(error);
-      });
-    },
-    resendEmail() {
-      const data = {
-        email: this.email,
-      };
-      this.loading = true;
-      axios.post('/auth/resendVerificationEmail', data).then((res) => {
-        this.loading = false;
-        if (res.data.success) {
-          this.chosenForm = 'success';
-        } else {
-          this.chosenForm = 'error';
-        }
-      }, (error) => {
-        this.chosenForm = 'error';
-        this.$error(error);
-        this.loading = false;
       });
     },
     logIntoAcct(email, password) {
-      this.$debug('trying to log into new account');
+      // step 2 of signing up
       axios.post('/auth/login', {
         email: email,
         password: password,
@@ -412,12 +399,18 @@ export default {
           // logged in successfully
           this.fetchAcctData();
         } else {
+          this.loading = false;
           this.$error(new KunvetError(response.data));
         }
-      }).catch(this.$error);
+      }).catch((err) => {
+        this.loading = false;
+        this.$error(err);
+      });
     },
     fetchAcctData() {
+      // step 3 of signing up (final step)
       axios.get('/auth/status').then((response) => {
+        this.loading = false;
         if (!response.data.success) {
           // Unsuccessful
           this.$error(new KunvetError(response.data));
@@ -435,18 +428,40 @@ export default {
         if (udata.default_org === '' || !udata.default_org) {
           // login individual
           EventBus.$emit('individual');
-          this.$router.push('/account');
+          // this.$router.push('/account');
         } else {
           // login business
           this.commitBusinessID(udata.default_org);
           EventBus.$emit('business');
-          this.$router.push('/myorg');
+          // this.$router.push('/myorg');
         }
+        this.$router.push('/validate'); // make all users verify their email with code immediately
       }).catch((error) => {
-        // Network error
+        this.loading = false;
         this.$error(error);
       });
     },
+    goToLogin() {
+      this.$router.push('/login');
+    },
+    // resendEmail() {
+    //   const data = {
+    //     email: this.email,
+    //   };
+    //   this.loading = true;
+    //   axios.post('/auth/resendVerificationEmail', data).then((res) => {
+    //     this.loading = false;
+    //     if (res.data.success) {
+    //       this.chosenForm = 'success';
+    //     } else {
+    //       this.chosenForm = 'error';
+    //     }
+    //   }, (error) => {
+    //     this.chosenForm = 'error';
+    //     this.$error(error);
+    //     this.loading = false;
+    //   });
+    // },
     commitUserdata(udata) {
       this.$store.commit({
         type: 'keepUserdata',

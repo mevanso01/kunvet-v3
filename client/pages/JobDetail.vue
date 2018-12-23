@@ -280,7 +280,7 @@
 
           <v-divider></v-divider>
       </div>
-      <div class="sub-container">
+      <div class="sub-container job-desc-subcontainer">
           <h2 style="margin-bottom: 8px;">Job Overview:</h2>
           <div class="long-text-cont" v-html="findJob.description"></div>
 
@@ -297,6 +297,8 @@
               </v-flex>
             </v-layout>
           </v-container>
+
+          <!--find-->
 
           <div class="bottom-container" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">
             <!-- <div class="gradient-bar" v-show="stickToBottom">
@@ -571,7 +573,10 @@ export default {
     },
     isNotAtBottom() {
       const footer = document.getElementById('bottom');
-      var distanceToBottom = document.documentElement.scrollHeight - document.documentElement.offsetHeight - document.documentElement.scrollTop;
+
+      const el = document.scrollingElement || document.documentElement;
+      var distanceToBottom = document.documentElement.scrollHeight - document.documentElement.offsetHeight - el.scrollTop;
+
       if (distanceToBottom < (footer.offsetHeight + 26)) {
         return false;
       }

@@ -1,3 +1,4 @@
+
 <style lang="scss">
 .promo-block {
   p {
@@ -60,6 +61,7 @@
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
   transform: translate3d(0,-28px,0) scale(.75);
 }
+
 .chip--select-multi {
   margin: 5px 5px 5px 0;
 }
@@ -69,22 +71,38 @@
   padding-right: 64px;
   position: relative;
 }
-.fsGoBtn {
-  display: block;
-  height: 48px;
-  background-color: #ef5350;
-  text-align: center;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
+
+.bottom-text{
+  font-size:2em;
+  color:#ef5350;
+  z-index:12;
+  bottom:550px;
 }
+
+.searchBar{
+    height: 48px;
+    padding-left: 15px;
+    border-top: 1px solid #eee;
+    border-left: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-radius: 6px 0px 0px 6px;
+}
+
+.category{
+  border-top: 1px solid #eee; 
+  border-bottom: 1px solid #eee; 
+  border-left: 1px solid #d2d2d3;
+  padding-left: 10px;
+  height: 48px;
+}
+
 .firstSearch .fsSelect {
   .v-input__slot {
     height: 48px;
     padding-left: 16px;
     border-top: 1px solid #eee;
-    border-left: 1px solid #eee;
     border-bottom: 1px solid #eee;
-    border-radius: 6px 0px 0px 6px;
+    z-index: 11;
   }
   .v-input__control::before,
   .v-input__slot::before,
@@ -112,6 +130,7 @@
   font-weight: 300;
   font-size: 32px;
   margin-bottom: 0;
+  
 }
 .fs-select-cities.v-input {
   margin-top: 0;
@@ -146,6 +165,7 @@
     display: inline-block;
   }
   .fs-select-cities {
+    height: 100%;
     width: 100%; /* use only when positions is not present */
   }
   .firstSearch .fsSelect .v-input-group__input {
@@ -155,6 +175,8 @@
     height: 40px !important;
   }
 }
+
+
 .fs-select-positions {
   width: 50%;
   display: inline-block;
@@ -182,8 +204,11 @@
 }
 .bottom-img {
   position: absolute;
-  bottom: 0;
-  width: calc(100% - 52px);
+  left:0px;
+  right:0px;
+  top: 450px;
+  width:100%;
+  z-index: 10;
 }
 .bottom-row .skew-div {
   margin: auto;
@@ -194,6 +219,7 @@
 .bottom-row .skew-div p {
   margin: 0;
 }
+
 .bottom-row .skew-div::before {
   content: "";
   position: absolute;
@@ -205,6 +231,16 @@
   top: 0;
   transform: skew(-30deg);
 }
+
+.main-container {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    background-color: none;
+    /* border: 1px solid #eeeeee; */
+    box-sizing: border-box;
+}
+
 @media (min-width: 601px) {
   .search .flex {
     padding: 10px 15px;
@@ -216,7 +252,7 @@
     width: calc(100% - 128px);
   }
   .bottom-img {
-    width: calc(100% - 128px);
+    width:100%;
   }
 }
 @media (max-width: 600px) {
@@ -232,6 +268,9 @@
     padding-left: 0;
     padding-right: 0;
   }
+  .bottom-row {
+    bottom: 10px;
+  }
 }
 @media (min-width: 961px) {
   .firstSearch {
@@ -244,8 +283,7 @@
     padding: 16px 16px 32px 16px;
   }
   .bottom-img {
-    width: calc(100% - 208px);
-    margin: 0 40px;
+    width:100%;
   }
 }
 @media (min-width: 601px) and (max-width: 960px) {
@@ -265,76 +303,98 @@
     margin: 10px;
   }
 }
+
+.iconRedButton {
+  display: block;
+  height: 72px;
+  width: 64px;
+  background-color:#FF6969;
+  text-align: center;
+  box-shadow: 0 10px 12px -4px #F3E1E1;
+  font-family: "Roboto";
+  outline: none !important;
+}
+
+.iconRedButton:hover {
+  background-color:#ef5350;
+}
 </style>
 
 <template>
   <v-container fluid class="home-page-cont pa-0">
-    <div class="main-cont-large">
-      <section class="firstSearch">
-        <v-layout row wrap>
-          <v-flex xs12 sm11 md10>
-            <div style="padding-bottom: 15px; text-align: right;">
-              <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
-              <h2 style="color: #333;">Find nearby jobs for students like you</h2>
+  <div style="width: 100%; height: 400px;
+    background:  #ff8f8f;
+    background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
+    background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
+    position: relative;
+  ">
+  <h1 style="position: absolute; left: 275px; bottom: 0; color: white; margin-bottom: 60px; font-size: 48px;">Latest Opportunities Near Your College.</h1>
+
+  </div>
+<div class="main-container" style="margin-top: -36px;  margin-left: auto; margin-right: auto;">
+        <v-layout row wrap style="padding-bottom: 10px;">
+          <v-flex xs1 sm1 md1 class="no-padding">
+            <div class="no-padding" style="line-height:72px; height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; background-color:white;">
+              <strong style="margin-left:40%; color:grey;">Find</strong>
             </div>
           </v-flex>
-        </v-layout>
-        <v-layout row wrap style="padding-bottom: 10px;">
-          <v-flex xs10 offset-sm2 sm7 offset-md3 md6 style="height: 48px;"
-            class="grey--text no-padding fsSelect">
-            <v-select class="no-padding fs-select-cities" style="height: 46px;"
-              label="City or School"
-              item-text="name"
-              item-value="name"
-              v-bind:items="availableCities"
-              v-model="selectedCity"
-              single-line
-              attach
-              content-class="fsSelect-menu"
-              hide-details
-              autocomplete
-            >
-            </v-select>
+
+            <v-flex xs5 sm5 md4 style="height: 56px; border-style:none;" class="grey--text no-padding">
+            <v-text-field 
+              style="height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; outline:none !important; border-radius:none;"
+              solo
+              flat
+              label="part time design intern"
+              clearable
+            ></v-text-field>
+            </v-flex> 
+            
+            <v-flex xs1 sm1 md1 class="grey--text no-padding">
+            <div style=" line-height:72px; height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; background-color:white;">
+              <strong style="margin-left:40%; color:grey;">Near</strong>
+            </div>
           </v-flex>
-          <v-flex xs2 sm2 md1 class="no-padding" v-ripple>
-            <a class="fsGoBtn" @click="searchGo">
-              <span style="color: white !important; line-height: 48px; text-decoration: none; font-size: 16px;">Go</span>
-            </a>
-          </v-flex>
+            <v-flex xs5 sm5 md4 class="grey--text no-padding">
+            <v-text-field 
+              style="height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; outline:none !important; border-radius:none;"
+              v-model="first_city_guess"
+              solo
+              flat
+              label="UC Irvine"
+              clearable
+            ></v-text-field>
+            </v-flex> 
+
+            <v-flex style="margin-left:10px;" class="no-padding">
+              <button @click="searchGo" v-ripple class="iconRedButton">
+                <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
+              </button>
+            </v-flex> 
+
         </v-layout>
-        <img class="bottom-img" :src="svgs.citySvg" />
-        <v-layout class="bottom-row">
-          <v-flex xs12 align-center>
-            <p class="center">
-              <v-btn class="kunvet-red-bg" dark to="/employers">Hire on Kunvet</v-btn>
-              <v-btn outline style="background-color: rgba(255,255,255,0.8) !important;"
-               @click="$vuetify.goTo('#promo', { duration: 750, offset: -64, easing: 'easeInOutCubic' })">Learn more</v-btn>
-            </p>
-          </v-flex>
-        </v-layout>
-      </section>
-    </div>
+      </div>
+  
+
     <div id="promo" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
-      <div style="max-width: 960px; margin: 0 auto;">
-        <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(66).svg')">
-          <h2>Why use Kunvet instead?</h2>
-          <p>
-            All jobs displayed on Kunvet are the latest jobs on the market. We do not present jobs that are older than 30 days to applicants to show-off our database. Unless an organization re-posts its job, we assure our users will not see any repetitive jobs. We too are tired of seeing outdated jobs on the internet.
-          </p>
-        </PromoTextContainer>
-
-        <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(67).svg')">
-          <h2>What's exclusive here?</h2>
-          <p>
-            We care about the quality of opportunities listed on Kunvet. Many opportunities are exclusive at Kunvet, meaning that they aren't listed on other platforms.
-            More importantly, these opportunities are within 20 min of driving distance, and many of them are actually located on campus.
-          </p>
-        </PromoTextContainer>
-
-        <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(68).svg')">
-          <h2>What can we guarantee?</h2>
-          <p>We will take all necessary steps to keep information on Kunvet clean and safe. We will consider every user’s feedback, suggestions, and complaints. No matter what is ahead of Kunvet team, we will not sacrifice our user’s experience.</p>
-        </PromoTextContainer>
+      <div class="main-cont-large" style="background: #fafafa">
+        <v-layout row wrap>
+          <v-flex xs12 sm11 md4>
+            <v-card style="width:300px">
+              <v-img
+                class="white--text"
+                height="200px"
+                src="svgs.vc"
+              >
+              </v-img>
+              <v-card-title>
+                <div>
+                  <span class="headline black--text">Business</span><br>
+                  <span class="grey--text">Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</span>
+                </div>
+              </v-card-title>
+            </v-card>
+            </v-flex>
+        </v-layout>
       </div>
     </div>
   </v-container>
@@ -347,6 +407,8 @@ import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Asset70 from '@/assets/icons/Asset(70).svg';
 import vc from '@/assets/vc.svg';
+import mag from '@/assets/magnifier.svg';
+
 import PromoTextContainer from '@/components/PromoTextContainer';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
@@ -360,6 +422,7 @@ export default {
   },
   data() {
     return {
+      first_city_guess: 'UC Irvine',
       uid: null,
       findJobs: [],
       saved_jobs: [],
@@ -397,6 +460,7 @@ export default {
         locationMarker: LocationMarkerSvg,
         kunvetDude: Asset70,
         citySvg: vc,
+        mag: mag,
       },
       selectedPositionsInital: 'All / Any',
       loadingJobs: false,
@@ -517,4 +581,8 @@ export default {
   },
 };
 
+// Define a new component called button-counter
+Vue.component('button-counter', {
+  template: '<button v-on:click="">Hello!</button>',
+});
 </script>

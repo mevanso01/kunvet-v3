@@ -73,8 +73,12 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: '/validate/:code',
+      path: '/validate',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/Validate'),
+    },
+    {
+      path: '/validate-email/:code',
+      component: () => import(/* webpackChunkName: "auth" */ '@/pages/ValidateOld'),
       props: true,
     },
     {

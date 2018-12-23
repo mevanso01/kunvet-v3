@@ -8,7 +8,7 @@
   <v-container fluid class="white-bg job-post__container">
     <div class="main-cont-large">
       <v-layout row wrap>
-        <v-flex xs-12 v-if="unpostedJobs.length === 0 && activeJobs.length === 0">
+        <v-flex xs-12 v-if="unpostedJobs.length === 0 && activeJobs.length === 0 && expiredJobs.length === 0">
           You have no active jobs.
         </v-flex>
         <v-flex xs12 v-if="unpostedJobs.length > 0" class="job-page-headline">
@@ -219,7 +219,6 @@
     query($userId: MongoID, $businessId: MongoID) {
       findJobs(filter: { user_id: $userId, business_id: $businessId }) {
         ${queries.FindJobRecordForJobCard}
-        expired
         expiry_date
       }
     }`;
@@ -271,7 +270,6 @@
           },
         });
         this.jobs = data.findJobs.concat();
-        // console.log(this.jobs);
       },
       onShowJobDialog(job) {
         this.dialogs.errorOccured = false;
