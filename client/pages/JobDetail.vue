@@ -113,6 +113,9 @@
 .job-detail-container .long-text-cont {
   margin-bottom: 16px;
 }
+
+/*fonts_here*/
+
 .job-detail-container .long-text-cont,
 .job-detail-container .long-text-cont span,
 .job-detail-container .long-text-cont p,
@@ -184,39 +187,152 @@
 }
 @media (max-width: 960px) {
 }
+/*NEW CODE BELOW*/
+.mobile-show {
+  display: none;
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px) {
+  .mobile-show {
+    display: block;
+    padding: 0;
+  }
+  .mobile-hide{
+    display: none !important;
+  }
+  .job-detail-container .long-text-cont,
+  .job-detail-container .long-text-cont span,
+  .job-detail-container .long-text-cont p,
+  .job-detail-container .long-text-cont li {
+    line-height: 1.6;
+  }
+  .sub-container{
+    padding: 24px 24px 0 24px;
+  }
+
+  .sub-container h2{
+    font-size: 22px;
+  }
+
+  .mobile-show li{
+    list-style: square;
+  }
+}
+
+.mobile-button-container {
+  margin: 40px 0;
+  height: 55px;
+  width: 100%;
+  position: relative;
+}
+
+.apply-button {
+  box-shadow: 0 10px 12px -4px #eaeaf9;
+  padding: 16px 0;
+  width: 31%;
+  background-color: red;
+  border-radius: 4px;
+  font-size: 1.1em;
+  color: white;
+}
+
+.find-button {
+  box-shadow: 0 10px 12px -4px #eaeaf9;
+  padding: 16px 0;
+  width: 53%;
+  color: red;
+  border-radius: 4px;
+  border: 1px solid red;
+  margin: 0 4px;
+  font-size: 1.1em;
+}
+
+.bookmark-button {
+  height: 100%;
+  width: 13%;
+  position: absolute;
+  bottom: 0;
+}
+.header-icon-container {
+  color: white;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-splash {
+  background-image: linear-gradient(to right, #EA596B, #F6BE6A);
+  height: 206px;
+}
+
+.header-text {
+  line-height: 1.2;
+  color: white;
+  position: relative;
+  padding: 0 24px;
+  font-weight: 600;
+}
+
 </style>
 <template>
   <v-container fluid style="padding-left: 0; padding-right: 0;" id="job-detail-container">
+
     <div class="main-cont-large job-detail-container">
+      <div class="header-splash mobile-show" style="margin-top: -70px">
+        <div class="header-icon-container">
+          <div style="padding: 12px 0 0 24px; ">
+            <img src="../assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+          </div>
+          <div style="padding: 12px 24px 0 0;">
+            <img src="../assets/job_detail/sandwich.svg" alt="" style="height: 32px; width: 40px;">
+          </div>
+
+        </div>
+        <h1 class="header-text" style="top: 46%; font-size: 1.8em; padding-right: 34px; margin: 0;">
+          {{ findJob.title }}
+        </h1>
+        <!--42%-->
+        <p class="header-text" style="top: 52%; font-size: 12px;">
+          Posted by {{ findJob.posted_by }}
+        </p>
+      </div>
+
       <div class="sub-container">
           <!--<router-link to="/">Back</router-link>-->
-          <div class="top-container">
-            <div class="float-left">
-              <v-avatar size="38px" slot="activator" style="float: left; margin-right: 10px;">
-                <img :src="profilePic" alt="">
-              </v-avatar>
-            </div>
-      		  <div class="float-left job-detail-posted-by" style="color: #A7A7A7; margin-right: 1px;">
-              <h3 style="color: #616161;" class="one-line ellipsis">{{ findJob.posted_by }}</h3>
-            </div>
-            <div class="float-right">
-              <a class="svg-button" flat @click="saveJob(findJob._id)">
-                <img v-if="saved" :src="svgs.savedIcon"/>
-                <img v-else :src="svgs.notSavedIcon"/>
-              </a>
-            </div>
-            <div class="float-right hidden-xs-only">
-              <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
-                outline class="red--text darken-1"
-                style="margin: 2px 8px;"
-                @click="apply">
-                {{ applied ? 'Applied' : 'Apply' }}
-              </v-btn>
-            </div>
+        <div class="top-container mobile-hide">
+          <div class="float-left">
+            <v-avatar size="38px" slot="activator" style="float: left; margin-right: 10px;">
+              <img :src="profilePic" alt="">
+            </v-avatar>
           </div>
-          <v-divider></v-divider>
-          <h2 class="post-title">{{ findJob.title }}</h2>
-          <div class="carditem" style="color: #A7A7A7; margin-bottom: 10px; font-size: 11px;"><timeago :since="findJob.date"></timeago></div>
+          <div class="float-left job-detail-posted-by" style="color: #A7A7A7; margin-right: 1px;">
+            <h3 style="color: #616161;" class="one-line ellipsis">{{ findJob.posted_by }}</h3>
+          </div>
+          <div class="float-right">
+            <a class="svg-button" flat @click="saveJob(findJob._id)">
+              <img v-if="saved" :src="svgs.savedIcon"/>
+              <img v-else :src="svgs.notSavedIcon"/>
+            </a>
+          </div>
+          <div class="float-right hidden-xs-only">
+            <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
+              outline class="red--text darken-1"
+              style="margin: 2px 8px;"
+              @click="apply">
+              {{ applied ? 'Applied' : 'Apply' }}
+            </v-btn>
+          </div>
+        </div>
+        <v-divider class="mobile-hide"></v-divider>
+
+        <h2 class="post-title mobile-hide">{{ findJob.title }}</h2>
+
+        <div class="carditem mobile-hide" style="color: #A7A7A7; margin-bottom: 10px; font-size: 11px;"><timeago :since="findJob.date"></timeago></div>
+        <!--mobile job descriptions-->
+        <div class="mobile-hide">
           <div class="carditem" style="color: #A7A7A7;">
             <p>
               <!--<v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon>-->
@@ -277,17 +393,51 @@
             <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></span>
           </div>
           <div v-else style="width: 100%; height: 16px;"></div>
-
-          <v-divider></v-divider>
       </div>
+        <div class="mobile-show" style="font-size: 16px">
+            <ul>
+              <li>Posted <timeago :since="findJob.date"></timeago></li>
+              <li>{{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template></li>
+              <li v-if="findJob.university">{{ findJob.university }}</li>
+            </ul>
+            <div>
+              <p v-show="findJob.type2 && computedType2 || findJob.studentfriendly || jobType" class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Basic Overview:</p>
+              <ul>
+                <li v-if="findJob.type2 && computedType2"> {{ computedType2 }} </li>
+                <li v-if="findJob.studentfriendly">Student Friendly</li>
+                <li><span v-for="(type, index) in jobType"> {{ type }}<span v-if="index + 1 < jobType.length">,</span></span></li>
+              </ul>
+            </div>
+            <div v-show=" (findJob.education && findJob.education !== 'None') || findJob.preferred_major || findJob.language">
+              <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
+              <ul>
+                <li v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</li>
+                <li v-if="findJob.preferred_major"> Majors preferred: {{ findJob.preferred_major }} </li>
+                <li v-if="findJob.language"> Additional language: {{ findJob.language }} </li>
+                <li v-if="findJob.age"> Age: {{ findJob.age }} </li>
+              </ul>
+            </div>
+
+            <div v-if="findJob.shift && findJob.shift.length > 0" style="margin-bottom: 16px;">
+              <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
+              <ul>
+                <li v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></li>
+              </ul>
+            </div>
+            <div v-else style="width: 100%; height: 16px;"></div>
+            <div class="v-divider"></div>
+          </div>
+
+      </div>
+
       <div class="sub-container job-desc-subcontainer">
-          <h2 style="margin-bottom: 8px;">Job Overview:</h2>
+          <h2 style="margin-bottom: 8px;">Job Overview</h2>
           <div class="long-text-cont" v-html="findJob.description"></div>
 
-          <h2 style="margin-bottom: 8px;">Experience & Requirements:</h2>
+          <h2 style="margin-bottom: 8px;">Experience & Requirements</h2>
           <div class="long-text-cont" v-html="findJob.experience"></div>
 
-          <h2 style="margin-bottom: 8px;">Responsibilities:</h2>
+          <h2 style="margin-bottom: 8px;">Responsibilities</h2>
           <div class="long-text-cont" v-html="findJob.responsibilities"></div>
 
           <v-container v-if="findJob.images && findJob.images.length > 0" fluid grid-list-sm style="margin: 20px 0;">
@@ -298,9 +448,20 @@
             </v-layout>
           </v-container>
 
+          <!--mobile buttons-->
+
+        <div class="mobile-button-container mobile-show">
+          <button class="apply-button">Apply</button>
+          <button class="find-button">Find Similar Jobs</button>
+          <button class="bookmark-button">
+            <img src="../assets/job_detail/bookmark.svg" alt=""
+                 style="box-shadow: 0 10px 12px -4px #eaeaf9;
+                         border-radius:4px; width: 100%; height: 96%; padding: 8px; background-color: orange;">
+          </button>
+        </div>
           <!--find-->
 
-          <div class="bottom-container" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">
+          <div class="bottom-container mobile-hide" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">
             <!-- <div class="gradient-bar" v-show="stickToBottom">
             </div> -->
             <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
@@ -316,8 +477,8 @@
           <!-- in order to retain document height when bottom container is fixed -->
           <div class="height-helper" v-show="stickToBottom"></div>
       </div>
-    </div>
 
+    </div>
     <v-dialog v-model="applydialog" max-width="500">
       <v-card v-if="findJob.apply_method === 'Through Google Forms' && findJob.gform_link"
       class="no-border-radius apply-card" v-show="email_verified">

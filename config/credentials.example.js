@@ -34,8 +34,8 @@ module.exports = {
   //
   // Get yours from https://ethereal.email/create
   mailTransport: {
-    host: 'smtp.ethereal.email',
-    port: 587,
+    host: '',
+    port: ,
     auth: {
       user: '',
       pass: '',
@@ -47,14 +47,5 @@ module.exports = {
   sentryServerDsn: '',
 
   // Please read on
-  REMOVEMEPLS: `
 
-*****
-** You did it!
-**
-** To show that you are paying attention and have filled in
-** all the blanks, remove this key.
-*****
-
-`,
 };

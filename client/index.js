@@ -4,8 +4,10 @@ import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
 import VueTimeago from 'vue-timeago';
 import TimeagoLocale from 'vue-timeago/locales/en-US.json';
+import InstantSearch from 'vue-instantsearch';
 
 import Client from '@/apollo/client';
+import SearchHighlight from '@/components/SearchHighlight';
 
 import '@/options/axios';
 import '@/options/googleMaps';
@@ -31,6 +33,8 @@ Vue.use(VueTimeago, {
     'en-US': TimeagoLocale,
   },
 });
+Vue.use(InstantSearch);
+Vue.component('highlight', SearchHighlight);
 
 const apolloProvider = new VueApollo({
   defaultClient: Client,
@@ -49,6 +53,10 @@ const router = new VueRouter({
     {
       path: '/search',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
+    },
+    {
+      path: '/newSearch',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/NewSearch'),
     },
     {
       path: '*',

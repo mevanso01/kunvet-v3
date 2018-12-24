@@ -20,6 +20,9 @@ function buildOptions() {
       user: ctx.state.user,
     }),
     playground: {
+      settings: {
+        'request.credentials': 'include',
+      },
       tabs: [
         {
           endpoint: '/data',

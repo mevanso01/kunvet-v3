@@ -45,7 +45,6 @@ import Models from '@/mongodb/Models';
 Logger.info(`Kunvet Server ${process.env.COMMIT} (${process.env.NODE_ENV})`);
 
 // const path = require('path');
-// let historyApiFallback = require('koa-history-api-fallback');
 
 const port = process.env.PORT || 3000;
 const app = new Koa();

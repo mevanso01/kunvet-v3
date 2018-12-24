@@ -121,7 +121,7 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <v-navigation-drawer class="hidden-sm-and-up mobile-menu" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
+    <!-- <v-navigation-drawer class="hidden-sm-and-up mobile-menu" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
       <v-toolbar flat class="transparent">
         <v-list class="pa-0">
           <v-list-tile>
@@ -147,7 +147,30 @@
           </div>
         </div>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
+
+    <div id="d-menu" class="d-menu" v-show="drawer">
+      <div class="d-menu-inner">
+        <div v-for="(item, idx) in dmenuItems" style="background-color: #fff">
+          <div class="d-menu-item" @click="handleDMenuClick(item)" :class="`idx-${idx}`" :key="item.title">
+            {{ item.title }}
+            <!--replace with user's name-->
+            <p v-if="item.isTop" style="font-size: 16px; margin: 0; color: white; font-weight: normal">Edit Profile</p>
+          </div>
+          <div v-if="item.subItems">
+            <div v-for="subItem in item.subItems" v-show="openSubitem === item.title"
+                 @click="drawer = false;" :key="subItem.title" class="d-menu-item" :class="`idx-${idx}`">
+              {{ subItem.title }}
+            </div>
+          </div>
+        </div>
+        <div class="d-menu-close">
+          <button @click="drawer = false;">
+            <i class="fa fa-times-circle " style="font-size: 46px; color: #FFE2E2;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <main v-bind:class="{ 'dn': isJobPostRoute && acct !== 0 }">
       <transition name="fade-transition">
@@ -259,6 +282,28 @@ export default {
           { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
         ],
       ],
+      dmenuItems: [
+        { title: 'User\'s Name', href: '/account', isTop: true },
+        { title: 'Search', href: '/search' },
+        {
+          title: 'My Jobs',
+          subItems: [
+            { title: 'Saved Jobs', href: '/savedjobs' },
+            { title: 'Applied Jobs', href: '/appliedjobs' },
+          ],
+        },
+        { title: 'Notifications', href: '/account' },
+        {
+          title: 'Settings',
+          subItems: [
+            { title: 'Email & Password' },
+            { title: 'Email Preferences' },
+            { title: 'Billing Info' },
+            { title: 'Delete Account' },
+          ],
+        },
+        { title: 'Log Out', href: '/account' },
+      ],
       sidebarItems: [
         [
           [
@@ -305,6 +350,7 @@ export default {
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },
       right: true,
       numNotifications: 0,
+      openSubitem: '',
     };
   },
   components: {
@@ -312,6 +358,14 @@ export default {
     SwitchAccount,
   },
   methods: {
+    handleDMenuClick(item) {
+      if (item.subItems) {
+        this.openSubitem = this.openSubitem === item.title ? '' : item.title;
+      } else {
+        this.$router.push(item.href);
+        this.drawer = false;
+      }
+    },
     firstSearch() {
       EventBus.$emit('firstSearch');
       this.firstS = false;

@@ -10,6 +10,8 @@ import colors from 'colors/safe';
 import fs from 'fs';
 import path from 'path';
 
+import SentryCliPlugin from '@sentry/webpack-plugin';
+
 import clientConfig from './build/webpack.config.client';
 import serverConfig from './build/webpack.config.server';
 
@@ -44,6 +46,16 @@ function processWebpackConfig(task, config) {
     const percent = Math.round(percentage * 100);
     setProgress(task, percent, message);
   }));
+  if (['client', 'server'].includes(task) && process.env.UPLOAD_SENTRY_SOURCEMAP) {
+    const sentryConfig = {
+      include: `dist/${task}`,
+      ignoreFile: '.sentrycliignore',
+      ignore: ['node_modules', 'webpack.config.js'],
+      configFile: 'sentry.properties',
+    };
+    process.env.SENTRY_PROJECT = task;
+    newConfig.plugins.push(new SentryCliPlugin(sentryConfig));
+  }
   if (['development', 'production'].includes(process.env.NODE_ENV)) {
     newConfig.mode = process.env.NODE_ENV;
   }

@@ -129,7 +129,6 @@ GQC.rootQuery().addFields({
   // Job
   findJob: Job.get('$findOne'),
   findJobs: Job.get('$findMany'),
-
   // Filters
   findAvailableFilters: Filters.get('$findOne'),
 
