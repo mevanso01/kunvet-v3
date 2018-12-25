@@ -8,7 +8,7 @@
     >
       <div class="searchBar">
         <ais-search-box></ais-search-box>
-        <ais-pagination></ais-pagination>
+        <!-- <ais-pagination></ais-pagination> -->
       </div>
       <ais-results class="results">
         <template slot-scope="{ result }">

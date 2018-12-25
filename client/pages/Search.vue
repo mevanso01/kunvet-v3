@@ -135,8 +135,20 @@
 .no-jobs-found-box {
   width: 100%;
   height: 125px;
-  background: linear-gradient(135deg, #fafafa, #f5f5f5);
-  background-image: linear-gradient(135deg, rgb(250, 250, 250), rgb(245, 245, 245));
+  // background: linear-gradient(135deg, #fafafa, #f5f5f5);
+  // background-image: linear-gradient(135deg, rgb(250, 250, 250), rgb(245, 245, 245));
+}
+.search-params-field {
+  height: 48px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow-y: hidden;
+  transition: all 0.3s ease;
+  label {
+    line-height: 22px !important;
+  }
 }
 @media (min-width: 601px) {
   .search .flex {
@@ -178,7 +190,7 @@
     padding: 0 48px;
   }
   section.search {
-    padding: 16px 16px 32px 16px;
+    padding: 16px 16px 16px 16px;
   }
   .bottom-img {
     width: calc(100% - 208px);
@@ -222,8 +234,7 @@
                   <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
                 </div>
 
-                <v-list
-                  dense class="custom-select-menu">
+                <v-list dense class="custom-select-menu">
                   <v-list-tile  @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
                 </v-list>
               </div>
@@ -231,6 +242,16 @@
             </div>
           </v-flex>
           <v-flex xs12 md6>
+            <v-text-field
+              class="search-params-field"
+              solo
+              flat
+              label="Search parameters"
+              v-model="query"
+              clearable
+            ></v-text-field>
+          </v-flex>
+          <!-- <v-flex xs12 md6>
             <div class="custom-select-2-wrapper">
               <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'types' }">
                 <div class="inner" @click="openSelect('types');">
@@ -247,8 +268,8 @@
                 </v-list>
               </div>
             </div>
-          </v-flex>
-          <v-flex xs12 md6>
+          </v-flex> -->
+          <!-- <v-flex xs12 md6>
             <div class="custom-select-2-wrapper">
               <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'positions' }">
                 <div class="inner" @click="reorderAvailablePositions(); openSelect('positions');">
@@ -269,8 +290,8 @@
                 </v-list>
               </div>
             </div>
-          </v-flex>
-          <v-flex xs12 md6>
+          </v-flex> -->
+          <!-- <v-flex xs12 md6>
             <div class="custom-select-2-wrapper">
               <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'shifts' }">
                 <div class="inner" @click="reorderAvailablePositions(); openSelect('shifts');">
@@ -287,11 +308,11 @@
                 </v-list>
               </div>
             </div>
-          </v-flex>
+          </v-flex> -->
         </v-layout>
       </section>
       <input class="hidden-input" id="submit" type="submit" value="GO">
-      <div id="general-submit" @click="searchAndFilter" v-ripple>
+      <div id="general-submit" @click="search()" v-ripple>
         <div id="general-submit-default">
           <span>SEARCH</span>
         </div>
@@ -304,7 +325,44 @@
           <h3 style="text-align: center; margin-top: 25px;">Loading jobs...</h3>
         </div>
         <v-flex xs12 class="no-padding">
-          <div v-for="job in filteredJobs" :key="job._id">
+          <div class="search">
+            <!-- <ais-index
+              app-id="0EXR93R20L"
+              api-key="f2b308e2f23de66614cacd60f8f93b67"
+              index-name="jobs"
+            >
+              <div class="searchBar">
+                <ais-search-box></ais-search-box>
+                <ais-pagination></ais-pagination>
+              </div> -->
+              <!-- <ais-results  inline-template>
+                <div v-for="(item, idx) in results" :key="idx">
+                  <div v-if="item.isText">
+                    {{ item.text }}
+                  </div>
+                  <div v-else>
+                    <MainJobCard
+                      :job="item"
+                      :saveJobFunc="saveJob"
+                      :isSaved="isSaved(item._id)"
+                      :fromCoordinates="selectedCoordinates"
+                    />
+                  </div>
+                </div>
+              </ais-results> -->
+              <!-- <ais-results class="results">
+                <template slot-scope="{ result }">
+                  <MainJobCard
+                    :job="result"
+                    :saveJobFunc="saveJob"
+                    :isSaved="isSaved(result._id)"
+                    :fromCoordinates="selectedCoordinates"
+                  />
+                </template>
+              </ais-results> -->
+            <!-- </ais-index> -->
+          </div>
+          <div v-for="(job, idx) in filteredJobs" :key="idx">
               <MainJobCard
                 :job="job"
                 :saveJobFunc="saveJob"
@@ -352,6 +410,9 @@ import findIndex from 'lodash/findIndex';
 import uniq from 'lodash/uniq';
 import queries from '@/constants/queries';
 import EventBus from '@/EventBus';
+import algoliasearch from 'algoliasearch';
+
+const algoliaClient = algoliasearch('0EXR93R20L', 'f2b308e2f23de66614cacd60f8f93b67');
 
 Vue.use(VueApollo);
 
@@ -409,7 +470,8 @@ export default {
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
-      pageSize: 12,
+      // pageSize: 12,
+      query: '',
       page: 0,
     };
   },
@@ -466,7 +528,7 @@ export default {
     availableShiftsObj() {
       return this.availableShifts.map((shiftObj) => {
         shiftObj.disabled = !this.filteredJobs.find(
-          job => job.shift.indexOf(shiftObj.value) !== -1,
+          job => Array.isArray(job.shift) && job.shift.indexOf(shiftObj.value) !== -1,
         );
         return shiftObj;
       });
@@ -479,6 +541,9 @@ export default {
     },
   },
   methods: {
+    augmentedResults(results) {
+      return results;
+    },
     updateAndClose(city) {
       this.selectedCity = city;
       this.openSelectField = null;
@@ -855,6 +920,27 @@ export default {
         this.fetchAvailableFilters();
       }
     },
+    async algoliaSearch() {
+      const requests = [{ params: { query: this.query, page: this.page }, indexName: 'jobs' }];
+      const results = await algoliaClient.search(requests);
+      const res = results.results[0];
+      console.log(res);
+      if (res.page === 0) {
+        this.filteredJobs = res.hits;
+      } else {
+        this.filteredJobs = this.filteredJobs.concat(res.hits);
+      }
+      this.loadingJobs = false;
+      if (res.page < (res.nbPages - 1) && this.page < 3) {
+        this.page += 1;
+        this.algoliaSearch();
+      }
+    },
+    search() {
+      this.page = 0;
+      this.loadingJobs = true;
+      this.algoliaSearch();
+    },
   },
   deactivated() {
     this.commitData();
@@ -873,7 +959,8 @@ export default {
     if (this.filteredJobs.length === 0) {
       this.loadingJobs = true;
     }
-    this.findAndFilterJobs();
+    this.algoliaSearch();
+    // this.findAndFilterJobs();
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
     if (data) {

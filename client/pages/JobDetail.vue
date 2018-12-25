@@ -192,14 +192,12 @@
   display: none;
 }
 
-@media only screen
-and (min-device-width: 320px)
-and (max-device-width: 480px) {
+@media only screen and (max-width: 600px) {
   .mobile-show {
     display: block;
     padding: 0;
   }
-  .mobile-hide{
+  .mobile-hide {
     display: none !important;
   }
   .job-detail-container .long-text-cont,

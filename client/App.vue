@@ -562,7 +562,7 @@ export default {
 @import 'css/account.css';
 @import 'css/applicants.css';
 @import 'css/buttons.css';
-@import 'css/job_pages.css';
+@import 'css/jobStyles.scss';
 @import 'css/nav.css';
 @import 'css/postsAndSearch.css';
 
