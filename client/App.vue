@@ -3,83 +3,84 @@
     <div v-if="devmode" class="devmode">
       Development mode
     </div>
-    <v-toolbar fixed class="main-navbar" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
-      <router-link to="/search">
-            <div id="nav-logo">
-              <!--<img id="nav-logo-svg" :src="svgs.kunvetLogoNav"></img>-->
-                <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">
-                    <path fill="var(--navbar-icon-color)" d="M506.16,577.25c-46.35,0-92.71.29-139.05-.42-5.78-.09-14.6-4.23-16.72-8.9-20.71-45.61-37.64-92.35-37.34-143.58.29-50,19-91.57,62.15-117.12,76.17-45.1,158.71-61.61,246-41.22,45,10.51,70.88,42.05,79.76,86.87C711.62,406.7,699.19,458.25,682.9,509c-6.12,19.06-14.73,37.32-21.06,56.32-3.23,9.7-8.61,12.17-18.16,12.09C597.84,577,552,577.27,506.16,577.25Z"
-                    />
-                    <path fill="var(--navbar-icon-color)" d="M510,824.51c-21.76-30.53-41.24-57.45-60.25-84.7C438.55,723.78,412.5,683,412.5,683a46,46,0,0,1,5.66-6.22c54.42-44.31,128.54-42.73,185.28,7.29Z"
-                    />
-                    <path fill="var(--navbar-wordmark-color)" d="M810.57,376.87h49.36v75.23l88.73-75.23h38.11L886.65,461.53l127,115.59H954.15l-94.22-85.78v85.78H810.57Z" />
-                    <path fill="var(--navbar-wordmark-color)" d="M1028,376.87h49.22V505.54a65.43,65.43,0,0,0,3.59,21.87A53.44,53.44,0,0,0,1091,545.2a48.44,48.44,0,0,0,16.24,12,53.62,53.62,0,0,0,42.68,0,48.68,48.68,0,0,0,16.17-12,53.49,53.49,0,0,0,10.27-17.79,65.43,65.43,0,0,0,3.59-21.87V376.87h30.94V505.54a81.69,81.69,0,0,1-5.27,29.32,63.8,63.8,0,0,1-16.45,24.26q-11.18,10.41-28.83,16.45t-42.26,6q-22.08,0-38.88-6T1051,559.05a69.13,69.13,0,0,1-17.23-24.4,75.59,75.59,0,0,1-5.84-29.53Z"
-                    />
-                    <path fill="var(--navbar-wordmark-color)" d="M1260.15,376.87h31.36L1405.7,504.28V376.87h30.8V580.22h-21.23l-124-140.62V577.12h-31.08Z" />
-                    <path fill="var(--navbar-wordmark-color)" d="M1511.87,376.87l66.23,138.37,61.31-138.37h31.64l-90.14,203.34h-23.06L1461.1,376.87Z" />
-                    <path fill="var(--navbar-wordmark-color)" d="M1845.15,376.87v17H1744.74V460h83.39v17.16h-83.39v79.45h100.41v20.53H1695.67V376.87Z" />
-                    <path fill="var(--navbar-wordmark-color)" d="M2059.6,376.87v17h-69.33V577.12H1941.2V393.89h-69.33v-17Z" />
-                </svg>
-            </div>
-        </router-link>
-        <v-spacer></v-spacer>
-        <div class="hidden-sm-and-up">
-          <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        </div>
-        <v-toolbar-items v-if="acct === 0" class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">
-            <v-btn flat>{{ item.title }}</v-btn>
-          </router-link>
-          <div style="padding-top: 18px; padding-left: 16px;">
-            <router-link to="/createjob">
-              <v-btn class="kunvet-red post-a-job-button" outline>Post a Job</v-btn>
-            </router-link>
-          </div>
-        </v-toolbar-items>
 
-        <v-toolbar-items v-else class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">
+    <!--<v-toolbar fixed class="main-navbar" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">-->
+      <!--<router-link to="/search">-->
+            <!--<div id="nav-logo">-->
+              <!--&lt;!&ndash;<img id="nav-logo-svg" :src="svgs.kunvetLogoNav"></img>&ndash;&gt;-->
+                <!--<svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">-->
+                    <!--<path fill="var(&#45;&#45;navbar-icon-color)" d="M506.16,577.25c-46.35,0-92.71.29-139.05-.42-5.78-.09-14.6-4.23-16.72-8.9-20.71-45.61-37.64-92.35-37.34-143.58.29-50,19-91.57,62.15-117.12,76.17-45.1,158.71-61.61,246-41.22,45,10.51,70.88,42.05,79.76,86.87C711.62,406.7,699.19,458.25,682.9,509c-6.12,19.06-14.73,37.32-21.06,56.32-3.23,9.7-8.61,12.17-18.16,12.09C597.84,577,552,577.27,506.16,577.25Z"-->
+                    <!--/>-->
+                    <!--<path fill="var(&#45;&#45;navbar-icon-color)" d="M510,824.51c-21.76-30.53-41.24-57.45-60.25-84.7C438.55,723.78,412.5,683,412.5,683a46,46,0,0,1,5.66-6.22c54.42-44.31,128.54-42.73,185.28,7.29Z"-->
+                    <!--/>-->
+                    <!--<path fill="var(&#45;&#45;navbar-wordmark-color)" d="M810.57,376.87h49.36v75.23l88.73-75.23h38.11L886.65,461.53l127,115.59H954.15l-94.22-85.78v85.78H810.57Z" />-->
+                    <!--<path fill="var(&#45;&#45;navbar-wordmark-color)" d="M1028,376.87h49.22V505.54a65.43,65.43,0,0,0,3.59,21.87A53.44,53.44,0,0,0,1091,545.2a48.44,48.44,0,0,0,16.24,12,53.62,53.62,0,0,0,42.68,0,48.68,48.68,0,0,0,16.17-12,53.49,53.49,0,0,0,10.27-17.79,65.43,65.43,0,0,0,3.59-21.87V376.87h30.94V505.54a81.69,81.69,0,0,1-5.27,29.32,63.8,63.8,0,0,1-16.45,24.26q-11.18,10.41-28.83,16.45t-42.26,6q-22.08,0-38.88-6T1051,559.05a69.13,69.13,0,0,1-17.23-24.4,75.59,75.59,0,0,1-5.84-29.53Z"-->
+                    <!--/>-->
+                    <!--<path fill="var(&#45;&#45;navbar-wordmark-color)" d="M1260.15,376.87h31.36L1405.7,504.28V376.87h30.8V580.22h-21.23l-124-140.62V577.12h-31.08Z" />-->
+                    <!--<path fill="var(&#45;&#45;navbar-wordmark-color)" d="M1511.87,376.87l66.23,138.37,61.31-138.37h31.64l-90.14,203.34h-23.06L1461.1,376.87Z" />-->
+                    <!--<path fill="var(&#45;&#45;navbar-wordmark-color)" d="M1845.15,376.87v17H1744.74V460h83.39v17.16h-83.39v79.45h100.41v20.53H1695.67V376.87Z" />-->
+                    <!--<path fill="var(&#45;&#45;navbar-wordmark-color)" d="M2059.6,376.87v17h-69.33V577.12H1941.2V393.89h-69.33v-17Z" />-->
+                <!--</svg>-->
+            <!--</div>-->
+        <!--</router-link>-->
+        <!--<v-spacer></v-spacer>-->
+        <!--<div class="hidden-sm-and-up">-->
+          <!--<v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>-->
+        <!--</div>-->
+        <!--<v-toolbar-items v-if="acct === 0" class="hidden-xs">-->
+          <!--<router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">-->
+            <!--<v-btn flat>{{ item.title }}</v-btn>-->
+          <!--</router-link>-->
+          <!--<div style="padding-top: 18px; padding-left: 16px;">-->
+            <!--<router-link to="/createjob">-->
+              <!--<v-btn class="kunvet-red post-a-job-button" outline>Post a Job</v-btn>-->
+            <!--</router-link>-->
+          <!--</div>-->
+        <!--</v-toolbar-items>-->
 
-            <v-menu fixed offset-y v-if="item.subItems" left open-on-hover :close-on-content-click="false">
+        <!--<v-toolbar-items v-else class="hidden-xs">-->
+          <!--<router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">-->
 
-              <template v-if="item.title === 'Notifications'">
-                <v-btn flat style="width: 10px;" slot="activator">
-                  <img class="nav-img notranslate" :src="item.icon"></img>
-                  <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>
-                  <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
-                </v-btn>
-                <Notifications :isNavbar="true" />
-              </template>
+            <!--<v-menu fixed offset-y v-if="item.subItems" left open-on-hover :close-on-content-click="false">-->
 
-              <template v-else>
-                <v-btn flat style="width: 10px;" slot="activator">
-                  <img v-if="['Account', 'My Profile'].includes(item.title)" class="nav-img nav-profile-pic" :src="profilePic"></img>
-                  <img v-else class="nav-img" :src="item.icon"></img>
-                  <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
-                </v-btn>
-                <v-list v-if="item.subItems.length > 0" dense>
-                  <div v-for="(subitem, index) in item.subItems" :key="index">
-                    <v-list-tile v-if="subitem.text" @click="routeTo(subitem.route)">
-                      <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
-                    </v-list-tile>
-                    <div v-else-if="subitem === 'SwitchAccount'">
-                      <SwitchAccount :isNavbar="true"/>
-                    </div>
-                    <v-list-tile v-else-if="subitem === 'Logout'" @click="logout">
-                      <v-list-tile-title style="font-size: 14px;">Log out</v-list-tile-title>
-                    </v-list-tile>
-                  </div>
-                </v-list>
-              </template>
-            </v-menu>
+              <!--<template v-if="item.title === 'Notifications'">-->
+                <!--<v-btn flat style="width: 10px;" slot="activator">-->
+                  <!--<img class="nav-img notranslate" :src="item.icon"></img>-->
+                  <!--<div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>-->
+                  <!--<div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>-->
+                <!--</v-btn>-->
+                <!--<Notifications :isNavbar="true" />-->
+              <!--</template>-->
 
-            <!--<v-btn v-else flat>
-              <img class="nav-img" :src="item.icon"></img>
-              <div class="nav-text" style="color:#818181">{{ item.title }}</div>
-            </v-btn>-->
-          </router-link>
-        </v-toolbar-items>
-    </v-toolbar>
+              <!--<template v-else>-->
+                <!--<v-btn flat style="width: 10px;" slot="activator">-->
+                  <!--<img v-if="['Account', 'My Profile'].includes(item.title)" class="nav-img nav-profile-pic" :src="profilePic"></img>-->
+                  <!--<img v-else class="nav-img" :src="item.icon"></img>-->
+                  <!--<div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>-->
+                <!--</v-btn>-->
+                <!--<v-list v-if="item.subItems.length > 0" dense>-->
+                  <!--<div v-for="(subitem, index) in item.subItems" :key="index">-->
+                    <!--<v-list-tile v-if="subitem.text" @click="routeTo(subitem.route)">-->
+                      <!--<v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>-->
+                    <!--</v-list-tile>-->
+                    <!--<div v-else-if="subitem === 'SwitchAccount'">-->
+                      <!--<SwitchAccount :isNavbar="true"/>-->
+                    <!--</div>-->
+                    <!--<v-list-tile v-else-if="subitem === 'Logout'" @click="logout">-->
+                      <!--<v-list-tile-title style="font-size: 14px;">Log out</v-list-tile-title>-->
+                    <!--</v-list-tile>-->
+                  <!--</div>-->
+                <!--</v-list>-->
+              <!--</template>-->
+            <!--</v-menu>-->
+
+            <!--&lt;!&ndash;<v-btn v-else flat>-->
+              <!--<img class="nav-img" :src="item.icon"></img>-->
+              <!--<div class="nav-text" style="color:#818181">{{ item.title }}</div>-->
+            <!--</v-btn>&ndash;&gt;-->
+          <!--</router-link>-->
+        <!--</v-toolbar-items>-->
+    <!--</v-toolbar>-->
     <v-toolbar
       dense flat
       v-if="isJobPostRoute && acct !== 0"
@@ -121,7 +122,7 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <!-- <v-navigation-drawer class="hidden-sm-and-up mobile-menu" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
+    <v-navigation-drawer class="hidden-sm-and-up mobile-menu" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
       <v-toolbar flat class="transparent">
         <v-list class="pa-0">
           <v-list-tile>
@@ -147,7 +148,7 @@
           </div>
         </div>
       </v-list>
-    </v-navigation-drawer> -->
+    </v-navigation-drawer>
 
     <div id="d-menu" class="d-menu" v-show="drawer">
       <div class="d-menu-inner">

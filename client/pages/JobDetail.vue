@@ -1,7 +1,4 @@
 <style>
-.sub-container {
-    padding: 10px 15px;
-}
 .job-star-icon {
     color: #e0e0e0;
     cursor: pointer;
@@ -114,7 +111,10 @@
   margin-bottom: 16px;
 }
 
-/*fonts_here*/
+.header-splash {
+  background-image: linear-gradient(to right, #EA596B, #F6BE6A);
+  position: relative;
+}
 
 .job-detail-container .long-text-cont,
 .job-detail-container .long-text-cont span,
@@ -165,7 +165,57 @@
     background: -o-linear-gradient(transparent, white);
   }
 }
+
+.bottom-button-container {
+  display: flex;
+  height: 53px;
+  width: 60%;
+  margin: 40px 0;
+}
+
+.apply-button {
+  box-shadow: 0 8px 12px -4px #eaeaf9;
+  padding: 16px 0;
+  line-height: 100%;
+  width: 31%;
+  min-width: 65px;
+  background-color: #EA596B;
+  border-radius: 4px;
+  font-size: 1.2em;
+  color: white;
+}
+
+.find-button {
+  padding: 16px 0;
+  line-height: 100%;
+  min-width: 135px;
+  width: 50%;
+  color: red;
+  border-radius: 4px;
+  border: 1px solid red;
+  margin: 0 4px;
+  font-size: 1.2em;
+}
+
+.bookmark-button {
+  box-shadow: 0 10px 12px -4px #eaeaf9;
+  height: 100%;
+  width: 13%;
+  min-width: 43px;
+}
+
+.bookmark-button img{
+  border-radius:4px;
+  height: 100%;
+  padding: 8px;
+  background-color: orange;
+}
+
 @media (min-width: 601px) {
+  .job-detail-container {
+    margin: 0 18%;
+    padding-top: 24px;
+  }
   .apply-card {
     min-width: 375px !important;
   }
@@ -176,14 +226,20 @@
     float: left;
     padding-right: 10px;
   }
+  .header-splash {
+    height: 276px;
+
+  }
 }
+
 @media (min-width: 961px) {
   .job-detail-container {
-    border: 1px solid #e0e0e0;
+    margin: 0 18%;
   }
   .apply-card {
     min-width: 400px !important;
   }
+
 }
 @media (max-width: 960px) {
 }
@@ -192,7 +248,13 @@
   display: none;
 }
 
-@media only screen and (max-width: 600px) {
+
+@media only screen
+and (max-width: 600px) {
+  .job-detail-container{
+    padding: 24px 24px 0 24px;
+  }
+
   .mobile-show {
     display: block;
     padding: 0;
@@ -207,7 +269,7 @@
     line-height: 1.6;
   }
   .sub-container{
-    padding: 24px 24px 0 24px;
+    padding: 0;
   }
 
   .sub-container h2{
@@ -217,42 +279,30 @@
   .mobile-show li{
     list-style: square;
   }
+  .header-splash {
+    min-height: 206px;
+  }
+  /*buttons*/
+  .bottom-button-container {
+    height: 55px;
+    width: 100%;
+  }
+
+  .apply-button {
+    font-size: 1.1em;
+    min-width: auto;
+  }
+
+  .find-button {
+    font-size: 1.1em;
+    min-width: 130px;
+  }
+
+  .bookmark-button {
+    min-width: auto;
+  }
 }
 
-.mobile-button-container {
-  margin: 40px 0;
-  height: 55px;
-  width: 100%;
-  position: relative;
-}
-
-.apply-button {
-  box-shadow: 0 10px 12px -4px #eaeaf9;
-  padding: 16px 0;
-  width: 31%;
-  background-color: red;
-  border-radius: 4px;
-  font-size: 1.1em;
-  color: white;
-}
-
-.find-button {
-  box-shadow: 0 10px 12px -4px #eaeaf9;
-  padding: 16px 0;
-  width: 53%;
-  color: red;
-  border-radius: 4px;
-  border: 1px solid red;
-  margin: 0 4px;
-  font-size: 1.1em;
-}
-
-.bookmark-button {
-  height: 100%;
-  width: 13%;
-  position: absolute;
-  bottom: 0;
-}
 .header-icon-container {
   color: white;
   position: absolute;
@@ -261,78 +311,104 @@
   justify-content: space-between;
 }
 
-.header-splash {
-  background-image: linear-gradient(to right, #EA596B, #F6BE6A);
-  height: 206px;
-}
-
 .header-text {
   line-height: 1.2;
   color: white;
-  position: relative;
-  padding: 0 24px;
+  position: absolute;
   font-weight: 600;
+}
+  /*new*/
+.job-detail-nav .v-toolbar__content{
+  padding: 0;
+  margin: 0;
+}
+
+.job-detail-padding{
+  padding: 0 18%
 }
 
 </style>
 <template>
-  <v-container fluid style="padding-left: 0; padding-right: 0;" id="job-detail-container">
-
-    <div class="main-cont-large job-detail-container">
-      <div class="header-splash mobile-show" style="margin-top: -70px">
-        <div class="header-icon-container">
-          <div style="padding: 12px 0 0 24px; ">
-            <img src="../assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
-          </div>
-          <div style="padding: 12px 24px 0 0;">
-            <img src="../assets/job_detail/sandwich.svg" alt="" style="height: 32px; width: 40px;">
-          </div>
-
+  <v-container fluid style="padding: 0" id="job-detail-container">
+    <div class="header-splash job-detail-padding mobile-hide" >
+      <v-toolbar flat class="job-detail-nav mobile-hide" style="background-color: inherit; padding: 0">
+        <img src="../assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn flat href="/search" style="background-color: inherit;" class="text-capitalize white--text">Search</v-btn>
+          <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn>
+          <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn>
+          <v-btn flat href="/settings" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn>
+          <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">Profile</v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+      <h1 class="header-text" style="top: 44%; font-size: 2.7em; margin: 0; min-height: 60px">
+        {{ findJob.title }}
+      </h1>
+      <p class="header-text" style="bottom: 5%; padding: 0; font-size: 12px;">
+        Posted by {{ findJob.posted_by }}
+      </p>
+    </div>
+    <!--mobile-->
+    <div class="header-splash mobile-show" >
+      <div class="header-icon-container">
+        <div style="padding: 12px 0 0 24px; ">
+          <a href="/search">
+            <img src="../assets/job_detail/whitelogo.svg" style="height: 26px; width: 128px;">
+          </a>
         </div>
-        <h1 class="header-text" style="top: 46%; font-size: 1.8em; padding-right: 34px; margin: 0;">
-          {{ findJob.title }}
-        </h1>
-        <!--42%-->
-        <p class="header-text" style="top: 52%; font-size: 12px;">
-          Posted by {{ findJob.posted_by }}
-        </p>
+        <div style="padding: 12px 24px 0 0;">
+          <img src="../assets/job_detail/sandwich.svg" style="height: 32px; width: 40px;">
+        </div>
       </div>
 
+
+      <h1 class="header-text" style="top: 40%; font-size: 1.8em; padding: 0 24px">
+        {{ findJob.title }}
+      </h1>
+
+
+      <p class="header-text" style="bottom: 4%; font-size: 12px; padding: 0 24px">
+        Posted by {{ findJob.posted_by }}
+      </p>
+    </div>
+    <div class="job-detail-container">
       <div class="sub-container">
           <!--<router-link to="/">Back</router-link>-->
-        <div class="top-container mobile-hide">
-          <div class="float-left">
-            <v-avatar size="38px" slot="activator" style="float: left; margin-right: 10px;">
-              <img :src="profilePic" alt="">
-            </v-avatar>
-          </div>
-          <div class="float-left job-detail-posted-by" style="color: #A7A7A7; margin-right: 1px;">
-            <h3 style="color: #616161;" class="one-line ellipsis">{{ findJob.posted_by }}</h3>
-          </div>
-          <div class="float-right">
-            <a class="svg-button" flat @click="saveJob(findJob._id)">
-              <img v-if="saved" :src="svgs.savedIcon"/>
-              <img v-else :src="svgs.notSavedIcon"/>
-            </a>
-          </div>
-          <div class="float-right hidden-xs-only">
-            <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
-              outline class="red--text darken-1"
-              style="margin: 2px 8px;"
-              @click="apply">
-              {{ applied ? 'Applied' : 'Apply' }}
-            </v-btn>
-          </div>
-        </div>
-        <v-divider class="mobile-hide"></v-divider>
+        <!--<div class="top-container mobile-hide">-->
+          <!--<div class="float-left">-->
+            <!--<v-avatar size="38px" slot="activator" style="float: left; margin-right: 10px;">-->
+              <!--<img :src="profilePic" alt="">-->
+            <!--</v-avatar>-->
+          <!--</div>-->
+          <!--<div class="float-left job-detail-posted-by" style="color: #A7A7A7; margin-right: 1px;">-->
+            <!--<h3 style="color: #616161;" class="one-line ellipsis">{{ findJob.posted_by }}</h3>-->
+          <!--</div>-->
+          <!--<div class="float-right">-->
+            <!--<a class="svg-button" flat @click="saveJob(findJob._id)">-->
+              <!--<img v-if="saved" :src="svgs.savedIcon"/>-->
+              <!--<img v-else :src="svgs.notSavedIcon"/>-->
+            <!--</a>-->
+          <!--</div>-->
+          <!--<div class="float-right hidden-xs-only">-->
+            <!--<v-btn :disabled="applied" v-if="uid !== findJob.user_id"-->
+              <!--outline class="red&#45;&#45;text darken-1"-->
+              <!--style="margin: 2px 8px;"-->
+              <!--@click="apply">-->
+              <!--{{ applied ? 'Applied' : 'Apply' }}-->
+            <!--</v-btn>-->
+          <!--</div>-->
+        <!--</div>-->
 
-        <h2 class="post-title mobile-hide">{{ findJob.title }}</h2>
+        <!--<h2 class="post-title mobile-hide">{{ findJob.title }}</h2>-->
 
-        <div class="carditem mobile-hide" style="color: #A7A7A7; margin-bottom: 10px; font-size: 11px;"><timeago :since="findJob.date"></timeago></div>
+
         <!--mobile job descriptions-->
         <div class="mobile-hide">
+          <div class="carditem mobile-hide " style="">Posted <timeago :since="findJob.date"></timeago></div>
           <div class="carditem" style="color: #A7A7A7;">
             <p>
+
               <!--<v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon>-->
               <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
               <span style="padding-top: 2px;">
@@ -346,19 +422,19 @@
 
           <div style="margin-top: 8px;">
             <div v-if="findJob.type2 && computedType2" class="blue-row float-left pr-10">
-              <img class="job-info-icon" :src="svgs.Internship"></img>
+              <img class="job-info-icon" :src="svgs.Internship"/>
               <span> {{ computedType2 }}</span>
             </div>
             <div v-if="findJob.studentfriendly" class="blue-row float-left pr-10">
-              <img class="job-info-icon" :src="svgs.sfSvg"></img>
+              <img class="job-info-icon" :src="svgs.sfSvg"/>
               <span>student friendly</span>
             </div>
             <div class="blue-row float-left pr-10">
-              <img class="job-info-icon" :src="svgs.Clock"></img>
+              <img class="job-info-icon" :src="svgs.Clock"/>
               <span v-for="(type, index) in jobType"> {{ type }}<span v-if="index + 1 < jobType.length">,</span></span>
             </div>
             <div class="blue-row">
-              <img class="job-info-icon" :src="svgs.sSvg"></img>
+              <img class="job-info-icon" :src="svgs.sSvg"/>
               <span>{{ salary }} </span>
             </div>
           </div>
@@ -368,31 +444,32 @@
             || findJob.preferred_major || findJob.language">
             <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
             <div v-show="findJob.education && findJob.education !== 'None'" class="blue-row float-sm-up">
-              <img class="job-info-icon" :src="svgs.degree"></img>
+              <img class="job-info-icon" :src="svgs.degree"/>
               <span v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</span>
             </div>
             <div v-show="findJob.preferred_major" class="blue-row float-sm-up">
-              <img class="job-info-icon" :src="svgs.majorPreferred"></img>
+              <img class="job-info-icon" :src="svgs.majorPreferred"/>
               <span>Majors preferred: {{ findJob.preferred_major }}</span>
             </div>
             <div v-show="findJob.language" class="blue-row">
-              <img class="job-info-icon" :src="svgs.languages"></img>
+              <img class="job-info-icon" :src="svgs.languages"/>
               <span>Additional language: {{ findJob.language }}</span>
             </div>
             <div v-show="findJob.age" class="blue-row">
-              <img class="job-info-icon" :src="svgs.age"></img>
+              <img class="job-info-icon" :src="svgs.age"/>
               <span>Age: {{ findJob.age }}</span>
             </div>
           </div>
 
           <div class="blue-row" style="clear: both; margin-bottom: 16px;" v-if="findJob.shift && findJob.shift.length > 0">
             <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
-            <img class="job-info-icon" :src="svgs.Clock"></img>
+            <img class="job-info-icon" :src="svgs.Clock"/>
             <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></span>
           </div>
           <div v-else style="width: 100%; height: 16px;"></div>
       </div>
-        <div class="mobile-show" style="font-size: 16px">
+
+        <div class="mobile-show" style="font-size: 1.1em">
             <ul>
               <li>Posted <timeago :since="findJob.date"></timeago></li>
               <li>{{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template></li>
@@ -423,12 +500,12 @@
               </ul>
             </div>
             <div v-else style="width: 100%; height: 16px;"></div>
-            <div class="v-divider"></div>
+
           </div>
 
       </div>
-
-      <div class="sub-container job-desc-subcontainer">
+      <div class="v-divider"></div>
+      <div class="sub-container job-desc-subcontainer" style="padding-top: 24px">
           <h2 style="margin-bottom: 8px;">Job Overview</h2>
           <div class="long-text-cont" v-html="findJob.description"></div>
 
@@ -446,31 +523,28 @@
             </v-layout>
           </v-container>
 
-          <!--mobile buttons-->
-
-        <div class="mobile-button-container mobile-show">
+        <div class="bottom-button-container">
           <button class="apply-button">Apply</button>
           <button class="find-button">Find Similar Jobs</button>
           <button class="bookmark-button">
-            <img src="../assets/job_detail/bookmark.svg" alt=""
-                 style="box-shadow: 0 10px 12px -4px #eaeaf9;
-                         border-radius:4px; width: 100%; height: 96%; padding: 8px; background-color: orange;">
+            <img src="../assets/job_detail/bookmark.svg" alt="">
           </button>
         </div>
           <!--find-->
 
-          <div class="bottom-container mobile-hide" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">
-            <!-- <div class="gradient-bar" v-show="stickToBottom">
-            </div> -->
-            <v-btn :disabled="applied" v-if="uid !== findJob.user_id"
-              outline class="red--text darken-1" @click="apply">
-              {{ applied ? 'Applied' : 'Apply' }}
-            </v-btn>
-            <a class="svg-button" style="margin: 6px 8px;" @click="saveJob(findJob._id)">
-              <img v-if="saved" :src="svgs.savedIcon"/>
-              <img v-else :src="svgs.notSavedIcon"/>
-            </a>
-          </div>
+          <!--<div class="bottom-container mobile-hide" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">-->
+            <!--&lt;!&ndash; <div class="gradient-bar" v-show="stickToBottom">-->
+            <!--</div> &ndash;&gt;-->
+            <!--<v-btn :disabled="applied" v-if="uid !== findJob.user_id"-->
+              <!--outline class="red&#45;&#45;text darken-1" @click="apply">-->
+              <!--{{ applied ? 'Applied' : 'Apply' }}-->
+            <!--</v-btn>-->
+            <!--<a class="svg-button" style="margin: 6px 8px;" @click="saveJob(findJob._id)">-->
+              <!--<img v-if="saved" :src="svgs.savedIcon"/>-->
+              <!--<img v-else :src="svgs.notSavedIcon"/>-->
+            <!--</a>-->
+          <!--</div>-->
+
 
           <!-- in order to retain document height when bottom container is fixed -->
           <div class="height-helper" v-show="stickToBottom"></div>
@@ -637,10 +711,13 @@ import FileClient from '@/utils/FileClient';
 import queries from '@/constants/queries';
 import parseUrl from 'url-parse';
 import userDataProvider from '@/userDataProvider';
-
+import MobileMenu from '@/components/MobileMenu';
 // const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
 export default {
+  components: {
+    MobileMenu,
+  },
   props: ['id'],
   data() {
     return {

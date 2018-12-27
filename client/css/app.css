@@ -126,9 +126,9 @@ ol, ul {
   }
 }
 
-.application--wrap {
-  padding-top: 64px;
-}
+/*.application--wrap {*/
+  /*padding-top: 64px;*/
+/*}*/
 .main-navbar {
   height: 64px;
   z-index: 100;
@@ -1102,9 +1102,9 @@ body {
     #nav-logo {
       height: 64px !important;
     }
-    .application--wrap {
-      padding-top: 64px;
-    }
+    /*.application--wrap {*/
+      /*padding-top: 64px;*/
+    /*}*/
 }
 @media (max-width: 600px) {
     #bottom .footer-big-text {
@@ -1142,9 +1142,9 @@ body {
     #nav-logo {
       height: 56px !important;
     }
-    .application--wrap {
-      padding-top: 54px;
-    }
+    /*.application--wrap {*/
+      /*padding-top: 54px;*/
+    /*}*/
     #nav-items {
         top: -8px;
         right: 16px;
