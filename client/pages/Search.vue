@@ -621,8 +621,8 @@ export default {
       // fetch the jobs
       this.$apollo.queries.findJobs.fetchMore({
         variables: {
-          limit: this.pageSize,
-          skip: this.pageSize * this.page,
+          limit: 12,
+          skip: 12 * this.page,
         },
         updateQuery(previousResult, { fetchMoreResult }) {
           return fetchMoreResult;
@@ -959,8 +959,13 @@ export default {
     if (this.filteredJobs.length === 0) {
       this.loadingJobs = true;
     }
-    this.algoliaSearch();
-    // this.findAndFilterJobs();
+    if (process && process.env && process.env.NODE_ENV === 'development') {
+      // load jobs from local db
+      console.log('Loading from local db for development purposes');
+      this.findAndFilterJobs();
+    } else {
+      this.algoliaSearch();
+    }
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
     if (data) {
