@@ -89,8 +89,8 @@
 }
 
 .category{
-  border-top: 1px solid #eee; 
-  border-bottom: 1px solid #eee; 
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   border-left: 1px solid #d2d2d3;
   padding-left: 10px;
   height: 48px;
@@ -130,7 +130,7 @@
   font-weight: 300;
   font-size: 32px;
   margin-bottom: 0;
-  
+
 }
 .fs-select-cities.v-input {
   margin-top: 0;
@@ -340,22 +340,22 @@
           </v-flex>
 
             <v-flex xs5 sm5 md4 style="height: 56px; border-style:none;" class="grey--text no-padding">
-            <v-text-field 
+            <v-text-field
               style="height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; outline:none !important; border-radius:none;"
               solo
               flat
               label="part time design intern"
               clearable
             ></v-text-field>
-            </v-flex> 
-            
+            </v-flex>
+
             <v-flex xs1 sm1 md1 class="grey--text no-padding">
             <div style=" line-height:72px; height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; background-color:white;">
               <strong style="margin-left:40%; color:grey;">Near</strong>
             </div>
           </v-flex>
             <v-flex xs5 sm5 md4 class="grey--text no-padding">
-            <v-text-field 
+            <v-text-field
               style="height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; outline:none !important; border-radius:none;"
               v-model="first_city_guess"
               solo
@@ -363,17 +363,17 @@
               label="UC Irvine"
               clearable
             ></v-text-field>
-            </v-flex> 
+            </v-flex>
 
             <v-flex style="margin-left:10px;" class="no-padding">
               <button @click="searchGo" v-ripple class="iconRedButton">
                 <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
               </button>
-            </v-flex> 
+            </v-flex>
 
         </v-layout>
       </div>
-  
+
 
     <div id="promo" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
       <div class="main-cont-large" style="background: #fafafa">

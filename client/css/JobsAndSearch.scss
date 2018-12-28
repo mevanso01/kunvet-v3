@@ -28,6 +28,26 @@
     font-size: 14px;
     padding-top: 2px;
   }
+  .carditem p {
+    margin: 0;
+  }
+  .carditem i {
+    width: 23px;
+    font-size: 16px;
+    color: #4d4d4d !important;
+    transform: translateY(-1px);
+  }
+  .carditem .carditem-image {
+    display: inline-block;
+    width: 23px;
+    line-height: 1;
+    float: left;
+  }
+  .carditem .carditem-image img {
+    height: 15px;
+    position: relative;
+    top: 2px;
+  }
 }
 
 @media only screen and (min-width: 601px) {

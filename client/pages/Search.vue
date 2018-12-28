@@ -7,6 +7,56 @@
     font-size: 1.5em;
   }
 }
+section.search,
+section.search > .main-cont-large {
+  background-color: #f2f7ff;
+}
+section.search {
+  width: 100%;
+  margin: 0 0 10px 0;
+  .custom-select-2,
+  .search-params-field {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    height: 56px;
+    // box-shadow: 0 10px 12px -4px #eaeaf9;
+    // -webkit-box-shadow: 0px 0px 5px 0px rgba(77,77,77,0.5);
+    // -moz-box-shadow: 0px 0px 5px 0px rgba(77,77,77,0.5);
+    // box-shadow: 0px 0px 5px 0px rgba(77,77,77,0.5);
+    // outline: none !important;
+    // border-radius: none;
+  }
+  .custom-select-2-wrapper,
+  .v-input__slot {
+    height: 56px;
+  }
+  .custom-select-2 .inner {
+    height: 56px;
+    max-height: 56px;
+  }
+  .custom-select-2 span {
+    line-height: 56px;
+  }
+  .custom-select-2 .v-btn {
+    top: 4px;
+  }
+  .search-row {
+    display: flex;
+    flex-direction: row;
+  }
+  .search-field-cont,
+  .search-go-cont {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .search-go-cont {
+    width: 56px;
+  }
+  .search-field-cont {
+    width: calc(50% - 26px); // 26px for go btn, 15 for padding
+    padding-right: 15px;
+  }
+}
 .general-dropdown-items select, .general-dropdown-items label {
   width: 100%;
   height: 100%;
@@ -147,13 +197,10 @@
   overflow-y: hidden;
   transition: all 0.3s ease;
   label {
-    line-height: 22px !important;
+    // line-height: 22px !important;
   }
 }
 @media (min-width: 601px) {
-  .search .flex {
-    padding: 10px 15px;
-  }
   .large-thats-it {
     width: 100% !important;
   }
@@ -165,6 +212,10 @@
   }
 }
 @media (max-width: 600px) {
+  .search-field-cont,
+  .search-go-cont {
+    padding: 10px 15px;
+  }
   .firstSearch {
     padding-left: 26px;
     padding-right: 26px;
@@ -218,9 +269,9 @@
 
 <template>
   <v-container fluid class="home-page-cont pa-0">
-    <div class="main-cont-large">
-      <section class="search">
-        <v-layout row wrap>
+    <section class="search">
+      <div class="main-cont-large">
+        <!-- <v-layout row wrap>
           <v-flex xs12 md6>
             <div class="custom-select-2-wrapper">
 
@@ -251,67 +302,46 @@
               clearable
             ></v-text-field>
           </v-flex>
-          <!-- <v-flex xs12 md6>
-            <div class="custom-select-2-wrapper">
-              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'types' }">
-                <div class="inner" @click="openSelect('types');">
-                  <span v-if="this.selectedTypes.length > 0">{{ computeSelectString(this.selectedTypes, 'availableTypes') }}</span>
-                  <span v-else style="color: rgba(0,0,0,.54);">Filter by job type</span>
-                  <v-btn icon v-if="openSelectField === 'types'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
-                  <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
-                </div>
 
-                <v-list class="custom-select-menu">
-                  <v-list-tile v-for="(item, i) in availableTypesObj" :key="i">
-                    <v-checkbox :label="item.text" v-model="selectedTypes" :value="item.value" :disabled="item.disabled" hide-details></v-checkbox>
-                  </v-list-tile>
-                </v-list>
-              </div>
-            </div>
-          </v-flex> -->
-          <!-- <v-flex xs12 md6>
+        </v-layout> -->
+        <div class="search-row">
+          <div class="search-field-cont">
             <div class="custom-select-2-wrapper">
-              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'positions' }">
-                <div class="inner" @click="reorderAvailablePositions(); openSelect('positions');">
-                  <span v-if="this.selectedPositions.length > 0">{{ computeSelectString(this.selectedPositions) }}</span>
-                  <span v-else style="color: rgba(0,0,0,.54);">Filter by positions</span>
-                  <v-btn icon v-if="openSelectField === 'positions'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
+              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'city' }">
+                <div class="inner" @click="openSelect('city')">
+                  <span v-if="this.selectedCity">{{ selectedCity }}</span>
+                  <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
+                  <v-btn icon v-if="openSelectField === 'city'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
                   <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
                 </div>
 
                 <v-list dense class="custom-select-menu">
-                  <div class="listFilterContainer" v-if="openSelectField === 'positions'">
-                    <i class="material-icons" style="font-size: 16px;">search</i>
-                    <input placeholder="search..." class="filterInput" v-model="filterPositions"/>
-                  </div>
-                  <v-list-tile v-if="openSelectField === 'positions'" v-for="(item, i) in filteredAvailablePositionsObj" :key="i">
-                    <v-checkbox :label="item.text" v-model="selectedPositions" :value="item.text" :disabled="item.disabled" hide-details></v-checkbox>
-                  </v-list-tile>
+                  <v-list-tile  @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
                 </v-list>
               </div>
             </div>
-          </v-flex> -->
-          <!-- <v-flex xs12 md6>
-            <div class="custom-select-2-wrapper">
-              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'shifts' }">
-                <div class="inner" @click="reorderAvailablePositions(); openSelect('shifts');">
-                  <span v-if="this.selectedShifts.length > 0">{{ computeSelectString(this.selectedShifts, 'availableShifts') }}</span>
-                  <span v-else style="color: rgba(0,0,0,.54);">Filter by shifts</span>
-                  <v-btn icon v-if="openSelectField === 'shifts'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
-                  <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
-                </div>
-
-                <v-list dense class="custom-select-menu">
-                  <v-list-tile v-for="(item, i) in availableShiftsObj" :key="i">
-                    <v-checkbox :label="item.text" v-model="selectedShifts" :value="item.value" :disabled="item.disabled" hide-details></v-checkbox>
-                  </v-list-tile>
-                </v-list>
-              </div>
-            </div>
-          </v-flex> -->
-        </v-layout>
-      </section>
-      <input class="hidden-input" id="submit" type="submit" value="GO">
+          </div>
+          <div class="search-field-cont">
+            <v-text-field
+              style=""
+              class="search-params-field"
+              solo
+              flat
+              hide-details
+              label="Search..."
+              clearable
+            ></v-text-field>
+          </div>
+          <div class="search-go-cont">
+            <button @click="" v-ripple class="kunvet-search-btn small">
+              <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="main-cont-large">
+      <!-- <input class="hidden-input" id="submit" type="submit" value="GO">
       <div id="general-submit" @click="search()" v-ripple>
         <div id="general-submit-default">
           <span>SEARCH</span>
@@ -319,7 +349,7 @@
         <div id="general-submit-error">
           <span id="general-submit-error-msg"></span>
         </div>
-      </div>
+      </div> -->
       <v-layout row wrap>
         <div v-if="loadingJobs" style="width: 100%; height: 60px;">
           <h3 style="text-align: center; margin-top: 25px;">Loading jobs...</h3>

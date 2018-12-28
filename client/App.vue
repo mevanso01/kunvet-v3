@@ -563,9 +563,9 @@ export default {
 @import 'css/account.css';
 @import 'css/applicants.css';
 @import 'css/buttons.css';
-@import 'css/jobStyles.scss';
 @import 'css/nav.css';
-@import 'css/postsAndSearch.css';
+// @import 'css/postsAndSearch.css';
+@import 'css/JobsAndSearch.scss';
 
 body, html {
   height: 100%;
