@@ -6,22 +6,15 @@
     display: flex;
     justify-content: space-between;
   }
-
-  @media (max-width: 960px) {
-  }
   .mobile-show {
-    display: none;
+    display: none ;
   }
-
 
   @media only screen
   and (max-width: 600px) {
     .mobile-show {
-      display: block;
+      display: block ;
       padding: 0;
-    }
-    .header-icon-container{
-      display: flex;
     }
     .mobile-hide {
       display: none !important;
@@ -38,27 +31,29 @@
       Development mode
     </div>
     <!--desktop version-->
-    <v-toolbar flat class="job-detail-nav mobile-hide" style="padding: 0 18%; position: absolute; top: 0; z-index: 100; background-color: inherit">
+    <v-toolbar flat class="job-detail-nav mobile-hide" style="padding: 0 18%; position: absolute; top: 0; z-index: 200; background-color: inherit">
       <img src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn flat href="/search" style="background-color: inherit;" class="text-capitalize white--text">Search</v-btn>
-        <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn>
+        <v-btn flat href="/myjobs" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn>
         <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn>
         <v-btn flat href="/settings" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn>
         <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">Profile</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <!--mobile version-->
-    <div class="header-icon-container mobile-show" style="z-index: 100; ">
-      <div style="padding: 12px 0 0 24px; ">
-        <a href="/search">
-          <img src="./assets/job_detail/whitelogo.svg" style="height: 26px; width: 128px;">
-        </a>
+    <div class="mobile-show">
+      <div class="header-icon-container " style="z-index: 100; ">
+        <div style="padding: 12px 0 0 24px; ">
+          <a href="/search">
+            <img src="./assets/job_detail/whitelogo.svg" style="height: 26px; width: 128px;">
+          </a>
+        </div>
+        <button style="padding: 12px 24px 0 0;" @click="drawer = !drawer">
+          <img src="./assets/job_detail/sandwich.svg" style="height: 32px; width: 40px;">
+        </button>
       </div>
-      <button style="padding: 12px 24px 0 0;" @click="drawer = !drawer">
-        <img src="./assets/job_detail/sandwich.svg" style="height: 32px; width: 40px;">
-      </button>
     </div>
     <!--<v-toolbar fixed class="main-navbar" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">-->
       <!--<router-link to="/search">-->
