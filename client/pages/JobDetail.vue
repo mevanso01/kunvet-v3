@@ -198,7 +198,6 @@
 }
 
 .bookmark-button {
-  box-shadow: 0 10px 12px -4px #eaeaf9;
   height: 100%;
   width: 13%;
   min-width: 43px;
@@ -209,6 +208,7 @@
   height: 100%;
   padding: 8px;
   background-color: orange;
+  box-shadow: 0 10px 12px -4px #eaeaf9;
 }
 
 @media (min-width: 601px) {
@@ -254,7 +254,6 @@ and (max-width: 600px) {
   .job-detail-container{
     padding: 24px 24px 0 24px;
   }
-
   .mobile-show {
     display: block;
     padding: 0;
@@ -331,17 +330,17 @@ and (max-width: 600px) {
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container">
     <div class="header-splash job-detail-padding mobile-hide" >
-      <v-toolbar flat class="job-detail-nav mobile-hide" style="background-color: inherit; padding: 0">
-        <img src="../assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-btn flat href="/search" style="background-color: inherit;" class="text-capitalize white--text">Search</v-btn>
-          <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn>
-          <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn>
-          <v-btn flat href="/settings" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn>
-          <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">Profile</v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
+      <!--<v-toolbar flat class="job-detail-nav mobile-hide" style="background-color: inherit; padding: 0">-->
+        <!--<img src="../assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">-->
+        <!--<v-spacer></v-spacer>-->
+        <!--<v-toolbar-items>-->
+          <!--<v-btn flat href="/search" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">Search</v-btn>-->
+          <!--<v-btn flat href="" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">My Jobs</v-btn>-->
+          <!--<v-btn flat href="" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">Notifications</v-btn>-->
+          <!--<v-btn flat href="/settings" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">Settings</v-btn>-->
+          <!--<v-btn flat href="" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">Profile</v-btn>-->
+        <!--</v-toolbar-items>-->
+      <!--</v-toolbar>-->
       <h1 class="header-text" style="top: 44%; font-size: 2.7em; margin: 0; min-height: 60px">
         {{ findJob.title }}
       </h1>
@@ -350,17 +349,17 @@ and (max-width: 600px) {
       </p>
     </div>
     <!--mobile-->
-    <div class="header-splash mobile-show" >
-      <div class="header-icon-container">
-        <div style="padding: 12px 0 0 24px; ">
-          <a href="/search">
-            <img src="../assets/job_detail/whitelogo.svg" style="height: 26px; width: 128px;">
-          </a>
-        </div>
-        <div style="padding: 12px 24px 0 0;">
-          <img src="../assets/job_detail/sandwich.svg" style="height: 32px; width: 40px;">
-        </div>
-      </div>
+    <div class="header-splash mobile-show">
+      <!--<div class="header-icon-container">-->
+        <!--<div style="padding: 12px 0 0 24px; ">-->
+          <!--<a href="/search">-->
+            <!--<img src="../assets/job_detail/whitelogo.svg" style="height: 26px; width: 128px;">-->
+          <!--</a>-->
+        <!--</div>-->
+        <!--<div style="padding: 12px 24px 0 0;">-->
+          <!--<img src="../assets/job_detail/sandwich.svg" style="height: 32px; width: 40px;">-->
+        <!--</div>-->
+      <!--</div>-->
 
 
       <h1 class="header-text" style="top: 40%; font-size: 1.8em; padding: 0 24px">
@@ -505,7 +504,7 @@ and (max-width: 600px) {
 
       </div>
       <div class="v-divider"></div>
-      <div class="sub-container job-desc-subcontainer" style="padding-top: 24px">
+      <div class="sub-container job-desc-subcontainer" style="padding-top: 24px; word-wrap: break-spaces;">
           <h2 style="margin-bottom: 8px;">Job Overview</h2>
           <div class="long-text-cont" v-html="findJob.description"></div>
 

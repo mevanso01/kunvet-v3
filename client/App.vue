@@ -1,9 +1,65 @@
+<style>
+  .header-icon-container {
+    color: white;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 960px) {
+  }
+  .mobile-show {
+    display: none;
+  }
+
+
+  @media only screen
+  and (max-width: 600px) {
+    .mobile-show {
+      display: block;
+      padding: 0;
+    }
+    .header-icon-container{
+      display: flex;
+    }
+    .mobile-hide {
+      display: none !important;
+    }
+
+  }
+
+
+</style>
+
 <template>
   <v-app>
     <div v-if="devmode" class="devmode">
       Development mode
     </div>
-
+    <!--desktop version-->
+    <v-toolbar flat class="job-detail-nav mobile-hide" style="padding: 0 18%; position: absolute; top: 0; z-index: 100; background-color: inherit">
+      <img src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn flat href="/search" style="background-color: inherit;" class="text-capitalize white--text">Search</v-btn>
+        <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn>
+        <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn>
+        <v-btn flat href="/settings" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn>
+        <v-btn flat href="" style="background-color: inherit;" class="text-capitalize white--text">Profile</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <!--mobile version-->
+    <div class="header-icon-container mobile-show" style="z-index: 100; ">
+      <div style="padding: 12px 0 0 24px; ">
+        <a href="/search">
+          <img src="./assets/job_detail/whitelogo.svg" style="height: 26px; width: 128px;">
+        </a>
+      </div>
+      <button style="padding: 12px 24px 0 0;" @click="drawer = !drawer">
+        <img src="./assets/job_detail/sandwich.svg" style="height: 32px; width: 40px;">
+      </button>
+    </div>
     <!--<v-toolbar fixed class="main-navbar" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">-->
       <!--<router-link to="/search">-->
             <!--<div id="nav-logo">-->
@@ -81,46 +137,47 @@
           <!--</router-link>-->
         <!--</v-toolbar-items>-->
     <!--</v-toolbar>-->
-    <v-toolbar
-      dense flat
-      v-if="isJobPostRoute && acct !== 0"
-      class="job-post__helper-nav-bar"
-    >
-      <v-toolbar-items>
-        <v-btn flat small :ripple="false" :to="'/search'" :class="isActiveJobPostLink('/search')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            Search
-          </span>
-        </v-btn>
-        <v-btn flat small :ripple="false" :to="'/savedjobs'" :class="isActiveJobPostLink('/savedjobs')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            Saved
-          </span>
-        </v-btn>
-        <v-btn flat small :ripple="false" :to="'/appliedjobs'" :class="isActiveJobPostLink('/appliedjobs')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            Applied
-          </span>
-        </v-btn>
-        <span class="job-post__helper-nav-bar__divider" />
-        <v-btn flat small :ripple="false" :to="'/myjobs'" :class="isActiveJobPostLink('/myjobs')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            My Jobs
-          </span>
-        </v-btn>
-        <v-btn flat small :ripple="false" :to="'/applicants'" :class="isActiveJobPostLink('/applicants')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            My Applicants
-          </span>
-        </v-btn>
-      </v-toolbar-items>
-      <v-spacer />
-      <v-toolbar-items>
-        <v-btn flat small :ripple="false" class="job-post__helper-nav-bar__post-a-job" :to="'/createjob'">
-          <i class="fa fa-edit job-post__helper-nav-bar__post-a-job__icon" /><span>Post a Job</span>
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+
+    <!--<v-toolbar-->
+      <!--dense flat-->
+      <!--v-if="isJobPostRoute && acct !== 0"-->
+      <!--class="job-post__helper-nav-bar"-->
+    <!--&gt;-->
+      <!--<v-toolbar-items>-->
+        <!--<v-btn flat small :ripple="false" :to="'/search'" :class="isActiveJobPostLink('/search')">-->
+          <!--<span class="job-post__helper-nav-bar__btn-text">-->
+            <!--Search-->
+          <!--</span>-->
+        <!--</v-btn>-->
+        <!--<v-btn flat small :ripple="false" :to="'/savedjobs'" :class="isActiveJobPostLink('/savedjobs')">-->
+          <!--<span class="job-post__helper-nav-bar__btn-text">-->
+            <!--Saved-->
+          <!--</span>-->
+        <!--</v-btn>-->
+        <!--<v-btn flat small :ripple="false" :to="'/appliedjobs'" :class="isActiveJobPostLink('/appliedjobs')">-->
+          <!--<span class="job-post__helper-nav-bar__btn-text">-->
+            <!--Applied-->
+          <!--</span>-->
+        <!--</v-btn>-->
+        <!--<span class="job-post__helper-nav-bar__divider" />-->
+        <!--<v-btn flat small :ripple="false" :to="'/myjobs'" :class="isActiveJobPostLink('/myjobs')">-->
+          <!--<span class="job-post__helper-nav-bar__btn-text">-->
+            <!--My Jobs-->
+          <!--</span>-->
+        <!--</v-btn>-->
+        <!--<v-btn flat small :ripple="false" :to="'/applicants'" :class="isActiveJobPostLink('/applicants')">-->
+          <!--<span class="job-post__helper-nav-bar__btn-text">-->
+            <!--My Applicants-->
+          <!--</span>-->
+        <!--</v-btn>-->
+      <!--</v-toolbar-items>-->
+      <!--<v-spacer />-->
+      <!--<v-toolbar-items>-->
+        <!--<v-btn flat small :ripple="false" class="job-post__helper-nav-bar__post-a-job" :to="'/createjob'">-->
+          <!--<i class="fa fa-edit job-post__helper-nav-bar__post-a-job__icon" /><span>Post a Job</span>-->
+        <!--</v-btn>-->
+      <!--</v-toolbar-items>-->
+    <!--</v-toolbar>-->
 
     <v-navigation-drawer class="hidden-sm-and-up mobile-menu" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
       <v-toolbar flat class="transparent">
