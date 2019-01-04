@@ -42,6 +42,14 @@ module.exports = {
     },
   },
 
+  // Algolia
+  // Set appId to false to disable the new search UI
+  algolia: {
+    appId: false,
+    searchApiKey: '',
+    adminApiKey: '',
+  },
+
   // Sentry
   sentryClientDsn: '',
   sentryServerDsn: '',
