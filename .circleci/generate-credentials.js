@@ -4,7 +4,7 @@ const prodCredentials = process.env.PROD_CREDENTIALS_FILE;
 const devCredentials = process.env.DEV_CREDENTIALS_FILE;
 const branch = process.env.CIRCLE_BRANCH;
 
-if (!prodcredentials || !devCredentials || !branch) {
+if (!prodCredentials || !devCredentials || !branch) {
   console.log('No credential environment variables');
   console.log('This build will be broken.');
   fs.writeFileSync('config/credentials.js', '/* CI */ module.exports = {};');
