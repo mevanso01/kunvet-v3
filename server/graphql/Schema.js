@@ -181,7 +181,7 @@ GQC.rootMutation().addFields({
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.Verified,
     ], {
-      ...wrapResolvers(Restrictions.LogRecord, {
+      ...wrapResolvers(Restrictions.UploadJobToAlgolia, {
         createJob: Job.get('$createOne'),
       }),
       ...wrapResolvers(sendNewApplicationNotification, {
@@ -196,7 +196,7 @@ GQC.rootMutation().addFields({
       updateAccount: Account.get('$updateOne'),
     }),
     ...wrapResolvers([
-      Restrictions.Debug,
+      Restrictions.UploadJobToAlgolia,
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.getFilterByUserId('user_id'),
     ], {
