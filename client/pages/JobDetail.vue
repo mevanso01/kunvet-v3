@@ -179,17 +179,17 @@
   line-height: 100%;
   width: 31%;
   min-width: 65px;
-  background-color: #EA596B;
+  background-color: #EA596B !important;
   border-radius: 4px;
-  font-size: 1.2em;
-  color: white;
+  font-size: 1.2em !important;
+  color: white !important;
 }
 
 .find-button {
   padding: 16px 0;
   line-height: 100%;
   min-width: 135px;
-  width: 50%;
+  width: 47%;
   color: red;
   border-radius: 4px;
   border: 1px solid red;
@@ -209,6 +209,7 @@
   padding: 8px;
   background-color: orange;
   box-shadow: 0 10px 12px -4px #eaeaf9;
+  width: 100%;
 }
 
 @media (min-width: 601px) {
@@ -330,17 +331,6 @@ and (max-width: 600px) {
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container">
     <div class="header-splash job-detail-padding mobile-hide" >
-      <!--<v-toolbar flat class="job-detail-nav mobile-hide" style="background-color: inherit; padding: 0">-->
-        <!--<img src="../assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">-->
-        <!--<v-spacer></v-spacer>-->
-        <!--<v-toolbar-items>-->
-          <!--<v-btn flat href="/search" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">Search</v-btn>-->
-          <!--<v-btn flat href="" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">My Jobs</v-btn>-->
-          <!--<v-btn flat href="" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">Notifications</v-btn>-->
-          <!--<v-btn flat href="/settings" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">Settings</v-btn>-->
-          <!--<v-btn flat href="" style="background-color: inherit;" class="text-capitalize white&#45;&#45;text">Profile</v-btn>-->
-        <!--</v-toolbar-items>-->
-      <!--</v-toolbar>-->
       <h1 class="header-text" style="top: 44%; font-size: 2.7em; margin: 0; min-height: 60px">
         {{ findJob.title }}
       </h1>
@@ -523,9 +513,14 @@ and (max-width: 600px) {
           </v-container>
 
         <div class="bottom-button-container">
-          <button class="apply-button">Apply</button>
+          <!--<button class="apply-button" @click="apply">Apply</button>-->
+          <v-btn class="apply-button" :disabled="applied" v-if="uid !== findJob.user_id"
+                 style="margin: 0 !important; height: 53px !important; text-transform: none !important;"
+                 @click="apply">
+            {{ applied ? 'Applied' : 'Apply' }}
+          </v-btn>
           <button class="find-button">Find Similar Jobs</button>
-          <button class="bookmark-button">
+          <button class="bookmark-button" @click="saveJob(findJob._id)">
             <img src="../assets/job_detail/bookmark.svg" alt="">
           </button>
         </div>
