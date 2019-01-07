@@ -41,6 +41,7 @@ section.search {
     top: 4px;
   }
   .search-row {
+    padding-top: 16px;
     display: flex;
     flex-direction: row;
   }
@@ -56,6 +57,21 @@ section.search {
     width: calc(50% - 26px); // 26px for go btn, 15 for padding
     padding-right: 15px;
   }
+}
+.job-distance-indicator {
+  // float: left;
+  // width: 100%;
+  clear: both;
+  display: inline-block;
+  background: #ef5350; // as fallback
+  background: linear-gradient(to right, #ef5350, #ef5350 25%, #ffc26f);
+  color: #fff;
+  padding-left: 24px;
+  // vvv mobile styles vvv
+  padding-right: 24px;
+  height: 28px;
+  line-height: 28px;
+  border-radius: 0 14px 14px 0;
 }
 .general-dropdown-items select, .general-dropdown-items label {
   width: 100%;
@@ -234,6 +250,14 @@ section.search {
   }
 }
 @media (min-width: 961px) {
+  .job-distance-indicator {
+    padding-left: calc(50% - 456px); // - 480 plus an extra 24px to align properly with job cards
+    height: 32px;
+    line-height: 32px;
+    border-radius: 0 16px 16px 0;
+    padding-right: 32px;
+    background: linear-gradient(to right, #ef5350, #ef5350 60%, #ffc26f);
+  }
   .firstSearch {
     height: calc(100vh - 64px);
   }
@@ -269,7 +293,7 @@ section.search {
 
 <template>
   <v-container fluid class="home-page-cont pa-0">
-    <section class="search">
+    <section class="search" style="padding-top: 64px;">
       <div class="main-cont-large">
         <!-- <v-layout row wrap>
           <v-flex xs12 md6>
@@ -340,7 +364,7 @@ section.search {
         </div>
       </div>
     </section>
-    <div class="main-cont-large">
+    <div>
       <!-- <input class="hidden-input" id="submit" type="submit" value="GO">
       <div id="general-submit" @click="search()" v-ripple>
         <div id="general-submit-default">
@@ -392,13 +416,60 @@ section.search {
               </ais-results> -->
             <!-- </ais-index> -->
           </div>
-          <div v-for="(job, idx) in filteredJobs" :key="idx">
+          <div v-if="filteredJobs.length > 0">
+            <div v-for="(job, idx) in filteredJobs" :key="idx">
               <MainJobCard
                 :job="job"
                 :saveJobFunc="saveJob"
                 :isSaved="isSaved(job._id)"
                 :fromCoordinates="selectedCoordinates"
               />
+            </div>
+          </div>
+          <div v-if="displayedJobs[0].length > 0" style="clear: both;">
+            <div class="job-distance-indicator">
+              10 miles away
+            </div>
+            <div class="main-cont-large">
+              <div v-for="(job, idx) in displayedJobs[0]" :key="`1-${idx}`">
+                <MainJobCard
+                  :job="job"
+                  :saveJobFunc="saveJob"
+                  :isSaved="isSaved(job._id)"
+                  :fromCoordinates="selectedCoordinates"
+                />
+              </div>
+            </div>
+          </div>
+          <div v-if="displayedJobs[1].length > 0" style="clear: both;">
+            <div class="job-distance-indicator">
+              20 miles away
+            </div>
+            <div class="main-cont-large">
+              <div v-for="(job, idx) in displayedJobs[1]" :key="`2-${idx}`">
+                <MainJobCard
+                  :job="job"
+                  :saveJobFunc="saveJob"
+                  :isSaved="isSaved(job._id)"
+                  :fromCoordinates="selectedCoordinates"
+                />
+              </div>
+            </div>
+          </div>
+          <div v-if="displayedJobs[2].length > 0" style="clear: both;">
+            <div class="job-distance-indicator">
+              30+ miles away
+            </div>
+            <div class="main-cont-large">
+              <div v-for="(job, idx) in displayedJobs[2]" :key="`3-${idx}`">
+                <MainJobCard
+                  :job="job"
+                  :saveJobFunc="saveJob"
+                  :isSaved="isSaved(job._id)"
+                  :fromCoordinates="selectedCoordinates"
+                />
+              </div>
+            </div>
           </div>
           <div v-if="!loadingJobs && filteredJobs.length > 0 && filteredJobs.length % 2 === 1" class="post-card small-thats-it">
             <div style="width: 215px; margin: 32px auto;">
@@ -413,7 +484,7 @@ section.search {
             <p class="center">That's all.</p>
           </div>
         </v-flex>
-        <div v-if="!loadingJobs && filteredJobs.length === 0" class="no-jobs-found-box">
+        <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
           <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please select different filters or a different location.</h3>
         </div>
       </v-layout>
@@ -503,6 +574,7 @@ export default {
       // pageSize: 12,
       query: '',
       page: 0,
+      displayedJobs: [[], [], []],
     };
   },
   apollo: {
@@ -568,6 +640,9 @@ export default {
         return Coordinates.uci;
       }
       return { latitude: this.selectedLat, longitude: this.selectedLong };
+    },
+    hasJobsShown() {
+      return this.displayedJobs[0].length > 0 || this.displayedJobs[1].length > 0 || this.displayedJobs[2].length > 0;
     },
   },
   methods: {
@@ -662,25 +737,36 @@ export default {
         const fetchedJobs = res.data.findJobs;
         this.page += 1;
         if (fetchedJobs.length > 0) {
-          const newFilteredJobs = [];
+          // const newFilteredJobs = [];
           const newPositions = [];
           for (var job of fetchedJobs) {
             if (
               this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
               (findIndex(this.filteredJobs, { '_id': job._id }) === -1)
             ) {
-              newFilteredJobs.push(job);
+              // newFilteredJobs.push(job);
+              const distance = this.computeDistance(job.latitude, job.longitude);
+              if (distance < 10) {
+                this.displayedJobs[0].push(job);
+              } else if (distance > 10 && distance < 20) {
+                this.displayedJobs[1].push(job);
+              } else {
+                this.displayedJobs[2].push(job);
+              }
             }
             for (var pos of job.position_tags) {
               newPositions.push(pos);
             }
           }
           this.inUsePositions = uniq(this.inUsePositions.concat(newPositions));
-          this.filteredJobs = this.filteredJobs.concat(newFilteredJobs);
-          this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+          // this.filteredJobs = this.filteredJobs.concat(newFilteredJobs);
+          // this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
           // find more jobs there are more to be found
           if (fetchedJobs.length === this.pageSize) {
             this.findAndFilterJobs();
+          } else {
+            // NEW
+            this.insertDistanceLabels();
           }
         }
       });
@@ -729,14 +815,30 @@ export default {
                 this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
                 (findIndex(this.filteredJobs, { '_id': job._id }) === -1)
               ) {
-                this.filteredJobs.push(job);
-                this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+                const distance = this.computeDistance(job.latitude, job.longitude);
+                if (distance < 10) {
+                  this.displayedJobs[0].push(job);
+                } else if (distance > 10 && distance < 20) {
+                  this.displayedJobs[1].push(job);
+                } else {
+                  this.displayedJobs[2].push(job);
+                }
+                // this.filteredJobs.push(job);
+                // this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
               }
             });
           } else {
             const job = this.filteredJobs[index];
             if (!this.filterJobByInfo(job, selectedTypes, selectedTypes2)) {
-              this.filteredJobs.splice(index, 1);
+              // this.filteredJobs.splice(index, 1);
+              const distance = this.computeDistance(job.latitude, job.longitude);
+              if (distance < 10) {
+                this.displayedJobs[0].splice(index, 1);
+              } else if (distance > 10 && distance < 20) {
+                this.displayedJobs[1].splice(index, 1);
+              } else {
+                this.displayedJobs[2].splice(index, 1);
+              }
             }
           }
         }
@@ -954,21 +1056,52 @@ export default {
       const requests = [{ params: { query: this.query, page: this.page }, indexName: 'jobs' }];
       const results = await algoliaClient.search(requests);
       const res = results.results[0];
-      console.log(res);
-      if (res.page === 0) {
-        this.filteredJobs = res.hits;
-      } else {
-        this.filteredJobs = this.filteredJobs.concat(res.hits);
+      // console.log(res);
+      // if (res.page === 0) {
+      //   this.filteredJobs = res.hits;
+      // } else {
+      //   this.filteredJobs = this.filteredJobs.concat(res.hits);
+      // }
+      for (const job of res.hits) {
+        const distance = this.computeDistance(job.latitude, job.longitude);
+        if (distance < 10) {
+          this.displayedJobs[0].push(job);
+        } else if (distance > 10 && distance < 20) {
+          this.displayedJobs[1].push(job);
+        } else {
+          this.displayedJobs[2].push(job);
+        }
       }
       this.loadingJobs = false;
       if (res.page < (res.nbPages - 1) && this.page < 3) {
         this.page += 1;
         this.algoliaSearch();
       }
+      // else {
+      //   this.insertDistanceLabels();
+      // }
+    },
+    insertDistanceLabels() {
+      let miles = 10;
+      let idx = 0;
+      if (this.filteredJobs.length > 0 && this.computeDistance(this.filteredJobs[0].latitude, this.filteredJobs[0].longitude) < 10) {
+        this.filteredJobs.splice(0, 0, { miles_away: '10' });
+        idx += 1;
+        miles += 10;
+      }
+      for (; idx < this.filteredJobs.length; idx++) {
+        const job = this.filteredJobs[0];
+        if (this.computeDistance(job.latitude, job.longitude) > miles) {
+          this.filteredJobs.splice(idx, 0, { miles_away: miles.toString() });
+          miles += 10;
+        }
+      }
+      console.log(this.filteredJobs);
     },
     search() {
       this.page = 0;
       this.loadingJobs = true;
+      this.displayedJobs = [[], [], []];
       this.algoliaSearch();
     },
   },

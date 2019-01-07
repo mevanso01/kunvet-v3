@@ -1,48 +1,21 @@
-<style>
-  .header-icon-container {
-    color: white;
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  .mobile-show {
-    display: none ;
-  }
-
-  @media only screen
-  and (max-width: 600px) {
-    .mobile-show {
-      display: block ;
-      padding: 0;
-    }
-    .mobile-hide {
-      display: none !important;
-    }
-
-  }
-
-
-</style>
-
 <template>
   <v-app>
     <div v-if="devmode" class="devmode">
       Development mode
     </div>
-    <!--desktop version-->
-    <v-toolbar flat class="job-detail-nav mobile-hide" style="padding: 0 18%; position: absolute; top: 0; z-index: 200; background-color: inherit">
+    <!--desktop version position: absolute; top: 0; -->
+    <v-toolbar flat fixed class="main-navbar mobile-hide" :class="{ 'white-bg': navHasBg }" style="z-index: 200; background-color: inherit;">
       <img src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="acct === 0">
+        <v-btn flat v-for="item in items[acct]" :to="item.href" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
+          {{ item.title }}
+        </v-btn>
         <div style="padding-top: 18px; padding-left: 16px;">
           <router-link to="/createjob">
             <v-btn class="post-a-job-button" style="color: white;" outline>Post a Job</v-btn>
           </router-link>
         </div>
-        <v-btn flat v-for="item in items[acct]" :to="item.href" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
-          {{ item.title }}
-        </v-btn>
       </v-toolbar-items>
       <!--logged in but not a job-route-->
       <v-toolbar-items v-if="!isJobPostRoute && acct !== 0">
@@ -65,7 +38,6 @@
           <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
         </v-btn>
       </v-toolbar-items>
-
     </v-toolbar>
 
 
@@ -544,6 +516,11 @@ export default {
       return jobPostRoutes.indexOf(this.$route.path) !== -1;
       // it is found
     },
+    navHasBg() {
+      // change this to set to white bg based on scroll position as well
+      const routes = ['/search'];
+      return routes.indexOf(this.$route.path) !== -1;
+    },
   },
 };
 </script>
@@ -561,7 +538,26 @@ body, html {
   height: 100%;
   width: 100%;
 }
+.header-icon-container {
+  color: white;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.mobile-show {
+  display: none ;
+}
 @media only screen and (min-width:600px) {
   .hidden-sm-and-up { display:none !important; }
+}
+@media only screen and (max-width: 600px) {
+  .mobile-show {
+    display: block ;
+    padding: 0;
+  }
+  .mobile-hide {
+    display: none !important;
+  }
 }
 </style>
