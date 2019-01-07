@@ -133,11 +133,15 @@ ol, ul {
   height: 64px;
   z-index: 100;
 }
+.main-navbar .post-a-job-button {
+  color: white;
+}
 .main-navbar.white-bg {
   background-color: white !important;
 }
 .main-navbar.white-bg,
-.main-navbar.white-bg a {
+.main-navbar.white-bg a,
+.main-navbar.white-bg .post-a-job-button {
   color: #ef5350 !important;
 }
 .main-navbar .v-menu__activator {

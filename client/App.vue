@@ -5,7 +5,9 @@
     </div>
     <!--desktop version position: absolute; top: 0; -->
     <v-toolbar flat fixed class="main-navbar mobile-hide" :class="{ 'white-bg': navHasBg }" style="z-index: 200; background-color: inherit;">
-      <img src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+      <router-link to="/search">
+        <img src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+      </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="acct === 0">
         <v-btn flat v-for="item in items[acct]" :to="item.href" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
@@ -13,7 +15,7 @@
         </v-btn>
         <div style="padding-top: 18px; padding-left: 16px;">
           <router-link to="/createjob">
-            <v-btn class="post-a-job-button" style="color: white;" outline>Post a Job</v-btn>
+            <v-btn class="post-a-job-button" outline>Post a Job</v-btn>
           </router-link>
         </div>
       </v-toolbar-items>
@@ -518,8 +520,8 @@ export default {
     },
     navHasBg() {
       // change this to set to white bg based on scroll position as well
-      const routes = ['/search'];
-      return routes.indexOf(this.$route.path) !== -1;
+      console.log(this.$route.path, this.$route.path.indexOf('/job/'));
+      return this.$route.path === '/' || this.$route.path.indexOf('/job/') === -1;
     },
   },
 };
