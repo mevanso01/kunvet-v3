@@ -1,34 +1,34 @@
 <template>
   <div class="jp-card">
-      <v-layout align-center row spacer slot="header">
-        <v-flex xs9>
-          <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
-            <img :src="profilePic" alt="">
-          </v-avatar>
-          <div class="posted-by" style="color: #A7A7A7; line-height: 36px;">
-            {{ job.posted_by }}
-          </div>
-        </v-flex>
-        <v-flex xs3>
-
-        <div class="float-right">
-          <v-tooltip bottom v-if="computeIsLoggedOut">
-            <div slot="activator">
-              <a class="svg-button">
-                <img style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
-              </a>
-            </div>
-            <span>Please log in</span>
-          </v-tooltip>
-          <a v-else class="svg-button" @click="saveJobClicked(job._id)">
-            <img v-if="isSaved" style="height: 24px; margin: 6px auto;" :src="svgs.yellowBookmark" />
-            <img v-else style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
-          </a>
+    <v-layout align-center row spacer slot="header" class="jp-head">
+      <v-flex xs9>
+        <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
+          <img :src="profilePic" alt="">
+        </v-avatar>
+        <div class="posted-by" style="color: #A7A7A7; line-height: 36px;">
+          {{ job.posted_by }}
         </div>
-        </v-flex>
-      </v-layout>
+      </v-flex>
+      <v-flex xs3>
 
-    <router-link :to="'/job/'+jobId">
+      <div class="float-right">
+        <v-tooltip bottom v-if="computeIsLoggedOut">
+          <div slot="activator">
+            <a class="svg-button">
+              <img style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
+            </a>
+          </div>
+          <span>Please log in</span>
+        </v-tooltip>
+        <a v-else class="svg-button" @click="saveJobClicked(job._id)">
+          <img v-if="isSaved" style="height: 24px; margin: 6px auto;" :src="svgs.yellowBookmark" />
+          <img v-else style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
+        </a>
+      </div>
+      </v-flex>
+    </v-layout>
+    <v-divider class="jp-divider"></v-divider>
+    <router-link :to="'/job/'+jobId" class="jp-body">
       <v-layout>
         <v-flex xs12 style="padding-top: 0px;">
           <div><h3 class="jp-title">
@@ -64,7 +64,7 @@
           </div>
 
           <div class="image-row">
-            <v-container fluid grid-list-sm style="margin-top: 8px;">
+            <v-container fluid grid-list-sm class="jp-img-cont">
               <v-layout row wrap>
                 <v-flex v-if="job.images" xs4 v-for="image in job.images.concat().splice(0, 3)">
                   <img class="image" :src="`${serverUrl}/file/get/${image.cropped.$oid ? image.cropped.$oid : image.cropped}`" alt="" width="100%" height="100%">

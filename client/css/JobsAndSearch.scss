@@ -1,19 +1,31 @@
 /* styles for job post cards - used in search, saved jobs, and applied jobs */
 /* jp stands for job post */
 .jp-card {
-  padding: 14px 24px 24px 24px;
+
   height: 370px;
   float: left;
   overflow: hidden;
   width: 100%; // set to 50% on desktop
-  .jp-title {
-    margin-top: 4px;
-    margin-bottom: 2px;
-    font-weight: 400;
-    font-size: 24px;
-    color: #4d4d4d;
+  .jp-head {
+    padding: 14px 24px 0 24px;
   }
-  .jp-title,
+  .jp-body {
+    display: block;
+    padding: 4px 24px 24px 24px;
+  }
+  .jp-divider {
+    margin-left: 24px;
+  }
+  .jp-title {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-weight: bold;
+    font-size: 21px;
+    color: #4d4d4d;
+    // white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
   .posted_by {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -36,6 +48,14 @@
     font-size: 16px;
     color: #4d4d4d !important;
     transform: translateY(-1px);
+  }
+  .jp-img-cont {
+    // padding-top: 12px;
+    padding-left: 0;
+    img {
+      max-width: 120px;
+      max-height: 120px;
+    }
   }
   .carditem .carditem-image {
     display: inline-block;
