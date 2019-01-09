@@ -383,7 +383,7 @@
               <v-img
                 class="white--text"
                 height="200px"
-                src="svgs.vc"
+                :src="svgs.vc"
               >
               </v-img>
               <v-card-title>
@@ -459,7 +459,7 @@ export default {
         information: InformationSvg,
         locationMarker: LocationMarkerSvg,
         kunvetDude: Asset70,
-        citySvg: vc,
+        vc: vc,
         mag: mag,
       },
       selectedPositionsInital: 'All / Any',

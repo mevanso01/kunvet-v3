@@ -21,7 +21,7 @@ export default {
   },
   UploadJobToAlgolia: async (req, next) => {
     const appId = Config.get('algolia.appId');
-    if (!appId) {
+    if (!appId || (process && process.env.NODE_ENV === 'development')) {
       // Algolia disabled
       return next(req);
     }

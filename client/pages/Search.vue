@@ -66,6 +66,7 @@ section.search {
   background: #ef5350; // as fallback
   background: linear-gradient(to right, #ef5350, #ef5350 25%, #ffc26f);
   color: #fff;
+  margin-top: 16px;
   padding-left: 24px;
   // vvv mobile styles vvv
   padding-right: 24px;
@@ -357,7 +358,7 @@ section.search {
             ></v-text-field>
           </div>
           <div class="search-go-cont">
-            <button @click="" v-ripple class="kunvet-search-btn small">
+            <button @click="search()" v-ripple class="kunvet-search-btn small">
               <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
             </button>
           </div>
@@ -379,8 +380,8 @@ section.search {
           <h3 style="text-align: center; margin-top: 25px;">Loading jobs...</h3>
         </div>
         <v-flex xs12 class="no-padding">
-          <div class="search">
-            <!-- <ais-index
+          <!--<div class="search">
+            <ais-index
               app-id="0EXR93R20L"
               api-key="f2b308e2f23de66614cacd60f8f93b67"
               index-name="jobs"
@@ -413,10 +414,10 @@ section.search {
                     :fromCoordinates="selectedCoordinates"
                   />
                 </template>
-              </ais-results> -->
-            <!-- </ais-index> -->
-          </div>
-          <div v-if="filteredJobs.length > 0">
+              </ais-results>
+            </ais-index>
+          </div>-->
+          <!-- <div v-if="filteredJobs.length > 0">
             <div v-for="(job, idx) in filteredJobs" :key="idx">
               <MainJobCard
                 :job="job"
@@ -425,7 +426,7 @@ section.search {
                 :fromCoordinates="selectedCoordinates"
               />
             </div>
-          </div>
+          </div> -->
           <div v-if="displayedJobs[0].length > 0" style="clear: both;">
             <div class="job-distance-indicator">
               10 miles away
