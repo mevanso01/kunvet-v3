@@ -9,7 +9,17 @@
         <img src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
       </router-link>
       <v-spacer></v-spacer>
-      <v-toolbar-items v-if="acct === 0">
+      <v-toolbar-items v-if="acct > 0">
+        <v-btn flat @click="goTo('/search');"style="background-color: inherit;" class="text-capitalize white--text">Search</v-btn>
+        <v-btn flat @click="goTo('/myjobs');" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn>
+        <!--TODO: notification mark-->
+        <v-btn flat @click="goTo('/notifications');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn>
+        <v-btn flat @click="goTo('/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn>
+        <v-btn flat @click="goTo('/account');" class="white--text" style="background-color: inherit;">
+          <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
+        </v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items v-else>
         <v-btn flat v-for="item in items[acct]" :to="item.href" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
           {{ item.title }}
         </v-btn>
@@ -20,26 +30,12 @@
         </div>
       </v-toolbar-items>
       <!--logged in but not a job-route-->
-      <v-toolbar-items v-if="!isJobPostRoute && acct !== 0">
+      <!-- <v-toolbar-items v-else>
         <v-btn flat v-for="item in items[acct]" :to="item.href" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
-          <!--TODO: make the notifications button and profile pic actually work-->
           {{ item.title }}
         </v-btn>
-
-      </v-toolbar-items>
+      </v-toolbar-items> -->
       <!--logged in but is a job-route-->
-      <v-toolbar-items v-if="isJobPostRoute && acct !== 0">
-        <v-btn flat href="/search" style="background-color: inherit;" class="text-capitalize white--text">Search</v-btn>
-        <v-btn flat href="/myjobs" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn>
-
-        <!--TODO: notification mark-->
-
-        <v-btn flat href="/notifications" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn>
-        <v-btn flat href="/settings" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn>
-        <v-btn flat href="/account" class="white--text" style="background-color: inherit;">
-          <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
-        </v-btn>
-      </v-toolbar-items>
     </v-toolbar>
 
 
@@ -379,7 +375,7 @@ export default {
       this.$store.commit('go');
       this.setProfilePic();
     },
-    routeTo(route) {
+    goTo(route) {
       this.$router.push(route);
     },
     getNumNotifications() {
@@ -521,7 +517,7 @@ export default {
     navHasBg() {
       // change this to set to white bg based on scroll position as well
       console.log(this.$route.path, this.$route.path.indexOf('/job/'));
-      return this.$route.path === '/' || this.$route.path.indexOf('/job/') === -1;
+      return this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1;
     },
   },
 };

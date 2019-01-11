@@ -141,7 +141,8 @@ ol, ul {
 }
 .main-navbar.white-bg,
 .main-navbar.white-bg a,
-.main-navbar.white-bg .post-a-job-button {
+.main-navbar.white-bg .post-a-job-button,
+.main-navbar.white-bg .v-btn {
   color: #ef5350 !important;
 }
 .main-navbar .v-menu__activator {
@@ -194,6 +195,9 @@ ol, ul {
 }
 
 /*  ---- Styles to globally override Vuetify ----  */
+.container {
+  padding-top: 80px;
+}
 .v-text-field {
   padding-top: 0 !important;
   margin-top: 12px;
@@ -227,7 +231,7 @@ i.icon--selection-control {
   background: rgba(0,0,0,0.08) !important;
 }
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
-    transform: translate3d(0, -18px, 0) scale(0.75) !important;
+  transform: translate3d(0, -18px, 0) scale(0.75) !important;
 }
 .input-group__details {
   color: #1976D2;

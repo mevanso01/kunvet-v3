@@ -5,7 +5,7 @@
   }
 </style>
 <template>
-  <v-container fluid class="white-bg job-post__container">
+  <v-container fluid class="white-bg">
     <div class="main-cont-large">
       <v-layout row wrap>
         <v-flex xs-12 v-if="unpostedJobs.length === 0 && activeJobs.length === 0 && expiredJobs.length === 0">
