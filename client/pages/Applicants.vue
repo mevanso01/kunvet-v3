@@ -1,51 +1,61 @@
-<style>
+<style lang="scss">
+  .applicants-page {
+    padding-left: 0;
+    padding-right: 0;
+    .main-cont-large {
+      background-color: inherit;
+      padding: 0 16px;
+    }
+    .job-headline {
+      background-color: #f2f7ff;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      p, h2 {
+        color: #808285;
+      }
+      h2 {
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+    }
+    .applicant {
+      padding-top: 6px;
+    }
+  }
 </style>
 <template>
-  <v-container fluid class="applicant-page">
-    <div class="main-cont-large">
-      <v-layout row wrap>
-        <v-flex xs12 v-if="jobs.length === 0">
-          <div v-if="pageLoading" style="margin-top: 48px;">
-            <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
-            style="display: block; margin: auto !important;"></v-progress-circular>
-          </div>
-          <div v-else>
-            You have no jobs.
-          </div>
-        </v-flex>
-        <template
-          v-if="jobs.length > 0"
-          v-for="job in jobs"
-        >
-          <v-flex xs12 style="margin-top: 12px" class="job-page-headline">
-            <h1>{{ job.title }}</h1>
-            <p class="mb-1">
+  <v-container fluid class="applicants-page">
+    <v-layout row wrap>
+      <v-flex xs12 v-if="jobs.length === 0">
+        <div v-if="pageLoading" style="margin-top: 48px;">
+          <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
+          style="display: block; margin: auto !important;"></v-progress-circular>
+        </div>
+        <div v-else>
+          You have no jobs.
+        </div>
+      </v-flex>
+      <template
+        v-if="jobs.length > 0"
+        v-for="job in jobs"
+      >
+        <v-flex xs12 style="margin-top: 12px" class="job-headline job-page-headline">
+          <div class="main-cont-large">
+            <p class="mb-1">{{ getApplicantsFromJobs(job._id).length }} {{ getApplicantsString(getApplicantsFromJobs(job._id).length) }} for</p>
+            <h2>{{ job.title }}</h2>
+            <!-- <p class="mb-1">
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
               </span> {{ getApplicantsCountString }} in total
-            </p>
-          </v-flex>
-
-          <v-flex xs12 sm6
-            v-if="applicants.length > 0"
-            v-for="item in getApplicantsFromJobs(job._id)"
-            class="new-applicant-card new-applicant-card--equal-height"
-          >
+            </p> -->
+          </div>
+        </v-flex>
+        <div class="main-cont-large">
+          <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="applicant">
             <div class="inner" style="position: relative;">
-              <div class="new-applicant-card__info">
+              <div class="">
                 <v-layout row wrap>
-                  <v-flex xs3 sm3 style="padding-bottom: 0;">
-                    <div class="new-applicant-card__profile-pic-container">
-                      <figure>
-                        <div v-if="item.status === 'submitted'" class="new-applicant-card__unread-circle" />
-                          <img :src="item.profilePic" style="min-height: 50px;"/>
-                          <div class="new-applicant-card__time-ago" style="margin-left: 5px;">
-                            <timeago :since="item.date" />
-                          </div>
-                      </figure>
-                    </div>
-                  </v-flex>
-                  <v-flex xs9 sm9 style="padding-bottom: 0; cursor: pointer;" @click="openApplication(item)">
+                  <v-flex xs12 sm7 style="padding-bottom: 0; cursor: pointer;" @click="openApplication(item)">
                       <h2 class="new-applicant-card__title">{{ item.name }}</h2>
                       <p style="overflow: hidden; margin-bottom: 0;">
                         <span>
@@ -67,6 +77,11 @@
                           Notes: {{ getApplicantNotesDisplayText(item) }}
                         </span>
                       </p>
+                  </v-flex>
+                  <v-flex xs12 sm5 style="padding-bottom: 0;">
+                    <div>
+                      Notes
+                    </div>
                   </v-flex>
                 </v-layout>
               </div>
@@ -116,10 +131,10 @@
                 </div>
               </div>-->
             </div>
-          </v-flex>
-        </template>
-      </v-layout>
-    </div>
+          </div>
+        </div>
+      </template>
+    </v-layout>
 
     <v-dialog v-model="dialogs.showAccept">
       <v-card>
@@ -434,6 +449,12 @@
       getApplicantNotesDisplayText({ notes }) {
         if (!notes) return '';
         return StringHelper.truncate(notes, 80);
+      },
+      getApplicantsString(num) {
+        console.log('num', num);
+        // return num === 1 ? 'applicant' : 'applicants';
+        if (num === 1) { return 'applicant'; }
+        return 'applicants';
       },
     },
     computed: {
