@@ -117,6 +117,7 @@
     "nodemailer": "^4.6.8",
     "passport-local-mongoose": "^5.0.1",
     "pdfjs-dist": "^2.0.550",
+    "ps-tree": "^1.2.0",
     "raven-js": "^3.27.0",
     "sanitize-html": "^1.19.1",
     "simple-node-logger": "^0.93.40",
