@@ -1,7 +1,7 @@
 <style>
 </style>
 <template>
-  <v-container fluid class="applicant-page job-post__container" style="padding-top: 8px;">
+  <v-container fluid class="applicant-page">
     <div class="main-cont-large">
       <v-layout row wrap>
         <v-flex xs12 v-if="jobs.length === 0">

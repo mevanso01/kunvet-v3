@@ -6,7 +6,8 @@
     <!--desktop version position: absolute; top: 0; -->
     <v-toolbar flat fixed class="main-navbar mobile-hide" :class="{ 'white-bg': navHasBg }" style="z-index: 200; background-color: inherit;">
       <router-link to="/search">
-        <img src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+        <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
+        <img v-else src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
       </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="acct > 0">
