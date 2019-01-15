@@ -20,36 +20,34 @@ a:hover{
     <div v-show="forgetpwd==0">
       <v-form v-model="valid" ref="form">
         <section class="login-section">
-            <h2>Welcome Back!</h2>
-            <p v-if="bad_login" style="color: #f00; margin-bottom: 0">The email or password you entered is incorrect</p>
-                <v-text-field
-                    label="E-mail"
-                    v-model="email"
-                    type="email"
-                    :rules="emailRules"
-                    @change="bad_login = false;"
-                    required
-                ></v-text-field>
-                <v-text-field
-                    label="Password"
-                    v-model="password"
-                    :rules="passwordRules"
-                    min="8"
-                    :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                    :append-icon-cb="() => (e1 = !e1)"
-                    :type="e1 ? 'password' : 'text'"
-                    @change="bad_login = false;"
-                    required
-                ></v-text-field>
+          <h2>Welcome Back!</h2>
+          <p v-if="bad_login" style="color: #f00; margin-bottom: 0">The email or password you entered is incorrect</p>
+          <v-text-field
+              label="E-mail"
+              v-model="email"
+              type="email"
+              :rules="emailRules"
+              @change="bad_login = false;"
+              required
+          ></v-text-field>
+          <v-text-field
+              label="Password"
+              v-model="password"
+              :rules="passwordRules"
+              min="8"
+              :append-icon="e1 ? 'visibility' : 'visibility_off'"
+              :append-icon-cb="() => (e1 = !e1)"
+              :type="e1 ? 'password' : 'text'"
+              @change="bad_login = false;"
+              required
+          ></v-text-field>
 
-
-                <p id="ask-sign-up" class="center" style="color: #616161; margin-bottom: 8px;">
-                  <router-link to="/signup" class="link">Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></router-link>
-                </p>
-                <p id="forgot-password" class="center kunvet-red">
-                  <a @click="forgetpwd=1" class="link">Forgot your password? <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                </p>
-
+          <p id="ask-sign-up" class="center" style="color: #616161; margin-bottom: 8px;">
+            <router-link to="/signup" class="link">Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></router-link>
+          </p>
+          <p id="forgot-password" class="center kunvet-red">
+            <a @click="forgetpwd=1" class="link">Forgot your password? <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+          </p>
         </section>
         <div v-if="loggedIn==0" id="general-submit" @click="submit">
             <div id="general-submit-default">
@@ -57,7 +55,6 @@ a:hover{
                 <span v-else>LOGIN</span>
             </div>
         </div>
-
 
         <v-alert
           color="green darken-1"
@@ -69,56 +66,45 @@ a:hover{
       </v-form>
     </div>
 
-
     <div v-show="forgetpwd==1">
-        <section v-if="!sent" class="login-section">
-            <h2>Forgot Password?</h2>
-                <p>No worries! Simply fill out the email of your account to reset it.</p>
-                <v-form v-model="valid" ref="form2">
-                    <v-text-field
-                        label="E-mail"
-                        v-model="email"
-                        :rules="emailRules"
-                        required
-                    ></v-text-field>
-                </v-form>
+      <section v-if="!sent" class="login-section">
+        <h2>Forgot Password?</h2>
+        <p>No worries! Simply fill out the email of your account to reset it.</p>
+        <v-form v-model="valid" ref="form2">
+          <v-text-field
+            label="E-mail"
+            v-model="email"
+            :rules="emailRules"
+            required
+            ></v-text-field>
+        </v-form>
 
-                <p id="ask-sign-up" class="center" style="color: #616161; margin-bottom: 8px;">
-                  <router-link to="/signup" class="link">
-                    Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-                  </router-link>
-                </p>
-                <p id="forgot-password" class="center" style="color: #616161;">
-                  <a @click="forgetpwd=0" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                </p>
-        </section>
+        <p id="ask-sign-up" class="center" style="color: #616161; margin-bottom: 8px;">
+        <router-link to="/signup" class="link">
+          Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+        </router-link>
+        </p>
+        <p id="forgot-password" class="center" style="color: #616161;">
+        <a @click="forgetpwd=0" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+        </p>
+      </section>
 
-        <section v-if="sent" class="login-section">
-            <p>
-              Success! If <b>{{ email }}</b> exists in our database you will receive an email shortly.
-            </p>
-            <p id="forgot-password" class="center" style="color: #616161;">
-              <a @click="forgetpwd=0;" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-            </p>
+      <section v-if="sent" class="login-section">
+        <p>
+        Success! If <b>{{ email }}</b> exists in our database you will receive an email shortly.
+        </p>
+        <p id="forgot-password" class="center" style="color: #616161;">
+        <a @click="forgetpwd=0;" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+        </p>
 
-        </section>
+      </section>
 
-        <div v-show="!sent" id="general-submit" @click="requestPasswordReset">
-            <div id="general-submit-default">
-                <v-progress-circular indeterminate v-if="loading" size="30" style="margin-top: 17px" color="white"></v-progress-circular>
-                <span v-else>Request password reset</span>
-            </div>
+      <div v-show="!sent" id="general-submit" @click="requestPasswordReset">
+        <div id="general-submit-default">
+          <v-progress-circular indeterminate v-if="loading" size="30" style="margin-top: 17px" color="white"></v-progress-circular>
+          <span v-else>Request password reset</span>
         </div>
-
-        <!--<v-alert
-            color="green darken-1" style="margin-bottom: 0;"
-            icon="check_circle"
-            :value="sent"
-            transition="slide-x-transition"
-        >
-            Request password email sent.
-        </v-alert>-->
-
+      </div>
     </div>
 </div>
 </template>
@@ -213,13 +199,12 @@ export default {
           // login individual
           // App.methods.login_i();
           EventBus.$emit('individual');
-          this.triggerRedirect();
+          this.$emit('loggedIn');
         } else {
           // login business
           this.commitBusinessID(udata.default_org);
           // App.methods.login_b();
           EventBus.$emit('business');
-          // this.triggerRedirect();
           this.$emit('loggedIn');
         }
       }).catch((error) => {
