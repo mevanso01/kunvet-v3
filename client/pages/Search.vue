@@ -512,9 +512,15 @@ import findIndex from 'lodash/findIndex';
 import uniq from 'lodash/uniq';
 import queries from '@/constants/queries';
 import EventBus from '@/EventBus';
+import Config from 'config';
 import algoliasearch from 'algoliasearch';
 
-const algoliaClient = algoliasearch('0EXR93R20L', 'f2b308e2f23de66614cacd60f8f93b67');
+const algoliaConfig = Config.get('algolia');
+
+let algoliaClient = null;
+if (algoliaConfig.appId) {
+  algoliaClient = algoliasearch(algoliaConfig.appId, algoliaConfig.searchApiKey);
+}
 
 Vue.use(VueApollo);
 
@@ -1124,11 +1130,15 @@ export default {
       this.loadingJobs = true;
     }
     if (process && process.env && process.env.NODE_ENV === 'development') {
-      // load jobs from local db
+      // Local DB
       console.log('Loading from local db for development purposes');
       this.findAndFilterJobs();
-    } else {
+    } else if (algoliaClient) {
+      // Algolia
       this.algoliaSearch();
+    } else {
+      // No usable backend is available
+      this.$error('No usable search backend');
     }
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
