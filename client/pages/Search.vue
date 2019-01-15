@@ -429,7 +429,7 @@ section.search {
           </div> -->
           <div v-if="displayedJobs[0].length > 0" style="clear: both;">
             <div class="job-distance-indicator">
-              10 miles away
+              Less than 10 miles away
             </div>
             <div class="main-cont-large">
               <div v-for="(job, idx) in displayedJobs[0]" :key="`1-${idx}`">
@@ -444,7 +444,7 @@ section.search {
           </div>
           <div v-if="displayedJobs[1].length > 0" style="clear: both;">
             <div class="job-distance-indicator">
-              20 miles away
+              10 to 20 miles away
             </div>
             <div class="main-cont-large">
               <div v-for="(job, idx) in displayedJobs[1]" :key="`2-${idx}`">
@@ -459,7 +459,7 @@ section.search {
           </div>
           <div v-if="displayedJobs[2].length > 0" style="clear: both;">
             <div class="job-distance-indicator">
-              30+ miles away
+              20+ miles away
             </div>
             <div class="main-cont-large">
               <div v-for="(job, idx) in displayedJobs[2]" :key="`3-${idx}`">
