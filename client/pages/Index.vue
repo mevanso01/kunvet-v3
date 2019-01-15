@@ -397,28 +397,32 @@
 
     <div id="promo" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: white">
         <v-layout row wrap>
-          <v-flex xs12 sm11 md4>
-            <v-card style="width:300px">
-              <v-img
-                class="white--text"
-                height="200px"
-                :src="svgs.vc"
-              >
-              </v-img>
-              <v-card-title>
-                <div>
-                  <span class="headline black--text">Business</span><br>
-                  <span class="grey--text">Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</span>
-                </div>
-              </v-card-title>
-            </v-card>
-            </v-flex>
+          <v-flex xs12 sm11 md5>
+            <div style="height: 400px; width:126%; float:left; background-color: #ffe2e2; transform:translate(-16px)">
+              <img src="@/assets/artboard1.png" height="60%" style="padding-left:30%; margin-top:10%"/>
+            </div>
+          </v-flex>
+
+          <v-flex xs12 sm11 md7>
+            <div style="margin-top:30px; left: 100px; height: 320px; width:100%;
+                background:  #FFC371;
+                background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
+                background: linear-gradient(to right,  #ff5f6d, #FFC371);
+                position: relative;
+            ">
+                <div style="padding-top: 3%; padding-left:10%;color:white;font-size:36px;"><strong>Hire on Kunvet</strong></div>
+                <div style="width: 39%; padding-top: 12px; margin-left:10%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+                <router-link to="/createjob">
+                  <button v-ripple style="margin-top:20px; margin-left:11%" class="postAJob">Post a Job</button>
+                </router-link>
+            </div>
+          </v-flex>
         </v-layout>
         
       <div style="width:100%; height:120px;">
       </div>
 
-            <div style="height: 320px; width:calc(53%); margin-top:30px; position:absolute; z-index:1000;       
+            <div style="height: 320px; width:calc(54%); margin-top:30px; position:absolute; z-index:1000;       
                 background:  #2f89fc;
                 background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
                 background: linear-gradient(to right,  #a57fff , #2f89fc);
@@ -504,7 +508,7 @@ export default {
         information: InformationSvg,
         locationMarker: LocationMarkerSvg,
         kunvetDude: Asset70,
-        vc: vc,
+        citySvg: vc,
         mag: mag,
       },
       selectedPositionsInital: 'All / Any',
