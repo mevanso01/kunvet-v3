@@ -161,7 +161,6 @@
   .fs-select-cities,
   .fs-select-positions {
     width: 50%;
-    float: left;
     display: inline-block;
   }
   .fs-select-cities {
@@ -318,65 +317,85 @@
 .iconRedButton:hover {
   background-color:#ef5350;
 }
+
+.postAJob {
+  display: block;
+  height: 56px;
+  width: 200px;
+  background-color:#FFFFFF;
+  text-align: center;
+  box-shadow: 0 5px 6px -2px #DF696C;
+  font-family: "Roboto",sans-serif;
+  color:#FF786D;
+  font-weight:bold;
+  font-size:16px;
+  outline: none !important;
+}
+
+.postAJob:hover {
+  background-color:#F3E1E1;
+}
+
+.postAJob2 {
+  display: block;
+  height: 56px;
+  width: 200px;
+  background-color:#FFFFFF;
+  text-align: center;
+  box-shadow: 0 5px 6px -2px #5471F6;
+  font-family: "Roboto",sans-serif;
+  color:#FF786D;
+  font-weight:bold;
+  font-size:16px;
+  outline: none !important;
+}
+
+.postAJob2:hover {
+  background-color:#F3E1E1;
+}
+
+
 </style>
 
 <template>
   <v-container fluid class="home-page-cont pa-0">
-  <div style="width: 100%; height: 400px;
+  <div style="width: 100%; height: 455px;
     background:  #ff8f8f;
     background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
     background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
     position: relative;
   ">
-  <h1 style="position: absolute; left: 275px; bottom: 0; color: white; margin-bottom: 60px; font-size: 48px;">Latest Opportunities Near Your College.</h1>
+  <h1 style="position: absolute; left: 275px; bottom: 0; color: white; margin-bottom: 60px; font-size: 50px;">Latest Opportunities Near Your College.</h1>
 
   </div>
 <div class="main-container" style="margin-top: -36px;  margin-left: auto; margin-right: auto;">
-        <v-layout row wrap style="padding-bottom: 10px;">
-          <v-flex xs1 sm1 md1 class="no-padding">
-            <div class="no-padding" style="line-height:72px; height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; background-color:white;">
-              <strong style="margin-left:40%; color:grey;">Find</strong>
-            </div>
-          </v-flex>
 
-            <v-flex xs5 sm5 md4 style="height: 56px; border-style:none;" class="grey--text no-padding">
-            <v-text-field
-              style="height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; outline:none !important; border-radius:none;"
-              solo
-              flat
-              label="part time design intern"
-              clearable
-            ></v-text-field>
-            </v-flex>
+            <div style="height:72px;width:90%;float:left;background-color:white;box-shadow: 0 10px 12px -4px #eaeaf9;">
+              <div class="no-padding" style="line-height:72px; height: 72px; width: 10%; background-color:white;float:left;">
+                <strong style="margin-left:40%; color:grey; font-size:16px;">Find</strong>
+              </div>
 
-            <v-flex xs1 sm1 md1 class="grey--text no-padding">
-            <div style=" line-height:72px; height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; background-color:white;">
-              <strong style="margin-left:40%; color:grey;">Near</strong>
-            </div>
-          </v-flex>
-            <v-flex xs5 sm5 md4 class="grey--text no-padding">
-            <v-text-field
-              style="height: 72px; box-shadow: 0 10px 12px -4px #eaeaf9; outline:none !important; border-radius:none;"
-              v-model="first_city_guess"
-              solo
-              flat
-              label="UC Irvine"
-              clearable
-            ></v-text-field>
-            </v-flex>
+                <input placeholder="part time design intern" 
+                style="height: 72px; width: 36%; outline:none !important; background-color:white;float:left;">
 
-            <v-flex style="margin-left:10px;" class="no-padding">
+                <div style=" line-height:72px; height: 72px; width: 10%; background-color:white;float:left;">
+                  <strong style="margin-left:40%; color:grey; font-size:16px;">Near</strong>
+                </div>
+
+                <input v-model="first_city_guess"
+                  style="height: 72px; width: 44%; outline:none !important; background-color:white;float:left;">
+              </div>
+
               <button @click="searchGo" v-ripple class="iconRedButton">
                 <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
               </button>
-            </v-flex>
 
-        </v-layout>
       </div>
 
+      <div style="width:100%; height:175px;">
+      </div>
 
-    <div id="promo" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
-      <div class="main-cont-large" style="background: #fafafa">
+    <div id="promo" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: white">
         <v-layout row wrap>
           <v-flex xs12 sm11 md4>
             <v-card style="width:300px">
@@ -395,7 +414,33 @@
             </v-card>
             </v-flex>
         </v-layout>
+        
+      <div style="width:100%; height:120px;">
       </div>
+
+            <div style="height: 320px; width:calc(53%); margin-top:30px; position:absolute; z-index:1000;       
+                background:  #2f89fc;
+                background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
+                background: linear-gradient(to right,  #a57fff , #2f89fc);
+                transform:translate(-32px);
+                ">
+
+                <div style="padding-top: 6%; padding-left:35%;color:white;font-size:36px;"><strong>Loved & Trusted</strong></div>
+                <div style="width: 48%; padding-top: 12px; margin-left:35%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+                <router-link to="/createjob">    
+                  <button v-ripple style="margin-top:20px; margin-left:35%" class="postAJob2">Post a Job</button>
+                </router-link>
+            </div>
+
+            <div style="z-index: 90; height: 400px; width:52%; background-color: #dbefff; margin-left:auto; margin-right:0; transform:translate(20px);">
+              <img src="@/assets/artboard2.png" height="70%" style="margin-left:15%; margin-top:50px"/>
+            </div>
+
+
+
+        <div style="width:100%; height:120px;">
+        </div>  
+
     </div>
   </v-container>
 </template>
