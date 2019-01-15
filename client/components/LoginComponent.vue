@@ -16,7 +16,7 @@ a:hover{
 }
 </style>
 <template>
-<div class="main-cont-small" v-on:keyup.enter="submit">
+<div v-on:keyup.enter="submit">
     <div v-show="forgetpwd==0">
       <v-form v-model="valid" ref="form">
         <section class="login-section">
