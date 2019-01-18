@@ -664,7 +664,7 @@ and (max-width: 600px) {
           <span v-else-if="applyState === 'CONFIRM'">Apply</span>
           <span v-else>Continue</span>
         </div>
-        <router-link v-else to="/">
+        <router-link v-else to="/search">
           <div class="bottom-dialog-button">Keep browsing jobs</div>
         </router-link>
       </v-card>

@@ -1,6 +1,8 @@
 <template>
 <v-container fluid class="white-bg">
-  <LoginComponent @loggedIn="triggerRedirect"></LoginComponent>
+  <div style="max-width: 420px; margin: auto;">
+    <LoginComponent @loggedIn="triggerRedirect"></LoginComponent>
+  </div>
 </v-container>
 
 </template>

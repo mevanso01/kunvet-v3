@@ -21,6 +21,23 @@
     .applicant {
       padding-top: 6px;
     }
+    .pdfframe-container {
+      height: 95vh;
+      padding: 51px 32px 32px 32px;
+      overflow: scroll;
+    }
+    .side-pdf-heading {
+      position: fixed;
+      width: 100%;
+      padding: 18px 32px 0px 32px;
+      background-color: #ef5350;
+    }
+    @media (min-width: 961px) {
+      .pdfframe-container,
+      .side-pdf-heading {
+        padding-right: calc(50vw - 480px);
+      }
+    }
   }
 </style>
 <template>
@@ -59,7 +76,7 @@
                       <h2 class="new-applicant-card__title">{{ item.name }}</h2>
                       <p style="overflow: hidden; margin-bottom: 0;">
                         <span>
-                          {{ item.school || 'School info unknown' }}
+                          {{ item.school }}
                         </span><br />
                         <span
                           v-if="item.degree && item.degree !== 'None' && item.degree != 'High school'"
@@ -84,6 +101,8 @@
                     </div>
                   </v-flex>
                 </v-layout>
+                <v-btn @click="openSideResume(item);">Show resume</v-btn>
+                <!-- <v-btn @click="openResumeInNewTab(item);">Open in new tab</v-btn> -->
               </div>
               <!-- {{ item.resumeSrc }}
               <PdfFrame
@@ -135,6 +154,31 @@
         </div>
       </template>
     </v-layout>
+
+    <v-navigation-drawer
+       v-model="showSideResume"
+       absolute right width="900"
+       temporary>
+       <div style="height: auto;
+          width: 100%;
+          background-color: #ef5350;
+          z-index: 9;
+          position: fixed;
+          top: 64px;
+          padding: 0;
+          overflow: hidden;">
+         <div class="side-pdf-heading">
+           <h2 v-if="currentApplicant" style="color: white; text-align: center;">{{ currentApplicant.name }}</h2>
+         </div>
+         <div class="pdfframe-container">
+           <PdfFrame
+             v-if="currentApplicant && currentApplicant.resumes[0] && currentResumeSrc"
+             :href="currentResumeSrc"
+           />
+           <v-btn flat class="ml-0" @click="showSideResume = false;">Hide Resume</v-btn>
+         </div>
+       </div>
+    </v-navigation-drawer>
 
     <v-dialog v-model="dialogs.showAccept">
       <v-card>
@@ -208,6 +252,8 @@
   import { degreeDbToString } from '@/constants/degrees';
   import queries from '@/constants/queries';
   import ProfilePicHelper from '@/utils/GetProfilePic';
+  import FileClient from '@/utils/FileClient';
+  import PdfFrame from '@/components/PdfFrame';
 
   export default {
     created() {
@@ -251,18 +297,33 @@
           major: MajorSvg,
           degree: DegreeSvg,
         },
+        currentApplicant: null,
+        currentResumeSrc: null,
+        showSideResume: false,
       };
     },
     components: {
-      // PdfFrame,
+      PdfFrame,
     },
     methods: {
       // async getSrc(resume) {
       //   // eslint-disable-next-line
-      //   console.log('Test', resume);
+      //   // console.log('Test', resume);
+      //   if (!resume.filename) { return; }
       //   const src = await FileClient.getLink(resume.filename);
       //   return src;
       // },
+      async openSideResume(item) {
+        this.showSideResume = true;
+        this.currentApplicant = item;
+        console.log('Item', item);
+        if (item.resumes[0] && item.resumes[0].filename) {
+          const src = await FileClient.getLink(item.resumes[0].filename);
+          this.currentResumeSrc = src;
+        } else {
+          this.currentResumeSrc = null;
+        }
+      },
       async getData() {
         const { data } = await this.$apollo.query({
           query: (gql`query ($userId: MongoID, $businessId: MongoID) {
