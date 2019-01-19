@@ -344,7 +344,7 @@
   text-align: center;
   box-shadow: 0 5px 6px -2px #5471F6;
   font-family: "Roboto",sans-serif;
-  color:#FF786D;
+  color:#5E85FD;
   font-weight:bold;
   font-size:16px;
   outline: none !important;
@@ -369,28 +369,47 @@
 
   </div>
 <div class="main-container" style="margin-top: -36px;  margin-left: auto; margin-right: auto;">
+  <div style="height:72px;width:90%;float:left;background-color:white;box-shadow: 0 10px 12px -4px #eaeaf9;">
 
-            <div style="height:72px;width:90%;float:left;background-color:white;box-shadow: 0 10px 12px -4px #eaeaf9;">
-              <div class="no-padding" style="line-height:72px; height: 72px; width: 10%; background-color:white;float:left;">
-                <strong style="margin-left:40%; color:grey; font-size:16px;">Find</strong>
-              </div>
 
-                <input placeholder="part time design intern" 
-                style="height: 72px; width: 36%; outline:none !important; background-color:white;float:left;">
+    <div style="height: 72px; padding-top:24px; width: 10%; background-color:white;float:left;">
+      <strong style="margin-left:40%; color:grey; font-size:16px;">Find</strong>
+    </div>
+            <v-text-field
+              style="height: 58px; width: 36%; outline:none !important; background-color:white;float:left;margin-top:12px;"
+              solo
+              flat
+              hide-details
+              label="part time design intern"
+              clearable
+            ></v-text-field>
 
-                <div style=" line-height:72px; height: 72px; width: 10%; background-color:white;float:left;">
-                  <strong style="margin-left:40%; color:grey; font-size:16px;">Near</strong>
-                </div>
-
-                <input v-model="first_city_guess"
-                  style="height: 72px; width: 44%; outline:none !important; background-color:white;float:left;">
-              </div>
-
-              <button @click="searchGo" v-ripple class="iconRedButton">
-                <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
-              </button>
-
+      <div style="height: 72px; padding-top:24px; width: 10%; background-color:white;float:left;">
+        <strong style="margin-left:40%; color:grey; font-size:16px;">Near</strong>
       </div>
+
+              <div style="height: 58px; margin-top:14px; width: 44%; outline:none !important; background-color:white;float:left;" v-bind:class="{ 'active': openSelectField === 'city' }">
+                <v-select style="height: 58px;"
+                  label="School or City"
+                  item-text="name"
+                  item-value="name"
+                  v-bind:items="availableCities"
+                  solo
+                  flat
+                  hide-details
+                  content-class="fsSelect-menu"
+                  autocomplete
+                >
+              </v-select>
+              </div>
+
+    </div>
+
+    <button @click="searchGo()" v-ripple class="kunvet-search-btn med">
+      <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
+    </button>
+</div>
+
 
       <div style="width:100%; height:175px;">
       </div>
