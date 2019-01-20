@@ -2,7 +2,7 @@
 
 </style>
 <template>
-  <v-container fluid class="job-post__container">
+  <v-container fluid>
     <div class="main-cont-large" style="background: none">
       <v-layout>
         <v-flex xs12>
@@ -52,7 +52,7 @@
     },
     computed: {
       plural() {
-        return this.saved_jobs.length === 1 ? '' : 's';
+        return this.counter === 1 ? '' : 's';
       },
     },
     methods: {

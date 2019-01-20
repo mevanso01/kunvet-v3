@@ -229,9 +229,15 @@ section.search {
   }
 }
 @media (max-width: 600px) {
-  .search-field-cont,
-  .search-go-cont {
-    padding: 10px 15px;
+  section.search {
+    .search-row {
+      display: block;
+    }
+    .search-field-cont,
+    .search-go-cont {
+      padding: 10px 15px;
+      width: 100%;
+    }
   }
   .firstSearch {
     padding-left: 26px;
@@ -294,41 +300,8 @@ section.search {
 
 <template>
   <v-container fluid class="home-page-cont pa-0">
-    <section class="search" style="padding-top: 64px;">
+    <section class="search" style="padding-top: 64px;" v-on:keyup.enter="search()">
       <div class="main-cont-large">
-        <!-- <v-layout row wrap>
-          <v-flex xs12 md6>
-            <div class="custom-select-2-wrapper">
-
-              <div class="custom-select-2"
-                   v-bind:class="{ 'active': openSelectField === 'city' }">
-
-                <div class="inner" @click="openSelect('city')">
-                  <span v-if="this.selectedCity">{{ selectedCity }}</span>
-                  <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
-                  <v-btn icon v-if="openSelectField === 'city'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
-                  <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
-                </div>
-
-                <v-list dense class="custom-select-menu">
-                  <v-list-tile  @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
-                </v-list>
-              </div>
-
-            </div>
-          </v-flex>
-          <v-flex xs12 md6>
-            <v-text-field
-              class="search-params-field"
-              solo
-              flat
-              label="Search parameters"
-              v-model="query"
-              clearable
-            ></v-text-field>
-          </v-flex>
-
-        </v-layout> -->
         <div class="search-row">
           <div class="search-field-cont">
             <div class="custom-select-2-wrapper">
@@ -353,13 +326,20 @@ section.search {
               solo
               flat
               hide-details
-              label="Search..."
+              placeholder="part time engineer..."
               clearable
             ></v-text-field>
           </div>
           <div class="search-go-cont">
-            <button @click="search()" v-ripple class="kunvet-search-btn small">
+            <button @click="search()" v-ripple class="mobile-hide kunvet-search-btn small">
               <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
+            </button>
+            <button @click="search()" v-ripple class="mobile-show kunvet-search-btn small block">
+              <span style="line-height: 56px; font-size: 20px; font-weight: bold;">
+                <!-- <img src="@/assets/magnifier.svg" height="24px"
+                  style="margin-bottom:5px;margin-right:5px;vertical-align: middle;"/> -->
+                Search
+              </span>
             </button>
           </div>
         </div>

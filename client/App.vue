@@ -11,12 +11,16 @@
       </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="acct > 0">
-        <v-btn flat @click="goTo('/search');"style="background-color: inherit;" class="text-capitalize white--text">Search</v-btn>
-        <v-btn flat @click="goTo('/myjobs');" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn>
+        <v-btn v-for="item in currentMenuItems"
+          flat @click="goTo(item.href)" style="background-color: inherit;" class="text-capitalize white--text">
+          {{ item.title }}
+        </v-btn>
+        <!-- <v-btn flat @click="goTo('/search');">Search</v-btn> -->
+        <!-- <v-btn flat @click="goTo('/myjobs');" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn> -->
         <!--TODO: notification mark-->
         <v-btn flat @click="goTo('/notifications');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn>
         <v-btn flat @click="goTo('/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn>
-        <v-btn flat @click="goTo('/account');" class="white--text" style="background-color: inherit;">
+        <v-btn flat @click="goToAccount();" class="white--text" style="background-color: inherit;">
           <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
         </v-btn>
       </v-toolbar-items>
@@ -40,49 +44,21 @@
     </v-toolbar>
 
 
-    <!--mobile version-->
+    <!-- mobile menu icon -->
     <div class="mobile-show">
       <div class="header-icon-container " style="z-index: 100; ">
         <div style="padding: 12px 0 0 24px; ">
-          <a href="/search">
-            <img src="./assets/job_detail/whitelogo.svg" style="height: 26px; width: 128px;">
-          </a>
+          <router-link to="/search">
+            <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
+            <img v-else src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+          </router-link>
         </div>
         <button style="padding: 12px 24px 0 0;" @click="drawer = !drawer">
-          <img src="./assets/job_detail/sandwich.svg" style="height: 32px; width: 40px;">
+          <img v-if="navHasBg" src="./assets/mobile/menu-icon-red.svg" style="height: 32px; width: 40px;">
+          <img v-else src="./assets/mobile/menu-icon-white.svg" style="height: 32px; width: 40px;">
         </button>
       </div>
     </div>
-
-    <!--this is the old mobile menu-->
-
-    <!--<v-navigation-drawer class="hidden-sm-and-up mobile-menu" v-show="drawer" absolute temporary right light v-model="drawer" overflow>-->
-      <!--<v-toolbar flat class="transparent">-->
-        <!--<v-list class="pa-0">-->
-          <!--<v-list-tile>-->
-            <!--<v-list-tile-content style="flex: 0 1 85%;">-->
-              <!--<v-list-tile-title>Menu</v-list-tile-title>-->
-            <!--</v-list-tile-content>-->
-            <!--<v-btn icon @click.stop="drawer = !drawer">-->
-                <!--<v-icon>clear</v-icon>-->
-              <!--</v-btn>-->
-          <!--</v-list-tile>-->
-        <!--</v-list>-->
-      <!--</v-toolbar>-->
-      <!--<v-list class="pt-0" dense>-->
-        <!--<div v-for="category in sidebarItems[acct]" style="border: solid 1px #E7E7E7; margin: 0 0 20px 0;">-->
-          <!--<div>-->
-            <!--<router-link :to="item.href" v-for="item in category" :key="item.title">-->
-              <!--<v-list-tile>-->
-                <!--<v-list-tile-content>-->
-                  <!--<v-list-tile-title>{{ item.title }}</v-list-tile-title>-->
-                <!--</v-list-tile-content>-->
-              <!--</v-list-tile>-->
-            <!--</router-link>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</v-list>-->
-    <!--</v-navigation-drawer>-->
 
     <div id="d-menu" class="d-menu mobile-show" v-show="drawer">
       <div class="d-menu-inner">
@@ -247,21 +223,12 @@ export default {
           { title: 'Log Out', href: '/account' },
         ],
         [
-          [
-            { title: 'Post New Job',  href: '/createjob' },
-            { title: 'My Posted Jobs', href: '/myjobs' },
-            { title: 'Applicants', href: '/applicants' },
-          ],
-          [
-            { title: 'Notifications', href: '/notifications' },
-            { title: 'Account', href: '/myorg' },
-            { title: 'Settings', href: '/settings' },
-          ],
-          [
-            { title: 'Job Search', href: '/' },
-            { title: 'Applied Jobs', href: '/appliedjobs' },
-            { title: 'Saved Jobs', href: '/savedjobs' },
-          ],
+          { title: 'Post New Job',  href: '/createjob' },
+          { title: 'My Posted Jobs', href: '/myjobs' },
+          { title: 'My Applicants', href: '/applicants' },
+          { title: 'Notifications', href: '/notifications' },
+          { title: 'Account', href: '/myorg' },
+          { title: 'Settings', href: '/settings' },
         ],
       ],
       // TODO: sidebaritems still needed
@@ -308,6 +275,18 @@ export default {
           ],
         ],
       ],
+      newMenuItems: [
+        [
+          { title: 'Search', href: '/search' },
+          { title: 'Applied Jobs', href: '/appliedjobs' },
+          { title: 'Saved Jobs', href: '/savedjobs' },
+        ],
+        [
+          { title: 'Search', href: '/search' },
+          { title: 'My Jobs', href: '/myjobs' },
+          { title: 'Applicants', href: '/applicants' },
+        ],
+      ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },
       right: true,
       numNotifications: 0,
@@ -317,6 +296,24 @@ export default {
   components: {
     Notifications,
     SwitchAccount,
+  },
+  computed: {
+    devmode() {
+      return process.env.NODE_ENV !== 'production';
+    },
+    isJobPostRoute() {
+      const jobPostRoutes = ['/myjobs', '/applicants', '/savedjobs', '/appliedjobs', '/search', '/'];
+      return jobPostRoutes.indexOf(this.$route.path) !== -1;
+      // it is found
+    },
+    navHasBg() {
+      // change this to set to white bg based on scroll position as well
+      console.log(this.$route.path, this.$route.path.indexOf('/job/'));
+      return this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1;
+    },
+    currentMenuItems() {
+      return this.newMenuItems[this.acct - 1];
+    },
   },
   methods: {
     handleDMenuClick(item) {
@@ -378,6 +375,22 @@ export default {
     },
     goTo(route) {
       this.$router.push(route);
+    },
+    goToAccount() {
+      switch (this.acct) {
+        case 0:
+          this.$router.push('/login');
+          break;
+        case 1:
+          this.$router.push('/account');
+          break;
+        case 2:
+          this.$router.push('/myorg');
+          break;
+        default:
+          this.$router.push('/account');
+          break;
+      }
     },
     getNumNotifications() {
       if (this.acct === 0 || !this.$store.state.userID) {
@@ -506,21 +519,6 @@ export default {
     //   }
     // });
   },
-  computed: {
-    devmode() {
-      return process.env.NODE_ENV !== 'production';
-    },
-    isJobPostRoute() {
-      const jobPostRoutes = ['/myjobs', '/applicants', '/savedjobs', '/appliedjobs', '/search', '/'];
-      return jobPostRoutes.indexOf(this.$route.path) !== -1;
-      // it is found
-    },
-    navHasBg() {
-      // change this to set to white bg based on scroll position as well
-      console.log(this.$route.path, this.$route.path.indexOf('/job/'));
-      return this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1;
-    },
-  },
 };
 </script>
 <style lang="scss">
@@ -544,17 +542,13 @@ body, html {
   display: flex;
   justify-content: space-between;
 }
-.mobile-show {
-  display: none ;
-}
-@media only screen and (min-width:600px) {
-  .hidden-sm-and-up { display:none !important; }
+@media only screen and (min-width: 601px) {
+  .hidden-sm-and-up,
+  .mobile-show {
+    display: none !important;
+  }
 }
 @media only screen and (max-width: 600px) {
-  .mobile-show {
-    display: block ;
-    padding: 0;
-  }
   .mobile-hide {
     display: none !important;
   }

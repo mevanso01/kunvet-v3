@@ -19,7 +19,8 @@
       }
     }
     .applicant {
-      padding-top: 6px;
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
     .pdfframe-container {
       height: 95vh;
@@ -36,6 +37,13 @@
       .pdfframe-container,
       .side-pdf-heading {
         padding-right: calc(50vw - 480px);
+      }
+      .applicant .kunvet-v-btn {
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .applicant:hover .kunvet-v-btn {
+        opacity: 1;
       }
     }
   }
@@ -71,8 +79,8 @@
           <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="applicant">
             <div class="inner" style="position: relative;">
               <div class="">
-                <v-layout row wrap>
-                  <v-flex xs12 sm7 style="padding-bottom: 0; cursor: pointer;" @click="openApplication(item)">
+                <v-layout row wrap style="padding-bottom: 12px;">
+                  <v-flex xs12 sm7 style="padding-bottom: 0; cursor: pointer;" @click="openSideResume(item);">
                       <h2 class="new-applicant-card__title">{{ item.name }}</h2>
                       <p style="overflow: hidden; margin-bottom: 0;">
                         <span>
@@ -101,7 +109,12 @@
                     </div>
                   </v-flex>
                 </v-layout>
-                <v-btn @click="openSideResume(item);">Show resume</v-btn>
+                <div>
+                  <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
+                  <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn>
+                  <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
+                  <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->
+                </div>
                 <!-- <v-btn @click="openResumeInNewTab(item);">Open in new tab</v-btn> -->
               </div>
               <!-- {{ item.resumeSrc }}
@@ -479,6 +492,17 @@
           EventBus.$emit('removeNotification', `New applicant: ${item.name}`);
         }
         this.$router.push(`view-applicant/${item._id}`);
+      },
+      openInNewTab(item) {
+        if (item.status === 'submitted') {
+          EventBus.$emit('removeNotification', `New applicant: ${item.name}`);
+        }
+        try {
+          window.open(`view-applicant/${item._id}`, '_blank');
+        } catch (err) {
+          this.$error(err);
+          this.$router.push(`view-applicant/${item._id}`);
+        }
       },
       resetDialogState() {
         this.dialogs.showAccept = false;
