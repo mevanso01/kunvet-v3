@@ -242,14 +242,8 @@ i.icon--selection-control {
 .input-group--error .input-group__details {
   color: #f00;
 }
-.v-dialog {
-  max-width: 420px;
-  border-radius: 0;
-  width: auto;
-}
-.v-dialog > div {
-  min-width: 250px;
-}
+
+
 .application,
 main {
   background-color: #fff;
