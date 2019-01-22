@@ -32,8 +32,14 @@ module.exports = {
 
   // Mail transport
   //
-  // Get yours from https://ethereal.email/create
+  // You don't need this for development. For NODE_ENV=development, email
+  // previews will automatically show up in your browser, and the transport
+  // configurations below will be unused.
+  //
+  // If you're developing remotely, use a fake SMTP server like
+  // https://ethereal.email/create
   mailTransport: {
+    alwaysSend: false, // Actually send emails in NODE_ENV=development
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
