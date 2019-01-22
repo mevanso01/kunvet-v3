@@ -291,6 +291,7 @@ export default {
       right: true,
       numNotifications: 0,
       openSubitem: '',
+      isAtTop: true,
     };
   },
   components: {
@@ -308,8 +309,13 @@ export default {
     },
     navHasBg() {
       // change this to set to white bg based on scroll position as well
+<<<<<<< HEAD
       this.$debug(this.$route.path, this.$route.path.indexOf('/job/'));
       return this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1;
+=======
+      // console.log(this.$route.path, this.$route.path.indexOf('/job/'));
+      return !this.isAtTop || (this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1);
+>>>>>>> changes to navbar and applied jobs
     },
     currentMenuItems() {
       return this.newMenuItems[this.acct - 1];
@@ -470,6 +476,14 @@ export default {
         this.$error(error);
       });
     },
+    handleScroll() {
+      const el = document.scrollingElement || document.documentElement;
+      if (el.scrollTop > 30) {
+        this.isAtTop = false;
+      } else {
+        this.isAtTop = true;
+      }
+    },
   },
   created() {
     EventBus.$on('logout', this.lo);
@@ -502,22 +516,7 @@ export default {
         }
       }
     });
-    // axios.get('auth/status').then(async (res) => {
-    //   if (res.data.success) {
-    //     if (!res.data.status) {
-    //       this.lo();
-    //     } else if (res.data.user.default_org) {
-    //       this.l2();
-    //     } else {
-    //       this.l1();
-    //     }
-    //     if (res.data.status) {
-    //       this.setProfilePic(res.data.user._id, res.data.user.default_org);
-    //     }
-    //   } else {
-    //     this.lo();
-    //   }
-    // });
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
   },
 };
 </script>

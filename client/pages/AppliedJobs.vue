@@ -1,7 +1,18 @@
-<style>
+<style lang="scss">
+.appliedjobs {
+  @media (min-width: 601px) {
+    .aj-card {
+      width: 50%;
+      float: left;
+      .jp-card {
+        width: 100% !important;
+      }
+    }
+  }
+}
 </style>
 <template>
-  <v-container fluid>
+  <v-container fluid class="appliedjobs">
     <div class="main-cont-large">
       <v-layout>
         <v-flex xs12>
@@ -19,8 +30,15 @@
           </h1>
         </v-flex>
       </v-layout>
-      <v-layout row wrap style="padding-bottom: 32px;">
-        <div class="post-card" v-for="{ job, application } in jobsAndApplications" v-if="job" style="height: auto;">
+      <div v-for="({ job, application }, idx) in jobsAndApplications" class="aj-card" :key="`aj-${idx}`">
+        <div class="aj-status" style="text-align: center;">
+          <h3 :style="`font-weight: normal; color: ${getStatusColor(application)}; margin-bottom: 0; height: auto;`">
+            <span class="mobile-hide">Status: </span>{{ getStatusFromApplication(application) }}
+          </h3>
+        </div>
+        <MainJobCard :job="job"></MainJobCard>
+      </div>
+        <!-- <div class="aj-card" v-for="{ job, application } in jobsAndApplications" v-if="job" style="height: auto;">
           <div v-if="!job.is_deleted">
             <v-layout align-center row spacer slot="header">
               <v-flex xs12>
@@ -74,8 +92,8 @@
               </v-flex>
             </v-layout>
           </div>
-        </div>
-      </v-layout>
+        </div> -->
+      <!-- </v-layout> -->
     </div>
   </v-container>
 </template>
@@ -92,6 +110,8 @@
   import ApplicationConstants from '@/constants/application';
   import queries from '@/constants/queries';
 
+  import MainJobCard from '@/components/MainJobCard';
+
   export default {
     data() {
       return {
@@ -104,6 +124,9 @@
           student: StudentSvg,
         },
       };
+    },
+    components: {
+      MainJobCard,
     },
     methods: {
       async getData() {
