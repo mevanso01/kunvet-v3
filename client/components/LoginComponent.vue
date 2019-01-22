@@ -2,7 +2,13 @@
   .link{
     cursor:pointer;
     text-align:center;
+    text-decoration: none;
   }
+
+  .link:hover{
+    text-decoration: underline;
+  }
+
   a:hover{
     cursor:pointer;
     text-decoration: underline;
@@ -37,7 +43,7 @@
     <div v-show="forgetpwd==0" >
       <v-form class="auth-form" v-model="valid" ref="form">
         <section >
-          <h2 class="kunvet-red" style="font-size: 24px">Welcome Back!</h2>
+          <h2 class="kunvet-red" style="font-size: 24px; margin: 48px 0">Welcome Back!</h2>
           <p v-if="bad_login" style="color: #f00; margin-bottom: 0">The email or password you entered is incorrect</p>
           <v-text-field
                   label="E-mail"
@@ -61,12 +67,12 @@
 
 
 
-          <p id="ask-sign-up" style="color: #616161; margin-bottom: 8px;">
-            <router-link to="/signup" class="link">Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></router-link>
+          <p id="ask-sign-up" style="color: #616161; margin-bottom: 8px; margin-top: 36px">
+            <span @click="$emit('toSignup')" class="link">Create an account</span>
 
           </p>
-          <p id="forgot-password" >
-            <a @click="forgetpwd=1" class="link">Forgot your password? <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+          <p id="forgot-password" style="margin-bottom: 60px">
+            <a @click="forgetpwd=1" class="link">Forgot your password?</a>
           </p>
 
         </section>
@@ -92,24 +98,16 @@
     <div v-show="forgetpwd==1" class="auth-form">
       <section v-if="!sent" class="login-section">
         <h2>Forgot Password?</h2>
-        <p>No worries! Simply fill out the email of your account to reset it.</p>
+        <p style="margin-bottom: 40px">No worries! Simply fill out the email of your account to reset it.</p>
         <v-form v-model="valid" ref="form2">
           <v-text-field
                   label="E-mail"
                   v-model="email"
                   :rules="emailRules"
                   required
+                  style="margin-bottom: 150px"
           ></v-text-field>
         </v-form>
-
-        <p id="ask-sign-up" style="color: #616161; margin-bottom: 8px;">
-          <router-link to="/signup" class="link">
-            Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-          </router-link>
-        </p>
-        <p id="forgot-password" style="color: #616161;">
-          <a @click="forgetpwd=0" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-        </p>
       </section>
 
       <section v-if="sent" class="login-section">
@@ -122,13 +120,17 @@
 
       </section>
 
-      <div v-show="!sent" id="general-submit" @click="requestPasswordReset">
+      <div v-show="!sent" id="general-submit" @click="requestPasswordReset" style="margin-bottom: 14px; border-radius: 4px;">
         <div id="general-submit-default">
           <v-progress-circular indeterminate v-if="loading" size="30" style="margin-top: 17px" color="white"></v-progress-circular>
-          <span v-else>Request password reset</span>
+          <span v-else>Request Password Reset</span>
         </div>
       </div>
-
+      <div v-show="!sent" id="general-submit" @click="forgetpwd=0">
+        <div id="general-submit-default" style="background-color: #f36865 !important; border-radius: 4px;">
+          <span >Back To Login</span>
+        </div>
+      </div>
       <!--<v-alert
           color="green darken-1" style="margin-bottom: 0;"
           icon="check_circle"
