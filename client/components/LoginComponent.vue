@@ -5,22 +5,39 @@
   }
   a:hover{
     cursor:pointer;
+    text-decoration: underline;
   }
-  .login-section {
-    padding: 16px 0;
+  /*.login-section {*/
+    /*padding: 16px 0;*/
+  /*}*/
+  /*@media (min-width: 600px) {*/
+    /*.login-section {*/
+      /*padding: 16px 32px;*/
+    /*}*/
+  /*}*/
+
+  section{
+    padding: 0 !important;
   }
-  @media (min-width: 600px) {
-    .login-section {
-      padding: 16px 32px;
-    }
+
+  .login-section p a{
+    text-decoration: none !important;
   }
+
+  .auth-form{
+    border: none;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+
 </style>
 <template>
   <div v-on:keyup.enter="submit">
-    <div v-show="forgetpwd==0">
-      <v-form style="border: none" v-model="valid" ref="form">
-        <section class="login-section">
-          <h2>Welcome Back!</h2>
+    <div v-show="forgetpwd==0" >
+      <v-form class="auth-form" v-model="valid" ref="form">
+        <section >
+          <h2 class="kunvet-red" style="font-size: 24px">Welcome Back!</h2>
           <p v-if="bad_login" style="color: #f00; margin-bottom: 0">The email or password you entered is incorrect</p>
           <v-text-field
                   label="E-mail"
@@ -43,18 +60,20 @@
           ></v-text-field>
 
 
-          <p id="ask-sign-up" class="center" style="color: #616161; margin-bottom: 8px;">
-            <router-link to="/signup" target="_blank" class="link">Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></router-link>
+
+          <p id="ask-sign-up" style="color: #616161; margin-bottom: 8px;">
+            <router-link to="/signup" class="link">Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></router-link>
+
           </p>
-          <p id="forgot-password" class="center kunvet-red">
+          <p id="forgot-password" >
             <a @click="forgetpwd=1" class="link">Forgot your password? <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
           </p>
 
         </section>
-        <div v-if="loggedIn==0" id="general-submit" @click="submit">
+        <div v-if="loggedIn==0" id="general-submit" @click="submit" style="border-radius: 4px; box-shadow: 0 10px 12px -4px #eaeaf9;">
           <div id="general-submit-default">
             <v-progress-circular indeterminate v-if="loading" size="30" color="white"></v-progress-circular>
-            <span v-else>LOGIN</span>
+            <span  v-else>Login</span>
           </div>
         </div>
 
@@ -70,7 +89,7 @@
     </div>
 
 
-    <div v-show="forgetpwd==1">
+    <div v-show="forgetpwd==1" class="auth-form">
       <section v-if="!sent" class="login-section">
         <h2>Forgot Password?</h2>
         <p>No worries! Simply fill out the email of your account to reset it.</p>
@@ -83,12 +102,12 @@
           ></v-text-field>
         </v-form>
 
-        <p id="ask-sign-up" class="center" style="color: #616161; margin-bottom: 8px;">
+        <p id="ask-sign-up" style="color: #616161; margin-bottom: 8px;">
           <router-link to="/signup" class="link">
             Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
           </router-link>
         </p>
-        <p id="forgot-password" class="center" style="color: #616161;">
+        <p id="forgot-password" style="color: #616161;">
           <a @click="forgetpwd=0" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
         </p>
       </section>

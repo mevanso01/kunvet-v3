@@ -311,6 +311,10 @@
     .dialog-card{
       width: 100%;
     }
+
+    .login-card{
+      margin: 150px auto !important;
+    }
   }
 
 
@@ -345,7 +349,7 @@
     height: 56px;
     font-size: 18px;
     border-radius: 2px;
-    background-color: #EA596B !important;
+    /*background-color: #EA596B !important;*/
     width: 80%;
     position: absolute;
     left: 0;
@@ -719,13 +723,13 @@
     <v-dialog class="other-dialog" color="white" style="background-color: white;" v-model="otherdialog" :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
       <v-card v-if="start" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
         <div style="height: 40%">
-          <p style="color: #EA596B; font-size: 30px; width: 80%; margin: 0 auto; padding: 40px 20px 20px 0;">Welcome to Kunvet!</p>
-          <p style="font-size: 14px; width: 80%; margin: 0 auto; padding-right: 20px;">Lorem Ipsum</p>
+          <p style="color: #EA596B; font-size: 48px; width: 80%; margin: 0 auto; padding: 40px 20px 20px 0; font-weight: bold;">Welcome to Kunvet!</p>
+          <!--<p style="font-size: 14px; width: 80%; margin: 0 auto; padding-right: 20px;">Lorem Ipsum</p>-->
         </div>
 
         <div style="height: 60%; text-align: center">
-          <button @click="handleSignup" class="dialog-button" style="width: 80%; position: relative;top: 18%">Sign Up</button>
-          <button @click="handleLogin" class="dialog-button" style="left:2px; width: 80%; position: relative;top: 22%">Log In</button>
+          <button @click="handleSignup" class="kunvet-v-btn dialog-button" style="width: 80%; position: relative;top: 18%">Sign Up</button>
+          <button @click="handleLogin" class="loginRedButton dialog-button" style=" width: 80%; position: relative;top: 22%">Log In</button>
 
         </div>
         <button class="mobile-show" style="position: relative; bottom: 15%;" @click="otherdialog=false" >
@@ -734,8 +738,9 @@
       </v-card>
 
       <v-card flat class="dialog-card" v-else-if="login">
-        <div class="main-cont-small" style="width: 80%; margin: 150px auto !important">
+        <div class="main-cont-small login-card" style="height: 100%; border: none !important; margin: 48px 0 !important;">
           <LoginComponent></LoginComponent>
+
         </div>
         <button class="mobile-show" style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
