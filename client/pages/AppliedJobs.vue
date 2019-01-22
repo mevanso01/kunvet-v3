@@ -1,7 +1,7 @@
 <style>
 </style>
 <template>
-  <v-container fluid class="job-post__container">
+  <v-container fluid>
     <div class="main-cont-large">
       <v-layout>
         <v-flex xs12>
