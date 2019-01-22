@@ -18,20 +18,42 @@
         margin-bottom: 0;
       }
     }
+    .btn-row > a {
+      color: #616161 !important;
+      text-decoration: underline;
+      display: block;
+    }
     .applicant {
       padding-top: 8px;
       padding-bottom: 8px;
     }
     .pdfframe-container {
       height: 95vh;
-      padding: 51px 32px 32px 32px;
+      padding: 55px 32px 32px 32px;
       overflow: scroll;
+      .more {
+        background: none !important;
+      }
     }
     .side-pdf-heading {
       position: fixed;
       width: 100%;
       padding: 18px 32px 0px 32px;
-      background-color: #ef5350;
+      // background-color: #ef5350;
+      // background-color: #ff6969;
+      background-color: #f2f7ff;
+      .v-btn__content {
+        text-transform: none;
+      }
+      h2 {
+        color: #4d4d4d;
+      }
+    }
+    @media (min-width: 601px) {
+      .btn-row > a {
+        padding-right: 8px;
+        display: inline;
+      }
     }
     @media (min-width: 961px) {
       .pdfframe-container,
@@ -80,88 +102,45 @@
             <div class="inner" style="position: relative;">
               <div class="">
                 <v-layout row wrap style="padding-bottom: 12px;">
-                  <v-flex xs12 sm7 style="padding-bottom: 0; cursor: pointer;" @click="openSideResume(item);">
+                  <v-flex xs12 sm6 style="padding-bottom: 0; cursor: pointer;" @click="openSideResume(item);">
                       <h2 class="new-applicant-card__title">{{ item.name }}</h2>
-                      <p style="overflow: hidden; margin-bottom: 0;">
-                        <span>
-                          {{ item.school }}
-                        </span><br />
-                        <span
-                          v-if="item.degree && item.degree !== 'None' && item.degree != 'High school'"
-                          style="color: grey;"
-                        >
-                          {{ item.degree }} in {{ item.major }}<br />
-                        </span>
-                        <span
-                          v-if="item.degree === 'High school'"
-                          style="color: grey;"
-                        >
-                          {{ item.degree }}
-                        </span>
-                        <span v-if="item.notes" style="color: grey;">
-                          Notes: {{ getApplicantNotesDisplayText(item) }}
-                        </span>
+                      <p v-if="item.school" style="overflow: hidden; margin-bottom: 0;">
+                          School: {{ item.school }}
                       </p>
+                      <p v-else style="overflow: hidden; margin-bottom: 0;">
+                          No school info
+                      </p>
+                      <p v-if="item.degree" style="overflow: hidden; margin-bottom: 0;">
+                          Degree: {{ item.degree }}
+                      </p>
+                      <p v-if="item.major" style="overflow: hidden; margin-bottom: 0;">
+                          Major: {{ item.major }}
+                      </p>
+                      <!-- <p style="overflow: hidden; margin-bottom: 0;">
+
+                      </p> -->
                   </v-flex>
-                  <v-flex xs12 sm5 style="padding-bottom: 0;">
-                    <div>
-                      Notes
+                  <v-flex xs12 sm6 style="padding-bottom: 0;">
+                    <div style="padding-top: 25px;">
+                      <span v-if="item.notes" style="color: grey;">
+                        <!-- Notes: {{ getApplicantNotesDisplayText(item) }} -->
+                        <pre style="font-family: Verdana; white-space: pre-line;">
+                          {{ item.notes }}
+                        </pre>
+                      </span>
                     </div>
                   </v-flex>
                 </v-layout>
-                <div>
-                  <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
-                  <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn>
+                <div class="btn-row">
+                  <!-- <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
+                  <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn> -->
+                  <a @click="openSideResume(item);">Show Resume</a>
+                  <a style="color: #616161;" @click="openInNewTab(item)">Open In New Tab</a>
                   <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
                   <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->
                 </div>
                 <!-- <v-btn @click="openResumeInNewTab(item);">Open in new tab</v-btn> -->
               </div>
-              <!-- {{ item.resumeSrc }}
-              <PdfFrame
-                v-if="item.resumeSrc"
-                :href="item.resumeSrc"
-              /> -->
-              <!--<div class="btn-holder btn-holder--equal-height">
-                <div class="btn-holder__right-elements">
-                  <span v-if="isAcceptedOrRejected(item)">
-                    <span style="color: grey;">
-                      {{ getAcceptedOrRejectedText(item) }}
-                    </span>
-                    <v-btn
-                      v-if="item.status === 'accepted'"
-                      class="kunvet-black-small-btn"
-                      @click="showContactInfoDialog(item)"
-                    >
-                      Contact
-                    </v-btn>
-                    <v-btn
-                      v-if="item.status === 'accepted'"
-                      class="kunvet-black-small-btn"
-                      :href="`mailto:${item.email}`"
-                    >
-                      Send email
-                    </v-btn>
-                  </span>
-                  <span v-else>
-                    <span style="color: red;">
-                      {{ getApplicantExpiringText(item) }}
-                    </span>
-                    <v-btn
-                      class="kunvet-accept-small-btn"
-                      @click="onShowAcceptDialog(item)"
-                    >
-                      Accept
-                    </v-btn>
-                    <v-btn
-                      class="kunvet-reject-small-btn"
-                      @click="onShowRejectDialog(item)"
-                    >
-                      Reject
-                    </v-btn>
-                  </span>
-                </div>
-              </div>-->
             </div>
           </div>
         </div>
@@ -174,21 +153,30 @@
        temporary>
        <div style="height: auto;
           width: 100%;
-          background-color: #ef5350;
+          background-color: #f2f7ff;
           z-index: 9;
           position: fixed;
           top: 64px;
           padding: 0;
           overflow: hidden;">
          <div class="side-pdf-heading">
-           <h2 v-if="currentApplicant" style="color: white; text-align: center;">{{ currentApplicant.name }}</h2>
+           <v-layout class="pb-2">
+             <v-flex xs6 class="pa-0">
+               <h2 v-if="currentApplicant" class="mb-0" style="text-align: left; line-height: 36px;">
+                 {{ currentApplicant.name }}
+               </h2>
+             </v-flex>
+             <v-flex xs6 class="pa-0" style="text-align: right;">
+               <v-btn flat class="mr-1 kunvet-v-btn light " @click="showSideResume = false;">Hide Resume</v-btn>
+               <v-btn flat class="ma-0  kunvet-v-btn light" @click="showSideResume = false;">Download Resume</v-btn>
+             </v-flex>
+          </v-layout>
          </div>
          <div class="pdfframe-container">
            <PdfFrame
              v-if="currentApplicant && currentApplicant.resumes[0] && currentResumeSrc"
              :href="currentResumeSrc"
            />
-           <v-btn flat class="ml-0" @click="showSideResume = false;">Hide Resume</v-btn>
          </div>
        </div>
     </v-navigation-drawer>
