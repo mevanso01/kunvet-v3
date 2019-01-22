@@ -309,13 +309,8 @@ export default {
     },
     navHasBg() {
       // change this to set to white bg based on scroll position as well
-<<<<<<< HEAD
-      this.$debug(this.$route.path, this.$route.path.indexOf('/job/'));
-      return this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1;
-=======
       // console.log(this.$route.path, this.$route.path.indexOf('/job/'));
       return !this.isAtTop || (this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1);
->>>>>>> changes to navbar and applied jobs
     },
     currentMenuItems() {
       return this.newMenuItems[this.acct - 1];
