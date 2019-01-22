@@ -44,7 +44,7 @@
 
 
           <p id="ask-sign-up" class="center" style="color: #616161; margin-bottom: 8px;">
-            <router-link to="/signup" class="link">Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></router-link>
+            <router-link to="/signup" target="_blank" class="link">Create an account <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></router-link>
           </p>
           <p id="forgot-password" class="center kunvet-red">
             <a @click="forgetpwd=1" class="link">Forgot your password? <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
