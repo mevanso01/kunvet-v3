@@ -504,12 +504,6 @@ if (algoliaConfig.appId) {
 
 Vue.use(VueApollo);
 
-const findJobQuery = gql`query ($id: MongoID) {
-  findJob (filter: { active: true, _id: $id }){
-    ${queries.FindJobRecordForJobCard}
-  }
-}`;
-
 export default {
   components: {
     MainJobCard,
@@ -643,7 +637,8 @@ export default {
     openSelect(name) {
       this.filterPositions = null; // clear job filter text
       if (this.openSelectField === 'city') {
-        this.filterJobs(); // filter jobs when city is closed
+        this.search();
+        // this.filterJobs(); // filter jobs when city is closed
       }
       if (this.openSelectField === name) {
         this.openSelectField = null;
@@ -757,81 +752,6 @@ export default {
           }
         }
       });
-    },
-    async filterJobs() {
-      // job types
-      this.commitData();
-      let selectedTypes = [];
-      let selectedTypes2 = [];
-      if (this.selectedTypes.length === 0) {
-        selectedTypes = ['fulltime', 'parttime'];
-        selectedTypes2 = ['internship', 'contract'];
-      } else {
-        for (let i = 0; i < this.selectedTypes.length; i++) {
-          if (['fulltime', 'parttime'].indexOf(this.selectedTypes[i]) >= 0) {
-            selectedTypes.push(this.selectedTypes[i]);
-          }
-          if (['internship', 'contract'].indexOf(this.selectedTypes[i]) >= 0) {
-            selectedTypes2.push(this.selectedTypes[i]);
-          }
-        }
-      }
-      let jobsToFetch = this.findJobs.concat();
-      if (this.selectedCity) { // should be always true?
-        this.setSelectedLatlongs();
-        jobsToFetch = jobsToFetch.filter(x => this.filterJobByDistance(x));
-      }
-      let endIndex = jobsToFetch.length;
-      if (endIndex > 99) {
-        endIndex = 99;
-      }
-      jobsToFetch = jobsToFetch.splice(0, endIndex);
-      if (endIndex > 0) {
-        for (var i = 0; i < endIndex; i++) {
-          const index = findIndex(this.filteredJobs, { '_id': jobsToFetch[i]._id });
-          if (index === -1) {
-            this.$apollo.query({
-              query: findJobQuery,
-              variables: {
-                id: jobsToFetch[i]._id,
-              },
-            }).then((data) => {
-              this.loadingJobs = false;
-              const job = data.data.findJob;
-              if (
-                this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
-                (findIndex(this.filteredJobs, { '_id': job._id }) === -1)
-              ) {
-                const distance = this.computeDistance(job.latitude, job.longitude);
-                if (distance < 10) {
-                  this.displayedJobs[0].push(job);
-                } else if (distance > 10 && distance < 20) {
-                  this.displayedJobs[1].push(job);
-                } else {
-                  this.displayedJobs[2].push(job);
-                }
-                // this.filteredJobs.push(job);
-                // this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
-              }
-            });
-          } else {
-            const job = this.filteredJobs[index];
-            if (!this.filterJobByInfo(job, selectedTypes, selectedTypes2)) {
-              // this.filteredJobs.splice(index, 1);
-              const distance = this.computeDistance(job.latitude, job.longitude);
-              if (distance < 10) {
-                this.displayedJobs[0].splice(index, 1);
-              } else if (distance > 10 && distance < 20) {
-                this.displayedJobs[1].splice(index, 1);
-              } else {
-                this.displayedJobs[2].splice(index, 1);
-              }
-            }
-          }
-        }
-      } else {
-        this.loadingJobs = false;
-      }
     },
     filterJobByInfo(job, selectedTypes, selectedTypes2) {
       if (
@@ -1089,7 +1009,20 @@ export default {
       this.page = 0;
       this.loadingJobs = true;
       this.displayedJobs = [[], [], []];
-      this.algoliaSearch();
+      this.rawSearch();
+    },
+    rawSearch() {
+      if (process && process.env && process.env.NODE_ENV === 'development') {
+        // Local DB
+        console.log('Loading from local db for development purposes');
+        this.findAndFilterJobs();
+      } else if (algoliaClient) {
+        // Algolia
+        this.algoliaSearch();
+      } else {
+        // No usable backend is available
+        this.$error('No usable search backend');
+      }
     },
   },
   deactivated() {
@@ -1109,17 +1042,7 @@ export default {
     if (this.filteredJobs.length === 0) {
       this.loadingJobs = true;
     }
-    if (process && process.env && process.env.NODE_ENV === 'development') {
-      // Local DB
-      console.log('Loading from local db for development purposes');
-      this.findAndFilterJobs();
-    } else if (algoliaClient) {
-      // Algolia
-      this.algoliaSearch();
-    } else {
-      // No usable backend is available
-      this.$error('No usable search backend');
-    }
+    this.rawSearch();
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
     if (data) {
