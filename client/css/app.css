@@ -135,6 +135,7 @@ button:focus {
 .main-navbar {
   height: 64px;
   z-index: 100;
+  transition: background-color 0.5s ease-in-out;
 }
 .main-navbar .post-a-job-button {
   color: white;

@@ -10,21 +10,20 @@
         </div>
       </v-flex>
       <v-flex xs3>
-
-      <div class="float-right">
-        <v-tooltip bottom v-if="computeIsLoggedOut">
-          <div slot="activator">
-            <a class="svg-button">
-              <img style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
-            </a>
-          </div>
-          <span>Please log in</span>
-        </v-tooltip>
-        <a v-else class="svg-button" @click="saveJobClicked(job._id)">
-          <img v-if="isSaved" style="height: 24px; margin: 6px auto;" :src="svgs.yellowBookmark" />
-          <img v-else style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
-        </a>
-      </div>
+        <div class="float-right" v-show="saveJobFunc">
+          <v-tooltip bottom v-if="computeIsLoggedOut">
+            <div slot="activator">
+              <a class="svg-button">
+                <img style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
+              </a>
+            </div>
+            <span>Please log in</span>
+          </v-tooltip>
+          <a v-else class="svg-button" @click="saveJobClicked(job._id)">
+            <img v-if="isSaved" style="height: 24px; margin: 6px auto;" :src="svgs.yellowBookmark" />
+            <img v-else style="height: 24px; margin: 6px auto;" :src="svgs.grayBookmark" />
+          </a>
+        </div>
       </v-flex>
     </v-layout>
     <v-divider class="jp-divider"></v-divider>

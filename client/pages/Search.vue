@@ -637,7 +637,7 @@ export default {
     openSelect(name) {
       this.filterPositions = null; // clear job filter text
       if (this.openSelectField === 'city') {
-        this.search();
+        // this.search();
         // this.filterJobs(); // filter jobs when city is closed
       }
       if (this.openSelectField === name) {
