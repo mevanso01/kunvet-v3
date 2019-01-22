@@ -28,15 +28,17 @@
       padding-bottom: 8px;
     }
     .pdfframe-container {
-      height: 95vh;
-      padding: 55px 32px 32px 32px;
+      // height: 95vh;
+      padding: 64px 32px 32px 32px;
       overflow: scroll;
       .more {
         background: none !important;
       }
     }
     .side-pdf-heading {
-      position: fixed;
+      position: sticky;
+      top: 64px;
+      z-index: 99;
       width: 100%;
       padding: 18px 32px 0px 32px;
       // background-color: #ef5350;
@@ -66,6 +68,11 @@
       }
       .applicant:hover .kunvet-v-btn {
         opacity: 1;
+      }
+    }
+    @media (max-width: 767px) {
+      .side-pdf-heading .sp-buttons {
+        display: none;
       }
     }
   }
@@ -151,6 +158,19 @@
        v-model="showSideResume"
        absolute right width="900"
        temporary>
+       <div class="side-pdf-heading">
+         <v-layout class="pb-3">
+           <v-flex xs12 sm6 class="pa-0">
+             <h2 v-if="currentApplicant" class="mb-0" style="text-align: left; line-height: 36px;">
+               {{ currentApplicant.name }}
+             </h2>
+           </v-flex>
+           <v-flex xs12 sm6 class="pa-0 sp-buttons" style="text-align: right;">
+             <v-btn flat class="kunvet-v-btn light" style="margin-right: 12px;" @click="showSideResume = false;">Hide Resume</v-btn>
+             <v-btn flat class="ma-0  kunvet-v-btn light" @click="showSideResume = false;">Download Resume</v-btn>
+           </v-flex>
+        </v-layout>
+       </div>
        <div style="height: auto;
           width: 100%;
           background-color: #f2f7ff;
@@ -159,19 +179,6 @@
           top: 64px;
           padding: 0;
           overflow: hidden;">
-         <div class="side-pdf-heading">
-           <v-layout class="pb-2">
-             <v-flex xs6 class="pa-0">
-               <h2 v-if="currentApplicant" class="mb-0" style="text-align: left; line-height: 36px;">
-                 {{ currentApplicant.name }}
-               </h2>
-             </v-flex>
-             <v-flex xs6 class="pa-0" style="text-align: right;">
-               <v-btn flat class="mr-1 kunvet-v-btn light " @click="showSideResume = false;">Hide Resume</v-btn>
-               <v-btn flat class="ma-0  kunvet-v-btn light" @click="showSideResume = false;">Download Resume</v-btn>
-             </v-flex>
-          </v-layout>
-         </div>
          <div class="pdfframe-container">
            <PdfFrame
              v-if="currentApplicant && currentApplicant.resumes[0] && currentResumeSrc"
