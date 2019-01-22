@@ -734,7 +734,9 @@
       </v-card>
 
       <v-card flat class="dialog-card" v-else-if="login">
-        <LoginComponent></LoginComponent>
+        <div class="main-cont-small" style="width: 80%; margin: 150px auto !important">
+          <LoginComponent></LoginComponent>
+        </div>
         <button class="mobile-show" style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>

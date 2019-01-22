@@ -16,7 +16,7 @@
   }
 </style>
 <template>
-  <div class="main-cont-small" style="width: 80%; margin: 150px auto !important" v-on:keyup.enter="submit">
+  <div v-on:keyup.enter="submit">
     <div v-show="forgetpwd==0">
       <v-form style="border: none" v-model="valid" ref="form">
         <section class="login-section">
@@ -31,15 +31,15 @@
                   required
           ></v-text-field>
           <v-text-field
-                  label="Password"
-                  v-model="password"
-                  :rules="passwordRules"
-                  min="8"
-                  :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                  :append-icon-cb="() => (e1 = !e1)"
-                  :type="e1 ? 'password' : 'text'"
-                  @change="bad_login = false;"
-                  required
+            label="Password"
+            v-model="password"
+            :rules="passwordRules"
+            min="8"
+            :append-icon="e1 ? 'visibility' : 'visibility_off'"
+            :append-icon-cb="() => (e1 = !e1)"
+            :type="e1 ? 'password' : 'text'"
+            @change="bad_login = false;"
+            required
           ></v-text-field>
 
 
@@ -60,10 +60,10 @@
 
 
         <v-alert
-                color="green darken-1"
-                icon="priority_high"
-                :value="loggedIn"
-                transition="slide-x-transition">
+            color="green darken-1"
+            icon="priority_high"
+            :value="loggedIn"
+            transition="slide-x-transition">
           Logged in successfully!
         </v-alert>
       </v-form>
