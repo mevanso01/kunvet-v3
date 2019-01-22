@@ -29,7 +29,6 @@ export default {
     MainJobCard,
   },
   data() {
-    console.log('algolia', Config.get('algolia'));
     return {
       algolia: Config.get('algolia'),
       appId: Config.get('algolia.appId'),

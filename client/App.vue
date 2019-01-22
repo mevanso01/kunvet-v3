@@ -308,7 +308,7 @@ export default {
     },
     navHasBg() {
       // change this to set to white bg based on scroll position as well
-      console.log(this.$route.path, this.$route.path.indexOf('/job/'));
+      this.$debug(this.$route.path, this.$route.path.indexOf('/job/'));
       return this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1;
     },
     currentMenuItems() {

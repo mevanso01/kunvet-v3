@@ -329,7 +329,7 @@
       async openSideResume(item) {
         this.showSideResume = true;
         this.currentApplicant = item;
-        console.log('Item', item);
+        this.$debug('Item', item);
         if (item.resumes[0] && item.resumes[0].filename) {
           const src = await FileClient.getLink(item.resumes[0].filename);
           this.currentResumeSrc = src;
@@ -536,7 +536,7 @@
         return StringHelper.truncate(notes, 80);
       },
       getApplicantsString(num) {
-        console.log('num', num);
+        this.$debug('num', num);
         // return num === 1 ? 'applicant' : 'applicants';
         if (num === 1) { return 'applicant'; }
         return 'applicants';

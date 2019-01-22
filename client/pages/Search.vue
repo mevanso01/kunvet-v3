@@ -1003,7 +1003,7 @@ export default {
           miles += 10;
         }
       }
-      console.log(this.filteredJobs);
+      this.$debug(this.filteredJobs);
     },
     search() {
       this.page = 0;
@@ -1014,7 +1014,7 @@ export default {
     rawSearch() {
       if (process && process.env && process.env.NODE_ENV === 'development') {
         // Local DB
-        console.log('Loading from local db for development purposes');
+        this.$debug('Loading from local db for development purposes');
         this.findAndFilterJobs();
       } else if (algoliaClient) {
         // Algolia
