@@ -498,10 +498,10 @@
           EventBus.$emit('removeNotification', `New applicant: ${item.name}`);
         }
         try {
-          window.open(`view-applicant/${item._id}`, '_blank');
+          window.open(`view-resume/${item._id}`, '_blank');
         } catch (err) {
           this.$error(err);
-          this.$router.push(`view-applicant/${item._id}`);
+          this.$router.push(`view-resume/${item._id}`);
         }
       },
       resetDialogState() {
