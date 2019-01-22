@@ -211,15 +211,12 @@
             this.loading = false; // dont forget to stop spinner
             if (udata.default_org === '' || !udata.default_org) {
               // login individual
-              // App.methods.login_i();
               EventBus.$emit('individual');
-              this.triggerRedirect();
+              this.$emit('loggedIn');
             } else {
               // login business
               this.commitBusinessID(udata.default_org);
-              // App.methods.login_b();
               EventBus.$emit('business');
-              // this.triggerRedirect();
               this.$emit('loggedIn');
             }
           }).catch((error) => {
