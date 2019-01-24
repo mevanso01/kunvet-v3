@@ -971,6 +971,7 @@ body {
 }
 #general-submit,
 .general-submit {
+    box-shadow: 0 10px 12px -4px #eaeaf9;
     font-weight: bold;
     position: relative;
     width: 100%;

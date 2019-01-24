@@ -723,13 +723,13 @@
     <v-dialog class="other-dialog" color="white" style="background-color: white;" v-model="otherdialog" :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
       <v-card v-if="start" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
         <div style="height: 40%">
-          <p style="color: #EA596B; font-size: 48px; width: 80%; margin: 0 auto; padding: 40px 20px 20px 0; font-weight: bold;">Welcome to Kunvet!</p>
+          <p style="color: #EA596B; font-size: 48px; width: 80%; margin: 0 auto; padding: 40px 20px 20px 0; font-weight: bold; line-height: 1.3">Welcome to Kunvet!</p>
           <!--<p style="font-size: 14px; width: 80%; margin: 0 auto; padding-right: 20px;">Lorem Ipsum</p>-->
         </div>
 
         <div style="height: 60%; text-align: center">
-          <button @click="handleSignup" class="kunvet-v-btn dialog-button" style="width: 80%; position: relative;top: 18%">Sign Up</button>
-          <button @click="handleLogin" class="loginRedButton dialog-button" style=" width: 80%; position: relative;top: 22%">Log In</button>
+          <button @click="handleSignup" class="kunvet-v-btn dialog-button" style="width: 80%; position: relative;top: 42%">Sign Up</button>
+          <button @click="handleLogin" class="loginRedButton dialog-button" style=" width: 80%; position: relative;top: 46%">Log In</button>
 
         </div>
         <button class="mobile-show" style="position: relative; bottom: 15%;" @click="otherdialog=false" >
@@ -739,7 +739,7 @@
 
       <v-card flat class="dialog-card" v-else-if="login">
         <div class="main-cont-small login-card" style="height: 100%; border: none !important; margin: 48px 0 !important;">
-          <LoginComponent></LoginComponent>
+          <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
 
         </div>
         <button class="mobile-show" style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
@@ -752,6 +752,10 @@
         <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>
+      </v-card>
+
+      <v-card flat class="dialog-card" v-else-if="resume">
+        <ResumeUploader></ResumeUploader>
       </v-card>
 
     </v-dialog>
@@ -783,6 +787,7 @@
     import MobileMenu from '@/components/MobileMenu';
     import LoginComponent from '@/components/LoginComponent';
     import SignupComponent from '@/components/SignupComponent';
+    import ResumeUploader from '@/components/ResumeUploader';
     // const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
     export default {
@@ -790,6 +795,7 @@
         MobileMenu,
         LoginComponent,
         SignupComponent,
+        ResumeUploader,
       },
       props: ['id'],
       data() {
@@ -798,6 +804,7 @@
           login: false,
           signup: false,
           start: false,
+          resume: false,
           findJob: {},
           jobType: [],
           serverUrl: Config.get('serverUrl'),
@@ -885,11 +892,19 @@
           this.login = true;
           this.start = false;
           this.signup = false;
+          this.resume = false;
         },
         handleSignup() {
           this.signup = true;
           this.start = false;
           this.login = false;
+          this.resume = false;
+        },
+        handleResume() {
+          this.signup = false;
+          this.start = false;
+          this.login = false;
+          this.resume = true;
         },
         handleScroll() {
           this.stickToBottom = this.isNotAtBottom();
