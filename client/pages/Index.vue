@@ -437,11 +437,11 @@
             </div>
           </v-flex>
         </v-layout>
-        
+
       <div style="width:100%; height:120px;">
       </div>
 
-            <div style="height: 320px; width:calc(54%); margin-top:30px; position:absolute; z-index:1000;       
+            <div style="height: 320px; width:calc(54%); margin-top:30px; position:absolute; z-index:1000;
                 background:  #2f89fc;
                 background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
                 background: linear-gradient(to right,  #a57fff , #2f89fc);
@@ -450,7 +450,7 @@
 
                 <div style="padding-top: 6%; padding-left:35%;color:white;font-size:36px;"><strong>Loved & Trusted</strong></div>
                 <div style="width: 48%; padding-top: 12px; margin-left:35%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
-                <router-link to="/createjob">    
+                <router-link to="/createjob">
                   <button v-ripple style="margin-top:20px; margin-left:35%" class="postAJob2">Post a Job</button>
                 </router-link>
             </div>
@@ -462,7 +462,7 @@
 
 
         <div style="width:100%; height:120px;">
-        </div>  
+        </div>
 
     </div>
   </v-container>
@@ -534,6 +534,7 @@ export default {
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
+      query: '',
     };
   },
   computed: {
@@ -611,7 +612,11 @@ export default {
       if (this.selectedCity && this.selectedCity[0]) {
         this.$store.commit('go');
         this.commitData();
-        this.$router.push('/search');
+        if (this.query) {
+          this.$router.push({ path: '/search', query: { q: this.query } });
+        } else {
+          this.$router.push('/search');
+        }
       }
     },
     commitData() {
