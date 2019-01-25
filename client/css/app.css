@@ -135,7 +135,7 @@ button:focus {
 .main-navbar {
   height: 64px;
   z-index: 100;
-  transition: background-color 0.5s ease-in-out;
+  transition: background-color 0.3s !important;
 }
 .main-navbar .post-a-job-button {
   color: white;
@@ -154,6 +154,11 @@ button:focus {
 }
 .main-navbar .nav-items .v-btn > .v-btn__content {
   height: 64px;
+}
+.mobile-navbar > .header-icon-container {
+  position: fixed;
+  height: 56px;
+  transition: background-color 0.3s;
 }
 .mobile-menu {
   position: fixed;

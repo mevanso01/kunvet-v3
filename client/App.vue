@@ -11,7 +11,7 @@
       </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="acct > 0">
-        <v-btn v-for="item in currentMenuItems"
+        <v-btn v-for="item in currentMenuItems" :key="item.title"
           flat @click="goTo(item.href)" style="background-color: inherit;" class="text-capitalize white--text">
           {{ item.title }}
         </v-btn>
@@ -25,7 +25,8 @@
         </v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else>
-        <v-btn flat v-for="item in items[acct]" :to="item.href" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
+        <!-- :to="item.href" -->
+        <v-btn flat v-for="item in items[acct]" @click="goTo(item.href)" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
           {{ item.title }}
         </v-btn>
         <div style="padding-top: 18px; padding-left: 16px;">
@@ -34,31 +35,24 @@
           </router-link>
         </div>
       </v-toolbar-items>
-      <!--logged in but not a job-route-->
-      <!-- <v-toolbar-items v-else>
-        <v-btn flat v-for="item in items[acct]" :to="item.href" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
-          {{ item.title }}
-        </v-btn>
-      </v-toolbar-items> -->
-      <!--logged in but is a job-route-->
     </v-toolbar>
 
-
     <!-- mobile menu icon -->
-    <div class="mobile-show">
-      <div class="header-icon-container " style="z-index: 100; ">
+    <div class="mobile-show mobile-navbar">
+      <div class="header-icon-container" :class="{ 'white-bg': navHasBg }" style="z-index: 100;">
         <div style="padding: 12px 0 0 24px; ">
           <router-link to="/search">
             <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
-            <img v-else src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+            <img v-else src="./assets/logo/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
           </router-link>
         </div>
-        <button style="padding: 12px 24px 0 0;" @click="drawer = !drawer">
+        <button style="padding: 12px 24px 12px 0;" @click="drawer = !drawer">
           <img v-if="navHasBg" src="./assets/mobile/menu-icon-red.svg" style="height: 32px; width: 40px;">
           <img v-else src="./assets/mobile/menu-icon-white.svg" style="height: 32px; width: 40px;">
         </button>
       </div>
     </div>
+
 
     <div id="d-menu" class="d-menu mobile-show" v-show="drawer">
       <div class="d-menu-inner">
