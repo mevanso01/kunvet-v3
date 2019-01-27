@@ -8,6 +8,7 @@ import InstantSearch from 'vue-instantsearch';
 
 import Client from '@/apollo/client';
 import SearchHighlight from '@/components/SearchHighlight';
+import TextField from '@/components/TextField';
 
 import '@/options/axios';
 import '@/options/googleMaps';
@@ -35,6 +36,7 @@ Vue.use(VueTimeago, {
 });
 Vue.use(InstantSearch);
 Vue.component('highlight', SearchHighlight);
+Vue.component('k-text-field', TextField);
 
 const apolloProvider = new VueApollo({
   defaultClient: Client,
