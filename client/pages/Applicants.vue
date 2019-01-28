@@ -52,6 +52,23 @@
         color: #4d4d4d;
       }
     }
+    .sp-footer {
+      position: sticky;
+      bottom: 0px;
+      height: 60px;
+      padding: 8px 32px;
+      background-color: #f2f7ff;
+      h2 {
+        font-size: 18px;
+        line-height: 42px;
+        color: #616161;
+        font-weight: 400;
+      }
+      button {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
     @media (min-width: 601px) {
       .btn-row > a {
         padding-right: 8px;
@@ -66,7 +83,8 @@
     }
     @media (min-width: 961px) {
       .pdfframe-container,
-      .sp-heading {
+      .sp-heading,
+      .sp-footer {
         padding-right: calc(50vw - 480px);
       }
       .applicant .kunvet-v-btn {
@@ -93,7 +111,8 @@
       .sp-drawer {
         z-index: 200;
       }
-      .sp-heading {
+      .sp-heading,
+      .sp-footer {
         display: none;
       }
       .sp-heading-mobile {
@@ -115,36 +134,6 @@
         background-color: #f2f7ff;
         z-index: 5;
       }
-    }
-  }
-  .mobile-resume {
-    background-color: #f2f7ff;
-    .mr-header {
-      position: sticky;
-      top: 0;
-      height: 40px;
-      background-color: #f2f7ff;
-      padding: 0 16px;
-      z-index: 5;
-      h2 {
-        text-align:center;
-        line-height: 40px;
-      }
-    }
-    .mr-content {
-      margin-bottom: 24px;
-      padding: 0 16px;
-    }
-    .mr-footer {
-      padding: 0 16px;
-      position: sticky;
-      bottom: 0;
-      height: 64px;
-      background-color: #f2f7ff;
-      z-index: 5;
-    }
-    .more {
-      z-index: 1;
     }
   }
   // height: auto;
@@ -254,7 +243,7 @@
 
     <v-navigation-drawer
        v-model="showSideResume"
-       absolute right width="900"
+       fixed right width="900"
        temporary class="sp-drawer">
        <div class="sp-heading">
          <v-layout class="pb-3">
@@ -278,14 +267,35 @@
        <div class="sp-content">
          <div class="pdfframe-container">
            <PdfFrame
-             v-if="currentApplicant && currentApplicant.resumes[0] && currentResumeSrc"
+             v-if="currentApplicant && currentApplicant.resumes.length > 0 && currentResumeSrc"
              :href="currentResumeSrc"
            />
          </div>
        </div>
+       <div class="sp-footer" v-if="currentApplicant && currentApplicant.resumes.length > 1" style="text-align: center;">
+         <v-layout>
+           <v-flex xs12 class="pa-0" style="text-align: right;">
+             <h2 class="mb-0">
+               <span style="margin-right: 10px;">Showing file {{ currFileNum + 1 }} of {{ currentApplicant.resumes.length }}</span>
+               <v-btn icon @click="nextFile(true)" style="height: 42px; width: 42px; color: white; background-color: white;">
+                 <img src="../assets/mobile/leftarrow.svg" style="height: 42px; width: 42px;">
+               </v-btn>
+               <v-btn icon @click="nextFile()" style="height: 42px; width: 42px; color: white; background-color: white;">
+                 <img src="../assets/mobile/rightarrow.svg" style="height: 42px; width: 42px;">
+               </v-btn>
+             </h2>
+           </v-flex>
+         </v-layout>
+       </div>
        <div class="sp-mobile-footer" style="text-align: center;">
+         <v-btn v-if="currentApplicant && currentApplicant.resumes.length > 1" icon @click="nextFile(true)" style="height: 42px; width: 42px; color: white; background-color: white;">
+           <img src="../assets/mobile/leftarrow.svg" style="height: 42px; width: 42px;">
+         </v-btn>
          <v-btn icon @click="showSideResume = false;" style="height: 48px; width: 48px; color: white; background-color: white;">
            <img src="../assets/mobile/close.svg" style="height: 48px; width: 48px;">
+         </v-btn>
+         <v-btn v-if="currentApplicant && currentApplicant.resumes.length > 1" icon @click="nextFile()" style="height: 42px; width: 42px; color: white; background-color: white;">
+           <img src="../assets/mobile/rightarrow.svg" style="height: 42px; width: 42px;">
          </v-btn>
        </div>
     </v-navigation-drawer>
@@ -410,6 +420,7 @@
         currentApplicant: null,
         currentResumeSrc: null,
         showSideResume: false,
+        currFileNum: 0,
       };
     },
     components: {
@@ -426,11 +437,23 @@
       async openSideResume(item) {
         this.showSideResume = true;
         this.currentApplicant = item;
+        this.currFileNum = 0;
         if (item.resumes[0] && item.resumes[0].filename) {
           const src = await FileClient.getLink(item.resumes[0].filename);
           this.currentResumeSrc = src;
         } else {
           this.currentResumeSrc = null;
+        }
+      },
+      async nextFile(reverse) {
+        const increment = reverse ? -1 : 1;
+        if (!this.currentApplicant || this.currFileNum + increment < 0 || this.currFileNum + increment >= this.currentApplicant.resumes.length) {
+          return;
+        }
+        this.currFileNum += increment;
+        if (this.currentApplicant.resumes[this.currFileNum] && this.currentApplicant.resumes[this.currFileNum].filename) {
+          const src = await FileClient.getLink(this.currentApplicant.resumes[this.currFileNum].filename);
+          this.currentResumeSrc = src;
         }
       },
       async getData() {
