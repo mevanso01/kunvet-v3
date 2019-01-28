@@ -4,7 +4,12 @@
     @click="click"
     :style="buttonStyle"
   >
-    <slot></slot>
+    <span v-if="working">
+      <v-progress-circular indeterminate></v-progress-circular>
+    </span>
+    <span v-else>
+      <slot></slot>
+    </span>
   </div>
 </template>
 <script>
@@ -18,6 +23,10 @@ export default {
     dark: {
       type: Boolean,
       default: true,
+    },
+    working: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
