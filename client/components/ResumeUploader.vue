@@ -22,6 +22,7 @@
     }
 
     .existing-file{
+        margin-bottom: 10px;
         display: flex;
         justify-content: start;
         background-color: #eee;
@@ -30,7 +31,8 @@
     }
 
     .existing-file p{
-        line-height: 1;
+        line-height: 70px;
+        transform: translateX(50px);
     }
 
     .smaller-file-icon{
@@ -80,11 +82,7 @@
                     <h2>Existing Files</h2>
                     <div class="existing-file" v-for="file in resumes">
                         <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
-                        <div>
-                            <p>date</p>
-                            <p>{{file.name}} test</p>
-                        </div>
-
+                        <p>{{file.name}}</p>
                     </div>
                 </div>
                 <!--<v-text-field-->

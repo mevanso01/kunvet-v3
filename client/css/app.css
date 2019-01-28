@@ -467,6 +467,7 @@ i.fa.fa-plus-circle {
   height: 100%;
   position: absolute;
   cursor: pointer;
+  z-index: 5;
 }
 .dropbox:hover {
   background: lightblue; /* when mouse over to the drop zone, change color */
