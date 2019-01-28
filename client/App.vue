@@ -195,7 +195,7 @@ export default {
           { title: 'Post a Job', href: '/createjob' },
         ],
         [
-          { title: 'User\'s Name', href: '/account', isTop: true },
+          { title: 'test', href: '/account', isTop: true },
           { title: 'Search', href: '/search' },
           {
             title: 'My Jobs',

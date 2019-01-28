@@ -359,7 +359,7 @@
               </v-flex>
             </v-layout>
 
-            <v-dialog v-model="showFileModal" content-class="auto-dialog">
+            <v-dialog v-model="showFileModal" style="height: 600px">
               <ResumeUploader
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
