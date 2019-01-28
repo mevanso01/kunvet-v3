@@ -31,11 +31,12 @@
       // height: 95vh;
       padding: 64px 32px 32px 32px;
       overflow: scroll;
+      background-color: #f2f7ff;
       .more {
         background: none !important;
       }
     }
-    .side-pdf-heading {
+    .sp-heading {
       position: sticky;
       top: 64px;
       z-index: 99;
@@ -57,9 +58,15 @@
         display: inline;
       }
     }
+    @media (min-width: 768px) {
+      .sp-heading-mobile,
+      .sp-mobile-footer {
+        display: none;
+      }
+    }
     @media (min-width: 961px) {
       .pdfframe-container,
-      .side-pdf-heading {
+      .sp-heading {
         padding-right: calc(50vw - 480px);
       }
       .applicant .kunvet-v-btn {
@@ -70,12 +77,84 @@
         opacity: 1;
       }
     }
+    @media (max-width: 600px) {
+      .side-pdf-heading {
+        top: 0;
+        z-index: 101;
+      }
+    }
     @media (max-width: 767px) {
-      .side-pdf-heading .sp-buttons {
+      // .side-pdf-heading .sp-buttons {
+      //   display: none;
+      // }
+      .pdfframe-container {
+        padding: 0 16px;
+      }
+      .sp-drawer {
+        z-index: 200;
+      }
+      .sp-heading {
         display: none;
+      }
+      .sp-heading-mobile {
+        display: block;
+        background-color: #f2f7ff;
+        position: sticky;
+        top: 0;
+        height: 40px;
+        h2 {
+          text-align: center;
+          line-height: 40px;
+        }
+      }
+      .sp-mobile-footer {
+        padding: 4px 16px;
+        position: sticky;
+        bottom: 0;
+        height: 72px;
+        background-color: #f2f7ff;
+        z-index: 5;
       }
     }
   }
+  .mobile-resume {
+    background-color: #f2f7ff;
+    .mr-header {
+      position: sticky;
+      top: 0;
+      height: 40px;
+      background-color: #f2f7ff;
+      padding: 0 16px;
+      z-index: 5;
+      h2 {
+        text-align:center;
+        line-height: 40px;
+      }
+    }
+    .mr-content {
+      margin-bottom: 24px;
+      padding: 0 16px;
+    }
+    .mr-footer {
+      padding: 0 16px;
+      position: sticky;
+      bottom: 0;
+      height: 64px;
+      background-color: #f2f7ff;
+      z-index: 5;
+    }
+    .more {
+      z-index: 1;
+    }
+  }
+  // height: auto;
+  //    width: 100%;
+  //    background-color: #f2f7ff;
+  //    z-index: 9;
+  //    position: fixed;
+  //    top: 64px;
+  //    padding: 0;
+  //    overflow: hidden;
 </style>
 <template>
   <v-container fluid class="applicants-page">
@@ -154,11 +233,30 @@
       </template>
     </v-layout>
 
+    <!-- <v-dialog v-if="isMobile" v-model="showSideResume" content-class="mobile-resume" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <div class="mr-header">
+        <h2 v-if="currentApplicant" class="mb-0">
+          {{ currentApplicant.name }}
+        </h2>
+      </div>
+      <div class="mr-content">
+        <div class="pdfframe-container">
+          <PdfFrame
+            v-if="currentApplicant && currentApplicant.resumes[0] && currentResumeSrc"
+            :href="currentResumeSrc"
+          />
+        </div>
+      </div>
+      <div class="mr-footer">
+        <v-btn @click="showSideResume = false;">Hide Resume</v-btn>
+      </div>
+    </v-dialog> -->
+
     <v-navigation-drawer
        v-model="showSideResume"
        absolute right width="900"
-       temporary>
-       <div class="side-pdf-heading">
+       temporary class="sp-drawer">
+       <div class="sp-heading">
          <v-layout class="pb-3">
            <v-flex xs12 sm6 class="pa-0">
              <h2 v-if="currentApplicant" class="mb-0" style="text-align: left; line-height: 36px;">
@@ -167,24 +265,28 @@
            </v-flex>
            <v-flex xs12 sm6 class="pa-0 sp-buttons" style="text-align: right;">
              <v-btn flat class="kunvet-v-btn light" style="margin-right: 12px;" @click="showSideResume = false;">Hide Resume</v-btn>
-             <v-btn flat class="ma-0  kunvet-v-btn light" @click="showSideResume = false;">Download Resume</v-btn>
+             <v-btn flat :disabled="!currentResumeSrc" class="ma-0 kunvet-v-btn light" @click="downloadResume(currentResumeSrc)">Download Resume</v-btn>
+             <!-- <a :href="currentResumeSrc" download>Download Resume</a> -->
            </v-flex>
         </v-layout>
        </div>
-       <div style="height: auto;
-          width: 100%;
-          background-color: #f2f7ff;
-          z-index: 9;
-          position: fixed;
-          top: 64px;
-          padding: 0;
-          overflow: hidden;">
+       <div class="sp-heading-mobile">
+         <h2 v-if="currentApplicant" class="mb-0">
+           {{ currentApplicant.name }}
+         </h2>
+       </div>
+       <div class="sp-content">
          <div class="pdfframe-container">
            <PdfFrame
              v-if="currentApplicant && currentApplicant.resumes[0] && currentResumeSrc"
              :href="currentResumeSrc"
            />
          </div>
+       </div>
+       <div class="sp-mobile-footer" style="text-align: center;">
+         <v-btn icon @click="showSideResume = false;" style="height: 48px; width: 48px; color: white; background-color: white;">
+           <img src="../assets/mobile/close.svg" style="height: 48px; width: 48px;">
+         </v-btn>
        </div>
     </v-navigation-drawer>
 
@@ -324,7 +426,6 @@
       async openSideResume(item) {
         this.showSideResume = true;
         this.currentApplicant = item;
-        this.$debug('Item', item);
         if (item.resumes[0] && item.resumes[0].filename) {
           const src = await FileClient.getLink(item.resumes[0].filename);
           this.currentResumeSrc = src;
@@ -488,6 +589,10 @@
         }
         this.$router.push(`view-applicant/${item._id}`);
       },
+      downloadResume(url) {
+        // this.$debug('download url', url);
+        window.open(url, '_blank');
+      },
       openInNewTab(item) {
         if (item.status === 'submitted') {
           EventBus.$emit('removeNotification', `New applicant: ${item.name}`);
@@ -531,8 +636,6 @@
         return StringHelper.truncate(notes, 80);
       },
       getApplicantsString(num) {
-        this.$debug('num', num);
-        // return num === 1 ? 'applicant' : 'applicants';
         if (num === 1) { return 'applicant'; }
         return 'applicants';
       },
@@ -544,6 +647,10 @@
       getApplicantsCountString() {
         return `${StringHelper.pluralize('applicant', this.applicants.length)}`;
       },
+      // isMobile() {
+      //   console.log('test', document.documentElement.clientWidth);
+      //   return document.documentElement.clientWidth <= 767;
+      // },
     },
   };
 </script>

@@ -67,6 +67,10 @@
 .kunvet-v-btn.light.theme--light.v-btn:not(.v-btn--icon):not(.v-btn--flat) {
   background-color: #ff6969;
 }
+.kunvet-v-btn.light.v-btn--disabled,
+.kunvet-v-btn.v-btn--disabled {
+  background-color: rgba(0,0,0,0.26);
+}
 .kunvet-search-btn {
   display: block;
   height: 72px;
