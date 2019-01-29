@@ -11,16 +11,27 @@
       </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="acct > 0">
-        <v-btn v-for="item in currentMenuItems" :key="item.title"
-          flat @click="goTo(item.href)" style="background-color: inherit;" class="text-capitalize white--text">
-          {{ item.title }}
-        </v-btn>
+        <template v-for="item in currentMenuItems">
+          <v-btn
+            flat @click="goTo(item.href)" style="background-color: inherit;" class="text-capitalize white--text">
+            {{ item.title }}
+          </v-btn>
+        </template>
         <!-- <v-btn flat @click="goTo('/search');">Search</v-btn> -->
         <!-- <v-btn flat @click="goTo('/myjobs');" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn> -->
         <!--TODO: notification mark-->
-        <v-btn flat @click="goTo('/notifications');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn>
-        <v-btn flat @click="goTo('/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn>
-        <v-btn flat @click="goToAccount();" class="white--text" style="background-color: inherit;">
+        <!-- <v-btn flat @click="goTo('/notifications');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn> -->
+        <!-- <v-btn flat @click="goTo('/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn> -->
+        <v-menu fixed offset-y left :close-on-content-click="false">
+          <v-btn flat style="min-width: 64px;" slot="activator" class="white--text nav-notifications-btn">
+            <img v-if="navHasBg" class="nav-img notranslate" src="./assets/navbar/bell4_red.svg"></img>
+            <img v-else class="nav-img notranslate" src="./assets/navbar/bell4_white.svg"></img>
+            <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>
+            <!-- <div class="nav-text" style="color:#818181; text-transform: none;">Notifications</div> -->
+          </v-btn>
+          <Notifications isNavbar />
+        </v-menu>
+        <v-btn flat @click="goToAccount();" class="white--text" style="min-width: 64px; background-color: inherit;">
           <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
         </v-btn>
       </v-toolbar-items>
@@ -126,12 +137,12 @@ import '@/stylus/main.styl';
 // import 'vuetify/dist/vuetify.min.css';
 
 // svgs
-import sfw from './assets/navbar/suitcase_full_white.svg';
-import sfg from './assets/navbar/suitcase_full_gray.svg';
-import bellw from './assets/navbar/bell_full_white.svg';
-import bellg from './assets/navbar/bell_full_gray.svg';
-import peopleFullWhite from './assets/navbar/people_full_white.svg';
-import personSvgG from './assets/navbar/person_gray.svg';
+// import sfw from './assets/navbar/suitcase_full_white.svg';
+// import sfg from './assets/navbar/suitcase_full_gray.svg';
+// import bellw from './assets/navbar/bell_full_white.svg';
+// import bellg from './assets/navbar/bell_full_gray.svg';
+// import peopleFullWhite from './assets/navbar/people_full_white.svg';
+// import personSvgG from './assets/navbar/person_gray.svg';
 import logoNav from './assets/navbar/kunvet_logo_nav.svg';
 import logoFooter from './assets/navbar/kunvet_logo_footer.svg';
 
@@ -162,7 +173,7 @@ export default {
       profilePic: '',
       drawer: false,
       // TODO:modify subitems and stuff for items
-      items: [
+      /* items: [
         [
           { title: 'Login', icon: null, href: '/login' },
           { title: 'Sign up', icon: null, href: '/signup' },
@@ -187,7 +198,7 @@ export default {
           { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
           { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
         ],
-      ],
+      ], */
       dmenuItems: [
         [
           { title: 'Login', href: '/login' },
@@ -226,7 +237,7 @@ export default {
         ],
       ],
       // TODO: sidebaritems still needed
-      sidebarItems: [
+      /* sidebarItems: [
         [
           [
             { title: 'Login', icon: null, href: '/login' },
@@ -268,7 +279,7 @@ export default {
             { title: 'Saved Jobs', href: '/savedjobs' },
           ],
         ],
-      ],
+      ], */
       newMenuItems: [
         [
           { title: 'Search', href: '/search' },
@@ -277,8 +288,10 @@ export default {
         ],
         [
           { title: 'Search', href: '/search' },
+          { title: 'Post New Job', href: '/createjob' },
           { title: 'My Jobs', href: '/myjobs' },
           { title: 'Applicants', href: '/applicants' },
+          { title: 'Settings', href: '/settings' },
         ],
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },

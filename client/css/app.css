@@ -140,6 +140,9 @@ button:focus {
 .main-navbar .post-a-job-button {
   color: white;
 }
+.main-navbar .nav-notifications-btn {
+
+}
 .main-navbar.white-bg {
   background-color: white !important;
 }
@@ -173,8 +176,7 @@ button:focus {
   top: 41px;
 }
 .nav-img {
-  position: absolute;
-  top: 12px;
+  /* position: absolute; */
   width: 20px;
 }
 .nav-profile-pic {
