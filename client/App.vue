@@ -37,7 +37,7 @@
       </v-toolbar-items>
       <v-toolbar-items v-else>
         <!-- :to="item.href" -->
-        <v-btn flat v-for="item in items[acct]" @click="goTo(item.href)" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
+        <v-btn flat v-for="item in currentMenuItems" @click="goTo(item.href)" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
           {{ item.title }}
         </v-btn>
         <div style="padding-top: 18px; padding-left: 16px;">
@@ -282,6 +282,10 @@ export default {
       ], */
       newMenuItems: [
         [
+          { title: 'Login', href: '/login' },
+          { title: 'Sign up', href: '/signup' },
+        ],
+        [
           { title: 'Search', href: '/search' },
           { title: 'Applied Jobs', href: '/appliedjobs' },
           { title: 'Saved Jobs', href: '/savedjobs' },
@@ -320,7 +324,7 @@ export default {
       return !this.isAtTop || (this.$route.path !== '/' && this.$route.path.indexOf('/job/') === -1);
     },
     currentMenuItems() {
-      return this.newMenuItems[this.acct - 1];
+      return this.newMenuItems[this.acct];
     },
   },
   methods: {
