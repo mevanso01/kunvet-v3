@@ -321,10 +321,8 @@ section.search {
           </div>
           <div class="search-field-cont">
             <v-text-field
-              style=""
               class="search-params-field"
               solo
-              flat
               hide-details
               placeholder="part time engineer..."
               clearable

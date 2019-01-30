@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-  name: 'k-text-field',
+  name: 'k-text-field-2',
   props: {
     value: {
       type: String,
