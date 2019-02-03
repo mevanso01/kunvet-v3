@@ -458,7 +458,7 @@ i.fa.fa-plus-circle {
   outline: 2px dashed grey; /* the dash box */
   outline-offset: -5px;
   color: dimgray;
-  min-height: 100px; /* minimum height */
+  /*min-height: 100px; !* minimum height *!*/
 
   position: relative;
   cursor: pointer;

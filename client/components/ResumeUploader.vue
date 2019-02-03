@@ -13,7 +13,8 @@
     .uploader-text{
         position: absolute;
         left: 50%;
-        transform: translateX(-50%);
+        top: 50%;
+        transform: translate(-50%,-50%);
     }
 
     .existing-container{
@@ -22,7 +23,7 @@
     }
 
     .existing-file{
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         display: flex;
         justify-content: start;
         background-color: #eee;
@@ -43,14 +44,35 @@
         transform: translateY(-50%);
         left: 5%;
     }
+
+    .upload-form{
+        width: 91%;
+        margin: 0 auto;
+
+    }
+
+    .vertical-center{
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 </style>
 
 <template>
     <v-card flat style="max-width: 100%; height: 100%;">
         <v-card-title style="height: 100%;">
             <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="width: 100%; height: 100%;">
-                <form enctype="multipart/form-data" novalidate style="width: 90%; margin: 0 auto" :style="{height: (this.resumeExists ? 40 : 80)+'%'}">
-                    <h2 style="margin: 10px 0">Upload Resume</h2>
+                <div class="existing-container" v-if="this.resumes.length > 0">
+                    <h2>Select Existing Files or Upload More</h2>
+                    <p v-if="this.resumeExists">{{this.selectedResumes.length}} {{this.selectedResumes.length | plural}} selected</p>
+                    <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="file in resumes">
+                        <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
+                        <p>{{file.name}}</p>
+                        <v-checkbox style="position: absolute; right: 50px; transform: translateY(19px);" @change="selectResume(file)"></v-checkbox>
+                    </div>
+                </div>
+
+                <form class="upload-form" :class="{'vertical-center' : !this.resumeExists}" enctype="multipart/form-data" novalidate :style="{height: (this.resumeExists ? 16 : 80)+'%'}">
                     <div class="dropbox" style="height: 100%;">
                         <input
                                 type="file"
@@ -63,28 +85,24 @@
                         >
                         <div v-if="state === 'INITIAL'" >
                             <div class="icon-container">
-                                <img class="file-icon" :style="{height: (this.resumeExists ? 50 : 125)+'px'}" src="../assets/job_detail/pdf-icon.svg">
-                                <img class="file-icon" :style="{height: (this.resumeExists ? 50 : 125)+'px'}" src="../assets/job_detail/doc-icon.svg">
+                                <img class="file-icon" :style="{height: (this.resumeExists ? 0 : 125)+'px'}" src="../assets/job_detail/pdf-icon.svg">
+                                <img class="file-icon" :style="{height: (this.resumeExists ? 0 : 125)+'px'}" src="../assets/job_detail/doc-icon.svg">
 
                             </div>
                             <p v-if="state === 'UPLOADING'">
                                 Uploading files...
                             </p>
-                            <p v-else class="uploader-text" :style="{'font-size': (this.resumeExists ? 12 : 14)+'px', top: (this.resumeExists ? 50 : 60)+'%'}">Drag resume or cover letter here, or click to browse for files.</p>
+                            <p v-else class="uploader-text" :style="{'font-size': (this.resumeExists ? 12 : 14)+'px', top: (this.resumeExists ? 50 : 60)+'%'}">Drag or click to upload additional files.</p>
                         </div>
 
                     </div>
-                    <div style="min-height: 21px; margin: 10px 0;">
-                        <p style="margin: 0;">{{ chosenFile }}</p>
-                    </div>
+                    <!--<div style="min-height: 21px; margin: 10px 0;">-->
+                        <!--<p style="margin: 0;">{{ chosenFile }}</p>-->
+                    <!--</div>-->
+
+                    <kbutton v-if="resumeExists" style="margin-top: 20px;">Confirm Files</kbutton>
                 </form>
-                <div class="existing-container" v-if="this.resumes.length > 0">
-                    <h2>Existing Files</h2>
-                    <div class="existing-file" v-for="file in resumes">
-                        <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
-                        <p>{{file.name}}</p>
-                    </div>
-                </div>
+
                 <!--<v-text-field-->
                 <!--v-model="resumeName"-->
                 <!--style="padding: 0 2px;"-->
@@ -109,12 +127,22 @@
 </template>
 <script>
     import FileClient from '@/utils/FileClient';
+    import kbutton from './general/Button';
 
     export default {
+      components: {
+        kbutton,
+      },
+      filters: {
+        plural(amount) {
+          return amount > 1 ? 'resumes' : 'resume';
+        },
+      },
       props: ['id'],
       data() {
         return {
           resumes: [],
+          selectedResumes: [],
           state: 'INITIAL',
           curId: '',
           file: null,
@@ -170,10 +198,24 @@
             name: this.file.name,
             filename: this.curId,
             resumeid: null,
+            selected: false,
           });
           console.log(this.resumes);
           this.$emit('uploaded', this.curId, this.resumeName);
           this.reset();
+        },
+        selectResume(resume) {
+          if (!resume.selected) {
+            resume.selected = true;
+            this.selectedResumes.push(resume);
+          } else {
+            resume.selected = false;
+            for (var i = 0; i < this.selectedResumes.length; ++i) {
+              if (resume.resumeid === this.selectedResumes[i].resumeid) {
+                this.selectedResumes.splice(i, 1);
+              }
+            }
+          }
         },
         cancel() {
           this.$emit('cancel');

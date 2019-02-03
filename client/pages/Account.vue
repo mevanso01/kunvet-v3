@@ -1,10 +1,11 @@
-<style>
+<style scoped>
 .acct-page-container__add-major {
   margin-left: 40px !important;
 }
 .acct-page-container__select-degree .input-group__details::before {
   background-color: transparent !important;
 }
+
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
@@ -359,7 +360,7 @@
               </v-flex>
             </v-layout>
 
-            <v-dialog v-model="showFileModal" style="height: 600px">
+            <v-dialog v-model="showFileModal">
               <ResumeUploader
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
