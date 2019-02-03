@@ -23,7 +23,8 @@
   }
 }
 .k-text-field.v-text-field.v-text-field--enclosed {
-  margin-bottom: 8px;
+  margin-top: 8px;
+  margin-bottom: 24px;
 }
 </style>
 <template>
@@ -33,10 +34,24 @@
     :label="label"
     outline
     :clearable="clearable"
+    :value="value"
+    :placeholder="placeholder"
+    @blur="updateInput"
+    :rules="rules"
+    :required="required"
+    ref="input"
+    :append-icon="appendIcon"
+    :append-icon-cb="() => (vis = !vis)"
+    :type="isVisible ? 'text' : 'password'"
+  ></v-text-field>
+  <!-- <input
+    :class="{ input: 1, invalid: invalid }"
+    ref="input"
+    @input="updateInput"
+    @blur="updateInput"
     :type="type" :value="value"
     :placeholder="placeholder"
-    :rules="rules"
-  ></v-text-field>
+  > -->
 </template>
 <script>
 export default {
@@ -71,45 +86,65 @@ export default {
       type: Boolean,
       default: false,
     },
+    toggleVisibility: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       mounted: false,
-
+      vis: false,
       invalid: false,
       reason: '',
-
     };
   },
   mounted() {
     this.mounted = true;
-
     // register with <v-form>
     if (this.$parent.$options.name === 'v-form') {
-      this.$parent.register(this);
+      this.$parent.register(this.$refs.input);
     }
   },
   computed: {
     hasRules() {
       return this.rules && this.rules.length > 0;
     },
+    appendIcon() {
+      if (!this.toggleVisibility) {
+        return false;
+      }
+      return this.vis ? 'visibility' : 'visibility_off';
+    },
+    isVisible() {
+      return !this.toggleVisibility || this.vis;
+    },
   },
   methods: {
     updateInput() {
+      // this.value = this.$refs.input.value;
+      // e.preventDefault();
       this.$emit('input', this.$refs.input.value);
-      this.validate();
+      // this.$refs.input.validate();
+      // this.validate();
     },
     validate() {
-      this.invalid = false;
-      for (const rule of this.rules) {
-        const result = rule(this.$refs.input.value, this.required);
-        if (!result || typeof result === 'string') {
-          this.invalid = true;
-          this.reason = typeof result === 'string' ? result : 'Invalid';
-          break;
-        }
-      }
-      return !this.invalid;
+      // this.invalid = false;
+      // if (this.required && !this.value) {
+      //   this.invalid = true;
+      //   this.reason = 'Required';
+      //   return false;
+      // }
+      // for (const rule of this.rules) {
+      //   const result = rule(this.$refs.input.value, this.required);
+      //   // const result = rule(this.value, this.required);
+      //   if (!result || typeof result === 'string') {
+      //     this.invalid2 = true;
+      //     this.reason = typeof result === 'string' ? result : 'Invalid';
+      //     break;
+      //   }
+      // }
+      // return !this.invalid;
     },
   },
 };

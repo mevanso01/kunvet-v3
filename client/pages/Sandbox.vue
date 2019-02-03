@@ -8,10 +8,12 @@
       <h1>Kunvet Text Fields</h1><br>
       <k-text-field
         label="Im a label"
+        required
       ></k-text-field>
       <k-text-field
         placeholder="Im a placeholder"
       ></k-text-field>
+      <k-btn @click="alert('hello')">Similar Jobs</k-btn>
     </div>
     <div style="background-color: #ddd; padding: 16px 24px; margin-bottom: 24px;">
 

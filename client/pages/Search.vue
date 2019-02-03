@@ -326,6 +326,7 @@ section.search {
               hide-details
               placeholder="part time engineer..."
               clearable
+              v-model="query"
             ></v-text-field>
           </div>
           <div class="search-go-cont">

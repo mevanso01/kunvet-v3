@@ -16,6 +16,7 @@ export default {
   props: {
     value: {
       type: String,
+      default: '',
     },
     placeholder: {
       type: String,
@@ -57,10 +58,16 @@ export default {
   methods: {
     updateInput() {
       this.$emit('input', this.$refs.input.value);
+      this.$emit('change');
       this.validate();
     },
     validate() {
       this.invalid = false;
+      if (this.required && !this.value) {
+        this.invalid = true;
+        this.reason = 'Required';
+        return false;
+      }
       for (const rule of this.rules) {
         const result = rule(this.$refs.input.value, this.required);
         if (!result || typeof result === 'string') {
