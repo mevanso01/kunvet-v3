@@ -112,7 +112,7 @@ export default {
     },
     appendIcon() {
       if (!this.toggleVisibility) {
-        return false;
+        return '';
       }
       return this.vis ? 'visibility' : 'visibility_off';
     },
