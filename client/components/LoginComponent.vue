@@ -45,15 +45,6 @@
         <section >
           <h2 class="kunvet-red" style="font-size: 24px; margin: 48px 0">Welcome Back!</h2>
           <p v-if="bad_login" style="color: #f00; margin-bottom: 0">The email or password you entered is incorrect</p>
-          <!-- <k-text-field
-            label="Im a label"
-            required
-            v-model="test"
-            :rules="[
-              v => !!v || 'E-mail is required',
-              v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w+)+$/.test(v) || 'E-mail must be valid',
-            ]"
-          ></k-text-field> -->
           <k-text-field
             label="E-mail"
             v-model="email"
@@ -62,7 +53,6 @@
             @change="bad_login = false;"
             required
           ></k-text-field>
-          {{ email }}
           <k-text-field
             label="Password"
             v-model="password"

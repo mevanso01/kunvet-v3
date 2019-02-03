@@ -37,6 +37,7 @@
     :value="value"
     :placeholder="placeholder"
     @input="updateInput"
+    @change="emitChange"
     :rules="rules"
     :required="required"
     ref="input"
@@ -127,6 +128,9 @@ export default {
       this.$emit('input', v);
       // this.$refs.input.validate();
       // this.validate();
+    },
+    emitChange() {
+      this.$emit('change');
     },
     validate() {
       // this.invalid = false;
