@@ -55,13 +55,14 @@
             ]"
           ></k-text-field> -->
           <k-text-field
-                  label="E-mail"
-                  v-model="email"
-                  type="email"
-                  :rules="emailRules"
-                  @change="bad_login = false;"
-                  required
+            label="E-mail"
+            v-model="email"
+            type="email"
+            :rules="emailRules"
+            @change="bad_login = false;"
+            required
           ></k-text-field>
+          {{ email }}
           <k-text-field
             label="Password"
             v-model="password"

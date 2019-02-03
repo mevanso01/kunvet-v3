@@ -36,7 +36,7 @@
     :clearable="clearable"
     :value="value"
     :placeholder="placeholder"
-    @blur="updateInput"
+    @input="updateInput"
     :rules="rules"
     :required="required"
     ref="input"
@@ -121,10 +121,10 @@ export default {
     },
   },
   methods: {
-    updateInput() {
+    updateInput(v) {
       // this.value = this.$refs.input.value;
       // e.preventDefault();
-      this.$emit('input', this.$refs.input.value);
+      this.$emit('input', v);
       // this.$refs.input.validate();
       // this.validate();
     },
