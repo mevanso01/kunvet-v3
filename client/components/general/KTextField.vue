@@ -1,9 +1,11 @@
 <style lang="scss">
 .k-text-field {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
   border-radius: 3px;
   height: 56px;
-  .v-input__slot {
+  .v-input__slot,
+  .v-text-field__details {
     padding: 0 16px !important;
   }
   .v-input__slot,
@@ -24,7 +26,10 @@
 }
 .k-text-field.v-text-field.v-text-field--enclosed {
   margin-top: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+}
+.k-text-field.v-text-field.v-text-field--enclosed.error--text {
+  margin-bottom: 28px;
 }
 </style>
 <template>

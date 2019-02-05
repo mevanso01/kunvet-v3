@@ -1,14 +1,13 @@
 <style scoped>
-  .link{
+  .link {
     cursor:pointer;
     text-align:center;
     text-decoration: none;
+    font-size: 13px;
   }
-
   .link:hover{
     text-decoration: underline;
   }
-
   a:hover{
     cursor:pointer;
     text-decoration: underline;
@@ -21,29 +20,27 @@
       /*padding: 16px 32px;*/
     /*}*/
   /*}*/
-
-  section{
+  section {
     padding: 0 !important;
   }
-
+  h2 {
+    font-size: 24px;
+  }
   .login-section p a{
     text-decoration: none !important;
   }
-
   .auth-form{
     border: none;
     width: 80%;
     margin: 0 auto;
   }
-
-
 </style>
 <template>
   <div v-on:keyup.enter="submit">
-    <div v-show="forgetpwd==0" >
+    <div v-if="forgetpwd==0" >
       <v-form class="auth-form" v-model="valid" ref="form">
-        <section >
-          <h2 class="kunvet-red" style="font-size: 24px; margin: 48px 0">Welcome Back!</h2>
+        <section>
+          <h2 class="kunvet-red" style="margin-bottom: 32px">Welcome Back!</h2>
           <p v-if="bad_login" style="color: #f00; margin-bottom: 0">The email or password you entered is incorrect</p>
           <k-text-field
             label="E-mail"
@@ -62,14 +59,10 @@
             @change="bad_login = false;"
             required
           ></k-text-field>
-
-
-
-          <p id="ask-sign-up" style="color: #616161; margin-bottom: 8px; margin-top: 36px">
-            <span @click="$emit('toSignup')" class="link">Create an account</span>
-
+          <p id="ask-sign-up" style="color: #616161; margin-bottom: 4px; margin-top: 38px">
+            <a @click="$emit('toSignup')" class="link">Create an account</a>
           </p>
-          <p id="forgot-password" style="margin-bottom: 60px">
+          <p id="forgot-password" style="margin-bottom: 38px">
             <a @click="forgetpwd=1" class="link">Forgot your password?</a>
           </p>
 
@@ -93,18 +86,19 @@
     </div>
 
 
-    <div v-show="forgetpwd==1" class="auth-form">
+    <div v-if="forgetpwd==1" class="auth-form">
       <section v-if="!sent" class="login-section">
-        <h2>Forgot Password?</h2>
-        <p style="margin-bottom: 40px">No worries! Simply fill out the email of your account to reset it.</p>
+        <h2 class="kunvet-red">Reset Password</h2>
+        <p style="margin-bottom: 16px">Please enter the email associated with your
+account, and we’ll email you a verfication code.</p>
         <v-form v-model="valid" ref="form2">
-          <v-text-field
+          <k-text-field
                   label="E-mail"
                   v-model="email"
                   :rules="emailRules"
                   required
-                  style="margin-bottom: 150px"
-          ></v-text-field>
+                  style="margin-bottom: 64px"
+          ></k-text-field>
         </v-form>
       </section>
 

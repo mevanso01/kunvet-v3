@@ -1,7 +1,7 @@
 <template>
 <v-container fluid class="white-bg">
-  <div style="max-width: 420px; margin: auto;">
-    <LoginComponent @loggedIn="triggerRedirect"></LoginComponent>
+  <div style="max-width: 420px; margin: auto; padding-top: 32px; padding-bottom: 32px;">
+    <LoginComponent @toSignup="goToSignup" @loggedIn="triggerRedirect"></LoginComponent>
   </div>
 </v-container>
 
@@ -18,6 +18,9 @@ export default {
     LoginComponent,
   },
   methods: {
+    goToSignup() {
+      this.$router.push('/signup');
+    },
     triggerRedirect() {
       let target = this.$route.query.redirect;
       // check if target is a restricted redirect page
