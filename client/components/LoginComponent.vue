@@ -45,25 +45,23 @@
         <section >
           <h2 class="kunvet-red" style="font-size: 24px; margin: 48px 0">Welcome Back!</h2>
           <p v-if="bad_login" style="color: #f00; margin-bottom: 0">The email or password you entered is incorrect</p>
-          <v-text-field
-                  label="E-mail"
-                  v-model="email"
-                  type="email"
-                  :rules="emailRules"
-                  @change="bad_login = false;"
-                  required
-          ></v-text-field>
-          <v-text-field
+          <k-text-field
+            label="E-mail"
+            v-model="email"
+            type="email"
+            :rules="emailRules"
+            @change="bad_login = false;"
+            required
+          ></k-text-field>
+          <k-text-field
             label="Password"
             v-model="password"
             :rules="passwordRules"
             min="8"
-            :append-icon="e1 ? 'visibility' : 'visibility_off'"
-            :append-icon-cb="() => (e1 = !e1)"
-            :type="e1 ? 'password' : 'text'"
+            toggleVisibility
             @change="bad_login = false;"
             required
-          ></v-text-field>
+          ></k-text-field>
 
 
 
@@ -168,6 +166,7 @@
             v => !!v || 'Required',
           ],
           loading: false,
+          test: '',
         };
       },
       methods: {

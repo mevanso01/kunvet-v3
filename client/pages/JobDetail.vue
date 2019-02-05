@@ -359,10 +359,9 @@
 
 
 
-  .v-dialog--active{
-    background-color: white;
+  .v-dialog--active {
+      background-color: white;
   }
-
 
 </style>
 <template>
@@ -720,8 +719,9 @@
     </v-dialog>
 
 
-    <v-dialog class="other-dialog" color="white" style="background-color: white;" v-model="otherdialog" :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
-      <v-card v-if="start" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
+    <v-dialog class="other-dialog" color="white" style="background-color: white;" v-model="otherdialog"
+              :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
+      <v-card v-if="loginState==='start'" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
         <div style="height: 40%">
           <p style="color: #EA596B; font-size: 48px; width: 80%; margin: 0 auto; padding: 40px 20px 20px 0; font-weight: bold; line-height: 1.3">Welcome to Kunvet!</p>
           <!--<p style="font-size: 14px; width: 80%; margin: 0 auto; padding-right: 20px;">Lorem Ipsum</p>-->
@@ -737,7 +737,7 @@
         </button>
       </v-card>
 
-      <v-card flat class="dialog-card" v-else-if="login">
+      <v-card flat class="dialog-card" v-else-if="loginState==='login'">
         <div class="main-cont-small login-card" style="height: 100%; border: none !important; margin: 48px 0 !important;">
           <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
 
@@ -747,16 +747,16 @@
         </button>
       </v-card>
 
-      <v-card flat class="dialog-card" v-else-if="signup">
+      <v-card flat class="dialog-card" v-else-if="loginState==='signup'">
         <SignupComponent></SignupComponent>
         <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>
       </v-card>
 
-      <v-card flat class="dialog-card" v-else-if="resume">
+      <div style="height: 500px !important; " v-else-if="loginState==='resume'">
         <ResumeUploader></ResumeUploader>
-      </v-card>
+      </div>
 
     </v-dialog>
   </v-container>
@@ -780,7 +780,7 @@
     import { degreeStringToDb } from '@/constants/degrees';
     import Config from 'config';
     import ProfilePicHelper from '@/utils/GetProfilePic';
-    import FileClient from '@/utils/FileClient';
+    // import FileClient from '@/utils/FileClient';
     import queries from '@/constants/queries';
     import parseUrl from 'url-parse';
     import userDataProvider from '@/userDataProvider';
@@ -801,10 +801,7 @@
       data() {
         return {
           otherdialog: false,
-          login: false,
-          signup: false,
-          start: false,
-          resume: false,
+          loginState: 'start',
           findJob: {},
           jobType: [],
           serverUrl: Config.get('serverUrl'),
@@ -889,22 +886,13 @@
       },
       methods: {
         handleLogin() {
-          this.login = true;
-          this.start = false;
-          this.signup = false;
-          this.resume = false;
+          this.loginState = 'login';
         },
         handleSignup() {
-          this.signup = true;
-          this.start = false;
-          this.login = false;
-          this.resume = false;
+          this.loginState = 'signup';
         },
         handleResume() {
-          this.signup = false;
-          this.start = false;
-          this.login = false;
-          this.resume = true;
+          this.loginState = 'resume';
         },
         handleScroll() {
           this.stickToBottom = this.isNotAtBottom();
@@ -969,12 +957,15 @@
           });
         },
         apply() {
+          console.log(this.resume);
           this.dialog = true;
           if (this.uid) {
-            this.state = 'INITIAL';
-            this.applyState = 'MAIN';
-            this.applydialog = true;
-            this._getUserData();
+            // this.state = 'INITIAL';
+            // this.applyState = 'MAIN';
+            // this.applydialog = true;
+            // this._getUserData();
+            this.otherdialog = true;
+            this.handleResume();
           } else {
             this.otherdialog = true;
             this.start = true;
@@ -1229,43 +1220,44 @@
             this.uploadResume();
           }
         },
-        uploadResume() {
-          this.client = new FileClient();
-          let curId = null;
-          if (!this.file) {
-            return;
-          }
-          this.state = 'UPLOADING';
-
-          setImmediate(async () => {
-            try {
-              curId = await this.client.createFileSlot(this.file.name, this.file.type);
-            } catch (e) {
-              this.$error(e);
-              this.state = 'ERROR';
-              this.errorMessage = e.message;
-              return;
-            }
-            try {
-              await this.client.uploadFile(curId, this.file);
-            } catch (e) {
-              this.$error(e);
-              this.state = 'ERROR';
-              this.errorMessage = e.message;
-              return;
-            }
-            this.resumes.push({
-              name: this.file.name,
-              filename: curId,
-              resumeid: null,
-            });
-            this.selectedResume = curId;
-            this.file = null;
-            this.fileName = null;
-            this.state = 'UPLOADED';
-            this.updateAccount();
-          });
-        },
+        // here
+        // uploadResume() {
+        //   this.client = new FileClient();
+        //   let curId = null;
+        //   if (!this.file) {
+        //     return;
+        //   }
+        //   this.state = 'UPLOADING';
+        //
+        //   setImmediate(async () => {
+        //     try {
+        //       curId = await this.client.createFileSlot(this.file.name, this.file.type);
+        //     } catch (e) {
+        //       this.$error(e);
+        //       this.state = 'ERROR';
+        //       this.errorMessage = e.message;
+        //       return;
+        //     }
+        //     try {
+        //       await this.client.uploadFile(curId, this.file);
+        //     } catch (e) {
+        //       this.$error(e);
+        //       this.state = 'ERROR';
+        //       this.errorMessage = e.message;
+        //       return;
+        //     }
+        //     this.resumes.push({
+        //       name: this.file.name,
+        //       filename: curId,
+        //       resumeid: null,
+        //     });
+        //     this.selectedResume = curId;
+        //     this.file = null;
+        //     this.fileName = null;
+        //     this.state = 'UPLOADED';
+        //     this.updateAccount();
+        //   });
+        // },
         updateAccount() {
           // this is weird. Not sure why it adds the property '__typename' if I dont do this
           const _resumes = this.resumes.map(({

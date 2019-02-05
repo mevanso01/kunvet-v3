@@ -18,7 +18,7 @@ import mutexify from 'mutexify';
 import debounce from 'lodash/debounce';
 
 export default {
-  props: ['href'],
+  props: ['href', 'clipResult'],
   data() {
     return {
       prefix: 'pdf',
@@ -85,7 +85,11 @@ export default {
       }
 
       this.pages = this.pdf.numPages;
-      this.clipped = this.pages > this.pageLimit;
+      if (this.clipResult) {
+        this.clipped = this.pages > this.pageLimit;
+      } else {
+        this.clipped = false;
+      }
       this.$emit('loaded', this.pdf);
     },
     render() {

@@ -1,124 +1,238 @@
+<style>
+    .file-icon {
+        width: 125px;
+        margin: 0 15px;
+        transform: translateY(55%);
+    }
+
+    .icon-container{
+        display: flex;
+        justify-content: center;
+    }
+
+    .uploader-text{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    .existing-container{
+        width: 90%;
+        margin: 50px auto 0 auto;
+    }
+
+    .existing-file{
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: start;
+        background-color: #eee;
+        width: 100%;
+        height: 70px;
+    }
+
+    .existing-file p{
+        line-height: 70px;
+        transform: translateX(50px);
+    }
+
+    .smaller-file-icon{
+        height: 20px;
+        width: 20px;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 5%;
+    }
+
+    .upload-form{
+        width: 91%;
+        margin: 0 auto;
+
+    }
+
+    .vertical-center{
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+</style>
+
 <template>
-  <v-card>
-      <v-card-title>
-      <div v-if="state === 'INITIAL' || state === 'UPLOADING'">
-      <form enctype="multipart/form-data" novalidate style="width: 100%;">
-        <h1>Upload Resume</h1>
-        <div class="dropbox">
-          <input
-            type="file"
-            :disabled="state === 'UPLOADING'"
-            @change="updateFile($event.target.files)"
-            accept="application/pdf, application/msword, 
+    <v-card flat style="max-width: 100%; height: 100%;">
+        <v-card-title style="height: 100%;">
+            <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="width: 100%; height: 100%;">
+                <div class="existing-container" v-if="this.resumes.length > 0">
+                    <h2>Select Existing Files or Upload More</h2>
+                    <p v-if="this.resumeExists">{{this.selectedResumes.length}} {{this.selectedResumes.length | plural}} selected</p>
+                    <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="file in resumes">
+                        <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
+                        <p>{{file.name}}</p>
+                        <v-checkbox style="position: absolute; right: 50px; transform: translateY(19px);" @change="selectResume(file)"></v-checkbox>
+                    </div>
+                </div>
+
+                <form class="upload-form" :class="{'vertical-center' : !this.resumeExists}" enctype="multipart/form-data" novalidate :style="{height: (this.resumeExists ? 16 : 80)+'%'}">
+                    <div class="dropbox" style="height: 100%;">
+                        <input
+                                type="file"
+                                :disabled="state === 'UPLOADING'"
+                                @change="updateFile($event.target.files)"
+                                accept="application/pdf, application/msword,
               application/vnd.openxmlformats-officedocument.wordprocessingml.document,
               application/vnd.oasis.opendocument.text"
-            class="input-file"
-          >
-            <p v-if="state === 'INITIAL'">
-              Drag your file here<br> or click to browse
-            </p>
-            <p v-if="state === 'UPLOADING'">
-              Uploading files...
-            </p>
-        </div>
-        <div style="min-height: 21px; margin: 10px 0;">
-          <p style="margin: 0;">{{ chosenFile }}</p>
-        </div>
-      </form>
-      <v-text-field
-        v-model="resumeName"
-        style="padding: 0 2px;"
-        name="edit-modal-input"
-        hide-details
-        single-line
-        placeholder="Give this resume a name"
-      ></v-text-field>
-      </div>
-      <div style="min-height: 40px;" v-if="state === 'FAILED'">
-        <h3 style="display: inline-block;">
-          Oops! Something went wrong.
-        </h3>
-        <p>{{ errorMessage }}</p>
-      </div>
-      </v-card-title>
-      <v-card-actions>
-        <v-btn flat="flat" @click="cancel">Cancel</v-btn>
-        <v-btn :disabled="!file || !resumeName" flat="flat" @click="upload">Upload</v-btn>
-      </v-card-actions>
-  </v-card>
+                                class="input-file"
+                        >
+                        <div v-if="state === 'INITIAL'" >
+                            <div class="icon-container">
+                                <img class="file-icon" :style="{height: (this.resumeExists ? 0 : 125)+'px'}" src="../assets/job_detail/pdf-icon.svg">
+                                <img class="file-icon" :style="{height: (this.resumeExists ? 0 : 125)+'px'}" src="../assets/job_detail/doc-icon.svg">
+
+                            </div>
+                            <p v-if="state === 'UPLOADING'">
+                                Uploading files...
+                            </p>
+                            <p v-else class="uploader-text" :style="{'font-size': (this.resumeExists ? 12 : 14)+'px', top: (this.resumeExists ? 50 : 60)+'%'}">Drag or click to upload additional files.</p>
+                        </div>
+
+                    </div>
+                    <!--<div style="min-height: 21px; margin: 10px 0;">-->
+                        <!--<p style="margin: 0;">{{ chosenFile }}</p>-->
+                    <!--</div>-->
+
+                    <kbutton v-if="resumeExists" style="margin-top: 20px;">Confirm Files</kbutton>
+                </form>
+
+                <!--<v-text-field-->
+                <!--v-model="resumeName"-->
+                <!--style="padding: 0 2px;"-->
+                <!--name="edit-modal-input"-->
+                <!--hide-details-->
+                <!--single-line-->
+                <!--placeholder="Give this resume a name"-->
+                <!--&gt;</v-text-field>-->
+            </div>
+            <div style="min-height: 40px;" v-if="state === 'FAILED'">
+                <h3 style="display: inline-block;">
+                    Oops! Something went wrong.
+                </h3>
+                <p>{{ errorMessage }}</p>
+            </div>
+        </v-card-title>
+        <!--<v-card-actions>-->
+        <!--<v-btn flat="flat" @click="cancel">Cancel</v-btn>-->
+        <!--<v-btn :disabled="!file || !resumeName" flat="flat" @click="upload">Upload</v-btn>-->
+        <!--</v-card-actions>-->
+    </v-card>
 </template>
 <script>
-import FileClient from '@/utils/FileClient';
+    import FileClient from '@/utils/FileClient';
+    import kbutton from './general/Button';
 
-export default {
-  props: ['id'],
-  data() {
-    return {
-      state: 'INITIAL',
-      curId: '',
-      file: null,
-      chosenFile: null,
-      client: null,
-      resumeName: '',
-      errorMessage: '',
+    export default {
+      components: {
+        kbutton,
+      },
+      filters: {
+        plural(amount) {
+          return amount > 1 ? 'resumes' : 'resume';
+        },
+      },
+      props: ['id'],
+      data() {
+        return {
+          resumes: [],
+          selectedResumes: [],
+          state: 'INITIAL',
+          curId: '',
+          file: null,
+          chosenFile: null,
+          client: null,
+          resumeName: '',
+          errorMessage: '',
+        };
+      },
+      mounted() {
+        this.client = new FileClient();
+        this.curId = this.id;
+      },
+      computed: {
+        resumeExists() {
+          return this.resumes.length > 0;
+        },
+      },
+      methods: {
+        updateFile(files) {
+          if (!files.length) {
+            this.file = null;
+          } else {
+            this.file = files[0];
+            this.chosenFile = files[0].name;
+            this.upload();
+          }
+        },
+        async upload() {
+          this.state = 'UPLOADING';
+          if (!this.curId) {
+            // Create a new file slot
+            try {
+              this.curId = await this.client.createFileSlot(this.file.name, this.file.type);
+            } catch (e) {
+              this.$error(e);
+              this.state = 'FAILED';
+              this.errorMessage = e.message;
+              return;
+            }
+
+            this.$emit('created', this.curId);
+          }
+          try {
+            await this.client.uploadFile(this.curId, this.file);
+          } catch (e) {
+            this.$error(e);
+            this.state = 'FAILED';
+            this.errorMessage = e.message;
+            return;
+          }
+          this.resumes.push({
+            name: this.file.name,
+            filename: this.curId,
+            resumeid: null,
+            selected: false,
+          });
+          console.log(this.resumes);
+          this.$emit('uploaded', this.curId, this.resumeName);
+          this.reset();
+        },
+        selectResume(resume) {
+          if (!resume.selected) {
+            resume.selected = true;
+            this.selectedResumes.push(resume);
+          } else {
+            resume.selected = false;
+            for (var i = 0; i < this.selectedResumes.length; ++i) {
+              if (resume.resumeid === this.selectedResumes[i].resumeid) {
+                this.selectedResumes.splice(i, 1);
+              }
+            }
+          }
+        },
+        cancel() {
+          this.$emit('cancel');
+          this.reset();
+        },
+        reset() {
+          this.curId = '';
+          this.file = null;
+          this.chosenFile = null;
+          this.resumeName = '';
+          this.state = 'INITIAL';
+        },
+      },
+      watch: {
+        id(newId) {
+          this.curId = newId;
+        },
+      },
     };
-  },
-  mounted() {
-    this.client = new FileClient();
-    this.curId = this.id;
-  },
-  methods: {
-    updateFile(files) {
-      if (!files.length) {
-        this.file = null;
-      } else {
-        this.file = files[0];
-        this.chosenFile = files[0].name;
-      }
-    },
-    async upload() {
-      this.state = 'UPLOADING';
-      if (!this.curId) {
-        // Create a new file slot
-        try {
-          this.curId = await this.client.createFileSlot(this.file.name, this.file.type);
-        } catch (e) {
-          this.$error(e);
-          this.state = 'FAILED';
-          this.errorMessage = e.message;
-          return;
-        }
-
-        this.$emit('created', this.curId);
-      }
-      try {
-        await this.client.uploadFile(this.curId, this.file);
-      } catch (e) {
-        this.$error(e);
-        this.state = 'FAILED';
-        this.errorMessage = e.message;
-        return;
-      }
-
-      this.$emit('uploaded', this.curId, this.resumeName);
-      this.reset();
-    },
-    cancel() {
-      this.$emit('cancel');
-      this.reset();
-    },
-    reset() {
-      this.curId =  '';
-      this.file = null;
-      this.chosenFile = null;
-      this.resumeName = '';
-      this.state = 'INITIAL';
-    },
-  },
-  watch: {
-    id(newId) {
-      this.curId = newId;
-    },
-  },
-};
 </script>
