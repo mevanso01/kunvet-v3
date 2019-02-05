@@ -79,15 +79,6 @@
   bottom:550px;
 }
 
-.searchBar{
-    height: 48px;
-    padding-left: 15px;
-    border-top: 1px solid #eee;
-    border-left: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    border-radius: 6px 0px 0px 6px;
-}
-
 .category{
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
@@ -231,15 +222,6 @@
   transform: skew(-30deg);
 }
 
-.main-container {
-    position: relative;
-    width: 100%;
-    max-width: 960px;
-    background-color: none;
-    /* border: 1px solid #eeeeee; */
-    box-sizing: border-box;
-}
-
 @media (min-width: 601px) {
   .search .flex {
     padding: 10px 15px;
@@ -303,6 +285,20 @@
   }
 }
 
+
+//-------------------------------Implemented main classes----------------------------------------------
+.main-container {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    background-color: none;
+    /* border: 1px solid #eeeeee; */
+    box-sizing: border-box;
+    margin-top: -36px; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
 .iconRedButton {
   display: block;
   height: 72px;
@@ -354,67 +350,262 @@
   background-color:#F3E1E1;
 }
 
+.search_find_near{
+  height: 72px; 
+  padding-top:24px; 
+  width: 10%; 
+  background-color:white;
+  float:left;
+}
+
+.top_title_text{
+  color: white; 
+  font-size: 3.9em; 
+  text-align:center;
+}
+
+.top_title_pos{
+  position:absolute;
+  width:100%; 
+  margin-top: calc(50vh - 50px);
+}
+
+.searchBar{
+  width:90%;
+  float:left;
+  background-color:white;
+  box-shadow: 0 10px 12px -4px #eaeaf9;
+  margin-right:10px;
+}
+
+.search_assist{
+  margin-left:40%; 
+  color:grey; 
+  font-size:16px;
+}
+
+.search_text_field{
+  height: 58px; 
+  width: 36%; 
+  outline:none !important; 
+  background-color:white;
+  float:left;
+  margin-top:12px;}
+
+.search_select{
+  height: 58px; 
+  width: 44%; 
+  outline:none !important; 
+  background-color:white;
+  float:left;
+  margin-top:12px;
+}
+
+.search_mobile{
+  margin-left:10%; 
+  margin-right:10%; 
+  margin-bottom: 20px; 
+  box-shadow: 0 10px 12px -4px #eaeaf9;
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  .top_title_text{
+    font-size: 3.9em; 
+    text-align:left;
+  }
+
+  .top_title_pos{
+    margin-top: calc(50vh - 100px);
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .top_title_text{
+    font-size: 2.1em;
+    line-height: 40px;
+    text-align:left;
+  }
+
+  .top_title_pos{
+    margin-left:10%;
+    width:80%;
+    margin-top: 42vh;
+  }
+
+  .main-container{
+    margin-top:-28px;
+  }
+
+  .search_find_near{
+    height: 56px; 
+    line-height:16px;
+    padding-top:16px; 
+    width: 20%; 
+  }
+
+  .search_text_field{
+    height: 56px; 
+    width:auto;
+    float:none;
+    margin-top:0px;
+  }
+
+    .search_select{
+    height: 56px; 
+    width:auto;
+    float:none;
+    margin-top:0px;
+  }
+
+
+}
+
 
 </style>
 
 <template>
-  <v-container fluid class="home-page-cont pa-0">
-  <div style="width: 100%; height: 455px;
+  <v-container fluid class="pa-0">
+  <div style="width: 100%; height: 60vh;
     background:  #ff8f8f;
     background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
     background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
     position: relative;
   ">
-  <h1 style="position: absolute; left: 275px; bottom: 0; color: white; margin-bottom: 60px; font-size: 50px;">Latest Opportunities Near Your College.</h1>
+    <div class="top_title_pos">
+     <h1 class="top_title_text">Latest Opportunities Near Your College.</h1>
+    </div>
+  </div>
+
+<div class="main-container">
+  <div class="searchBar mobile-hide">
+      <div class="search_find_near">
+        <strong class="search_assist">Find</strong>
+      </div>
+
+        <div class="search_text_field">
+          <v-text-field
+            solo
+            flat
+            hide-details
+            label="part time design intern"
+            clearable
+          ></v-text-field>
+        </div>
+
+      <div class="search_find_near">
+        <strong class="search_assist">Near</strong>
+      </div>
+      <div class="search_select" v-bind:class="{ 'active': openSelectField === 'city' }">
+          <v-select
+            label="School or City"
+            item-text="name"
+            item-value="name"
+            v-bind:items="availableCities"
+            solo
+            flat
+            hide-details
+            content-class="fsSelect-menu"
+            autocomplete
+            >
+          </v-select>
+      </div>
+  </div>
+
+  <div class="search_mobile mobile-show">
+        <div class="search_find_near">
+          <strong class="search_assist" >Find</strong>
+        </div>
+        <div class="search_text_field">
+          <v-text-field
+            solo
+            flat
+            hide-details
+            label="part time design intern"
+            clearable
+          ></v-text-field>
+        </div>
+    </div>
+
+  <div class="search_mobile mobile-show">
+        <div class="search_find_near">
+          <strong class="search_assist" >Near</strong>
+        </div>
+        <div class="search_select" v-bind:class="{ 'active': openSelectField === 'city' }">
+          <v-select
+            label="School or City"
+            item-text="name"
+            item-value="name"
+            v-bind:items="availableCities"
+            solo
+            flat
+            hide-details
+            content-class="fsSelect-menu"
+            autocomplete
+            >
+          </v-select>
+        </div>
+    </div>
+
+            <button @click="searchGo()" v-ripple class="mobile-hide kunvet-search-btn med">
+              <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
+            </button>
+            <button @click="searchGo()" v-ripple class="mobile-show kunvet-search-btn small block" style="width:80%; margin:auto;">
+              <span style="line-height: 56px; font-size: 20px; font-family: 'Roboto', sans-serif;">
+                Search
+              </span>
+            </button>
 
   </div>
-<div class="main-container" style="margin-top: -36px;  margin-left: auto; margin-right: auto;">
-  <div style="height:72px;width:90%;float:left;background-color:white;box-shadow: 0 10px 12px -4px #eaeaf9;">
 
-
-    <div style="height: 72px; padding-top:24px; width: 10%; background-color:white;float:left;">
-      <strong style="margin-left:40%; color:grey; font-size:16px;">Find</strong>
-    </div>
-            <v-text-field
-              style="height: 58px; width: 36%; outline:none !important; background-color:white;float:left;margin-top:12px;"
-              solo
-              flat
-              hide-details
-              label="part time design intern"
-              clearable
-            ></v-text-field>
-
-      <div style="height: 72px; padding-top:24px; width: 10%; background-color:white;float:left;">
-        <strong style="margin-left:40%; color:grey; font-size:16px;">Near</strong>
+      <div style="width:100%; height:22vh;">
       </div>
 
-              <div style="height: 58px; margin-top:14px; width: 44%; outline:none !important; background-color:white;float:left;" v-bind:class="{ 'active': openSelectField === 'city' }">
-                <v-select style="height: 58px;"
-                  label="School or City"
-                  item-text="name"
-                  item-value="name"
-                  v-bind:items="availableCities"
-                  solo
-                  flat
-                  hide-details
-                  content-class="fsSelect-menu"
-                  autocomplete
-                >
-              </v-select>
-              </div>
+    <div class="mobile-show">
+      <div style="height: 50vh; width:100%; background-color: #ffe2e2;">
+        <img src="@/assets/artboard1.png" height="70%" style="margin-top:15%"/>
+      </div>
+
+      <div style="height: 280px; width:85%; margin:auto;
+                transform: translate(0px, -80px);
+                background:  #FFC371;
+                background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
+                background: linear-gradient(to right,  #ff5f6d, #FFC371);
+                position: relative;
+            ">
+        <div style="padding-top:3%;padding-left:8%;color:white;font-size:34px;"><strong>Hire on Kunvet</strong></div>
+        <div style="width: 80%; margin-left:8%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+        <router-link to="/createjob">
+          <button v-ripple style="margin-top:20px; margin-left:8%" class="postAJob">Post a Job</button>
+        </router-link>
+      </div>
+
+      <div style="width:100%; height:4vh;">
+      </div>
+
+      <div style="height: 50vh; width:100%; background-color: #dbefff;">
+        <img src="@/assets/artboard2.png" height="70%" style="margin-left:10%; margin-top:15%"/>
+      </div>
+
+      <div style="height: 280px; width:85%; margin:auto;
+                transform: translate(0px, -80px);
+                background:  #2f89fc;
+                background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
+                background: linear-gradient(to right,  #a57fff , #2f89fc);
+                position: relative;
+            ">
+        <div style="padding-top: 3%;padding-left:8%;color:white;font-size:34px;"><strong>Loved & Trusted</strong></div>
+        <div style="width: 80%; margin-left:8%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+        <router-link to="/createjob">
+          <button v-ripple style="margin-top:20px; margin-left:8%" class="postAJob2">Post a Job</button>
+        </router-link>
+      </div>
 
     </div>
 
-    <button @click="searchGo()" v-ripple class="kunvet-search-btn med">
-      <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
-    </button>
-</div>
 
 
-      <div style="width:100%; height:175px;">
-      </div>
 
-    <div id="promo" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: white">
+    <div id="promo" class="main-cont-large pa-3 promo-block mobile-hide" style="max-width: 100%; background: white">
         <v-layout row wrap>
           <v-flex xs12 sm11 md5>
             <div style="height: 400px; width:126%; float:left; background-color: #ffe2e2; transform:translate(-16px)">
@@ -438,7 +629,7 @@
           </v-flex>
         </v-layout>
 
-      <div style="width:100%; height:120px;">
+      <div style="width:100%; height:24vh;">
       </div>
 
             <div style="height: 320px; width:calc(54%); margin-top:30px; position:absolute; z-index:1000;
@@ -463,8 +654,9 @@
 
         <div style="width:100%; height:120px;">
         </div>
-
     </div>
+
+
   </v-container>
 </template>
 <script>
