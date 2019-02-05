@@ -408,13 +408,13 @@
   box-shadow: 0 10px 12px -4px #eaeaf9;
 }
 
-.container-right {
+.container-left {
   width: calc(100% + 8px);
 }
 
-.container-left {
+.container-right {
   width: calc(100% + 8px);
-  transform: translateX(-8px);
+    transform: translateX(-8px);
 }
 
 @media (min-width: 601px) and (max-width: 960px) {
@@ -465,7 +465,6 @@
     float:none;
     margin-top:0px;
   }
-
 
 }
 
@@ -617,22 +616,22 @@
     <div id="promo" class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
         <v-layout row wrap>
           <v-flex xs12 sm6>
-            <div class="container-right" style="background-color: #ffe2e2; height: 400px;">
+            <div class="container-left" style="background-color: #ffe2e2; height: 400px;">
               <img src="@/assets/artboard1.png" height="60%" style="padding-left:30%; margin-top:10%"/>
             </div>
           </v-flex>
 
           <v-flex xs12 sm6>
-            <div class="container-left" style="margin-top:30px; height: 320px;
+            <div class="container-right" style="margin-top:30px; height: 320px;
                 background:  #FFC371;
                 background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
                 background: linear-gradient(to right,  #ff5f6d, #FFC371);
                 position: relative;
             ">
-                <div style="padding-top: 3%; padding-left:10%;color:white;font-size:36px;"><strong>Hire on Kunvet</strong></div>
-                <div style="width: 39%; padding-top: 12px; margin-left:10%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+                <div style="padding-top: 3%; padding-left:10%;color:white;font-size:38px;"><strong>Hire on Kunvet</strong></div>
+                <div style="padding-top: 12px; margin-left:10%; color:white; font-size:18px; max-width: 400px; line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
                 <router-link to="/createjob">
-                  <button v-ripple style="margin-top:20px; margin-left:11%" class="postAJob">Post a Job</button>
+                  <button v-ripple style="margin-top:20px; margin-left:10%" class="postAJob">Post a Job</button>
                 </router-link>
             </div>
           </v-flex>
@@ -640,25 +639,29 @@
 
       <div style="width:100%; height:24vh;">
       </div>
-
-            <div style="height: 320px; width:calc(54%); margin-top:30px; position:absolute; z-index:1000;
+        <v-layout row wrap>
+          <v-flex xs12 sm6 style="z-index:5;">
+            <div class="container-left" style="height: 320px; margin-top:30px; 
                 background:  #2f89fc;
                 background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
                 background: linear-gradient(to right,  #a57fff , #2f89fc);
-                transform:translate(-32px);
                 ">
 
-                <div style="padding-top: 6%; padding-left:35%;color:white;font-size:36px;"><strong>Loved & Trusted</strong></div>
-                <div style="width: 48%; padding-top: 12px; margin-left:35%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+                <div style="padding-top: 28px; padding-right:10%;color:white;font-size:38px; text-align:right;"><strong>Loved & Trusted</strong></div>
+                <div style="padding-top: 12px; color:white; font-size:18px; max-width:480px; padding-right: 10%; text-align:right; margin-left:auto; padding-left: 30px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
                 <router-link to="/createjob">
-                  <button v-ripple style="margin-top:20px; margin-left:35%" class="postAJob2">Post a Job</button>
+                  <button v-ripple style="margin-top:20px; margin-left:auto; margin-right:10%;" class="postAJob2">Post a Job</button>
                 </router-link>
-            </div>
+              </div>
+            </v-flex>
 
-            <div style="z-index: 90; height: 400px; width:52%; background-color: #dbefff; margin-left:auto; margin-right:0; transform:translate(20px);">
+          <v-flex xs12 sm6>
+            <div class="container-right" style="z-index:0; height: 400px; background-color: #dbefff;">
               <img src="@/assets/artboard2.png" height="70%" style="margin-left:15%; margin-top:50px"/>
             </div>
-
+          </v-flex>
+          
+        </v-layout>
 
 
         <div style="width:100%; height:120px;">
