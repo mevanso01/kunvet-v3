@@ -1,13 +1,34 @@
+<style lang="scss" scoped>
+.k-btn {
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 0 10px 12px -4px #eaeaf9;
+  // position: relative;
+  display: inline-block;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  overflow: hidden;
+  .k-btn--text {
+    font-size: 17px;
+    padding: 0 24px;
+  }
+}
+.k-btn.block {
+  width: 100%;
+}
+</style>
 <template>
   <div
-    class="general-submit button"
+    class="k-btn"
     @click="click"
+    :class="{ 'block': block }"
     :style="buttonStyle"
   >
     <span v-if="working">
       <v-progress-circular indeterminate></v-progress-circular>
     </span>
-    <span v-else>
+    <span class="k-btn--text" v-else>
       <slot></slot>
     </span>
   </div>
@@ -18,11 +39,15 @@ export default {
   props: {
     color: {
       type: String,
-      default: '#ef5350',
+      default: '#ff6969',
     },
     dark: {
       type: Boolean,
       default: true,
+    },
+    block: {
+      type: Boolean,
+      default: false,
     },
     working: {
       type: Boolean,
@@ -48,10 +73,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.button {
-  border-radius: 4px;
-  box-shadow: 0 10px 12px -4px #eaeaf9;
-  cursor: pointer;
-}
-</style>

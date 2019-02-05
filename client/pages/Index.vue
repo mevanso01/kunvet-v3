@@ -294,8 +294,8 @@
     background-color: none;
     /* border: 1px solid #eeeeee; */
     box-sizing: border-box;
-    margin-top: -36px; 
-    margin-left: auto; 
+    margin-top: -36px;
+    margin-left: auto;
     margin-right: auto;
 }
 
@@ -351,22 +351,22 @@
 }
 
 .search_find_near{
-  height: 72px; 
-  padding-top:24px; 
-  width: 10%; 
+  height: 72px;
+  padding-top:24px;
+  width: 10%;
   background-color:white;
   float:left;
 }
 
 .top_title_text{
-  color: white; 
-  font-size: 3.9em; 
+  color: white;
+  font-size: 3.9em;
   text-align:center;
 }
 
 .top_title_pos{
   position:absolute;
-  width:100%; 
+  width:100%;
   margin-top: calc(50vh - 50px);
 }
 
@@ -379,38 +379,47 @@
 }
 
 .search_assist{
-  margin-left:40%; 
-  color:grey; 
+  margin-left:40%;
+  color:grey;
   font-size:16px;
 }
 
 .search_text_field{
-  height: 58px; 
-  width: 36%; 
-  outline:none !important; 
+  height: 58px;
+  width: 36%;
+  outline:none !important;
   background-color:white;
   float:left;
   margin-top:12px;}
 
-.search_select{
-  height: 58px; 
-  width: 44%; 
-  outline:none !important; 
+.search_select {
+  height: 58px;
+  width: 44%;
+  outline:none !important;
   background-color:white;
   float:left;
   margin-top:12px;
 }
 
-.search_mobile{
-  margin-left:10%; 
-  margin-right:10%; 
-  margin-bottom: 20px; 
+.search_mobile {
+  margin-left:10%;
+  margin-right:10%;
+  margin-bottom: 20px;
   box-shadow: 0 10px 12px -4px #eaeaf9;
+}
+
+.container-right {
+  width: calc(100% + 8px);
+}
+
+.container-left {
+  width: calc(100% + 8px);
+  transform: translateX(-8px);
 }
 
 @media (min-width: 601px) and (max-width: 960px) {
   .top_title_text{
-    font-size: 3.9em; 
+    font-size: 3.9em;
     text-align:left;
   }
 
@@ -437,21 +446,21 @@
   }
 
   .search_find_near{
-    height: 56px; 
+    height: 56px;
     line-height:16px;
-    padding-top:16px; 
-    width: 20%; 
+    padding-top:16px;
+    width: 20%;
   }
 
   .search_text_field{
-    height: 56px; 
+    height: 56px;
     width:auto;
     float:none;
     margin-top:0px;
   }
 
     .search_select{
-    height: 56px; 
+    height: 56px;
     width:auto;
     float:none;
     margin-top:0px;
@@ -605,16 +614,16 @@
 
 
 
-    <div id="promo" class="main-cont-large pa-3 promo-block mobile-hide" style="max-width: 100%; background: white">
+    <div id="promo" class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
         <v-layout row wrap>
-          <v-flex xs12 sm11 md5>
-            <div style="height: 400px; width:126%; float:left; background-color: #ffe2e2; transform:translate(-16px)">
+          <v-flex xs12 sm6>
+            <div class="container-right" style="background-color: #ffe2e2; height: 400px;">
               <img src="@/assets/artboard1.png" height="60%" style="padding-left:30%; margin-top:10%"/>
             </div>
           </v-flex>
 
-          <v-flex xs12 sm11 md7>
-            <div style="margin-top:30px; left: 100px; height: 320px; width:100%;
+          <v-flex xs12 sm6>
+            <div class="container-left" style="margin-top:30px; height: 320px;
                 background:  #FFC371;
                 background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
                 background: linear-gradient(to right,  #ff5f6d, #FFC371);
