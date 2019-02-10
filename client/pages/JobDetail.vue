@@ -174,30 +174,25 @@
   }
 
   .apply-button {
-    box-shadow: 0 8px 12px -4px #eaeaf9;
-    padding: 16px 0;
-    line-height: 100%;
-    width: 31%;
+    width: 80%;
     min-width: 65px;
-    background-color: #EA596B !important;
-    border-radius: 4px;
-    font-size: 1.2em !important;
-    color: white !important;
+    margin-right: 4px;
   }
 
-  .find-button {
-    padding: 16px 0;
-    line-height: 100%;
-    min-width: 135px;
-    width: 47%;
-    color: red;
-    border-radius: 4px;
-    border: 1px solid red;
-    margin: 0 4px;
-    font-size: 1.2em;
-  }
+  /*.find-button {*/
+    /*padding: 16px 0;*/
+    /*line-height: 100%;*/
+    /*min-width: 135px;*/
+    /*width: 47%;*/
+    /*color: red;*/
+    /*border-radius: 4px;*/
+    /*border: 1px solid red;*/
+    /*margin: 0 4px;*/
+    /*font-size: 1.2em;*/
+  /*}*/
 
   .bookmark-button {
+    margin-left: 4px;
     height: 100%;
     width: 13%;
     min-width: 43px;
@@ -361,6 +356,63 @@
 
   .v-dialog--active {
       background-color: white;
+  }
+
+  /*resume uploader*/
+
+  .file-icon {
+    width: 125px;
+    margin: 0 15px;
+    transform: translateY(55%);
+  }
+
+  .icon-container{
+    display: flex;
+    justify-content: center;
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
+  }
+
+  .uploader-text{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .existing-container{
+    width: 90%;
+    margin: 50px auto 0 auto;
+  }
+
+  .existing-file{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: start;
+    background-color: #eee;
+    width: 100%;
+    height: 70px;
+  }
+
+  .existing-file p{
+    line-height: 70px;
+    transform: translateX(50px);
+  }
+
+  .smaller-file-icon{
+    height: 20px;
+    width: 20px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5%;
+  }
+
+  .upload-form{
+    width: 91%;
+    margin: 0 auto;
+
   }
 
 </style>
@@ -552,15 +604,20 @@
 
         <div class="bottom-button-container">
           <!--<button class="apply-button" @click="apply">Apply</button>-->
-          <v-btn class="apply-button" :disabled="applied" v-if="uid !== findJob.user_id"
-                 style="margin: 0 !important; height: 53px !important; text-transform: none !important;"
-                 @click="apply">
-            {{ applied ? 'Applied' : 'Apply' }}
-          </v-btn>
-          <button class="find-button">Find Similar Jobs</button>
-          <button class="bookmark-button" @click="saveJob(findJob._id)">
-            <img src="../assets/job_detail/bookmark.svg" alt="">
-          </button>
+          <!--<v-btn class="apply-button" :disabled="applied" v-if="uid !== findJob.user_id"-->
+                 <!--style="margin: 0 !important; height: 53px !important; text-transform: none !important;"-->
+                 <!--@click="apply">-->
+            <!--{{ applied ? 'Applied' : 'Apply' }}-->
+          <!--</v-btn>-->
+          <!--&lt;!&ndash;<button class="find-button">Find Similar Jobs</button>&ndash;&gt;-->
+          <!--<button class="bookmark-button" @click="saveJob(findJob._id)">-->
+            <!--<img src="../assets/job_detail/bookmark.svg" alt="">-->
+          <!--</button>-->
+          <k-btn class="apply-button" @click="apply">{{ applied ? 'Applied' : 'Apply' }}</k-btn>
+          <a class="bookmark-button" @click="saveJob(findJob._id)">
+            <img v-if="isSaved(findJob._id)" src="../assets/job_detail/bookmark_full.svg" alt="">
+            <img v-else src="../assets/job_detail/bookmark.svg" alt="">
+          </a>
         </div>
         <!--find-->
 
@@ -755,8 +812,26 @@
       </v-card>
 
       <div style="height: 500px !important; " v-else-if="loginState==='resume'">
-        <ResumeUploader></ResumeUploader>
+        <form class="upload-form" :class="{'vertical-center' : !this.resumeExists}" enctype="multipart/form-data" novalidate :style="{height: (this.resumeExists ? 16 : 80)+'%'}">
+
+          <div class="existing-container" v-if="this.resumes.length > 0">
+            <h2>Select Existing Files or Upload More</h2>
+            <p v-if="this.resumeExists">{{this.selectedResumes.length}} {{this.selectedResumes.length | plural}} selected</p>
+            <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="file in this.resumes">
+              <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
+              <p v-if="file.name.length < 20">{{file.name}}</p>
+              <p v-else>{{file.name | truncate}}</p>
+              <v-checkbox style="position: absolute; right: 50px; transform: translateY(19px);" @change="selectResume(file)"></v-checkbox>
+            </div>
+          </div>
+
+          <ResumeUploader @uploaded="resumeUploaded" style="width: 100%; height: 70px;"></ResumeUploader>
+          <k-btn v-if="resumeExists" style="margin-top: 20px;" >Confirm Files</k-btn>
+
+        </form>
+
       </div>
+
 
     </v-dialog>
   </v-container>
@@ -791,6 +866,14 @@
     // const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
     export default {
+      filters: {
+        plural(amount) {
+          return amount > 1 ? 'resumes' : 'resume';
+        },
+        truncate(s) {
+          return `${s.substring(0, 20)} ...`;
+        },
+      },
       components: {
         MobileMenu,
         LoginComponent,
@@ -856,6 +939,9 @@
         sanitizedDescription() {
           return sanitizeHtml(this.findJob.description);
         },
+        resumeExists() {
+          return this.resumes.length > 0;
+        },
         selectedResumeNames() {
           if (this.selectedResumes.length > 0) {
             /* (const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
@@ -885,6 +971,29 @@
         },
       },
       methods: {
+        resumeUploaded(_filename, _resumename) {
+          console.log('resume has been uploaded');
+          const newResume = {
+            name: _resumename,
+            filename: _filename,
+            resumeid: null,
+          };
+          this.resumes.push(newResume);
+          this.updateAccount();
+          console.log('this.resumes is now ');
+          console.log(this.resumes);
+        },
+        confirmFiles() {
+          console.log('apply to job with ');
+          for (var i = 0; i < this.selectedResumes.length; ++i) {
+            console.log(this.selectedResumes[i]);
+          }
+        },
+        isSaved(id) {
+          console.log('is saved called');
+          console.log(this.saved_jobs.indexOf(id) > -1);
+          return this.saved_jobs.indexOf(id) > -1;
+        },
         handleLogin() {
           this.loginState = 'login';
         },
@@ -958,12 +1067,13 @@
         },
         apply() {
           console.log(this.resume);
+          console.log(this.loginState);
           this.dialog = true;
           if (this.uid) {
             // this.state = 'INITIAL';
             // this.applyState = 'MAIN';
             // this.applydialog = true;
-            // this._getUserData();
+            this._getUserData();
             this.otherdialog = true;
             this.handleResume();
           } else {
@@ -1001,6 +1111,7 @@
           });
         },
         saveJob(id) {
+          console.log(this.uid);
           if (this.uid) {
             if (this.saved_jobs.indexOf(id) === -1) {
               this.saved_jobs.push(id);
@@ -1044,6 +1155,8 @@
             }).catch((error) => {
               this.$error(error);
             });
+          } else {
+            console.log('id was null everything failed');
           }
         },
         async fetchProfilePic() {
