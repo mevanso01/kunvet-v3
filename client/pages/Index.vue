@@ -534,7 +534,7 @@
             clearable
           ></v-text-field>
         </div>
-    </div>
+  </div>
 
   <div class="search_mobile mobile-show">
         <div class="search_find_near">
@@ -556,14 +556,18 @@
         </div>
     </div>
 
-            <button @click="searchGo()" v-ripple class="mobile-hide kunvet-search-btn med">
-              <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
-            </button>
-            <button @click="searchGo()" v-ripple class="mobile-show kunvet-search-btn small block" style="width:80%; margin:auto;">
-              <span style="line-height: 56px; font-size: 20px; font-family: 'Roboto', sans-serif;">
-                Search
-              </span>
-            </button>
+    <router-link :to="searchDestination">
+      <button v-ripple class="mobile-hide kunvet-search-btn med">
+        <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
+      </button>
+    </router-link>
+    <router-link :to="searchDestination">
+      <button v-ripple class="mobile-show kunvet-search-btn small block" style="width:80%; margin:auto;">
+        <span style="line-height: 56px; font-size: 20px; font-family: 'Roboto', sans-serif;">
+          Search
+        </span>
+      </button>
+    </router-link>
 
   </div>
 
@@ -741,7 +745,20 @@ export default {
       query: '',
     };
   },
+  watch: {
+    selectedCity() {
+      this.commitData();
+    },
+  },
   computed: {
+    searchDestination() {
+      return {
+        path: '/search',
+        query: {
+          q: this.query,
+        },
+      };
+    },
     filteredAvailablePositionsObj() {
       let str = this.filterPositions;
       if (!str || str === '') {
@@ -810,17 +827,6 @@ export default {
         this.openSelectField = null;
       } else {
         this.openSelectField = name;
-      }
-    },
-    searchGo() {
-      if (this.selectedCity) {
-        this.$store.commit('go');
-        this.commitData();
-        if (this.query) {
-          this.$router.push({ path: '/search', query: { q: this.query } });
-        } else {
-          this.$router.push('/search');
-        }
       }
     },
     commitData() {
