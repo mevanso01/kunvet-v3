@@ -14,6 +14,13 @@
     padding: 0 24px;
   }
 }
+.k-btn.outline {
+  border: 2px solid;
+  box-shadow: none;
+  img {
+    margin-bottom: 2px;
+  }
+}
 .k-btn.block {
   width: 100%;
 }
@@ -24,7 +31,8 @@
   }
   img {
     max-width: 30px;
-    margin: 0 8px;
+    margin-left: 8px;
+    margin-right: 8px;
     vertical-align: middle;
   }
 }
@@ -33,7 +41,7 @@
   <div
     class="k-btn"
     @click="click"
-    :class="{ 'block': block, 'icon': icon }"
+    :class="{ 'block': block, 'icon': icon, 'outline': outline }"
     :style="buttonStyle"
   >
     <span v-if="working">
@@ -64,6 +72,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    outline: {
+      type: Boolean,
+      default: false,
+    },
     working: {
       type: Boolean,
       default: false,
@@ -81,8 +93,9 @@ export default {
   computed: {
     buttonStyle() {
       return {
-        background: this.color,
+        background: this.outline ? 'transparent' : this.color,
         color: this.dark ? '#fff' : 'inherit',
+        'border-color': this.outline ? this.color : 'none',
       };
     },
   },

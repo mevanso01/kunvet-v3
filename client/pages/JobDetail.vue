@@ -603,21 +603,17 @@
 
 
         <div class="bottom-button-container">
-          <!--<button class="apply-button" @click="apply">Apply</button>-->
-          <!--<v-btn class="apply-button" :disabled="applied" v-if="uid !== findJob.user_id"-->
-                 <!--style="margin: 0 !important; height: 53px !important; text-transform: none !important;"-->
-                 <!--@click="apply">-->
-            <!--{{ applied ? 'Applied' : 'Apply' }}-->
-          <!--</v-btn>-->
-          <!--&lt;!&ndash;<button class="find-button">Find Similar Jobs</button>&ndash;&gt;-->
-          <!--<button class="bookmark-button" @click="saveJob(findJob._id)">-->
-            <!--<img src="../assets/job_detail/bookmark.svg" alt="">-->
-          <!--</button>-->
-          <k-btn class="apply-button" @click="apply">{{ applied ? 'Applied' : 'Apply' }}</k-btn>
-          <a class="bookmark-button" @click="saveJob(findJob._id)">
-            <img v-if="isSaved(findJob._id)" src="../assets/job_detail/bookmark_full.svg" alt="">
-            <img v-else src="../assets/job_detail/bookmark.svg" alt="">
-          </a>
+          <k-btn style="padding: 0 32px;" @click="apply" :disabled="applied">{{ applied ? 'Applied' : 'Apply' }}</k-btn>
+          <k-btn icon outline v-if="isSaved(findJob._id)" @click="saveJob(findJob._id)" color="orange" class="ml-2">
+            <img src="../assets/job_detail/bookmark_full.svg" alt="">
+          </k-btn>
+          <k-btn icon outline v-else @click="saveJob(findJob._id)" color="#b3b3b3" class="ml-2">
+            <img src="../assets/icons/Asset(36).svg" alt="">
+          </k-btn>
+          <!-- <a class="svg-button" @click="saveJob(findJob._id)">
+            <img v-if="isSaved(findJob._id)" style="height: 24px; margin: 6px auto;" src="../assets/job_detail/bookmark_full.svg" />
+            <img v-else style="height: 24px; margin: 6px auto;" src="../assets/icons/Asset(36).svg" />
+          </a> -->
         </div>
         <!--find-->
 
