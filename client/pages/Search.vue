@@ -333,13 +333,9 @@ section.search {
             <button @click="search()" v-ripple class="mobile-hide kunvet-search-btn small">
               <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
             </button>
-            <button @click="search()" v-ripple class="mobile-show kunvet-search-btn small block">
-              <span style="line-height: 56px; font-size: 20px; font-weight: bold;">
-                <!-- <img src="@/assets/magnifier.svg" height="24px"
-                  style="margin-bottom:5px;margin-right:5px;vertical-align: middle;"/> -->
-                Search
-              </span>
-            </button>
+            <k-btn @click="search()" block v-ripple class="mobile-show">
+              Search
+            </k-btn>
           </div>
         </div>
       </div>
@@ -1040,6 +1036,9 @@ export default {
     this.setSelectedLatlongs();
     if (this.filteredJobs.length === 0) {
       this.loadingJobs = true;
+    }
+    if (this.$route.query.q) {
+      this.query = this.$route.query.q;
     }
     this.rawSearch();
     document.addEventListener('click', this.documentClick, { passive: true });

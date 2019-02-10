@@ -36,8 +36,8 @@
   }
 </style>
 <template>
-  <div v-on:keyup.enter="submit">
-    <div v-if="forgetpwd==0" >
+  <div>
+    <div v-if="forgetpwd==0" v-on:keyup.enter="submit">
       <v-form class="auth-form" v-model="valid" ref="form">
         <section>
           <h2 class="kunvet-red" style="margin-bottom: 32px">Welcome Back!</h2>
@@ -67,14 +67,13 @@
           </p>
 
         </section>
-        <div v-if="loggedIn==0" id="general-submit" @click="submit" style="border-radius: 4px; box-shadow: 0 10px 12px -4px #eaeaf9;">
+        <!-- <div v-if="loggedIn==0" id="general-submit" @click="submit" style="border-radius: 4px; box-shadow: 0 10px 12px -4px #eaeaf9;">
           <div id="general-submit-default">
             <v-progress-circular indeterminate v-if="loading" size="30" color="white"></v-progress-circular>
             <span  v-else>Login</span>
           </div>
-        </div>
-
-
+        </div> -->
+        <k-btn block @click="submit" :working="loading" v-show="loggedIn==0">Login</k-btn>
         <v-alert
             color="green darken-1"
             icon="priority_high"
@@ -86,52 +85,35 @@
     </div>
 
 
-    <div v-if="forgetpwd==1" class="auth-form">
-      <section v-if="!sent" class="login-section">
+    <div v-if="forgetpwd==1" class="auth-form" v-on:keyup.enter="requestPasswordReset">
+      <section class="login-section">
         <h2 class="kunvet-red">Reset Password</h2>
-        <p style="margin-bottom: 16px">Please enter the email associated with your
-account, and we’ll email you a verfication code.</p>
-        <v-form v-model="valid" ref="form2">
-          <k-text-field
-                  label="E-mail"
-                  v-model="email"
-                  :rules="emailRules"
-                  required
-                  style="margin-bottom: 64px"
-          ></k-text-field>
-        </v-form>
+        <div v-if="!sent">
+          <p style="margin-bottom: 16px">
+            Please enter the email associated with your account, and we’ll email you a verfication code.
+          </p>
+          <v-form v-model="valid" ref="form2">
+            <k-text-field
+                    label="E-mail"
+                    v-model="email"
+                    :rules="emailRules"
+                    required
+                    style="margin-bottom: 64px"
+            ></k-text-field>
+          </v-form>
+        </div>
+        <div v-if="sent">
+          <p style="margin-bottom: 64px;">
+            Success!<br>If <b>{{ email }}</b> exists in our database you will receive an email for resetting your password shortly.
+          </p>
+          <!-- <p id="forgot-password" class="center" style="color: #616161;">
+            <a @click="forgetpwd=0;" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+          </p> -->
+        </div>
       </section>
 
-      <section v-if="sent" class="login-section">
-        <p>
-          Success! If <b>{{ email }}</b> exists in our database you will receive an email shortly.
-        </p>
-        <p id="forgot-password" class="center" style="color: #616161;">
-          <a @click="forgetpwd=0;" class="link">Back to log in <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-        </p>
-
-      </section>
-
-      <div v-show="!sent" id="general-submit" @click="requestPasswordReset" style="margin-bottom: 14px; border-radius: 4px;">
-        <div id="general-submit-default">
-          <v-progress-circular indeterminate v-if="loading" size="30" style="margin-top: 17px" color="white"></v-progress-circular>
-          <span v-else>Request Password Reset</span>
-        </div>
-      </div>
-      <div v-show="!sent" id="general-submit" @click="forgetpwd=0">
-        <div id="general-submit-default" style="background-color: #f36865 !important; border-radius: 4px;">
-          <span >Back To Login</span>
-        </div>
-      </div>
-      <!--<v-alert
-          color="green darken-1" style="margin-bottom: 0;"
-          icon="check_circle"
-          :value="sent"
-          transition="slide-x-transition"
-      >
-          Request password email sent.
-      </v-alert>-->
-
+      <k-btn block @click="requestPasswordReset" :working="loading" v-show="!sent" class="mb-2">Request Password Reset</k-btn>
+      <k-btn block @click="forgetpwd=0; sent=false;" color="#ff8f8f">Back to Login</k-btn>
     </div>
   </div>
 </template>

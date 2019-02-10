@@ -289,6 +289,7 @@ export default {
           { title: 'Search', href: '/search' },
           { title: 'Applied Jobs', href: '/appliedjobs' },
           { title: 'Saved Jobs', href: '/savedjobs' },
+          { title: 'Settings', href: '/settings' },
         ],
         [
           { title: 'Search', href: '/search' },
