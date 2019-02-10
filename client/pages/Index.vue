@@ -497,6 +497,7 @@
             hide-details
             label="part time design intern"
             clearable
+            v-model="query"
           ></v-text-field>
         </div>
 

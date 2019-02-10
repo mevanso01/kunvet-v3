@@ -1041,6 +1041,9 @@ export default {
     if (this.filteredJobs.length === 0) {
       this.loadingJobs = true;
     }
+    if (this.$route.query.q) {
+      this.query = this.$route.query.q;
+    }
     this.rawSearch();
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
