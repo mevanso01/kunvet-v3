@@ -75,7 +75,11 @@
     width: 50%;
   }
 }
-
+@media only screen and (max-width: 600px) {
+  .jp-card .jp-divider {
+    margin-right: 24px;
+  }
+}
 
 .ais-search-box__form {
   input {

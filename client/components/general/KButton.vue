@@ -10,7 +10,7 @@
   text-align: center;
   overflow: hidden;
   .k-btn--text {
-    font-size: 17px;
+    font-size: 16px;
     padding: 0 24px;
   }
 }

@@ -13,7 +13,7 @@
       <k-text-field
         placeholder="Im a placeholder"
       ></k-text-field>
-      <k-btn icon @click="testFunc"><img src="../assets/icons/Asset(36).svg" /></k-btn>
+      <k-btn icon @click="testFunc" color="lightblue"><img src="../assets/icons/Asset(36).svg" /></k-btn>
     </div>
     <div style="background-color: #ddd; padding: 16px 24px; margin-bottom: 24px;">
 
