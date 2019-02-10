@@ -509,6 +509,7 @@
             item-text="name"
             item-value="name"
             v-bind:items="availableCities"
+            v-model="selectedCity"
             solo
             flat
             hide-details
@@ -641,7 +642,7 @@
       </div>
         <v-layout row wrap>
           <v-flex xs12 sm6 style="z-index:5;">
-            <div class="container-left" style="height: 320px; margin-top:30px; 
+            <div class="container-left" style="height: 320px; margin-top:30px;
                 background:  #2f89fc;
                 background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
                 background: linear-gradient(to right,  #a57fff , #2f89fc);
@@ -660,7 +661,7 @@
               <img src="@/assets/artboard2.png" height="70%" style="margin-left:15%; margin-top:50px"/>
             </div>
           </v-flex>
-          
+
         </v-layout>
 
 
@@ -722,9 +723,7 @@ export default {
       // firstSearch: this.$store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
       selectedCity: this.$store.state.selectedCity || 'Irvine - UC Irvine', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
-      selectedTypes: this.$store.selectedTypes || [],
       selectedPositions: this.$store.selectedPositions || [],
-      selectedShifts: this.$store.selectedShifts || [],
       selectedLat: Coordinates.uci.latitude,
       selectedLong: Coordinates.uci.longitude,
       svgs: {
@@ -813,7 +812,7 @@ export default {
       }
     },
     searchGo() {
-      if (this.selectedCity && this.selectedCity[0]) {
+      if (this.selectedCity) {
         this.$store.commit('go');
         this.commitData();
         if (this.query) {
@@ -827,9 +826,9 @@ export default {
       this.$store.commit({
         type: 'keepSearch',
         sCities: this.selectedCity,
-        sTypes: this.selectedTypes,
-        sPositions: this.selectedPositions,
-        sShifts: this.selectedShifts,
+        // sTypes: this.selectedTypes,
+        // sPositions: this.selectedPositions,
+        // sShifts: this.selectedShifts,
       });
     },
     // unused, but could be useful later

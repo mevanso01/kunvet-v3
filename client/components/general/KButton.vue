@@ -17,12 +17,23 @@
 .k-btn.block {
   width: 100%;
 }
+.k-btn.icon {
+  width: 56px;
+  .k-btn--text {
+    padding: 0;
+  }
+  img {
+    max-width: 30px;
+    margin: 0 8px;
+    vertical-align: middle;
+  }
+}
 </style>
 <template>
   <div
     class="k-btn"
     @click="click"
-    :class="{ 'block': block }"
+    :class="{ 'block': block, 'icon': icon }"
     :style="buttonStyle"
   >
     <span v-if="working">
@@ -46,6 +57,10 @@ export default {
       default: true,
     },
     block: {
+      type: Boolean,
+      default: false,
+    },
+    icon: {
       type: Boolean,
       default: false,
     },
