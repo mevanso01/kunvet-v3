@@ -8,7 +8,7 @@ import InstantSearch from 'vue-instantsearch';
 
 import Client from '@/apollo/client';
 import SearchHighlight from '@/components/SearchHighlight';
-import Button from '@/components/general/Button';
+import KButton from '@/components/general/KButton';
 import KTextField from '@/components/general/KTextField';
 
 import '@/options/axios';
@@ -37,7 +37,7 @@ Vue.use(VueTimeago, {
 });
 Vue.use(InstantSearch);
 Vue.component('highlight', SearchHighlight);
-Vue.component('k-btn', Button);
+Vue.component('k-btn', KButton);
 Vue.component('k-text-field', KTextField);
 
 const apolloProvider = new VueApollo({

@@ -100,7 +100,7 @@
                         <!--<p style="margin: 0;">{{ chosenFile }}</p>-->
                     <!--</div>-->
 
-                    <kbutton v-if="resumeExists" style="margin-top: 20px;">Confirm Files</kbutton>
+                    <k-btn v-if="resumeExists" style="margin-top: 20px;">Confirm Files</k-btn>
                 </form>
 
                 <!--<v-text-field-->
@@ -127,12 +127,8 @@
 </template>
 <script>
     import FileClient from '@/utils/FileClient';
-    import kbutton from './general/Button';
 
     export default {
-      components: {
-        kbutton,
-      },
       filters: {
         plural(amount) {
           return amount > 1 ? 'resumes' : 'resume';
