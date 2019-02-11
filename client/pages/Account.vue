@@ -360,8 +360,10 @@
               </v-flex>
             </v-layout>
 
-            <v-dialog v-model="showFileModal">
+            <v-dialog v-model="showFileModal" max-width="500">
               <ResumeUploader
+                :full-dropbox="true"
+                style="width: 60%; height: 500px;"
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
               />

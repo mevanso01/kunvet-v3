@@ -4,12 +4,8 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
-    }
-
-    .upload-form{
-        width: 91%;
-        margin: 0 auto;
-
+        width: 100%;
+        font-size: 12px;
     }
 
     .vertical-center{
@@ -17,16 +13,45 @@
         top: 50%;
         transform: translateY(-50%);
     }
+
+    .full-dropbox{
+        width: 100% !important;
+        height: 100%
+    }
+
+    .file-icon {
+        width: 125px;
+        margin: 0 15px;
+        transform: translateY(15%);
+    }
+
+    .icon-container{
+        display: flex;
+        justify-content: center;
+        /*position: absolute;*/
+        /*top: 50%;*/
+        /*transform: translateY(-50%);*/
+    }
+
+    .smaller-file-icon{
+        height: 20px;
+        width: 20px;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 5%;
+    }
+
 </style>
 
 <template>
-    <v-card flat style="max-width: 100%; height: 100%;">
-        <v-card-title style="height: 100%;">
+    <v-card flat style="height: auto" :class="{'full-dropbox':'full-dropbox'}">
+        <v-card-title style="height: 100%; padding: 0">
             <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="width: 100%; height: 100%;">
-
-
-                <form class="upload-form" :class="{'vertical-center' : !this.resumeExists}" enctype="multipart/form-data" novalidate :style="{height: (this.resumeExists ? 16 : 80)+'%'}">
-                    <div class="dropbox" style="height: 100%;">
+                <form class="upload-form" :class="{'vertical-center' : !this.resumeExists}"
+                      enctype="multipart/form-data" novalidate
+                      :style="{height: ((this.resumeExists && !this.fullDropbox) ? 16 : 80)+'%'}">
+                    <div class="dropbox" :class="{'full-dropbox':'full-dropbox'}">
                         <input
                                 type="file"
                                 :disabled="state === 'UPLOADING'"
@@ -37,15 +62,12 @@
                                 class="input-file"
                         >
                         <div v-if="state === 'INITIAL'" >
-                            <!--<div class="icon-container">-->
-                                <!--<img class="file-icon" :style="{height: (this.resumeExists ? 0 : 125)+'px'}" src="../assets/job_detail/pdf-icon.svg">-->
-                                <!--<img class="file-icon" :style="{height: (this.resumeExists ? 0 : 125)+'px'}" src="../assets/job_detail/doc-icon.svg">-->
+                            <div v-if="!resumeExists" class="icon-container">
+                                <img class="file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
+                                <img class="file-icon" src="../assets/job_detail/doc-icon.svg" alt="">
+                            </div>
 
-                            <!--</div>-->
-                            <p v-if="state === 'UPLOADING'">
-                                Uploading files...
-                            </p>
-                            <p v-else class="uploader-text" :style="{'font-size': (this.resumeExists ? 12 : 14)+'px', top: (this.resumeExists ? 50 : 60)+'%'}">Drag or click to upload additional files.</p>
+                            <p class="uploader-text">Drag or click to upload additional files.</p>
                         </div>
 
                     </div>
@@ -70,19 +92,10 @@
     import FileClient from '@/utils/FileClient';
 
     export default {
-      filters: {
-        plural(amount) {
-          return amount > 1 ? 'resumes' : 'resume';
-        },
-        truncate(s) {
-          return `${s.substring(0, 20)} ...`;
-        },
-      },
-      props: ['id'],
+      props: ['id', 'full-dropbox', 'smalldropbox'],
       data() {
         return {
           resumes: [],
-          selectedResumes: [],
           state: 'INITIAL',
           curId: '',
           file: null,
@@ -93,13 +106,12 @@
         };
       },
       mounted() {
-        console.log(this.selectedResumes.length);
         this.client = new FileClient();
         this.curId = this.id;
       },
       computed: {
         resumeExists() {
-          return this.resumes.length > 0;
+          return this.resumes.length > 0 || this.smalldropbox;
         },
       },
       methods: {
@@ -142,9 +154,6 @@
             resumeid: null,
             selected: false,
           });
-          console.log(this.resumes);
-          console.log('the resume is going to be named');
-          console.log(this.resumeName);
           this.$emit('uploaded', this.curId, this.resumeName);
           // change this back to resumeName later
           this.reset();

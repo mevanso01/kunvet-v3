@@ -360,30 +360,10 @@
 
   /*resume uploader*/
 
-  .file-icon {
-    width: 125px;
-    margin: 0 15px;
-    transform: translateY(55%);
-  }
-
-  .icon-container{
-    display: flex;
-    justify-content: center;
-    /*position: absolute;*/
-    /*top: 50%;*/
-    /*transform: translateY(-50%);*/
-  }
-
-  .uploader-text{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-  }
-
   .existing-container{
     width: 90%;
-    margin: 50px auto 0 auto;
+    height: 500px;
+    margin: 0 auto;
   }
 
   .existing-file{
@@ -391,28 +371,13 @@
     display: flex;
     justify-content: start;
     background-color: #eee;
-    width: 100%;
+    width: 99%;
     height: 70px;
   }
 
   .existing-file p{
     line-height: 70px;
     transform: translateX(50px);
-  }
-
-  .smaller-file-icon{
-    height: 20px;
-    width: 20px;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 5%;
-  }
-
-  .upload-form{
-    width: 91%;
-    margin: 0 auto;
-
   }
 
 </style>
@@ -491,6 +456,7 @@
               <span style="padding-top: 2px;">
                 {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
+            </p>
             </p>
             <p v-if="findJob.university" style="margin-left: 24px;">
               {{ findJob.university }}
@@ -607,29 +573,10 @@
           <k-btn icon outline v-if="isSaved(findJob._id)" @click="saveJob(findJob._id)" color="orange" class="ml-2">
             <img src="../assets/job_detail/bookmark_full.svg" alt="">
           </k-btn>
-          <k-btn icon outline v-else @click="saveJob(findJob._id)" color="#b3b3b3" class="ml-2">
+          <k-btn v-else icon outline @click="saveJob(findJob._id)" color="#b3b3b3" class="ml-2">
             <img src="../assets/icons/Asset(36).svg" alt="">
           </k-btn>
-          <!-- <a class="svg-button" @click="saveJob(findJob._id)">
-            <img v-if="isSaved(findJob._id)" style="height: 24px; margin: 6px auto;" src="../assets/job_detail/bookmark_full.svg" />
-            <img v-else style="height: 24px; margin: 6px auto;" src="../assets/icons/Asset(36).svg" />
-          </a> -->
         </div>
-        <!--find-->
-
-        <!--<div class="bottom-container mobile-hide" v-bind:class="{ 'stick-to-bottom': stickToBottom }" id="bottom-container">-->
-        <!--&lt;!&ndash; <div class="gradient-bar" v-show="stickToBottom">-->
-        <!--</div> &ndash;&gt;-->
-        <!--<v-btn :disabled="applied" v-if="uid !== findJob.user_id"-->
-        <!--outline class="red&#45;&#45;text darken-1" @click="apply">-->
-        <!--{{ applied ? 'Applied' : 'Apply' }}-->
-        <!--</v-btn>-->
-        <!--<a class="svg-button" style="margin: 6px 8px;" @click="saveJob(findJob._id)">-->
-        <!--<img v-if="saved" :src="svgs.savedIcon"/>-->
-        <!--<img v-else :src="svgs.notSavedIcon"/>-->
-        <!--</a>-->
-        <!--</div>-->
-
 
         <!-- in order to retain document height when bottom container is fixed -->
         <div class="height-helper" v-show="stickToBottom"></div>
@@ -807,26 +754,26 @@
         </button>
       </v-card>
 
-      <div style="height: 500px !important; " v-else-if="loginState==='resume'">
-        <form class="upload-form" :class="{'vertical-center' : !this.resumeExists}" enctype="multipart/form-data" novalidate :style="{height: (this.resumeExists ? 16 : 80)+'%'}">
+      <v-card flat class="dialog-card" style="overflow: hidden" v-else-if="loginState==='resume'">
+        <div class="existing-container"  enctype="multipart/form-data" novalidate>
 
-          <div class="existing-container" v-if="this.resumes.length > 0">
+          <div style="margin-top: 50px" v-if="this.resumes.length > 0">
             <h2>Select Existing Files or Upload More</h2>
             <p v-if="this.resumeExists">{{this.selectedResumes.length}} {{this.selectedResumes.length | plural}} selected</p>
             <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="file in this.resumes">
               <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
               <p v-if="file.name.length < 20">{{file.name}}</p>
               <p v-else>{{file.name | truncate}}</p>
-              <v-checkbox style="position: absolute; right: 50px; transform: translateY(19px);" @change="selectResume(file)"></v-checkbox>
+              <v-checkbox style="position: relative; left: 220px;transform: translateY(19px);" @change="selectResume(file)"></v-checkbox>
             </div>
           </div>
 
-          <ResumeUploader @uploaded="resumeUploaded" style="width: 100%; height: 70px;"></ResumeUploader>
-          <k-btn v-if="resumeExists" style="margin-top: 20px;" >Confirm Files</k-btn>
+          <ResumeUploader :smalldropbox="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
+          <k-btn v-if="resumeExists" @click="createApplication" style="margin: 40px auto;" >Confirm Files</k-btn>
 
-        </form>
+        </div>
 
-      </div>
+      </v-card>
 
 
     </v-dialog>
@@ -968,7 +915,6 @@
       },
       methods: {
         resumeUploaded(_filename, _resumename) {
-          console.log('resume has been uploaded');
           const newResume = {
             name: _resumename,
             filename: _filename,
@@ -976,18 +922,8 @@
           };
           this.resumes.push(newResume);
           this.updateAccount();
-          console.log('this.resumes is now ');
-          console.log(this.resumes);
-        },
-        confirmFiles() {
-          console.log('apply to job with ');
-          for (var i = 0; i < this.selectedResumes.length; ++i) {
-            console.log(this.selectedResumes[i]);
-          }
         },
         isSaved(id) {
-          console.log('is saved called');
-          console.log(this.saved_jobs.indexOf(id) > -1);
           return this.saved_jobs.indexOf(id) > -1;
         },
         handleLogin() {
@@ -997,10 +933,24 @@
           this.loginState = 'signup';
         },
         handleResume() {
+          this._getUserData();
           this.loginState = 'resume';
         },
         handleScroll() {
           this.stickToBottom = this.isNotAtBottom();
+        },
+        selectResume(resume) {
+          if (!resume.selected) {
+            resume.selected = true;
+            this.selectedResumes.push(resume);
+          } else {
+            resume.selected = false;
+            for (var i = 0; i < this.selectedResumes.length; ++i) {
+              if (resume.resumeid === this.selectedResumes[i].resumeid) {
+                this.selectedResumes.splice(i, 1);
+              }
+            }
+          }
         },
         isNotAtBottom() {
           const footer = document.getElementById('bottom');
@@ -1062,8 +1012,6 @@
           });
         },
         apply() {
-          console.log(this.resume);
-          console.log(this.loginState);
           this.dialog = true;
           if (this.uid) {
             // this.state = 'INITIAL';
@@ -1107,7 +1055,6 @@
           });
         },
         saveJob(id) {
-          console.log(this.uid);
           if (this.uid) {
             if (this.saved_jobs.indexOf(id) === -1) {
               this.saved_jobs.push(id);
@@ -1160,6 +1107,7 @@
           this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
         },
         _getUserData() {
+          console.log('RETRIEVEING USER DATA');
           userDataProvider.getUserData().then(data => {
             if (data.acct === 0) {
               this.$store.commit({ type: 'setAcctID', id: null }); // reset userID to prevent infinite redirect loop
@@ -1221,15 +1169,18 @@
         createApplication() {
           // validate
           if (this.uid && this.userdata && !this.loading && !this.applied) {
+            console.log('creating application');
             this.loading = true;
             // const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
             /* resume: this.resumes.length > 0 ? ({
                       filename: this.resumes[index].filename,
                       resumeid: this.resumes[index].resumeid,
                     }) : null, */
-            const _resumes = this.resumes
-              .map(r => ({ filename: r.filename, resumeid: r.resumeid }))
-              .filter(r => this.selectedResumes.indexOf(r.filename) !== -1);
+            // const _resumes = this.resumes
+            //   .map(r => ({ filename: r.filename, resumeid: r.resumeid }))
+            //   .filter(r => this.selectedResumes.indexOf(r.filename) !== -1);
+            const _resumes = this.selectedResumes
+              .map(r => ({ filename: r.filename, resumeid: r.resumeid }));
             const application = {
               user_id: this.uid,
               job_id: this.id,
@@ -1242,6 +1193,7 @@
               wechat_id: this.userdata.wechat_id,
               applicant_message: this.message,
             };
+            console.log(application);
             this.$apollo.mutate({
               mutation: (gql`mutation ($application: CreateOneApplicantInput!) {
             createApplication (record: $application) {
