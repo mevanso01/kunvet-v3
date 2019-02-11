@@ -361,13 +361,14 @@
 .top_title_text{
   color: white;
   font-size: 3.9em;
-  text-align:center;
+  text-align: center;
 }
 
 .top_title_pos{
   position:absolute;
   width:100%;
-  margin-top: calc(50vh - 50px);
+  bottom:0;
+  margin-bottom: 50px;
 }
 
 .searchBar{
@@ -417,20 +418,46 @@
     transform: translateX(-8px);
 }
 
+.search_hide{
+  display:block;
+}
+
+.search_show{
+  display:none;
+}
+
+.search_button_text{
+  line-height: 56px; 
+  font-size: 20px; 
+  font-family: 'Roboto', sans-serif;
+}
+
+
 @media (min-width: 601px) and (max-width: 960px) {
   .top_title_text{
-    font-size: 3.9em;
+    font-size: 3.5em;
     text-align:left;
   }
 
   .top_title_pos{
-    margin-top: calc(50vh - 100px);
+    bottom:0;
+    margin-bottom:50px;
   }
 }
 
-@media only screen and (max-width: 480px) {
-  .top_title_text{
-    font-size: 2.1em;
+@media only screen and (max-width: 819px) {
+  .search_show{
+    display:block;
+  }
+  
+  .search_hide{
+    display:none;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 819px) {
+    .top_title_text{
+    font-size: 2.8em;
     line-height: 40px;
     text-align:left;
   }
@@ -438,7 +465,48 @@
   .top_title_pos{
     margin-left:10%;
     width:80%;
-    margin-top: 42vh;
+    bottom:0;
+    margin-bottom:50px;
+  }
+
+  .main-container{
+    margin-top:-36px;
+  }
+
+  .search_find_near{
+    height: 56px;
+    line-height:36px;
+    padding-top:16px;
+    width: 20%;
+  }
+
+  .search_text_field{
+    height: 72px;
+    width:auto;
+    float:none;
+    padding-top:10px;
+  }
+
+    .search_select{
+    height: 72px;
+    width:auto;
+    float:none;
+    padding-top:10px;
+  }
+}
+
+@media only screen and (max-width: 601px) {
+  .top_title_text{
+    font-size: 2.2em;
+    line-height: 40px;
+    text-align:left;
+  }
+
+  .top_title_pos{
+    margin-left:10%;
+    width:80%;
+    bottom:0;
+    margin-bottom:20px;
   }
 
   .main-container{
@@ -456,6 +524,7 @@
     height: 56px;
     width:auto;
     float:none;
+    padding-top:10px;
     margin-top:0px;
   }
 
@@ -465,7 +534,6 @@
     float:none;
     margin-top:0px;
   }
-
 }
 
 
@@ -485,11 +553,10 @@
   </div>
 
 <div class="main-container">
-  <div class="searchBar mobile-hide">
+  <div class="searchBar search_hide">
       <div class="search_find_near">
         <strong class="search_assist">Find</strong>
       </div>
-
         <div class="search_text_field">
           <v-text-field
             solo
@@ -500,7 +567,6 @@
             v-model="query"
           ></v-text-field>
         </div>
-
       <div class="search_find_near">
         <strong class="search_assist">Near</strong>
       </div>
@@ -521,7 +587,7 @@
       </div>
   </div>
 
-  <div class="search_mobile mobile-show">
+  <div class="search_mobile search_show">
         <div class="search_find_near">
           <strong class="search_assist" >Find</strong>
         </div>
@@ -536,7 +602,7 @@
         </div>
   </div>
 
-  <div class="search_mobile mobile-show">
+  <div class="search_mobile search_show">
         <div class="search_find_near">
           <strong class="search_assist" >Near</strong>
         </div>
@@ -557,13 +623,13 @@
     </div>
 
     <router-link :to="searchDestination">
-      <button v-ripple class="mobile-hide kunvet-search-btn med">
+      <button v-ripple class="search_hide kunvet-search-btn med">
         <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
       </button>
     </router-link>
     <router-link :to="searchDestination">
-      <button v-ripple class="mobile-show kunvet-search-btn small block" style="width:80%; margin:auto;">
-        <span style="line-height: 56px; font-size: 20px; font-family: 'Roboto', sans-serif;">
+      <button v-ripple class="search_show kunvet-search-btn small block" style="width:80%; margin:auto;">
+        <span class="search_button_text">
           Search
         </span>
       </button>
