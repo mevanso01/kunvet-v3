@@ -312,6 +312,9 @@
       },
     },
     activated() {
+      if (this.$route.query && this.$route.query.o && this.$route.query.o === 'logout') {
+        this.logout();
+      }
       if (this.$route.params && this.$route.params.command === 'logout') {
         this.logout();
       }

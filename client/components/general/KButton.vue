@@ -36,12 +36,17 @@
     vertical-align: middle;
   }
 }
+.k-btn.disabled {
+  background-color: rgba(0,0,0,0.12) !important; // #e0e0e0
+  color: rgba(0,0,0,0.26) !important; // #a6a6a6
+  box-shadow: none;
+}
 </style>
 <template>
   <div
     class="k-btn"
     @click="click"
-    :class="{ 'block': block, 'icon': icon, 'outline': outline }"
+    :class="{ 'block': block, 'icon': icon, 'outline': outline, 'disabled': disabled }"
     :style="buttonStyle"
   >
     <span v-if="working">
@@ -80,6 +85,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -87,7 +96,9 @@ export default {
   },
   methods: {
     click() {
-      this.$emit('click');
+      if (!this.disabled) {
+        this.$emit('click');
+      }
     },
   },
   computed: {

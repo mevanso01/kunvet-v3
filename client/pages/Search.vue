@@ -59,8 +59,6 @@ section.search {
   }
 }
 .job-distance-indicator {
-  // float: left;
-  // width: 100%;
   clear: both;
   display: inline-block;
   background: #ef5350; // as fallback
@@ -124,9 +122,9 @@ section.search {
 .chip--select-multi {
   margin: 5px 5px 5px 0;
 }
-.small-thats-it, .large-thats-it {
-  background-color: #fafafa;
-}
+// .small-thats-it, .large-thats-it {
+//   background-color: #fafafa;
+// }
 @media only screen and (max-width: 480px) {
   .fs-select-positions {
     display: none !important;
@@ -262,7 +260,7 @@ section.search {
     height: 32px;
     line-height: 32px;
     border-radius: 0 16px 16px 0;
-    padding-right: 32px;
+    padding-right: 48px;
     background: linear-gradient(to right, #ef5350, #ef5350 60%, #ffc26f);
   }
   .firstSearch {
@@ -355,53 +353,6 @@ section.search {
           <h3 style="text-align: center; margin-top: 25px;">Loading jobs...</h3>
         </div>
         <v-flex xs12 class="no-padding">
-          <!--<div class="search">
-            <ais-index
-              app-id="0EXR93R20L"
-              api-key="f2b308e2f23de66614cacd60f8f93b67"
-              index-name="jobs"
-            >
-              <div class="searchBar">
-                <ais-search-box></ais-search-box>
-                <ais-pagination></ais-pagination>
-              </div> -->
-              <!-- <ais-results  inline-template>
-                <div v-for="(item, idx) in results" :key="idx">
-                  <div v-if="item.isText">
-                    {{ item.text }}
-                  </div>
-                  <div v-else>
-                    <MainJobCard
-                      :job="item"
-                      :saveJobFunc="saveJob"
-                      :isSaved="isSaved(item._id)"
-                      :fromCoordinates="selectedCoordinates"
-                    />
-                  </div>
-                </div>
-              </ais-results> -->
-              <!-- <ais-results class="results">
-                <template slot-scope="{ result }">
-                  <MainJobCard
-                    :job="result"
-                    :saveJobFunc="saveJob"
-                    :isSaved="isSaved(result._id)"
-                    :fromCoordinates="selectedCoordinates"
-                  />
-                </template>
-              </ais-results>
-            </ais-index>
-          </div>-->
-          <!-- <div v-if="filteredJobs.length > 0">
-            <div v-for="(job, idx) in filteredJobs" :key="idx">
-              <MainJobCard
-                :job="job"
-                :saveJobFunc="saveJob"
-                :isSaved="isSaved(job._id)"
-                :fromCoordinates="selectedCoordinates"
-              />
-            </div>
-          </div> -->
           <div v-if="displayedJobs[0].length > 0" style="clear: both;">
             <div class="job-distance-indicator">
               Less than 10 miles away
@@ -445,19 +396,19 @@ section.search {
                   :fromCoordinates="selectedCoordinates"
                 />
               </div>
+              <!-- <div v-if="displayedJobs[2].length % 2 === 1" class="jp-card small-thats-it">
+                <div style="width: 215px; margin: 32px auto;">
+                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
+                </div>
+                <p class="center">That's all.</p>
+              </div>
+              <div v-if="displayedJobs[2].length % 2 === 0" class="jp-card large-thats-it">
+                <div style="width: 215px; margin: 32px auto;">
+                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
+                </div>
+                <p class="center">That's all.</p>
+              </div> -->
             </div>
-          </div>
-          <div v-if="!loadingJobs && filteredJobs.length > 0 && filteredJobs.length % 2 === 1" class="post-card small-thats-it">
-            <div style="width: 215px; margin: 32px auto;">
-              <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
-            </div>
-            <p class="center">That's all.</p>
-          </div>
-          <div v-if="!loadingJobs && filteredJobs.length > 0 && filteredJobs.length % 2 === 0" class="post-card large-thats-it">
-            <div style="width: 215px; margin: 32px auto;">
-              <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
-            </div>
-            <p class="center">That's all.</p>
           </div>
         </v-flex>
         <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
@@ -1067,9 +1018,6 @@ export default {
         this.getSavedJobs();
       }
     }
-    // });
-    // const data = this.$store.state;
-    // console.log(data);
   },
 };
 

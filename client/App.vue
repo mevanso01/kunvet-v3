@@ -67,15 +67,17 @@
 
     <div id="d-menu" class="d-menu mobile-show" v-show="drawer">
       <div class="d-menu-inner">
+        <div v-if="acct > 0" class="d-menu-item idx-0" @click="goToAccount()">
+          My account
+          <p style="font-size: 16px; margin: 0; color: white; font-weight: normal">Edit Profile</p>
+        </div>
         <div v-for="(item, idx) in dmenuItems[acct]" style="background-color: #fff">
-          <div class="d-menu-item" @click="handleDMenuClick(item)" :class="`idx-${idx}`" :key="item.title">
+          <div class="d-menu-item" @click="handleDMenuClick(item)" :class="`idx-${indexOffset(idx)}`" :key="item.title">
             {{ item.title }}
-            <!--TODO: replace with user's name-->
-            <p v-if="item.isTop" style="font-size: 16px; margin: 0; color: white; font-weight: normal">Edit Profile</p>
           </div>
           <div v-if="item.subItems">
             <div v-for="subItem in item.subItems" v-show="openSubitem === item.title"
-                 @click="drawer = false;" :key="subItem.title" class="d-menu-item" :class="`idx-${idx}`">
+                 @click="handleDMenuClick(subItem)" :key="subItem.title" class="d-menu-subitem" :class="`subitem-${indexOffset(idx)}`">
               {{ subItem.title }}
             </div>
           </div>
@@ -172,33 +174,6 @@ export default {
       acct: 0,
       profilePic: '',
       drawer: false,
-      // TODO:modify subitems and stuff for items
-      /* items: [
-        [
-          { title: 'Login', icon: null, href: '/login' },
-          { title: 'Sign up', icon: null, href: '/signup' },
-        ],
-        [
-          {
-            title: 'Jobs',
-            icon: sfg,
-            href: '/search',
-            subItems: [],
-          },
-          { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
-          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
-        ],
-        [
-          {
-            title: 'My Jobs',
-            icon: sfw,
-            href: '/myjobs',
-            subItems: [],
-          },
-          { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
-          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
-        ],
-      ], */
       dmenuItems: [
         [
           { title: 'Login', href: '/login' },
@@ -206,7 +181,6 @@ export default {
           { title: 'Post a Job', href: '/createjob' },
         ],
         [
-          { title: 'test', href: '/account', isTop: true },
           { title: 'Search', href: '/search' },
           {
             title: 'My Jobs',
@@ -217,15 +191,15 @@ export default {
           },
           { title: 'Notifications', href: '/account' },
           {
-            title: 'Settings',
-            subItems: [
-              { title: 'Email & Password' },
-              { title: 'Email Preferences' },
-              { title: 'Billing Info' },
-              { title: 'Delete Account' },
-            ],
+            title: 'Settings', href: '/settings',
+            // subItems: [ // WILL IMPLEMENT LATER
+            //   { title: 'Email & Password' },
+            //   { title: 'Email Preferences' },
+            //   { title: 'Billing Info' },
+            //   { title: 'Delete Account' },
+            // ],
           },
-          { title: 'Log Out', href: '/account' },
+          { title: 'Log Out', href: '/settings?o=logout' },
         ],
         [
           { title: 'Post New Job',  href: '/createjob' },
@@ -236,50 +210,6 @@ export default {
           { title: 'Settings', href: '/settings' },
         ],
       ],
-      // TODO: sidebaritems still needed
-      /* sidebarItems: [
-        [
-          [
-            { title: 'Login', icon: null, href: '/login' },
-            { title: 'Sign up', icon: null, href: '/signup' },
-            { title: 'Post a Job', icon: null, href: '/createjob' },
-          ],
-        ],
-        [
-          [
-            { title: 'Search', href: '/search' },
-            { title: 'Applied Jobs', href: '/appliedjobs' },
-            { title: 'Saved Jobs', href: '/savedjobs' },
-          ],
-          [
-            { title: 'Notifications', href: '/notifications' },
-            { title: 'My Profile', href: '/account' },
-            { title: 'Settings', href: '/settings' },
-          ],
-          [
-            { title: 'Post Individual Job',  href: '/createjob' },
-            { title: 'My Posted Jobs', href: '/myjobs' },
-            { title: 'My Applicants', href: '/applicants' },
-          ],
-        ],
-        [
-          [
-            { title: 'Post New Job',  href: '/createjob' },
-            { title: 'My Posted Jobs', href: '/myjobs' },
-            { title: 'Applicants', href: '/applicants' },
-          ],
-          [
-            { title: 'Notifications', href: '/notifications' },
-            { title: 'Account', href: '/myorg' },
-            { title: 'Settings', href: '/settings' },
-          ],
-          [
-            { title: 'Job Search', href: '/' },
-            { title: 'Applied Jobs', href: '/appliedjobs' },
-            { title: 'Saved Jobs', href: '/savedjobs' },
-          ],
-        ],
-      ], */
       newMenuItems: [
         [
           { title: 'Login', href: '/login' },
@@ -329,12 +259,17 @@ export default {
     },
   },
   methods: {
+    indexOffset(idx) {
+      // calculate offset for mobile menu classes. 6 is the size of the largest dmenu item
+      return (6 - this.dmenuItems[this.acct].length) + idx;
+    },
     handleDMenuClick(item) {
       if (item.subItems) {
         this.openSubitem = this.openSubitem === item.title ? '' : item.title;
       } else {
         this.$router.push(item.href);
         this.drawer = false;
+        this.openSubitem = '';
       }
     },
     firstSearch() {
