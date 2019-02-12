@@ -45,12 +45,12 @@
 </style>
 
 <template>
-    <v-card flat style="height: auto" :class="{'full-dropbox':'full-dropbox'}">
+    <v-card flat style="height: 100%" :class="{'full-dropbox':'full-dropbox'}">
         <v-card-title style="height: 100%; padding: 0">
             <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="width: 100%; height: 100%;">
-                <form class="upload-form" :class="{'vertical-center' : !this.resumeExists}"
+                <form class="upload-form" :class="{'vertical-center' : !resumeExists}"
                       enctype="multipart/form-data" novalidate
-                      :style="{height: ((this.resumeExists && !this.fullDropbox) ? 16 : 80)+'%'}">
+                      :style="{height: ((resumeExists && !fullDropbox) ? 16 : 80)+'%'}">
                     <div class="dropbox" :class="{'full-dropbox':'full-dropbox'}">
                         <input
                                 type="file"

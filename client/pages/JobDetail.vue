@@ -754,7 +754,7 @@
 
           <div style="margin-top: 50px" v-if="this.resumes.length > 0">
             <h2>Select Existing Files or Upload More</h2>
-            <p v-if="this.resumeExists">{{this.selectedResumes.length}} {{this.selectedResumes.length | plural}} selected</p>
+            <p v-if="resumeExists">{{selectedResumes.length}} {{selectedResumes.length | plural}} selected</p>
             <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="(file, index) in this.resumes">
               <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
               <p v-if="file.name.length < 20">{{file.name}}</p>
@@ -767,6 +767,11 @@
           <k-btn v-if="resumeExists" @click="createApplication" style="margin: 40px auto;" >Confirm Files</k-btn>
         </div>
       </v-card>
+
+      <v-card flat class="dialog-card" v-else-if="loginState='success'">
+        <div>successfully applied</div>
+      </v-card>
+
     </v-dialog>
   </v-container>
 </template>
@@ -942,19 +947,6 @@
         handleScroll() {
           this.stickToBottom = this.isNotAtBottom();
         },
-        // selectResume(resume) {
-        //   if (!resume.selected) {
-        //     resume.selected = true;
-        //     this.selectedResumes.push(resume);
-        //   } else {
-        //     resume.selected = false;
-        //     for (var i = 0; i < this.selectedResumes.length; ++i) {
-        //       if (resume.resumeid === this.selectedResumes[i].resumeid) {
-        //         this.selectedResumes.splice(i, 1);
-        //       }
-        //     }
-        //   }
-        // },
         isNotAtBottom() {
           const footer = document.getElementById('bottom');
 
@@ -1153,22 +1145,6 @@
             this.$error(error);
           });
         },
-        applyAffirmativeButton() {
-          // When the affirmative button is clicked...
-          if (this.applyState === 'MAIN') {
-            this.applyState = 'CONFIRM';
-          } else {
-            this.createApplication();
-          }
-        },
-        applyDismissiveButton() {
-          // When the back/dismissive button is clicked...
-          if (this.applyState === 'CONFIRM') {
-            this.applyState = 'MAIN';
-          } else {
-            this.applydialog = false;
-          }
-        },
         createApplication() {
           // validate
           if (this.uid && this.userdata && !this.loading && !this.applied) {
@@ -1196,7 +1172,6 @@
               wechat_id: this.userdata.wechat_id,
               applicant_message: this.message,
             };
-            console.log(application);
             this.$apollo.mutate({
               mutation: (gql`mutation ($application: CreateOneApplicantInput!) {
             createApplication (record: $application) {
@@ -1262,7 +1237,7 @@
             }).then((data) => {
               this.loading = false;
               if (data) {
-                this.applyState = 'SUCCESS';
+                this.loginState = 'success';
                 this.applied = true;
               } else {
                 this.$debug('no data returned when creating application');
@@ -1270,7 +1245,7 @@
               }
             }).catch((error) => {
               this.loading = false;
-              this.applyState = 'ERROR';
+              this.loginState = 'error';
               this.$error(error);
             });
           }
