@@ -82,10 +82,6 @@
                 <p>{{ errorMessage }}</p>
             </div>
         </v-card-title>
-        <!--<v-card-actions>-->
-        <!--<v-btn flat="flat" @click="cancel">Cancel</v-btn>-->
-        <!--<v-btn :disabled="!file || !resumeName" flat="flat" @click="upload">Upload</v-btn>-->
-        <!--</v-card-actions>-->
     </v-card>
 </template>
 <script>
@@ -96,13 +92,13 @@
       data() {
         return {
           resumes: [],
-          state: 'INITIAL',
           curId: '',
+          resumeName: '',
+          errorMessage: '',
           file: null,
           chosenFile: null,
           client: null,
-          resumeName: '',
-          errorMessage: '',
+          state: 'INITIAL',
         };
       },
       mounted() {
@@ -112,6 +108,7 @@
       computed: {
         resumeExists() {
           return this.resumes.length > 0 || this.smalldropbox;
+          // this or statement is needed to solve problem with force-refresh
         },
       },
       methods: {
@@ -155,7 +152,6 @@
             selected: false,
           });
           this.$emit('uploaded', this.curId, this.resumeName);
-          // change this back to resumeName later
           this.reset();
         },
         selectResume(resume) {

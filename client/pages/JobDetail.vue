@@ -583,140 +583,129 @@
       </div>
 
     </div>
-    <v-dialog v-model="applydialog" max-width="500">
-      <v-card v-if="findJob.apply_method === 'Through Google Forms' && findJob.gform_link"
-              class="no-border-radius apply-card" v-show="email_verified">
-        <div @click="applyDismissiveButton">
-          <v-btn icon><v-icon>close</v-icon></v-btn>
-        </div>
-        <div class="px-3 pb-4">
-          <div v-if="findJob.notes">
-            <p>
-              <strong>Special instruction from this employer:</strong><br>
-              {{ findJob.notes }}
-            </p>
-          </div>
-          <p style="margin-bottom: 5px;">This particular employer prefers you apply through this simple form:</p>
-          <a :href="formattedFormLink" target="_blank"><u>{{ formattedFormLink }}</u></a>
-        </div>
-      </v-card>
-      <v-card v-else class="no-border-radius apply-card" v-show="email_verified">
-        <div @click="applyDismissiveButton">
-          <v-btn icon v-if="applyState === 'CONFIRM'"><v-icon>arrow_back</v-icon></v-btn>
-          <v-btn icon v-else><v-icon>close</v-icon></v-btn>
-        </div>
-        <div class="px-3">
-          <div v-if="applyState === 'MAIN'">
-            <div v-if="findJob.notes">
-              <p>
-                <strong>Special instruction from this employer:</strong><br>
-                {{ findJob.notes }}
-              </p>
-            </div>
-            <!--<h3 style="margin-bottom: 4px;">Message body</h3>
-            <v-text-field
-              v-model="message"
-              class="no-padding" style="margin-bottom: 16px;"
-              name="message"
-              placeholder="Add a message to this application (optional unless specified otherwise)"
-              multi-line
-              auto-grow
-              rows=3
-              hide-details
-            ></v-text-field>-->
-            <h3>Select files to send</h3>
-            <div v-if="resumes.length > 0">
-              <v-checkbox v-for="resume in resumes" class="kunvet-red"
-                          :label="resume.name" v-model="selectedResumes" :value="resume.filename" hide-details>
-              </v-checkbox>
-            </div>
-            <p v-else>You have no resumes yet!</p>
-            <div style="font-size: 12px; text-align: center; margin-bottom: 5px;">
-              <span v-if="state === 'ERROR'" style="color: red;">{{ errorMessage }}</span>
-              <span v-if="state === 'UPLOADING'">Uploading...</span>
-            </div>
-            <div class="new-resume-box">
-              <input
-                      type="file"
-                      :disabled="state === 'UPLOADING'"
-                      @change="updateFile($event.target.files)"
-                      accept="application/pdf, application/msword,
-                  application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                  application/vnd.oasis.opendocument.text"
-                      class="input-file"
-              >
-              <p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume or cover letter</p>
-            </div>
-            <br>
-            <br>
-          </div>
-          <div v-else-if="applyState === 'CONFIRM'">
-            <div v-if="findJob.notes">
-              <p>
-                <strong>Special instruction from this employer:</strong><br>
-                {{ findJob.notes }}
-              </p>
-            </div>
-            <h3>Review Application</h3>
-            <div class="pb-2">
-              My info:
-              <p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>
-              <p class="small-p">{{ userdata.email }}</p>
-              <p class="small-p">{{ userdata.wechat_id }}</p>
-              <p class="small-p">{{ userdata.school }}</p>
-              <p class="small-p">{{ userdata.degree }}</p>
-              <p class="small-p">{{ userdata.major }}</p>
-            </div>
-            <!--<div v-if="message" class="pb-2">
-              Message body:
-              <p class="small-p">{{ message }}</p>
-            </div>
-            <div v-else class="pb-2">
-              No message body
-            </div>-->
-            <div v-if="selectedResumes.length > 0" class="pb-3">
-              Selected files:
-              <p class="small-p" v-for="file in selectedResumeNames">{{ file }}</p>
-            </div>
-            <div v-else class="pb-3" style="color: #f00;">
-              No resume selected!
-            </div>
-          </div>
-          <div v-else-if="applyState === 'SUCCESS'">
-            <h3>What's next?</h3>
-            <p>
-              Look out for follow-up emails from the employer.<br>
-              You can find your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.
-            </p>
-          </div>
-          <div v-else-if="applyState === 'ERROR'">
-            <h3>Oh no, an error occured!</h3>
-            <p>Please try again later.</p>
-          </div>
-        </div>
-        <div v-if="applyState !== 'SUCCESS'"
-             class="bottom-dialog-button"
-             v-bind:class="{'disabled': loading}"
-             @click="applyAffirmativeButton">
-          <v-progress-circular indeterminate v-if="loading" class="ma-3" size="30" color="white"></v-progress-circular>
-          <span v-else-if="applyState === 'CONFIRM'">Apply</span>
-          <span v-else>Continue</span>
-        </div>
-        <router-link v-else to="/">
-          <div class="bottom-dialog-button">Keep browsing jobs</div>
-        </router-link>
-      </v-card>
-      <v-card class="no-border-radius apply-card" v-if="!email_verified">
-        <v-card-text>
-          You need to verify your email before you can apply to jobs!
-        </v-card-text>
-        <v-card-actions>
-          <v-btn flat @click="applydialog = false;">
-            Okay
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <!--<v-dialog v-model="applydialog" max-width="500">-->
+      <!--<v-card v-if="findJob.apply_method === 'Through Google Forms' && findJob.gform_link"-->
+              <!--class="no-border-radius apply-card" v-show="email_verified">-->
+        <!--<div @click="applyDismissiveButton">-->
+          <!--<v-btn icon><v-icon>close</v-icon></v-btn>-->
+        <!--</div>-->
+        <!--<div class="px-3 pb-4">-->
+          <!--<div v-if="findJob.notes">-->
+            <!--<p>-->
+              <!--<strong>Special instruction from this employer:</strong><br>-->
+              <!--{{ findJob.notes }}-->
+            <!--</p>-->
+          <!--</div>-->
+          <!--<p style="margin-bottom: 5px;">This particular employer prefers you apply through this simple form:</p>-->
+          <!--<a :href="formattedFormLink" target="_blank"><u>{{ formattedFormLink }}</u></a>-->
+        <!--</div>-->
+      <!--</v-card>-->
+      <!--<v-card v-else class="no-border-radius apply-card" v-show="email_verified">-->
+        <!--<div @click="applyDismissiveButton">-->
+          <!--<v-btn icon v-if="applyState === 'CONFIRM'"><v-icon>arrow_back</v-icon></v-btn>-->
+          <!--<v-btn icon v-else><v-icon>close</v-icon></v-btn>-->
+        <!--</div>-->
+        <!--<div class="px-3">-->
+          <!--<div v-if="applyState === 'MAIN'">-->
+            <!--<div v-if="findJob.notes">-->
+              <!--<p>-->
+                <!--<strong>Special instruction from this employer:</strong><br>-->
+                <!--{{ findJob.notes }}-->
+              <!--</p>-->
+            <!--</div>-->
+            <!--<h3>Select files to send</h3>-->
+            <!--<div v-if="resumes.length > 0">-->
+              <!--<v-checkbox v-for="resume in resumes" class="kunvet-red"-->
+                          <!--:label="resume.name" v-model="selectedResumes" :value="resume.filename" hide-details>-->
+              <!--</v-checkbox>-->
+            <!--</div>-->
+            <!--<p v-else>You have no resumes yet!</p>-->
+            <!--<div style="font-size: 12px; text-align: center; margin-bottom: 5px;">-->
+              <!--<span v-if="state === 'ERROR'" style="color: red;">{{ errorMessage }}</span>-->
+              <!--<span v-if="state === 'UPLOADING'">Uploading...</span>-->
+            <!--</div>-->
+            <!--<div class="new-resume-box">-->
+              <!--<input-->
+                      <!--type="file"-->
+                      <!--:disabled="state === 'UPLOADING'"-->
+                      <!--@change="updateFile($event.target.files)"-->
+                      <!--accept="application/pdf, application/msword,-->
+                  <!--application/vnd.openxmlformats-officedocument.wordprocessingml.document,-->
+                  <!--application/vnd.oasis.opendocument.text"-->
+                      <!--class="input-file"-->
+              <!--&gt;-->
+              <!--<p style="line-height: 30px; color: #9e9e9e;" class="center">Upload new resume or cover letter</p>-->
+            <!--</div>-->
+            <!--<br>-->
+            <!--<br>-->
+          <!--</div>-->
+          <!--<div v-else-if="applyState === 'CONFIRM'">-->
+            <!--<div v-if="findJob.notes">-->
+              <!--<p>-->
+                <!--<strong>Special instruction from this employer:</strong><br>-->
+                <!--{{ findJob.notes }}-->
+              <!--</p>-->
+            <!--</div>-->
+            <!--<h3>Review Application</h3>-->
+            <!--<div class="pb-2">-->
+              <!--My info:-->
+              <!--<p class="small-p">{{ userdata.firstname }} {{ userdata.lastname}}</p>-->
+              <!--<p class="small-p">{{ userdata.email }}</p>-->
+              <!--<p class="small-p">{{ userdata.wechat_id }}</p>-->
+              <!--<p class="small-p">{{ userdata.school }}</p>-->
+              <!--<p class="small-p">{{ userdata.degree }}</p>-->
+              <!--<p class="small-p">{{ userdata.major }}</p>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<div v-if="message" class="pb-2">-->
+              <!--Message body:-->
+              <!--<p class="small-p">{{ message }}</p>-->
+            <!--</div>-->
+            <!--<div v-else class="pb-2">-->
+              <!--No message body-->
+            <!--</div>&ndash;&gt;-->
+            <!--<div v-if="selectedResumes.length > 0" class="pb-3">-->
+              <!--Selected files:-->
+              <!--<p class="small-p" v-for="file in selectedResumeNames">{{ file }}</p>-->
+            <!--</div>-->
+            <!--<div v-else class="pb-3" style="color: #f00;">-->
+              <!--No resume selected!-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div v-else-if="applyState === 'SUCCESS'">-->
+            <!--<h3>What's next?</h3>-->
+            <!--<p>-->
+              <!--Look out for follow-up emails from the employer.<br>-->
+              <!--You can find your application’s status under <router-link to="/appliedjobs">Applied Jobs</router-link>.-->
+            <!--</p>-->
+          <!--</div>-->
+          <!--<div v-else-if="applyState === 'ERROR'">-->
+            <!--<h3>Oh no, an error occured!</h3>-->
+            <!--<p>Please try again later.</p>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div v-if="applyState !== 'SUCCESS'"-->
+             <!--class="bottom-dialog-button"-->
+             <!--v-bind:class="{'disabled': loading}"-->
+             <!--@click="applyAffirmativeButton">-->
+          <!--<v-progress-circular indeterminate v-if="loading" class="ma-3" size="30" color="white"></v-progress-circular>-->
+          <!--<span v-else-if="applyState === 'CONFIRM'">Apply</span>-->
+          <!--<span v-else>Continue</span>-->
+        <!--</div>-->
+        <!--<router-link v-else to="/">-->
+          <!--<div class="bottom-dialog-button">Keep browsing jobs</div>-->
+        <!--</router-link>-->
+      <!--</v-card>-->
+      <!--<v-card class="no-border-radius apply-card" v-if="!email_verified">-->
+        <!--<v-card-text>-->
+          <!--You need to verify your email before you can apply to jobs!-->
+        <!--</v-card-text>-->
+        <!--<v-card-actions>-->
+          <!--<v-btn flat @click="applydialog = false;">-->
+            <!--Okay-->
+          <!--</v-btn>-->
+        <!--</v-card-actions>-->
+      <!--</v-card>-->
+    <!--</v-dialog>-->
 
 
     <v-dialog class="other-dialog" color="white" style="background-color: white;" v-model="otherdialog"
@@ -754,7 +743,7 @@
         </button>
       </v-card>
 
-      <v-card flat class="dialog-card" style="overflow: hidden" v-else-if="loginState==='resume'">
+      <v-card flat class="dialog-card" style="overflow-y: scroll" v-else-if="loginState==='resume'">
         <div class="existing-container"  enctype="multipart/form-data" novalidate>
 
           <div style="margin-top: 50px" v-if="this.resumes.length > 0">
@@ -764,18 +753,14 @@
               <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
               <p v-if="file.name.length < 20">{{file.name}}</p>
               <p v-else>{{file.name | truncate}}</p>
-              <v-checkbox style="position: relative; left: 220px;transform: translateY(19px);" @change="selectResume(file)"></v-checkbox>
+              <v-checkbox style="position: absolute; right: 10%;transform: translateY(19px);" @change="selectResume(file)"></v-checkbox>
             </div>
           </div>
 
           <ResumeUploader :smalldropbox="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
           <k-btn v-if="resumeExists" @click="createApplication" style="margin: 40px auto;" >Confirm Files</k-btn>
-
         </div>
-
       </v-card>
-
-
     </v-dialog>
   </v-container>
 </template>
