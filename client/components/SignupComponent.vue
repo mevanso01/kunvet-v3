@@ -76,6 +76,10 @@ export default {
         return ['student', 'business', 'individual'].indexOf(value) !== -1;
       },
     },
+    doRedirect: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -131,9 +135,7 @@ export default {
         this.$debug('Failed validation');
         return;
       }
-
       this.loading = true;
-
       const headers = { emulateJSON: true };
       const data = {
         email: this.email,
@@ -153,8 +155,8 @@ export default {
         this.loading = false;
         if (res.data.success) {
           this.state = 'success';
-          this.$emit('success');
-          this.logIntoAcct(this.email, this.password);
+          // this.$emit('success');
+          this.logIntoAcct(this.email, this.password); // go to step 2
         } else if (res.data.message === 'User already exists') {
           this.error = 'UserExistsError';
         } else if (res.data.message === 'Email exists but not verified') {
@@ -178,7 +180,7 @@ export default {
         this.$debug('login response', response);
         if (response.data.success) {
           // logged in successfully
-          this.fetchAcctData();
+          this.fetchAcctData(); // go to step 3
         } else {
           this.loading = false;
           this.$error(new KunvetError(response.data));
@@ -216,7 +218,10 @@ export default {
           EventBus.$emit('business');
           // this.$router.push('/myorg');
         }
-        this.$router.push('/validate'); // make all users verify their email with code immediately
+        this.$emit('success');
+        if (this.doRedirect) {
+          this.$router.push('/validate'); // make user verify their email with code immediately
+        }
       }).catch((error) => {
         this.loading = false;
         this.$error(error);
