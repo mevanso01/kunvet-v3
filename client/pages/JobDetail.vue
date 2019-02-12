@@ -380,6 +380,12 @@
     transform: translateX(50px);
   }
 
+  .uploader-checkbox{
+    position: absolute;
+    right: 10%;
+    transform: translateY(19px);
+  }
+
 </style>
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container">
@@ -749,11 +755,11 @@
           <div style="margin-top: 50px" v-if="this.resumes.length > 0">
             <h2>Select Existing Files or Upload More</h2>
             <p v-if="this.resumeExists">{{this.selectedResumes.length}} {{this.selectedResumes.length | plural}} selected</p>
-            <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="file in this.resumes">
+            <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="(file, index) in this.resumes">
               <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
               <p v-if="file.name.length < 20">{{file.name}}</p>
               <p v-else>{{file.name | truncate}}</p>
-              <v-checkbox style="position: absolute; right: 10%;transform: translateY(19px);" @change="selectResume(file)"></v-checkbox>
+              <v-checkbox class="uploader-checkbox" v-model="file.selected"></v-checkbox>
             </div>
           </div>
 
@@ -811,11 +817,13 @@
       props: ['id'],
       data() {
         return {
-          otherdialog: false,
-          loginState: 'start',
+          selected: [],
           findJob: {},
           jobType: [],
+          resumes: [],
           serverUrl: Config.get('serverUrl'),
+          otherdialog: false,
+          loginState: 'start',
           profilePic: null,
           salary: null,
           svgs: {
@@ -845,8 +853,6 @@
             email: null,
             wechat_id: null,
           },
-          resumes: [],
-          selectedResumes: [], // file id
           userdatafetched: false,
           applied: false,
           saved: false,
@@ -897,6 +903,18 @@
           }
           return '';
         },
+        /* This computed function finds all resumes in this.resumes that are 'selected'
+        and returns them as an array.
+        */
+        selectedResumes() {
+          const selected = [];
+          for (var i = 0; i < this.resumes.length; ++i) {
+            if (this.resumes[i].selected) {
+              selected.push(this.resumes[i]);
+            }
+          }
+          return selected;
+        },
       },
       methods: {
         resumeUploaded(_filename, _resumename) {
@@ -924,19 +942,19 @@
         handleScroll() {
           this.stickToBottom = this.isNotAtBottom();
         },
-        selectResume(resume) {
-          if (!resume.selected) {
-            resume.selected = true;
-            this.selectedResumes.push(resume);
-          } else {
-            resume.selected = false;
-            for (var i = 0; i < this.selectedResumes.length; ++i) {
-              if (resume.resumeid === this.selectedResumes[i].resumeid) {
-                this.selectedResumes.splice(i, 1);
-              }
-            }
-          }
-        },
+        // selectResume(resume) {
+        //   if (!resume.selected) {
+        //     resume.selected = true;
+        //     this.selectedResumes.push(resume);
+        //   } else {
+        //     resume.selected = false;
+        //     for (var i = 0; i < this.selectedResumes.length; ++i) {
+        //       if (resume.resumeid === this.selectedResumes[i].resumeid) {
+        //         this.selectedResumes.splice(i, 1);
+        //       }
+        //     }
+        //   }
+        // },
         isNotAtBottom() {
           const footer = document.getElementById('bottom');
 
