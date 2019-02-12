@@ -367,7 +367,7 @@
   }
 
   .existing-file{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: start;
     background-color: #eee;
@@ -752,24 +752,26 @@
       <v-card flat class="dialog-card" style="overflow-y: scroll" v-else-if="loginState==='resume'">
         <div class="existing-container"  enctype="multipart/form-data" novalidate>
 
-          <div style="margin-top: 50px" v-if="this.resumes.length > 0">
+          <div style="margin-top: 20px" v-if="this.resumes.length > 0">
             <h2>Select Existing Files or Upload More</h2>
             <p v-if="resumeExists">{{selectedResumes.length}} {{selectedResumes.length | plural}} selected</p>
             <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="(file, index) in this.resumes">
               <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
-              <p v-if="file.name.length < 20">{{file.name}}</p>
+              <p v-if="file.name.length < 40">{{file.name}}</p>
               <p v-else>{{file.name | truncate}}</p>
               <v-checkbox class="uploader-checkbox" v-model="file.selected"></v-checkbox>
             </div>
           </div>
 
           <ResumeUploader :smalldropbox="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
-          <k-btn v-if="resumeExists" @click="createApplication" style="margin: 40px auto;" >Confirm Files</k-btn>
+          <k-btn v-if="resumeExists" @click="createApplication" style="margin: 20px auto;" >Confirm Files</k-btn>
         </div>
       </v-card>
 
       <v-card flat class="dialog-card" v-else-if="loginState='success'">
-        <div>successfully applied</div>
+        <v-card-title>Complete!</v-card-title>
+        <p>Thank you for sending in an application. It is currently under review.
+          We will notify you once your application is viewed. Thanks for using Kunvet!</p>
       </v-card>
 
     </v-dialog>
@@ -810,7 +812,7 @@
           return amount > 1 ? 'resumes' : 'resume';
         },
         truncate(s) {
-          return `${s.substring(0, 20)} ...`;
+          return `${s.substring(0, 40)} ...`;
         },
       },
       components: {

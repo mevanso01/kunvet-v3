@@ -45,7 +45,7 @@
 </style>
 
 <template>
-    <v-card flat style="height: 100%" :class="{'full-dropbox':'full-dropbox'}">
+    <v-card flat :style="{height: (resumeExists ? 'auto' : '100%')}" :class="{'full-dropbox':'full-dropbox'}">
         <v-card-title style="height: 100%; padding: 0">
             <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="width: 100%; height: 100%;">
                 <form class="upload-form" :class="{'vertical-center' : !resumeExists}"
