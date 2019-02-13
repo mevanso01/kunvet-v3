@@ -57,6 +57,9 @@ h1 {
     <div v-if="state == 'error'" class="container">
       Error!
     </div>
+    <div v-if="state == 'verify'" class="container">
+      <CodeVerification ref="codever" @verified="codeValidated" />
+    </div>
     <div v-if="state == 'success'" class="container">
       Successful!
     </div>
@@ -65,6 +68,7 @@ h1 {
 <script>
 import Axios from 'axios';
 import KunvetError from '#/KunvetError';
+import CodeVerification from '@/components/CodeVerification';
 import EventBus from '@/EventBus';
 
 export default {
@@ -80,6 +84,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    dontValidate: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -88,11 +96,9 @@ export default {
       business_name: '',
       email: '',
       password: '',
-
       loading: false,
       state: 'initial',
       error: '',
-
       // Account types
       accountTypes: {
         student: {
@@ -129,6 +135,9 @@ export default {
       ],
     };
   },
+  components: {
+    CodeVerification,
+  },
   methods: {
     signup() {
       if (!this.$refs.form.validate()) {
@@ -152,19 +161,19 @@ export default {
       }
 
       Axios.post('/auth/register', data, headers).then((res) => {
-        this.loading = false;
         if (res.data.success) {
-          this.state = 'success';
-          // this.$emit('success');
           this.logIntoAcct(this.email, this.password); // go to step 2
-        } else if (res.data.message === 'User already exists') {
-          this.error = 'UserExistsError';
-        } else if (res.data.message === 'Email exists but not verified') {
-          this.error = 'UserExistsError';
         } else {
-          this.state = 'error';
-          this.$emit('error');
-          this.$error(new KunvetError(res.data));
+          this.loading = false;
+          if (res.data.message === 'User already exists') {
+            this.error = 'UserExistsError';
+          } else if (res.data.message === 'Email exists but not verified') {
+            this.error = 'UserExistsError';
+          } else {
+            this.state = 'error';
+            this.$emit('error');
+            this.$error(new KunvetError(res.data));
+          }
         }
       }, (error) => {
         this.state = 'error';
@@ -218,14 +227,25 @@ export default {
           EventBus.$emit('business');
           // this.$router.push('/myorg');
         }
-        this.$emit('success');
         if (this.doRedirect) {
-          this.$router.push('/validate'); // make user verify their email with code immediately
+          // redirect to validate page
+          this.$router.push('/validate');
+        } else if (!this.dontValidate) {
+          // show code verification component inside this component
+          this.state = 'verify';
+          this.$refs.codever.init();
+        } else {
+          // emit success and let the parent take the next action
+          this.$emit('success');
         }
       }).catch((error) => {
         this.loading = false;
         this.$error(error);
       });
+    },
+    codeValidated() {
+      this.state = 'success';
+      this.$emit('success');
     },
     commitUserdata(udata) {
       this.$store.commit({

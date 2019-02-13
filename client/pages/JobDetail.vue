@@ -110,17 +110,153 @@
   .job-detail-container .long-text-cont {
     margin-bottom: 16px;
   }
-
   .header-splash {
     background-image: linear-gradient(to right, #EA596B, #F6BE6A);
     position: relative;
   }
-
   .job-detail-container .long-text-cont,
   .job-detail-container .long-text-cont span,
   .job-detail-container .long-text-cont p,
   .job-detail-container .long-text-cont li {
     color: #616161 !important;
+  }
+
+  .bottom-button-container {
+    display: flex;
+    height: 53px;
+    width: 60%;
+    margin: 40px 0;
+  }
+
+  .apply-button {
+    width: 80%;
+    min-width: 65px;
+    margin-right: 4px;
+  }
+
+  /*.find-button {*/
+    /*padding: 16px 0;*/
+    /*line-height: 100%;*/
+    /*min-width: 135px;*/
+    /*width: 47%;*/
+    /*color: red;*/
+    /*border-radius: 4px;*/
+    /*border: 1px solid red;*/
+    /*margin: 0 4px;*/
+    /*font-size: 1.2em;*/
+  /*}*/
+
+  .bookmark-button {
+    margin-left: 4px;
+    height: 100%;
+    width: 13%;
+    min-width: 43px;
+  }
+
+  .bookmark-button img {
+    border-radius:4px;
+    height: 100%;
+    padding: 8px;
+    background-color: orange;
+    box-shadow: 0 10px 12px -4px #eaeaf9;
+    width: 100%;
+  }
+
+  .mobile-show {
+    display: none;
+  }
+  /*desktop version*/
+  .dialog-card {
+    width: 500px;
+  }
+
+  .header-icon-container {
+    color: white;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .header-text {
+    line-height: 1.2;
+    color: white;
+    position: absolute;
+    font-weight: 600;
+  }
+
+  /*new*/
+  .job-detail-nav .v-toolbar__content {
+    padding: 0;
+    margin: 0;
+  }
+  .job-detail-padding {
+    padding: 0 18%
+  }
+  .dialog-button {
+    color: white;
+    box-shadow: 0 10px 12px -4px #eaeaf9;
+    height: 56px;
+    font-size: 18px;
+    border-radius: 2px;
+    /*background-color: #EA596B !important;*/
+    width: 80%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .v-dialog--active {
+      background-color: white;
+  }
+
+  /*resume uploader*/
+  .existing-container {
+    width: 90%;
+    height: 500px;
+    margin: 0 auto;
+  }
+  .existing-file {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: start;
+    background-color: #eee;
+    width: 99%;
+    height: 70px;
+  }
+  .existing-file p {
+    line-height: 70px;
+    transform: translateX(50px);
+  }
+
+  @media (min-width: 961px) {
+    .job-detail-container {
+      margin: 0 18%;
+    }
+    .apply-card {
+      min-width: 400px !important;
+    }
+  }
+  @media (max-width: 960px) {
+  }
+  @media (min-width: 601px) {
+    .job-detail-container {
+      margin: 0 18%;
+      padding-top: 24px;
+    }
+    .apply-card {
+      min-width: 375px !important;
+    }
+    .job-detail-posted-by {
+      max-width: calc(99% - 204px);
+    }
+    .job-detail-container .float-sm-up {
+      float: left;
+      padding-right: 10px;
+    }
+    .header-splash {
+      height: 276px;
+
+    }
   }
   @media (max-width: 600px) {
     .flex {
@@ -164,92 +300,6 @@
       background: -webkit-linear-gradient(transparent, white); /* Safari 5.1+, Chrome 10+ */
       background: -o-linear-gradient(transparent, white);
     }
-  }
-
-  .bottom-button-container {
-    display: flex;
-    height: 53px;
-    width: 60%;
-    margin: 40px 0;
-  }
-
-  .apply-button {
-    width: 80%;
-    min-width: 65px;
-    margin-right: 4px;
-  }
-
-  /*.find-button {*/
-    /*padding: 16px 0;*/
-    /*line-height: 100%;*/
-    /*min-width: 135px;*/
-    /*width: 47%;*/
-    /*color: red;*/
-    /*border-radius: 4px;*/
-    /*border: 1px solid red;*/
-    /*margin: 0 4px;*/
-    /*font-size: 1.2em;*/
-  /*}*/
-
-  .bookmark-button {
-    margin-left: 4px;
-    height: 100%;
-    width: 13%;
-    min-width: 43px;
-  }
-
-  .bookmark-button img{
-    border-radius:4px;
-    height: 100%;
-    padding: 8px;
-    background-color: orange;
-    box-shadow: 0 10px 12px -4px #eaeaf9;
-    width: 100%;
-  }
-
-
-  @media (min-width: 601px) {
-    .job-detail-container {
-      margin: 0 18%;
-      padding-top: 24px;
-    }
-    .apply-card {
-      min-width: 375px !important;
-    }
-    .job-detail-posted-by {
-      max-width: calc(99% - 204px);
-    }
-    .job-detail-container .float-sm-up {
-      float: left;
-      padding-right: 10px;
-    }
-    .header-splash {
-      height: 276px;
-
-    }
-  }
-
-  @media (min-width: 961px) {
-    .job-detail-container {
-      margin: 0 18%;
-    }
-    .apply-card {
-      min-width: 400px !important;
-    }
-
-  }
-  @media (max-width: 960px) {
-  }
-
-  .mobile-show {
-    display: none;
-  }
-  /*desktop version*/
-  .dialog-card{
-    width: 500px;
-  }
-
-  @media (max-width: 600px) {
     .job-detail-container{
       padding: 24px 24px 0 24px;
     }
@@ -285,32 +335,28 @@
       height: 55px;
       width: 100%;
     }
-
     .apply-button {
       font-size: 1.1em;
       min-width: auto;
     }
-
     .find-button {
       font-size: 1.1em;
       min-width: 130px;
     }
-
     .bookmark-button {
       min-width: auto;
     }
-    .other-dialog{
+    .other-dialog {
       max-width: 600px !important;
     }
-
-    .dialog-card{
+    .dialog-card {
       width: 100%;
     }
-
-    .login-card{
+    .login-card {
       margin: 150px auto !important;
     }
   }
+<<<<<<< Updated upstream
 
 
   .header-icon-container {
@@ -386,6 +432,8 @@
     transform: translateY(19px);
   }
 
+=======
+>>>>>>> Stashed changes
 </style>
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container">
@@ -575,7 +623,7 @@
 
 
         <div class="bottom-button-container">
-          <k-btn style="padding: 0 32px;" @click="apply" :disabled="applied">{{ applied ? 'Applied' : 'Apply' }}</k-btn>
+          <k-btn style="padding: 0 32px;" @click="openApplyDialog" :disabled="applied">{{ applied ? 'Applied' : 'Apply' }}</k-btn>
           <k-btn icon outline v-if="isSaved(findJob._id)" @click="saveJob(findJob._id)" color="orange" class="ml-2">
             <img src="../assets/job_detail/bookmark_full.svg" alt="">
           </k-btn>
@@ -716,7 +764,7 @@
 
     <v-dialog class="other-dialog" color="white" style="background-color: white;" v-model="otherdialog"
               :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
-      <v-card v-if="loginState==='start'" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
+      <v-card v-if="loginState === 'start'" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
         <div style="height: 40%">
           <p style="color: #EA596B; font-size: 48px; width: 80%; margin: 0 auto; padding: 40px 20px 20px 0; font-weight: bold; line-height: 1.3">Welcome to Kunvet!</p>
           <!--<p style="font-size: 14px; width: 80%; margin: 0 auto; padding-right: 20px;">Lorem Ipsum</p>-->
@@ -732,7 +780,7 @@
         </button>
       </v-card>
 
-      <v-card flat class="dialog-card" v-else-if="loginState==='login'">
+      <v-card flat class="dialog-card" v-else-if="loginState === 'login'">
         <div class="main-cont-small login-card" style="height: 100%; border: none !important; margin: 48px 0 !important;">
           <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
 
@@ -742,8 +790,15 @@
         </button>
       </v-card>
 
-      <v-card flat class="dialog-card" v-else-if="loginState==='signup'">
-        <SignupComponent></SignupComponent>
+      <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
+        <SignupComponent @success="handleResume"></SignupComponent>
+        <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
+          <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+        </button>
+      </v-card>
+
+      <v-card flat class="dialog-card" v-else-if="loginState === 'verify'">
+        <CodeVerification ref="cver" @verified="handleVerified" style="margin-top: 32px; margin-bottom: 32px;"></CodeVerification>
         <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>
@@ -766,6 +821,16 @@
           <ResumeUploader :smalldropbox="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
           <k-btn v-if="resumeExists" @click="createApplication" style="margin: 20px auto;" >Confirm Files</k-btn>
         </div>
+<<<<<<< Updated upstream
+=======
+      </v-card>
+
+      <v-card flat class="dialog-card" v-else-if="loginState === 'success'">
+        <h2>Thank you! Your application was selected</h2>
+        <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
+          <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+        </button>
+>>>>>>> Stashed changes
       </v-card>
 
       <v-card flat class="dialog-card" v-else-if="loginState='success'">
@@ -804,6 +869,7 @@
     import LoginComponent from '@/components/LoginComponent';
     import SignupComponent from '@/components/SignupComponent';
     import ResumeUploader from '@/components/ResumeUploader';
+    import CodeVerification from '@/components/CodeVerification';
     // const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
     export default {
@@ -820,6 +886,7 @@
         LoginComponent,
         SignupComponent,
         ResumeUploader,
+        CodeVerification,
       },
       props: ['id'],
       data() {
@@ -943,8 +1010,19 @@
           this.loginState = 'signup';
         },
         handleResume() {
-          this._getUserData();
           this.loginState = 'resume';
+          this._getUserData();
+        },
+        handleVerified() {
+          this.email_verified = true;
+          this.loginState = 'resume';
+          if (!this.userdata) {
+            this._getUserData();
+          }
+        },
+        showCodeValidation() { // use only for very rare edge cases
+          this.loginState = 'verify';
+          this.$refs.cver.init();
         },
         handleScroll() {
           this.stickToBottom = this.isNotAtBottom();
@@ -1008,13 +1086,13 @@
             this.fetchProfilePic();
           });
         },
-        apply() {
+        openApplyDialog() {
           this.dialog = true;
           if (this.uid) {
             // this.state = 'INITIAL';
             // this.applyState = 'MAIN';
             // this.applydialog = true;
-            this._getUserData();
+            // this._getUserData();
             this.otherdialog = true;
             this.handleResume();
           } else {
@@ -1104,7 +1182,7 @@
           this.profilePic = await ProfilePicHelper.getProfilePic(userID, businessID);
         },
         _getUserData() {
-          console.log('RETRIEVEING USER DATA');
+          this.$debug('RETRIEVEING USER DATA');
           userDataProvider.getUserData().then(data => {
             if (data.acct === 0) {
               this.$store.commit({ type: 'setAcctID', id: null }); // reset userID to prevent infinite redirect loop
@@ -1148,6 +1226,11 @@
           });
         },
         createApplication() {
+          // verify email if it isnt verified at this point for some reason
+          if (!this.email_verified) {
+            this.showCodeValidation();
+            return;
+          }
           // validate
           if (this.uid && this.userdata && !this.loading && !this.applied) {
             console.log('creating application');
