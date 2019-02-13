@@ -299,6 +299,14 @@
     margin-right: auto;
 }
 
+.top_container_style{
+    width: 100%; height: 60vh;
+    background:  #ff8f8f;
+    background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
+    background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
+    position: relative;
+}
+
 .iconRedButton {
   display: block;
   height: 72px;
@@ -326,6 +334,8 @@
   font-weight:bold;
   font-size:16px;
   outline: none !important;
+  margin-top:20px;
+  margin-left:10%
 }
 
 .postAJob:hover {
@@ -344,6 +354,9 @@
   font-weight:bold;
   font-size:16px;
   outline: none !important;
+  margin-top:20px; 
+  margin-left:auto; 
+  margin-right:10%;
 }
 
 .postAJob2:hover {
@@ -432,6 +445,88 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.artboard1_img{
+  background-color: #ffe2e2;
+  height: 400px; 
+  text-align: right;
+}
+
+.artboard2_img{
+  z-index:0; 
+  height: 400px; 
+  background-color: #dbefff; 
+  text-align: left;
+}
+
+.artboard1_img_style{
+  padding-right:50px; 
+  margin-top: 80px; 
+  max-width: 400px;
+}
+
+.artboard2_img_style{
+  padding-left:50px; 
+  margin-top: 80px; 
+  max-width: 400px;
+}
+
+.hire_kunvet_container{
+  height: 320px; margin-top:30px; 
+  background:  #FFC371;
+  background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
+  background: linear-gradient(to right,  #ff5f6d, #FFC371);
+  position: relative;
+}
+
+.hire_kunvet_title{
+  padding-top: 3%; 
+  padding-left:10%;
+  color:white;
+  font-size:38px;
+}
+
+.hire_kunvet_text{
+  padding-top: 12px; 
+  margin-left:10%; 
+  color:white; 
+  font-size:18px; 
+  max-width: 400px; 
+  line-height: 26px
+}
+
+
+.loved_trusted_container{
+  height: 320px; 
+  margin-top:30px;
+  background:  #2f89fc;
+  background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
+  background: linear-gradient(to right,  #a57fff , #2f89fc);
+}
+
+.loved_trusted_title{
+  padding-top: 28px; 
+  padding-right:10%;
+  color:white;
+  font-size:38px; 
+  text-align:right;  
+}
+
+.loved_trusted_text{
+  padding-top: 12px; 
+  color:white; 
+  font-size:18px; 
+  max-width:480px; 
+  padding-right: 10%; 
+  text-align:right; 
+  margin-left:auto; 
+  padding-left: 30px;
+}
+
+.artboard1_img_mobile{
+    height: 50vh; 
+    width:100%; 
+    background-color: #ffe2e2;
+}
 
 @media (min-width: 601px) and (max-width: 960px) {
   .top_title_text{
@@ -445,7 +540,7 @@
   }
 }
 
-@media only screen and (max-width: 819px) {
+@media only screen and (max-width: 820px) {
   .search_show{
     display:block;
   }
@@ -455,7 +550,7 @@
   }
 }
 
-@media (min-width: 601px) and (max-width: 819px) {
+@media (min-width: 601px) and (max-width: 820px) {
     .top_title_text{
     font-size: 2.8em;
     line-height: 40px;
@@ -524,7 +619,6 @@
     height: 56px;
     width:auto;
     float:none;
-    padding-top:10px;
     margin-top:0px;
   }
 
@@ -534,6 +628,46 @@
     float:none;
     margin-top:0px;
   }
+
+    .loved_trusted_title{
+    padding-top: 3%;
+    padding-left:8%;
+    font-size:34px;
+  }
+
+  .loved_trusted_text{
+    width: 80%; 
+    margin-left:8%;
+    font-size:16px;
+    line-height: 26px;
+  }
+
+  .hire_kunvet_title{
+    padding-top:3%;
+    padding-left:8%;
+    font-size:34px;
+  }
+
+  .hire_kunvet_text{
+    width: 80%; 
+    margin-left:8%; 
+    font-size:16px;
+    line-height: 26px;
+  }
+
+  .loved_trusted_container{
+    height: 280px; 
+    width:85%; 
+    margin:auto;
+    transform: translate(0px, -80px);
+  }
+  
+  .hire_kunvet_container{
+    height: 280px; 
+    width:85%; 
+    margin:auto;
+    transform: translate(0px, -80px);
+  }
 }
 
 
@@ -541,12 +675,7 @@
 
 <template>
   <v-container fluid class="pa-0">
-  <div style="width: 100%; height: 60vh;
-    background:  #ff8f8f;
-    background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
-    background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
-    position: relative;
-  ">
+  <div class="top_container_style">
     <div class="top_title_pos">
      <h1 class="top_title_text">Latest Opportunities Near Your College.</h1>
     </div>
@@ -637,106 +766,82 @@
 
   </div>
 
-      <div style="width:100%; height:22vh;">
+      <div style="width:100%; height:150px;">
       </div>
 
     <div class="mobile-show">
-      <div style="height: 50vh; width:100%; background-color: #ffe2e2;">
+      <div class="artboard1_img_mobile">
         <img src="@/assets/artboard1.png" height="70%" style="margin-top:15%"/>
       </div>
 
-      <div style="height: 280px; width:85%; margin:auto;
-                transform: translate(0px, -80px);
-                background:  #FFC371;
-                background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
-                background: linear-gradient(to right,  #ff5f6d, #FFC371);
-                position: relative;
-            ">
-        <div style="padding-top:3%;padding-left:8%;color:white;font-size:34px;"><strong>Hire on Kunvet</strong></div>
-        <div style="width: 80%; margin-left:8%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+      <div class="hire_kunvet_container">
+        <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
+        <div class="hire_kunvet_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
         <router-link to="/createjob">
           <button v-ripple style="margin-top:20px; margin-left:8%" class="postAJob">Post a Job</button>
         </router-link>
       </div>
 
-      <div style="width:100%; height:4vh;">
+      <div style="width:100%; height:150px;">
       </div>
 
       <div style="height: 50vh; width:100%; background-color: #dbefff;">
         <img src="@/assets/artboard2.png" height="70%" style="margin-left:10%; margin-top:15%"/>
       </div>
 
-      <div style="height: 280px; width:85%; margin:auto;
-                transform: translate(0px, -80px);
-                background:  #2f89fc;
-                background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
-                background: linear-gradient(to right,  #a57fff , #2f89fc);
-                position: relative;
-            ">
-        <div style="padding-top: 3%;padding-left:8%;color:white;font-size:34px;"><strong>Loved & Trusted</strong></div>
-        <div style="width: 80%; margin-left:8%; color:white; font-size:16px;line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+      <div class="loved_trusted_container">
+        <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
+        <div class="loved_trusted_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
         <router-link to="/createjob">
           <button v-ripple style="margin-top:20px; margin-left:8%" class="postAJob2">Post a Job</button>
         </router-link>
       </div>
-
     </div>
-
-
 
 
     <div id="promo" class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
         <v-layout row wrap>
           <v-flex xs12 sm6>
-            <div class="container-left" style="background-color: #ffe2e2; height: 400px;">
-              <img src="@/assets/artboard1.png" height="60%" style="padding-left:30%; margin-top:10%"/>
+            <div class="container-left artboard1_img">
+              <img src="@/assets/artboard1.png" width="100%" class="artboard1_img_style" />
             </div>
           </v-flex>
 
           <v-flex xs12 sm6>
-            <div class="container-right" style="margin-top:30px; height: 320px;
-                background:  #FFC371;
-                background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
-                background: linear-gradient(to right,  #ff5f6d, #FFC371);
-                position: relative;
-            ">
-                <div style="padding-top: 3%; padding-left:10%;color:white;font-size:38px;"><strong>Hire on Kunvet</strong></div>
-                <div style="padding-top: 12px; margin-left:10%; color:white; font-size:18px; max-width: 400px; line-height: 26px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+            <div class="container-right hire_kunvet_container">
+                <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
+                <div class="hire_kunvet_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
                 <router-link to="/createjob">
-                  <button v-ripple style="margin-top:20px; margin-left:10%" class="postAJob">Post a Job</button>
+                  <button v-ripple class="postAJob">Post a Job</button>
                 </router-link>
             </div>
           </v-flex>
         </v-layout>
 
-      <div style="width:100%; height:24vh;">
+      <div style="width:100%; height:150px;">
       </div>
         <v-layout row wrap>
           <v-flex xs12 sm6 style="z-index:5;">
-            <div class="container-left" style="height: 320px; margin-top:30px;
-                background:  #2f89fc;
-                background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
-                background: linear-gradient(to right,  #a57fff , #2f89fc);
-                ">
+            <div class="container-left loved_trusted_container">
 
-                <div style="padding-top: 28px; padding-right:10%;color:white;font-size:38px; text-align:right;"><strong>Loved & Trusted</strong></div>
-                <div style="padding-top: 12px; color:white; font-size:18px; max-width:480px; padding-right: 10%; text-align:right; margin-left:auto; padding-left: 30px;">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+                <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
+                <div class="loved_trusted_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
                 <router-link to="/createjob">
-                  <button v-ripple style="margin-top:20px; margin-left:auto; margin-right:10%;" class="postAJob2">Post a Job</button>
+                  <button v-ripple class="postAJob2">Post a Job</button>
                 </router-link>
               </div>
             </v-flex>
 
           <v-flex xs12 sm6>
-            <div class="container-right" style="z-index:0; height: 400px; background-color: #dbefff;">
-              <img src="@/assets/artboard2.png" height="70%" style="margin-left:15%; margin-top:50px"/>
+            <div class="container-right artboard2_img">
+              <img src="@/assets/artboard2.png" width="100%" class="artboard2_img_style"/>
             </div>
           </v-flex>
 
         </v-layout>
 
 
-        <div style="width:100%; height:120px;">
+        <div style="width:100%; height:150px;">
         </div>
     </div>
 
