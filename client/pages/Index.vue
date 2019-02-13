@@ -491,9 +491,8 @@
   color:white; 
   font-size:18px; 
   max-width: 400px; 
-  line-height: 26px
+  line-height: 26px;
 }
-
 
 .loved_trusted_container{
   height: 320px; 
@@ -515,7 +514,7 @@
   padding-top: 12px; 
   color:white; 
   font-size:18px; 
-  max-width:480px; 
+  max-width:400px; 
   padding-right: 10%; 
   text-align:right; 
   margin-left:auto; 
@@ -633,13 +632,17 @@
     padding-top: 3%;
     padding-left:8%;
     font-size:34px;
+    text-align:left;
   }
 
   .loved_trusted_text{
     width: 80%; 
-    margin-left:8%;
+    padding-left:8%;
     font-size:16px;
     line-height: 26px;
+    text-align:left; 
+    margin-left:0;
+    padding-right:0; 
   }
 
   .hire_kunvet_title{
@@ -668,6 +671,17 @@
     margin:auto;
     transform: translate(0px, -80px);
   }
+
+  .postAJob{
+    margin-top:20px; 
+    margin-left:8%;
+  }
+
+  .postAJob2{
+     margin-top:20px; 
+     margin-left:8%;
+  }
+
 }
 
 
@@ -778,7 +792,7 @@
         <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
         <div class="hire_kunvet_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
         <router-link to="/createjob">
-          <button v-ripple style="margin-top:20px; margin-left:8%" class="postAJob">Post a Job</button>
+          <button v-ripple class="postAJob">Post a Job</button>
         </router-link>
       </div>
 
@@ -793,11 +807,10 @@
         <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
         <div class="loved_trusted_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
         <router-link to="/createjob">
-          <button v-ripple style="margin-top:20px; margin-left:8%" class="postAJob2">Post a Job</button>
+          <button v-ripple class="postAJob2">Post a Job</button>
         </router-link>
       </div>
     </div>
-
 
     <div id="promo" class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
         <v-layout row wrap>
@@ -839,9 +852,7 @@
           </v-flex>
 
         </v-layout>
-
-
-        <div style="width:100%; height:150px;">
+          <div style="width:100%; height:150px;">
         </div>
     </div>
 
