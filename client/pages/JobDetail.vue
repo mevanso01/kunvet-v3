@@ -356,8 +356,6 @@
       margin: 150px auto !important;
     }
   }
-<<<<<<< Updated upstream
-
 
   .header-icon-container {
     color: white;
@@ -431,9 +429,6 @@
     right: 10%;
     transform: translateY(19px);
   }
-
-=======
->>>>>>> Stashed changes
 </style>
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container">
@@ -510,7 +505,6 @@
               <span style="padding-top: 2px;">
                 {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
-            </p>
             </p>
             <p v-if="findJob.university" style="margin-left: 24px;">
               {{ findJob.university }}
@@ -812,17 +806,15 @@
             <p v-if="resumeExists">{{selectedResumes.length}} {{selectedResumes.length | plural}} selected</p>
             <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="(file, index) in this.resumes">
               <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
-              <p v-if="file.name.length < 40">{{file.name}}</p>
+              <p v-if="file.name.length < 30">{{file.name}}</p>
               <p v-else>{{file.name | truncate}}</p>
               <v-checkbox class="uploader-checkbox" v-model="file.selected"></v-checkbox>
             </div>
           </div>
 
           <ResumeUploader :smalldropbox="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
-          <k-btn v-if="resumeExists" @click="createApplication" style="margin: 20px auto;" >Confirm Files</k-btn>
+          <k-btn v-if="resumeExists" @click="createApplication" :disabled="!selectedResumes.length" style="margin: 20px auto;">Confirm Files</k-btn>
         </div>
-<<<<<<< Updated upstream
-=======
       </v-card>
 
       <v-card flat class="dialog-card" v-else-if="loginState === 'success'">
@@ -830,13 +822,6 @@
         <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>
->>>>>>> Stashed changes
-      </v-card>
-
-      <v-card flat class="dialog-card" v-else-if="loginState='success'">
-        <v-card-title>Complete!</v-card-title>
-        <p>Thank you for sending in an application. It is currently under review.
-          We will notify you once your application is viewed. Thanks for using Kunvet!</p>
       </v-card>
 
     </v-dialog>
@@ -878,7 +863,7 @@
           return amount > 1 ? 'resumes' : 'resume';
         },
         truncate(s) {
-          return `${s.substring(0, 40)} ...`;
+          return `${s.substring(0, 30)} ...`;
         },
       },
       components: {
@@ -997,6 +982,7 @@
             filename: _filename,
             resumeid: null,
           };
+          newResume.selected = true;
           this.resumes.push(newResume);
           this.updateAccount();
         },

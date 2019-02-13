@@ -66,8 +66,7 @@
                                 <img class="file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
                                 <img class="file-icon" src="../assets/job_detail/doc-icon.svg" alt="">
                             </div>
-
-                            <p class="uploader-text">Drag or click to upload additional files.</p>
+                            <p class="uploader-text">Drag or Click to Upload Resumes and Cover Letters!</p>
                         </div>
 
                     </div>
@@ -149,23 +148,10 @@
             name: this.file.name,
             filename: this.curId,
             resumeid: null,
-            selected: false,
+            selected: true,
           });
           this.$emit('uploaded', this.curId, this.resumeName);
           this.reset();
-        },
-        selectResume(resume) {
-          if (!resume.selected) {
-            resume.selected = true;
-            this.selectedResumes.push(resume);
-          } else {
-            resume.selected = false;
-            for (var i = 0; i < this.selectedResumes.length; ++i) {
-              if (resume.resumeid === this.selectedResumes[i].resumeid) {
-                this.selectedResumes.splice(i, 1);
-              }
-            }
-          }
         },
         cancel() {
           this.$emit('cancel');
