@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
   .job-star-icon {
     color: #e0e0e0;
     cursor: pointer;
@@ -206,7 +206,7 @@
     margin: 0 auto;
   }
   .v-dialog--active {
-      background-color: white;
+    background-color: white;
   }
 
   /*resume uploader*/
@@ -255,7 +255,6 @@
     }
     .header-splash {
       height: 276px;
-
     }
   }
   @media (max-width: 600px) {
@@ -356,7 +355,6 @@
       margin: 150px auto !important;
     }
   }
-<<<<<<< Updated upstream
 
   .header-icon-container {
     color: white;
@@ -383,7 +381,7 @@
   }
 
 
-  .dialog-button{
+  .dialog-button {
     color: white;
     box-shadow: 0 10px 12px -4px #eaeaf9;
     height: 56px;
@@ -396,11 +394,8 @@
     right: 0;
     margin: 0 auto;
   }
-
-
-
   .v-dialog--active {
-      background-color: white;
+    background-color: white;
   }
 
   /*resume uploader*/
@@ -410,7 +405,6 @@
     height: 500px;
     margin: 0 auto;
   }
-
   .existing-file{
     margin-bottom: 10px;
     display: flex;
@@ -419,19 +413,15 @@
     width: 99%;
     height: 70px;
   }
-
   .existing-file p{
     line-height: 70px;
     transform: translateX(50px);
   }
-
   .uploader-checkbox{
     position: absolute;
     right: 10%;
     transform: translateY(19px);
   }
-=======
->>>>>>> Stashed changes
 </style>
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container">
@@ -825,15 +815,12 @@
         <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>
-<<<<<<< Updated upstream
-=======
       </v-card>
 
       <v-card flat class="dialog-card" v-else-if="loginState='success'">
         <v-card-title>Complete!</v-card-title>
         <p>Thank you for sending in an application. It is currently under review.
           We will notify you once your application is viewed. Thanks for using Kunvet!</p>
->>>>>>> Stashed changes
       </v-card>
 
     </v-dialog>
