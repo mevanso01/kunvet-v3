@@ -356,6 +356,7 @@
       margin: 150px auto !important;
     }
   }
+<<<<<<< Updated upstream
 
   .header-icon-container {
     color: white;
@@ -429,6 +430,8 @@
     right: 10%;
     transform: translateY(19px);
   }
+=======
+>>>>>>> Stashed changes
 </style>
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container">
@@ -822,6 +825,15 @@
         <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>
+<<<<<<< Updated upstream
+=======
+      </v-card>
+
+      <v-card flat class="dialog-card" v-else-if="loginState='success'">
+        <v-card-title>Complete!</v-card-title>
+        <p>Thank you for sending in an application. It is currently under review.
+          We will notify you once your application is viewed. Thanks for using Kunvet!</p>
+>>>>>>> Stashed changes
       </v-card>
 
     </v-dialog>

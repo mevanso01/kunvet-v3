@@ -24,7 +24,7 @@ h1 {
 
 <template>
   <div class="signup-card">
-    <div v-if="state == 'initial'" class="container">
+    <div v-show="state == 'initial'" class="container">
       <h1 :style="headerStyle">{{ accountTypeInfo.header }}</h1>
       <p v-if="error === 'UserExistsError'" style="color: #f00">
         An account with this email already exists. Would you like to <router-link to="/login" style="text-decoration: underline;">login?</router-link>
@@ -54,13 +54,13 @@ h1 {
         <k-btn @click="signup" :working="loading" :color="accountTypeInfo.color">Sign Up</k-btn>
       </v-form>
     </div>
-    <div v-if="state == 'error'" class="container">
+    <div v-show="state == 'error'" class="container">
       Error!
     </div>
-    <div v-if="state == 'verify'" class="container">
+    <div v-show="state == 'verify'" class="container">
       <CodeVerification ref="codever" @verified="codeValidated" />
     </div>
-    <div v-if="state == 'success'" class="container">
+    <div v-show="state == 'success'" class="container">
       Successful!
     </div>
   </div>
