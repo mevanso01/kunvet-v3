@@ -49,6 +49,7 @@
     :append-icon="appendIcon"
     :append-icon-cb="() => (vis = !vis)"
     :type="isVisible ? 'text' : 'password'"
+    :readonly="readonly"
   ></v-text-field>
   <!-- <input
     :class="{ input: 1, invalid: invalid }"
@@ -93,6 +94,10 @@ export default {
       default: false,
     },
     toggleVisibility: {
+      type: Boolean,
+      default: false,
+    },
+    readonly: {
       type: Boolean,
       default: false,
     },
