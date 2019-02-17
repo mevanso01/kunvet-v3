@@ -6,12 +6,6 @@
   }
   .header-splash {
     height: 230px;
-    .main-cont-large {
-      background: transparent;
-      position: absolute;
-      bottom: 0;
-      padding-bottom: 8px;
-    }
     .header-text {
       font-size: 18px;
       // font-weight: bold;
@@ -67,7 +61,7 @@
 <template>
   <v-container fluid class="appliedjobs">
     <div class="header-splash">
-      <div class="main-cont-large" style="background: transparent;">
+      <div class="main-cont-large bottom">
         <span v-if="jobsAndApplications.length > 0" class="header-text">
           <span class="counter-text">{{ jobsAndApplications.length }}</span>
           <span>
