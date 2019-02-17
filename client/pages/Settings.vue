@@ -41,8 +41,6 @@
   }
 }
 
-
-
 </style>
 
 <template>
@@ -58,7 +56,13 @@
 
         <h2>Current Email Address</h2>
         <v-divider></v-divider>
-        <div style="height:100px; width:100%">{{account_email}}</div>
+
+        <k-text-field class="text_field_style"  
+        :value="account_email" 
+        disabled>
+        </k-text-field>
+
+        <div style="height:100px; width:100%;"></div>
 
         <SwitchAccount :bottomPadding="true"/>
 
