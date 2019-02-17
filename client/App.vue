@@ -253,7 +253,8 @@ export default {
       // change this to set to white bg based on scroll position as well
       // console.log(this.$route.path, this.$route.path.indexOf('/job/'));
       const isTransparentPage = (this.$route.path !== '/' && this.$route.path.indexOf('/job/') !== -1) ||
-        this.$route.path.indexOf('/appliedjobs') !== -1;
+        this.$route.path.indexOf('/appliedjobs') !== -1 ||
+        this.$route.path.indexOf('/settings') !== -1;
       return !this.isAtTop || !isTransparentPage;
     },
     currentMenuItems() {

@@ -1,4 +1,7 @@
-<style>
+<style scoped>
+.settings-page {
+  padding: 0;
+}
 .settings-page .btn {
   margin-left: 0;
 }
@@ -18,10 +21,14 @@
 
 /*NEW CLASSES*/
 
+/* .header-splash {
+  background-image: linear-gradient(to right, #EA596B, #F6BE6A);
+  width:100%;
+  position: relative;
+} */
+
 .header-splash {
-    background-image: linear-gradient(to right, #EA596B, #F6BE6A);
-    width:100%;
-    position: relative;
+  height: 230px;
 }
 
 .text-field-style{
@@ -30,10 +37,7 @@
 
 @media(min-width: 601px){
   .header-splash{
-    height: 276px;
-    transform: translate(-24px);
-    padding-left:48px;
-    vertical-align: bottom;
+    height: 215px;
   }
 }
 
@@ -44,7 +48,9 @@
 <template>
   <v-container fluid class="settings-page">
     <div class="header-splash">
-      <h1>Settings</h1>
+      <div class="main-cont-large bottom" style="background: transparent;">
+        <h1>Settings</h1>
+      </div>
     </div>
 
     <div class="main-cont-large">

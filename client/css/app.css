@@ -161,9 +161,6 @@ button:focus {
 .main-navbar .post-a-job-button {
   color: white;
 }
-.main-navbar .nav-notifications-btn {
-
-}
 .main-navbar.white-bg {
   background-color: white !important;
 }
@@ -207,11 +204,13 @@ button:focus {
 }
 .nav-notification-mark {
   position: absolute;
-  min-width: 15px;
-  font-size: 10px;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 16px;
   border-radius: 8px;
-  top: 15px;
-  left: 25px;
+  top: -3px;
+  left: 17px;
   background-color: #ef5350;
   color: #fff;
 }
@@ -232,7 +231,19 @@ button:focus {
   position: relative;
   color: #fff;
 }
-
+.header-splash h1 {
+  color: #fff;
+}
+.header-splash .main-cont-large {
+  background: transparent;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+.header-splash .main-cont-large.bottom {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 8px;
+}
 /*  ---- Styles to globally override Vuetify ----  */
 .container {
   padding-top: 80px;
