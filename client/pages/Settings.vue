@@ -31,8 +31,19 @@
   height: 230px;
 }
 
-.text-field-style{
-  box-shadow: 0 10px 12px -4px #eaeaf9;
+.text_field_style{
+  box-shadow: 14px 10px 16px -4px #eaeaf9;
+}
+
+.email_address{
+  width:100%;
+  line-height: 56px;
+}
+
+.email_preferences{
+  padding-bottom: 12px;
+  display: inline-block;
+  width:80%;
 }
 
 @media(min-width: 601px){
@@ -40,6 +51,7 @@
     height: 215px;
   }
 }
+
 
 </style>
 
