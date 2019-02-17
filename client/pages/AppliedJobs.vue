@@ -58,6 +58,20 @@
       </div>
     </div>
     <div class="main-cont-large">
+      <v-layout row wrap style="border-bottom-color: black;">>
+        <v-flex xs7>
+          <p style="color:grey">kunvet</p>
+          <h2 style="font-weight:bold; margin-bottom:0px;">Coding Intern</h2>
+        </v-flex>
+        <v-flex xs2>
+          <p style="color:grey">Applied</p>
+          <p style="color:#ff9897"><span style="font-size:20px">7</span> minutes ago</p>
+        </v-flex>
+        <v-flex xs2>
+          <p style="color:grey">status</p>
+          <h2 style="color:#ffc46a">Seen</h2>
+        </v-flex>
+      </v-layout>
       <v-layout>
         <v-flex xs12>
           <router-link v-if="jobsAndApplications.length === 0" to="/">
