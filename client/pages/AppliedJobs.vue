@@ -38,6 +38,31 @@
     }
   }
 }
+.list-post{
+  .list-post-job-name{
+  margin-top: 8px;
+  margin-bottom: 0;
+  font-weight: bold;
+  font-size: 21px;
+  color: #4d4d4d;
+  // white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  }
+
+  .list-title{
+    color: grey;
+  }
+  .post-time{
+    color:#ff9897;
+  }
+  .post-expired{
+    color:grey;
+  }
+  .post-valid{
+    color:#ffc46a
+  }
+}
 </style>
 <template>
   <v-container fluid class="appliedjobs">
@@ -58,20 +83,24 @@
       </div>
     </div>
     <div class="main-cont-large">
-      <v-layout row wrap style="border-bottom-color: black;">>
-        <v-flex xs7>
-          <p style="color:grey">kunvet</p>
-          <h2 style="font-weight:bold; margin-bottom:0px;">Coding Intern</h2>
-        </v-flex>
-        <v-flex xs2>
-          <p style="color:grey">Applied</p>
-          <p style="color:#ff9897"><span style="font-size:20px">7</span> minutes ago</p>
-        </v-flex>
-        <v-flex xs2>
-          <p style="color:grey">status</p>
-          <h2 style="color:#ffc46a">Seen</h2>
-        </v-flex>
-      </v-layout>
+      <div>
+        <v-layout row wrap class="list-post">
+          <v-flex xs12 sm7>
+            <p class="list-title">kunvet</p>
+            <h2 class="list-post-title">Coding Intern</h2>
+          </v-flex>
+          <v-flex xs4 sm2>
+            <p class="list-title">Applied</p>
+            <p class="post-time"><span style="font-size:20px">7</span> minutes ago</p>
+          </v-flex>
+          <v-flex xs2 sm2>
+            <p class="list-title">status</p>
+            <h2 v-if="false" class="post-valid">Seen</h2>
+            <h2 v-else class="post-expired">Expired</h2>
+          </v-flex>
+        </v-layout>
+        <hr style="size:20">
+      </div>
       <v-layout>
         <v-flex xs12>
           <router-link v-if="jobsAndApplications.length === 0" to="/">
