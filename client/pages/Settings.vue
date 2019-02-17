@@ -15,11 +15,44 @@
   background-color: #333;
   margin-bottom: 16px;
 }
+
+/*NEW CLASSES*/
+
+.header-splash {
+    background-image: linear-gradient(to right, #EA596B, #F6BE6A);
+    width:100%;
+    position: relative;
+}
+
+.text-field-style{
+  box-shadow: 0 10px 12px -4px #eaeaf9;
+}
+
+@media(min-width: 601px){
+  .header-splash{
+    height: 276px;
+    transform: translate(-24px);
+    padding-left:48px;
+    vertical-align: bottom;
+  }
+}
+
+
+
 </style>
+
 <template>
   <v-container fluid class="settings-page">
+    <div class="header-splash">
+      <h1>Settings</h1>
+    </div>
+
     <div class="main-cont-large">
       <section style="padding: 0; margin: 15px; width: auto;">
+
+        <h2>Current Email Address</h2>
+        <v-divider></v-divider>
+        <div style="height:100px; width:100%">{{account_email}}</div>
 
         <SwitchAccount :bottomPadding="true"/>
 
@@ -75,6 +108,7 @@
         orgname: null,
         oid: null,
         deleteOrgDialog: false,
+        account_email: null,
       };
     },
     components: {
@@ -101,12 +135,14 @@
               _id
               default_org
               org_list
+              email
             }
           }`),
           variables: {
             uid: this.$store.state.userID,
           },
         });
+        this.account_email = res.email;
         if (res.org_list && res.org_list[0] !== null) {
           this.orgList = res.org_list;
         }
