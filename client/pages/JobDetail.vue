@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="scss" scoped>
   .job-star-icon {
     color: #e0e0e0;
     cursor: pointer;
@@ -109,10 +109,6 @@
   }
   .job-detail-container .long-text-cont {
     margin-bottom: 16px;
-  }
-  .header-splash {
-    background-image: linear-gradient(to right, #EA596B, #F6BE6A);
-    position: relative;
   }
   .job-detail-container .long-text-cont,
   .job-detail-container .long-text-cont span,

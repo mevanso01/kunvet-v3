@@ -226,6 +226,13 @@ button:focus {
   color: #fff;
 }
 
+/* header stuff */
+.header-splash {
+  background-image: linear-gradient(to right, #EA596B, #F6BE6A);
+  position: relative;
+  color: #fff;
+}
+
 /*  ---- Styles to globally override Vuetify ----  */
 .container {
   padding-top: 80px;

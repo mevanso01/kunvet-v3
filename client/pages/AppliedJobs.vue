@@ -1,5 +1,28 @@
 <style lang="scss">
 .appliedjobs {
+  padding: 0;
+  .main-cont-large {
+    padding: 0 16px;
+  }
+  .header-splash {
+    height: 230px;
+    .main-cont-large {
+      background: transparent;
+      position: absolute;
+      bottom: 0;
+      padding-bottom: 8px;
+    }
+    .header-text {
+      font-size: 18px;
+      // font-weight: bold;
+    }
+    .counter-text {
+      font-size: 84px;
+      margin-right: 8px;
+      font-weight: bold;
+      line-height: 84px;
+    }
+  }
   @media (min-width: 601px) {
     .aj-card {
       width: 50%;
@@ -9,10 +32,31 @@
       }
     }
   }
+  @media (max-width: 600px) {
+    .header-splash {
+      height: 215px;
+    }
+  }
 }
 </style>
 <template>
   <v-container fluid class="appliedjobs">
+    <div class="header-splash">
+      <div class="main-cont-large" style="background: transparent;">
+        <span v-if="jobsAndApplications.length > 0" class="header-text">
+          <span class="counter-text">{{ jobsAndApplications.length }}</span>
+          <span>
+            Applied {{ getAppliedJobsString }}
+          </span>
+        </span>
+        <span v-else class="header-text">
+          You have not applied for any jobs yet!
+          <router-link to="/" style="font-weight: bold;">
+            Lets go!
+          </router-link>
+        </span>
+      </div>
+    </div>
     <div class="main-cont-large">
       <v-layout>
         <v-flex xs12>
@@ -38,62 +82,6 @@
         </div>
         <MainJobCard :job="job"></MainJobCard>
       </div>
-        <!-- <div class="aj-card" v-for="{ job, application } in jobsAndApplications" v-if="job" style="height: auto;">
-          <div v-if="!job.is_deleted">
-            <v-layout align-center row spacer slot="header">
-              <v-flex xs12>
-                <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
-                  <img :src="job.profilePic" alt="">
-                </v-avatar>
-                <div style="color: #A7A7A7; line-height: 36px;">
-                  {{ job.posted_by }}
-                </div>
-              </v-flex>
-            </v-layout>
-
-            <router-link :to="'job/'+job._id">
-              <v-layout>
-                <v-flex xs12 style="padding-top: 0px;">
-                  <div class="new-applicant-card__info" style="padding-top: 0;">
-                    <div><h3 class="post-title">{{ job.title }}</h3></div>
-                    <p>
-                      <span class="new-applicant-card__address">
-                        <img class="new-applicant-card__regular-icon" :src="svgs.locationMarker" />{{ job.address }}
-                      </span>
-                    </p>
-                    <div class="carditem">
-                      <p><v-icon>info</v-icon>{{ parseJobIntoMainJobInfo(job) }}</p>
-                    </div>
-                    <div class="carditem">
-                      <p>
-                        <span class="carditem-image">
-                          <img :src="svgs.student" class="new-applicant-card__regular-icon" />
-                        </span>{{ job.studentfriendly ? 'S' : 'Not s' }}tudent-friendly
-                        <span>{{ job.experience ? '&bull; Experience required' : '' }}</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="btn-holder">
-                    <h3 :style="`font-weight: normal; color: ${getStatusColor(application)}; margin-bottom: 0; height: auto;`">
-                      {{ getStatusFromApplication(application) }}
-                    </h3>
-                  </div>
-                </v-flex>
-              </v-layout>
-            </router-link>
-          </div>
-          <div v-else>
-            <v-layout>
-              <v-flex xs12 style="padding-top: 0px;">
-                <div class="new-applicant-card__info">
-                  <div><h3 class="post-title">{{ job.title }}</h3></div>
-                  <p>Job deleted</p>
-                </div>
-              </v-flex>
-            </v-layout>
-          </div>
-        </div> -->
-      <!-- </v-layout> -->
     </div>
   </v-container>
 </template>

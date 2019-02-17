@@ -158,7 +158,7 @@ export default {
   },
   methods: {
     testFunc() {
-      alert('hello');
+      console.log('testFunc called');
     },
     getSrc(resume) {
       // eslint-disable-next-line
