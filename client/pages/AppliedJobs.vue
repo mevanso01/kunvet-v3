@@ -17,6 +17,9 @@
       line-height: 84px;
     }
   }
+  .list-bounds{
+    margin-top: 30px;
+  }
   @media (min-width: 601px) {
     .aj-card {
       width: 50%;
@@ -56,6 +59,9 @@
   .post-valid{
     color:#ffc46a
   }
+  .post-submitted{
+    color:pink
+  }
 }
 </style>
 <template>
@@ -76,49 +82,27 @@
         </span>
       </div>
     </div>
-    <div class="main-cont-large">
+    <div class="main-cont-large list-bounds">
       <div v-for="({ job, application }, idx) in jobsAndApplications">
-        <v-layout row wrap class="list-post">
-          <v-flex xs12 sm7>
-            <p class="list-title">{{ job.posted_by }}</p>
-            <h2 class="list-post-title">{{ job.title }}</h2>
-          </v-flex>
-          <v-flex xs4 sm2>
-            <p class="list-title">Applied</p>
-            <p class="post-time"><span style="font-size:20px">7</span> minutes ago</p>
-          </v-flex>
-          <v-flex xs2 sm2>
-            <p class="list-title">status</p>
-            <h2 v-if="application.status === 'submitted'" class="post-submitted">Submitted</h2>
-            <h2 v-else-if="application.status === 'opened'" class="post-valid">Seen</h2>
-            <h2 v-else class="post-expired">Expired</h2>
-          </v-flex>
-        </v-layout>
-        <hr style="size:20">
-      </div>
-      <v-layout>
-        <v-flex xs12>
-          <router-link v-if="jobsAndApplications.length === 0" to="/">
-            <p style="text-decoration: none;">
-              You have not yet applied for any jobs. Click me to go to the jobs dashboard.
-            </p>
-          </router-link>
-          <h1 v-else="jobsAndApplications.length > 0" style="margin-bottom: 10px; color: #A7A7A7;">
-            <span>
-              <span class="kunvet-red">
-                {{ jobsAndApplications.length }}
-              </span> Applied {{ getAppliedJobsString }}
-            </span>
-          </h1>
-        </v-flex>
-      </v-layout>
-      <div v-for="({ job, application }, idx) in jobsAndApplications" class="aj-card" :key="`aj-${idx}`">
-        <div class="aj-status" style="text-align: center;">
-          <h3 :style="`font-weight: normal; color: ${getStatusColor(application)}; margin-bottom: 0; height: auto;`">
-            <span class="mobile-hide">Status: </span>{{ getStatusFromApplication(application) }}
-          </h3>
-        </div>
-        <MainJobCard :job="job"></MainJobCard>
+          <v-layout row wrap class="list-post">
+            <v-flex xs12 sm7>
+              <router-link :to="`/job/${job._id}`">
+              <p class="list-title">{{ job.posted_by }}</p>
+              <h2 class="list-post-title">{{ job.title }}</h2>
+              </router-link>
+            </v-flex>
+            <v-flex xs4 sm2>
+              <p class="list-title">Applied</p>
+              <timeago class="post-time":since="job.date" />
+            </v-flex>
+            <v-flex xs2 sm2>
+              <p class="list-title">status</p>
+              <h2 v-if="application.status === 'submitted'" class="post-submitted">Submitted</h2>
+              <h2 v-else-if="application.status === 'opened'" class="post-valid">Seen</h2>
+              <h2 v-else class="post-expired">Expired</h2>
+            </v-flex>
+          </v-layout>
+          <hr v-if= "idx < jobsAndApplications.length - 1" style="size:20; width:88%;">
       </div>
     </div>
   </v-container>
