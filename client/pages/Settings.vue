@@ -32,7 +32,7 @@
 }
 
 .text_field_style{
-  box-shadow: 14px 10px 16px -4px #eaeaf9;
+  /*box-shadow: 14px 10px 16px -4px #eaeaf9;*/
 }
 
 .email_address{
@@ -44,6 +44,10 @@
   padding-bottom: 12px;
   display: inline-block;
   width:80%;
+}
+
+.switch_settings{
+  display:inline-block;
 }
 
 @media(min-width: 601px){
@@ -65,34 +69,43 @@
 
     <div class="main-cont-large">
       <section style="padding: 0; margin: 15px; width: auto;">
+        <br>
 
-        <h2>Current Email Address</h2>
+        <h2>Account Ownership</h2>
         <v-divider></v-divider>
 
-        <k-text-field class="text_field_style"  
-        :value="account_email" 
-        disabled>
+        <br>
+
+        <k-text-field :value="account_email" disabled class="text_field_style">
         </k-text-field>
 
-        <div style="height:100px; width:100%;"></div>
+        <br>
 
-        <SwitchAccount :bottomPadding="true"/>
+       <!-- <SwitchAccount :bottomPadding="true" />  -->
 
-        <h2>General Settings</h2>
-        <v-divider></v-divider>
         <div>
-          <v-btn small outline @click="logout">Logout</v-btn>
+          <k-btn small block @click="logout">Logout</k-btn>
         </div>
-        <br>
-        <br>
+
+        <br><br><br>
+
+        <h2>Email Preferences</h2>
+        <v-divider></v-divider>
+        <div class="email_preferences">Recieve emails about new applicants </div> <v-switch color="red" class="switch_settings"></v-switch>
+        <div class="email_preferences">Recieve emails about job expiration </div> <v-switch color="red" class="switch_settings"></v-switch>
+        <div class="email_preferences">Recieve emails about newsletters</div> <v-switch color="red" class="switch_settings"></v-switch>
+        
+        <br><br><br>
 
         <div v-if="orgname && oid">
           <h2>Organization settings</h2>
           <v-divider></v-divider>
-          <h3 v-if="orgname">Viewing organization: {{ orgname }}</h3>
           <br>
-          <v-btn small outline color="red darken-1" @click="deleteOrgDialog = true;">Delete this organization</v-btn>
+          <h3 v-if="orgname">Organization name: {{ orgname }}</h3>
+          <br>
+          <k-btn small block @click="deleteOrgDialog = true;" style="background-color:#ea2a2a">Delete This Organization</k-btn>
         </div>
+        <br>
       </section>
 
       <v-dialog v-model="deleteOrgDialog">
