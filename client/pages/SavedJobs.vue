@@ -1,14 +1,42 @@
-<style>
-
+<style  lang="scss">
+.main-cont-large {
+  padding: 0 16px;
+}
+.header-splash {
+  height: 230px;
+  .header-text {
+    font-size: 18px;
+    // font-weight: bold;
+  }
+  .counter-text {
+    font-size: 84px;
+    margin-right: 8px;
+    font-weight: bold;
+    line-height: 84px;
+  }
+}
 </style>
 <template>
-  <v-container fluid>
-    <div class="main-cont-large" style="background: none">
-      <v-layout>
-        <v-flex xs12>
-          <h1 style="margin-bottom: 10px; color: #A7A7A7;"><span class="kunvet-red">{{ counter }}</span> Saved Job{{ plural }}</h1>
-        </v-flex>
-      </v-layout>
+  <v-container fluid style="padding: 0">
+    <div class="header-splash" style="margin-bottom: 30px;">
+      <div class="main-cont-large bottom">
+        <span class="counter-text">{{ counter }}</span>
+        <span class="header-text">
+           Saved Job{{ plural }}
+        </span>
+      </div>
+    </div>
+    <div v-if="counter < 1">
+      <p style="text-align: center;">
+        You haven't saved any job yet.
+        <router-link to="/" style="font-weight: bold;">
+          Click Here
+        </router-link>
+         to browse the jobs listing!
+      </p>
+    </div>
+
+    <div>
       <v-layout style="padding-bottom: 32px;">
         <v-flex xs12 class="no-padding">
           <div v-for="job in findJobs" :key="job._id">
