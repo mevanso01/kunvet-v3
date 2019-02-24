@@ -4,9 +4,9 @@ import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
 import Mailer from '@/utils/Mailer';
 import Files from '@/utils/Files';
+import sendApplicantInfo from '@/utils/EmailFunctions';
 import Models from '../mongodb/Models';
 import Restrictions from './Restrictions';
-
 // GraphQL types
 const Job = composeWithMongoose(Models.Job);
 const Account = composeWithMongoose(Models.Account);
@@ -94,17 +94,13 @@ async function sendNewApplicationNotification(req, next) {
     }
   }
 
-  try {
-    await mailer.sendTemplate(
-      employer.email,
-      'application-created',
-      locals,
-    );
-  } catch (e) {
-    Logger.error(e);
-    // throw Error('Employer could not be emailed');
-  }
+  const templateObject = {
+    email: employer.email,
+    status: 'application-created',
+    locals: locals,
+  };
 
+  sendApplicantInfo(mailer, templateObject);
   try {
     employer.notifications.push({
       text: `New applicant: ${user.firstname} ${user.lastname}`, // Important: change code in applicants.vue before removing

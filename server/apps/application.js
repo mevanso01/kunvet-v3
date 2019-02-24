@@ -27,7 +27,7 @@ import ApiResponse from '@/utils/ApiResponse';
 import Models from '@/mongodb/Models';
 import Mailer from '@/utils/Mailer';
 import Data from '@/utils/Data';
-import EmailFunctions from '@/utils/EmailFunctions';
+import sendApplicationStatus from '@/utils/EmailFunctions';
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -94,27 +94,17 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
     );
   }
 
-  // Send notification to applicant
-  if (['opened', 'accepted', 'rejected'].includes(status)) {
-    const mailer = new Mailer();
-    try {
-      await mailer.sendTemplate(
-        user.email,
-        `application-${status}`,
-        {
-          replyTo: employer.email,
-          fname: user.firstname,
-          name: application.name,
-          jobname: job.title,
-        },
-      );
-    } catch (e) {
-      console.log(e);
-      return ApiResponse(
-        ErrorCode.InternalError,
-      );
-    }
+  const emailBody = {
+    replyTo: employer.email,
+    fname: user.firstname,
+    name: application.name,
+    jobname: job.title,
+  };
 
+
+  // Send notification to applicant //working on this function
+  if (['opened', 'accepted', 'rejected'].includes(status)) {
+    sendApplicationStatus(user, emailBody); // moved previous code into EmailFunctions.js
     try {
       user.notifications.push({
         text: `Your application was ${ctx.params.status}`,
