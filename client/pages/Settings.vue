@@ -91,9 +91,14 @@
 
         <h2>Email Preferences</h2>
         <v-divider></v-divider>
-        <div class="email_preferences">Recieve emails about new applicants </div> <v-switch color="red" class="switch_settings"></v-switch>
-        <div class="email_preferences">Recieve emails about job expiration </div> <v-switch color="red" class="switch_settings"></v-switch>
-        <div class="email_preferences">Recieve emails about newsletters</div> <v-switch color="red" class="switch_settings"></v-switch>
+        <div class="email_preferences">Recieve emails about new applicants </div>
+         <v-switch color="red" class="switch_settings"></v-switch>
+        <div class="email_preferences">Recieve emails application status </div>
+         <v-switch v-model="user.preferences.applicationStatusEmails" color="red" class="switch_settings"></v-switch>
+        <div class="email_preferences">Recieve emails about job expiration </div> 
+        <v-switch color="red" class="switch_settings"></v-switch>
+        <div class="email_preferences">Recieve emails about newsletters</div> 
+        <v-switch color="red" class="switch_settings"></v-switch>
         
         <br><br><br>
 
