@@ -2,7 +2,6 @@ import composeWithMongoose from 'graphql-compose-mongoose';
 import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
-import Mailer from '@/utils/Mailer';
 import Files from '@/utils/Files';
 import EmailFunctions from '@/utils/EmailFunctions';
 import Models from '../mongodb/Models';
@@ -42,7 +41,6 @@ const degrees = {
 };
 
 async function sendNewApplicationNotification(req, next) {
-  const mailer = new Mailer();
   const user = req.context.user;
   let job = null;
   let employer = null;
@@ -100,7 +98,7 @@ async function sendNewApplicationNotification(req, next) {
     locals: locals,
   };
 
-  EmailFunctions.sendApplicantInfo(mailer, templateObject);
+  EmailFunctions.sendApplicantInfo(templateObject);
   try {
     employer.notifications.push({
       text: `New applicant: ${user.firstname} ${user.lastname}`, // Important: change code in applicants.vue before removing
