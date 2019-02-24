@@ -287,18 +287,6 @@ section.search {
   margin: 0 auto;
   padding: 4px 40px;
 }
-#rua {
-  width: 100%;
-  flex-wrap: nowrap;
-  overflow-x: hidden;
-  justify-content: center;
-  background: #FCFCFC;
-  .card {
-    flex: 0 0 auto;
-    width: 200px;
-    margin: 10px;
-  }
-}
 </style>
 
 <template>
