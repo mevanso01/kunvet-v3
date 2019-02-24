@@ -466,6 +466,22 @@ const AccountSchema = Mongoose.Schema({
     default: false,
   },
   preferences: {
+    getNewsletters: {
+      type: Boolean,
+      default: false,
+    },
+    jobExpiredEmails: {
+      type: String,
+      enum: ['All', 'Off'],
+      // enum: ['None', 'Monthy', 'Weekly', 'Daily',],
+      default: 'All',
+    },
+    applicationStatusEmails: {
+      type: String,
+      enum: ['All', 'Off'],
+      // enum: ['None', 'Monthy', 'Weekly', 'Daily',],
+      default: 'All',
+    }
   },
 });
 const AvailableFiltersSchema = Mongoose.Schema({

@@ -6,6 +6,9 @@ import Logger from 'winston';
 
 export default {
   async sendApplicationStatus(user, emailBody) {
+    if (user.preferences.applicationStatusEmails === 'Off') {
+      return ApiResponse();
+    }
     const mailer = new Mailer();
     try {
       await mailer.sendTemplate(
@@ -22,6 +25,8 @@ export default {
     }
     return ApiResponse();
   },
+
+
   async sendApplicantInfo(mailer, templateObject) {
     try {
       await mailer.sendTemplate(
@@ -35,3 +40,7 @@ export default {
     }
   },
 };
+
+//    if(user.preferences.jobExpiredEmails === 'Off'){return ApiResponse();}
+//    if(user.preferences.getNewsLetters === false){return ApiResponse();}
+
