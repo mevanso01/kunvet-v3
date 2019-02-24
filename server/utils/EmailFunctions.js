@@ -30,8 +30,8 @@ function checkEmailBody(emailBody) {
 export default {
   async sendApplicationStatus(user, emailBody) {
     checkEmailBody(emailBody); // verifies that the emailBody is sending all values
-    const mailer = new Mailer();
     try {
+      const mailer = new Mailer();
       await mailer.sendTemplate(
         user.email,
         `application-${status}`,
@@ -46,10 +46,10 @@ export default {
     }
     return ApiResponse();
   },
-  async sendApplicantInfo(mailer, templateObject) {
+  async sendApplicantInfo(templateObject) {
     checkTemplateObject(templateObject); // verifies that the templateObject is sending all values
-    const mailer = new Mailer();
     try {
+      const mailer = new Mailer();
       await mailer.sendTemplate(
         templateObject.email,
         templateObject.status,
