@@ -41,6 +41,18 @@
   color: rgba(0,0,0,0.26) !important; // #a6a6a6
   box-shadow: none;
 }
+
+.spinner-overlay {
+  position: absolute;
+  /* opacity: 0; */
+}
+.spinner-overlay.working {
+  /* opacity: 1; */
+}
+
+.k-btn--text.working {
+  /* opacity: 0; */
+}
 </style>
 <template>
   <div
@@ -49,10 +61,10 @@
     :class="{ 'block': block, 'icon': icon, 'outline': outline, 'disabled': disabled }"
     :style="buttonStyle"
   >
-    <span v-if="working">
+    <div :class="{'spinner-overlay': true, 'working': working}">
       <v-progress-circular indeterminate></v-progress-circular>
-    </span>
-    <span class="k-btn--text" v-else>
+    </div>
+    <span :class="{'k-btn--text': true, 'working': working}">
       <slot></slot>
     </span>
   </div>
@@ -89,6 +101,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    to: {
+      type: [String, Object],
+      default: '',
+    },
+    autoSpin: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -96,9 +116,16 @@ export default {
   },
   methods: {
     click() {
-      if (!this.disabled) {
-        this.$emit('click');
+      if (this.disabled) {
+        return;
       }
+      if (this.autoSpin) {
+        this.working = true;
+      }
+      if (this.to) {
+        this.$router.push(this.to);
+      }
+      this.$emit('click');
     },
   },
   computed: {

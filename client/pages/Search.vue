@@ -282,17 +282,10 @@ section.search {
     height: calc(100vh - 64px);
   }
 }
-#rua {
-  width: 100%;
-  flex-wrap: nowrap;
-  overflow-x: hidden;
-  justify-content: center;
-  background: #FCFCFC;
-  .card {
-    flex: 0 0 auto;
-    width: 200px;
-    margin: 10px;
-  }
+.algoliaLogo {
+  width: 960px;
+  margin: 0 auto;
+  padding: 4px 40px;
 }
 </style>
 
@@ -410,10 +403,12 @@ section.search {
               </div> -->
             </div>
           </div>
-          <ais-powered-by></ais-powered-by>
         </v-flex>
         <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
           <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please select different filters or a different location.</h3>
+        </div>
+        <div class="algoliaLogo">
+          <ais-powered-by></ais-powered-by>
         </div>
       </v-layout>
     </div>
