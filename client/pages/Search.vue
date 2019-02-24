@@ -907,7 +907,15 @@ export default {
       }
     },
     async algoliaSearch() {
-      const requests = [{ params: { query: this.query, page: this.page }, indexName: 'jobs' }];
+      const coordinates = this.getCityCoordinates();
+      const requests = [{
+        params: {
+          query: this.query,
+          page: this.page,
+          aroundLatLng: `${coordinates.latitude}, ${coordinates.longitude}`,
+        },
+        indexName: 'jobs',
+      }];
       const results = await algoliaClient.search(requests);
       const res = results.results[0];
       // console.log(res);
