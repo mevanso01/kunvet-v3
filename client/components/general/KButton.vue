@@ -13,6 +13,14 @@
     font-size: 16px;
     padding: 0 24px;
   }
+  .k-btn--text.working {
+    visibility: hidden;
+  }
+  .k-btn-spinner {
+    position: absolute;
+    top: calc(50% - 16px);
+    left: calc(50% - 16px);
+  }
 }
 .k-btn.outline {
   border: 2px solid;
@@ -61,12 +69,13 @@
     :class="{ 'block': block, 'icon': icon, 'outline': outline, 'disabled': disabled }"
     :style="buttonStyle"
   >
-    <div :class="{'spinner-overlay': true, 'working': working}">
-      <v-progress-circular indeterminate></v-progress-circular>
+    <!--class="spinner-overlay" :class="{ 'working': working }"-->
+    <div style="position: relative;">
+      <span class="k-btn--text" :class="{ 'working': working }">
+        <slot></slot>
+      </span>
+      <v-progress-circular v-if="working" class="k-btn-spinner" indeterminate></v-progress-circular>
     </div>
-    <span :class="{'k-btn--text': true, 'working': working}">
-      <slot></slot>
-    </span>
   </div>
 </template>
 <script>
@@ -77,9 +86,9 @@ export default {
       type: String,
       default: '#ff6969',
     },
-    dark: {
+    darkText: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     block: {
       type: Boolean,
@@ -132,7 +141,7 @@ export default {
     buttonStyle() {
       return {
         background: this.outline ? 'transparent' : this.color,
-        color: this.dark ? '#fff' : 'inherit',
+        color: this.darkText ? '#333' : '#fff',
         'border-color': this.outline ? this.color : 'none',
       };
     },

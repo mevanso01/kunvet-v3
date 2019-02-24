@@ -13,7 +13,9 @@
       <k-text-field
         placeholder="Im a placeholder"
       ></k-text-field>
-      <k-btn icon @click="testFunc" color="lightblue"><img src="../assets/icons/Asset(36).svg" /></k-btn>
+      <k-btn icon working @click="testFunc" color="lightblue"><img src="../assets/icons/Asset(36).svg" /></k-btn>
+      <k-btn working darkText color="#ddd">Long text hello hello</k-btn>
+      <k-btn darkText color="#ddd">Long text hello hello</k-btn>
     </div>
     <div style="background-color: #ddd; padding: 16px 24px; margin-bottom: 24px;">
 
