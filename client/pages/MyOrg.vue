@@ -298,12 +298,12 @@
                 <v-dialog v-model="showJobToPostDialog">
                   <v-card>
                     <v-card-title>
-                      <div class="headline">You have an unfinished job!</div>
+                      <div class="headline">You have an unfinished job! Would you like to continue posting it?</div>
                     </v-card-title>
                     <a @click="showJobToPostDialog = false" class="center" style="display: block; color: #616161 !important; margin-bottom: 12px;">continue later</a>
                     <div class="general-submit" @click="goToCreateJob">
                       <div class="general-submit-default">
-                        <span>CONTINUE EDITING MY JOB</span>
+                        <span>Continue Editing My Job</span>
                       </div>
                     </div>
                   </v-card>

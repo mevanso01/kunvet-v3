@@ -1,4 +1,4 @@
-<style>
+<style scoped lang="scss">
 .pos-bottom {
   position: absolute;
   width: calc(100% - 32px);
@@ -11,8 +11,7 @@
 }
 .bottom-text a {
   cursor: pointer;
-  margin-right: 20px;
-  margin-left: 8px;
+  font-size: 16px;
 }
 .bio .input-group__input {
   padding-bottom: 4px;
@@ -21,17 +20,94 @@
   background-color: rgba(239,83,80,0.4) !important;
   color: #fff;
 }
+.student-signup-color {
+  // color: #3089fc;
+  // color: #019de1;
+  color: #3488fc;
+}
+.business-signup-color {
+  color: #ffc370;
+}
+.individual-signup-color {
+  color: #e491ff;
+}
+.flex {
+  padding: 8px;
+}
+.choose-account-section {
+  text-align: center;
+  h2 {
+    font-weight: bold;
+  }
+}
+@media (min-width: 601px) {
+  .choose-account-section {
+    padding-bottom: 32px;
+  }
+  .choose-account-section .v-card__text  {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  .choose-account-section .v-card {
+    height: 230px;
+  }
+  .pos-bottom {
+    width: calc(100% - 64px);
+  }
+  .main-cont-large-clear {
+    margin-bottom: 48px;
+  }
+}
 </style>
 
 <template>
   <v-container fluid>
     <div id="signup" class="main-cont-large-clear" v-show="!alreadyloggedin">
-      <section v-if="chosenForm === ''">
+      <section v-if="chosenForm === ''" class="choose-account-section">
           <div class="text-xs-center">
                <h1>Select an account</h1>
           </div>
           <v-layout row wrap>
-            <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
+            <v-flex sm4>
+              <v-card>
+                <v-card-text>
+                  <div style="margin-bottom: 84px;">
+                    <h2 class="student-signup-color">Students</h2>
+                    <p>Are you looking to apply for jobs? Sign up here!</p>
+                  </div>
+                  <div class="text-xs-center pos-bottom">
+                    <k-btn color="#3488fc" block @click="chooseSignup('student')">Student Sign Up</k-btn>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex sm4>
+              <v-card>
+                <v-card-text>
+                  <div style="margin-bottom: 84px;">
+                    <h2 class="business-signup-color">Business</h2>
+                    <p>If you are looking to hire for your business or organization, choose this option</p>
+                  </div>
+                  <div class="text-xs-center pos-bottom">
+                    <k-btn color="#ffc370" block @click="chooseSignup('business')">Business Sign Up</k-btn>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex sm4>
+              <v-card>
+                <v-card-text>
+                  <div style="margin-bottom: 64px;">
+                    <h2 class="individual-signup-color">Personal Hiring</h2>
+                    <p>If you're an individual looking to hire someone, choose this option</p>
+                  </div>
+                  <div class="text-xs-center pos-bottom">
+                    <k-btn color="#e491ff" block @click="chooseSignup('individual')">Individual Sign Up</k-btn>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <!-- <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
               <v-card>
                 <v-card-text>
                   <div style="margin-bottom: 64px;">
@@ -46,8 +122,8 @@
                   </div>
                 </v-card-text>
               </v-card>
-            </v-flex>
-            <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
+            </v-flex> -->
+            <!-- <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
               <v-card>
                 <v-card-text>
                   <div style="margin-bottom: 64px;">
@@ -62,8 +138,13 @@
                   </div>
                 </v-card-text>
               </v-card>
-            </v-flex>
+            </v-flex> -->
           </v-layout>
+      </section>
+
+      <section v-if="chosenForm === 'signup'">
+        <SignupComponent :type="signupType" style="max-width: 420px; margin: auto;"></SignupComponent>
+        <!-- <a style="text-align: center; margin: auto; display: block;" @click="chosenForm = ''">Choose a different kind of account</a> -->
       </section>
 
       <section style="padding-top: 0px" v-if="chosenForm === 'individual'">
@@ -119,9 +200,6 @@
                 </v-form>
               </v-card-text>
             </v-card>
-            <div class="bottom-text">
-              <router-link to="/login">Already have an account? Log in</router-link>
-            </div>
           </v-flex>
         </v-layout>
       </section>
@@ -233,6 +311,12 @@
           </v-flex>
         </v-layout>
       </section>
+
+      <div class="bottom-text">
+        <router-link to="/login">
+          Already have an account? <span style="text-decoration: underline;">Log in</span>
+        </router-link>
+      </div>
     </div>
 
     <div class="main-cont-large-clear" v-show="alreadyloggedin">
@@ -260,6 +344,7 @@ import axios from 'axios';
 import KunvetError from '#/KunvetError';
 import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
+import SignupComponent from '@/components/SignupComponent';
 
 export default {
   props: ['stage'],
@@ -292,7 +377,11 @@ export default {
         'Flyers & posters', 'Social media', 'Word of mouth', 'Email campaign', 'Other',
       ],
       alreadyloggedin: false,
+      signupType: '',
     };
+  },
+  components: {
+    SignupComponent,
   },
   methods: {
     submit() {
@@ -319,6 +408,11 @@ export default {
     },
     chooseFormB() {
       this.chosenForm = 'business';
+    },
+    chooseSignup(type) {
+      this.signupType = type;
+      this.chosenForm = 'signup';
+      this.$router.push(`/signup?type=${type}`);
     },
     back() {
       this.chosenForm = '';
@@ -501,6 +595,12 @@ export default {
   activated() {
     this.resetData();
     this.checkStage();
+    if (this.$route.query.type) {
+      this.signupType = this.$route.query.type;
+      this.chosenForm = 'signup';
+    } else {
+      this.chosenForm = '';
+    }
     userDataProvider.getUserData().then(data => {
       if (data.acct !== 0) {
         this.alreadyloggedin = true;

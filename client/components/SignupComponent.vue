@@ -2,17 +2,15 @@
 .signup-card {
   display: flex;
   flex-direction: column;
-  height: 500px;
+  /* height: 500px; */
   width: 100%;
 }
-
 .container {
-  margin: 50px auto;
+  /* margin: 50px auto; */
   padding: 0;
   text-align: center;
   width: 80%;
 }
-
 h1 {
   height: 24px;
   text-align: left;
@@ -43,7 +41,7 @@ h1 {
         ></k-text-field>
 
         <!-- requireBusinessName -->
-        <k-text-field label="Name of Organization / Business"
+        <k-text-field label="Name of Business / Organization"
           v-model="business_name" v-if="accountTypeInfo.requireBusinessName"
           required
         ></k-text-field>
@@ -120,7 +118,6 @@ export default {
           requireBusinessName: false,
         },
       },
-
       // Validation
       requiredRules: [
         v => !!v || 'Required',

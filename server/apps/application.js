@@ -27,6 +27,7 @@ import ApiResponse from '@/utils/ApiResponse';
 import Models from '@/mongodb/Models';
 import Mailer from '@/utils/Mailer';
 import Data from '@/utils/Data';
+import EmailFunctions from '@/utils/EmailFunctions';
 
 const app = new Koa();
 const router = new KoaRouter();

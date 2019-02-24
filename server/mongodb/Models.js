@@ -465,6 +465,8 @@ const AccountSchema = Mongoose.Schema({
     required: true,
     default: false,
   },
+  preferences: {
+  },
 });
 const AvailableFiltersSchema = Mongoose.Schema({
   in_use_positions: [String],
