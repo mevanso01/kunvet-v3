@@ -410,6 +410,7 @@ section.search {
               </div> -->
             </div>
           </div>
+          <ais-powered-by></ais-powered-by>
         </v-flex>
         <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
           <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please select different filters or a different location.</h3>
