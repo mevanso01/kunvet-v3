@@ -595,6 +595,11 @@ export default {
   activated() {
     this.resetData();
     this.checkStage();
+    // document.addEventListener('backbutton', () => { console.log('TEST'); }, false);
+    // watch: {
+    // '$route' (to, from) {
+    // }
+    console.log('Activated');
     if (this.$route.query.type) {
       this.signupType = this.$route.query.type;
       this.chosenForm = 'signup';

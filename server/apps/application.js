@@ -27,7 +27,7 @@ import ApiResponse from '@/utils/ApiResponse';
 import Models from '@/mongodb/Models';
 import Mailer from '@/utils/Mailer';
 import Data from '@/utils/Data';
-import sendApplicationStatus from '@/utils/EmailFunctions';
+import EmailFunctions from '@/utils/EmailFunctions';
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -104,7 +104,12 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
 
   // Send notification to applicant //working on this function
   if (['opened', 'accepted', 'rejected'].includes(status)) {
-    sendApplicationStatus(user, emailBody); // moved previous code into EmailFunctions.js
+    try {
+      EmailFunctions.sendApplicationStatus(user, emailBody); // moved previous code into EmailFunctions.js
+    } catch (e) {
+      console.log('ERROR', e);
+    }
+
     try {
       user.notifications.push({
         text: `Your application was ${ctx.params.status}`,

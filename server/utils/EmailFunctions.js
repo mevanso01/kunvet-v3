@@ -17,12 +17,9 @@ export default {
           jobname: emailBody.jobName },
       );
     } catch (e) {
-      console.log(e);
-      return ApiResponse(
-        ErrorCode.InternalError,
-      );
+      Logger.error(e);
+      return ApiResponse(ErrorCode.InternalError);
     }
-
     return ApiResponse();
   },
   async sendApplicantInfo(mailer, templateObject) {
