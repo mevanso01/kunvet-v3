@@ -93,8 +93,8 @@
         <v-divider></v-divider>
         <div class="email_preferences">Recieve emails about new applicants </div>
          <v-switch color="red" class="switch_settings"></v-switch>
-        <div class="email_preferences">Recieve emails application status </div>
-         <v-switch v-model="user.preferences.applicationStatusEmails" color="red" class="switch_settings"></v-switch>
+        <div class="email_preferences">Recieve emails about application status </div>
+         <v-switch color="red" class="switch_settings"></v-switch>
         <div class="email_preferences">Recieve emails about job expiration </div> 
         <v-switch color="red" class="switch_settings"></v-switch>
         <div class="email_preferences">Recieve emails about newsletters</div> 
@@ -149,6 +149,7 @@
         oid: null,
         deleteOrgDialog: false,
         account_email: null,
+        preferences: null,
       };
     },
     components: {
@@ -176,6 +177,11 @@
               default_org
               org_list
               email
+              preferences {
+                getNewsletters
+                jobExpiredEmails
+                applicationStatusEmails
+              }
             }
           }`),
           variables: {
@@ -183,6 +189,8 @@
           },
         });
         this.account_email = res.email;
+        this.preferences = res.preferences;
+
         if (res.org_list && res.org_list[0] !== null) {
           this.orgList = res.org_list;
         }
