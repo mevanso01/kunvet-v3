@@ -48,6 +48,7 @@ export default {
   },
   async sendApplicantInfo(mailer, templateObject) {
     checkTemplateObject(templateObject); // verifies that the templateObject is sending all values
+    const mailer = new Mailer();
     try {
       await mailer.sendTemplate(
         templateObject.email,
