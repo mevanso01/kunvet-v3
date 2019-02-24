@@ -4,7 +4,7 @@ import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
 import Mailer from '@/utils/Mailer';
 import Files from '@/utils/Files';
-import sendApplicantInfo from '@/utils/EmailFunctions';
+import EmailFunctions from '@/utils/EmailFunctions';
 import Models from '../mongodb/Models';
 import Restrictions from './Restrictions';
 // GraphQL types
@@ -100,7 +100,7 @@ async function sendNewApplicationNotification(req, next) {
     locals: locals,
   };
 
-  sendApplicantInfo(mailer, templateObject);
+  EmailFunctions.sendApplicantInfo(mailer, templateObject);
   try {
     employer.notifications.push({
       text: `New applicant: ${user.firstname} ${user.lastname}`, // Important: change code in applicants.vue before removing
