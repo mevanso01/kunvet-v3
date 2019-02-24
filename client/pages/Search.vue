@@ -410,6 +410,7 @@ section.search {
               </div> -->
             </div>
           </div>
+          <ais-powered-by></ais-powered-by>
         </v-flex>
         <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
           <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please select different filters or a different location.</h3>
@@ -906,7 +907,15 @@ export default {
       }
     },
     async algoliaSearch() {
-      const requests = [{ params: { query: this.query, page: this.page }, indexName: 'jobs' }];
+      const coordinates = this.getCityCoordinates();
+      const requests = [{
+        params: {
+          query: this.query,
+          page: this.page,
+          aroundLatLng: `${coordinates.latitude}, ${coordinates.longitude}`,
+        },
+        indexName: 'jobs',
+      }];
       const results = await algoliaClient.search(requests);
       const res = results.results[0];
       // console.log(res);
