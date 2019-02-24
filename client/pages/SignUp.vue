@@ -383,6 +383,14 @@ export default {
   components: {
     SignupComponent,
   },
+  watch: {
+    $route(to) {
+      if (to.path === '/signup') {
+        this.chosenForm = '';
+        this.signupType = '';
+      }
+    },
+  },
   methods: {
     submit() {
       this.$refs.form.validate();
@@ -412,7 +420,8 @@ export default {
     chooseSignup(type) {
       this.signupType = type;
       this.chosenForm = 'signup';
-      this.$router.push(`/signup?type=${type}`);
+      // this.$router.push(`/signup?type=${type}`);
+      this.$router.push(`/signup/${type}`);
     },
     back() {
       this.chosenForm = '';
@@ -602,6 +611,9 @@ export default {
     console.log('Activated');
     if (this.$route.query.type) {
       this.signupType = this.$route.query.type;
+      this.chosenForm = 'signup';
+    } else if (this.stage) {
+      this.signupType = this.stage;
       this.chosenForm = 'signup';
     } else {
       this.chosenForm = '';
