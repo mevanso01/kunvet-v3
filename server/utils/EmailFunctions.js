@@ -20,6 +20,18 @@ function checkTemplateObject(templateObject) {
   if (!templateObject.locals) console.warn('Missing locals in templateObject.');
 }
 
+/*
+This is what the emailBody should look like.
+const emailBody = {
+    replyTo: employer.email,
+    fname: user.firstname,
+    name: application.name,
+    jobname: job.title,
+  };
+
+This helper function ensures that the right arguments are passed in.
+*/
+
 function checkEmailBody(emailBody) {
   if (!emailBody.replyTo) console.warn('Missing replyTo property in emailBody');
   if (!emailBody.fname) console.warn('Missing fname property in emailBody');
@@ -28,6 +40,17 @@ function checkEmailBody(emailBody) {
 }
 
 export default {
+  /*
+  This functions takes a user and an emailBody. The email body contains data
+  about the users name, the job title, the application name, and the employer email.
+  The emailBody looks like this.
+  const emailBody = {
+    replyTo: employer.email,
+    fname: user.firstname,
+    name: application.name,
+    jobname: job.title,
+  };
+  */
   async sendApplicationStatus(user, emailBody) {
     checkEmailBody(emailBody); // verifies that the emailBody is sending all values
     try {
@@ -46,7 +69,26 @@ export default {
     }
     return ApiResponse();
   },
-  async sendApplicantInfo(templateObject) {
+  /*
+  This function takes a templateObject and sends the email template.
+  locals is an object containing the details of the user which looks like this.
+  const locals = {
+    replyTo: user.email,
+    name: `${user.firstname} ${user.lastname}`,
+    fname: user.firstname,
+    jobname: job.title,
+    employername: employer.firstname,
+    email: user.email,
+    degree: degree,
+    school: req.args.record.school,
+    message: req.args.record.applicant_message,
+    trackingToken: req.args.record.tracking_token,
+    appId: results.record._id,
+    attachments: [
+    ],
+  };
+  */
+  sendApplicantInfo: async function (templateObject) {
     checkTemplateObject(templateObject); // verifies that the templateObject is sending all values
     try {
       const mailer = new Mailer();
