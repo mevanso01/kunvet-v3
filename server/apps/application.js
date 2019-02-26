@@ -25,7 +25,6 @@ import KoaRouter from 'koa-router';
 import ErrorCode from '#/ErrorCode';
 import ApiResponse from '@/utils/ApiResponse';
 import Models from '@/mongodb/Models';
-import Mailer from '@/utils/Mailer';
 import Data from '@/utils/Data';
 import EmailFunctions from '@/utils/EmailFunctions';
 
