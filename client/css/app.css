@@ -245,6 +245,9 @@ button:focus {
   padding-bottom: 8px;
 }
 /*  ---- Styles to globally override Vuetify ----  */
+.v-dialog {
+  max-width: 420px;
+}
 .container {
   padding-top: 80px;
 }

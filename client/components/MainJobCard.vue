@@ -27,7 +27,7 @@
       </v-flex>
     </v-layout>
     <v-divider class="jp-divider"></v-divider>
-    <router-link :to="'/job/'+jobId" class="jp-body">
+    <router-link :to="'/job/'+job._id" class="jp-body">
       <v-layout>
         <v-flex xs12 style="padding-top: 0px;">
           <div><h3 class="jp-title">
@@ -105,9 +105,9 @@ export default {
     };
   },
   computed: {
-    jobId() {
-      return this.job._id.$oid ? this.job._id.$oid : this.job._id;
-    },
+    // jobId() {
+    //   return this.job._id.$oid ? this.job._id.$oid : this.job._id;
+    // },
     computeIsLoggedOut() {
       return this.$store.state.acct === 0;
     },

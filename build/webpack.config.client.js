@@ -151,6 +151,7 @@ const wpconf = {
       contents: JSON.stringify(ErrorCodeInternal),
     }),
     new webpack.IgnorePlugin(/vertx/),
+    new webpack.HotModuleReplacementPlugin(),
     new FaviconsWebpackPlugin('./client/assets/favicon.png'),
     new CopyWebpackPlugin([
       {
@@ -198,6 +199,12 @@ const wpconf = {
     splitChunks: {
       chunks: 'all',
     },
+  },
+  devServer: {
+    open: true,
+    hot: true,
+    historyApiFallback: true,
+    overlay: true,
   },
 };
 

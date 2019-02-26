@@ -296,12 +296,11 @@
                     <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
                   </div>
                 </v-list>
-                <v-btn
-                  class="acct-btn"
+                <k-btn
                   @click="showFileModal = true"
                 >
                   Add Resume
-                </v-btn>
+                </k-btn>
               </v-flex>
               <v-flex xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
                 <account-header
@@ -329,12 +328,11 @@
                   </template>
                 </v-list>
                 <div>
-                  <v-btn
-                    class="acct-btn"
-                    @click.native.stop="createOrganizationModal.show = true"
+                  <k-btn
+                    @click="createOrganizationModal.show = true"
                   >
                     Create an Organization
-                  </v-btn>
+                  </k-btn>
                 </div>
               </v-flex>
             </v-layout>
@@ -351,11 +349,9 @@
                 </p>
                 <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/createjob">
-                    <v-btn class="acct-btn">
-                      Post Personal Jobs
-                    </v-btn>
-                  </router-link>
+                  <k-btn to="/createjob" autoSpin>
+                    Post Personal Jobs
+                  </k-btn>
                 </div>
               </v-flex>
             </v-layout>
@@ -537,12 +533,12 @@
             <v-dialog v-model="showJobToPostDialog">
               <v-card>
                 <v-card-title>
-                  <div class="headline">You have an unfinished job!</div>
+                  <div class="headline">You have an unfinished job! Would you like to continue posting it?</div>
                 </v-card-title>
                 <a @click="showJobToPostDialog = false" class="center" style="display: block; color: #616161 !important; margin-bottom: 12px;">continue later</a>
                 <div class="general-submit" @click="goToCreateJob">
                   <div class="general-submit-default">
-                    <span>CONTINUE EDITING MY JOB</span>
+                    <span>Continue Editing My Job</span>
                   </div>
                 </div>
               </v-card>
