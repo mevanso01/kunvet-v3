@@ -482,6 +482,7 @@ const AccountSchema = Mongoose.Schema({
       // enum: ['None', 'Monthy', 'Weekly', 'Daily',],
       default: 'All',
     },
+  },
   account_type: {
     type: String,
     enum: ['student', 'individual', 'business'],
