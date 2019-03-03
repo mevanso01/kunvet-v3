@@ -481,7 +481,7 @@ const AccountSchema = Mongoose.Schema({
       enum: ['All', 'Off'],
       // enum: ['None', 'Monthy', 'Weekly', 'Daily',],
       default: 'All',
-    }
+    },
   },
 });
 const AvailableFiltersSchema = Mongoose.Schema({

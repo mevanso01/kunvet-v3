@@ -94,9 +94,10 @@
         <div class="email_preferences">Recieve emails about new applicants </div>
          <v-switch color="red" class="switch_settings"></v-switch>
         <div class="email_preferences">Recieve emails about application status </div>
-         <v-switch color="red" class="switch_settings"></v-switch>
+         <v-switch v-model="preferences_bool" color="red" class="switch_settings"></v-switch>
+         <div class="email_preferences">{{preferences_bool}} and {{preferences.applicationStatusEmails}}</div>
         <div class="email_preferences">Recieve emails about job expiration </div> 
-        <v-switch color="red" class="switch_settings"></v-switch>
+        <v-switch color="red" class="switch_settings"></v-switch> 
         <div class="email_preferences">Recieve emails about newsletters</div> 
         <v-switch color="red" class="switch_settings"></v-switch>
         
@@ -150,6 +151,7 @@
         deleteOrgDialog: false,
         account_email: null,
         preferences: null,
+        preferences_bool: true,
       };
     },
     components: {
@@ -190,6 +192,22 @@
         });
         this.account_email = res.email;
         this.preferences = res.preferences;
+
+        //  TAKE A LOOK HERE PLS
+
+        if (res.preferences.applicationStatusEmails === 'All') {
+          this.preferences_bool = true;
+        } else {
+          this.preferences_bool = false;
+        }
+
+        if (this.preferences_bool === false) {
+          res.preferences.applicationStatusEmails = 'Off';
+          this.preferences.applicationStatusEmails = 'Off';
+        } else {
+          res.preferences.applicationStatusEmails = 'All';
+          this.preferences.applicationStatusEmails = 'All';
+        }
 
         if (res.org_list && res.org_list[0] !== null) {
           this.orgList = res.org_list;
