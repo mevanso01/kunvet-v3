@@ -465,7 +465,10 @@ const AccountSchema = Mongoose.Schema({
     required: true,
     default: false,
   },
-  preferences: {
+  account_type: {
+    type: String,
+    enum: ['student', 'individual', 'business'],
+    default: 'student',
   },
 });
 const AvailableFiltersSchema = Mongoose.Schema({

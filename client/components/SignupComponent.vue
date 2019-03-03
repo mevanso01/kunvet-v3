@@ -146,6 +146,7 @@ export default {
       const data = {
         email: this.email,
         pwd: this.password,
+        account_type: this.type,
       };
 
       if (this.accountTypeInfo.requireFullName) {

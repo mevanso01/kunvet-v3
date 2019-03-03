@@ -515,8 +515,9 @@ router.post('/register', async (ctx) => {
         email: email,
         firstname: req.fname,
         lastname: req.lname,
+        account_type: req.account_type,
         default_org: defaultOrg,
-        org_list: [defaultOrg],
+        org_list: defaultOrg ? [defaultOrg] : [],
       },
       req.pwd,
     );

@@ -913,6 +913,7 @@ export default {
       }];
       const results = await algoliaClient.search(requests);
       const res = results.results[0];
+      console.log('Algolia results', res);
       // console.log(res);
       // if (res.page === 0) {
       //   this.filteredJobs = res.hits;
@@ -962,7 +963,7 @@ export default {
       this.rawSearch();
     },
     rawSearch() {
-      if (process && process.env && process.env.NODE_ENV === 'development') {
+      if (!algoliaClient && process && process.env && process.env.NODE_ENV === 'development') {
         // Local DB
         this.$debug('Loading from local db for development purposes');
         this.findAndFilterJobs();
