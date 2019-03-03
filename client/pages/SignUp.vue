@@ -143,7 +143,7 @@
       </section>
 
       <section v-if="chosenForm === 'signup'">
-        <SignupComponent :type="signupType" style="max-width: 420px; margin: auto;"></SignupComponent>
+        <SignupComponent :type="signupType" @success="onSuccess" style="max-width: 420px; margin: auto;"></SignupComponent>
         <!-- <a style="text-align: center; margin: auto; display: block;" @click="chosenForm = ''">Choose a different kind of account</a> -->
       </section>
 
@@ -425,6 +425,13 @@ export default {
     },
     back() {
       this.chosenForm = '';
+    },
+    onSuccess() {
+      if (this.signupType === 'business') {
+        this.$router.push('/myorg');
+      } else {
+        this.$router.push('/account');
+      }
     },
     createIndividualAcct() {
       const headers = { emulateJSON: true };
