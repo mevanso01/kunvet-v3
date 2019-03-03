@@ -255,7 +255,8 @@ export default {
       const isTransparentPage = (this.$route.path !== '/' && this.$route.path.indexOf('/job/') !== -1) ||
         this.$route.path.indexOf('/appliedjobs') !== -1 ||
         this.$route.path.indexOf('/settings') !== -1 ||
-        this.$route.path === '/';
+        this.$route.path.indexOf('/myjobs') !== -1 ||
+        this.$route.path.indexOf('/savedjobs') !== -1;
       return !this.isAtTop || !isTransparentPage;
     },
     currentMenuItems() {
