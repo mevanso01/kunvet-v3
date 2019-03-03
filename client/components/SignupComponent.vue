@@ -9,11 +9,11 @@
   /* margin: 50px auto; */
   padding: 0;
   text-align: center;
-  width: 80%;
+  /* width: 80%; */
 }
 h1 {
   height: 24px;
-  text-align: left;
+  text-align: center;
   margin: 5px 0 25px 0;
   font-size: 24px;
   font-weight: bold;
@@ -108,7 +108,7 @@ export default {
         business: {
           header: 'Business Sign Up',
           color: '#ffb85a',
-          requireFullName: false,
+          requireFullName: true,
           requireBusinessName: true,
         },
         individual: {
