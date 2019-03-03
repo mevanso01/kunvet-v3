@@ -2,9 +2,10 @@
   "presets": [
     ["@babel/preset-env", {
       "modules": false,
-      "targets": {
-        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
-      }
+      "targets": [
+        "chrome 41",
+        "node 8"
+      ]
     }],
   ],
   "plugins": [
