@@ -91,16 +91,19 @@
 
         <h2>Email Preferences</h2>
         <v-divider></v-divider>
+        <!-- Leo: there still is no function to save these preferences? What you need is something
+          like <v-switch @change="saveFunctionHere()" v-model="preferences_bool"></v-switch>
+          or a save button -->
         <div class="email_preferences">Recieve emails about new applicants </div>
          <v-switch color="red" class="switch_settings"></v-switch>
         <div class="email_preferences">Recieve emails about application status </div>
          <v-switch v-model="preferences_bool" color="red" class="switch_settings"></v-switch>
          <div class="email_preferences">{{preferences_bool}} and {{preferences.applicationStatusEmails}}</div>
-        <div class="email_preferences">Recieve emails about job expiration </div> 
-        <v-switch color="red" class="switch_settings"></v-switch> 
-        <div class="email_preferences">Recieve emails about newsletters</div> 
+        <div class="email_preferences">Recieve emails about job expiration </div>
         <v-switch color="red" class="switch_settings"></v-switch>
-        
+        <div class="email_preferences">Recieve emails about newsletters</div>
+        <v-switch color="red" class="switch_settings"></v-switch>
+
         <br><br><br>
 
         <div v-if="orgname && oid">
@@ -200,15 +203,17 @@
         } else {
           this.preferences_bool = false;
         }
-
+        // Leo: this entire block can be moved into the block above
+        // Leo: also, if the names of the properties in this.preferences match the names of the account preferences,
+        // then the line 'this.preferences = res.preferences;' is sufficient and this block is useless
         if (this.preferences_bool === false) {
-          res.preferences.applicationStatusEmails = 'Off';
+          // Leo: there is no point in modifying the res object! It is only available in this function anyway
+          // res.preferences.applicationStatusEmails = 'Off'; // Leo: I've commented this out
           this.preferences.applicationStatusEmails = 'Off';
         } else {
-          res.preferences.applicationStatusEmails = 'All';
+          // res.preferences.applicationStatusEmails = 'All'; // Leo: I've commented this out
           this.preferences.applicationStatusEmails = 'All';
         }
-
         if (res.org_list && res.org_list[0] !== null) {
           this.orgList = res.org_list;
         }

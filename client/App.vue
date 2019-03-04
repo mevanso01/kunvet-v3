@@ -252,11 +252,9 @@ export default {
     navHasBg() {
       // change this to set to white bg based on scroll position as well
       // console.log(this.$route.path, this.$route.path.indexOf('/job/'));
+      // console.log(this.$route.path);
       const isTransparentPage = (this.$route.path !== '/' && this.$route.path.indexOf('/job/') !== -1) ||
-        this.$route.path.indexOf('/appliedjobs') !== -1 ||
-        this.$route.path.indexOf('/settings') !== -1 ||
-        this.$route.path.indexOf('/myjobs') !== -1 ||
-        this.$route.path.indexOf('/savedjobs') !== -1;
+        ['/', '/appliedjobs', '/settings', '/myjobs', '/savedjobs'].indexOf(this.$route.path) !== -1;
       return !this.isAtTop || !isTransparentPage;
     },
     currentMenuItems() {
