@@ -234,6 +234,7 @@ export default {
       numNotifications: 0,
       openSubitem: '',
       isAtTop: true,
+      acctType: '',
     };
   },
   components: {
@@ -258,7 +259,12 @@ export default {
       return !this.isAtTop || !isTransparentPage;
     },
     currentMenuItems() {
-      return this.newMenuItems[this.acct];
+      let idx = this.acct;
+      if (this.acct === 1 && this.acctType === 'individual') {
+        idx = 2; // same as business
+        console.log('TEST');
+      }
+      return this.newMenuItems[idx];
     },
   },
   methods: {
@@ -305,7 +311,7 @@ export default {
         this.profilePic = '';
       }
     },
-    l1() {
+    l1() { // Deprecated function
       this.acct = 1;
       this.$store.commit({
         type: 'setAcct',
@@ -315,7 +321,7 @@ export default {
       this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
       this.setProfilePic();
     },
-    l2() {
+    l2() { // Deprecated function
       this.acct = 2;
       this.$store.commit({
         type: 'setAcct',
@@ -433,6 +439,19 @@ export default {
   created() {
     EventBus.$on('logout', this.lo);
     EventBus.$on('login', this.setProfilePic);
+    EventBus.$on('signup', signupType => {
+      this.acct = signupType === 'business' ? 2 : 1; // 2 for business, 1 for individual and student
+      this.acctType = signupType;
+      this.$store.commit({
+        type: 'setAcct',
+        acct: this.acct,
+      });
+      this.$store.commit('go');
+      if (this.acct === 1) {
+        this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
+      }
+      this.setProfilePic();
+    });
     EventBus.$on('individual', this.l1);
     EventBus.$on('business', this.l2);
     EventBus.$on('firstSearch', this.fs1);
@@ -457,7 +476,9 @@ export default {
           this.l2();
         }
         if (res.userdata && res.userdata._id) {
+          console.log('data', res.userdata);
           this.setProfilePic(res.userdata._id, res.userdata.default_org);
+          this.acctType = res.userdata.account_type;
         }
       }
     });

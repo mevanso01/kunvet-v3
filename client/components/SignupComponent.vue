@@ -215,16 +215,10 @@ export default {
         this.commitUserdata(udata);
         this.commitID(udata._id);
 
-        if (udata.default_org === '' || !udata.default_org) {
-          // login individual
-          EventBus.$emit('individual');
-          // this.$router.push('/account');
-        } else {
-          // login business
+        if (udata.default_org) {
           this.commitBusinessID(udata.default_org);
-          EventBus.$emit('business');
-          // this.$router.push('/myorg');
         }
+        EventBus.$emit('signup', this.type);
         if (this.doRedirect) {
           // redirect to validate page
           this.$router.push('/validate');
