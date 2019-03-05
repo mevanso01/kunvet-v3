@@ -435,6 +435,7 @@
       //   return src;
       // },
       async openSideResume(item) {
+        this.updateApplicantStatus('opened', item._id);
         this.showSideResume = true;
         this.currentApplicant = item;
         this.currFileNum = 0;
