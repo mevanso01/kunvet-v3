@@ -248,6 +248,9 @@ button:focus {
 .v-dialog {
   max-width: 420px;
 }
+.v-dialog--active {
+  background-color: white !important;
+}
 .container {
   padding-top: 80px;
 }

@@ -201,9 +201,6 @@
     right: 0;
     margin: 0 auto;
   }
-  .v-dialog--active {
-    background-color: white;
-  }
 
   /*resume uploader*/
   .existing-container {
@@ -343,6 +340,7 @@
     }
     .other-dialog {
       max-width: 600px !important;
+      background-color: white !important;
     }
     .dialog-card {
       width: 100%;
@@ -383,15 +381,11 @@
     height: 56px;
     font-size: 18px;
     border-radius: 2px;
-    /*background-color: #EA596B !important;*/
     width: 80%;
     position: absolute;
     left: 0;
     right: 0;
     margin: 0 auto;
-  }
-  .v-dialog--active {
-    background-color: white;
   }
 
   /*resume uploader*/
@@ -745,7 +739,7 @@
     <!--</v-dialog>-->
 
 
-    <v-dialog class="other-dialog" color="white" style="background-color: white;" v-model="otherdialog"
+    <v-dialog class="other-dialog" style="background-color: white;" v-model="otherdialog"
               :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
       <v-card v-if="loginState === 'start'" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
         <div style="height: 40%">
@@ -763,7 +757,7 @@
         </button>
       </v-card>
 
-      <v-card flat class="dialog-card" v-else-if="loginState === 'login'">
+      <v-card flat class="dialog-card" v-else-if="loginState === 'login'" color="white">
         <div class="main-cont-small login-card" style="height: 100%; border: none !important; margin: 48px 0 !important;">
           <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
 
