@@ -205,16 +205,11 @@
             this.commitUserdata(udata);
             this.commitID(udata._id);
             this.loading = false; // dont forget to stop spinner
-            if (udata.default_org === '' || !udata.default_org) {
-              // login individual
-              EventBus.$emit('individual');
-              this.$emit('loggedIn');
-            } else {
-              // login business
+            if (udata.default_org) {
               this.commitBusinessID(udata.default_org);
-              EventBus.$emit('business');
-              this.$emit('loggedIn');
             }
+            EventBus.$emit('login', udata.account_type); // emit globally
+            this.$emit('loggedIn'); // emit from component
           }).catch((error) => {
             // Network error
             this.$error(error);

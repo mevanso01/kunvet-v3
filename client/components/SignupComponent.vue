@@ -218,7 +218,7 @@ export default {
         if (udata.default_org) {
           this.commitBusinessID(udata.default_org);
         }
-        EventBus.$emit('signup', this.type);
+        EventBus.$emit('login', udata.account_type); // should be same as this.type
         if (this.doRedirect) {
           // redirect to validate page
           this.$router.push('/validate');

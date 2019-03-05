@@ -311,9 +311,9 @@ export default {
         this.profilePic = '';
       }
     },
-    setAcctData(acct, signupType) {
+    setAcctData(acct, acctType) {
       this.acct = acct;
-      this.acctType = signupType;
+      this.acctType = acctType;
       this.$store.commit({
         type: 'setAcct',
         acct: this.acct,
@@ -322,7 +322,7 @@ export default {
       if (this.acct === 1) {
         this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
       }
-      this.setProfilePic()
+      this.setProfilePic();
     },
     goTo(route) {
       this.$router.push(route);
@@ -432,10 +432,9 @@ export default {
   },
   created() {
     EventBus.$on('logout', this.lo);
-    EventBus.$on('login', this.setProfilePic);
-    EventBus.$on('signup', signupType => {
-      const acct = signupType === 'business' ? 2 : 1; // 2 for business, 1 for individual and student
-      this.setAcctData(acct, signupType);
+    EventBus.$on('login', acctType => {
+      const acct = acctType === 'business' ? 2 : 1; // 2 for business, 1 for individual and student
+      this.setAcctData(acct, acctType);
     });
     // EventBus.$on('individual', this.l1);
     // EventBus.$on('business', this.l2);
@@ -453,13 +452,10 @@ export default {
       if (res.acct === 0) { // userDataProvider returns acct = 0 by default
         // user not logged in
         this.lo();
-      } else {
+      } else if (res.userdata && res.userdata._id) {
         // user logged in
-        if (res.userdata && res.userdata._id) {
-          console.log('data', res.userdata);
-          this.setProfilePic(res.userdata._id, res.userdata.default_org);
-          this.setAcctData(res.acct, res.userdata.account_type);
-        }
+        this.setProfilePic(res.userdata._id, res.userdata.default_org);
+        this.setAcctData(res.acct, res.userdata.account_type);
       }
     });
     window.addEventListener('scroll', this.handleScroll, { passive: true });
