@@ -283,9 +283,9 @@ section.search {
   }
 }
 .algoliaLogo {
-  width: 960px;
+  // width: 960px;
   margin: 0 auto;
-  padding: 4px 40px;
+  padding: 4px 40px 8px 40px;
 }
 </style>
 
@@ -315,7 +315,7 @@ section.search {
               class="search-params-field"
               solo
               hide-details
-              placeholder="part time engineer..."
+              :placeholder="searchPlaceholder"
               clearable
               v-model="query"
             ></v-text-field>
@@ -428,6 +428,7 @@ import DistanceHelper from '@/utils/DistanceHelper';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
+import searchTexts from '@/constants/search';
 import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
 import findIndex from 'lodash/findIndex';
@@ -498,6 +499,7 @@ export default {
       query: '',
       page: 0,
       displayedJobs: [[], [], []],
+      searchPlaceholder: '',
     };
   },
   apollo: {
@@ -569,6 +571,12 @@ export default {
     },
   },
   methods: {
+    // Randomly pick search search placeholder text
+    getSearchPlaceholderText() {
+      const textList = searchTexts.placeholderList;
+      const idx = Math.floor(Math.random() * textList.length);
+      return `Try: ${textList[idx]}`;
+    },
     augmentedResults(results) {
       return results;
     },
@@ -997,6 +1005,7 @@ export default {
       this.query = this.$route.query.q;
     }
     this.rawSearch();
+    this.searchPlaceholder = this.getSearchPlaceholderText();
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
     if (data) {

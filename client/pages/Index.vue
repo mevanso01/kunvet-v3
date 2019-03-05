@@ -205,23 +205,22 @@
 
 //-------------------------------Implemented main classes----------------------------------------------
 .main-container {
-    position: relative;
-    width: 100%;
-    max-width: 960px;
-    background-color: none;
-    /* border: 1px solid #eeeeee; */
-    box-sizing: border-box;
-    margin-top: -36px;
-    margin-left: auto;
-    margin-right: auto;
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  background-color: none;
+  /* border: 1px solid #eeeeee; */
+  box-sizing: border-box;
+  margin-top: -36px;
+  margin-left: auto;
+  margin-right: auto;
 }
-
-.top_container_style{
-    width: 100%; height: 60vh;
-    background:  #ff8f8f;
-    background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
-    background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
-    position: relative;
+.top_container_style {
+  width: 100%; height: 58vh; // was 60vh
+  background:  #ff8f8f;
+  background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
+  background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
+  position: relative;
 }
 
 .iconRedButton {
@@ -300,14 +299,6 @@
   bottom:0;
   margin-bottom: 50px;
 }
-
-.searchBar{
-  width:90%;
-  float:left;
-  background-color:white;
-  box-shadow: 0 10px 12px -4px #eaeaf9;
-  margin-right:10px;
-}
 .search_assist {
   margin-left:40%;
   color:grey;
@@ -342,43 +333,39 @@
   width: calc(100% + 8px);
   transform: translateX(-8px);
 }
-.search_hide{
+.search_hide {
   display:block;
 }
-.search_show{
+.search_show {
   display:none;
 }
-.search_button_text{
+.search_button_text {
   line-height: 56px;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
 }
-.artboard1_img{
+.artboard1_img {
   background-color: #ffe2e2;
   height: 400px;
   text-align: right;
 }
-
 .artboard2_img{
   z-index:0;
   height: 400px;
   background-color: #dbefff;
   text-align: left;
 }
-
-.artboard1_img_style{
+.artboard1_img_style {
   padding-right:50px;
   margin-top: 80px;
   max-width: 400px;
 }
-
-.artboard2_img_style{
+.artboard2_img_style {
   padding-left:50px;
   margin-top: 80px;
   max-width: 400px;
 }
-
-.hire_kunvet_container{
+.hire_kunvet_container {
   height: 320px; margin-top:30px;
   background:  #FFC371;
   background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
@@ -410,7 +397,7 @@
   background: linear-gradient(to right,  #a57fff , #2f89fc);
 }
 
-.loved_trusted_title{
+.loved_trusted_title {
   padding-top: 28px;
   padding-right:10%;
   color:white;
@@ -434,7 +421,6 @@
     width:100%;
     background-color: #ffe2e2;
 }
-
 @media (min-width: 821px) and (max-width: 960px) {
   .top_title_text {
     font-size: 3.3em;
@@ -454,12 +440,27 @@
     margin-bottom:50px;
   }
 }
+@media only screen and (min-width: 821px) {
+  .searchBar {
+    width:90%;
+    float:left;
+    background-color:white;
+    box-shadow: 0 10px 12px -4px #eaeaf9;
+    margin-right:10px;
+  }
+}
 @media only screen and (max-width: 820px) {
   .search_show {
     display:block;
   }
-  .search_hide{
+  .search_hide {
     display:none;
+  }
+  .searchBar .innerCol {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 12px -3px #eaeaf9; // was previously 0 10px 12px -4px #eaeaf9
   }
 }
 @media (min-width: 601px) and (max-width: 820px) {
@@ -486,8 +487,18 @@
     float: none;
   }
 }
+@media only screen and (min-width: 601px) {
+  .search_find_near {
+    height: 72px;
+    line-height: 72px;
+    padding-top: 0;
+  }
+}
 @media only screen and (max-width: 600px) {
-  .top_title_text{
+  .top_container_style {
+    height: 320px; // because vh doesnt work well on mobile browsers that change height
+  }
+  .top_title_text {
     font-size: 2.2em;
     line-height: 40px;
     text-align:left;
@@ -568,13 +579,6 @@
   //   height: 800px;
   // }
 }
-@media only screen and (min-width: 601px) {
-  .search_find_near {
-    height: 72px;
-    line-height: 72px;
-    padding-top: 0;
-  }
-}
 </style>
 
 <template>
@@ -586,24 +590,28 @@
   </div>
 
 <div class="main-container">
-  <div class="searchBar search_hide">
+  <div class="searchBar">
+    <div class="innerCol">
       <div class="search_find_near">
         <strong class="search_assist">Find</strong>
       </div>
-        <div class="search_text_field">
-          <v-text-field
-            solo
-            flat
-            hide-details
-            label="part time design intern"
-            clearable
-            v-model="query"
-          ></v-text-field>
-        </div>
+      <div class="search_text_field">
+        <v-text-field
+          solo
+          flat
+          hide-details
+          label="All jobs"
+          clearable
+          v-model="query"
+        ></v-text-field>
+      </div>
+    </div>
+    <div class="innerCol">
       <div class="search_find_near">
         <strong class="search_assist">Near</strong>
       </div>
-      <div class="search_select" v-bind:class="{ 'active': openSelectField === 'city' }">
+      <!-- v-bind:class="{ 'active': openSelectField === 'city' }" -->
+      <div class="search_select">
           <v-select
             label="School or City"
             item-text="name"
@@ -618,26 +626,27 @@
             >
           </v-select>
       </div>
+    </div>
   </div>
 
-  <div class="search_mobile search_show">
+  <!-- <div class="search_mobile search_hide search_show">
         <div class="search_find_near">
-          <strong class="search_assist" >Find</strong>
+          <strong class="search_assist">Find</strong>
         </div>
         <div class="search_text_field">
           <v-text-field
             solo
             flat
             hide-details
-            label="part time design intern"
+            label="All jobs"
             clearable
           ></v-text-field>
         </div>
-  </div>
+  </div> -->
 
-  <div class="search_mobile search_show">
+  <!-- <div class="search_mobile search_show">
         <div class="search_find_near">
-          <strong class="search_assist" >Near</strong>
+          <strong class="search_assist">Near</strong>
         </div>
         <div class="search_select" v-bind:class="{ 'active': openSelectField === 'city' }">
           <v-select
@@ -653,7 +662,7 @@
             >
           </v-select>
         </div>
-    </div>
+    </div> -->
 
     <router-link :to="searchDestination">
       <button v-ripple class="search_hide kunvet-search-btn med">
