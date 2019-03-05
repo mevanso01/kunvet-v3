@@ -311,24 +311,18 @@ export default {
         this.profilePic = '';
       }
     },
-    l1() { // Deprecated function
-      this.acct = 1;
+    setAcctData(acct, signupType) {
+      this.acct = acct;
+      this.acctType = signupType;
       this.$store.commit({
         type: 'setAcct',
-        acct: 1,
+        acct: this.acct,
       });
       this.$store.commit('go');
-      this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
-      this.setProfilePic();
-    },
-    l2() { // Deprecated function
-      this.acct = 2;
-      this.$store.commit({
-        type: 'setAcct',
-        acct: 2,
-      });
-      this.$store.commit('go');
-      this.setProfilePic();
+      if (this.acct === 1) {
+        this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
+      }
+      this.setProfilePic()
     },
     goTo(route) {
       this.$router.push(route);
@@ -440,20 +434,11 @@ export default {
     EventBus.$on('logout', this.lo);
     EventBus.$on('login', this.setProfilePic);
     EventBus.$on('signup', signupType => {
-      this.acct = signupType === 'business' ? 2 : 1; // 2 for business, 1 for individual and student
-      this.acctType = signupType;
-      this.$store.commit({
-        type: 'setAcct',
-        acct: this.acct,
-      });
-      this.$store.commit('go');
-      if (this.acct === 1) {
-        this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
-      }
-      this.setProfilePic();
+      const acct = signupType === 'business' ? 2 : 1; // 2 for business, 1 for individual and student
+      this.setAcctData(acct, signupType);
     });
-    EventBus.$on('individual', this.l1);
-    EventBus.$on('business', this.l2);
+    // EventBus.$on('individual', this.l1);
+    // EventBus.$on('business', this.l2);
     EventBus.$on('firstSearch', this.fs1);
     EventBus.$on('setNotifications', notifications => {
       const n = Array.isArray(notifications) ? notifications.length : 0;
@@ -470,15 +455,10 @@ export default {
         this.lo();
       } else {
         // user logged in
-        if (res.acct === 1) {
-          this.l1();
-        } else if (res.acct === 2) {
-          this.l2();
-        }
         if (res.userdata && res.userdata._id) {
           console.log('data', res.userdata);
           this.setProfilePic(res.userdata._id, res.userdata.default_org);
-          this.acctType = res.userdata.account_type;
+          this.setAcctData(res.acct, res.userdata.account_type);
         }
       }
     });
