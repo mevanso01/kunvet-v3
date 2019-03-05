@@ -1,5 +1,4 @@
-
-<style lang="scss">
+<style lang="scss" scoped>
 .promo-block {
   p {
     font-size: 1.2em;
@@ -61,67 +60,21 @@
 .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
   transform: translate3d(0,-28px,0) scale(.75);
 }
-
 .chip--select-multi {
   margin: 5px 5px 5px 0;
 }
-.firstSearch {
-  padding-top: 20vh !important;
-  padding-left: 64px;
-  padding-right: 64px;
-  position: relative;
-}
-
 .bottom-text{
   font-size:2em;
   color:#ef5350;
   z-index:12;
   bottom:550px;
 }
-
 .category{
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   border-left: 1px solid #d2d2d3;
   padding-left: 10px;
   height: 48px;
-}
-
-.firstSearch .fsSelect {
-  .v-input__slot {
-    height: 48px;
-    padding-left: 16px;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    z-index: 11;
-  }
-  .v-input__control::before,
-  .v-input__slot::before,
-  .v-input__slot::after {
-    display: none;
-  }
-  .v-input-group__input {
-    padding-left: 16px !important;
-  }
-  .v-input-group__input .v-input-group__selections {
-    padding-top: 2px;
-  }
-  .v-input__append-inner {
-    margin-right: 8px;
-  }
-  // label {
-  //   top: 9px;
-  //   left: 16px;
-  // }
-}
-.fsSelect-menu .v-list {
-  padding-top: 0;
-}
-.firstSearch h1 {
-  font-weight: 300;
-  font-size: 32px;
-  margin-bottom: 0;
-
 }
 .fs-select-cities.v-input {
   margin-top: 0;
@@ -140,41 +93,9 @@
 .fs-select-cities .v-input-group__input::before {
   display: none;
 }
-.small-thats-it, .large-thats-it {
-  background-color: #fafafa;
-}
-@media only screen and (max-width: 480px) {
-  .fs-select-positions {
-    display: none !important;
-  }
-}
-@media only screen and (min-width: 481px) {
-  .fs-select-cities,
-  .fs-select-positions {
-    width: 50%;
-    display: inline-block;
-  }
-  .fs-select-cities {
-    height: 100%;
-    width: 100%; /* use only when positions is not present */
-  }
-  .firstSearch .fsSelect .v-input-group__input {
-    padding-top: 3px;
-  }
-  .fs-select-cities .input-group__selections {
-    height: 40px !important;
-  }
-}
-
-
-.fs-select-positions {
-  width: 50%;
-  display: inline-block;
-}
-.fs-select-positions .v-input-group__selections {
-  height: 38px;
-  overflow: auto !important;
-}
+// .v-text-field.v-text-field--solo .v-input__control {
+//   min-height: 56px; // Doesnt work??
+// }
 .no-padding {
   padding: 0;
 }
@@ -209,7 +130,6 @@
 .bottom-row .skew-div p {
   margin: 0;
 }
-
 .bottom-row .skew-div::before {
   content: "";
   position: absolute;
@@ -225,9 +145,6 @@
 @media (min-width: 601px) {
   .search .flex {
     padding: 10px 15px;
-  }
-  .large-thats-it {
-    width: 100% !important;
   }
   .bottom-row {
     width: calc(100% - 128px);
@@ -354,8 +271,8 @@
   font-weight:bold;
   font-size:16px;
   outline: none !important;
-  margin-top:20px; 
-  margin-left:auto; 
+  margin-top:20px;
+  margin-left:auto;
   margin-right:10%;
 }
 
@@ -391,87 +308,78 @@
   box-shadow: 0 10px 12px -4px #eaeaf9;
   margin-right:10px;
 }
-
-.search_assist{
+.search_assist {
   margin-left:40%;
   color:grey;
   font-size:16px;
 }
-
-.search_text_field{
-  height: 58px;
+.search_text_field {
+  height: 72px;
   width: 36%;
-  outline:none !important;
-  background-color:white;
-  float:left;
-  margin-top:12px;}
-
-.search_select {
-  height: 58px;
-  width: 44%;
-  outline:none !important;
-  background-color:white;
-  float:left;
-  margin-top:12px;
+  outline: none !important;
+  background-color: white;
+  float: left;
+  padding-top: 12px; // (72px - 48px) / 2
 }
-
+.search_select {
+  height: 72px;
+  width: 44%;
+  outline: none !important;
+  background-color: white;
+  float: left;
+  padding-top: 12px; // (72px - 48px) / 2
+}
 .search_mobile {
   margin-left:10%;
   margin-right:10%;
   margin-bottom: 20px;
   box-shadow: 0 10px 12px -4px #eaeaf9;
 }
-
 .container-left {
   width: calc(100% + 8px);
 }
-
 .container-right {
   width: calc(100% + 8px);
-    transform: translateX(-8px);
+  transform: translateX(-8px);
 }
-
 .search_hide{
   display:block;
 }
-
 .search_show{
   display:none;
 }
-
 .search_button_text{
-  line-height: 56px; 
-  font-size: 20px; 
+  line-height: 56px;
+  font-size: 20px;
   font-family: 'Roboto', sans-serif;
 }
-
 .artboard1_img{
   background-color: #ffe2e2;
-  height: 400px; 
+  height: 400px;
   text-align: right;
 }
 
 .artboard2_img{
-  z-index:0; 
-  height: 400px; 
-  background-color: #dbefff; 
+  z-index:0;
+  height: 400px;
+  background-color: #dbefff;
   text-align: left;
 }
 
 .artboard1_img_style{
-  padding-right:50px; 
-  margin-top: 80px; 
+  padding-right:50px;
+  margin-top: 80px;
   max-width: 400px;
 }
 
 .artboard2_img_style{
-  padding-left:50px; 
-  margin-top: 80px; 
+  padding-left:50px;
+  margin-top: 80px;
   max-width: 400px;
 }
 
 .hire_kunvet_container{
-  height: 320px; margin-top:30px; 
+  height: 320px; margin-top:30px;
   background:  #FFC371;
   background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
   background: linear-gradient(to right,  #ff5f6d, #FFC371);
@@ -479,23 +387,23 @@
 }
 
 .hire_kunvet_title{
-  padding-top: 3%; 
+  padding-top: 3%;
   padding-left:10%;
   color:white;
   font-size:38px;
 }
 
 .hire_kunvet_text{
-  padding-top: 12px; 
-  margin-left:10%; 
-  color:white; 
-  font-size:18px; 
-  max-width: 400px; 
+  padding-top: 12px;
+  margin-left:10%;
+  color:white;
+  font-size:18px;
+  max-width: 400px;
   line-height: 26px;
 }
 
-.loved_trusted_container{
-  height: 320px; 
+.loved_trusted_container {
+  height: 320px;
   margin-top:30px;
   background:  #2f89fc;
   background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
@@ -503,195 +411,177 @@
 }
 
 .loved_trusted_title{
-  padding-top: 28px; 
+  padding-top: 28px;
   padding-right:10%;
   color:white;
-  font-size:38px; 
-  text-align:right;  
+  font-size:38px;
+  text-align:right;
 }
 
-.loved_trusted_text{
-  padding-top: 12px; 
-  color:white; 
-  font-size:18px; 
-  max-width:400px; 
-  padding-right: 10%; 
-  text-align:right; 
-  margin-left:auto; 
+.loved_trusted_text {
+  padding-top: 12px;
+  color: white;
+  font-size: 18px;
+  max-width: 450px;
+  padding-right: 10%;
+  text-align: right;
+  margin-left: auto;
   padding-left: 30px;
 }
 
 .artboard1_img_mobile{
-    height: 50vh; 
-    width:100%; 
+    height: 50vh;
+    width:100%;
     background-color: #ffe2e2;
 }
 
-@media (min-width: 601px) and (max-width: 960px) {
-  .top_title_text{
-    font-size: 3.5em;
+@media (min-width: 821px) and (max-width: 960px) {
+  .top_title_text {
+    font-size: 3.3em;
     text-align:left;
   }
-
-  .top_title_pos{
+  .top_title_text,
+  .main-container {
+    margin-left: 16px;
+    margin-right: 16px;
+    width: auto;
+  }
+  .searchBar {
+    width: calc(90% - 10px);
+  }
+  .top_title_pos {
     bottom:0;
     margin-bottom:50px;
   }
 }
-
 @media only screen and (max-width: 820px) {
-  .search_show{
+  .search_show {
     display:block;
   }
-  
   .search_hide{
     display:none;
   }
 }
-
 @media (min-width: 601px) and (max-width: 820px) {
-    .top_title_text{
+  .top_title_text {
     font-size: 2.8em;
     line-height: 40px;
     text-align:left;
   }
-
-  .top_title_pos{
+  .top_title_pos {
     margin-left:10%;
     width:80%;
     bottom:0;
     margin-bottom:50px;
   }
-
-  .main-container{
+  .main-container {
     margin-top:-36px;
   }
-
-  .search_find_near{
-    height: 56px;
-    line-height:36px;
-    padding-top:16px;
-    width: 20%;
+  .search_text_field {
+    width: auto;
+    float: none;
   }
-
-  .search_text_field{
-    height: 72px;
-    width:auto;
-    float:none;
-    padding-top:10px;
-  }
-
-    .search_select{
-    height: 72px;
-    width:auto;
-    float:none;
-    padding-top:10px;
+  .search_select {
+    width: auto;
+    float: none;
   }
 }
-
-@media only screen and (max-width: 601px) {
+@media only screen and (max-width: 600px) {
   .top_title_text{
     font-size: 2.2em;
     line-height: 40px;
     text-align:left;
   }
-
   .top_title_pos{
     margin-left:10%;
     width:80%;
     bottom:0;
     margin-bottom:20px;
   }
-
-  .main-container{
+  .main-container {
     margin-top:-28px;
   }
-
-  .search_find_near{
-    height: 56px;
-    line-height:16px;
-    padding-top:16px;
+  .search_find_near {
+    margin-top: 4px;
+    padding-top: 0;
+    height: 48px;
+    line-height: 48px;
     width: 20%;
   }
-
-  .search_text_field{
+  .search_text_field,
+  .search_select {
     height: 56px;
-    width:auto;
-    float:none;
-    margin-top:0px;
+    width: auto;
+    float: none;
+    padding-top: 4px;
   }
-
-    .search_select{
-    height: 56px;
-    width:auto;
-    float:none;
-    margin-top:0px;
-  }
-
-    .loved_trusted_title{
+  .loved_trusted_title {
     padding-top: 3%;
     padding-left:8%;
-    font-size:34px;
+    font-size: 34px;
     text-align:left;
   }
 
-  .loved_trusted_text{
-    width: 80%; 
+  .loved_trusted_text {
+    width: 80%;
     padding-left:8%;
     font-size:16px;
     line-height: 26px;
-    text-align:left; 
+    text-align:left;
     margin-left:0;
-    padding-right:0; 
+    padding-right:0;
   }
-
-  .hire_kunvet_title{
+  .hire_kunvet_title {
     padding-top:3%;
     padding-left:8%;
     font-size:34px;
   }
-
-  .hire_kunvet_text{
-    width: 80%; 
-    margin-left:8%; 
+  .hire_kunvet_text {
+    width: 80%;
+    margin-left:8%;
     font-size:16px;
     line-height: 26px;
   }
-
   .loved_trusted_container{
-    height: 280px; 
-    width:85%; 
+    height: 310px;
+    width: 90%;
+    margin: auto;
+    transform: translate(0px, -80px);
+  }
+  .hire_kunvet_container {
+    height: 280px;
+    width: 90%;
     margin:auto;
     transform: translate(0px, -80px);
   }
-  
-  .hire_kunvet_container{
-    height: 280px; 
-    width:85%; 
-    margin:auto;
-    transform: translate(0px, -80px);
-  }
-
-  .postAJob{
-    margin-top:20px; 
+  .postAJob {
+    margin-top:20px;
     margin-left:8%;
   }
-
   .postAJob2{
-     margin-top:20px; 
+     margin-top:20px;
      margin-left:8%;
   }
-
+  // .row-1, .row-2 {
+  //   display: block;
+  //   position: relative;
+  //   height: 800px;
+  // }
 }
-
-
+@media only screen and (min-width: 601px) {
+  .search_find_near {
+    height: 72px;
+    line-height: 72px;
+    padding-top: 0;
+  }
+}
 </style>
 
 <template>
   <v-container fluid class="pa-0">
   <div class="top_container_style">
     <div class="top_title_pos">
-     <h1 class="top_title_text">Latest Opportunities Near Your College.</h1>
+     <h1 class="top_title_text">Latest Opportunities Near Your School</h1> <!-- Changed from "College" by L.V. -->
     </div>
   </div>
 
@@ -777,11 +667,10 @@
         </span>
       </button>
     </router-link>
-
   </div>
 
-      <div style="width:100%; height:150px;">
-      </div>
+    <div style="width:100%; height:120px;"></div>
+    <div style="width:100%; height:30px;" class="mobile-hide"></div>
 
     <div class="mobile-show">
       <div class="artboard1_img_mobile">
@@ -790,13 +679,10 @@
 
       <div class="hire_kunvet_container">
         <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
-        <div class="hire_kunvet_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+        <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free!</div>
         <router-link to="/createjob">
           <button v-ripple class="postAJob">Post a Job</button>
         </router-link>
-      </div>
-
-      <div style="width:100%; height:150px;">
       </div>
 
       <div style="height: 50vh; width:100%; background-color: #dbefff;">
@@ -805,14 +691,14 @@
 
       <div class="loved_trusted_container">
         <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
-        <div class="loved_trusted_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+        <div class="loved_trusted_text">Kunvet is used by hundreds of students and local businesses. Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
         <router-link to="/createjob">
           <button v-ripple class="postAJob2">Post a Job</button>
         </router-link>
       </div>
     </div>
 
-    <div id="promo" class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
+    <div class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
         <v-layout row wrap>
           <v-flex xs12 sm6>
             <div class="container-left artboard1_img">
@@ -823,7 +709,7 @@
           <v-flex xs12 sm6>
             <div class="container-right hire_kunvet_container">
                 <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
-                <div class="hire_kunvet_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
+                <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free!</div>
                 <router-link to="/createjob">
                   <button v-ripple class="postAJob">Post a Job</button>
                 </router-link>
@@ -831,29 +717,28 @@
           </v-flex>
         </v-layout>
 
-      <div style="width:100%; height:150px;">
-      </div>
+        <!-- Some padding -->
+        <div style="width:100%; height:150px;"></div>
+
         <v-layout row wrap>
           <v-flex xs12 sm6 style="z-index:5;">
             <div class="container-left loved_trusted_container">
-
-                <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
-                <div class="loved_trusted_text">Hiring on Kunvet is so simple and easy to use. Simply create an account, type in information about your job and hit post!</div>
-                <router-link to="/createjob">
-                  <button v-ripple class="postAJob2">Post a Job</button>
-                </router-link>
-              </div>
-            </v-flex>
-
+              <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
+              <div class="loved_trusted_text">Kunvet is used by hundreds of students and local businesses. Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
+              <router-link to="/createjob">
+                <button v-ripple class="postAJob2">Post a Job</button>
+              </router-link>
+            </div>
+          </v-flex>
           <v-flex xs12 sm6>
             <div class="container-right artboard2_img">
               <img src="@/assets/artboard2.png" width="100%" class="artboard2_img_style"/>
             </div>
           </v-flex>
-
         </v-layout>
-          <div style="width:100%; height:150px;">
-        </div>
+
+        <!-- Some padding -->
+        <div style="width:100%; height:150px;"></div>
     </div>
 
 
