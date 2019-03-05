@@ -136,7 +136,12 @@ const wpconf = {
   plugins: [
     new HappyPack({
       loaders: [
-        'babel-loader?cacheDirectory',
+        {
+          loader: 'babel-loader',
+          options: {
+            babelrc: true,
+          },
+        },
       ],
     }),
     new webpack.DefinePlugin({
