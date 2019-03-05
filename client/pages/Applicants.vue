@@ -533,7 +533,7 @@
             applicantId = this.dialogs.currentApplicant._id;
           }
           await axios.post(`/application/${applicantId}/setStatus/${newStatus}`);
-          await this.updateApplicantViaQuery(applicantId);
+          // await this.updateApplicantViaQuery(applicantId);
           const { applicants } = this;
           for (let i = 0; i < applicants.length; ++i) {
             if (applicants[i]._id === applicantId) {
