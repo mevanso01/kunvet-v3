@@ -262,7 +262,6 @@ export default {
       let idx = this.acct;
       if (this.acct === 1 && this.acctType === 'individual') {
         idx = 2; // same as business
-        console.log('TEST');
       }
       return this.newMenuItems[idx];
     },

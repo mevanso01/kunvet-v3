@@ -264,13 +264,13 @@
             <v-divider class="acct-divider" />
 
             <v-layout row wrap>
-              <v-flex xs12 sm6 md5 class="padding-sm-right">
+              <v-flex v-if="showResumeSection" xs12 sm6 md5 class="padding-sm-right">
                 <account-header
                   :svg="svgs.resume"
                   :text="'My Resumes'"
                 />
                 <p v-if="!userdata.resumes || userdata.resumes.length === 0">
-                  Create a kunvet resume or upload your own. Use it to apply for any jobs on kunvet.
+                  Upload your resume or cover letter. Use it to apply for any jobs on Kunvet.
                 </p>
                 <v-list two-line class="acct-list" v-else>
                   <div v-for="(resume, index) in userdata.resumes" :key="index">
@@ -301,6 +301,23 @@
                 >
                   Add Resume
                 </k-btn>
+              </v-flex>
+              <v-flex v-else xs12 sm6 md5 class="padding-sm-left">
+                <account-header
+                  :svg="svgs.suitcase"
+                  :text="'Personal Jobs & Applicants'"
+                />
+                <p v-if="doesNotHaveJobs">
+                  Personal jobs are jobs that you offer as an individual.
+                  If you are posting on behalf of a business,
+                  please create an organization.
+                </p>
+                <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
+                <div>
+                  <k-btn to="/createjob" autoSpin>
+                    Post Personal Jobs
+                  </k-btn>
+                </div>
               </v-flex>
               <v-flex xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
                 <account-header
@@ -336,7 +353,7 @@
                 </div>
               </v-flex>
             </v-layout>
-            <v-layout row wrap>
+            <v-layout row wrap v-if="showResumeSection">
               <v-flex xs12 sm6 offset-sm6 md5 offset-md7 class="right-account-column padding-sm-left">
                 <account-header
                   :svg="svgs.suitcase"
@@ -345,7 +362,7 @@
                 <p v-if="doesNotHaveJobs">
                   Personal jobs are jobs that you offer as an individual.
                   If you are posting on behalf of a business,
-                  please create an organization from the menu bar.
+                  please create an organization.
                 </p>
                 <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
                 <div>
@@ -476,10 +493,10 @@
                 <v-dialog v-model="createOrganizationModal.show">
                   <v-card>
                     <v-card-title class="headline">
-                      Create organization / business profile
+                      Create business / organization profile
                     </v-card-title>
                     <v-card-text>
-                      <v-text-field
+                      <v-text-field v-show="!loading"
                         v-model="createOrganizationModal.organizationName"
                         style="padding: 0 2px;"
                         name="edit-modal-input"
@@ -487,15 +504,13 @@
                         single-line
                         placeholder="Name of business or organization"
                       />
+                      <template v-if="loading">
+                        <v-progress-circular indeterminate :size="30" color="primary" class="pa-3" style="display: block; margin: auto;"></v-progress-circular>
+                      </template>
                     </v-card-text>
                     <v-card-actions>
-                      <template v-if="loading">
-                        <v-progress-circular indeterminate :size="30" color="primary" class="pa-3"></v-progress-circular>
-                      </template>
-                      <template v-else>
-                        <v-btn flat="flat" @click.native="createOrganization">Continue</v-btn>
-                        <v-btn flat="flat" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
-                      </template>
+                      <v-btn flat="flat" :disabled="!createOrganizationModal.organizationName || loading" @click.native="createOrganization">Continue</v-btn>
+                      <v-btn flat="flat" style="text-align: right;" :disabled="loading" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -671,6 +686,10 @@
         return {
           maxWidth: `${degreeSelectMaxWidths[degreeStringToDb(degree)]}px`,
         };
+      },
+      showResumeSection() {
+        return !this.userdata || this.userdata.account_type === 'student' ||
+          (this.userdata.resumes && this.userdata.resumes.length > 0);
       },
     },
     methods: {
@@ -950,6 +969,7 @@
                     filename
                     resumeid
                   }
+                  account_type
               }
             }`),
             variables: {
@@ -1029,6 +1049,7 @@
                           filename
                           resumeid
                         }
+                        account_type
                     }
                   }`),
                   variables: {
@@ -1061,7 +1082,7 @@
               name: organizationName,
             });
             // EventBus.$emit('new_org', { name: organizationName, _id: recordId });
-            this.switchToOrg(recordId);
+            this.switchToOrg(recordId, true);
           } catch (e) {
             this.$error(e);
             this.loading = false;
@@ -1125,6 +1146,7 @@
                   resumeid
                 }
                 email_verified
+                account_type
             }
           }`),
           variables: {
@@ -1142,6 +1164,7 @@
           this.userdata.profile_pic = res.profile_pic;
           this.userdata.default_org = res.default_org;
           this.userdata.resumes = res.resumes.concat();
+          this.userdata.account_type = res.account_type;
           this.commitUserdata();
           if (res.org_list) {
             this.populateOrgList(res.org_list);
@@ -1151,16 +1174,18 @@
           this.$error(error);
         });
       },
-      switchToOrg(id) {
+      switchToOrg(id, dontUpdate = false) {
         this.$store.commit({
           type: 'keepBdata',
           bdata: null,
         });
         this.userdata.default_org = id;
-        this.updateAccount();
+        if (!dontUpdate) {
+          this.updateAccount();
+        }
         this.$store.commit({ type: 'setDefaultOrg', id });
         this.$store.commit({ type: 'setBusinessID', id });
-        EventBus.$emit('business');
+        EventBus.$emit('login', 'business');
         this.$router.push('/myorg');
       },
       resendEmail() {

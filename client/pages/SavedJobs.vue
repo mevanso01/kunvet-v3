@@ -26,17 +26,13 @@
         </span>
       </div>
     </div>
-    <div v-if="counter < 1">
-      <p style="text-align: center;">
-        You haven't saved any job yet.
-        <router-link to="/" style="font-weight: bold;">
-          Click Here
-        </router-link>
-         to browse the jobs listing!
-      </p>
-    </div>
-
-    <div>
+    <div class="main-cont-large">
+      <div v-if="counter < 1">
+        <p style="text-align: center;">
+          You haven't saved any job yet. You can save jobs for later by clicking or tapping the bookmark icon in the top right corner of the job.<br>
+          <router-link to="/" style="font-weight: bold;">Click here</router-link> to browse the jobs available.
+        </p>
+      </div>
       <v-layout style="padding-bottom: 32px;">
         <v-flex xs12 class="no-padding">
           <div v-for="job in findJobs" :key="job._id">

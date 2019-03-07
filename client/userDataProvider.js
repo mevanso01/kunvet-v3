@@ -63,13 +63,13 @@ function commitUserdata(udata) {
   Store.commit({
     type: 'keepUserdata',
     userdata: udata,
+    updateLastFetched: true,
   });
 }
 
 // Returns acct, uid, and userdata
 function getUserDataFromLS() {
-  var ret = {};
-  // console.log(Store.state.userID, Store);
+  var ret = null;
   if (Store.state.userID && Store.state.userdata && Store.state.acct) {
     // if store is available and already in store
     ret = {
@@ -82,6 +82,14 @@ function getUserDataFromLS() {
 }
 
 async function getUserData() {
+  // Try to get data from local storage if it's been recently fetched.
+  // Time difference is 10 minutes (600000ms)
+  if (Store.state.udataLastFetched && Store.state.udataLastFetched - Date.now() <= 600000) {
+    const lsData = getUserDataFromLS();
+    if (lsData) {
+      return lsData;
+    }
+  }
   const res = await axios.get('auth/status');
   if (res.data && res.data.success && res.data.status) {
     // process userdata, if needed
