@@ -196,7 +196,7 @@
                 <v-flex xs5 sm5  style="padding: 0px">
                   <p>Status</p>
                   <h2 style="color: grey">Expired</h2>
-                  <k-btn color="grey" small>
+                  <k-btn color="grey" small @click="repostJob(job._id)">
                     Re-post
                   </k-btn>
                 </v-flex>
