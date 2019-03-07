@@ -205,10 +205,15 @@
             this.commitUserdata(udata);
             this.commitID(udata._id);
             this.loading = false; // dont forget to stop spinner
+            let acctType = udata.account_type;
             if (udata.default_org) {
               this.commitBusinessID(udata.default_org);
             }
-            EventBus.$emit('login', udata.account_type); // emit globally
+            if (acctType === 'business' && !udata.default_org) {
+              // TODO: create better solution for business accounts that dont have an org
+              acctType = 'individual';
+            }
+            EventBus.$emit('login', acctType); // emit globally
             this.$emit('loggedIn'); // emit from component
           }).catch((error) => {
             // Network error

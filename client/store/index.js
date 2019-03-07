@@ -67,7 +67,13 @@ const Store = new Vuex.Store({
       state.selectedShifts = payload.sShifts;
     },
     keepUserdata(state, payload) {
-      state.userdata = payload.userdata;
+      if (!state.userdata) {
+        state.userdata = payload.userdata;
+      } else {
+        for (const key of Object.keys(payload.userdata)) {
+          state.userdata[key] = payload.userdata[key];
+        }
+      }
       state.newUser = false;
       if (payload.updateLastFetched) {
         state.udataLastFetched = Date.now();

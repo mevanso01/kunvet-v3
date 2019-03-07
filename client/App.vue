@@ -51,7 +51,7 @@
     <!-- mobile menu icon -->
     <div class="mobile-show mobile-navbar">
       <div class="header-icon-container" :class="{ 'white-bg': navHasBg }" style="z-index: 100;">
-        <div style="padding: 12px 0 0 24px; ">
+        <div style="padding: 12px 0 0 21px;">
           <router-link to="/search">
             <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
             <img v-else src="./assets/logo/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
@@ -68,7 +68,7 @@
     <div id="d-menu" class="d-menu mobile-show" v-show="drawer">
       <div class="d-menu-inner">
         <div v-if="acct > 0" class="d-menu-item idx-0" @click="goToAccount()">
-          My account
+          {{ usersName || 'My account' }}
           <p style="font-size: 16px; margin: 0; color: white; font-weight: normal">Edit Profile</p>
         </div>
         <div v-for="(item, idx) in dmenuItems[acct]" style="background-color: #fff">
@@ -235,6 +235,7 @@ export default {
       openSubitem: '',
       isAtTop: true,
       acctType: '',
+      usersName: '',
     };
   },
   components: {
@@ -286,6 +287,7 @@ export default {
     },
     lo() {
       this.acct = 0;
+      this.usersName = '';
       this.$store.commit({ type: 'logout' });
       this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
     },
@@ -317,11 +319,17 @@ export default {
         type: 'setAcct',
         acct: this.acct,
       });
-      this.$store.commit('go');
+      // this.$store.commit('go'); // Firstsearch no longer used
       if (this.acct === 1) {
         this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
       }
       this.setProfilePic();
+      if (this.$store.state.userdata && this.$store.state.userdata.firstname && this.$store.state.userdata.lastname) {
+        const name = `${this.$store.state.userdata.firstname} ${this.$store.state.userdata.lastname}`;
+        if (name.length < 30 && name.length > 2) {
+          this.usersName = name;
+        }
+      }
     },
     goTo(route) {
       this.$router.push(route);
@@ -341,6 +349,7 @@ export default {
           this.$router.push('/account');
           break;
       }
+      this.drawer = false;
     },
     getNumNotifications() {
       if (this.acct === 0 || !this.$store.state.userID) {
@@ -432,6 +441,9 @@ export default {
   created() {
     EventBus.$on('logout', this.lo);
     EventBus.$on('login', acctType => {
+      if (acctType === 'update' && this.acctType) { // special case
+        this.setAcctData(this.acct, this.acctType);
+      }
       const acct = acctType === 'business' ? 2 : 1; // 2 for business, 1 for individual and student
       this.setAcctData(acct, acctType);
     });
@@ -454,7 +466,12 @@ export default {
       } else if (res.userdata && res.userdata._id) {
         // user logged in
         this.setProfilePic(res.userdata._id, res.userdata.default_org);
-        this.setAcctData(res.acct, res.userdata.account_type);
+        let acctType = res.userdata.account_type;
+        if (acctType === 'business' && !res.userdata.default_org) {
+          // TODO: create better solution for business accounts that dont have an org
+          acctType = 'individual';
+        }
+        this.setAcctData(res.acct, acctType);
       }
     });
     window.addEventListener('scroll', this.handleScroll, { passive: true });

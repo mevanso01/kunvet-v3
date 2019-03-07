@@ -1025,6 +1025,7 @@
                 record: {
                   org_list: newOrgList,
                   default_org: recordId,
+                  account_type: 'business',
                 },
               },
               refetchQueries: [
@@ -1081,7 +1082,9 @@
               _id: recordId,
               name: organizationName,
             });
+            this.userdata.account_type = 'business';
             // EventBus.$emit('new_org', { name: organizationName, _id: recordId });
+            this.commitUserdata();
             this.switchToOrg(recordId, true);
           } catch (e) {
             this.$error(e);

@@ -1,8 +1,7 @@
 /* styles for job post cards - used in search, saved jobs, and applied jobs */
 /* jp stands for job post */
 .jp-card {
-
-  height: 370px;
+  height: 375px;
   float: left;
   overflow: hidden;
   width: 100%; // set to 50% on desktop
@@ -50,8 +49,7 @@
     transform: translateY(-1px);
   }
   .jp-img-cont {
-    padding-top: 16px;
-    padding-left: 0;
+    padding: 12px 0 0 0;
     img {
       max-width: 120px;
       max-height: 120px;

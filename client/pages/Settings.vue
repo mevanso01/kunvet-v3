@@ -94,15 +94,21 @@
         <!-- Leo: there still is no function to save these preferences? What you need is something
           like <v-switch @change="saveFunctionHere()" v-model="preferences_bool"></v-switch>
           or a save button -->
-        <div class="email_preferences">Recieve emails about new applicants </div>
-         <v-switch color="red" class="switch_settings"></v-switch>
-        <div class="email_preferences">Recieve emails about application status </div>
-         <v-switch v-model="preferences_bool" color="red" class="switch_settings"></v-switch>
-         <div class="email_preferences">{{preferences_bool}} and {{preferences.applicationStatusEmails}}</div>
-        <div class="email_preferences">Recieve emails about job expiration </div>
-        <v-switch color="red" class="switch_settings"></v-switch>
-        <div class="email_preferences">Recieve emails about newsletters</div>
-        <v-switch color="red" class="switch_settings"></v-switch>
+        <div v-if="preferences">
+          <div class="email_preferences">Recieve emails about new applicants</div>
+          <v-switch color="red" class="switch_settings"></v-switch>
+
+          <div class="email_preferences">Recieve emails about application status</div>
+          <v-switch v-model="preferences_bool" color="red" class="switch_settings"></v-switch>
+
+          <div class="email_preferences">{{preferences_bool}} and {{preferences.applicationStatusEmails}}</div>
+
+          <div class="email_preferences">Recieve emails about job expiration</div>
+          <v-switch color="red" class="switch_settings"></v-switch>
+
+          <div class="email_preferences">Recieve emails about newsletters</div>
+          <v-switch color="red" class="switch_settings"></v-switch>
+        </div>
 
         <br><br><br>
 
@@ -305,6 +311,7 @@
             record: {
               org_list: NewOrgList,
               default_org: null,
+              account_type: 'individual',
             },
           },
           refetchQueries: [
@@ -355,7 +362,15 @@
         }).catch((error) => {
           this.$error(error);
         });
-        EventBus.$emit('individual');
+        this.$store.commit({
+          type: 'keepUserdata',
+          userdata: {
+            org_list: NewOrgList,
+            default_org: null,
+            account_type: 'individual',
+          },
+        });
+        EventBus.$emit('login', 'individual');
         this.$router.push('/');
       },
       async getOrgByID(oid) {

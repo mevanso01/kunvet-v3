@@ -432,9 +432,6 @@
     margin-right: 16px;
     width: auto;
   }
-  .searchBar {
-    width: calc(90% - 10px);
-  }
   .top_title_pos {
     bottom:0;
     margin-bottom:50px;
@@ -442,7 +439,8 @@
 }
 @media only screen and (min-width: 821px) {
   .searchBar {
-    width:90%;
+    width: 89%;
+    width: calc(90% - 10px);
     float:left;
     background-color:white;
     box-shadow: 0 10px 12px -4px #eaeaf9;
