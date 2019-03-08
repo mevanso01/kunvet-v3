@@ -27,13 +27,25 @@
             <img v-if="navHasBg" class="nav-img notranslate" src="./assets/navbar/bell4_red.svg"></img>
             <img v-else class="nav-img notranslate" src="./assets/navbar/bell4_white.svg"></img>
             <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>
-            <!-- <div class="nav-text" style="color:#818181; text-transform: none;">Notifications</div> -->
           </v-btn>
           <Notifications isNavbar />
         </v-menu>
-        <v-btn flat @click="goToAccount();" class="white--text" style="min-width: 64px; background-color: inherit;">
+        <v-menu fixed offset-y left>
+          <v-btn flat slot="activator" class="white--text" style="min-width: 64px; background-color: inherit;">
+            <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
+          </v-btn>
+          <v-list dense class="main-navbar-dropdown-list">
+            <v-list-tile @click="goToAccount()">
+              <p>View Account</p>
+            </v-list-tile>
+            <v-list-tile @click="logout()">
+              <p>Logout</p>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+        <!-- <v-btn flat @click="goToAccount();" class="white--text" style="min-width: 64px; background-color: inherit;">
           <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
-        </v-btn>
+        </v-btn> -->
       </v-toolbar-items>
       <v-toolbar-items v-else>
         <!-- :to="item.href" -->
@@ -292,7 +304,7 @@ export default {
       this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
     },
     logout() {
-      EventBus.$emit('logout');
+      EventBus.$emit('logout'); // triggers lo() function
       this.$store.commit({ type: 'resetState' });
       axios.get('/auth/logout').then(() => {
       }, (error) => {

@@ -342,8 +342,8 @@ section.search {
         </div>
       </div> -->
       <v-layout row wrap>
-        <div v-if="loadingJobs" style="width: 100%; height: 60px;">
-          <h3 style="text-align: center; margin-top: 25px;">Loading jobs...</h3>
+        <div v-if="loadingJobs" style="width: 100%;">
+          <h3 style="text-align: center; margin-top: 25px; margin-bottom: 25px;">Loading jobs...</h3>
         </div>
         <v-flex xs12 class="no-padding">
           <div v-if="displayedJobs[0].length > 0" style="clear: both;">
@@ -405,7 +405,7 @@ section.search {
           </div>
         </v-flex>
         <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
-          <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please select different filters or a different location.</h3>
+          <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please type in a different query or select a different location.</h3>
         </div>
         <div class="algoliaLogo">
           <ais-powered-by></ais-powered-by>

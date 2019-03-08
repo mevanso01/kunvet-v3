@@ -176,6 +176,10 @@ button:focus {
 .main-navbar .nav-items .v-btn > .v-btn__content {
   height: 64px;
 }
+.main-navbar-dropdown-list p {
+  font-size: 14px;
+  margin-bottom: 0;
+}
 .mobile-navbar > .header-icon-container {
   position: fixed;
   height: 56px;
