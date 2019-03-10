@@ -71,10 +71,10 @@
   >
     <!--class="spinner-overlay" :class="{ 'working': working }"-->
     <div style="position: relative;">
-      <span class="k-btn--text" :class="{ 'working': showSpinner }">
+      <span class="k-btn--text" :class="{ 'working': working }" :style="textStyle">
         <slot></slot>
       </span>
-      <v-progress-circular v-if="showSpinner" class="k-btn-spinner" indeterminate></v-progress-circular>
+      <v-progress-circular v-if="working" class="k-btn-spinner" indeterminate></v-progress-circular>
     </div>
   </div>
 </template>
@@ -118,10 +118,13 @@ export default {
       type: Boolean,
       default: false,
     },
+    small: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      autoSpinWorking: false,
     };
   },
   methods: {
@@ -130,12 +133,7 @@ export default {
         return;
       }
       if (this.autoSpin) {
-        this.autoSpinWorking = true;
-        setTimeout(() => {
-          if (this && this.autoSpinWorking) {
-            this.autoSpinWorking = false; // turn off just in case component does not re-render
-          }
-        }, 250);
+        this.working = true;
       }
       if (this.to) {
         this.$router.push(this.to);
@@ -144,14 +142,19 @@ export default {
     },
   },
   computed: {
-    showSpinner() {
-      return this.working || this.autoSpinWorking;
-    },
     buttonStyle() {
       return {
         background: this.outline ? 'transparent' : this.color,
         color: this.darkText ? '#333' : '#fff',
         'border-color': this.outline ? this.color : 'none',
+        'height': this.small ? '25px' : '56px',
+        'line-height': this.small ? '25px' : '56px',
+      };
+    },
+    textStyle() {
+      return {
+        'font-size': this.small ? '12px' : '16px',
+        'padding': this.small ? '0 16px' : '0 24px',
       };
     },
   },
