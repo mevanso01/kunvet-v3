@@ -5,22 +5,42 @@
         top: 50%;
         transform: translate(-50%,-50%);
         width: 100%;
-        font-size: 12px;
+        font-size: 1.25em;
+        text-align: center;
     }
 
+    .dropbox {
+        outline: 2px dashed grey; /* the dash box */
+        outline-offset: -5px;
+        color: dimgray;
+        min-height: 70px;
+        position: relative;
+        cursor: pointer;
+        margin: 0 2px 0 -3px;
+    }
+    .dropbox .input-file {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        cursor: pointer;
+        z-index: 5;
+    }
+    .dropbox:hover {
+        background: lightblue; /* when mouse over to the drop zone, change color */
+    }
     .vertical-center{
         position: relative;
-        top: 50%;
+        top: 45%;
         transform: translateY(-50%);
     }
 
-    .full-dropbox{
-        width: 100% !important;
-        height: 100%
+    .upload-form{
+        height: 100%;
     }
 
     .file-icon {
-        width: 125px;
+        width: 85px;
         margin: 0 15px;
         transform: translateY(15%);
     }
@@ -45,13 +65,15 @@
 </style>
 
 <template>
-    <v-card flat :style="{height: (resumeExists ? 'auto' : '100%')}" :class="{'full-dropbox':'full-dropbox'}">
+    <v-card flat :style="{height: this.small ? 'auto' : '80%'}">
         <v-card-title style="height: 100%; padding: 0">
-            <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="width: 100%; height: 100%;">
-                <form class="upload-form" :class="{'vertical-center' : !resumeExists}"
+            <!--change bottom div width to 100% if small dropbox-->
+            <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="height: 100%; margin: 0 auto;" :style="{ width: this.small ? '100%' : '90%'}">
+                <h2 v-if="!this.small" style="margin-top: 25px; margin-bottom: 10px; ">Upload Resumes</h2>
+                <form class="upload-form"
                       enctype="multipart/form-data" novalidate
-                      :style="{height: ((resumeExists && !fullDropbox) ? 16 : 80)+'%'}">
-                    <div class="dropbox" :class="{'full-dropbox':'full-dropbox'}">
+                >
+                    <div class="dropbox" :style="{ height: this.small ? '20%' : '100%'}">
                         <input
                                 type="file"
                                 :disabled="state === 'UPLOADING'"
@@ -62,11 +84,11 @@
                                 class="input-file"
                         >
                         <div v-if="state === 'INITIAL'" >
-                            <div v-if="!resumeExists" class="icon-container">
+                            <div v-if="!small" class="icon-container">
                                 <img class="file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
                                 <img class="file-icon" src="../assets/job_detail/doc-icon.svg" alt="">
                             </div>
-                            <p class="uploader-text">Drag or Click to Upload Resumes and Cover Letters!</p>
+                            <p class="uploader-text">Drag or click to upload resumes and cover letters.</p>
                         </div>
 
                     </div>
@@ -87,10 +109,9 @@
     import FileClient from '@/utils/FileClient';
 
     export default {
-      props: ['id', 'full-dropbox', 'smalldropbox'],
+      props: ['id', 'small'],
       data() {
         return {
-          resumes: [],
           curId: '',
           resumeName: '',
           errorMessage: '',
@@ -103,12 +124,6 @@
       mounted() {
         this.client = new FileClient();
         this.curId = this.id;
-      },
-      computed: {
-        resumeExists() {
-          return this.resumes.length > 0 || this.smalldropbox;
-          // this or statement is needed to solve problem with force-refresh
-        },
       },
       methods: {
         updateFile(files) {
@@ -144,12 +159,8 @@
             this.errorMessage = e.message;
             return;
           }
-          this.resumes.push({
-            name: this.file.name,
-            filename: this.curId,
-            resumeid: null,
-            selected: true,
-          });
+
+          console.log(`emitting ${this.resumeName}`);
           this.$emit('uploaded', this.curId, this.resumeName);
           this.reset();
         },

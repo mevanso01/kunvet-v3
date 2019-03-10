@@ -375,8 +375,6 @@
 
             <v-dialog v-model="showFileModal" max-width="500">
               <ResumeUploader
-                :full-dropbox="true"
-                style="width: 60%; height: 500px;"
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
               />
@@ -392,7 +390,7 @@
             </v-dialog>
 
             <v-dialog v-model="showDeleteResumeDialog">
-              <v-card>
+              <v-card style="height: 100%">
                 <v-card-title>
                   <h2>Delete {{ deleteResumeName }}?</h2>
                 </v-card-title>

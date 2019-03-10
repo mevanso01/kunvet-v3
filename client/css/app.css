@@ -257,6 +257,7 @@ button:focus {
 }
 .v-dialog--active {
   background-color: white !important;
+  height: 500px !important;
 }
 .container {
   padding-top: 80px;
@@ -508,31 +509,7 @@ i.fa.fa-plus-circle {
 .first-search-img {
   max-width: 80%;
 }
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -5px;
-  color: dimgray;
-  min-height: 70px;
-  position: relative;
-  cursor: pointer;
-  /*width: 90%;*/
-}
-.dropbox .input-file {
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  cursor: pointer;
-  z-index: 5;
-}
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 20px 0;
-}
+
 .notification-container {
   margin: auto;
   max-width: 400px;

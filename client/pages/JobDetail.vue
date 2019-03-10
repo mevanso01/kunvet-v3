@@ -162,9 +162,9 @@
     display: none;
   }
   /*desktop version*/
-  .dialog-card {
-    width: 500px;
-  }
+  /*.dialog-card {*/
+    /*width: 500px;*/
+  /*}*/
 
   .header-icon-container {
     color: white;
@@ -337,6 +337,7 @@
     }
     .bookmark-button {
       min-width: auto;
+
     }
     .other-dialog {
       max-width: 600px !important;
@@ -781,7 +782,7 @@
         </button>
       </v-card>
 
-      <v-card flat class="dialog-card" style="overflow-y: scroll" v-else-if="loginState==='resume'">
+      <v-card flat class="dialog-card" v-else-if="loginState==='resume'">
         <div class="existing-container"  enctype="multipart/form-data" novalidate>
 
           <div style="margin-top: 20px" v-if="this.resumes.length > 0">
@@ -794,8 +795,7 @@
               <v-checkbox class="uploader-checkbox" v-model="file.selected"></v-checkbox>
             </div>
           </div>
-
-          <ResumeUploader :smalldropbox="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
+          <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
           <k-btn v-if="resumeExists" @click="createApplication" :disabled="!selectedResumes.length" style="margin: 20px auto;">Confirm Files</k-btn>
         </div>
       </v-card>
@@ -974,6 +974,8 @@
           newResume.selected = true;
           this.resumes.push(newResume);
           this.updateAccount();
+          console.log(this.resumes);
+          console.log('message from JobDetail');
         },
         isSaved(id) {
           return this.saved_jobs.indexOf(id) > -1;
@@ -1406,6 +1408,13 @@
                 uid: this.uid,
               },
             }],
+          }).then(() => {
+            this.$store.commit({
+              type: 'keepUserdata',
+              userdata: {
+                resumes: _resumes,
+              },
+            });
           }).catch(this.$error);
         },
         resetData() {
