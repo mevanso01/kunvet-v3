@@ -158,30 +158,28 @@
 
       <!--Expired Jobs-->
       <div class="main-cont-large">
-        <hr v-if= "expiredJobs.length > 0">
+        <hr v-if="expiredJobs.length > 0 && activeJobs.length > 0">
         <div v-if="expiredJobs.length > 0"
                   v-for="(job, idx) in expiredJobs">
           <v-layout row wrap class="new-applicant-card">
             <v-flex xs12 sm6 md7>
               <router-link :to="`/job/${job._id}`">
-              <p><timeago :since="job.date"/></p>
-              <h2 class="list-post-title">{{ job.title }}</h2>
-              <v-layout>
-                <v-flex xs12 sm12 md4>
-                  <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
-                    <k-btn color="#000" small>
-                      Edit
-                    </k-btn>
-                  </router-link>
+                <p><timeago :since="job.date"/></p>
+                <h2 class="list-post-title">{{ job.title }}</h2>
+                <v-layout>
+                  <v-flex xs12 sm12 md4>
+                    <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
+                      <k-btn color="#000" small>
+                        Edit
+                      </k-btn>
+                    </router-link>
 
-                <k-btn color="Salmon" small
-                    @click="onShowJobDialog(job)"
-                  >
-                  Delete
-                </k-btn>
-              </v-flex>
-            </v-layout>
-            </router-link>
+                    <k-btn color="Salmon" small @click="onShowJobDialog(job)">
+                      Delete
+                    </k-btn>
+                  </v-flex>
+                </v-layout>
+              </router-link>
             </v-flex>
             <v-flex xs12 sm6 md5>
               <v-layout>
