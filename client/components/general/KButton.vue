@@ -75,10 +75,10 @@
   >
     <!--class="spinner-overlay" :class="{ 'working': working }"-->
     <div style="position: relative;">
-      <span class="k-btn--text" :class="{ 'working': working }">
+      <span class="k-btn--text" :class="{ 'working': showSpinner }">
         <slot></slot>
       </span>
-      <v-progress-circular v-if="working" class="k-btn-spinner" indeterminate></v-progress-circular>
+      <v-progress-circular v-if="showSpinner" class="k-btn-spinner" indeterminate></v-progress-circular>
     </div>
   </div>
 </template>
@@ -129,6 +129,7 @@ export default {
   },
   data() {
     return {
+      autoSpinWorking: false,
     };
   },
   methods: {
@@ -137,7 +138,12 @@ export default {
         return;
       }
       if (this.autoSpin) {
-        this.working = true;
+        this.autoSpinWorking = true;
+        setTimeout(() => {
+          if (this && this.autoSpinWorking) {
+            this.autoSpinWorking = false; // turn off just in case component does not re-render
+          }
+        }, 250);
       }
       if (this.to) {
         this.$router.push(this.to);
@@ -146,6 +152,9 @@ export default {
     },
   },
   computed: {
+    showSpinner() {
+      return this.working || this.autoSpinWorking;
+    },
     buttonStyle() {
       return {
         background: this.outline ? 'transparent' : this.color,
