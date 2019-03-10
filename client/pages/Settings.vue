@@ -84,7 +84,7 @@
        <!-- <SwitchAccount :bottomPadding="true" />  -->
 
         <div>
-          <k-btn small block @click="logout">Logout</k-btn>
+          <k-btn block @click="logout">Logout</k-btn>
         </div>
 
         <br><br><br>
@@ -118,7 +118,7 @@
           <br>
           <h3 v-if="orgname">Organization name: {{ orgname }}</h3>
           <br>
-          <k-btn small block @click="deleteOrgDialog = true;" style="background-color:#ea2a2a">Delete This Organization</k-btn>
+          <k-btn block @click="deleteOrgDialog = true;" style="background-color:#ea2a2a">Delete This Organization</k-btn>
         </div>
         <br>
       </section>
@@ -362,6 +362,7 @@
         }).catch((error) => {
           this.$error(error);
         });
+        this.$store.commit('unsetBusinessData');
         this.$store.commit({
           type: 'keepUserdata',
           userdata: {

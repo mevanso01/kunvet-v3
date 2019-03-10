@@ -154,11 +154,11 @@
   }
 }
 @media (max-width: 600px) {
-  .firstSearch {
-    padding-left: 26px;
-    padding-right: 26px;
-    height: calc(100vh - 56px);
-  }
+  // .firstSearch {
+  //   padding-left: 26px;
+  //   padding-right: 26px;
+  //   height: calc(100vh - 56px);
+  // }
   #banner {
     display: none;
   }
@@ -171,9 +171,9 @@
   }
 }
 @media (min-width: 961px) {
-  .firstSearch {
-    height: calc(100vh - 64px);
-  }
+  // .firstSearch {
+  //   height: calc(100vh - 64px);
+  // }
   .city-img-holder {
     padding: 0 48px;
   }
@@ -185,9 +185,9 @@
   }
 }
 @media (min-width: 601px) and (max-width: 960px) {
-  .firstSearch {
-    height: calc(100vh - 64px);
-  }
+  // .firstSearch {
+  //   height: calc(100vh - 64px);
+  // }
 }
 #rua {
   width: 100%;
@@ -399,9 +399,9 @@
 
 .loved_trusted_title {
   padding-top: 28px;
-  padding-right:10%;
-  color:white;
-  font-size:38px;
+  padding-right: 10%;
+  color: white;
+  font-size: 38px;
   text-align:right;
 }
 
@@ -413,11 +413,11 @@
   padding-right: 10%;
   text-align: right;
   margin-left: auto;
-  padding-left: 30px;
+  padding-left: 24px;
 }
 
-.artboard1_img_mobile{
-    height: 50vh;
+.artboard1_img_mobile {
+    height: 350px; // 50vh;
     width:100%;
     background-color: #ffe2e2;
 }
@@ -532,13 +532,12 @@
   }
 
   .loved_trusted_text {
-    width: 80%;
-    padding-left:8%;
-    font-size:16px;
+    padding-left: 8%;
+    padding-right: 8%;
+    font-size: 16px;
     line-height: 26px;
-    text-align:left;
-    margin-left:0;
-    padding-right:0;
+    text-align: left;
+    margin-left: 0;
   }
   .hire_kunvet_title {
     padding-top:3%;
@@ -546,10 +545,11 @@
     font-size:34px;
   }
   .hire_kunvet_text {
-    width: 80%;
-    margin-left:8%;
-    font-size:16px;
+    padding-left: 8%;
+    padding-right: 8%;
+    font-size: 16px;
     line-height: 26px;
+    margin-left: 0;
   }
   .loved_trusted_container{
     height: 310px;
@@ -681,7 +681,7 @@
 
     <div class="mobile-show">
       <div class="artboard1_img_mobile">
-        <img src="@/assets/artboard1.png" height="70%" style="margin-top:15%"/>
+        <img src="@/assets/artboard1.png" width="96%" style="margin-top: 15%; margin-left: 2%;"/>
       </div>
 
       <div class="hire_kunvet_container">
@@ -692,8 +692,8 @@
         </router-link>
       </div>
 
-      <div style="height: 50vh; width:100%; background-color: #dbefff;">
-        <img src="@/assets/artboard2.png" height="70%" style="margin-left:10%; margin-top:15%"/>
+      <div style="height: 350px; width: 100%; background-color: #dbefff;">
+        <img src="@/assets/artboard2.png" width="86%" style="margin-top: 15%; margin-left: 7%;"/>
       </div>
 
       <div class="loved_trusted_container">

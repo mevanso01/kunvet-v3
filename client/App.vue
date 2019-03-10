@@ -38,6 +38,9 @@
             <v-list-tile @click="goToAccount()">
               <p>View Account</p>
             </v-list-tile>
+            <v-list-tile @click="goTo('/settings')">
+              <p>Settings</p>
+            </v-list-tile>
             <v-list-tile @click="logout()">
               <p>Logout</p>
             </v-list-tile>
@@ -79,24 +82,27 @@
 
     <div id="d-menu" class="d-menu mobile-show" v-show="drawer">
       <div class="d-menu-inner">
-        <div v-if="acct > 0" class="d-menu-item idx-0" @click="goToAccount()">
-          {{ usersName || 'My account' }}
-          <p style="font-size: 16px; margin: 0; color: white; font-weight: normal">Edit Profile</p>
-        </div>
-        <div v-for="(item, idx) in dmenuItems[acct]" style="background-color: #fff">
-          <div class="d-menu-item" @click="handleDMenuClick(item)" :class="`idx-${indexOffset(idx)}`" :key="item.title">
-            {{ item.title }}
+        <div style="background-color: #fff">
+          <div v-if="acct > 0" class="d-menu-item idx-0" @click="goToAccount()">
+            {{ usersName || 'My account' }}
+            <p style="font-size: 16px; margin: 0; color: white; font-weight: normal">Edit Profile</p>
           </div>
-          <div v-if="item.subItems">
-            <div v-for="subItem in item.subItems" v-show="openSubitem === item.title"
-                 @click="handleDMenuClick(subItem)" :key="subItem.title" class="d-menu-subitem" :class="`subitem-${indexOffset(idx)}`">
-              {{ subItem.title }}
+          <div v-for="(item, idx) in currentMobileMenuItems" style="background-color: #fff">
+            <div class="d-menu-item" @click="handleDMenuClick(item)" :class="`idx-${indexOffset(idx)}`" :key="item.title">
+              {{ item.title }}
+            </div>
+            <div v-if="item.subItems">
+              <div v-for="subItem in item.subItems" v-show="openSubitem === item.title"
+                   @click="handleDMenuClick(subItem)" :key="subItem.title" class="d-menu-subitem" :class="`subitem-${indexOffset(idx)}`">
+                {{ subItem.title }}
+              </div>
             </div>
           </div>
         </div>
         <div class="d-menu-close">
           <button @click="drawer = false;">
-            <i class="fa fa-times-circle " style="font-size: 46px; color: #FFE2E2;"></i>
+            <!-- <i class="fa fa-times-circle " style="font-size: 46px; color: #FFE2E2;"></i> -->
+            <img src="./assets/mobile/close-white.svg" alt="" style="height: 46px; width: 46px;">
           </button>
         </div>
       </div>
@@ -231,14 +237,12 @@ export default {
           { title: 'Search', href: '/search' },
           { title: 'Applied Jobs', href: '/appliedjobs' },
           { title: 'Saved Jobs', href: '/savedjobs' },
-          { title: 'Settings', href: '/settings' },
         ],
         [
           { title: 'Search', href: '/search' },
           { title: 'Post New Job', href: '/createjob' },
           { title: 'My Jobs', href: '/myjobs' },
           { title: 'Applicants', href: '/applicants' },
-          { title: 'Settings', href: '/settings' },
         ],
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },
@@ -278,11 +282,19 @@ export default {
       }
       return this.newMenuItems[idx];
     },
+    currentMobileMenuItems() {
+      let idx = this.acct;
+      if (this.acct === 1 && this.acctType === 'individual') {
+        idx = 2; // same as business
+      }
+      return this.dmenuItems[idx];
+    },
   },
   methods: {
     indexOffset(idx) {
       // calculate offset for mobile menu classes. 6 is the size of the largest dmenu item
-      return (6 - this.dmenuItems[this.acct].length) + idx;
+      // plus 6 + 1 to account for first item with account name
+      return (7 - this.dmenuItems[this.acct].length) + idx;
     },
     handleDMenuClick(item) {
       if (item.subItems) {
