@@ -3,6 +3,11 @@
     padding: 0;
     .main-cont-large {
       padding: 0 16px;
+      hr{
+          margin-top: 20px;
+          margin-bottom: 20px;
+          size:20px;
+        }
     }
     .header-splash {
       height: 230px;
@@ -37,10 +42,6 @@
     }
   }
 
-  hr{
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
 
 </style>
 <template>
@@ -98,9 +99,9 @@
               </v-layout>
             </v-flex>
           </v-layout>
-          <hr v-if= "idx < unpostedJobs.length - 1" style="size:20; width:88%;">
+          <hr v-if= "idx < unpostedJobs.length - 1"  >
         </div>
-        <hr v-if= "unpostedJobs.length > 0" style="size:20;">
+        <hr v-if= "unpostedJobs.length > 0"  >
       </div>
 
       <!--Active Jobs-->
@@ -151,13 +152,13 @@
               </v-layout>
             </v-flex>
           </v-layout>
-          <hr v-if= "idx < activeJobs.length - 1" style="size:20;">
+          <hr v-if= "idx < activeJobs.length - 1"  >
         </div>
       </div>
 
       <!--Expired Jobs-->
       <div class="main-cont-large">
-        <hr v-if= "expiredJobs.length > 0" style="size:20; width:88%;">
+        <hr v-if= "expiredJobs.length > 0">
         <div v-if="expiredJobs.length > 0"
                   v-for="(job, idx) in expiredJobs">
           <v-layout row wrap class="new-applicant-card">
@@ -203,7 +204,7 @@
               </v-layout>
             </v-flex>
           </v-layout>
-          <hr v-if= "idx < expiredJobs.length - 1" style="size:20; width:88%;">
+          <hr v-if= "idx < expiredJobs.length - 1">
         </div>
       </div>
     </div>
