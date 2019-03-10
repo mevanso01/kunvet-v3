@@ -55,7 +55,7 @@
     </div>
 
     <div style="margin-bottom:30px;">
-
+    <div v-if="(unpostedJobs.length + activeJobs.length + expiredJobs.length) <= 0" >
       <!--Unposted Jobs-->
       <div class="main-cont-large">
         <div v-if="unpostedJobs.length > 0"
@@ -119,7 +119,7 @@
                     Edit
                   </k-btn>
                 </router-link>
-                
+
                 <k-btn color="Salmon" small
                 @click="onShowJobDialog(job)"
               >
@@ -206,6 +206,15 @@
           <hr v-if= "idx < expiredJobs.length - 1" style="size:20; width:88%;">
         </div>
       </div>
+    </div>
+    <div v-else>
+      <div class="main-cont-large" style="text-align: center;">
+        You have posted no job yet,
+        <router-link :to="`/createjob/`" :style="">
+          click here
+        </router-link> to post one.
+      </div>
+    </div>
     </div>
 <!--<div class="main-cont-large">
       <v-layout row wrap>
