@@ -29,6 +29,10 @@
     margin-bottom: 2px;
   }
 }
+.k-btn.small .k-btn--text {
+  font-size: 12px;
+  padding: 0 16px;
+}
 .k-btn.block {
   width: 100%;
 }
@@ -66,12 +70,12 @@
   <div
     class="k-btn"
     @click="click"
-    :class="{ 'block': block, 'icon': icon, 'outline': outline, 'disabled': disabled }"
+    :class="{ 'block': block, 'icon': icon, 'outline': outline, 'disabled': disabled, 'small': small }"
     :style="buttonStyle"
   >
     <!--class="spinner-overlay" :class="{ 'working': working }"-->
     <div style="position: relative;">
-      <span class="k-btn--text" :class="{ 'working': working }" :style="textStyle">
+      <span class="k-btn--text" :class="{ 'working': working }">
         <slot></slot>
       </span>
       <v-progress-circular v-if="working" class="k-btn-spinner" indeterminate></v-progress-circular>
@@ -149,12 +153,6 @@ export default {
         'border-color': this.outline ? this.color : 'none',
         'height': this.small ? '25px' : '56px',
         'line-height': this.small ? '25px' : '56px',
-      };
-    },
-    textStyle() {
-      return {
-        'font-size': this.small ? '12px' : '16px',
-        'padding': this.small ? '0 16px' : '0 24px',
       };
     },
   },
