@@ -153,8 +153,11 @@
           <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
           style="display: block; margin: auto !important;"></v-progress-circular>
         </div>
-        <div v-else>
-          You have no jobs.
+        <div v-else class="main-cont-large">
+          <p style="text-align: center;">
+            <strong>You have no active jobs.</strong><br><br>
+            <router-link to="/createjob" style="font-weight: bold;">Click here</router-link> create a new job, or go to the <router-link to="/myjobs" style="font-weight: bold;">jobs page</router-link> to re-post a past job.
+          </p>
         </div>
       </v-flex>
       <template
