@@ -154,11 +154,11 @@
   }
 }
 @media (max-width: 600px) {
-  .firstSearch {
-    padding-left: 26px;
-    padding-right: 26px;
-    height: calc(100vh - 56px);
-  }
+  // .firstSearch {
+  //   padding-left: 26px;
+  //   padding-right: 26px;
+  //   height: calc(100vh - 56px);
+  // }
   #banner {
     display: none;
   }
@@ -171,9 +171,9 @@
   }
 }
 @media (min-width: 961px) {
-  .firstSearch {
-    height: calc(100vh - 64px);
-  }
+  // .firstSearch {
+  //   height: calc(100vh - 64px);
+  // }
   .city-img-holder {
     padding: 0 48px;
   }
@@ -185,9 +185,9 @@
   }
 }
 @media (min-width: 601px) and (max-width: 960px) {
-  .firstSearch {
-    height: calc(100vh - 64px);
-  }
+  // .firstSearch {
+  //   height: calc(100vh - 64px);
+  // }
 }
 #rua {
   width: 100%;
@@ -416,8 +416,8 @@
   padding-left: 24px;
 }
 
-.artboard1_img_mobile{
-    height: 50vh;
+.artboard1_img_mobile {
+    height: 350px; // 50vh;
     width:100%;
     background-color: #ffe2e2;
 }
@@ -692,7 +692,7 @@
         </router-link>
       </div>
 
-      <div style="height: 50vh; width:100%; background-color: #dbefff;">
+      <div style="height: 350px; width: 100%; background-color: #dbefff;">
         <img src="@/assets/artboard2.png" height="70%" style="margin-left:10%; margin-top:15%"/>
       </div>
 
