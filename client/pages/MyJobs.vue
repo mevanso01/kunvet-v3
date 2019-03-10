@@ -209,10 +209,10 @@
     </div>
     <div v-else>
       <div class="main-cont-large" style="text-align: center;">
-        You have posted no job yet,
-        <router-link :to="`/createjob/`" :style="">
+        <p>You have posted no job yet,
+        <router-link :to="`/createjob/`" style="font-weight: bold;">
           click here
-        </router-link> to post one.
+        </router-link> to post one.</p>
       </div>
     </div>
     </div>
