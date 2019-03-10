@@ -100,11 +100,11 @@
           </v-layout>
           <hr v-if= "idx < unpostedJobs.length - 1" style="size:20; width:88%;">
         </div>
+        <hr v-if= "unpostedJobs.length > 0" style="size:20;">
       </div>
 
       <!--Active Jobs-->
       <div class="main-cont-large">
-        <hr v-if= "unpostedJobs.length > 0" style="size:20;">
         <div v-if="activeJobs.length > 0"
                   v-for="(job, idx) in activeJobs">
           <v-layout row wrap class="new-applicant-card">
@@ -114,12 +114,12 @@
               <h2 class="list-post-title">{{ job.title }}</h2>
               <v-layout>
               <v-flex xs12 sm12 md4>
-                <router-link :to="`/createjob/${job._id}`" style="margin-right: 10px;">
+                <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
                   <k-btn color="#000" small>
                     Edit
                   </k-btn>
                 </router-link>
-
+                
                 <k-btn color="Salmon" small
                 @click="onShowJobDialog(job)"
               >
@@ -167,7 +167,7 @@
               <h2 class="list-post-title">{{ job.title }}</h2>
               <v-layout>
                 <v-flex xs12 sm12 md4>
-                  <router-link :to="`/createjob/${job._id}`" style="margin-right: 10px;">
+                  <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
                     <k-btn color="#000" small>
                       Edit
                     </k-btn>
