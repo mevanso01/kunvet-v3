@@ -532,13 +532,12 @@
   }
 
   .loved_trusted_text {
-    width: 80%;
-    padding-left:8%;
-    font-size:16px;
+    padding-left: 8%;
+    padding-right: 8%;
+    font-size: 16px;
     line-height: 26px;
-    text-align:left;
-    margin-left:0;
-    padding-right:0;
+    text-align: left;
+    margin-left: 0;
   }
   .hire_kunvet_title {
     padding-top:3%;
@@ -546,10 +545,11 @@
     font-size:34px;
   }
   .hire_kunvet_text {
-    width: 80%;
-    margin-left:8%;
-    font-size:16px;
+    padding-left: 8%;
+    padding-right: 8%;
+    font-size: 16px;
     line-height: 26px;
+    margin-left: 0;
   }
   .loved_trusted_container{
     height: 310px;
@@ -681,7 +681,7 @@
 
     <div class="mobile-show">
       <div class="artboard1_img_mobile">
-        <img src="@/assets/artboard1.png" height="70%" style="margin-top:15%"/>
+        <img src="@/assets/artboard1.png" width="96%" style="margin-top: 15%; margin-left: 2%;"/>
       </div>
 
       <div class="hire_kunvet_container">
@@ -693,7 +693,7 @@
       </div>
 
       <div style="height: 350px; width: 100%; background-color: #dbefff;">
-        <img src="@/assets/artboard2.png" height="70%" style="margin-left:10%; margin-top:15%"/>
+        <img src="@/assets/artboard2.png" width="86%" style="margin-top: 15%; margin-left: 7%;"/>
       </div>
 
       <div class="loved_trusted_container">
