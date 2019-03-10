@@ -399,9 +399,9 @@
 
 .loved_trusted_title {
   padding-top: 28px;
-  padding-right:10%;
-  color:white;
-  font-size:38px;
+  padding-right: 10%;
+  color: white;
+  font-size: 38px;
   text-align:right;
 }
 
@@ -413,7 +413,7 @@
   padding-right: 10%;
   text-align: right;
   margin-left: auto;
-  padding-left: 30px;
+  padding-left: 24px;
 }
 
 .artboard1_img_mobile{

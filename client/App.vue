@@ -38,6 +38,9 @@
             <v-list-tile @click="goToAccount()">
               <p>View Account</p>
             </v-list-tile>
+            <v-list-tile @click="goTo('/settings')">
+              <p>Settings</p>
+            </v-list-tile>
             <v-list-tile @click="logout()">
               <p>Logout</p>
             </v-list-tile>
@@ -234,14 +237,12 @@ export default {
           { title: 'Search', href: '/search' },
           { title: 'Applied Jobs', href: '/appliedjobs' },
           { title: 'Saved Jobs', href: '/savedjobs' },
-          { title: 'Settings', href: '/settings' },
         ],
         [
           { title: 'Search', href: '/search' },
           { title: 'Post New Job', href: '/createjob' },
           { title: 'My Jobs', href: '/myjobs' },
           { title: 'Applicants', href: '/applicants' },
-          { title: 'Settings', href: '/settings' },
         ],
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },
