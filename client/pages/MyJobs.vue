@@ -55,7 +55,7 @@
     </div>
 
     <div style="margin-bottom:30px;">
-    <div v-if="(unpostedJobs.length + activeJobs.length + expiredJobs.length) <= 0" >
+    <div v-if="(unpostedJobs.length + activeJobs.length + expiredJobs.length) > 0" >
       <!--Unposted Jobs-->
       <div class="main-cont-large">
         <div v-if="unpostedJobs.length > 0"
