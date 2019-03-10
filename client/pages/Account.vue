@@ -946,6 +946,7 @@
               wechat_id: this.userdata.wechat_id,
               resumes: _resumes,
               default_org: this.userdata.default_org,
+              account_type: this.userdata.account_type,
             },
           },
           refetchQueries: [{
@@ -1184,6 +1185,7 @@
         });
         this.userdata.default_org = id;
         if (!dontUpdate) {
+          this.userdata.account_type = 'business';
           this.updateAccount();
         }
         this.$store.commit({ type: 'setDefaultOrg', id });
