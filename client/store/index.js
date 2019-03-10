@@ -57,7 +57,7 @@ const Store = new Vuex.Store({
     setDefaultOrg(state, payload) {
       state.default_org = payload.id;
     },
-    unsetBusinessID(state) {
+    unsetBusinessID(state) { // deprecated, use unsetBusinessData instead
       state.businessID = null;
     },
     keepSearch(state, payload) {
@@ -81,6 +81,10 @@ const Store = new Vuex.Store({
     },
     keepBdata(state, payload) {
       state.bdata = payload.bdata;
+    },
+    unsetBusinessData(state) {
+      state.businessID = null;
+      state.bdata = null;
     },
     setJobProgress(state, payload) {
       state.currentJobProgress.jobId = payload.id;

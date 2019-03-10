@@ -362,6 +362,7 @@
         }).catch((error) => {
           this.$error(error);
         });
+        this.$store.commit('unsetBusinessData');
         this.$store.commit({
           type: 'keepUserdata',
           userdata: {

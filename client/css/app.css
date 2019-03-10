@@ -60,7 +60,7 @@ button:focus {
 #d-menu > .d-menu-inner {
   height: 100%;
   width: 100%;
-  background-color: rgba(239, 83, 80, 0.5);
+  background-color: rgba(239, 83, 80, 0.52);
   opacity: 0;
   animation: slideInBottom .4s;
   animation-fill-mode: forwards;
@@ -93,22 +93,25 @@ button:focus {
 }
 #d-menu .d-menu-item.idx-1 {
   /* background-color: #f1817f; */
-  background-color: rgba(239, 83, 80, 0.9);
+  background-color: rgba(239, 83, 80, 0.92);
   animation-delay: 0.12s;
 }
 #d-menu .d-menu-item.idx-2 {
-  background-color: rgba(239, 83, 80, 0.8);
+  background-color: rgba(239, 83, 80, 0.84);
   animation-delay: 0.08s;
 }
 #d-menu .d-menu-item.idx-3 {
-  background-color: rgba(239, 83, 80, 0.7);
+  background-color: rgba(239, 83, 80, 0.76);
   animation-delay: 0.05s;
 }
 #d-menu .d-menu-item.idx-4 {
-  background-color: rgba(239, 83, 80, 0.6);
+  background-color: rgba(239, 83, 80, 0.68);
 }
 #d-menu .d-menu-item.idx-5 {
-  background-color: rgba(239, 83, 80, 0.5);
+  background-color: rgba(239, 83, 80, 0.60);
+}
+#d-menu .d-menu-item.idx-6 {
+  background-color: rgba(239, 83, 80, 0.52);
 }
 #d-menu .d-menu-subitem.subitem-0 {
   background-color: #ef5350;
