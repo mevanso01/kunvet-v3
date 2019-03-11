@@ -1,647 +1,728 @@
 <style lang="scss" scoped>
-  .job-star-icon {
-    color: #e0e0e0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .job-star-icon-starred {
-    color: #ef5350;
-  }
-  .job-time,
-  .job-address,
-  .job-desc {
-    font-size: 9pt;
-    color: #9e9e9e;
-  }
-  .job-detail-container .job-image {
-    background-size: 8px 8px;
-    background-position: center center;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    height: 128px;
-    cursor: pointer;
-    text-align: center;
-  }
-  .job-detail-container .job-image img {
-    position: relative;
-    top: 0;
-    width: 100%;
-    max-width: 100%;
-    height: 128px;
-    object-fit: cover;
-    transform: scale(1);
-    transition: all 0.2s ease;
-  }
-  .job-detail-container .job-image img:hover {
-    transform: scale(1.0625);
-  }
-  .job-detail-container .post-title {
-    font-size: 30px;
-    line-height: 1.2;
-    margin-top: 12px;
-    margin-bottom: 2px;
-  }
-  .job-info-icon {
-    height: 15px;
-    width: 16px;
-    margin-left: 1px;
-    margin-right: 3px;
-    transform: translateY(1px);
-  }
-  .blue-row {
-    font-size: 15px;
-    color: #666;
-    display: inline-block;
-  }
-  .pr-10 { padding-right: 10px; }
-  .job-detail-container .top-container {
-    width: 100%;
-    height: 48px;
-  }
-  .job-detail-container .bottom-container {
-    display: flex;
-    height: 48px;
-    background-color: #fff;
-  }
-  .orange-row {
-    /* color: white;
-    background-color: rgba(227, 148, 0, 0.25); */
-    padding: 4px;
-    margin-bottom: 5px;
-  }
-  .job-detail-container .bookmark-btn .icon {
-    font-size: 24px !important;
-    height: 24px !important;
-    width: 24px !important;
-  }
-  .job-detail-container .bookmark-btn {
-    height: 36px !important;
-    width: 36px !important;
-  }
-  .job-detail-container .svg-button {
-    height: 36px;
-    margin: 2px 8px;
-    display: inline-flex;
-    flex: 0 1 auto;
-  }
-  .svg-button img {
-    height: inherit;
-    display: block;
-    margin: auto;
-  }
-  .new-resume-box {
-    height: 32px;
-    width: 100%;
-    position: relative;
-    border: 1px solid rgb(231, 231, 231);
-    margin-top: 10px;
-  }
-  .new-resume-box .input-file {
-    opacity: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-  }
-  .job-detail-posted-by {
-    max-width: calc(99% - 100px);
-  }
-  .job-detail-container .long-text-cont {
-    margin-bottom: 16px;
-  }
-  .job-detail-container .long-text-cont,
-  .job-detail-container .long-text-cont span,
-  .job-detail-container .long-text-cont p,
-  .job-detail-container .long-text-cont li {
-    color: #616161 !important;
-  }
-
-  .bottom-button-container {
-    display: flex;
-    height: 53px;
-    width: 60%;
-    margin: 40px 0;
-  }
-
-  .apply-button {
-    width: 80%;
-    min-width: 65px;
-    margin-right: 4px;
-  }
-
-  .bookmark-button {
-    margin-left: 4px;
-    height: 100%;
-    width: 13%;
-    min-width: 43px;
-  }
-
-  .bookmark-button img {
-    border-radius:4px;
-    height: 100%;
-    padding: 8px;
-    background-color: orange;
-    box-shadow: 0 10px 12px -4px #eaeaf9;
-    width: 100%;
-  }
-
-  .mobile-show {
-    display: none;
-  }
-
-  .header-icon-container {
-    color: white;
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .header-text-container {
-    padding: 0 24px;
-    margin: 0 auto;
-    max-width: 1008px;
-
-  }
-  .header-text {
-    line-height: 1.2;
-    color: white;
-    position: absolute;
-    font-weight: 600;
-  }
-
-  /*new*/
-  .job-detail-nav .v-toolbar__content {
-    padding: 0;
-    margin: 0;
-  }
-  .job-detail-padding {
-    padding: 0 18%
-  }
-  .dialog-button {
-    color: white;
-    box-shadow: 0 10px 12px -4px #eaeaf9;
-    height: 56px;
-    font-size: 18px;
-    border-radius: 2px;
-    /*background-color: #EA596B !important;*/
-    width: 80%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-  }
-
-  /*resume uploader*/
-  .existing-container {
-    width: 90%;
-    height: 500px;
-    margin: 0 auto;
-  }
-  .existing-file {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: start;
-    background-color: #eee;
-    width: 99%;
-    height: 70px;
-  }
-  .existing-file p {
-    line-height: 70px;
-    transform: translateX(50px);
-  }
-
-  @media (min-width: 961px) {
-    .job-detail-container {
-      margin: 0 18%;
+    .job-star-icon {
+        color: #e0e0e0;
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
-    .apply-card {
-      min-width: 400px !important;
+
+    .job-star-icon-starred {
+        color: #ef5350;
     }
-  }
-  @media (max-width: 960px) {
-  }
-  @media (min-width: 601px) {
-    .job-detail-container {
-      margin: 0 auto;
-      padding: 24px;
-      max-width: 1008px;
+
+    .job-time,
+    .job-address,
+    .job-desc {
+        font-size: 9pt;
+        color: #9e9e9e;
     }
-    .apply-card {
-      min-width: 375px !important;
+
+    .job-detail-container .job-image {
+        background-size: 8px 8px;
+        background-position: center center;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: 128px;
+        cursor: pointer;
+        text-align: center;
     }
-    .job-detail-posted-by {
-      max-width: calc(99% - 204px);
+
+    .job-detail-container .job-image img {
+        position: relative;
+        top: 0;
+        width: 100%;
+        max-width: 100%;
+        height: 128px;
+        object-fit: cover;
+        transform: scale(1);
+        transition: all 0.2s ease;
     }
-    .job-detail-container .float-sm-up {
-      float: left;
-      padding-right: 10px;
+
+    .job-detail-container .job-image img:hover {
+        transform: scale(1.0625);
     }
-    .header-splash {
-      height: 276px;
+
+    .job-detail-container .post-title {
+        font-size: 30px;
+        line-height: 1.2;
+        margin-top: 12px;
+        margin-bottom: 2px;
     }
-  }
-  @media (max-width: 600px) {
-    .flex {
-      padding: 10px 1px;
+
+    .job-info-icon {
+        height: 15px;
+        width: 16px;
+        margin-left: 1px;
+        margin-right: 3px;
+        transform: translateY(1px);
     }
-    .post-title-cont {
-      height: 32px;
-      margin-top: 8px;
+
+    .blue-row {
+        font-size: 15px;
+        color: #666;
+        display: inline-block;
     }
-    .post-title {
-      font-size: 24px;
-      line-height: 1.2;
+
+    .pr-10 {
+        padding-right: 10px;
     }
-    .apply-card {
-      min-width: 300px !important;
+
+    .job-detail-container .top-container {
+        width: 100%;
+        height: 48px;
     }
+
     .job-detail-container .bottom-container {
-      height: 64px;
+        display: flex;
+        height: 48px;
+        background-color: #fff;
     }
-    .job-detail-container .bottom-container.stick-to-bottom {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 64px;
-      padding: 0 15px 16px 15px;
+
+    .orange-row {
+        /* color: white;
+        background-color: rgba(227, 148, 0, 0.25); */
+        padding: 4px;
+        margin-bottom: 5px;
     }
-    .job-detail-container .height-helper {
-      width: 100%;
-      height: 64px;
+
+    .job-detail-container .bookmark-btn .icon {
+        font-size: 24px !important;
+        height: 24px !important;
+        width: 24px !important;
     }
-    .job-detail-container .bottom-container.stick-to-bottom .gradient-bar {
-      position:absolute;
-      top: -5px;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(transparent, white);
-      background: -moz-linear-gradient(transparent, white); /* FF 3.6+ */
-      background: -ms-linear-gradient(transparent, white); /* IE10 */
-      background: -webkit-linear-gradient(transparent, white); /* Safari 5.1+, Chrome 10+ */
-      background: -o-linear-gradient(transparent, white);
+
+    .job-detail-container .bookmark-btn {
+        height: 36px !important;
+        width: 36px !important;
     }
-    .job-detail-container{
-      padding: 24px 24px 0 24px;
+
+    .job-detail-container .svg-button {
+        height: 36px;
+        margin: 2px 8px;
+        display: inline-flex;
+        flex: 0 1 auto;
     }
-    .mobile-show {
-      display: block;
-      padding: 0;
+
+    .svg-button img {
+        height: inherit;
+        display: block;
+        margin: auto;
     }
-    .mobile-hide {
-      display: none !important;
+
+    .new-resume-box {
+        height: 32px;
+        width: 100%;
+        position: relative;
+        border: 1px solid rgb(231, 231, 231);
+        margin-top: 10px;
     }
+
+    .new-resume-box .input-file {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .job-detail-posted-by {
+        max-width: calc(99% - 100px);
+    }
+
+    .job-detail-container .long-text-cont {
+        margin-bottom: 16px;
+    }
+
     .job-detail-container .long-text-cont,
     .job-detail-container .long-text-cont span,
     .job-detail-container .long-text-cont p,
     .job-detail-container .long-text-cont li {
-      line-height: 1.6;
-    }
-    .sub-container{
-      padding: 0;
+        color: #616161 !important;
     }
 
-    .sub-container h2{
-      font-size: 22px;
-    }
-
-    .mobile-show li{
-      list-style: square;
-    }
-    .header-splash {
-      min-height: 206px;
-    }
-    /*buttons*/
     .bottom-button-container {
-      height: 55px;
-      width: 100%;
+        display: flex;
+        height: 53px;
+        width: 60%;
+        margin: 40px 0;
     }
+
     .apply-button {
-      font-size: 1.1em;
-      min-width: auto;
+        width: 80%;
+        min-width: 65px;
+        margin-right: 4px;
     }
-    .find-button {
-      font-size: 1.1em;
-      min-width: 130px;
-    }
+
     .bookmark-button {
-      min-width: auto;
+        margin-left: 4px;
+        height: 100%;
+        width: 13%;
+        min-width: 43px;
+    }
+
+    .bookmark-button img {
+        border-radius: 4px;
+        height: 100%;
+        padding: 8px;
+        background-color: orange;
+        box-shadow: 0 10px 12px -4px #eaeaf9;
+        width: 100%;
+    }
+
+    .mobile-show {
+        display: none;
+    }
+
+    .header-icon-container {
+        color: white;
+        position: absolute;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .header-text-container {
+        padding: 0 24px;
+        margin: 0 auto;
+        max-width: 1008px;
 
     }
-    .other-dialog {
-      max-width: 600px !important;
-      background-color: white !important;
+
+    .header-text {
+        line-height: 1.2;
+        color: white;
+        position: absolute;
+        font-weight: 600;
     }
-    .dialog-card {
-      width: 100%;
+
+    .job-detail-nav .v-toolbar__content {
+        padding: 0;
+        margin: 0;
     }
-    .login-card {
-      margin: 150px auto !important;
+
+    .job-detail-padding {
+        padding: 0 18%
     }
-  }
 
-  .header-icon-container {
-    color: white;
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
+    .dialog-button {
+        color: white;
+        box-shadow: 0 10px 12px -4px #eaeaf9;
+        height: 56px;
+        font-size: 18px;
+        border-radius: 2px;
+        /*background-color: #EA596B !important;*/
+        width: 80%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
 
-  .header-text {
-    line-height: 1.2;
-    color: white;
-    position: absolute;
-    font-weight: 600;
-  }
-  /*new*/
-  .job-detail-nav .v-toolbar__content{
-    padding: 0;
-    margin: 0;
-  }
+    /*resume uploader*/
+    .existing-container {
+        width: 90%;
+        height: 500px;
+        margin: 0 auto;
+    }
 
-  .job-detail-padding{
-    padding: 0 18%
-  }
+    .existing-file {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: start;
+        background-color: #eee;
+        width: 99%;
+        height: 70px;
+    }
 
+    .existing-file p {
+        line-height: 70px;
+        transform: translateX(50px);
+    }
 
-  .dialog-button {
-    color: white;
-    box-shadow: 0 10px 12px -4px #eaeaf9;
-    height: 56px;
-    font-size: 18px;
-    border-radius: 2px;
-    width: 80%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-  }
+    .apply-text {
+        color: #EA596B;
+        font-size: 48px;
+        width: 80%;
+        margin: 0 auto;
+        padding: 40px 20px 20px 0;
+        font-weight: bold;
+        line-height: 1.3
+    }
 
-  /*resume uploader*/
+    @media (min-width: 961px) {
+        .job-detail-container {
+            margin: 0 18%;
+        }
+        .apply-card {
+            min-width: 400px !important;
+        }
+    }
 
-  .existing-container{
-    width: 90%;
-    height: 500px;
-    margin: 0 auto;
-  }
-  .existing-file{
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: start;
-    background-color: #eee;
-    width: 99%;
-    height: 70px;
-  }
-  .existing-file p{
-    line-height: 70px;
-    transform: translateX(50px);
-  }
-  .uploader-checkbox{
-    position: absolute;
-    right: 10%;
-    transform: translateY(19px);
-  }
+    @media (max-width: 960px) {
+    }
+
+    @media (min-width: 601px) {
+        .job-detail-container {
+            margin: 0 auto;
+            padding: 24px;
+            max-width: 1008px;
+        }
+        .apply-card {
+            min-width: 375px !important;
+        }
+        .job-detail-posted-by {
+            max-width: calc(99% - 204px);
+        }
+        .job-detail-container .float-sm-up {
+            float: left;
+            padding-right: 10px;
+        }
+        .header-splash {
+            height: 276px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .flex {
+            padding: 10px 1px;
+        }
+        .post-title-cont {
+            height: 32px;
+            margin-top: 8px;
+        }
+        .post-title {
+            font-size: 24px;
+            line-height: 1.2;
+        }
+        .apply-card {
+            min-width: 300px !important;
+        }
+        .job-detail-container .bottom-container {
+            height: 64px;
+        }
+        .job-detail-container .bottom-container.stick-to-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 64px;
+            padding: 0 15px 16px 15px;
+        }
+        .job-detail-container .height-helper {
+            width: 100%;
+            height: 64px;
+        }
+        .job-detail-container .bottom-container.stick-to-bottom .gradient-bar {
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(transparent, white);
+            background: -moz-linear-gradient(transparent, white); /* FF 3.6+ */
+            background: -ms-linear-gradient(transparent, white); /* IE10 */
+            background: -webkit-linear-gradient(transparent, white); /* Safari 5.1+, Chrome 10+ */
+            background: -o-linear-gradient(transparent, white);
+        }
+        .job-detail-container {
+            padding: 24px 24px 0 24px;
+        }
+        .mobile-show {
+            display: block;
+            padding: 0;
+        }
+        .mobile-hide {
+            display: none !important;
+        }
+        .job-detail-container .long-text-cont,
+        .job-detail-container .long-text-cont span,
+        .job-detail-container .long-text-cont p,
+        .job-detail-container .long-text-cont li {
+            line-height: 1.6;
+        }
+        .sub-container {
+            padding: 0;
+        }
+
+        .sub-container h2 {
+            font-size: 22px;
+        }
+
+        .mobile-show li {
+            list-style: square;
+        }
+        .header-splash {
+            min-height: 206px;
+        }
+        /*buttons*/
+        .bottom-button-container {
+            height: 55px;
+            width: 100%;
+        }
+        .apply-button {
+            font-size: 1.1em;
+            min-width: auto;
+        }
+        .find-button {
+            font-size: 1.1em;
+            min-width: 130px;
+        }
+        .bookmark-button {
+            min-width: auto;
+
+        }
+        .other-dialog {
+            max-width: 600px !important;
+            background-color: white !important;
+        }
+        .dialog-card {
+            width: 100%;
+        }
+        .login-card {
+            margin: 150px auto !important;
+        }
+    }
+
+    .header-icon-container {
+        color: white;
+        position: absolute;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .header-text {
+        line-height: 1.2;
+        color: white;
+        position: absolute;
+        font-weight: 600;
+    }
+
+    /*new*/
+    .job-detail-nav .v-toolbar__content {
+        padding: 0;
+        margin: 0;
+    }
+
+    .job-detail-padding {
+        padding: 0 18%
+    }
+
+    .dialog-button {
+        color: white;
+        box-shadow: 0 10px 12px -4px #eaeaf9;
+        height: 56px;
+        font-size: 18px;
+        border-radius: 2px;
+        width: 80%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+
+    /*resume uploader*/
+
+    .existing-container {
+        width: 90%;
+        height: 500px;
+        margin: 0 auto;
+    }
+
+    .existing-file {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: start;
+        background-color: #eee;
+        width: 99%;
+        height: 70px;
+    }
+
+    .existing-file p {
+        line-height: 70px;
+        transform: translateX(50px);
+    }
+
+    .uploader-checkbox {
+        position: absolute;
+        right: 10%;
+        transform: translateY(19px);
+    }
 </style>
 <template>
-  <v-container fluid style="padding: 0" id="job-detail-container">
-    <div class="header-splash mobile-hide" >
-      <div class="header-text-container">
-        <h1 class="header-text" style="top: 44%; font-size: 2.7em; margin: 0; min-height: 60px">
-          {{ findJob.title }}
-        </h1>
-        <p class="header-text" style="bottom: 5%; padding: 0; font-size: 12px;">
-          Posted by {{ findJob.posted_by }}
-        </p>
-      </div>
-    </div>
-    <!--mobile-->
-    <div class="header-splash mobile-show">
-      <h1 class="header-text" style="top: 40%; font-size: 1.8em; padding: 0 24px">
-        {{ findJob.title }}
-      </h1>
+    <v-container fluid style="padding: 0" id="job-detail-container">
+        <div class="header-splash mobile-hide">
+            <div class="header-text-container">
+                <h1 class="header-text" style="top: 44%; font-size: 2.7em; margin: 0; min-height: 60px">
+                    {{ findJob.title }}
+                </h1>
+                <p class="header-text" style="bottom: 5%; padding: 0; font-size: 12px;">
+                    Posted by {{ findJob.posted_by }}
+                </p>
+            </div>
+        </div>
+        <!--mobile-->
+        <div class="header-splash mobile-show">
+            <h1 class="header-text" style="top: 40%; font-size: 1.8em; padding: 0 24px">
+                {{ findJob.title }}
+            </h1>
 
-      <p class="header-text" style="bottom: 4%; font-size: 12px; padding: 0 24px">
-        Posted by {{ findJob.posted_by }}
-      </p>
+            <p class="header-text" style="bottom: 4%; font-size: 12px; padding: 0 24px">
+                Posted by {{ findJob.posted_by }}
+            </p>
 
-    </div>
-    <div class="job-detail-container">
-      <div class="sub-container">
-        <!--mobile job descriptions-->
-        <div class="mobile-hide">
-          <div class="carditem mobile-hide " style="">Posted <timeago :since="findJob.date"></timeago></div>
-          <div class="carditem" style="color: #A7A7A7;">
-            <p>
+        </div>
+        <div class="job-detail-container">
+            <div class="sub-container">
+                <!--mobile job descriptions-->
+                <div class="mobile-hide">
+                    <div class="carditem mobile-hide " style="">Posted
+                        <timeago :since="findJob.date"></timeago>
+                    </div>
+                    <div class="carditem" style="color: #A7A7A7;">
+                        <p>
 
-              <!--<v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon>-->
-              <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
-              <span style="padding-top: 2px;">
+                            <!--<v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon>-->
+                            <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
+                            <span style="padding-top: 2px;">
                 {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
-            </p>
-            <p v-if="findJob.university" style="margin-left: 24px;">
-              {{ findJob.university }}
-            </p>
-          </div>
+                        </p>
+                        <p v-if="findJob.university" style="margin-left: 24px;">
+                            {{ findJob.university }}
+                        </p>
+                    </div>
 
-          <div style="margin-top: 8px;">
-            <div v-if="findJob.type2 && computedType2" class="blue-row float-left pr-10">
-              <img class="job-info-icon" :src="svgs.Internship"/>
-              <span> {{ computedType2 }}</span>
-            </div>
-            <div v-if="findJob.studentfriendly" class="blue-row float-left pr-10">
-              <img class="job-info-icon" :src="svgs.sfSvg"/>
-              <span>student friendly</span>
-            </div>
-            <div class="blue-row float-left pr-10">
-              <img class="job-info-icon" :src="svgs.Clock"/>
-              <span v-for="(type, index) in jobType"> {{ type }}<span v-if="index + 1 < jobType.length">,</span></span>
-            </div>
-            <div class="blue-row">
-              <img class="job-info-icon" :src="svgs.sSvg"/>
-              <span>{{ salary }} </span>
-            </div>
-          </div>
+                    <div style="margin-top: 8px;">
+                        <div v-if="findJob.type2 && computedType2" class="blue-row float-left pr-10">
+                            <img class="job-info-icon" :src="svgs.Internship"/>
+                            <span> {{ computedType2 }}</span>
+                        </div>
+                        <div v-if="findJob.studentfriendly" class="blue-row float-left pr-10">
+                            <img class="job-info-icon" :src="svgs.sfSvg"/>
+                            <span>student friendly</span>
+                        </div>
+                        <div class="blue-row float-left pr-10">
+                            <img class="job-info-icon" :src="svgs.Clock"/>
+                            <span v-for="(type, index) in jobType"> {{ type }}<span
+                                    v-if="index + 1 < jobType.length">,</span></span>
+                        </div>
+                        <div class="blue-row">
+                            <img class="job-info-icon" :src="svgs.sSvg"/>
+                            <span>{{ salary }} </span>
+                        </div>
+                    </div>
 
-          <div style="min-height: 42px" v-show="
+                    <div style="min-height: 42px" v-show="
             (findJob.education && findJob.education !== 'None')
             || findJob.preferred_major || findJob.language">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
-            <div v-show="findJob.education && findJob.education !== 'None'" class="blue-row float-sm-up">
-              <img class="job-info-icon" :src="svgs.degree"/>
-              <span v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</span>
+                        <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
+                        <div v-show="findJob.education && findJob.education !== 'None'" class="blue-row float-sm-up">
+                            <img class="job-info-icon" :src="svgs.degree"/>
+                            <span v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</span>
+                        </div>
+                        <div v-show="findJob.preferred_major" class="blue-row float-sm-up">
+                            <img class="job-info-icon" :src="svgs.majorPreferred"/>
+                            <span>Majors preferred: {{ findJob.preferred_major }}</span>
+                        </div>
+                        <div v-show="findJob.language" class="blue-row">
+                            <img class="job-info-icon" :src="svgs.languages"/>
+                            <span>Additional language: {{ findJob.language }}</span>
+                        </div>
+                        <div v-show="findJob.age" class="blue-row">
+                            <img class="job-info-icon" :src="svgs.age"/>
+                            <span>Age: {{ findJob.age }}</span>
+                        </div>
+                    </div>
+
+                    <div class="blue-row" style="clear: both; margin-bottom: 16px;"
+                         v-if="findJob.shift && findJob.shift.length > 0">
+                        <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
+                        <img class="job-info-icon" :src="svgs.Clock"/>
+                        <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span
+                                v-if="index + 1 < findJob.shift.length">,</span></span>
+                    </div>
+                    <div v-else style="width: 100%; height: 16px;"></div>
+                </div>
+
+                <div class="mobile-show" style="font-size: 1.1em">
+                    <ul>
+                        <li>Posted
+                            <timeago :since="findJob.date"></timeago>
+                        </li>
+                        <li>{{ findJob.address }}
+                            <template v-if="findJob.address2"> {{ findJob.address2 }}</template>
+                        </li>
+                        <li v-if="findJob.university">{{ findJob.university }}</li>
+                    </ul>
+                    <div>
+                        <p v-show="findJob.type2 && computedType2 || findJob.studentfriendly || jobType" class="small-p"
+                           style="margin-bottom: 2px; margin-top: 5px;">Basic Overview:</p>
+                        <ul>
+                            <li v-if="findJob.type2 && computedType2"> {{ computedType2 }}</li>
+                            <li v-if="findJob.studentfriendly">Student Friendly</li>
+                            <li><span v-for="(type, index) in jobType"> {{ type }}<span
+                                    v-if="index + 1 < jobType.length">,</span></span></li>
+                        </ul>
+                    </div>
+                    <div v-show=" (findJob.education && findJob.education !== 'None') || findJob.preferred_major || findJob.language">
+                        <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
+                        <ul>
+                            <li v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</li>
+                            <li v-if="findJob.preferred_major"> Majors preferred: {{ findJob.preferred_major }}</li>
+                            <li v-if="findJob.language"> Additional language: {{ findJob.language }}</li>
+                            <li v-if="findJob.age"> Age: {{ findJob.age }}</li>
+                        </ul>
+                    </div>
+
+                    <div v-if="findJob.shift && findJob.shift.length > 0" style="margin-bottom: 16px;">
+                        <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
+                        <ul>
+                            <li v-for="(shift, index) in findJob.shift"> {{ shift }}<span
+                                    v-if="index + 1 < findJob.shift.length">,</span></li>
+                        </ul>
+                    </div>
+                    <div v-else style="width: 100%; height: 16px;"></div>
+
+                </div>
+
             </div>
-            <div v-show="findJob.preferred_major" class="blue-row float-sm-up">
-              <img class="job-info-icon" :src="svgs.majorPreferred"/>
-              <span>Majors preferred: {{ findJob.preferred_major }}</span>
+            <div class="v-divider"></div>
+            <div class="sub-container job-desc-subcontainer" style="padding-top: 24px; word-wrap: break-spaces;">
+                <h2 style="margin-bottom: 8px;">Job Overview</h2>
+                <div class="long-text-cont" v-html="findJob.description"></div>
+
+                <h2 style="margin-bottom: 8px;">Experience & Requirements</h2>
+                <div class="long-text-cont" v-html="findJob.experience"></div>
+
+                <h2 style="margin-bottom: 8px;">Responsibilities</h2>
+                <div class="long-text-cont" v-html="findJob.responsibilities"></div>
+
+                <v-container v-if="findJob.images && findJob.images.length > 0" fluid grid-list-sm
+                             style="margin: 20px 0;">
+                    <v-layout row wrap>
+                        <v-flex xs4 sm3 md2 class="image-container" v-for="image in findJob.images">
+                            <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image"
+                                 width="100%">
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+                <div class="bottom-button-container">
+                    <k-btn style="padding: 0 32px;" @click="openApplyDialog" :disabled="applied">{{ applied ? 'Applied'
+                        : 'Apply' }}
+                    </k-btn>
+                    <k-btn icon outline v-if="isSaved(findJob._id)" @click="saveJob(findJob._id)" color="orange"
+                           class="ml-2">
+                        <img src="../assets/job_detail/bookmark_full.svg" alt="">
+                    </k-btn>
+                    <k-btn v-else icon outline @click="saveJob(findJob._id)" color="#b3b3b3" class="ml-2">
+                        <img src="../assets/icons/Asset(36).svg" alt="">
+                    </k-btn>
+                </div>
+
+                <!-- in order to retain document height when bottom container is fixed -->
+                <div class="height-helper" v-show="stickToBottom"></div>
             </div>
-            <div v-show="findJob.language" class="blue-row">
-              <img class="job-info-icon" :src="svgs.languages"/>
-              <span>Additional language: {{ findJob.language }}</span>
-            </div>
-            <div v-show="findJob.age" class="blue-row">
-              <img class="job-info-icon" :src="svgs.age"/>
-              <span>Age: {{ findJob.age }}</span>
-            </div>
-          </div>
-
-          <div class="blue-row" style="clear: both; margin-bottom: 16px;" v-if="findJob.shift && findJob.shift.length > 0">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
-            <img class="job-info-icon" :src="svgs.Clock"/>
-            <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></span>
-          </div>
-          <div v-else style="width: 100%; height: 16px;"></div>
-        </div>
-
-        <div class="mobile-show" style="font-size: 1.1em">
-          <ul>
-            <li>Posted <timeago :since="findJob.date"></timeago></li>
-            <li>{{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template></li>
-            <li v-if="findJob.university">{{ findJob.university }}</li>
-          </ul>
-          <div>
-            <p v-show="findJob.type2 && computedType2 || findJob.studentfriendly || jobType" class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Basic Overview:</p>
-            <ul>
-              <li v-if="findJob.type2 && computedType2"> {{ computedType2 }} </li>
-              <li v-if="findJob.studentfriendly">Student Friendly</li>
-              <li><span v-for="(type, index) in jobType"> {{ type }}<span v-if="index + 1 < jobType.length">,</span></span></li>
-            </ul>
-          </div>
-          <div v-show=" (findJob.education && findJob.education !== 'None') || findJob.preferred_major || findJob.language">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
-            <ul>
-              <li v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</li>
-              <li v-if="findJob.preferred_major"> Majors preferred: {{ findJob.preferred_major }} </li>
-              <li v-if="findJob.language"> Additional language: {{ findJob.language }} </li>
-              <li v-if="findJob.age"> Age: {{ findJob.age }} </li>
-            </ul>
-          </div>
-
-          <div v-if="findJob.shift && findJob.shift.length > 0" style="margin-bottom: 16px;">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
-            <ul>
-              <li v-for="(shift, index) in findJob.shift"> {{ shift }}<span v-if="index + 1 < findJob.shift.length">,</span></li>
-            </ul>
-          </div>
-          <div v-else style="width: 100%; height: 16px;"></div>
 
         </div>
 
-      </div>
-      <div class="v-divider"></div>
-      <div class="sub-container job-desc-subcontainer" style="padding-top: 24px; word-wrap: break-spaces;">
-        <h2 style="margin-bottom: 8px;">Job Overview</h2>
-        <div class="long-text-cont" v-html="findJob.description"></div>
+        <!--dialog for apply job flow-->
+        <v-dialog class="other-dialog" v-model="otherdialog"
+                  :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
+            <v-card v-if="loginState === 'start'" flat class="dialog-card"
+                    style="height: 500px; display: flex; flex-direction: column;">
+                <div style="height: 40%">
+                    <p class="kunvet-red apply-text">Welcome to Kunvet!</p>
+                </div>
 
-        <h2 style="margin-bottom: 8px;">Experience & Requirements</h2>
-        <div class="long-text-cont" v-html="findJob.experience"></div>
+                <div style="height: 60%; text-align: center">
+                    <button @click="handleSignup" class="kunvet-v-btn dialog-button"
+                            style="width: 80%; position: relative;top: 42%">Sign Up
+                    </button>
+                    <button @click="handleLogin" class="loginRedButton dialog-button"
+                            style=" width: 80%; position: relative;top: 46%">Log In
+                    </button>
 
-        <h2 style="margin-bottom: 8px;">Responsibilities</h2>
-        <div class="long-text-cont" v-html="findJob.responsibilities"></div>
+                </div>
+                <button class="mobile-show" style="position: relative; bottom: 0;" @click="otherdialog=false">
+                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+                </button>
+            </v-card>
 
-        <v-container v-if="findJob.images && findJob.images.length > 0" fluid grid-list-sm style="margin: 20px 0;">
-          <v-layout row wrap>
-            <v-flex xs4 sm3 md2 class="image-container" v-for="image in findJob.images">
-              <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image" width="100%">
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <div class="bottom-button-container">
-          <k-btn style="padding: 0 32px;" @click="openApplyDialog" :disabled="applied">{{ applied ? 'Applied' : 'Apply' }}</k-btn>
-          <k-btn icon outline v-if="isSaved(findJob._id)" @click="saveJob(findJob._id)" color="orange" class="ml-2">
-            <img src="../assets/job_detail/bookmark_full.svg" alt="">
-          </k-btn>
-          <k-btn v-else icon outline @click="saveJob(findJob._id)" color="#b3b3b3" class="ml-2">
-            <img src="../assets/icons/Asset(36).svg" alt="">
-          </k-btn>
-        </div>
+            <v-card flat class="dialog-card" v-else-if="loginState === 'login'" color="white">
+                <div class="main-cont-small login-card"
+                     style="height: 100%; border: none !important; margin: 48px 0 !important;">
+                    <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
+                    <div style="width: 50px; background-color: blue"></div>
+                </div>
+                <button class="mobile-show"
+                        style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)"
+                        @click="otherdialog=false">
+                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+                </button>
+            </v-card>
 
-        <!-- in order to retain document height when bottom container is fixed -->
-        <div class="height-helper" v-show="stickToBottom"></div>
-      </div>
+            <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
+                <SignupComponent :includeLogin="true" @account="getColor" @success="handleResume"
+                                 style="padding: 30px"></SignupComponent>
+                <k-btn @click="loginState='login'" :color="accountColor"
+                       style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">
+                    Back to Login
+                </k-btn>
+                <button class="mobile-show"
+                        style="position: relative; bottom: -50px; left: 50%; transform: translateX(-50%)"
+                        @click="otherdialog=false">
+                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+                </button>
+            </v-card>
 
-    </div>
+            <v-card flat class="dialog-card" v-else-if="loginState === 'verify'">
+                <CodeVerification ref="cver" @verified="handleVerified"
+                                  style="margin-top: 32px; margin-bottom: 32px;"></CodeVerification>
+                <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
+                        @click="otherdialog=false">
+                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+                </button>
+            </v-card>
 
-    <!--dialog for apply job flow-->
-    <v-dialog class="other-dialog" v-model="otherdialog"
-              :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
-      <v-card v-if="loginState === 'start'" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
-        <div style="height: 40%">
-          <p style="color: #EA596B; font-size: 48px; width: 80%; margin: 0 auto; padding: 40px 20px 20px 0; font-weight: bold; line-height: 1.3">Welcome to Kunvet!</p>
-        </div>
+            <v-card flat class="dialog-card" v-else-if="loginState==='resume'">
+                <div class="existing-container" enctype="multipart/form-data" novalidate>
 
-        <div style="height: 60%; text-align: center">
-          <button @click="handleSignup" class="kunvet-v-btn dialog-button" style="width: 80%; position: relative;top: 42%">Sign Up</button>
-          <button @click="handleLogin" class="loginRedButton dialog-button" style=" width: 80%; position: relative;top: 46%">Log In</button>
+                    <div style="padding-top: 20px" v-if="this.resumes.length > 0">
+                        <h2>Select Existing Files or Upload More</h2>
+                        <p v-if="resumeExists">{{selectedResumes.length}} {{selectedResumes.length | plural}}
+                            selected</p>
+                        <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file"
+                             v-for="(file, index) in this.resumes">
+                            <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
+                            <p v-if="file.name.length < 30">{{file.name}}</p>
+                            <p v-else>{{file.name | truncate}}</p>
+                            <v-checkbox color="#ef5350" class="uploader-checkbox" v-model="file.selected"></v-checkbox>
+                        </div>
+                    </div>
+                    <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded"
+                                    style="width: 100%;"></ResumeUploader>
+                    <k-btn v-if="resumeExists" @click="createApplication" :disabled="!selectedResumes.length"
+                           style="margin: 20px auto;">Confirm Files
+                    </k-btn>
+                    <button class="mobile-show"
+                            style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
+                            @click="otherdialog=false">
+                        <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+                    </button>
+                </div>
+            </v-card>
 
-        </div>
-        <button class="mobile-show" style="position: relative; bottom: 15%;" @click="otherdialog=false" >
-          <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-        </button>
-      </v-card>
+            <v-card flat class="dialog-card" v-else-if="loginState === 'success'">
+                <v-card-title class="kunvet-red apply-text">Thank you! Your application is under review.</v-card-title>
+                <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
+                        @click="otherdialog=false">
+                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+                </button>
+            </v-card>
 
-      <v-card flat class="dialog-card" v-else-if="loginState === 'login'" color="white">
-        <div class="main-cont-small login-card" style="height: 100%; border: none !important; margin: 48px 0 !important;">
-          <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
-          <div style="width: 50px; background-color: blue"></div>
-        </div>
-        <button class="mobile-show" style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
-          <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-        </button>
-      </v-card>
-
-      <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
-        <SignupComponent :includeLogin="true" @account="getColor" @success="handleResume" style="padding: 30px"></SignupComponent>
-        <k-btn @click="loginState='login'" :color="accountColor" style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">Back to Login</k-btn>
-        <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
-          <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-        </button>
-      </v-card>
-
-      <v-card flat class="dialog-card" v-else-if="loginState === 'verify'">
-        <CodeVerification ref="cver" @verified="handleVerified" style="margin-top: 32px; margin-bottom: 32px;"></CodeVerification>
-        <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
-          <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-        </button>
-      </v-card>
-
-      <v-card flat class="dialog-card" v-else-if="loginState==='resume'">
-        <div class="existing-container"  enctype="multipart/form-data" novalidate>
-
-          <div style="padding-top: 20px" v-if="this.resumes.length > 0">
-            <h2>Select Existing Files or Upload More</h2>
-            <p v-if="resumeExists">{{selectedResumes.length}} {{selectedResumes.length | plural}} selected</p>
-            <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="(file, index) in this.resumes">
-              <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
-              <p v-if="file.name.length < 30">{{file.name}}</p>
-              <p v-else>{{file.name | truncate}}</p>
-              <v-checkbox color="#ef5350" class="uploader-checkbox" v-model="file.selected"></v-checkbox>
-            </div>
-          </div>
-          <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
-          <k-btn v-if="resumeExists" @click="createApplication" :disabled="!selectedResumes.length" style="margin: 20px auto;">Confirm Files</k-btn>
-        </div>
-      </v-card>
-
-      <v-card flat class="dialog-card" v-else-if="loginState === 'success'">
-        <h2>Thank you! Your application was selected</h2>
-        <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
-          <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-        </button>
-      </v-card>
-
-      <v-card flat class="dialog-card" v-else-if="loginState='success'">
-        <v-card-title>Complete!</v-card-title>
-        <p>Thank you for sending in an application. It is currently under review.
-          We will notify you once your application is viewed. Thanks for using Kunvet!</p>
-      </v-card>
-
-    </v-dialog>
-  </v-container>
+        </v-dialog>
+    </v-container>
 </template>
 <script>
     import gql from 'graphql-tag';
@@ -756,8 +837,8 @@
           return '';
         },
         /* This computed function finds all resumes in this.resumes that are 'selected'
-        and returns them as an array.
-        */
+            and returns them as an array.
+            */
         selectedResumes() {
           const selected = [];
           for (var i = 0; i < this.resumes.length; ++i) {
@@ -837,9 +918,9 @@
           }).then((data) => {
             this.findJob = data.data.findJob;
             /*
-                      Or better, including more details for SEO:
-                      Node.js Developer at Kunvet in Irvine, CA
-                    */
+                              Or better, including more details for SEO:
+                              Node.js Developer at Kunvet in Irvine, CA
+                            */
             this.$setTitle(this.findJob.title);
 
             this.jobType = [];
@@ -1013,9 +1094,9 @@
             this.loading = true;
             // const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
             /* resume: this.resumes.length > 0 ? ({
-                      filename: this.resumes[index].filename,
-                      resumeid: this.resumes[index].resumeid,
-                    }) : null, */
+                              filename: this.resumes[index].filename,
+                              resumeid: this.resumes[index].resumeid,
+                            }) : null, */
             // const _resumes = this.resumes
             //   .map(r => ({ filename: r.filename, resumeid: r.resumeid }))
             //   .filter(r => this.selectedResumes.indexOf(r.filename) !== -1);
