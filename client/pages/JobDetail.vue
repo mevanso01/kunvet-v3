@@ -764,7 +764,8 @@
       </v-card>
 
       <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
-        <SignupComponent @success="handleResume" style="padding: 30px"></SignupComponent>
+        <SignupComponent :includeLogin="true" @account="getColor" @success="handleResume" style="padding: 30px"></SignupComponent>
+        <k-btn @click="loginState='login'" :color="accountColor" style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">Back to Login</k-btn>
         <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>
@@ -830,16 +831,13 @@
     import { degreeStringToDb } from '@/constants/degrees';
     import Config from 'config';
     import ProfilePicHelper from '@/utils/GetProfilePic';
-    // import FileClient from '@/utils/FileClient';
     import queries from '@/constants/queries';
-    import parseUrl from 'url-parse';
     import userDataProvider from '@/userDataProvider';
     import MobileMenu from '@/components/MobileMenu';
     import LoginComponent from '@/components/LoginComponent';
     import SignupComponent from '@/components/SignupComponent';
     import ResumeUploader from '@/components/ResumeUploader';
     import CodeVerification from '@/components/CodeVerification';
-    // const DefaultPic = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
 
     export default {
       filters: {
@@ -910,6 +908,7 @@
           email_verified: true,
           message: null,
           stickToBottom: true,
+          accountColor: '#3488fc',
         };
       },
       computed: {
@@ -918,27 +917,6 @@
         },
         resumeExists() {
           return this.resumes.length > 0;
-        },
-        selectedResumeNames() {
-          if (this.selectedResumes.length > 0) {
-            /* (const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
-                    if (index !== -1) {
-                      return this.resumes[index].name;
-                    } */
-            return this.resumes.filter(r => this.selectedResumes.indexOf(r.filename) !== -1).map(r => r.name);
-          }
-          return [];
-          // return null;
-        },
-        formattedFormLink() {
-          if (!this.findJob.gform_link) {
-            return '';
-          }
-          const link = parseUrl(this.findJob.gform_link, {});
-          if (!link.protocol) {
-            link.set('protocol', 'http');
-          }
-          return link.href;
         },
         computedType2() {
           if (Array.isArray(this.findJob.type2) && this.findJob.type2.length > 0) {
@@ -960,6 +938,9 @@
         },
       },
       methods: {
+        getColor(info) {
+          this.accountColor = info.color;
+        },
         resumeUploaded(_filename, _resumename) {
           const newResume = {
             name: _resumename,
@@ -1060,17 +1041,9 @@
         },
         openApplyDialog() {
           this.dialog = true;
-          if (this.uid) {
-            // this.state = 'INITIAL';
-            // this.applyState = 'MAIN';
-            // this.applydialog = true;
-            // this._getUserData();
-            this.otherdialog = true;
+          this.otherdialog = true;
+          if (this.uid) { // user is already logged in
             this.handleResume();
-          } else {
-            this.otherdialog = true;
-            this.start = true;
-            // this.$router.push('/login');
           }
         },
         getSavedJobs() {
@@ -1316,44 +1289,6 @@
             this.uploadResume();
           }
         },
-        // here
-        // uploadResume() {
-        //   this.client = new FileClient();
-        //   let curId = null;
-        //   if (!this.file) {
-        //     return;
-        //   }
-        //   this.state = 'UPLOADING';
-        //
-        //   setImmediate(async () => {
-        //     try {
-        //       curId = await this.client.createFileSlot(this.file.name, this.file.type);
-        //     } catch (e) {
-        //       this.$error(e);
-        //       this.state = 'ERROR';
-        //       this.errorMessage = e.message;
-        //       return;
-        //     }
-        //     try {
-        //       await this.client.uploadFile(curId, this.file);
-        //     } catch (e) {
-        //       this.$error(e);
-        //       this.state = 'ERROR';
-        //       this.errorMessage = e.message;
-        //       return;
-        //     }
-        //     this.resumes.push({
-        //       name: this.file.name,
-        //       filename: curId,
-        //       resumeid: null,
-        //     });
-        //     this.selectedResume = curId;
-        //     this.file = null;
-        //     this.fileName = null;
-        //     this.state = 'UPLOADED';
-        //     this.updateAccount();
-        //   });
-        // },
         updateAccount() {
           // this is weird. Not sure why it adds the property '__typename' if I dont do this
           const _resumes = this.resumes.map(({

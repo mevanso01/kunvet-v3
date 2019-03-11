@@ -3,23 +3,12 @@
     cursor:pointer;
     text-align:center;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 15px;
   }
   .link:hover{
-    text-decoration: underline;
-  }
-  a:hover{
     cursor:pointer;
     text-decoration: underline;
   }
-  /*.login-section {*/
-    /*padding: 16px 0;*/
-  /*}*/
-  /*@media (min-width: 600px) {*/
-    /*.login-section {*/
-      /*padding: 16px 32px;*/
-    /*}*/
-  /*}*/
   section {
     padding: 0 !important;
   }
@@ -60,7 +49,7 @@
             required
           ></k-text-field>
           <p id="ask-sign-up" style="color: #616161; margin-bottom: 4px; margin-top: 38px">
-            <a @click="$emit('toSignup')" class="link">Create an account</a>
+            <a @click="$emit('toSignup')" class="link">Don't have an account? Sign Up</a>
           </p>
           <p id="forgot-password" style="margin-bottom: 38px">
             <a @click="forgetpwd=1" class="link">Forgot your password?</a>
