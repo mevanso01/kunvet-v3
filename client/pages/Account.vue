@@ -373,7 +373,7 @@
               </v-flex>
             </v-layout>
 
-            <v-dialog v-model="showFileModal" max-width="500">
+            <v-dialog v-model="showFileModal" max-width="500" :fullscreen="$vuetify.breakpoint.xsOnly">
               <ResumeUploader
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"

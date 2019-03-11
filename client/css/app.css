@@ -252,12 +252,11 @@ button:focus {
   padding-bottom: 8px;
 }
 /*  ---- Styles to globally override Vuetify ----  */
-.v-dialog {
-  max-width: 420px;
-}
 .v-dialog--active {
   background-color: white !important;
-  height: 500px !important;
+}
+.v-dialog--fullscreen > .v-card {
+  min-height: unset;
 }
 .container {
   padding-top: 80px;
@@ -1083,8 +1082,14 @@ body {
   .padding-sm-left {
     padding-left: 15px;
   }
+  .v-dialog--active {
+      height: 500px;
+  }
 }
 @media (min-width: 961px) {
+  .v-dialog--active {
+    height: 500px;
+  }
   .flex {
     padding: 10px 0;
   }
@@ -1160,6 +1165,9 @@ body {
     /*}*/
 }
 @media (max-width: 600px) {
+    .v-dialog--active {
+        height: inherit;
+    }
     #bottom .footer-big-text {
       width: 100%;
     }

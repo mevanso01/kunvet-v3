@@ -161,10 +161,6 @@
   .mobile-show {
     display: none;
   }
-  /*desktop version*/
-  /*.dialog-card {*/
-    /*width: 500px;*/
-  /*}*/
 
   .header-icon-container {
     color: white;
@@ -740,12 +736,11 @@
     <!--</v-dialog>-->
 
 
-    <v-dialog class="other-dialog" style="background-color: white;" v-model="otherdialog"
+    <v-dialog class="other-dialog" v-model="otherdialog"
               :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
       <v-card v-if="loginState === 'start'" class="dialog-card" style="height: 500px; display: flex; flex-direction: column;">
         <div style="height: 40%">
           <p style="color: #EA596B; font-size: 48px; width: 80%; margin: 0 auto; padding: 40px 20px 20px 0; font-weight: bold; line-height: 1.3">Welcome to Kunvet!</p>
-          <!--<p style="font-size: 14px; width: 80%; margin: 0 auto; padding-right: 20px;">Lorem Ipsum</p>-->
         </div>
 
         <div style="height: 60%; text-align: center">
@@ -761,7 +756,7 @@
       <v-card flat class="dialog-card" v-else-if="loginState === 'login'" color="white">
         <div class="main-cont-small login-card" style="height: 100%; border: none !important; margin: 48px 0 !important;">
           <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
-
+          <div style="width: 50px; background-color: blue"></div>
         </div>
         <button class="mobile-show" style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
@@ -769,7 +764,7 @@
       </v-card>
 
       <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
-        <SignupComponent @success="handleResume"></SignupComponent>
+        <SignupComponent @success="handleResume" style="padding: 30px"></SignupComponent>
         <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)" @click="otherdialog=false" >
           <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
         </button>
@@ -785,14 +780,14 @@
       <v-card flat class="dialog-card" v-else-if="loginState==='resume'">
         <div class="existing-container"  enctype="multipart/form-data" novalidate>
 
-          <div style="margin-top: 20px" v-if="this.resumes.length > 0">
+          <div style="padding-top: 20px" v-if="this.resumes.length > 0">
             <h2>Select Existing Files or Upload More</h2>
             <p v-if="resumeExists">{{selectedResumes.length}} {{selectedResumes.length | plural}} selected</p>
             <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file" v-for="(file, index) in this.resumes">
               <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
               <p v-if="file.name.length < 30">{{file.name}}</p>
               <p v-else>{{file.name | truncate}}</p>
-              <v-checkbox class="uploader-checkbox" v-model="file.selected"></v-checkbox>
+              <v-checkbox color="#ef5350" class="uploader-checkbox" v-model="file.selected"></v-checkbox>
             </div>
           </div>
           <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded" style="width: 100%;"></ResumeUploader>
