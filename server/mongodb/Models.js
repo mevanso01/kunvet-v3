@@ -474,7 +474,7 @@ const AccountSchema = Mongoose.Schema({
       type: String,
       enum: ['All', 'Off'],
       // enum: ['None', 'Monthy', 'Weekly', 'Daily',],
-      default: 'All',
+      default: 'Off',
     },
     applicationStatusEmails: {
       type: String,

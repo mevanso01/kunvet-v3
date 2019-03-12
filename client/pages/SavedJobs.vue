@@ -1,4 +1,4 @@
-<style  lang="scss">
+<style lang="scss" scoped>
 .main-cont-large {
   padding: 0 16px;
 }
