@@ -366,7 +366,7 @@
   max-width: 400px;
 }
 .hire_kunvet_container {
-  height: 340px; margin-top:30px;
+  height: 300px; margin-top:40px;
   background:  #FFC371;
   background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
   background: linear-gradient(to right,  #ff5f6d, #FFC371);
@@ -390,8 +390,8 @@
 }
 
 .loved_trusted_container {
-  height: 340px;
-  margin-top:30px;
+  height: 350px;
+  margin-top:22px;
   background:  #2f89fc;
   background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
   background: linear-gradient(to right,  #a57fff , #2f89fc);
