@@ -378,6 +378,7 @@
 
             <v-dialog v-model="showFileModal" max-width="500" :fullscreen="$vuetify.breakpoint.xsOnly">
               <ResumeUploader
+                title="Upload new resume or cover letter"
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
               />

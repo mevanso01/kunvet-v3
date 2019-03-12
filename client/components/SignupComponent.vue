@@ -19,11 +19,6 @@ h1 {
   font-weight: bold;
 }
 
-.move-right {
-  position: absolute;
-  right: 30px;
-  width: 40%;
-}
 </style>
 
 <template>
@@ -55,7 +50,7 @@ h1 {
         <k-text-field v-model="email" label="Email Address" :rules="emailRules" required></k-text-field>
         <k-text-field v-model="password" toggleVisibility label="Password" :rules="passwordRules" required></k-text-field>
 
-        <k-btn :class="{'move-right' : this.includeLogin}" @click="signup" :working="loading" :color="accountTypeInfo.color">Sign Up</k-btn>
+        <k-btn @click="signup" :working="loading" :color="accountTypeInfo.color">Sign Up</k-btn>
       </v-form>
     </div>
     <div v-show="state == 'error'" class="container">
@@ -89,10 +84,6 @@ export default {
       default: false,
     },
     dontValidate: {
-      type: Boolean,
-      default: false,
-    },
-    includeLogin: {
       type: Boolean,
       default: false,
     },

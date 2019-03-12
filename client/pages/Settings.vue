@@ -95,19 +95,17 @@
           like <v-switch @change="saveFunctionHere()" v-model="preferences_bool"></v-switch>
           or a save button -->
         <div v-if="preferences">
-          <div class="email_preferences">Recieve emails about new applicants</div>
-          <v-switch color="red" class="switch_settings"></v-switch>
+          <!-- <div class="email_preferences">Recieve emails about new applicants</div>
+          <v-switch color="red" class="switch_settings"></v-switch> -->
 
           <div class="email_preferences">Recieve emails about application status</div>
-          <v-switch v-model="preferences_bool" color="red" class="switch_settings"></v-switch>
-
-          <div class="email_preferences">{{preferences_bool}} and {{preferences.applicationStatusEmails}}</div>
+          <v-switch @change="savePreferences()" v-model="application_bool" color="red" class="switch_settings"></v-switch>
 
           <div class="email_preferences">Recieve emails about job expiration</div>
-          <v-switch color="red" class="switch_settings"></v-switch>
+          <v-switch @change="savePreferences()" v-model="jobExpired_bool" color="red" class="switch_settings"></v-switch>
 
           <div class="email_preferences">Recieve emails about newsletters</div>
-          <v-switch color="red" class="switch_settings"></v-switch>
+          <v-switch @change="savePreferences()" v-model="getNewsletter_bool" color="red" class="switch_settings"></v-switch>
         </div>
 
         <br><br><br>
@@ -161,7 +159,9 @@
         deleteOrgDialog: false,
         account_email: null,
         preferences: null,
-        preferences_bool: true,
+        application_bool: true,
+        getNewsletter_bool: false,
+        jobExpired_bool: false,
       };
     },
     components: {
@@ -203,24 +203,10 @@
         this.account_email = res.email;
         this.preferences = res.preferences;
 
-        //  TAKE A LOOK HERE PLS
+        this.getNewsletter_bool = this.preferences.getNewsletters;
+        this.application_bool = (this.preferences.applicationStatusEmails === 'All');
+        this.jobExpired_bool = (this.preferences.jobExpiredEmails === 'All');
 
-        if (res.preferences.applicationStatusEmails === 'All') {
-          this.preferences_bool = true;
-        } else {
-          this.preferences_bool = false;
-        }
-        // Leo: this entire block can be moved into the block above
-        // Leo: also, if the names of the properties in this.preferences match the names of the account preferences,
-        // then the line 'this.preferences = res.preferences;' is sufficient and this block is useless
-        if (this.preferences_bool === false) {
-          // Leo: there is no point in modifying the res object! It is only available in this function anyway
-          // res.preferences.applicationStatusEmails = 'Off'; // Leo: I've commented this out
-          this.preferences.applicationStatusEmails = 'Off';
-        } else {
-          // res.preferences.applicationStatusEmails = 'All'; // Leo: I've commented this out
-          this.preferences.applicationStatusEmails = 'All';
-        }
         if (res.org_list && res.org_list[0] !== null) {
           this.orgList = res.org_list;
         }
@@ -429,8 +415,13 @@
       loginToRegularAccount() {
         EventBus.$emit('individual');
       },
-      saveUserData() {
+      savePreferences() {
         if (!this.preferences) return;
+
+        this.preferences.getNewsletters = this.getNewsletter_bool;
+        this.preferences.applicationStatusEmails = (this.application_bool) ? 'All' : 'Off';
+        this.preferences.jobExpiredEmails = (this.jobExpired_bool) ? 'All' : 'Off';
+
         userDataProvider.setUserData({
           preferences: {
             getNewsletters: this.preferences.getNewsletters,
