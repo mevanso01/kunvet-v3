@@ -1,13 +1,25 @@
 <style lang="scss" scoped>
-    .job-star-icon {
-        color: #e0e0e0;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .job-star-icon-starred {
-        color: #ef5350;
-    }
+  .file-icon {
+    width: 85px;
+    margin: 0 15px;
+    transform: translateY(15%);
+  }
+  .smaller-file-icon {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5%;
+  }
+  .job-star-icon {
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .job-star-icon-starred {
+    color: #ef5350;
+  }
 
     .job-time,
     .job-address,
