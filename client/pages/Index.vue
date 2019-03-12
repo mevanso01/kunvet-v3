@@ -300,7 +300,7 @@
   margin-bottom: 50px;
 }
 .search_assist {
-  margin-left:40%;
+  margin-left:16px;
   color:grey;
   font-size:16px;
 }
@@ -366,7 +366,7 @@
   max-width: 400px;
 }
 .hire_kunvet_container {
-  height: 320px; margin-top:30px;
+  height: 340px; margin-top:30px;
   background:  #FFC371;
   background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
   background: linear-gradient(to right,  #ff5f6d, #FFC371);
@@ -390,7 +390,7 @@
 }
 
 .loved_trusted_container {
-  height: 320px;
+  height: 340px;
   margin-top:30px;
   background:  #2f89fc;
   background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
@@ -440,7 +440,7 @@
 @media only screen and (min-width: 821px) {
   .searchBar {
     width: 89%;
-    width: calc(90% - 10px);
+    width: calc(100% - 82px);
     float:left;
     background-color:white;
     box-shadow: 0 10px 12px -4px #eaeaf9;
