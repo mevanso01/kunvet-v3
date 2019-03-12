@@ -9,14 +9,14 @@
 }
 section.search,
 section.search > .main-cont-large {
-  background-color: #f2f7ff;
+  background-color: white;
 }
 section.search {
   width: 100%;
   margin: 0 0 10px 0;
   .custom-select-2,
   .search-params-field {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 6px 20px rgba(177, 176, 176, .1);
     border-radius: 4px;
     height: 56px;
     // box-shadow: 0 10px 12px -4px #eaeaf9;
@@ -207,10 +207,11 @@ section.search {
   height: 48px;
   width: 100%;
   background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 6px 20px rgba(177, 176, 176, .1);
   position: relative;
   overflow-y: hidden;
   transition: all 0.3s ease;
+  padding: 0 24px;
   label {
     // line-height: 22px !important;
   }
@@ -305,7 +306,7 @@ section.search {
                 </div>
 
                 <v-list dense class="custom-select-menu">
-                  <v-list-tile  @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
+                  <v-list-tile style="padding: 0 8px;" @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
                 </v-list>
               </div>
             </div>
@@ -324,7 +325,7 @@ section.search {
             <button @click="search()" v-ripple class="mobile-hide kunvet-search-btn small">
               <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
             </button>
-            <k-btn @click="search()" block v-ripple class="mobile-show">
+            <k-btn @click="search()" block v-ripple class="mobile-show" style="box-shadow: 3px 6px 20px rgb(249, 157, 156);">
               Search
             </k-btn>
           </div>
@@ -407,7 +408,7 @@ section.search {
         <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
           <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please type in a different query or select a different location.</h3>
         </div>
-        <div class="algoliaLogo">
+        <div class="algoliaLogo" style="color: white;">
           <ais-powered-by></ais-powered-by>
         </div>
       </v-layout>
