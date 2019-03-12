@@ -2,9 +2,9 @@ import Store from '@/store';
 import EventBus from '@/EventBus';
 import axios from 'axios';
 import { degreeDbToString } from '@/constants/degrees';
+import apolloClient from '@/apollo/client';
+import gql from 'graphql-tag';
 
-// import apolloClient from '@/apollo/client';
-// import gql from 'graphql-tag';
 /*
 function fetchUserData(userID) {
   apolloClient.query({
@@ -59,11 +59,11 @@ function fetchUserData(userID) {
 }
 */
 
-function commitUserdata(udata) {
+function commitUserdata(udata, updateLastFetched = false) {
   Store.commit({
     type: 'keepUserdata',
     userdata: udata,
-    updateLastFetched: true,
+    updateLastFetched: updateLastFetched,
   });
 }
 
@@ -105,7 +105,8 @@ async function getUserData() {
     if (acct === 2) {
       Store.commit({ type: 'setBusinessID', id: userdata.default_org });
     }
-    commitUserdata(userdata);
+    // commit userdata to LS update last fetched date
+    commitUserdata(userdata, true);
     return {
       acct: acct,
       uid: userdata._id,
@@ -124,7 +125,103 @@ async function getUserData() {
   };
 }
 
+/** Function for setting user data.
+ *  INPUT: Takes in an object with account attributes to be set (the object can have any number of account attributes)
+ *  OUTPUT: returns a promise that either resolves or rejects based on if save operation was successful */
+function setUserData(newUdata) {
+  return new Promise((resolve, reject) => {
+    const record = {};
+    const uid = Store.state.userID;
+
+    if (!uid) {
+      reject('No User ID');
+      return;
+    }
+
+    // attributes allowed to modify
+    // TODO: implement special parameters for resumes and preferences
+    const allowedAttributes = [
+      'firstname',
+      'lastname',
+      'school',
+      'degree',
+      'major',
+      'wechat_id',
+      'profile_pic',
+      'org_list',
+      'default_org',
+      'resumes',
+      'preferences',
+      'account_type',
+    ];
+
+    for (const key of Object.keys(newUdata)) {
+      if (allowedAttributes.indexOf(key) !== -1) {
+        record[key] = newUdata[key];
+      } else {
+        console.log(`WARNING: ${key} is not in allowed attributes to modify`);
+      }
+    }
+
+    apolloClient.mutate({
+      mutation: (gql`
+        mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
+      {
+        updateAccount (
+          filter: { _id: $uid },
+          record: $record,
+        ) {
+          recordId
+        }
+      }`),
+      variables: {
+        uid: uid,
+        record: record,
+      },
+      refetchQueries: [{
+        query: (gql`query ($uid: MongoID) {
+          findAccount (filter: {
+            _id: $uid
+          }) {
+            _id
+            firstname
+            lastname
+            school
+            degree
+            major
+            email
+            wechat_id
+            profile_pic
+            org_list
+            default_org
+            resumes {
+              name
+              filename
+              resumeid
+            }
+            preferences {
+              getNewsletters
+              jobExpiredEmails
+              applicationStatusEmails
+            }
+            account_type
+          }
+        }`),
+        variables: {
+          uid: uid,
+        },
+      }],
+    }).then((data) => {
+      commitUserdata(record); // important: update userdata in LS
+      resolve(data); // data looks like: { updateAccount: { recordId: "..." } }
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}
+
 export default {
   getUserData,
   getUserDataFromLS,
+  setUserData,
 };

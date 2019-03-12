@@ -147,6 +147,7 @@
   import Axios from 'axios';
   import gql from 'graphql-tag';
   import SwitchAccount from '@/components/SwitchAccount';
+  import userDataProvider from '@/userDataProvider';
 
   export default {
     props: ['command'],
@@ -427,6 +428,16 @@
       },
       loginToRegularAccount() {
         EventBus.$emit('individual');
+      },
+      saveUserData() {
+        if (!this.preferences) return;
+        userDataProvider.setUserData({
+          preferences: {
+            getNewsletters: this.preferences.getNewsletters,
+            jobExpiredEmails: this.preferences.jobExpiredEmails,
+            applicationStatusEmails: this.preferences.applicationStatusEmails,
+          },
+        });
       },
     },
     computed: {
