@@ -267,12 +267,15 @@
               <v-flex v-if="showResumeSection" xs12 sm6 md5 class="padding-sm-right">
                 <account-header
                   :svg="svgs.resume"
-                  :text="'My Resumes'"
+                  :text="'My Files'"
                 />
+
                 <p v-if="!userdata.resumes || userdata.resumes.length === 0">
                   Upload your resume or cover letter. Use it to apply for any jobs on Kunvet.
                 </p>
+
                 <v-list two-line class="acct-list" v-else>
+                  <p>Manage your resumes/cover letters/CV/portfolios here.</p>
                   <div v-for="(resume, index) in userdata.resumes" :key="index">
                     <v-list-tile>
                       <v-list-tile-content>
@@ -299,7 +302,7 @@
                 <k-btn
                   @click="showFileModal = true"
                 >
-                  Add Resume
+                  Add File
                 </k-btn>
               </v-flex>
               <v-flex v-else xs12 sm6 md5 class="padding-sm-left">
