@@ -40,6 +40,11 @@
     font-weight: bold;
   }
 }
+@media (min-width: 960px) {
+  h2 {
+    margin-bottom: 12px;
+  }
+}
 @media (min-width: 601px) {
   .choose-account-section {
     padding-bottom: 32px;
@@ -57,6 +62,25 @@
   .main-cont-large-clear {
     margin-bottom: 48px;
   }
+  .mobile-hr {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .choose-account-section {
+    padding: 16px 0;
+  }
+  .v-card {
+    box-shadow: none !important;
+  }
+  .mobile-hr {
+    display: block;
+    margin: 16px auto 20px auto;
+  }
+  .text-xs-center.pos-bottom {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
 }
 </style>
 
@@ -65,7 +89,7 @@
     <div id="signup" class="main-cont-large-clear" v-show="!alreadyloggedin">
       <section v-if="chosenForm === ''" class="choose-account-section">
           <div class="text-xs-center">
-               <h1>Select an account</h1>
+            <h1>Select an account</h1>
           </div>
           <v-layout row wrap>
             <v-flex sm4>
@@ -82,6 +106,7 @@
               </v-card>
             </v-flex>
             <v-flex sm4>
+              <v-divider class="mobile-hr" />
               <v-card>
                 <v-card-text>
                   <div style="margin-bottom: 84px;">
@@ -95,9 +120,10 @@
               </v-card>
             </v-flex>
             <v-flex sm4>
+              <v-divider class="mobile-hr" />
               <v-card>
                 <v-card-text>
-                  <div style="margin-bottom: 64px;">
+                  <div style="margin-bottom: 84px;">
                     <h2 class="individual-signup-color">Personal Hiring</h2>
                     <p>If you're an individual looking to hire someone, choose this option</p>
                   </div>
@@ -107,38 +133,6 @@
                 </v-card-text>
               </v-card>
             </v-flex>
-            <!-- <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
-              <v-card>
-                <v-card-text>
-                  <div style="margin-bottom: 64px;">
-                    <h2>Personal</h2>
-                    <p>Choose if you're:</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A professor looking for an assistant</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> An applicant searching for jobs</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> An individual searching for a tutor</p>
-                  </div>
-                  <div class="text-xs-center pos-bottom">
-                    <v-btn class="kunvet-red-bg" dark @click="chooseFormI()">Get a personal account</v-btn>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </v-flex> -->
-            <!-- <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
-              <v-card>
-                <v-card-text>
-                  <div style="margin-bottom: 64px;">
-                    <h2>Organization</h2>
-                    <p>Choose if you're:</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A school club offering a position</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A startup searching for other students</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A small business hiring students</p>
-                  </div>
-                  <div class="text-xs-center pos-bottom">
-                    <v-btn class="kunvet-red-bg" dark @click="chooseFormB()">Get an organization account</v-btn>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </v-flex> -->
           </v-layout>
       </section>
 
