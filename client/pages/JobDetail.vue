@@ -675,12 +675,16 @@
             </v-card>
 
             <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
-                <SignupComponent :includeLogin="true" @account="getColor" @success="handleResume"
+                <SignupComponent @account="getColor" @success="handleResume"
                                  style="padding: 30px"></SignupComponent>
-                <k-btn @click="loginState='login'" :color="accountColor"
-                       style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">
-                    Back to Login
-                </k-btn>
+                <!--<k-btn @click="loginState='login'" :color="accountColor"-->
+                       <!--style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">-->
+                    <!--Back to Login-->
+                <!--</k-btn>-->
+                <div style="text-align: center; padding-bottom: 30px;">
+                    Already have an account?
+                    <a @click="loginState='login'" style="text-decoration: underline;">Log in</a>
+                </div>
                 <button class="mobile-show"
                         style="position: relative; bottom: -50px; left: 50%; transform: translateX(-50%)"
                         @click="otherdialog=false">
@@ -725,7 +729,7 @@
                 </div>
             </v-card>
 
-            <v-card flat class="dialog-card" v-else-if="loginState === 'success'">
+            <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'success'">
                 <v-card-title class="kunvet-red apply-text">Thank you! Your application is under review.</v-card-title>
                 <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
                         @click="otherdialog=false">
