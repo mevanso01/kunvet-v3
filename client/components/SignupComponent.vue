@@ -18,6 +18,12 @@ h1 {
   font-size: 24px;
   font-weight: bold;
 }
+
+.move-right {
+  position: absolute;
+  right: 30px;
+  width: 40%;
+}
 </style>
 
 <template>
@@ -49,7 +55,7 @@ h1 {
         <k-text-field v-model="email" label="Email Address" :rules="emailRules" required></k-text-field>
         <k-text-field v-model="password" toggleVisibility label="Password" :rules="passwordRules" required></k-text-field>
 
-        <k-btn @click="signup" :working="loading" :color="accountTypeInfo.color">Sign Up</k-btn>
+        <k-btn :class="{'move-right' : this.includeLogin}" @click="signup" :working="loading" :color="accountTypeInfo.color">Sign Up</k-btn>
       </v-form>
     </div>
     <div v-show="state == 'error'" class="container">
@@ -83,6 +89,10 @@ export default {
       default: false,
     },
     dontValidate: {
+      type: Boolean,
+      default: false,
+    },
+    includeLogin: {
       type: Boolean,
       default: false,
     },
@@ -134,6 +144,9 @@ export default {
   },
   components: {
     CodeVerification,
+  },
+  mounted() { // emits the proper account color to the login button in JobDetail
+    this.$emit('account', this.accountTypes[this.type]);
   },
   methods: {
     signup() {

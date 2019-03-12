@@ -134,7 +134,7 @@
               <v-layout>
                 <v-flex xs7 sm7  style="padding: 0px">
                   <p>Applicants</p>
-                  <h2 style="color: Fuchsia">28</h2>
+                  <h2 style="color: Fuchsia">{{getApplicantsFromJobs(job._id)}}</h2>
                   <router-link :to="`/applicants/`">
                     <k-btn color="Fuchsia" small>
                       View Applicants
@@ -185,7 +185,7 @@
               <v-layout>
                 <v-flex xs7 sm7  style="padding: 0px">
                   <p>Applicants</p>
-                  <h2 style="color: Fuchsia">28</h2>
+                  <h2 style="color: Fuchsia">{{getApplicantsFromJobs(job._id)}}</h2>
                   <router-link :to="`/applicants/`">
                     <k-btn color="Fuchsia" small>
                       View
@@ -440,6 +440,7 @@
         tab: 0,
         user: null,
         jobs: [],
+        applicants: [],
         dialogs: {
           currentJob: null,
           showDelete: false,
@@ -474,6 +475,10 @@
           },
         });
         this.jobs = data.findJobs.concat();
+        const jobs = this.jobs.filter(x => !x.is_deleted);
+        const jobIds = jobs.map(({ _id }) => _id);
+        const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
+        this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
       },
       onShowJobDialog(job) {
         this.dialogs.errorOccured = false;
@@ -567,6 +572,30 @@
           this.dialogs.showRepost = false;
           this.dialogs.errorOccured = true;
         });
+      },
+      async getApplicants(jobId, useCache = true) {
+        return this.$apollo.query({
+          fetchPolicy: useCache ? 'cache-first' : 'network-only',
+          query: (gql`query ($JobId: MongoID) {
+            findApplicants (filter: {
+              job_id: $JobId,
+            }) {
+              ${queries.FindApplicantRecord}
+              notes
+            }
+          }`),
+          variables: {
+            JobId: jobId,
+          },
+        });
+      },
+      async getApplicationsFromJob(jobId, useCache = true) {
+        const { data: { findApplicants: applicants } } = await this.getApplicants(jobId, useCache);
+        return applicants;
+      },
+      getApplicantsFromJobs(jobId) {
+        const applicants = this.applicants;
+        return applicants.filter(({ job_id: id }) => id === jobId).length;
       },
     },
     computed: {

@@ -252,11 +252,11 @@ button:focus {
   padding-bottom: 8px;
 }
 /*  ---- Styles to globally override Vuetify ----  */
-.v-dialog {
-  max-width: 420px;
-}
 .v-dialog--active {
   background-color: white !important;
+}
+.v-dialog--fullscreen > .v-card {
+  min-height: unset;
 }
 .container {
   padding-top: 80px;
@@ -508,31 +508,7 @@ i.fa.fa-plus-circle {
 .first-search-img {
   max-width: 80%;
 }
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -5px;
-  color: dimgray;
-  min-height: 70px;
-  position: relative;
-  cursor: pointer;
-  /*width: 90%;*/
-}
-.dropbox .input-file {
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  cursor: pointer;
-  z-index: 5;
-}
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 20px 0;
-}
+
 .notification-container {
   margin: auto;
   max-width: 400px;
@@ -1085,7 +1061,7 @@ body {
     width: 100%;
 }
 #bottom-content {
-    width: 960px;
+    width: 1032px;
     margin: 0 auto;
     left: 0;
     right: 0;
@@ -1106,8 +1082,14 @@ body {
   .padding-sm-left {
     padding-left: 15px;
   }
+  .v-dialog--active {
+      height: 500px;
+  }
 }
 @media (min-width: 961px) {
+  .v-dialog--active {
+    height: 500px;
+  }
   .flex {
     padding: 10px 0;
   }
@@ -1183,6 +1165,9 @@ body {
     /*}*/
 }
 @media (max-width: 600px) {
+    .v-dialog--active {
+        height: inherit;
+    }
     #bottom .footer-big-text {
       width: 100%;
     }
