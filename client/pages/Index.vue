@@ -300,7 +300,7 @@
   margin-bottom: 50px;
 }
 .search_assist {
-  margin-left:40%;
+  margin-left:16px;
   color:grey;
   font-size:16px;
 }
@@ -440,7 +440,7 @@
 @media only screen and (min-width: 821px) {
   .searchBar {
     width: 89%;
-    width: calc(90% - 10px);
+    width: calc(100% - 82px);
     float:left;
     background-color:white;
     box-shadow: 0 10px 12px -4px #eaeaf9;
