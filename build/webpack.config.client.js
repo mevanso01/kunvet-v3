@@ -111,9 +111,6 @@ const wpconf = {
         test: /\.js$/,
         loader: 'happypack/loader',
         exclude: /node_modules/,
-        options: {
-          plugins: ['@babel/plugin-transform-async-to-generator'],
-        },
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
