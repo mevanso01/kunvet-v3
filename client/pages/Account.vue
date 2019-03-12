@@ -273,9 +273,10 @@
                 <p v-if="!userdata.resumes || userdata.resumes.length === 0">
                   Upload your resume or cover letter. Use it to apply for any jobs on Kunvet.
                 </p>
+                <div v-else>
+                  <p>Manage your resumes and cover letters here.</p>
+                <v-list two-line class="acct-list">
 
-                <v-list two-line class="acct-list" v-else>
-                  <p>Manage your resumes/cover letters/CV/portfolios here.</p>
                   <div v-for="(resume, index) in userdata.resumes" :key="index">
                     <v-list-tile>
                       <v-list-tile-content>
@@ -299,6 +300,7 @@
                     <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
                   </div>
                 </v-list>
+              </div>
                 <k-btn
                   @click="showFileModal = true"
                 >
