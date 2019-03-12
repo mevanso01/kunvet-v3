@@ -76,9 +76,10 @@
 
         <br>
 
-        <k-text-field :value="account_email" disabled class="text_field_style">
-        </k-text-field>
+        <!--<k-text-field :value="account_email" disabled class="text_field_style">
+        </k-text-field>-->
 
+        <p style="padding-left: 12px; font-size: 20px; font-style: italic;">{{account_email}}</p>
         <br>
 
        <!-- <SwitchAccount :bottomPadding="true" />  -->
