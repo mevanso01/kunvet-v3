@@ -275,35 +275,33 @@
                 </p>
                 <div v-else>
                   <p>Manage your resumes and cover letters here.</p>
-                <v-list two-line class="acct-list">
+                  <v-list two-line class="acct-list">
 
-                  <div v-for="(resume, index) in userdata.resumes" :key="index">
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
-                      </v-list-tile-content>
-                        <v-list-tile-action @click="createEditResumeModal(userdata.resumes[index].name, index)">
-                          <v-btn icon rippl >
-                            <v-icon color="grey lighten-1">edit</v-icon>
-                          </v-btn>
-                        </v-list-tile-action>
-                        <v-list-tile-action @click="
-                          deleteResumeIndex=index;
-                          deleteResumeName=resume.name;
-                          showDeleteResumeDialog=true"
-                        >
-                          <v-btn icon ripple>
-                            <v-icon color="grey lighten-1">delete</v-icon>
-                          </v-btn>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                    <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
-                  </div>
-                </v-list>
-              </div>
-                <k-btn
-                  @click="showFileModal = true"
-                >
+                    <div v-for="(resume, index) in userdata.resumes" :key="index">
+                      <v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
+                        </v-list-tile-content>
+                          <v-list-tile-action @click="createEditResumeModal(userdata.resumes[index].name, index)">
+                            <v-btn icon rippl >
+                              <v-icon color="grey lighten-1">edit</v-icon>
+                            </v-btn>
+                          </v-list-tile-action>
+                          <v-list-tile-action @click="
+                            deleteResumeIndex=index;
+                            deleteResumeName=resume.name;
+                            showDeleteResumeDialog=true"
+                          >
+                            <v-btn icon ripple>
+                              <v-icon color="grey lighten-1">delete</v-icon>
+                            </v-btn>
+                          </v-list-tile-action>
+                      </v-list-tile>
+                      <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
+                    </div>
+                  </v-list>
+                </div>
+                <k-btn @click="showFileModal = true">
                   Add File
                 </k-btn>
               </v-flex>
@@ -1131,6 +1129,7 @@
           });
         });
       },
+      // NO LONGER USED
       fetchData() {
         this.$apollo.query({
           query: (gql`query ($uid: MongoID) {
@@ -1173,11 +1172,11 @@
           this.userdata.default_org = res.default_org;
           this.userdata.resumes = res.resumes.concat();
           this.userdata.account_type = res.account_type;
-          this.commitUserdata();
           if (res.org_list) {
             this.populateOrgList(res.org_list);
           }
           this.email_verified = res.email_verified;
+          this.commitUserdata();
         }).catch((error) => {
           this.$error(error);
         });
@@ -1234,8 +1233,11 @@
           if (data.acct === 1) {
             this.fillUpIndividualJobs();
           }
-          if (data.userdata.org_list) {
+          if (data.userdata.org_list && data.userdata.org_list.length > 0) {
             this.populateOrgList(data.userdata.org_list);
+          } else if (data.userdata.default_org) {
+            this.$error('User has default org but empty org list');
+            this.populateOrgList([data.userdata.default_org]);
           }
         }
       });
