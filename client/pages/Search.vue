@@ -16,9 +16,13 @@ section.search {
   margin: 0 0 10px 0;
   .custom-select-2,
   .search-params-field {
-    box-shadow: 3px 6px 20px rgba(177, 176, 176, .1);
+    // box-shadow: 3px 6px 20px rgba(177, 176, 176, .1);
     border-radius: 4px;
     height: 56px;
+    border: 1px solid rgba(177, 176, 176, 0.4);
+    .v-input__control {
+      height: 54px; // to help with border
+    }
     // box-shadow: 0 10px 12px -4px #eaeaf9;
     // -webkit-box-shadow: 0px 0px 5px 0px rgba(77,77,77,0.5);
     // -moz-box-shadow: 0px 0px 5px 0px rgba(77,77,77,0.5);
@@ -207,14 +211,11 @@ section.search {
   height: 48px;
   width: 100%;
   background-color: #fff;
-  box-shadow: 3px 6px 20px rgba(177, 176, 176, .1);
+  box-shadow: 0px 3px 16px rgba(177, 176, 176, .1);
   position: relative;
   overflow-y: hidden;
   transition: all 0.3s ease;
   padding: 0 24px;
-  label {
-    // line-height: 22px !important;
-  }
 }
 @media (min-width: 601px) {
   .large-thats-it {
@@ -322,10 +323,10 @@ section.search {
             ></v-text-field>
           </div>
           <div class="search-go-cont">
-            <button @click="search()" v-ripple class="mobile-hide kunvet-search-btn small">
+            <button @click="search()" v-ripple class="mobile-hide kunvet-search-icon-btn small">
               <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
             </button>
-            <k-btn @click="search()" block v-ripple class="mobile-show" style="box-shadow: 3px 6px 20px rgb(249, 157, 156);">
+            <k-btn @click="search()" block v-ripple class="mobile-show kunvet-search-btn">
               Search
             </k-btn>
           </div>

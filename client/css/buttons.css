@@ -71,26 +71,26 @@
 .kunvet-v-btn.v-btn--disabled {
   background-color: rgba(0,0,0,0.26);
 }
-.kunvet-search-btn {
+.kunvet-search-btn,
+.kunvet-search-icon-btn {
+  -webkit-box-shadow: 0 3px 14px rgb(249, 157, 156);
+  -moz-box-shadow: 0 3px 14px rgb(249, 157, 156);
+  box-shadow: 0 3px 14px rgb(249, 157, 156) !important;
+}
+.kunvet-search-icon-btn {
   display: block;
   height: 72px;
   width: 72px;
   background-color: #ff6969;
   color: white;
-  text-align: center;
   border-radius: 4px;
-  -webkit-box-shadow: 3px 6px 20px rgb(249, 157, 156);
-  -moz-box-shadow: 3px 6px 20px rgb(249, 157, 156);
-  box-shadow: 3px 6px 20px rgb(249, 157, 156);
+  text-align: center;
   font-family: "Roboto";
   outline: none !important;
 }
-.kunvet-search-btn.small {
+.kunvet-search-icon-btn.small {
   height: 56px;
   width: 56px;
-}
-.kunvet-search-btn.block {
-  width: 100%;
 }
 
 .iconRedButton {
