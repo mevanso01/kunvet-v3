@@ -28,6 +28,7 @@ export default class Mailer {
       },
       htmlToText: true,
       transport: this.transport,
+      send: true,
       juice: true,
       juiceResources: {
         preserveImportant: true,
