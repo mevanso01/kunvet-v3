@@ -923,7 +923,6 @@ export default {
       }];
       const results = await algoliaClient.search(requests);
       const res = results.results[0];
-      console.log('Algolia results', res);
       // console.log(res);
       // if (res.page === 0) {
       //   this.filteredJobs = res.hits;
