@@ -1,0 +1,125 @@
+/* styles for job post cards - used in search, saved jobs, and applied jobs */
+/* jp stands for job post */
+.jp-card {
+  height: 375px;
+  float: left;
+  overflow: hidden;
+  width: 100%; // set to 50% on desktop
+  .jp-head {
+    padding: 14px 24px 0 24px;
+  }
+  .jp-body {
+    display: block;
+    padding: 4px 24px 24px 24px;
+  }
+  .jp-divider {
+    margin-left: 24px;
+  }
+  .jp-title {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-weight: bold;
+    font-size: 21px;
+    color: #4d4d4d;
+    // white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .posted_by {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .post-address-container p {
+    margin-bottom: 0px;
+    color: #9e9e9e;
+  }
+  .carditem {
+    margin-bottom: 5px;
+    font-size: 14px;
+    padding-top: 2px;
+  }
+  .carditem p {
+    margin: 0;
+  }
+  .carditem i {
+    width: 23px;
+    font-size: 16px;
+    color: #4d4d4d !important;
+    transform: translateY(-1px);
+  }
+  .jp-img-cont {
+    padding: 12px 0 0 0;
+    img {
+      max-width: 120px;
+      max-height: 120px;
+    }
+  }
+  .carditem .carditem-image {
+    display: inline-block;
+    width: 23px;
+    line-height: 1;
+    float: left;
+  }
+  .carditem .carditem-image img {
+    height: 15px;
+    position: relative;
+    top: 2px;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .jp-card {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .jp-card .jp-divider {
+    margin-right: 24px;
+  }
+}
+
+.ais-search-box__form {
+  input {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    height: 48px;
+    padding: 0 16px;
+    outline-width: 0;
+  }
+  button {
+    border-radius: 5px;
+    background: red;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    height: 48px;
+    width: 48px;
+    svg {
+      fill: #fff;
+    }
+  }
+}
+.search {
+  margin: 16px 0;
+}
+.searchBar {
+  text-align: center;
+}
+.results {
+}
+ul.ais-pagination {
+  margin: 10px 0;
+  padding: 0;
+  li {
+    display: inline-block;
+    background: red;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    color: #fff;
+    padding: 4px 0 0 0;
+    margin: 5px;
+  }
+  .ais-pagination__item--first, .ais-pagination__item--last {
+    display: none;
+  }
+}

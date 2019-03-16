@@ -111,9 +111,6 @@ const wpconf = {
         test: /\.js$/,
         loader: 'happypack/loader',
         exclude: /node_modules/,
-        options: {
-          plugins: ['@babel/plugin-transform-async-to-generator'],
-        },
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -136,7 +133,12 @@ const wpconf = {
   plugins: [
     new HappyPack({
       loaders: [
-        'babel-loader?cacheDirectory',
+        {
+          loader: 'babel-loader',
+          options: {
+            babelrc: true,
+          },
+        },
       ],
     }),
     new webpack.DefinePlugin({
@@ -151,6 +153,7 @@ const wpconf = {
       contents: JSON.stringify(ErrorCodeInternal),
     }),
     new webpack.IgnorePlugin(/vertx/),
+    new webpack.HotModuleReplacementPlugin(),
     new FaviconsWebpackPlugin('./client/assets/favicon.png'),
     new CopyWebpackPlugin([
       {
@@ -198,6 +201,12 @@ const wpconf = {
     splitChunks: {
       chunks: 'all',
     },
+  },
+  devServer: {
+    open: true,
+    hot: true,
+    historyApiFallback: true,
+    overlay: true,
   },
 };
 

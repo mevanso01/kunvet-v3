@@ -50,6 +50,10 @@ module.exports = {
     googleAnalytics: true,
     hotjar: true,
   },
+  algolia: {
+    appId: Credentials.algolia.appId,
+    searchApiKey: Credentials.algolia.searchApiKey,
+  },
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
 
@@ -80,6 +84,9 @@ module.exports = {
     mail: {
       from: 'Kunvet Notifications <notifications@kunvet.com>',
       transport: Credentials.mailTransport,
+    },
+    algolia: {
+      adminApiKey: Credentials.algolia.adminApiKey,
     },
   },
 };

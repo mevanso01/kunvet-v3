@@ -1,4 +1,7 @@
-<style>
+<style scoped>
+.settings-page {
+  padding: 0;
+}
 .settings-page .btn {
   margin-left: 0;
 }
@@ -15,29 +18,108 @@
   background-color: #333;
   margin-bottom: 16px;
 }
+
+/*NEW CLASSES*/
+
+/* .header-splash {
+  background-image: linear-gradient(to right, #EA596B, #F6BE6A);
+  width:100%;
+  position: relative;
+} */
+
+.header-splash {
+  height: 230px;
+}
+
+.text_field_style{
+  /*box-shadow: 14px 10px 16px -4px #eaeaf9;*/
+}
+
+.email_address{
+  width:100%;
+  line-height: 56px;
+}
+
+.email_preferences{
+  padding-bottom: 12px;
+  display: inline-block;
+  width:80%;
+}
+
+.switch_settings{
+  display:inline-block;
+}
+
+@media(min-width: 601px){
+  .header-splash{
+    height: 215px;
+  }
+}
+
+
 </style>
+
 <template>
   <v-container fluid class="settings-page">
+    <div class="header-splash">
+      <div class="main-cont-large bottom" style="background: transparent;">
+        <h1>Settings</h1>
+      </div>
+    </div>
+
     <div class="main-cont-large">
       <section style="padding: 0; margin: 15px; width: auto;">
+        <br>
 
-        <SwitchAccount :bottomPadding="true"/>
-
-        <h2>General Settings</h2>
+        <h2>Account Ownership</h2>
         <v-divider></v-divider>
+
+        <br>
+
+        <!--<k-text-field :value="account_email" disabled class="text_field_style">
+        </k-text-field>-->
+
+        <p style="padding-left: 12px; font-size: 20px; font-style: italic;">{{account_email}}</p>
+        <br>
+
+       <!-- <SwitchAccount :bottomPadding="true" />  -->
+
         <div>
-          <v-btn small outline @click="logout">Logout</v-btn>
+          <k-btn block @click="logout">Logout</k-btn>
         </div>
-        <br>
-        <br>
+
+        <br><br><br>
+
+        <h2>Email Preferences</h2>
+        <v-divider></v-divider>
+        <!-- Leo: there still is no function to save these preferences? What you need is something
+          like <v-switch @change="saveFunctionHere()" v-model="preferences_bool"></v-switch>
+          or a save button -->
+        <div v-if="preferences">
+          <!-- <div class="email_preferences">Recieve emails about new applicants</div>
+          <v-switch color="red" class="switch_settings"></v-switch> -->
+
+          <div class="email_preferences">Recieve emails about application status</div>
+          <v-switch @change="savePreferences()" v-model="application_bool" color="red" class="switch_settings"></v-switch>
+
+          <div class="email_preferences">Recieve emails about job expiration</div>
+          <v-switch @change="savePreferences()" v-model="jobExpired_bool" color="red" class="switch_settings"></v-switch>
+
+          <div class="email_preferences">Recieve emails about newsletters</div>
+          <v-switch @change="savePreferences()" v-model="getNewsletter_bool" color="red" class="switch_settings"></v-switch>
+        </div>
+
+        <br><br><br>
 
         <div v-if="orgname && oid">
           <h2>Organization settings</h2>
           <v-divider></v-divider>
-          <h3 v-if="orgname">Viewing organization: {{ orgname }}</h3>
           <br>
-          <v-btn small outline color="red darken-1" @click="deleteOrgDialog = true;">Delete this organization</v-btn>
+          <h3 v-if="orgname">Organization name: {{ orgname }}</h3>
+          <br>
+          <k-btn block @click="deleteOrgDialog = true;" style="background-color:#ea2a2a">Delete This Organization</k-btn>
         </div>
+        <br>
       </section>
 
       <v-dialog v-model="deleteOrgDialog">
@@ -64,6 +146,7 @@
   import Axios from 'axios';
   import gql from 'graphql-tag';
   import SwitchAccount from '@/components/SwitchAccount';
+  import userDataProvider from '@/userDataProvider';
 
   export default {
     props: ['command'],
@@ -75,6 +158,11 @@
         orgname: null,
         oid: null,
         deleteOrgDialog: false,
+        account_email: null,
+        preferences: null,
+        application_bool: true,
+        getNewsletter_bool: false,
+        jobExpired_bool: false,
       };
     },
     components: {
@@ -101,12 +189,25 @@
               _id
               default_org
               org_list
+              email
+              preferences {
+                getNewsletters
+                jobExpiredEmails
+                applicationStatusEmails
+              }
             }
           }`),
           variables: {
             uid: this.$store.state.userID,
           },
         });
+        this.account_email = res.email;
+        this.preferences = res.preferences;
+
+        this.getNewsletter_bool = this.preferences.getNewsletters;
+        this.application_bool = (this.preferences.applicationStatusEmails === 'All');
+        this.jobExpired_bool = (this.preferences.jobExpiredEmails === 'All');
+
         if (res.org_list && res.org_list[0] !== null) {
           this.orgList = res.org_list;
         }
@@ -198,6 +299,7 @@
             record: {
               org_list: NewOrgList,
               default_org: null,
+              account_type: 'individual',
             },
           },
           refetchQueries: [
@@ -248,7 +350,16 @@
         }).catch((error) => {
           this.$error(error);
         });
-        EventBus.$emit('individual');
+        this.$store.commit('unsetBusinessData');
+        this.$store.commit({
+          type: 'keepUserdata',
+          userdata: {
+            org_list: NewOrgList,
+            default_org: null,
+            account_type: 'individual',
+          },
+        });
+        EventBus.$emit('login', 'individual');
         this.$router.push('/');
       },
       async getOrgByID(oid) {
@@ -305,6 +416,21 @@
       loginToRegularAccount() {
         EventBus.$emit('individual');
       },
+      savePreferences() {
+        if (!this.preferences) return;
+
+        this.preferences.getNewsletters = this.getNewsletter_bool;
+        this.preferences.applicationStatusEmails = (this.application_bool) ? 'All' : 'Off';
+        this.preferences.jobExpiredEmails = (this.jobExpired_bool) ? 'All' : 'Off';
+
+        userDataProvider.setUserData({
+          preferences: {
+            getNewsletters: this.preferences.getNewsletters,
+            jobExpiredEmails: this.preferences.jobExpiredEmails,
+            applicationStatusEmails: this.preferences.applicationStatusEmails,
+          },
+        });
+      },
     },
     computed: {
       orgSelectItems() {
@@ -312,6 +438,9 @@
       },
     },
     activated() {
+      if (this.$route.query && this.$route.query.o && this.$route.query.o === 'logout') {
+        this.logout();
+      }
       if (this.$route.params && this.$route.params.command === 'logout') {
         this.logout();
       }

@@ -1,81 +1,109 @@
-<style>
+<style lang="scss">
+.appliedjobs {
+  padding: 0;
+  .main-cont-large {
+    padding: 0 16px;
+  }
+  .header-splash {
+    height: 230px;
+    .header-text {
+      font-size: 18px;
+      // font-weight: bold;
+    }
+    .counter-text {
+      font-size: 84px;
+      margin-right: 8px;
+      font-weight: bold;
+      line-height: 84px;
+    }
+  }
+  .list-bounds{
+    margin-top: 30px;
+  }
+  @media (min-width: 601px) {
+    .aj-card {
+      width: 50%;
+      float: left;
+      .jp-card {
+        width: 100% !important;
+      }
+    }
+  }
+  @media (max-width: 600px) {
+    .header-splash {
+      height: 215px;
+    }
+  }
+}
+.list-post{
+  .list-post-job-name{
+  margin-top: 8px;
+  margin-bottom: 0;
+  font-weight: bold;
+  font-size: 21px;
+  color: #4d4d4d;
+  // white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  }
+
+  .list-title{
+    color: grey;
+  }
+  .post-time{
+    color:#ff9897;
+  }
+  .post-expired{
+    color:grey;
+  }
+  .post-valid{
+    color:#ffc46a
+  }
+  .post-submitted{
+    color:pink
+  }
+}
 </style>
 <template>
-  <v-container fluid class="job-post__container">
-    <div class="main-cont-large">
-      <v-layout>
-        <v-flex xs12>
-          <router-link v-if="jobsAndApplications.length === 0" to="/">
-            <p style="text-decoration: none;">
-              You have not yet applied for any jobs. Click me to go to the jobs dashboard.
-            </p>
+  <v-container fluid class="appliedjobs">
+    <div class="header-splash">
+      <div class="main-cont-large bottom">
+        <span v-if="jobsAndApplications.length > 0" class="header-text">
+          <span class="counter-text">{{ jobsAndApplications.length }}</span>
+          <span>
+            Applied {{ getAppliedJobsString }}
+          </span>
+        </span>
+        <span v-else class="header-text">
+          You have not applied for any jobs yet!
+          <router-link to="/" style="font-weight: bold;">
+            Lets go!
           </router-link>
-          <h1 v-else="jobsAndApplications.length > 0" style="margin-bottom: 10px; color: #A7A7A7;">
-            <span>
-              <span class="kunvet-red">
-                {{ jobsAndApplications.length }}
-              </span> Applied {{ getAppliedJobsString }}
-            </span>
-          </h1>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap style="padding-bottom: 32px;">
-        <div class="post-card" v-for="{ job, application } in jobsAndApplications" v-if="job" style="height: auto;">
-          <div v-if="!job.is_deleted">
-            <v-layout align-center row spacer slot="header">
-              <v-flex xs12>
-                <v-avatar size="36px" slot="activator" style="float: left; margin-right: 10px;">
-                  <img :src="job.profilePic" alt="">
-                </v-avatar>
-                <div style="color: #A7A7A7; line-height: 36px;">
-                  {{ job.posted_by }}
-                </div>
-              </v-flex>
-            </v-layout>
-
-            <router-link :to="'job/'+job._id">
-              <v-layout>
-                <v-flex xs12 style="padding-top: 0px;">
-                  <div class="new-applicant-card__info" style="padding-top: 0;">
-                    <div><h3 class="post-title">{{ job.title }}</h3></div>
-                    <p>
-                      <span class="new-applicant-card__address">
-                        <img class="new-applicant-card__regular-icon" :src="svgs.locationMarker" />{{ job.address }}
-                      </span>
-                    </p>
-                    <div class="carditem">
-                      <p><v-icon>info</v-icon>{{ parseJobIntoMainJobInfo(job) }}</p>
-                    </div>
-                    <div class="carditem">
-                      <p>
-                        <span class="carditem-image">
-                          <img :src="svgs.student" class="new-applicant-card__regular-icon" />
-                        </span>{{ job.studentfriendly ? 'S' : 'Not s' }}tudent-friendly
-                        <span>{{ job.experience ? '&bull; Experience required' : '' }}</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="btn-holder">
-                    <h3 :style="`font-weight: normal; color: ${getStatusColor(application)}; margin-bottom: 0; height: auto;`">
-                      {{ getStatusFromApplication(application) }}
-                    </h3>
-                  </div>
-                </v-flex>
-              </v-layout>
-            </router-link>
-          </div>
-          <div v-else>
-            <v-layout>
-              <v-flex xs12 style="padding-top: 0px;">
-                <div class="new-applicant-card__info">
-                  <div><h3 class="post-title">{{ job.title }}</h3></div>
-                  <p>Job deleted</p>
-                </div>
-              </v-flex>
-            </v-layout>
-          </div>
-        </div>
-      </v-layout>
+        </span>
+      </div>
+    </div>
+    <div class="main-cont-large list-bounds">
+      <div v-for="({ job, application }, idx) in jobsAndApplications">
+          <v-layout row wrap class="list-post">
+            <v-flex xs12 sm7>
+              <router-link :to="`/job/${job._id}`">
+              <p class="list-title">{{ job.posted_by }}</p>
+              <h2 class="list-post-title">{{ job.title }}</h2>
+              </router-link>
+            </v-flex>
+            <v-flex xs4 sm2>
+              <p class="list-title">Applied</p>
+              <timeago class="post-time":since="job.date" />
+            </v-flex>
+            <v-flex xs2 sm2>
+              <p class="list-title">status</p>
+              <h2 v-if="application.status === 'submitted'" class="post-submitted">Submitted</h2>
+              <h2 v-else-if="application.status === 'opened'" class="post-valid">Seen</h2>
+              <h2 v-else class="post-expired">Expired</h2>
+            </v-flex>
+          </v-layout>
+          <hr v-if= "idx < jobsAndApplications.length - 1" style="size:20; width:88%;">
+      </div>
     </div>
   </v-container>
 </template>
@@ -92,6 +120,8 @@
   import ApplicationConstants from '@/constants/application';
   import queries from '@/constants/queries';
 
+  import MainJobCard from '@/components/MainJobCard';
+
   export default {
     data() {
       return {
@@ -104,6 +134,9 @@
           student: StudentSvg,
         },
       };
+    },
+    components: {
+      MainJobCard,
     },
     methods: {
       async getData() {
@@ -138,7 +171,8 @@
             application: { _id: jobId, ...application },
           };
         }
-        if (job.deleted) {
+        // TODO:
+        if (job.is_deleted) {
           job = Object.assign({}, job);
           return {
             job: job,

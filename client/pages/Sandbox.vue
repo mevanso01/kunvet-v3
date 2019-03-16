@@ -1,10 +1,24 @@
 <template>
-  <v-container fluid style="padding: 0;">
-    <div style="background-color: #ddd; padding: 16px 24px; margin-bottom: 24px;">
+  <v-container fluid style="padding-right: 0; padding-left: 0;">
+    <div class="main-cont-large" style="padding-bottom: 32px;">
       <h1>Sandbox</h1>
       <div>
         Play with me on <code>client/pages/Sandbox.vue</code>!
       </div>
+      <h1>Kunvet Text Fields</h1><br>
+      <k-text-field
+        label="Im a label"
+        required
+      ></k-text-field>
+      <k-text-field
+        placeholder="Im a placeholder"
+      ></k-text-field>
+      <k-btn icon working @click="testFunc" color="lightblue"><img src="../assets/icons/Asset(36).svg" /></k-btn>
+      <k-btn working darkText color="#ddd">Long text hello hello</k-btn>
+      <k-btn darkText color="#ddd">Long text hello hello</k-btn>
+    </div>
+    <div style="background-color: #ddd; padding: 16px 24px; margin-bottom: 24px;">
+
       <br>
       <!-- <CodeVerification email="test" /> -->
       <div style="max-width: 400px; padding: 20px 30px; border: 1px solid #777; text-align: center;">
@@ -145,6 +159,9 @@ export default {
     ResumeUploader,
   },
   methods: {
+    testFunc() {
+      console.log('testFunc called');
+    },
     getSrc(resume) {
       // eslint-disable-next-line
       console.log('Test', resume);

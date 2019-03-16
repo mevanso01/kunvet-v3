@@ -1,124 +1,195 @@
+<style lang="scss" scoped>
+  .uploader-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    font-size: 1.25em;
+    text-align: center;
+  }
+  .dropbox {
+    outline: 2px dashed grey; /* the dash box */
+    outline-offset: -5px;
+    color: dimgray;
+    min-height: 70px;
+    position: relative;
+    cursor: pointer;
+    margin: 0 2px 0 -3px;
+  }
+  .dropbox .input-file {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    cursor: pointer;
+    z-index: 5;
+  }
+  .dropbox:hover {
+    background: lightblue; /* when mouse over to the drop zone, change color */
+  }
+  .vertical-center {
+    position: relative;
+    top: 45%;
+    transform: translateY(-50%);
+  }
+  .upload-form {
+    height: 100%;
+  }
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
+  }
+  .file-icon {
+    width: 85px;
+    margin: 0 15px;
+    transform: translateY(15%);
+  }
+  .resume-uploader-cont {
+    height: auto;
+    padding-bottom: 20px;
+    .dropbox {
+      height: 100%;
+      min-height: 420px;
+    }
+  }
+  .resume-uploader-cont.small {
+    // height: 80%;
+    padding-bottom: 0;
+    .dropbox {
+      height: 20%;
+      min-height: 80px;
+    }
+  }
+</style>
+
 <template>
-  <v-card>
-      <v-card-title>
-      <div v-if="state === 'INITIAL' || state === 'UPLOADING'">
-      <form enctype="multipart/form-data" novalidate style="width: 100%;">
-        <h1>Upload Resume</h1>
-        <div class="dropbox">
-          <input
-            type="file"
-            :disabled="state === 'UPLOADING'"
-            @change="updateFile($event.target.files)"
-            accept="application/pdf, application/msword, 
-              application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-              application/vnd.oasis.opendocument.text"
-            class="input-file"
-          >
-            <p v-if="state === 'INITIAL'">
-              Drag your file here<br> or click to browse
-            </p>
-            <p v-if="state === 'UPLOADING'">
-              Uploading files...
-            </p>
-        </div>
-        <div style="min-height: 21px; margin: 10px 0;">
-          <p style="margin: 0;">{{ chosenFile }}</p>
-        </div>
-      </form>
-      <v-text-field
-        v-model="resumeName"
-        style="padding: 0 2px;"
-        name="edit-modal-input"
-        hide-details
-        single-line
-        placeholder="Give this resume a name"
-      ></v-text-field>
-      </div>
-      <div style="min-height: 40px;" v-if="state === 'FAILED'">
-        <h3 style="display: inline-block;">
-          Oops! Something went wrong.
-        </h3>
-        <p>{{ errorMessage }}</p>
-      </div>
-      </v-card-title>
-      <v-card-actions>
-        <v-btn flat="flat" @click="cancel">Cancel</v-btn>
-        <v-btn :disabled="!file || !resumeName" flat="flat" @click="upload">Upload</v-btn>
-      </v-card-actions>
-  </v-card>
+    <v-card flat class="resume-uploader-cont" :class="{ 'small': this.small }">
+        <v-card-title style="height: 100%; padding: 0">
+            <!--change bottom div width to 100% if small dropbox-->
+            <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="height: 100%; margin: 0 auto;" :style="{ width: this.small ? '100%' : '90%'}">
+                <h2 v-if="!this.small" style="margin-top: 25px; margin-bottom: 10px; ">{{ title }}</h2>
+                <form class="upload-form"
+                  enctype="multipart/form-data" novalidate>
+                    <div class="dropbox">
+                        <input
+                          type="file"
+                          :disabled="state === 'UPLOADING'"
+                          @change="updateFile($event.target.files)"
+                          accept="application/pdf, application/msword,
+        application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+        application/vnd.oasis.opendocument.text"
+                          class="input-file"
+                        >
+                        <div v-if="state === 'INITIAL'" >
+                            <div v-if="!small" class="icon-container">
+                                <img class="file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
+                                <img class="file-icon" src="../assets/job_detail/doc-icon.svg" alt="">
+                            </div>
+                            <p class="uploader-text">Drag or click to upload resumes and cover letters.</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div style="min-height: 40px;" v-if="state === 'FAILED'">
+                <h3 style="display: inline-block;">
+                    Oops! Something went wrong.
+                </h3>
+                <p>{{ errorMessage }}</p>
+            </div>
+        </v-card-title>
+    </v-card>
 </template>
 <script>
-import FileClient from '@/utils/FileClient';
+    import FileClient from '@/utils/FileClient';
 
-export default {
-  props: ['id'],
-  data() {
-    return {
-      state: 'INITIAL',
-      curId: '',
-      file: null,
-      chosenFile: null,
-      client: null,
-      resumeName: '',
-      errorMessage: '',
+    export default {
+      props: {
+        id: {
+          type: String,
+        },
+        small: {
+          type: Boolean,
+          default: false,
+        },
+        title: {
+          type: String,
+          default: 'Upload Resumes',
+        },
+      },
+      data() {
+        return {
+          curId: '',
+          resumeName: '',
+          errorMessage: '',
+          file: null,
+          chosenFile: null,
+          client: null,
+          state: 'INITIAL',
+        };
+      },
+      mounted() {
+        this.client = new FileClient();
+        this.curId = this.id;
+      },
+      methods: {
+        updateFile(files) {
+          if (!files.length) {
+            this.file = null;
+          } else {
+            this.file = files[0];
+            this.chosenFile = files[0].name;
+            this.resumeName = this.chosenFile;
+            this.upload();
+          }
+        },
+        async upload() {
+          this.state = 'UPLOADING';
+          if (!this.curId) {
+            // Create a new file slot
+            try {
+              this.curId = await this.client.createFileSlot(this.file.name, this.file.type);
+            } catch (e) {
+              this.$error(e);
+              this.state = 'FAILED';
+              this.errorMessage = e.message;
+              return;
+            }
+
+            this.$emit('created', this.curId);
+          }
+          try {
+            await this.client.uploadFile(this.curId, this.file);
+          } catch (e) {
+            this.$error(e);
+            this.state = 'FAILED';
+            this.errorMessage = e.message;
+            return;
+          }
+
+          console.log(`emitting ${this.resumeName}`);
+          this.$emit('uploaded', this.curId, this.resumeName);
+          this.reset();
+        },
+        cancel() {
+          this.$emit('cancel');
+          this.reset();
+        },
+        reset() {
+          this.curId = '';
+          this.file = null;
+          this.chosenFile = null;
+          this.resumeName = '';
+          this.state = 'INITIAL';
+        },
+      },
+      watch: {
+        id(newId) {
+          this.curId = newId;
+        },
+      },
     };
-  },
-  mounted() {
-    this.client = new FileClient();
-    this.curId = this.id;
-  },
-  methods: {
-    updateFile(files) {
-      if (!files.length) {
-        this.file = null;
-      } else {
-        this.file = files[0];
-        this.chosenFile = files[0].name;
-      }
-    },
-    async upload() {
-      this.state = 'UPLOADING';
-      if (!this.curId) {
-        // Create a new file slot
-        try {
-          this.curId = await this.client.createFileSlot(this.file.name, this.file.type);
-        } catch (e) {
-          this.$error(e);
-          this.state = 'FAILED';
-          this.errorMessage = e.message;
-          return;
-        }
-
-        this.$emit('created', this.curId);
-      }
-      try {
-        await this.client.uploadFile(this.curId, this.file);
-      } catch (e) {
-        this.$error(e);
-        this.state = 'FAILED';
-        this.errorMessage = e.message;
-        return;
-      }
-
-      this.$emit('uploaded', this.curId, this.resumeName);
-      this.reset();
-    },
-    cancel() {
-      this.$emit('cancel');
-      this.reset();
-    },
-    reset() {
-      this.curId =  '';
-      this.file = null;
-      this.chosenFile = null;
-      this.resumeName = '';
-      this.state = 'INITIAL';
-    },
-  },
-  watch: {
-    id(newId) {
-      this.curId = newId;
-    },
-  },
-};
 </script>

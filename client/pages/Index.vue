@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="scss" scoped>
 .promo-block {
   p {
     font-size: 1.2em;
@@ -63,55 +63,18 @@
 .chip--select-multi {
   margin: 5px 5px 5px 0;
 }
-.firstSearch {
-  padding-top: 20vh !important;
-  padding-left: 64px;
-  padding-right: 64px;
-  position: relative;
+.bottom-text{
+  font-size:2em;
+  color:#ef5350;
+  z-index:12;
+  bottom:550px;
 }
-.fsGoBtn {
-  display: block;
+.category{
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  border-left: 1px solid #d2d2d3;
+  padding-left: 10px;
   height: 48px;
-  background-color: #ef5350;
-  text-align: center;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
-}
-.firstSearch .fsSelect {
-  .v-input__slot {
-    height: 48px;
-    padding-left: 16px;
-    border-top: 1px solid #eee;
-    border-left: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    border-radius: 6px 0px 0px 6px;
-  }
-  .v-input__control::before,
-  .v-input__slot::before,
-  .v-input__slot::after {
-    display: none;
-  }
-  .v-input-group__input {
-    padding-left: 16px !important;
-  }
-  .v-input-group__input .v-input-group__selections {
-    padding-top: 2px;
-  }
-  .v-input__append-inner {
-    margin-right: 8px;
-  }
-  // label {
-  //   top: 9px;
-  //   left: 16px;
-  // }
-}
-.fsSelect-menu .v-list {
-  padding-top: 0;
-}
-.firstSearch h1 {
-  font-weight: 300;
-  font-size: 32px;
-  margin-bottom: 0;
 }
 .fs-select-cities.v-input {
   margin-top: 0;
@@ -130,39 +93,9 @@
 .fs-select-cities .v-input-group__input::before {
   display: none;
 }
-.small-thats-it, .large-thats-it {
-  background-color: #fafafa;
-}
-@media only screen and (max-width: 480px) {
-  .fs-select-positions {
-    display: none !important;
-  }
-}
-@media only screen and (min-width: 481px) {
-  .fs-select-cities,
-  .fs-select-positions {
-    width: 50%;
-    float: left;
-    display: inline-block;
-  }
-  .fs-select-cities {
-    width: 100%; /* use only when positions is not present */
-  }
-  .firstSearch .fsSelect .v-input-group__input {
-    padding-top: 3px;
-  }
-  .fs-select-cities .input-group__selections {
-    height: 40px !important;
-  }
-}
-.fs-select-positions {
-  width: 50%;
-  display: inline-block;
-}
-.fs-select-positions .v-input-group__selections {
-  height: 38px;
-  overflow: auto !important;
-}
+// .v-text-field.v-text-field--solo .v-input__control {
+//   min-height: 56px; // Doesnt work??
+// }
 .no-padding {
   padding: 0;
 }
@@ -182,8 +115,11 @@
 }
 .bottom-img {
   position: absolute;
-  bottom: 0;
-  width: calc(100% - 52px);
+  left:0px;
+  right:0px;
+  top: 450px;
+  width:100%;
+  z-index: 10;
 }
 .bottom-row .skew-div {
   margin: auto;
@@ -205,26 +141,24 @@
   top: 0;
   transform: skew(-30deg);
 }
+
 @media (min-width: 601px) {
   .search .flex {
     padding: 10px 15px;
-  }
-  .large-thats-it {
-    width: 100% !important;
   }
   .bottom-row {
     width: calc(100% - 128px);
   }
   .bottom-img {
-    width: calc(100% - 128px);
+    width:100%;
   }
 }
 @media (max-width: 600px) {
-  .firstSearch {
-    padding-left: 26px;
-    padding-right: 26px;
-    height: calc(100vh - 56px);
-  }
+  // .firstSearch {
+  //   padding-left: 26px;
+  //   padding-right: 26px;
+  //   height: calc(100vh - 56px);
+  // }
   #banner {
     display: none;
   }
@@ -232,11 +166,14 @@
     padding-left: 0;
     padding-right: 0;
   }
+  .bottom-row {
+    bottom: 10px;
+  }
 }
 @media (min-width: 961px) {
-  .firstSearch {
-    height: calc(100vh - 64px);
-  }
+  // .firstSearch {
+  //   height: calc(100vh - 64px);
+  // }
   .city-img-holder {
     padding: 0 48px;
   }
@@ -244,14 +181,13 @@
     padding: 16px 16px 32px 16px;
   }
   .bottom-img {
-    width: calc(100% - 208px);
-    margin: 0 40px;
+    width:100%;
   }
 }
 @media (min-width: 601px) and (max-width: 960px) {
-  .firstSearch {
-    height: calc(100vh - 64px);
-  }
+  // .firstSearch {
+  //   height: calc(100vh - 64px);
+  // }
 }
 #rua {
   width: 100%;
@@ -265,78 +201,556 @@
     margin: 10px;
   }
 }
+
+
+//-------------------------------Implemented main classes----------------------------------------------
+.main-container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  background-color: none;
+  /* border: 1px solid #eeeeee; */
+  box-sizing: border-box;
+  margin-top: -36px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.top_container_style {
+  width: 100%; height: 58vh; // was 60vh
+  background:  #ff8f8f;
+  background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
+  background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
+  position: relative;
+}
+
+.iconRedButton {
+  display: block;
+  height: 72px;
+  width: 64px;
+  background-color:#FF6969;
+  text-align: center;
+  box-shadow: 0 10px 12px -4px #F3E1E1;
+  font-family: "Roboto";
+  outline: none !important;
+}
+
+.iconRedButton:hover {
+  background-color:#ef5350;
+}
+
+.postAJob {
+  display: block;
+  height: 56px;
+  width: 200px;
+  background-color:#FFFFFF;
+  text-align: center;
+  box-shadow: 0 5px 6px -2px #DF696C;
+  font-family: "Roboto",sans-serif;
+  color:#FF786D;
+  font-weight:bold;
+  font-size:16px;
+  outline: none !important;
+  margin-top:20px;
+  margin-left:10%
+}
+
+.postAJob:hover {
+  background-color:#F3E1E1;
+}
+
+.postAJob2 {
+  display: block;
+  height: 56px;
+  width: 200px;
+  background-color:#FFFFFF;
+  text-align: center;
+  box-shadow: 0 5px 6px -2px #5471F6;
+  font-family: "Roboto",sans-serif;
+  color:#5E85FD;
+  font-weight:bold;
+  font-size:16px;
+  outline: none !important;
+  margin-top:20px;
+  margin-left:auto;
+  margin-right:10%;
+}
+
+.postAJob2:hover {
+  background-color:#F3E1E1;
+}
+
+.search_find_near{
+  height: 72px;
+  padding-top:24px;
+  width: 10%;
+  background-color:white;
+  float:left;
+}
+
+.top_title_text{
+  color: white;
+  font-size: 3.9em;
+  text-align: center;
+}
+
+.top_title_pos{
+  position:absolute;
+  width:100%;
+  bottom:0;
+  margin-bottom: 50px;
+}
+.search_assist {
+  margin-left:16px;
+  color:grey;
+  font-size:16px;
+}
+.search_text_field {
+  height: 72px;
+  width: 36%;
+  outline: none !important;
+  background-color: white;
+  float: left;
+  padding-top: 12px; // (72px - 48px) / 2
+}
+.search_select {
+  height: 72px;
+  width: 44%;
+  outline: none !important;
+  background-color: white;
+  float: left;
+  padding-top: 12px; // (72px - 48px) / 2
+}
+.search_mobile {
+  margin-left:10%;
+  margin-right:10%;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 12px -4px #eaeaf9;
+}
+.container-left {
+  width: calc(100% + 8px);
+}
+.container-right {
+  width: calc(100% + 8px);
+  transform: translateX(-8px);
+}
+.search_hide {
+  display:block;
+}
+.search_show {
+  display: none !important;
+}
+.search_button_text {
+  line-height: 56px;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+.artboard1_img {
+  background-color: #ffe2e2;
+  height: 400px;
+  text-align: right;
+}
+.artboard2_img{
+  z-index:0;
+  height: 400px;
+  background-color: #dbefff;
+  text-align: left;
+}
+.artboard1_img_style {
+  padding-right:50px;
+  margin-top: 80px;
+  max-width: 400px;
+}
+.artboard2_img_style {
+  padding-left:50px;
+  margin-top: 80px;
+  max-width: 400px;
+}
+.hire_kunvet_container {
+  height: 300px; margin-top:40px;
+  background:  #FFC371;
+  background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
+  background: linear-gradient(to right,  #ff5f6d, #FFC371);
+  position: relative;
+}
+
+.hire_kunvet_title{
+  padding-top: 3%;
+  padding-left:10%;
+  color:white;
+  font-size:38px;
+}
+
+.hire_kunvet_text{
+  padding-top: 12px;
+  margin-left:10%;
+  color:white;
+  font-size:18px;
+  max-width: 400px;
+  line-height: 26px;
+}
+
+.loved_trusted_container {
+  height: 350px;
+  margin-top:22px;
+  background:  #2f89fc;
+  background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
+  background: linear-gradient(to right,  #a57fff , #2f89fc);
+}
+
+.loved_trusted_title {
+  padding-top: 28px;
+  padding-right: 10%;
+  color: white;
+  font-size: 38px;
+  text-align:right;
+}
+
+.loved_trusted_text {
+  padding-top: 12px;
+  color: white;
+  font-size: 18px;
+  max-width: 450px;
+  padding-right: 10%;
+  text-align: right;
+  margin-left: auto;
+  padding-left: 24px;
+}
+
+.artboard1_img_mobile {
+    height: 350px; // 50vh;
+    width:100%;
+    background-color: #ffe2e2;
+}
+@media (min-width: 821px) and (max-width: 960px) {
+  .top_title_text {
+    font-size: 3.3em;
+    text-align:left;
+  }
+  .top_title_text,
+  .main-container {
+    margin-left: 16px;
+    margin-right: 16px;
+    width: auto;
+  }
+  .top_title_pos {
+    bottom:0;
+    margin-bottom:50px;
+  }
+}
+@media only screen and (min-width: 821px) {
+  .searchBar {
+    width: 89%;
+    width: calc(100% - 82px);
+    float:left;
+    background-color:white;
+    box-shadow: 0 10px 12px -4px #eaeaf9;
+    margin-right:10px;
+  }
+}
+@media only screen and (max-width: 820px) {
+  .search_show {
+    display: block !important;
+  }
+  .search_hide {
+    display:none;
+  }
+  .searchBar .innerCol {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 12px -3px #eaeaf9; // was previously 0 10px 12px -4px #eaeaf9
+  }
+}
+@media (min-width: 601px) and (max-width: 820px) {
+  .top_title_text {
+    font-size: 2.8em;
+    line-height: 40px;
+    text-align:left;
+  }
+  .top_title_pos {
+    margin-left:10%;
+    width:80%;
+    bottom:0;
+    margin-bottom:50px;
+  }
+  .main-container {
+    margin-top:-36px;
+  }
+  .search_text_field {
+    width: auto;
+    float: none;
+  }
+  .search_select {
+    width: auto;
+    float: none;
+  }
+}
+@media only screen and (min-width: 601px) {
+  .search_find_near {
+    height: 72px;
+    line-height: 72px;
+    padding-top: 0;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .top_container_style {
+    height: 320px; // because vh doesnt work well on mobile browsers that change height
+  }
+  .top_title_text {
+    font-size: 2.2em;
+    line-height: 40px;
+    text-align:left;
+  }
+  .top_title_pos{
+    margin-left:10%;
+    width:80%;
+    bottom:0;
+    margin-bottom:20px;
+  }
+  .main-container {
+    margin-top:-28px;
+  }
+  .search_find_near {
+    margin-top: 4px;
+    padding-top: 0;
+    height: 48px;
+    line-height: 48px;
+    width: 20%;
+  }
+  .search_text_field,
+  .search_select {
+    height: 56px;
+    width: auto;
+    float: none;
+    padding-top: 4px;
+  }
+  .loved_trusted_title {
+    padding-top: 3%;
+    padding-left:8%;
+    font-size: 34px;
+    text-align:left;
+  }
+
+  .loved_trusted_text {
+    padding-left: 8%;
+    padding-right: 8%;
+    font-size: 16px;
+    line-height: 26px;
+    text-align: left;
+    margin-left: 0;
+  }
+  .hire_kunvet_title {
+    padding-top:3%;
+    padding-left:8%;
+    font-size:34px;
+  }
+  .hire_kunvet_text {
+    padding-left: 8%;
+    padding-right: 8%;
+    font-size: 16px;
+    line-height: 26px;
+    margin-left: 0;
+  }
+  .loved_trusted_container{
+    height: 310px;
+    width: 90%;
+    margin: auto;
+    transform: translate(0px, -80px);
+  }
+  .hire_kunvet_container {
+    height: 280px;
+    width: 90%;
+    margin:auto;
+    transform: translate(0px, -80px);
+  }
+  .postAJob {
+    margin-top:20px;
+    margin-left:8%;
+  }
+  .postAJob2{
+     margin-top:20px;
+     margin-left:8%;
+  }
+  // .row-1, .row-2 {
+  //   display: block;
+  //   position: relative;
+  //   height: 800px;
+  // }
+}
 </style>
 
 <template>
-  <v-container fluid class="home-page-cont pa-0">
-    <div class="main-cont-large">
-      <section class="firstSearch">
+  <v-container fluid class="pa-0">
+  <div class="top_container_style">
+    <div class="top_title_pos">
+     <h1 class="top_title_text">Latest Opportunities Near Your School</h1> <!-- Changed from "College" by L.V. -->
+    </div>
+  </div>
+
+<div class="main-container">
+  <div class="searchBar">
+    <div class="innerCol">
+      <div class="search_find_near">
+        <strong class="search_assist">Find</strong>
+      </div>
+      <div class="search_text_field">
+        <v-text-field
+          solo
+          flat
+          hide-details
+          label="All jobs"
+          clearable
+          v-model="query"
+        ></v-text-field>
+      </div>
+    </div>
+    <div class="innerCol">
+      <div class="search_find_near">
+        <strong class="search_assist">Near</strong>
+      </div>
+      <!-- v-bind:class="{ 'active': openSelectField === 'city' }" -->
+      <div class="search_select">
+          <v-select
+            label="School or City"
+            item-text="name"
+            item-value="name"
+            v-bind:items="availableCities"
+            v-model="selectedCity"
+            solo
+            flat
+            hide-details
+            content-class="fsSelect-menu"
+            autocomplete
+            >
+          </v-select>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="search_mobile search_hide search_show">
+        <div class="search_find_near">
+          <strong class="search_assist">Find</strong>
+        </div>
+        <div class="search_text_field">
+          <v-text-field
+            solo
+            flat
+            hide-details
+            label="All jobs"
+            clearable
+          ></v-text-field>
+        </div>
+  </div> -->
+
+  <!-- <div class="search_mobile search_show">
+        <div class="search_find_near">
+          <strong class="search_assist">Near</strong>
+        </div>
+        <div class="search_select" v-bind:class="{ 'active': openSelectField === 'city' }">
+          <v-select
+            label="School or City"
+            item-text="name"
+            item-value="name"
+            v-bind:items="availableCities"
+            solo
+            flat
+            hide-details
+            content-class="fsSelect-menu"
+            autocomplete
+            >
+          </v-select>
+        </div>
+    </div> -->
+
+    <router-link :to="searchDestination">
+      <button v-ripple class="search_hide kunvet-search-icon-btn med">
+        <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
+      </button>
+    </router-link>
+    <router-link :to="searchDestination">
+      <div style="width:80%; margin:auto;">
+        <k-btn v-ripple class="search_show kunvet-search-btn" block>
+          <span class="search_button_text">
+            Search
+          </span>
+        </k-btn>
+      </div>
+    </router-link>
+  </div>
+
+    <div style="width:100%; height:120px;"></div>
+    <div style="width:100%; height:30px;" class="mobile-hide"></div>
+
+    <div class="mobile-show">
+      <div class="artboard1_img_mobile">
+        <img src="@/assets/artboard1.png" width="96%" style="margin-top: 15%; margin-left: 2%;"/>
+      </div>
+
+      <div class="hire_kunvet_container">
+        <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
+        <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free!</div>
+        <router-link to="/createjob">
+          <button v-ripple class="postAJob">Post a Job</button>
+        </router-link>
+      </div>
+
+      <div style="height: 350px; width: 100%; background-color: #dbefff;">
+        <img src="@/assets/artboard2.png" width="86%" style="margin-top: 15%; margin-left: 7%;"/>
+      </div>
+
+      <div class="loved_trusted_container">
+        <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
+        <div class="loved_trusted_text">Kunvet is used by hundreds of students and local businesses. Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
+        <router-link to="/createjob">
+          <button v-ripple class="postAJob2">Post a Job</button>
+        </router-link>
+      </div>
+    </div>
+
+    <div class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
         <v-layout row wrap>
-          <v-flex xs12 sm11 md10>
-            <div style="padding-bottom: 15px; text-align: right;">
-              <h1 style="color: #ef5350;">Kunvet (con-vit)</h1>
-              <h2 style="color: #333;">Find nearby jobs for students like you</h2>
+          <v-flex xs12 sm6>
+            <div class="container-left artboard1_img">
+              <img src="@/assets/artboard1.png" width="100%" class="artboard1_img_style" />
+            </div>
+          </v-flex>
+
+          <v-flex xs12 sm6>
+            <div class="container-right hire_kunvet_container">
+                <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
+                <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free!</div>
+                <router-link to="/createjob">
+                  <button v-ripple class="postAJob">Post a Job</button>
+                </router-link>
             </div>
           </v-flex>
         </v-layout>
-        <v-layout row wrap style="padding-bottom: 10px;">
-          <v-flex xs10 offset-sm2 sm7 offset-md3 md6 style="height: 48px;"
-            class="grey--text no-padding fsSelect">
-            <v-select class="no-padding fs-select-cities" style="height: 46px;"
-              label="City or School"
-              item-text="name"
-              item-value="name"
-              v-bind:items="availableCities"
-              v-model="selectedCity"
-              single-line
-              attach
-              content-class="fsSelect-menu"
-              hide-details
-              autocomplete
-            >
-            </v-select>
+
+        <!-- Some padding -->
+        <div style="width:100%; height:150px;"></div>
+
+        <v-layout row wrap>
+          <v-flex xs12 sm6 style="z-index:5;">
+            <div class="container-left loved_trusted_container">
+              <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
+              <div class="loved_trusted_text">Kunvet is used by hundreds of students and local businesses. Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
+              <router-link to="/createjob">
+                <button v-ripple class="postAJob2">Post a Job</button>
+              </router-link>
+            </div>
           </v-flex>
-          <v-flex xs2 sm2 md1 class="no-padding" v-ripple>
-            <a class="fsGoBtn" @click="searchGo">
-              <span style="color: white !important; line-height: 48px; text-decoration: none; font-size: 16px;">Go</span>
-            </a>
+          <v-flex xs12 sm6>
+            <div class="container-right artboard2_img">
+              <img src="@/assets/artboard2.png" width="100%" class="artboard2_img_style"/>
+            </div>
           </v-flex>
         </v-layout>
-        <img class="bottom-img" :src="svgs.citySvg" />
-        <v-layout class="bottom-row">
-          <v-flex xs12 align-center>
-            <p class="center">
-              <v-btn class="kunvet-red-bg" dark to="/createjob">Hire on Kunvet</v-btn>
-              <v-btn outline style="background-color: rgba(255,255,255,0.8) !important;"
-               @click="$vuetify.goTo('#promo', { duration: 750, offset: -64, easing: 'easeInOutCubic' })">Learn more</v-btn>
-            </p>
-          </v-flex>
-        </v-layout>
-      </section>
-    </div>
-    <div id="promo" class="main-cont-large pa-3 promo-block" style="max-width: 100%; background: #fafafa">
-      <div style="max-width: 960px; margin: 0 auto;">
-        <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(66).svg')">
-          <h2>Why use Kunvet instead?</h2>
-          <p>
-            All jobs displayed on Kunvet are the latest jobs on the market. We do not present jobs that are older than 30 days to applicants to show-off our database. Unless an organization re-posts its job, we assure our users will not see any repetitive jobs. We too are tired of seeing outdated jobs on the internet.
-          </p>
-        </PromoTextContainer>
 
-        <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(67).svg')">
-          <h2>What's exclusive here?</h2>
-          <p>
-            We care about the quality of opportunities listed on Kunvet. Many opportunities are exclusive at Kunvet, meaning that they aren't listed on other platforms.
-            More importantly, these opportunities are within 20 min of driving distance, and many of them are actually located on campus.
-          </p>
-        </PromoTextContainer>
-
-        <PromoTextContainer class="my-5" :image="require('@/assets/icons/Asset(68).svg')">
-          <h2>What can we guarantee?</h2>
-          <p>We will take all necessary steps to keep information on Kunvet clean and safe. We will consider every user’s feedback, suggestions, and complaints. No matter what is ahead of Kunvet team, we will not sacrifice our user’s experience.</p>
-        </PromoTextContainer>
-      </div>
+        <!-- Some padding -->
+        <div style="width:100%; height:150px;"></div>
     </div>
+
+
   </v-container>
 </template>
 <script>
@@ -347,6 +761,8 @@ import InformationSvg from '@/assets/job_posts/information.svg';
 import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
 import Asset70 from '@/assets/icons/Asset(70).svg';
 import vc from '@/assets/vc.svg';
+import mag from '@/assets/magnifier.svg';
+
 import PromoTextContainer from '@/components/PromoTextContainer';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
@@ -360,6 +776,7 @@ export default {
   },
   data() {
     return {
+      first_city_guess: 'UC Irvine',
       uid: null,
       findJobs: [],
       saved_jobs: [],
@@ -387,9 +804,7 @@ export default {
       // firstSearch: this.$store.state.firstSearch,
       firstSearchType: 'Latest Jobs',
       selectedCity: this.$store.state.selectedCity || 'Irvine - UC Irvine', // { lat: 33.6846, long: -117.8265 }, // this.$store.state.selectedCity,
-      selectedTypes: this.$store.selectedTypes || [],
       selectedPositions: this.$store.selectedPositions || [],
-      selectedShifts: this.$store.selectedShifts || [],
       selectedLat: Coordinates.uci.latitude,
       selectedLong: Coordinates.uci.longitude,
       svgs: {
@@ -397,14 +812,29 @@ export default {
         locationMarker: LocationMarkerSvg,
         kunvetDude: Asset70,
         citySvg: vc,
+        mag: mag,
       },
       selectedPositionsInital: 'All / Any',
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
+      query: '',
     };
   },
+  watch: {
+    selectedCity() {
+      this.commitData();
+    },
+  },
   computed: {
+    searchDestination() {
+      return {
+        path: '/search',
+        query: {
+          q: this.query,
+        },
+      };
+    },
     filteredAvailablePositionsObj() {
       let str = this.filterPositions;
       if (!str || str === '') {
@@ -475,20 +905,13 @@ export default {
         this.openSelectField = name;
       }
     },
-    searchGo() {
-      if (this.selectedCity && this.selectedCity[0]) {
-        this.$store.commit('go');
-        this.commitData();
-        this.$router.push('/search');
-      }
-    },
     commitData() {
       this.$store.commit({
         type: 'keepSearch',
         sCities: this.selectedCity,
-        sTypes: this.selectedTypes,
-        sPositions: this.selectedPositions,
-        sShifts: this.selectedShifts,
+        // sTypes: this.selectedTypes,
+        // sPositions: this.selectedPositions,
+        // sShifts: this.selectedShifts,
       });
     },
     // unused, but could be useful later
@@ -517,4 +940,8 @@ export default {
   },
 };
 
+// Define a new component called button-counter
+Vue.component('button-counter', {
+  template: '<button v-on:click="">Hello!</button>',
+});
 </script>

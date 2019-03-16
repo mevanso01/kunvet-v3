@@ -15,7 +15,7 @@ export default class Mailer {
     this.transport = Nodemailer.createTransport(Config.get('private.mail.transport'));
   }
   getEmailInstance() {
-    return new Email({
+    const emailOptions = {
       message: {
         from: Config.get('private.mail.from'),
         jsonTransport: true,
@@ -37,7 +37,11 @@ export default class Mailer {
           images: 16, // 16KB max
         },
       },
-    });
+    };
+    if (this.transport.alwaysSend) {
+      emailOptions.send = true;
+    }
+    return new Email(emailOptions);
   }
   sendTemplate(recipient, template, locals) {
     const email = this.getEmailInstance();

@@ -7,6 +7,75 @@
     font-size: 1.5em;
   }
 }
+section.search,
+section.search > .main-cont-large {
+  background-color: white;
+}
+section.search {
+  width: 100%;
+  margin: 0 0 10px 0;
+  .custom-select-2,
+  .search-params-field {
+    // box-shadow: 3px 6px 20px rgba(177, 176, 176, .1);
+    border-radius: 4px;
+    height: 56px;
+    border: 1px solid rgba(177, 176, 176, 0.4);
+    .v-input__control {
+      height: 54px; // to help with border
+    }
+    // box-shadow: 0 10px 12px -4px #eaeaf9;
+    // -webkit-box-shadow: 0px 0px 5px 0px rgba(77,77,77,0.5);
+    // -moz-box-shadow: 0px 0px 5px 0px rgba(77,77,77,0.5);
+    // box-shadow: 0px 0px 5px 0px rgba(77,77,77,0.5);
+    // outline: none !important;
+    // border-radius: none;
+  }
+  .custom-select-2-wrapper,
+  .v-input__slot {
+    height: 56px;
+  }
+  .custom-select-2 .inner {
+    height: 56px;
+    max-height: 56px;
+  }
+  .custom-select-2 span {
+    line-height: 56px;
+  }
+  .custom-select-2 .v-btn {
+    top: 4px;
+  }
+  .search-row {
+    padding-top: 16px;
+    display: flex;
+    flex-direction: row;
+  }
+  .search-field-cont,
+  .search-go-cont {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .search-go-cont {
+    width: 56px;
+  }
+  .search-field-cont {
+    width: calc(50% - 26px); // 26px for go btn, 15 for padding
+    padding-right: 15px;
+  }
+}
+.job-distance-indicator {
+  clear: both;
+  display: inline-block;
+  background: #ef5350; // as fallback
+  background: linear-gradient(to right, #ef5350, #ef5350 25%, #ffc26f);
+  color: #fff;
+  margin-top: 16px;
+  padding-left: 24px;
+  // vvv mobile styles vvv
+  padding-right: 24px;
+  height: 28px;
+  line-height: 28px;
+  border-radius: 0 14px 14px 0;
+}
 .general-dropdown-items select, .general-dropdown-items label {
   width: 100%;
   height: 100%;
@@ -57,9 +126,9 @@
 .chip--select-multi {
   margin: 5px 5px 5px 0;
 }
-.small-thats-it, .large-thats-it {
-  background-color: #fafafa;
-}
+// .small-thats-it, .large-thats-it {
+//   background-color: #fafafa;
+// }
 @media only screen and (max-width: 480px) {
   .fs-select-positions {
     display: none !important;
@@ -135,13 +204,20 @@
 .no-jobs-found-box {
   width: 100%;
   height: 125px;
-  background: linear-gradient(135deg, #fafafa, #f5f5f5);
-  background-image: linear-gradient(135deg, rgb(250, 250, 250), rgb(245, 245, 245));
+  // background: linear-gradient(135deg, #fafafa, #f5f5f5);
+  // background-image: linear-gradient(135deg, rgb(250, 250, 250), rgb(245, 245, 245));
+}
+.search-params-field {
+  height: 48px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 3px 16px rgba(177, 176, 176, .1);
+  position: relative;
+  overflow-y: hidden;
+  transition: all 0.3s ease;
+  padding: 0 24px;
 }
 @media (min-width: 601px) {
-  .search .flex {
-    padding: 10px 15px;
-  }
   .large-thats-it {
     width: 100% !important;
   }
@@ -153,6 +229,16 @@
   }
 }
 @media (max-width: 600px) {
+  section.search {
+    .search-row {
+      display: block;
+    }
+    .search-field-cont,
+    .search-go-cont {
+      padding: 10px 15px;
+      width: 100%;
+    }
+  }
   .firstSearch {
     padding-left: 26px;
     padding-right: 26px;
@@ -171,6 +257,14 @@
   }
 }
 @media (min-width: 961px) {
+  .job-distance-indicator {
+    padding-left: calc(50% - 456px); // - 480 plus an extra 24px to align properly with job cards
+    height: 32px;
+    line-height: 32px;
+    border-radius: 0 16px 16px 0;
+    padding-right: 48px;
+    background: linear-gradient(to right, #ef5350, #ef5350 60%, #ffc26f);
+  }
   .firstSearch {
     height: calc(100vh - 64px);
   }
@@ -178,7 +272,7 @@
     padding: 0 48px;
   }
   section.search {
-    padding: 16px 16px 32px 16px;
+    padding: 16px 16px 16px 16px;
   }
   .bottom-img {
     width: calc(100% - 208px);
@@ -190,31 +284,21 @@
     height: calc(100vh - 64px);
   }
 }
-#rua {
-  width: 100%;
-  flex-wrap: nowrap;
-  overflow-x: hidden;
-  justify-content: center;
-  background: #FCFCFC;
-  .card {
-    flex: 0 0 auto;
-    width: 200px;
-    margin: 10px;
-  }
+.algoliaLogo {
+  // width: 960px;
+  margin: 0 auto;
+  padding: 4px 40px 8px 40px;
 }
 </style>
 
 <template>
   <v-container fluid class="home-page-cont pa-0">
-    <div class="main-cont-large">
-      <section class="search">
-        <v-layout row wrap>
-          <v-flex xs12 md6>
+    <section class="search" style="padding-top: 64px;" v-on:keyup.enter="search()">
+      <div class="main-cont-large">
+        <div class="search-row">
+          <div class="search-field-cont">
             <div class="custom-select-2-wrapper">
-
-              <div class="custom-select-2"
-                   v-bind:class="{ 'active': openSelectField === 'city' }">
-
+              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'city' }">
                 <div class="inner" @click="openSelect('city')">
                   <span v-if="this.selectedCity">{{ selectedCity }}</span>
                   <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
@@ -222,111 +306,111 @@
                   <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
                 </div>
 
-                <v-list
-                  dense class="custom-select-menu">
-                  <v-list-tile  @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
-                </v-list>
-              </div>
-
-            </div>
-          </v-flex>
-          <v-flex xs12 md6>
-            <div class="custom-select-2-wrapper">
-              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'types' }">
-                <div class="inner" @click="openSelect('types');">
-                  <span v-if="this.selectedTypes.length > 0">{{ computeSelectString(this.selectedTypes, 'availableTypes') }}</span>
-                  <span v-else style="color: rgba(0,0,0,.54);">Filter by job type</span>
-                  <v-btn icon v-if="openSelectField === 'types'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
-                  <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
-                </div>
-
-                <v-list class="custom-select-menu">
-                  <v-list-tile v-for="(item, i) in availableTypesObj" :key="i">
-                    <v-checkbox :label="item.text" v-model="selectedTypes" :value="item.value" :disabled="item.disabled" hide-details></v-checkbox>
-                  </v-list-tile>
-                </v-list>
-              </div>
-            </div>
-          </v-flex>
-          <v-flex xs12 md6>
-            <div class="custom-select-2-wrapper">
-              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'positions' }">
-                <div class="inner" @click="reorderAvailablePositions(); openSelect('positions');">
-                  <span v-if="this.selectedPositions.length > 0">{{ computeSelectString(this.selectedPositions) }}</span>
-                  <span v-else style="color: rgba(0,0,0,.54);">Filter by positions</span>
-                  <v-btn icon v-if="openSelectField === 'positions'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
-                  <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
-                </div>
-
                 <v-list dense class="custom-select-menu">
-                  <div class="listFilterContainer" v-if="openSelectField === 'positions'">
-                    <i class="material-icons" style="font-size: 16px;">search</i>
-                    <input placeholder="search..." class="filterInput" v-model="filterPositions"/>
-                  </div>
-                  <v-list-tile v-if="openSelectField === 'positions'" v-for="(item, i) in filteredAvailablePositionsObj" :key="i">
-                    <v-checkbox :label="item.text" v-model="selectedPositions" :value="item.text" :disabled="item.disabled" hide-details></v-checkbox>
-                  </v-list-tile>
+                  <v-list-tile style="padding: 0 8px;" @click="updateAndClose(item.name)" v-for="(item, i) in availableCities" :key="i">{{item.name}}</v-list-tile>
                 </v-list>
               </div>
             </div>
-          </v-flex>
-          <v-flex xs12 md6>
-            <div class="custom-select-2-wrapper">
-              <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'shifts' }">
-                <div class="inner" @click="reorderAvailablePositions(); openSelect('shifts');">
-                  <span v-if="this.selectedShifts.length > 0">{{ computeSelectString(this.selectedShifts, 'availableShifts') }}</span>
-                  <span v-else style="color: rgba(0,0,0,.54);">Filter by shifts</span>
-                  <v-btn icon v-if="openSelectField === 'shifts'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
-                  <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
-                </div>
-
-                <v-list dense class="custom-select-menu">
-                  <v-list-tile v-for="(item, i) in availableShiftsObj" :key="i">
-                    <v-checkbox :label="item.text" v-model="selectedShifts" :value="item.value" :disabled="item.disabled" hide-details></v-checkbox>
-                  </v-list-tile>
-                </v-list>
-              </div>
-            </div>
-          </v-flex>
-        </v-layout>
-      </section>
-      <input class="hidden-input" id="submit" type="submit" value="GO">
-      <div id="general-submit" @click="searchAndFilter" v-ripple>
+          </div>
+          <div class="search-field-cont">
+            <v-text-field
+              class="search-params-field"
+              solo
+              hide-details
+              :placeholder="searchPlaceholder"
+              clearable
+              v-model="query"
+            ></v-text-field>
+          </div>
+          <div class="search-go-cont">
+            <button @click="search()" v-ripple class="mobile-hide kunvet-search-icon-btn small">
+              <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
+            </button>
+            <k-btn @click="search()" block v-ripple class="mobile-show kunvet-search-btn">
+              Search
+            </k-btn>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div>
+      <!-- <input class="hidden-input" id="submit" type="submit" value="GO">
+      <div id="general-submit" @click="search()" v-ripple>
         <div id="general-submit-default">
           <span>SEARCH</span>
         </div>
         <div id="general-submit-error">
           <span id="general-submit-error-msg"></span>
         </div>
-      </div>
+      </div> -->
       <v-layout row wrap>
-        <div v-if="loadingJobs" style="width: 100%; height: 60px;">
-          <h3 style="text-align: center; margin-top: 25px;">Loading jobs...</h3>
+        <div v-if="loadingJobs" style="width: 100%;">
+          <h3 style="text-align: center; margin-top: 25px; margin-bottom: 25px;">Loading jobs...</h3>
         </div>
         <v-flex xs12 class="no-padding">
-          <div v-for="job in filteredJobs" :key="job._id">
-              <MainJobCard
-                :job="job"
-                :saveJobFunc="saveJob"
-                :isSaved="isSaved(job._id)"
-                :fromCoordinates="selectedCoordinates"
-              />
-          </div>
-          <div v-if="!loadingJobs && filteredJobs.length > 0 && filteredJobs.length % 2 === 1" class="post-card small-thats-it">
-            <div style="width: 215px; margin: 32px auto;">
-              <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
+          <div v-if="displayedJobs[0].length > 0" style="clear: both;">
+            <div class="job-distance-indicator">
+              Less than 10 miles away
             </div>
-            <p class="center">That's all.</p>
-          </div>
-          <div v-if="!loadingJobs && filteredJobs.length > 0 && filteredJobs.length % 2 === 0" class="post-card large-thats-it">
-            <div style="width: 215px; margin: 32px auto;">
-              <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
+            <div class="main-cont-large">
+              <div v-for="(job, idx) in displayedJobs[0]" :key="`1-${idx}`">
+                <MainJobCard
+                  :job="job"
+                  :saveJobFunc="saveJob"
+                  :isSaved="isSaved(job._id)"
+                  :fromCoordinates="selectedCoordinates"
+                />
+              </div>
             </div>
-            <p class="center">That's all.</p>
+          </div>
+          <div v-if="displayedJobs[1].length > 0" style="clear: both;">
+            <div class="job-distance-indicator">
+              10 to 20 miles away
+            </div>
+            <div class="main-cont-large">
+              <div v-for="(job, idx) in displayedJobs[1]" :key="`2-${idx}`">
+                <MainJobCard
+                  :job="job"
+                  :saveJobFunc="saveJob"
+                  :isSaved="isSaved(job._id)"
+                  :fromCoordinates="selectedCoordinates"
+                />
+              </div>
+            </div>
+          </div>
+          <div v-if="displayedJobs[2].length > 0" style="clear: both;">
+            <div class="job-distance-indicator">
+              20+ miles away
+            </div>
+            <div class="main-cont-large">
+              <div v-for="(job, idx) in displayedJobs[2]" :key="`3-${idx}`">
+                <MainJobCard
+                  :job="job"
+                  :saveJobFunc="saveJob"
+                  :isSaved="isSaved(job._id)"
+                  :fromCoordinates="selectedCoordinates"
+                />
+              </div>
+              <!-- <div v-if="displayedJobs[2].length % 2 === 1" class="jp-card small-thats-it">
+                <div style="width: 215px; margin: 32px auto;">
+                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
+                </div>
+                <p class="center">That's all.</p>
+              </div>
+              <div v-if="displayedJobs[2].length % 2 === 0" class="jp-card large-thats-it">
+                <div style="width: 215px; margin: 32px auto;">
+                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
+                </div>
+                <p class="center">That's all.</p>
+              </div> -->
+            </div>
           </div>
         </v-flex>
-        <div v-if="!loadingJobs && filteredJobs.length === 0" class="no-jobs-found-box">
-          <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please select different filters or a different location.</h3>
+        <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
+          <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please type in a different query or select a different location.</h3>
+        </div>
+        <div class="algoliaLogo" style="color: white;">
+          <ais-powered-by></ais-powered-by>
         </div>
       </v-layout>
     </div>
@@ -346,20 +430,24 @@ import DistanceHelper from '@/utils/DistanceHelper';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
+import searchTexts from '@/constants/search';
 import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
 import findIndex from 'lodash/findIndex';
 import uniq from 'lodash/uniq';
 import queries from '@/constants/queries';
 import EventBus from '@/EventBus';
+import Config from 'config';
+import algoliasearch from 'algoliasearch';
+
+const algoliaConfig = Config.get('algolia');
+
+let algoliaClient = null;
+if (algoliaConfig.appId) {
+  algoliaClient = algoliasearch(algoliaConfig.appId, algoliaConfig.searchApiKey);
+}
 
 Vue.use(VueApollo);
-
-const findJobQuery = gql`query ($id: MongoID) {
-  findJob (filter: { active: true, _id: $id }){
-    ${queries.FindJobRecordForJobCard}
-  }
-}`;
 
 export default {
   components: {
@@ -409,8 +497,11 @@ export default {
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
-      pageSize: 12,
+      // pageSize: 12,
+      query: '',
       page: 0,
+      displayedJobs: [[], [], []],
+      searchPlaceholder: '',
     };
   },
   apollo: {
@@ -466,7 +557,7 @@ export default {
     availableShiftsObj() {
       return this.availableShifts.map((shiftObj) => {
         shiftObj.disabled = !this.filteredJobs.find(
-          job => job.shift.indexOf(shiftObj.value) !== -1,
+          job => Array.isArray(job.shift) && job.shift.indexOf(shiftObj.value) !== -1,
         );
         return shiftObj;
       });
@@ -477,8 +568,20 @@ export default {
       }
       return { latitude: this.selectedLat, longitude: this.selectedLong };
     },
+    hasJobsShown() {
+      return this.displayedJobs[0].length > 0 || this.displayedJobs[1].length > 0 || this.displayedJobs[2].length > 0;
+    },
   },
   methods: {
+    // Randomly pick search search placeholder text
+    getSearchPlaceholderText() {
+      const textList = searchTexts.placeholderList;
+      const idx = Math.floor(Math.random() * textList.length);
+      return `Try: ${textList[idx]}`;
+    },
+    augmentedResults(results) {
+      return results;
+    },
     updateAndClose(city) {
       this.selectedCity = city;
       this.openSelectField = null;
@@ -486,7 +589,8 @@ export default {
     openSelect(name) {
       this.filterPositions = null; // clear job filter text
       if (this.openSelectField === 'city') {
-        this.filterJobs(); // filter jobs when city is closed
+        // this.search();
+        // this.filterJobs(); // filter jobs when city is closed
       }
       if (this.openSelectField === name) {
         this.openSelectField = null;
@@ -556,8 +660,8 @@ export default {
       // fetch the jobs
       this.$apollo.queries.findJobs.fetchMore({
         variables: {
-          limit: this.pageSize,
-          skip: this.pageSize * this.page,
+          limit: 12,
+          skip: 12 * this.page,
         },
         updateQuery(previousResult, { fetchMoreResult }) {
           return fetchMoreResult;
@@ -567,87 +671,39 @@ export default {
         const fetchedJobs = res.data.findJobs;
         this.page += 1;
         if (fetchedJobs.length > 0) {
-          const newFilteredJobs = [];
+          // const newFilteredJobs = [];
           const newPositions = [];
           for (var job of fetchedJobs) {
             if (
               this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
               (findIndex(this.filteredJobs, { '_id': job._id }) === -1)
             ) {
-              newFilteredJobs.push(job);
+              // newFilteredJobs.push(job);
+              const distance = this.computeDistance(job.latitude, job.longitude);
+              if (distance < 10) {
+                this.displayedJobs[0].push(job);
+              } else if (distance > 10 && distance < 20) {
+                this.displayedJobs[1].push(job);
+              } else {
+                this.displayedJobs[2].push(job);
+              }
             }
             for (var pos of job.position_tags) {
               newPositions.push(pos);
             }
           }
           this.inUsePositions = uniq(this.inUsePositions.concat(newPositions));
-          this.filteredJobs = this.filteredJobs.concat(newFilteredJobs);
-          this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
+          // this.filteredJobs = this.filteredJobs.concat(newFilteredJobs);
+          // this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
           // find more jobs there are more to be found
           if (fetchedJobs.length === this.pageSize) {
             this.findAndFilterJobs();
+          } else {
+            // NEW
+            this.insertDistanceLabels();
           }
         }
       });
-    },
-    async filterJobs() {
-      // job types
-      this.commitData();
-      let selectedTypes = [];
-      let selectedTypes2 = [];
-      if (this.selectedTypes.length === 0) {
-        selectedTypes = ['fulltime', 'parttime'];
-        selectedTypes2 = ['internship', 'contract'];
-      } else {
-        for (let i = 0; i < this.selectedTypes.length; i++) {
-          if (['fulltime', 'parttime'].indexOf(this.selectedTypes[i]) >= 0) {
-            selectedTypes.push(this.selectedTypes[i]);
-          }
-          if (['internship', 'contract'].indexOf(this.selectedTypes[i]) >= 0) {
-            selectedTypes2.push(this.selectedTypes[i]);
-          }
-        }
-      }
-      let jobsToFetch = this.findJobs.concat();
-      if (this.selectedCity) { // should be always true?
-        this.setSelectedLatlongs();
-        jobsToFetch = jobsToFetch.filter(x => this.filterJobByDistance(x));
-      }
-      let endIndex = jobsToFetch.length;
-      if (endIndex > 99) {
-        endIndex = 99;
-      }
-      jobsToFetch = jobsToFetch.splice(0, endIndex);
-      if (endIndex > 0) {
-        for (var i = 0; i < endIndex; i++) {
-          const index = findIndex(this.filteredJobs, { '_id': jobsToFetch[i]._id });
-          if (index === -1) {
-            this.$apollo.query({
-              query: findJobQuery,
-              variables: {
-                id: jobsToFetch[i]._id,
-              },
-            }).then((data) => {
-              this.loadingJobs = false;
-              const job = data.data.findJob;
-              if (
-                this.filterJobByInfo(job, selectedTypes, selectedTypes2) &&
-                (findIndex(this.filteredJobs, { '_id': job._id }) === -1)
-              ) {
-                this.filteredJobs.push(job);
-                this.filteredJobs.sort((a, b) => this.compareDistanceAndDate(a, b));
-              }
-            });
-          } else {
-            const job = this.filteredJobs[index];
-            if (!this.filterJobByInfo(job, selectedTypes, selectedTypes2)) {
-              this.filteredJobs.splice(index, 1);
-            }
-          }
-        }
-      } else {
-        this.loadingJobs = false;
-      }
     },
     filterJobByInfo(job, selectedTypes, selectedTypes2) {
       if (
@@ -855,6 +911,80 @@ export default {
         this.fetchAvailableFilters();
       }
     },
+    async algoliaSearch() {
+      const coordinates = this.getCityCoordinates();
+      const requests = [{
+        params: {
+          query: this.query,
+          page: this.page,
+          aroundLatLng: `${coordinates.latitude}, ${coordinates.longitude}`,
+        },
+        indexName: 'jobs',
+      }];
+      const results = await algoliaClient.search(requests);
+      const res = results.results[0];
+      console.log('Algolia results', res);
+      // console.log(res);
+      // if (res.page === 0) {
+      //   this.filteredJobs = res.hits;
+      // } else {
+      //   this.filteredJobs = this.filteredJobs.concat(res.hits);
+      // }
+      for (const job of res.hits) {
+        const distance = this.computeDistance(job.latitude, job.longitude);
+        if (distance < 10) {
+          this.displayedJobs[0].push(job);
+        } else if (distance > 10 && distance < 20) {
+          this.displayedJobs[1].push(job);
+        } else {
+          this.displayedJobs[2].push(job);
+        }
+      }
+      this.loadingJobs = false;
+      if (res.page < (res.nbPages - 1) && this.page < 3) {
+        this.page += 1;
+        this.algoliaSearch();
+      }
+      // else {
+      //   this.insertDistanceLabels();
+      // }
+    },
+    insertDistanceLabels() {
+      let miles = 10;
+      let idx = 0;
+      if (this.filteredJobs.length > 0 && this.computeDistance(this.filteredJobs[0].latitude, this.filteredJobs[0].longitude) < 10) {
+        this.filteredJobs.splice(0, 0, { miles_away: '10' });
+        idx += 1;
+        miles += 10;
+      }
+      for (; idx < this.filteredJobs.length; idx++) {
+        const job = this.filteredJobs[0];
+        if (this.computeDistance(job.latitude, job.longitude) > miles) {
+          this.filteredJobs.splice(idx, 0, { miles_away: miles.toString() });
+          miles += 10;
+        }
+      }
+      this.$debug(this.filteredJobs);
+    },
+    search() {
+      this.page = 0;
+      this.loadingJobs = true;
+      this.displayedJobs = [[], [], []];
+      this.rawSearch();
+    },
+    rawSearch() {
+      if (!algoliaClient && process && process.env && process.env.NODE_ENV === 'development') {
+        // Local DB
+        this.$debug('Loading from local db for development purposes');
+        this.findAndFilterJobs();
+      } else if (algoliaClient) {
+        // Algolia
+        this.algoliaSearch();
+      } else {
+        // No usable backend is available
+        this.$error('No usable search backend');
+      }
+    },
   },
   deactivated() {
     this.commitData();
@@ -873,7 +1003,11 @@ export default {
     if (this.filteredJobs.length === 0) {
       this.loadingJobs = true;
     }
-    this.findAndFilterJobs();
+    if (this.$route.query.q) {
+      this.query = this.$route.query.q;
+    }
+    this.rawSearch();
+    this.searchPlaceholder = this.getSearchPlaceholderText();
     document.addEventListener('click', this.documentClick, { passive: true });
     const data = this.$store.state;
     if (data) {
@@ -900,9 +1034,6 @@ export default {
         this.getSavedJobs();
       }
     }
-    // });
-    // const data = this.$store.state;
-    // console.log(data);
   },
 };
 

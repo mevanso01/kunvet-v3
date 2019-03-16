@@ -1,10 +1,11 @@
-<style>
+<style scoped>
 .acct-page-container__add-major {
   margin-left: 40px !important;
 }
 .acct-page-container__select-degree .input-group__details::before {
   background-color: transparent !important;
 }
+
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg">
@@ -263,44 +264,63 @@
             <v-divider class="acct-divider" />
 
             <v-layout row wrap>
-              <v-flex xs12 sm6 md5 class="padding-sm-right">
+              <v-flex v-if="showResumeSection" xs12 sm6 md5 class="padding-sm-right">
                 <account-header
                   :svg="svgs.resume"
-                  :text="'My Resumes'"
+                  :text="'My Files'"
                 />
+
                 <p v-if="!userdata.resumes || userdata.resumes.length === 0">
-                  Create a kunvet resume or upload your own. Use it to apply for any jobs on kunvet.
+                  Upload your resume or cover letter. Use it to apply for any jobs on Kunvet.
                 </p>
-                <v-list two-line class="acct-list" v-else>
-                  <div v-for="(resume, index) in userdata.resumes" :key="index">
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
-                      </v-list-tile-content>
-                        <v-list-tile-action @click="createEditResumeModal(userdata.resumes[index].name, index)">
-                          <v-btn icon rippl >
-                            <v-icon color="grey lighten-1">edit</v-icon>
-                          </v-btn>
-                        </v-list-tile-action>
-                        <v-list-tile-action @click="
-                          deleteResumeIndex=index;
-                          deleteResumeName=resume.name;
-                          showDeleteResumeDialog=true"
-                        >
-                          <v-btn icon ripple>
-                            <v-icon color="grey lighten-1">delete</v-icon>
-                          </v-btn>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                    <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
-                  </div>
-                </v-list>
-                <v-btn
-                  class="acct-btn"
-                  @click="showFileModal = true"
-                >
-                  Add Resume
-                </v-btn>
+                <div v-else>
+                  <p>Manage your resumes and cover letters here.</p>
+                  <v-list two-line class="acct-list">
+
+                    <div v-for="(resume, index) in userdata.resumes" :key="index">
+                      <v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
+                        </v-list-tile-content>
+                          <v-list-tile-action @click="createEditResumeModal(userdata.resumes[index].name, index)">
+                            <v-btn icon rippl >
+                              <v-icon color="grey lighten-1">edit</v-icon>
+                            </v-btn>
+                          </v-list-tile-action>
+                          <v-list-tile-action @click="
+                            deleteResumeIndex=index;
+                            deleteResumeName=resume.name;
+                            showDeleteResumeDialog=true"
+                          >
+                            <v-btn icon ripple>
+                              <v-icon color="grey lighten-1">delete</v-icon>
+                            </v-btn>
+                          </v-list-tile-action>
+                      </v-list-tile>
+                      <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
+                    </div>
+                  </v-list>
+                </div>
+                <k-btn @click="showFileModal = true">
+                  Add File
+                </k-btn>
+              </v-flex>
+              <v-flex v-else xs12 sm6 md5 class="padding-sm-left">
+                <account-header
+                  :svg="svgs.suitcase"
+                  :text="'Personal Jobs & Applicants'"
+                />
+                <p v-if="doesNotHaveJobs">
+                  Personal jobs are jobs that you offer as an individual.
+                  If you are posting on behalf of a business,
+                  please create an organization.
+                </p>
+                <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
+                <div>
+                  <k-btn to="/createjob" autoSpin>
+                    Post Personal Jobs
+                  </k-btn>
+                </div>
               </v-flex>
               <v-flex xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
                 <account-header
@@ -328,16 +348,15 @@
                   </template>
                 </v-list>
                 <div>
-                  <v-btn
-                    class="acct-btn"
-                    @click.native.stop="createOrganizationModal.show = true"
+                  <k-btn
+                    @click="createOrganizationModal.show = true"
                   >
                     Create an Organization
-                  </v-btn>
+                  </k-btn>
                 </div>
               </v-flex>
             </v-layout>
-            <v-layout row wrap>
+            <v-layout row wrap v-if="showResumeSection">
               <v-flex xs12 sm6 offset-sm6 md5 offset-md7 class="right-account-column padding-sm-left">
                 <account-header
                   :svg="svgs.suitcase"
@@ -346,21 +365,20 @@
                 <p v-if="doesNotHaveJobs">
                   Personal jobs are jobs that you offer as an individual.
                   If you are posting on behalf of a business,
-                  please create an organization from the menu bar.
+                  please create an organization.
                 </p>
                 <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/createjob">
-                    <v-btn class="acct-btn">
-                      Post Personal Jobs
-                    </v-btn>
-                  </router-link>
+                  <k-btn to="/createjob" autoSpin>
+                    Post Personal Jobs
+                  </k-btn>
                 </div>
               </v-flex>
             </v-layout>
 
-            <v-dialog v-model="showFileModal" content-class="auto-dialog">
+            <v-dialog v-model="showFileModal" max-width="500" :fullscreen="$vuetify.breakpoint.xsOnly">
               <ResumeUploader
+                title="Upload new resume or cover letter"
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
               />
@@ -376,7 +394,7 @@
             </v-dialog>
 
             <v-dialog v-model="showDeleteResumeDialog">
-              <v-card>
+              <v-card style="height: 100%">
                 <v-card-title>
                   <h2>Delete {{ deleteResumeName }}?</h2>
                 </v-card-title>
@@ -477,10 +495,10 @@
                 <v-dialog v-model="createOrganizationModal.show">
                   <v-card>
                     <v-card-title class="headline">
-                      Create organization / business profile
+                      Create business / organization profile
                     </v-card-title>
                     <v-card-text>
-                      <v-text-field
+                      <v-text-field v-show="!loading"
                         v-model="createOrganizationModal.organizationName"
                         style="padding: 0 2px;"
                         name="edit-modal-input"
@@ -488,15 +506,13 @@
                         single-line
                         placeholder="Name of business or organization"
                       />
+                      <template v-if="loading">
+                        <v-progress-circular indeterminate :size="30" color="primary" class="pa-3" style="display: block; margin: auto;"></v-progress-circular>
+                      </template>
                     </v-card-text>
                     <v-card-actions>
-                      <template v-if="loading">
-                        <v-progress-circular indeterminate :size="30" color="primary" class="pa-3"></v-progress-circular>
-                      </template>
-                      <template v-else>
-                        <v-btn flat="flat" @click.native="createOrganization">Continue</v-btn>
-                        <v-btn flat="flat" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
-                      </template>
+                      <v-btn flat="flat" :disabled="!createOrganizationModal.organizationName || loading" @click.native="createOrganization">Continue</v-btn>
+                      <v-btn flat="flat" style="text-align: right;" :disabled="loading" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -534,12 +550,12 @@
             <v-dialog v-model="showJobToPostDialog">
               <v-card>
                 <v-card-title>
-                  <div class="headline">You have an unfinished job!</div>
+                  <div class="headline">You have an unfinished job! Would you like to continue posting it?</div>
                 </v-card-title>
                 <a @click="showJobToPostDialog = false" class="center" style="display: block; color: #616161 !important; margin-bottom: 12px;">continue later</a>
                 <div class="general-submit" @click="goToCreateJob">
                   <div class="general-submit-default">
-                    <span>CONTINUE EDITING MY JOB</span>
+                    <span>Continue Editing My Job</span>
                   </div>
                 </div>
               </v-card>
@@ -672,6 +688,10 @@
         return {
           maxWidth: `${degreeSelectMaxWidths[degreeStringToDb(degree)]}px`,
         };
+      },
+      showResumeSection() {
+        return !this.userdata || this.userdata.account_type === 'student' ||
+          (this.userdata.resumes && this.userdata.resumes.length > 0);
       },
     },
     methods: {
@@ -928,6 +948,7 @@
               wechat_id: this.userdata.wechat_id,
               resumes: _resumes,
               default_org: this.userdata.default_org,
+              account_type: this.userdata.account_type,
             },
           },
           refetchQueries: [{
@@ -951,6 +972,7 @@
                     filename
                     resumeid
                   }
+                  account_type
               }
             }`),
             variables: {
@@ -1006,6 +1028,7 @@
                 record: {
                   org_list: newOrgList,
                   default_org: recordId,
+                  account_type: 'business',
                 },
               },
               refetchQueries: [
@@ -1030,6 +1053,7 @@
                           filename
                           resumeid
                         }
+                        account_type
                     }
                   }`),
                   variables: {
@@ -1061,8 +1085,10 @@
               _id: recordId,
               name: organizationName,
             });
+            this.userdata.account_type = 'business';
             // EventBus.$emit('new_org', { name: organizationName, _id: recordId });
-            this.switchToOrg(recordId);
+            this.commitUserdata();
+            this.switchToOrg(recordId, true);
           } catch (e) {
             this.$error(e);
             this.loading = false;
@@ -1103,6 +1129,7 @@
           });
         });
       },
+      // NO LONGER USED
       fetchData() {
         this.$apollo.query({
           query: (gql`query ($uid: MongoID) {
@@ -1126,6 +1153,7 @@
                   resumeid
                 }
                 email_verified
+                account_type
             }
           }`),
           variables: {
@@ -1143,25 +1171,29 @@
           this.userdata.profile_pic = res.profile_pic;
           this.userdata.default_org = res.default_org;
           this.userdata.resumes = res.resumes.concat();
-          this.commitUserdata();
+          this.userdata.account_type = res.account_type;
           if (res.org_list) {
             this.populateOrgList(res.org_list);
           }
           this.email_verified = res.email_verified;
+          this.commitUserdata();
         }).catch((error) => {
           this.$error(error);
         });
       },
-      switchToOrg(id) {
+      switchToOrg(id, dontUpdate = false) {
         this.$store.commit({
           type: 'keepBdata',
           bdata: null,
         });
         this.userdata.default_org = id;
-        this.updateAccount();
+        if (!dontUpdate) {
+          this.userdata.account_type = 'business';
+          this.updateAccount();
+        }
         this.$store.commit({ type: 'setDefaultOrg', id });
         this.$store.commit({ type: 'setBusinessID', id });
-        EventBus.$emit('business');
+        EventBus.$emit('login', 'business');
         this.$router.push('/myorg');
       },
       resendEmail() {
@@ -1201,8 +1233,11 @@
           if (data.acct === 1) {
             this.fillUpIndividualJobs();
           }
-          if (data.userdata.org_list) {
+          if (data.userdata.org_list && data.userdata.org_list.length > 0) {
             this.populateOrgList(data.userdata.org_list);
+          } else if (data.userdata.default_org) {
+            this.$error('User has default org but empty org list');
+            this.populateOrgList([data.userdata.default_org]);
           }
         }
       });

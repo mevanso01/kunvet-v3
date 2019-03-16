@@ -1,125 +1,307 @@
-<style>
+<style lang="scss">
+  .applicants-page {
+    padding-left: 0;
+    padding-right: 0;
+    .main-cont-large {
+      background-color: inherit;
+      padding: 0 16px;
+    }
+    .job-headline {
+      background-color: #f2f7ff;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      p, h2 {
+        color: #808285;
+      }
+      h2 {
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+    }
+    .btn-row > a {
+      color: #616161 !important;
+      text-decoration: underline;
+      display: block;
+    }
+    .applicant {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+    .pdfframe-container {
+      // height: 95vh;
+      padding: 64px 32px 32px 32px;
+      overflow: scroll;
+      background-color: #f2f7ff;
+      .more {
+        background: none !important;
+      }
+    }
+    .sp-heading {
+      position: sticky;
+      top: 64px;
+      z-index: 99;
+      width: 100%;
+      padding: 18px 32px 0px 32px;
+      // background-color: #ef5350;
+      // background-color: #ff6969;
+      background-color: #f2f7ff;
+      .v-btn__content {
+        text-transform: none;
+      }
+      h2 {
+        color: #4d4d4d;
+      }
+    }
+    .sp-footer {
+      position: sticky;
+      bottom: 0px;
+      height: 60px;
+      padding: 8px 32px;
+      background-color: #f2f7ff;
+      h2 {
+        font-size: 18px;
+        line-height: 42px;
+        color: #616161;
+        font-weight: 400;
+      }
+      button {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+    @media (min-width: 601px) {
+      .btn-row > a {
+        padding-right: 8px;
+        display: inline;
+      }
+    }
+    @media (min-width: 768px) {
+      .sp-heading-mobile,
+      .sp-mobile-footer {
+        display: none;
+      }
+    }
+    @media (min-width: 961px) {
+      .pdfframe-container,
+      .sp-heading,
+      .sp-footer {
+        padding-right: calc(50vw - 480px);
+      }
+      .applicant .kunvet-v-btn {
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .applicant:hover .kunvet-v-btn {
+        opacity: 1;
+      }
+    }
+    @media (max-width: 600px) {
+      .side-pdf-heading {
+        top: 0;
+        z-index: 101;
+      }
+    }
+    @media (max-width: 767px) {
+      // .side-pdf-heading .sp-buttons {
+      //   display: none;
+      // }
+      .pdfframe-container {
+        padding: 0 16px;
+      }
+      .sp-drawer {
+        z-index: 200;
+      }
+      .sp-heading,
+      .sp-footer {
+        display: none;
+      }
+      .sp-heading-mobile {
+        display: block;
+        background-color: #f2f7ff;
+        position: sticky;
+        top: 0;
+        height: 40px;
+        h2 {
+          text-align: center;
+          line-height: 40px;
+        }
+      }
+      .sp-mobile-footer {
+        padding: 4px 16px;
+        position: sticky;
+        bottom: 0;
+        height: 72px;
+        background-color: #f2f7ff;
+        z-index: 5;
+      }
+    }
+  }
+  // height: auto;
+  //    width: 100%;
+  //    background-color: #f2f7ff;
+  //    z-index: 9;
+  //    position: fixed;
+  //    top: 64px;
+  //    padding: 0;
+  //    overflow: hidden;
 </style>
 <template>
-  <v-container fluid class="applicant-page job-post__container" style="padding-top: 8px;">
-    <div class="main-cont-large">
-      <v-layout row wrap>
-        <v-flex xs12 v-if="jobs.length === 0">
-          <div v-if="pageLoading" style="margin-top: 48px;">
-            <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
-            style="display: block; margin: auto !important;"></v-progress-circular>
-          </div>
-          <div v-else>
-            You have no jobs.
-          </div>
-        </v-flex>
-        <template
-          v-if="jobs.length > 0"
-          v-for="job in jobs"
-        >
-          <v-flex xs12 style="margin-top: 12px" class="job-page-headline">
-            <h1>{{ job.title }}</h1>
-            <p class="mb-1">
+  <v-container fluid class="applicants-page">
+    <v-layout row wrap>
+      <v-flex xs12 v-if="jobs.length === 0">
+        <div v-if="pageLoading" style="margin-top: 48px;">
+          <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
+          style="display: block; margin: auto !important;"></v-progress-circular>
+        </div>
+        <div v-else class="main-cont-large">
+          <p style="text-align: center;">
+            <strong>You have no active jobs.</strong><br><br>
+            <router-link to="/createjob" style="font-weight: bold;">Click here</router-link> create a new job, or go to the <router-link to="/myjobs" style="font-weight: bold;">jobs page</router-link> to re-post a past job.
+          </p>
+        </div>
+      </v-flex>
+      <template
+        v-if="jobs.length > 0"
+        v-for="job in jobs"
+      >
+        <v-flex xs12 style="margin-top: 12px" class="job-headline job-page-headline">
+          <div class="main-cont-large">
+            <p class="mb-1">{{ getApplicantsFromJobs(job._id).length }} {{ getApplicantsString(getApplicantsFromJobs(job._id).length) }} for</p>
+            <h2>{{ job.title }}</h2>
+            <!-- <p class="mb-1">
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
               </span> {{ getApplicantsCountString }} in total
-            </p>
-          </v-flex>
-
-          <v-flex xs12 sm6
-            v-if="applicants.length > 0"
-            v-for="item in getApplicantsFromJobs(job._id)"
-            class="new-applicant-card new-applicant-card--equal-height"
-          >
+            </p> -->
+          </div>
+        </v-flex>
+        <div class="main-cont-large">
+          <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="applicant">
             <div class="inner" style="position: relative;">
-              <div class="new-applicant-card__info">
-                <v-layout row wrap>
-                  <v-flex xs3 sm3 style="padding-bottom: 0;">
-                    <div class="new-applicant-card__profile-pic-container">
-                      <figure>
-                        <div v-if="item.status === 'submitted'" class="new-applicant-card__unread-circle" />
-                          <img :src="item.profilePic" style="min-height: 50px;"/>
-                          <div class="new-applicant-card__time-ago" style="margin-left: 5px;">
-                            <timeago :since="item.date" />
-                          </div>
-                      </figure>
+              <div class="">
+                <v-layout row wrap style="padding-bottom: 12px;">
+                  <v-flex xs12 sm6 style="padding-bottom: 0; cursor: pointer;" @click="openSideResume(item);">
+                      <h2 class="new-applicant-card__title">{{ item.name }}</h2>
+                      <p v-if="item.school" style="overflow: hidden; margin-bottom: 0;">
+                          School: {{ item.school }}
+                      </p>
+                      <p v-else style="overflow: hidden; margin-bottom: 0;">
+                          No school info
+                      </p>
+                      <p v-if="item.degree" style="overflow: hidden; margin-bottom: 0;">
+                          Degree: {{ item.degree }}
+                      </p>
+                      <p v-if="item.major" style="overflow: hidden; margin-bottom: 0;">
+                          Major: {{ item.major }}
+                      </p>
+                      <!-- <p style="overflow: hidden; margin-bottom: 0;">
+
+                      </p> -->
+                  </v-flex>
+                  <v-flex xs12 sm6 style="padding-bottom: 0;">
+                    <div style="padding-top: 25px;">
+                      <span v-if="item.notes" style="color: grey;">
+                        <!-- Notes: {{ getApplicantNotesDisplayText(item) }} -->
+                        <pre style="font-family: Verdana; white-space: pre-line;">
+                          {{ item.notes }}
+                        </pre>
+                      </span>
                     </div>
                   </v-flex>
-                  <v-flex xs9 sm9 style="padding-bottom: 0; cursor: pointer;" @click="openApplication(item)">
-                      <h2 class="new-applicant-card__title">{{ item.name }}</h2>
-                      <p style="overflow: hidden; margin-bottom: 0;">
-                        <span>
-                          {{ item.school || 'School info unknown' }}
-                        </span><br />
-                        <span
-                          v-if="item.degree && item.degree !== 'None' && item.degree != 'High school'"
-                          style="color: grey;"
-                        >
-                          {{ item.degree }} in {{ item.major }}<br />
-                        </span>
-                        <span
-                          v-if="item.degree === 'High school'"
-                          style="color: grey;"
-                        >
-                          {{ item.degree }}
-                        </span>
-                        <span v-if="item.notes" style="color: grey;">
-                          Notes: {{ getApplicantNotesDisplayText(item) }}
-                        </span>
-                      </p>
-                  </v-flex>
                 </v-layout>
-              </div>
-              <!-- {{ item.resumeSrc }}
-              <PdfFrame
-                v-if="item.resumeSrc"
-                :href="item.resumeSrc"
-              /> -->
-              <!--<div class="btn-holder btn-holder--equal-height">
-                <div class="btn-holder__right-elements">
-                  <span v-if="isAcceptedOrRejected(item)">
-                    <span style="color: grey;">
-                      {{ getAcceptedOrRejectedText(item) }}
-                    </span>
-                    <v-btn
-                      v-if="item.status === 'accepted'"
-                      class="kunvet-black-small-btn"
-                      @click="showContactInfoDialog(item)"
-                    >
-                      Contact
-                    </v-btn>
-                    <v-btn
-                      v-if="item.status === 'accepted'"
-                      class="kunvet-black-small-btn"
-                      :href="`mailto:${item.email}`"
-                    >
-                      Send email
-                    </v-btn>
-                  </span>
-                  <span v-else>
-                    <span style="color: red;">
-                      {{ getApplicantExpiringText(item) }}
-                    </span>
-                    <v-btn
-                      class="kunvet-accept-small-btn"
-                      @click="onShowAcceptDialog(item)"
-                    >
-                      Accept
-                    </v-btn>
-                    <v-btn
-                      class="kunvet-reject-small-btn"
-                      @click="onShowRejectDialog(item)"
-                    >
-                      Reject
-                    </v-btn>
-                  </span>
+                <div class="btn-row">
+                  <!-- <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
+                  <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn> -->
+                  <a @click="openSideResume(item);">Show Resume</a>
+                  <a style="color: #616161;" @click="openInNewTab(item)">View More Information</a>
+                  <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
+                  <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->
                 </div>
-              </div>-->
+                <!-- <v-btn @click="openResumeInNewTab(item);">Open in new tab</v-btn> -->
+              </div>
             </div>
-          </v-flex>
-        </template>
-      </v-layout>
-    </div>
+          </div>
+        </div>
+      </template>
+    </v-layout>
+
+    <!-- <v-dialog v-if="isMobile" v-model="showSideResume" content-class="mobile-resume" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <div class="mr-header">
+        <h2 v-if="currentApplicant" class="mb-0">
+          {{ currentApplicant.name }}
+        </h2>
+      </div>
+      <div class="mr-content">
+        <div class="pdfframe-container">
+          <PdfFrame
+            v-if="currentApplicant && currentApplicant.resumes[0] && currentResumeSrc"
+            :href="currentResumeSrc"
+          />
+        </div>
+      </div>
+      <div class="mr-footer">
+        <v-btn @click="showSideResume = false;">Hide Resume</v-btn>
+      </div>
+    </v-dialog> -->
+
+    <v-navigation-drawer
+       v-model="showSideResume"
+       fixed right width="900"
+       temporary class="sp-drawer">
+       <div class="sp-heading">
+         <v-layout class="pb-3">
+           <v-flex xs12 sm6 class="pa-0">
+             <h2 v-if="currentApplicant" class="mb-0" style="text-align: left; line-height: 36px;">
+               {{ currentApplicant.name }}
+             </h2>
+           </v-flex>
+           <v-flex xs12 sm6 class="pa-0 sp-buttons" style="text-align: right;">
+             <v-btn flat class="kunvet-v-btn light" style="margin-right: 12px;" @click="showSideResume = false;">Hide Resume</v-btn>
+             <v-btn flat :disabled="!currentResumeSrc" class="ma-0 kunvet-v-btn light" @click="downloadResume(currentResumeSrc)">Download Resume</v-btn>
+             <!-- <a :href="currentResumeSrc" download>Download Resume</a> -->
+           </v-flex>
+        </v-layout>
+       </div>
+       <div class="sp-heading-mobile">
+         <h2 v-if="currentApplicant" class="mb-0">
+           {{ currentApplicant.name }}
+         </h2>
+       </div>
+       <div class="sp-content">
+         <div class="pdfframe-container">
+           <PdfFrame
+             v-if="currentApplicant && currentApplicant.resumes.length > 0 && currentResumeSrc"
+             :href="currentResumeSrc"
+           />
+         </div>
+       </div>
+       <div class="sp-footer" v-if="currentApplicant && currentApplicant.resumes.length > 1" style="text-align: center;">
+         <v-layout>
+           <v-flex xs12 class="pa-0" style="text-align: right;">
+             <h2 class="mb-0">
+               <span style="margin-right: 10px;">Showing file {{ currFileNum + 1 }} of {{ currentApplicant.resumes.length }}</span>
+               <v-btn icon @click="nextFile(true)" style="height: 42px; width: 42px; color: white; background-color: white;">
+                 <img src="../assets/mobile/leftarrow.svg" style="height: 42px; width: 42px;">
+               </v-btn>
+               <v-btn icon @click="nextFile()" style="height: 42px; width: 42px; color: white; background-color: white;">
+                 <img src="../assets/mobile/rightarrow.svg" style="height: 42px; width: 42px;">
+               </v-btn>
+             </h2>
+           </v-flex>
+         </v-layout>
+       </div>
+       <div class="sp-mobile-footer" style="text-align: center;">
+         <v-btn v-if="currentApplicant && currentApplicant.resumes.length > 1" icon @click="nextFile(true)" style="height: 42px; width: 42px; color: white; background-color: white;">
+           <img src="../assets/mobile/leftarrow.svg" style="height: 42px; width: 42px;">
+         </v-btn>
+         <v-btn icon @click="showSideResume = false;" style="height: 48px; width: 48px; color: white; background-color: white;">
+           <img src="../assets/mobile/close.svg" style="height: 48px; width: 48px;">
+         </v-btn>
+         <v-btn v-if="currentApplicant && currentApplicant.resumes.length > 1" icon @click="nextFile()" style="height: 42px; width: 42px; color: white; background-color: white;">
+           <img src="../assets/mobile/rightarrow.svg" style="height: 42px; width: 42px;">
+         </v-btn>
+       </div>
+    </v-navigation-drawer>
 
     <v-dialog v-model="dialogs.showAccept">
       <v-card>
@@ -193,6 +375,8 @@
   import { degreeDbToString } from '@/constants/degrees';
   import queries from '@/constants/queries';
   import ProfilePicHelper from '@/utils/GetProfilePic';
+  import FileClient from '@/utils/FileClient';
+  import PdfFrame from '@/components/PdfFrame';
 
   export default {
     created() {
@@ -236,18 +420,46 @@
           major: MajorSvg,
           degree: DegreeSvg,
         },
+        currentApplicant: null,
+        currentResumeSrc: null,
+        showSideResume: false,
+        currFileNum: 0,
       };
     },
     components: {
-      // PdfFrame,
+      PdfFrame,
     },
     methods: {
       // async getSrc(resume) {
       //   // eslint-disable-next-line
-      //   console.log('Test', resume);
+      //   // console.log('Test', resume);
+      //   if (!resume.filename) { return; }
       //   const src = await FileClient.getLink(resume.filename);
       //   return src;
       // },
+      async openSideResume(item) {
+        this.updateApplicantStatus('opened', item._id);
+        this.showSideResume = true;
+        this.currentApplicant = item;
+        this.currFileNum = 0;
+        if (item.resumes[0] && item.resumes[0].filename) {
+          const src = await FileClient.getLink(item.resumes[0].filename);
+          this.currentResumeSrc = src;
+        } else {
+          this.currentResumeSrc = null;
+        }
+      },
+      async nextFile(reverse) {
+        const increment = reverse ? -1 : 1;
+        if (!this.currentApplicant || this.currFileNum + increment < 0 || this.currFileNum + increment >= this.currentApplicant.resumes.length) {
+          return;
+        }
+        this.currFileNum += increment;
+        if (this.currentApplicant.resumes[this.currFileNum] && this.currentApplicant.resumes[this.currFileNum].filename) {
+          const src = await FileClient.getLink(this.currentApplicant.resumes[this.currFileNum].filename);
+          this.currentResumeSrc = src;
+        }
+      },
       async getData() {
         const { data } = await this.$apollo.query({
           query: (gql`query ($userId: MongoID, $businessId: MongoID) {
@@ -325,7 +537,7 @@
             applicantId = this.dialogs.currentApplicant._id;
           }
           await axios.post(`/application/${applicantId}/setStatus/${newStatus}`);
-          await this.updateApplicantViaQuery(applicantId);
+          // await this.updateApplicantViaQuery(applicantId);
           const { applicants } = this;
           for (let i = 0; i < applicants.length; ++i) {
             if (applicants[i]._id === applicantId) {
@@ -404,6 +616,21 @@
         }
         this.$router.push(`view-applicant/${item._id}`);
       },
+      downloadResume(url) {
+        // this.$debug('download url', url);
+        window.open(url, '_blank');
+      },
+      openInNewTab(item) {
+        if (item.status === 'submitted') {
+          EventBus.$emit('removeNotification', `New applicant: ${item.name}`);
+        }
+        try {
+          window.open(`view-applicant/${item._id}`, '_blank');
+        } catch (err) {
+          this.$error(err);
+          this.$router.push(`view-applicant/${item._id}`);
+        }
+      },
       resetDialogState() {
         this.dialogs.showAccept = false;
         this.dialogs.showReject = false;
@@ -435,6 +662,10 @@
         if (!notes) return '';
         return StringHelper.truncate(notes, 80);
       },
+      getApplicantsString(num) {
+        if (num === 1) { return 'applicant'; }
+        return 'applicants';
+      },
     },
     computed: {
       getApplicantsCount() {
@@ -443,6 +674,10 @@
       getApplicantsCountString() {
         return `${StringHelper.pluralize('applicant', this.applicants.length)}`;
       },
+      // isMobile() {
+      //   console.log('test', document.documentElement.clientWidth);
+      //   return document.documentElement.clientWidth <= 767;
+      // },
     },
   };
 </script>

@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import "../css/_createJobStyles";
+  @import "../css/CreateJobStyles";
 </style>
 
 <template>

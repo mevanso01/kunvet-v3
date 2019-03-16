@@ -2,11 +2,10 @@ import composeWithMongoose from 'graphql-compose-mongoose';
 import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
-import Mailer from '@/utils/Mailer';
 import Files from '@/utils/Files';
+import EmailFunctions from '@/utils/EmailFunctions';
 import Models from '../mongodb/Models';
 import Restrictions from './Restrictions';
-
 // GraphQL types
 const Job = composeWithMongoose(Models.Job);
 const Account = composeWithMongoose(Models.Account);
@@ -42,7 +41,6 @@ const degrees = {
 };
 
 async function sendNewApplicationNotification(req, next) {
-  const mailer = new Mailer();
   const user = req.context.user;
   let job = null;
   let employer = null;
@@ -94,17 +92,13 @@ async function sendNewApplicationNotification(req, next) {
     }
   }
 
-  try {
-    await mailer.sendTemplate(
-      employer.email,
-      'application-created',
-      locals,
-    );
-  } catch (e) {
-    Logger.error(e);
-    // throw Error('Employer could not be emailed');
-  }
+  const templateObject = {
+    email: employer.email,
+    status: 'application-created',
+    locals: locals,
+  };
 
+  EmailFunctions.sendApplicantInfo(templateObject);
   try {
     employer.notifications.push({
       text: `New applicant: ${user.firstname} ${user.lastname}`, // Important: change code in applicants.vue before removing
@@ -181,7 +175,7 @@ GQC.rootMutation().addFields({
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.Verified,
     ], {
-      ...wrapResolvers(Restrictions.LogRecord, {
+      ...wrapResolvers(Restrictions.UploadJobToAlgolia, {
         createJob: Job.get('$createOne'),
       }),
       ...wrapResolvers(sendNewApplicationNotification, {
@@ -196,7 +190,7 @@ GQC.rootMutation().addFields({
       updateAccount: Account.get('$updateOne'),
     }),
     ...wrapResolvers([
-      Restrictions.Debug,
+      Restrictions.UploadJobToAlgolia,
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.getFilterByUserId('user_id'),
     ], {

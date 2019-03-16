@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexLS from './persist';
+// import VuexLS from './persist';
 // import VuexPersistence from 'vuex-persist';
 // import Cookies from 'js-cookie';
 
@@ -20,6 +20,7 @@ const Store = new Vuex.Store({
     selectedShifts: [],
     bdata: null,
     userdata: null,
+    udataLastFetched: null,
     currentJobProgress: {
       jobId: null,
       part1Complete: false,
@@ -40,6 +41,7 @@ const Store = new Vuex.Store({
         state.userdata = null;
         state.bdata = null;
         state.userID = null;
+        state.udataLastFetched = null;
         state.newUser = true;
       } else {
         state.newUser = false;
@@ -55,7 +57,7 @@ const Store = new Vuex.Store({
     setDefaultOrg(state, payload) {
       state.default_org = payload.id;
     },
-    unsetBusinessID(state) {
+    unsetBusinessID(state) { // deprecated, use unsetBusinessData instead
       state.businessID = null;
     },
     keepSearch(state, payload) {
@@ -65,11 +67,24 @@ const Store = new Vuex.Store({
       state.selectedShifts = payload.sShifts;
     },
     keepUserdata(state, payload) {
-      state.userdata = payload.userdata;
+      if (!state.userdata) {
+        state.userdata = payload.userdata;
+      } else {
+        for (const key of Object.keys(payload.userdata)) {
+          state.userdata[key] = payload.userdata[key];
+        }
+      }
       state.newUser = false;
+      if (payload.updateLastFetched) {
+        state.udataLastFetched = Date.now();
+      }
     },
     keepBdata(state, payload) {
       state.bdata = payload.bdata;
+    },
+    unsetBusinessData(state) {
+      state.businessID = null;
+      state.bdata = null;
     },
     setJobProgress(state, payload) {
       state.currentJobProgress.jobId = payload.id;
@@ -109,6 +124,7 @@ const Store = new Vuex.Store({
       state.selectedShifts = [];
       state.bdata = null;
       state.userdata = null;
+      state.udataLastFetched = null;
       state.currentJobProgress = {
         jobId: null,
         part1Complete: false,
@@ -119,12 +135,12 @@ const Store = new Vuex.Store({
       state.newUser = true;
     },
   },
-  plugins: [VuexLS.plugin],
-  getters: {
-    LS() {
-      return VuexLS.restoreState('vuex', window.localStorage);
-    },
-  },
+  // plugins: [VuexLS.plugin],
+  // getters: {
+  //   LS() {
+  //     return VuexLS.restoreState('vuex', window.localStorage);
+  //   },
+  // },
 });
 
 export default Store;

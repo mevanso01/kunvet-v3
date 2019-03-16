@@ -3,151 +3,110 @@
     <div v-if="devmode" class="devmode">
       Development mode
     </div>
-    <v-toolbar fixed class="main-navbar" v-bind:class="{ black: (acct == 2), white: (acct != 2) }">
+    <!--desktop version position: absolute; top: 0; -->
+    <v-toolbar flat fixed class="main-navbar mobile-hide" :class="{ 'white-bg': navHasBg }" style="z-index: 200; background-color: inherit;">
       <router-link to="/search">
-            <div id="nav-logo">
-              <!--<img id="nav-logo-svg" :src="svgs.kunvetLogoNav"></img>-->
-                <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="312 0 2384 1024">
-                    <path fill="var(--navbar-icon-color)" d="M506.16,577.25c-46.35,0-92.71.29-139.05-.42-5.78-.09-14.6-4.23-16.72-8.9-20.71-45.61-37.64-92.35-37.34-143.58.29-50,19-91.57,62.15-117.12,76.17-45.1,158.71-61.61,246-41.22,45,10.51,70.88,42.05,79.76,86.87C711.62,406.7,699.19,458.25,682.9,509c-6.12,19.06-14.73,37.32-21.06,56.32-3.23,9.7-8.61,12.17-18.16,12.09C597.84,577,552,577.27,506.16,577.25Z"
-                    />
-                    <path fill="var(--navbar-icon-color)" d="M510,824.51c-21.76-30.53-41.24-57.45-60.25-84.7C438.55,723.78,412.5,683,412.5,683a46,46,0,0,1,5.66-6.22c54.42-44.31,128.54-42.73,185.28,7.29Z"
-                    />
-                    <path fill="var(--navbar-wordmark-color)" d="M810.57,376.87h49.36v75.23l88.73-75.23h38.11L886.65,461.53l127,115.59H954.15l-94.22-85.78v85.78H810.57Z" />
-                    <path fill="var(--navbar-wordmark-color)" d="M1028,376.87h49.22V505.54a65.43,65.43,0,0,0,3.59,21.87A53.44,53.44,0,0,0,1091,545.2a48.44,48.44,0,0,0,16.24,12,53.62,53.62,0,0,0,42.68,0,48.68,48.68,0,0,0,16.17-12,53.49,53.49,0,0,0,10.27-17.79,65.43,65.43,0,0,0,3.59-21.87V376.87h30.94V505.54a81.69,81.69,0,0,1-5.27,29.32,63.8,63.8,0,0,1-16.45,24.26q-11.18,10.41-28.83,16.45t-42.26,6q-22.08,0-38.88-6T1051,559.05a69.13,69.13,0,0,1-17.23-24.4,75.59,75.59,0,0,1-5.84-29.53Z"
-                    />
-                    <path fill="var(--navbar-wordmark-color)" d="M1260.15,376.87h31.36L1405.7,504.28V376.87h30.8V580.22h-21.23l-124-140.62V577.12h-31.08Z" />
-                    <path fill="var(--navbar-wordmark-color)" d="M1511.87,376.87l66.23,138.37,61.31-138.37h31.64l-90.14,203.34h-23.06L1461.1,376.87Z" />
-                    <path fill="var(--navbar-wordmark-color)" d="M1845.15,376.87v17H1744.74V460h83.39v17.16h-83.39v79.45h100.41v20.53H1695.67V376.87Z" />
-                    <path fill="var(--navbar-wordmark-color)" d="M2059.6,376.87v17h-69.33V577.12H1941.2V393.89h-69.33v-17Z" />
-                </svg>
+        <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
+        <img v-else src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+      </router-link>
+      <v-spacer></v-spacer>
+      <v-toolbar-items v-if="acct > 0">
+        <template v-for="item in currentMenuItems">
+          <v-btn
+            flat @click="goTo(item.href)" style="background-color: inherit;" class="text-capitalize white--text">
+            {{ item.title }}
+          </v-btn>
+        </template>
+        <!-- <v-btn flat @click="goTo('/search');">Search</v-btn> -->
+        <!-- <v-btn flat @click="goTo('/myjobs');" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn> -->
+        <!--TODO: notification mark-->
+        <!-- <v-btn flat @click="goTo('/notifications');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn> -->
+        <!-- <v-btn flat @click="goTo('/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn> -->
+        <v-menu fixed offset-y left :close-on-content-click="false">
+          <v-btn flat style="min-width: 64px;" slot="activator" class="white--text nav-notifications-btn">
+            <img v-if="navHasBg" class="nav-img notranslate" src="./assets/navbar/bell4_red.svg"></img>
+            <img v-else class="nav-img notranslate" src="./assets/navbar/bell4_white.svg"></img>
+            <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>
+          </v-btn>
+          <Notifications isNavbar />
+        </v-menu>
+        <v-menu fixed offset-y left>
+          <v-btn flat slot="activator" class="white--text" style="min-width: 64px; background-color: inherit;">
+            <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
+          </v-btn>
+          <v-list dense class="main-navbar-dropdown-list">
+            <v-list-tile @click="goToAccount()">
+              <p>View Account</p>
+            </v-list-tile>
+            <v-list-tile @click="goTo('/settings')">
+              <p>Settings</p>
+            </v-list-tile>
+            <v-list-tile @click="logout()">
+              <p>Logout</p>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+        <!-- <v-btn flat @click="goToAccount();" class="white--text" style="min-width: 64px; background-color: inherit;">
+          <img style="width: 28px; border-radius: 50%; top: 10px;" :src="profilePic">
+        </v-btn> -->
+      </v-toolbar-items>
+      <v-toolbar-items v-else>
+        <!-- :to="item.href" -->
+        <v-btn flat v-for="item in currentMenuItems" @click="goTo(item.href)" :key="item.title" style="background-color: inherit;" class="text-capitalize white--text">
+          {{ item.title }}
+        </v-btn>
+        <div style="padding-top: 18px; padding-left: 16px;">
+          <router-link to="/createjob">
+            <v-btn class="post-a-job-button" outline>Post a Job</v-btn>
+          </router-link>
+        </div>
+      </v-toolbar-items>
+    </v-toolbar>
+
+    <!-- mobile menu icon -->
+    <div class="mobile-show mobile-navbar">
+      <div class="header-icon-container" :class="{ 'white-bg': navHasBg }" style="z-index: 100;">
+        <div style="padding: 12px 0 0 21px;">
+          <router-link to="/search">
+            <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
+            <img v-else src="./assets/logo/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
+          </router-link>
+        </div>
+        <button style="padding: 12px 24px 12px 0;" @click="drawer = !drawer">
+          <img v-if="navHasBg" src="./assets/mobile/menu-icon-red.svg" style="height: 32px; width: 40px;">
+          <img v-else src="./assets/mobile/menu-icon-white.svg" style="height: 32px; width: 40px;">
+        </button>
+      </div>
+    </div>
+
+
+    <div id="d-menu" class="d-menu mobile-show" v-show="drawer">
+      <div class="d-menu-inner">
+        <div style="background-color: #fff">
+          <div v-if="acct > 0" class="d-menu-item idx-0" @click="goToAccount()">
+            {{ usersName || 'My account' }}
+            <p style="font-size: 16px; margin: 0; color: white; font-weight: normal">Edit Profile</p>
+          </div>
+          <div v-for="(item, idx) in currentMobileMenuItems" style="background-color: #fff">
+            <div class="d-menu-item" @click="handleDMenuClick(item)" :class="`idx-${indexOffset(idx)}`" :key="item.title">
+              {{ item.title }}
             </div>
-        </router-link>
-        <v-spacer></v-spacer>
-        <div class="hidden-sm-and-up">
-          <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        </div>
-        <v-toolbar-items v-if="acct === 0" class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">
-            <v-btn flat>{{ item.title }}</v-btn>
-          </router-link>
-          <div style="padding-top: 18px; padding-left: 16px;">
-            <router-link to="/createjob">
-              <v-btn class="kunvet-red post-a-job-button" outline>Post a Job</v-btn>
-            </router-link>
-          </div>
-        </v-toolbar-items>
-
-        <v-toolbar-items v-else class="hidden-xs">
-          <router-link v-for="item in items[acct]" :to="item.href" :key="item.title" class="nav-items">
-
-            <v-menu fixed offset-y v-if="item.subItems" left open-on-hover :close-on-content-click="false">
-
-              <template v-if="item.title === 'Notifications'">
-                <v-btn flat style="width: 10px;" slot="activator">
-                  <img class="nav-img notranslate" :src="item.icon"></img>
-                  <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>
-                  <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
-                </v-btn>
-                <Notifications :isNavbar="true" />
-              </template>
-
-              <template v-else>
-                <v-btn flat style="width: 10px;" slot="activator">
-                  <img v-if="['Account', 'My Profile'].includes(item.title)" class="nav-img nav-profile-pic" :src="profilePic"></img>
-                  <img v-else class="nav-img" :src="item.icon"></img>
-                  <div class="nav-text" style="color:#818181; text-transform: none;">{{ item.title }}</div>
-                </v-btn>
-                <v-list v-if="item.subItems.length > 0" dense>
-                  <div v-for="(subitem, index) in item.subItems" :key="index">
-                    <v-list-tile v-if="subitem.text" @click="routeTo(subitem.route)">
-                      <v-list-tile-title style="font-size: 14px;">{{ subitem.text }}</v-list-tile-title>
-                    </v-list-tile>
-                    <div v-else-if="subitem === 'SwitchAccount'">
-                      <SwitchAccount :isNavbar="true"/>
-                    </div>
-                    <v-list-tile v-else-if="subitem === 'Logout'" @click="logout">
-                      <v-list-tile-title style="font-size: 14px;">Log out</v-list-tile-title>
-                    </v-list-tile>
-                  </div>
-                </v-list>
-              </template>
-            </v-menu>
-
-            <!--<v-btn v-else flat>
-              <img class="nav-img" :src="item.icon"></img>
-              <div class="nav-text" style="color:#818181">{{ item.title }}</div>
-            </v-btn>-->
-          </router-link>
-        </v-toolbar-items>
-    </v-toolbar>
-    <v-toolbar
-      dense flat
-      v-if="isJobPostRoute && acct !== 0"
-      class="job-post__helper-nav-bar"
-    >
-      <v-toolbar-items>
-        <v-btn flat small :ripple="false" :to="'/search'" :class="isActiveJobPostLink('/search')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            Search
-          </span>
-        </v-btn>
-        <v-btn flat small :ripple="false" :to="'/savedjobs'" :class="isActiveJobPostLink('/savedjobs')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            Saved
-          </span>
-        </v-btn>
-        <v-btn flat small :ripple="false" :to="'/appliedjobs'" :class="isActiveJobPostLink('/appliedjobs')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            Applied
-          </span>
-        </v-btn>
-        <span class="job-post__helper-nav-bar__divider" />
-        <v-btn flat small :ripple="false" :to="'/myjobs'" :class="isActiveJobPostLink('/myjobs')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            My Jobs
-          </span>
-        </v-btn>
-        <v-btn flat small :ripple="false" :to="'/applicants'" :class="isActiveJobPostLink('/applicants')">
-          <span class="job-post__helper-nav-bar__btn-text">
-            My Applicants
-          </span>
-        </v-btn>
-      </v-toolbar-items>
-      <v-spacer />
-      <v-toolbar-items>
-        <v-btn flat small :ripple="false" class="job-post__helper-nav-bar__post-a-job" :to="'/createjob'">
-          <i class="fa fa-edit job-post__helper-nav-bar__post-a-job__icon" /><span>Post a Job</span>
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
-
-    <v-navigation-drawer class="hidden-sm-and-up mobile-menu" v-show="drawer" absolute temporary right light v-model="drawer" overflow>
-      <v-toolbar flat class="transparent">
-        <v-list class="pa-0">
-          <v-list-tile>
-            <v-list-tile-content style="flex: 0 1 85%;">
-              <v-list-tile-title>Menu</v-list-tile-title>
-            </v-list-tile-content>
-            <v-btn icon @click.stop="drawer = !drawer">
-                <v-icon>clear</v-icon>
-              </v-btn>
-          </v-list-tile>
-        </v-list>
-      </v-toolbar>
-      <v-list class="pt-0" dense>
-        <div v-for="category in sidebarItems[acct]" style="border: solid 1px #E7E7E7; margin: 0 0 20px 0;">
-          <div>
-            <router-link :to="item.href" v-for="item in category" :key="item.title">
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </router-link>
+            <div v-if="item.subItems">
+              <div v-for="subItem in item.subItems" v-show="openSubitem === item.title"
+                   @click="handleDMenuClick(subItem)" :key="subItem.title" class="d-menu-subitem" :class="`subitem-${indexOffset(idx)}`">
+                {{ subItem.title }}
+              </div>
+            </div>
           </div>
         </div>
-      </v-list>
-    </v-navigation-drawer>
+        <div class="d-menu-close">
+          <button @click="drawer = false;">
+            <!-- <i class="fa fa-times-circle " style="font-size: 46px; color: #FFE2E2;"></i> -->
+            <img src="./assets/mobile/close-white.svg" alt="" style="height: 46px; width: 46px;">
+          </button>
+        </div>
+      </div>
+    </div>
 
     <main v-bind:class="{ 'dn': isJobPostRoute && acct !== 0 }">
       <transition name="fade-transition">
@@ -198,12 +157,12 @@ import '@/stylus/main.styl';
 // import 'vuetify/dist/vuetify.min.css';
 
 // svgs
-import sfw from './assets/navbar/suitcase_full_white.svg';
-import sfg from './assets/navbar/suitcase_full_gray.svg';
-import bellw from './assets/navbar/bell_full_white.svg';
-import bellg from './assets/navbar/bell_full_gray.svg';
-import peopleFullWhite from './assets/navbar/people_full_white.svg';
-import personSvgG from './assets/navbar/person_gray.svg';
+// import sfw from './assets/navbar/suitcase_full_white.svg';
+// import sfg from './assets/navbar/suitcase_full_gray.svg';
+// import bellw from './assets/navbar/bell_full_white.svg';
+// import bellg from './assets/navbar/bell_full_gray.svg';
+// import peopleFullWhite from './assets/navbar/people_full_white.svg';
+// import personSvgG from './assets/navbar/person_gray.svg';
 import logoNav from './assets/navbar/kunvet_logo_nav.svg';
 import logoFooter from './assets/navbar/kunvet_logo_footer.svg';
 
@@ -233,96 +192,131 @@ export default {
       acct: 0,
       profilePic: '',
       drawer: false,
-      items: [
+      dmenuItems: [
         [
-          { title: 'Login', icon: null, href: '/login' },
-          { title: 'Sign up', icon: null, href: '/signup' },
+          { title: 'Login', href: '/login' },
+          { title: 'Sign up', href: '/signup' },
+          { title: 'Post a Job', href: '/createjob' },
         ],
         [
-          {
-            title: 'Jobs',
-            icon: sfg,
-            href: '/search',
-            subItems: [],
-          },
-          { title: 'Notifications', icon: bellg, href: '/notifications', subItems: [] },
-          { title: 'My Profile', icon: personSvgG, href: '/account', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
-        ],
-        [
+          { title: 'Search', href: '/search' },
           {
             title: 'My Jobs',
-            icon: sfw,
-            href: '/myjobs',
-            subItems: [],
+            subItems: [
+              { title: 'Saved Jobs', href: '/savedjobs' },
+              { title: 'Applied Jobs', href: '/appliedjobs' },
+            ],
           },
-          { title: 'Notifications', icon: bellw, href: '/notifications', subItems: [] },
-          { title: 'Account', icon: peopleFullWhite, href: '/myorg', subItems: ['SwitchAccount', { text: 'Settings', route: '/settings' }, 'Logout'] },
+          { title: 'Notifications', href: '/account' },
+          {
+            title: 'Settings', href: '/settings',
+            // subItems: [ // WILL IMPLEMENT LATER
+            //   { title: 'Email & Password' },
+            //   { title: 'Email Preferences' },
+            //   { title: 'Billing Info' },
+            //   { title: 'Delete Account' },
+            // ],
+          },
+          { title: 'Log Out', href: '/settings?o=logout' },
+        ],
+        [
+          { title: 'Post New Job',  href: '/createjob' },
+          { title: 'My Posted Jobs', href: '/myjobs' },
+          { title: 'My Applicants', href: '/applicants' },
+          { title: 'Notifications', href: '/notifications' },
+          { title: 'Account', href: '/myorg' },
+          { title: 'Settings', href: '/settings' },
         ],
       ],
-      sidebarItems: [
+      newMenuItems: [
         [
-          [
-            { title: 'Login', icon: null, href: '/login' },
-            { title: 'Sign up', icon: null, href: '/signup' },
-            { title: 'Post a Job', icon: null, href: '/createjob' },
-          ],
+          { title: 'Login', href: '/login' },
+          { title: 'Sign up', href: '/signup' },
         ],
         [
-          [
-            { title: 'Search', href: '/search' },
-            { title: 'Applied Jobs', href: '/appliedjobs' },
-            { title: 'Saved Jobs', href: '/savedjobs' },
-          ],
-          [
-            { title: 'Notifications', href: '/notifications' },
-            { title: 'My Profile', href: '/account' },
-            { title: 'Settings', href: '/settings' },
-          ],
-          [
-            { title: 'Post Individual Job',  href: '/createjob' },
-            { title: 'My Posted Jobs', href: '/myjobs' },
-            { title: 'My Applicants', href: '/applicants' },
-          ],
+          { title: 'Search', href: '/search' },
+          { title: 'Applied Jobs', href: '/appliedjobs' },
+          { title: 'Saved Jobs', href: '/savedjobs' },
         ],
         [
-          [
-            { title: 'Post New Job',  href: '/createjob' },
-            { title: 'My Posted Jobs', href: '/myjobs' },
-            { title: 'Applicants', href: '/applicants' },
-          ],
-          [
-            { title: 'Notifications', href: '/notifications' },
-            { title: 'Account', href: '/myorg' },
-            { title: 'Settings', href: '/settings' },
-          ],
-          [
-            { title: 'Job Search', href: '/' },
-            { title: 'Applied Jobs', href: '/appliedjobs' },
-            { title: 'Saved Jobs', href: '/savedjobs' },
-          ],
+          { title: 'Search', href: '/search' },
+          { title: 'Post New Job', href: '/createjob' },
+          { title: 'My Jobs', href: '/myjobs' },
+          { title: 'Applicants', href: '/applicants' },
         ],
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },
       right: true,
       numNotifications: 0,
+      openSubitem: '',
+      isAtTop: true,
+      acctType: '',
+      usersName: '',
     };
   },
   components: {
     Notifications,
     SwitchAccount,
   },
+  computed: {
+    devmode() {
+      return process.env.NODE_ENV !== 'production';
+    },
+    isJobPostRoute() {
+      const jobPostRoutes = ['/myjobs', '/applicants', '/savedjobs', '/appliedjobs', '/search', '/'];
+      return jobPostRoutes.indexOf(this.$route.path) !== -1;
+      // it is found
+    },
+    navHasBg() {
+      // change this to set to white bg based on scroll position as well
+      // console.log(this.$route.path, this.$route.path.indexOf('/job/'));
+      // console.log(this.$route.path);
+      const isTransparentPage = (this.$route.path !== '/' && this.$route.path.indexOf('/job/') !== -1) ||
+        ['/', '/appliedjobs', '/settings', '/myjobs', '/savedjobs'].indexOf(this.$route.path) !== -1;
+      return !this.isAtTop || !isTransparentPage;
+    },
+    currentMenuItems() {
+      let idx = this.acct;
+      if (this.acct === 1 && this.acctType === 'individual') {
+        idx = 2; // same as business
+      }
+      return this.newMenuItems[idx];
+    },
+    currentMobileMenuItems() {
+      let idx = this.acct;
+      if (this.acct === 1 && this.acctType === 'individual') {
+        idx = 2; // same as business
+      }
+      return this.dmenuItems[idx];
+    },
+  },
   methods: {
+    indexOffset(idx) {
+      // calculate offset for mobile menu classes. 6 is the size of the largest dmenu item
+      // plus 6 + 1 to account for first item with account name
+      return (7 - this.dmenuItems[this.acct].length) + idx;
+    },
+    handleDMenuClick(item) {
+      if (item.subItems) {
+        this.openSubitem = this.openSubitem === item.title ? '' : item.title;
+      } else {
+        this.$router.push(item.href);
+        this.drawer = false;
+        this.openSubitem = '';
+      }
+    },
     firstSearch() {
       EventBus.$emit('firstSearch');
       this.firstS = false;
     },
     lo() {
       this.acct = 0;
+      this.usersName = '';
       this.$store.commit({ type: 'logout' });
       this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
     },
     logout() {
-      EventBus.$emit('logout');
+      EventBus.$emit('logout'); // triggers lo() function
       this.$store.commit({ type: 'resetState' });
       axios.get('/auth/logout').then(() => {
       }, (error) => {
@@ -342,27 +336,44 @@ export default {
         this.profilePic = '';
       }
     },
-    l1() {
-      this.acct = 1;
+    setAcctData(acct, acctType) {
+      this.acct = acct;
+      this.acctType = acctType;
       this.$store.commit({
         type: 'setAcct',
-        acct: 1,
+        acct: this.acct,
       });
-      this.$store.commit('go');
-      this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
+      // this.$store.commit('go'); // Firstsearch no longer used
+      if (this.acct === 1) {
+        this.$store.commit({ type: 'setDefaultOrg', payload: { id: null } });
+      }
       this.setProfilePic();
+      if (this.$store.state.userdata && this.$store.state.userdata.firstname && this.$store.state.userdata.lastname) {
+        const name = `${this.$store.state.userdata.firstname} ${this.$store.state.userdata.lastname}`;
+        if (name.length < 30 && name.length > 2) {
+          this.usersName = name;
+        }
+      }
     },
-    l2() {
-      this.acct = 2;
-      this.$store.commit({
-        type: 'setAcct',
-        acct: 2,
-      });
-      this.$store.commit('go');
-      this.setProfilePic();
-    },
-    routeTo(route) {
+    goTo(route) {
       this.$router.push(route);
+    },
+    goToAccount() {
+      switch (this.acct) {
+        case 0:
+          this.$router.push('/login');
+          break;
+        case 1:
+          this.$router.push('/account');
+          break;
+        case 2:
+          this.$router.push('/myorg');
+          break;
+        default:
+          this.$router.push('/account');
+          break;
+      }
+      this.drawer = false;
     },
     getNumNotifications() {
       if (this.acct === 0 || !this.$store.state.userID) {
@@ -442,12 +453,26 @@ export default {
         this.$error(error);
       });
     },
+    handleScroll() {
+      const el = document.scrollingElement || document.documentElement;
+      if (el.scrollTop > 30) {
+        this.isAtTop = false;
+      } else {
+        this.isAtTop = true;
+      }
+    },
   },
   created() {
     EventBus.$on('logout', this.lo);
-    EventBus.$on('login', this.setProfilePic);
-    EventBus.$on('individual', this.l1);
-    EventBus.$on('business', this.l2);
+    EventBus.$on('login', acctType => {
+      if (acctType === 'update' && this.acctType) { // special case
+        this.setAcctData(this.acct, this.acctType);
+      }
+      const acct = acctType === 'business' ? 2 : 1; // 2 for business, 1 for individual and student
+      this.setAcctData(acct, acctType);
+    });
+    // EventBus.$on('individual', this.l1);
+    // EventBus.$on('business', this.l2);
     EventBus.$on('firstSearch', this.fs1);
     EventBus.$on('setNotifications', notifications => {
       const n = Array.isArray(notifications) ? notifications.length : 0;
@@ -462,43 +487,18 @@ export default {
       if (res.acct === 0) { // userDataProvider returns acct = 0 by default
         // user not logged in
         this.lo();
-      } else {
+      } else if (res.userdata && res.userdata._id) {
         // user logged in
-        if (res.acct === 1) {
-          this.l1();
-        } else if (res.acct === 2) {
-          this.l2();
+        this.setProfilePic(res.userdata._id, res.userdata.default_org);
+        let acctType = res.userdata.account_type;
+        if (acctType === 'business' && !res.userdata.default_org) {
+          // TODO: create better solution for business accounts that dont have an org
+          acctType = 'individual';
         }
-        if (res.userdata && res.userdata._id) {
-          this.setProfilePic(res.userdata._id, res.userdata.default_org);
-        }
+        this.setAcctData(res.acct, acctType);
       }
     });
-    // axios.get('auth/status').then(async (res) => {
-    //   if (res.data.success) {
-    //     if (!res.data.status) {
-    //       this.lo();
-    //     } else if (res.data.user.default_org) {
-    //       this.l2();
-    //     } else {
-    //       this.l1();
-    //     }
-    //     if (res.data.status) {
-    //       this.setProfilePic(res.data.user._id, res.data.user.default_org);
-    //     }
-    //   } else {
-    //     this.lo();
-    //   }
-    // });
-  },
-  computed: {
-    devmode() {
-      return process.env.NODE_ENV !== 'production';
-    },
-    isJobPostRoute() {
-      const jobPostRoutes = ['/myjobs', '/applicants', '/savedjobs', '/appliedjobs', '/search', '/'];
-      return jobPostRoutes.indexOf(this.$route.path) !== -1;
-    },
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
   },
 };
 </script>
@@ -508,15 +508,30 @@ export default {
 @import 'css/account.css';
 @import 'css/applicants.css';
 @import 'css/buttons.css';
-@import 'css/job_pages.css';
 @import 'css/nav.css';
-@import 'css/postsAndSearch.css';
+// @import 'css/postsAndSearch.css';
+@import 'css/JobsAndSearch.scss';
 
 body, html {
   height: 100%;
   width: 100%;
 }
-@media only screen and (min-width:600px) {
-  .hidden-sm-and-up { display:none !important; }
+.header-icon-container {
+  color: white;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+@media only screen and (min-width: 601px) {
+  .hidden-sm-and-up,
+  .mobile-show {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .mobile-hide {
+    display: none !important;
+  }
 }
 </style>

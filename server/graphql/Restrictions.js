@@ -1,3 +1,5 @@
+import Config from 'config';
+import AlgoliaSearch from 'algoliasearch';
 import Logger from 'winston';
 import Models from '@/mongodb/Models';
 import set from 'lodash/set';
@@ -16,6 +18,32 @@ export default {
   LogRecord: async (req, next) => {
     Logger.info(req.args.record);
     return next(req);
+  },
+  UploadJobToAlgolia: async (req, next) => {
+    const appId = Config.get('algolia.appId');
+    if (!appId || (process && process.env.NODE_ENV === 'development')) {
+      // Algolia disabled
+      return next(req);
+    }
+
+    const client = AlgoliaSearch(appId, Config.get('private.algolia.adminApiKey'));
+    const index = client.initIndex('jobs');
+
+    const response = await next(req);
+    if (response.recordId && response.record.active) {
+      const job = JSON.parse(JSON.stringify(response.record));
+      job.objectID = job._id;
+      if (job.latitude) {
+        job._geoloc = {
+          lat: job.latitude,
+          lng: job.longitude,
+        };
+      }
+      index.addObjects([job]);
+      Logger.info('Uploading to Algolia');
+    }
+
+    return response;
   },
   LoggedIn: (req, next) => {
     if (!req.context.user || !req.context.user._id) {

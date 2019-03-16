@@ -2,9 +2,18 @@
   "presets": [
     ["@babel/preset-env", {
       "modules": false,
-      "targets": {
-        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
-      }
+      "useBuiltIns": "entry",
+      "targets": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 10",
+        "chrome 41",
+        "node 8"
+      ],
+      "include": [
+        "transform-classes",
+        "proposal-object-rest-spread"
+      ]
     }],
   ],
   "plugins": [
@@ -13,7 +22,6 @@
     "@babel/plugin-proposal-export-namespace-from",
     "@babel/plugin-proposal-numeric-separator",
     "@babel/plugin-proposal-throw-expressions",
-    "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-transform-runtime"
   ]

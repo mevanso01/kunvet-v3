@@ -13,6 +13,9 @@
   .v-text-field:not(.error--text):not(.input-group--disabled) .v-input__slot:before {
     border-color: #4d4d4d;
   }
+  .v-input--radio-group .v-radio {
+    margin-bottom: 8px;
+  }
   .v-input--radio-group .v-input__slot {
     margin-bottom: 0;
   }
@@ -313,9 +316,9 @@
     }
     .job-detail-container {
       border: 1px solid #e0e0e0;
-      .sub-container {
-        padding: 18px 15px 8px 15px;
-      }
+      //.sub-container {
+      //  padding: 18px 15px 8px 15px;
+      //}
     }
     .special-flex-1 {
       padding: 0 10px;

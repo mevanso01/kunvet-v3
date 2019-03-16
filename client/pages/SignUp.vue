@@ -1,4 +1,4 @@
-<style>
+<style scoped lang="scss">
 .pos-bottom {
   position: absolute;
   width: calc(100% - 32px);
@@ -11,8 +11,7 @@
 }
 .bottom-text a {
   cursor: pointer;
-  margin-right: 20px;
-  margin-left: 8px;
+  font-size: 16px;
 }
 .bio .input-group__input {
   padding-bottom: 4px;
@@ -21,49 +20,125 @@
   background-color: rgba(239,83,80,0.4) !important;
   color: #fff;
 }
+.student-signup-color {
+  // color: #3089fc;
+  // color: #019de1;
+  color: #3488fc;
+}
+.business-signup-color {
+  color: #ffc370;
+}
+.individual-signup-color {
+  color: #e491ff;
+}
+.flex {
+  padding: 8px;
+}
+.choose-account-section {
+  text-align: center;
+  h2 {
+    font-weight: bold;
+  }
+}
+@media (min-width: 960px) {
+  h2 {
+    margin-bottom: 12px;
+  }
+}
+@media (min-width: 601px) {
+  .choose-account-section {
+    padding-bottom: 32px;
+  }
+  .choose-account-section .v-card__text  {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  .choose-account-section .v-card {
+    height: 230px;
+  }
+  .pos-bottom {
+    width: calc(100% - 64px);
+  }
+  .main-cont-large-clear {
+    margin-bottom: 48px;
+  }
+  .mobile-hr {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .choose-account-section {
+    padding: 16px 0;
+  }
+  .v-card {
+    box-shadow: none !important;
+  }
+  .mobile-hr {
+    display: block;
+    margin: 16px auto 20px auto;
+  }
+  .text-xs-center.pos-bottom {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
 </style>
 
 <template>
   <v-container fluid>
     <div id="signup" class="main-cont-large-clear" v-show="!alreadyloggedin">
-      <section v-if="chosenForm === ''">
+      <section v-if="chosenForm === ''" class="choose-account-section">
           <div class="text-xs-center">
-               <h1>Select an account</h1>
+            <h1>Select an account</h1>
           </div>
           <v-layout row wrap>
-            <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
+            <v-flex sm4>
               <v-card>
                 <v-card-text>
-                  <div style="margin-bottom: 64px;">
-                    <h2>Personal</h2>
-                    <p>Choose if you're:</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A professor looking for an assistant</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> An applicant searching for jobs</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> An individual searching for a tutor</p>
+                  <div style="margin-bottom: 84px;">
+                    <h2 class="student-signup-color">Students</h2>
+                    <p>Are you looking to apply for jobs? Sign up here!</p>
                   </div>
                   <div class="text-xs-center pos-bottom">
-                    <v-btn class="kunvet-red-bg" dark @click="chooseFormI()">Get a personal account</v-btn>
+                    <k-btn color="#3488fc" block @click="chooseSignup('student')">Student Sign Up</k-btn>
                   </div>
                 </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex d-flex xs12 md6 class="padding-10px-sm-up">
+            <v-flex sm4>
+              <v-divider class="mobile-hr" />
               <v-card>
                 <v-card-text>
-                  <div style="margin-bottom: 64px;">
-                    <h2>Organization</h2>
-                    <p>Choose if you're:</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A school club offering a position</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A startup searching for other students</p>
-                    <p><i class="fa fa-check-square-o" aria-hidden="true"></i> A small business hiring students</p>
+                  <div style="margin-bottom: 84px;">
+                    <h2 class="business-signup-color">Business</h2>
+                    <p>If you are looking to hire for your business or organization, choose this option</p>
                   </div>
                   <div class="text-xs-center pos-bottom">
-                    <v-btn class="kunvet-red-bg" dark @click="chooseFormB()">Get an organization account</v-btn>
+                    <k-btn color="#ffc370" block @click="chooseSignup('business')">Business Sign Up</k-btn>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex sm4>
+              <v-divider class="mobile-hr" />
+              <v-card>
+                <v-card-text>
+                  <div style="margin-bottom: 84px;">
+                    <h2 class="individual-signup-color">Personal Hiring</h2>
+                    <p>If you're an individual looking to hire someone, choose this option</p>
+                  </div>
+                  <div class="text-xs-center pos-bottom">
+                    <k-btn color="#e491ff" block @click="chooseSignup('individual')">Individual Sign Up</k-btn>
                   </div>
                 </v-card-text>
               </v-card>
             </v-flex>
           </v-layout>
+      </section>
+
+      <section v-if="chosenForm === 'signup'">
+        <SignupComponent :type="signupType" @success="onSuccess" style="max-width: 420px; margin: auto;"></SignupComponent>
+        <!-- <a style="text-align: center; margin: auto; display: block;" @click="chosenForm = ''">Choose a different kind of account</a> -->
       </section>
 
       <section style="padding-top: 0px" v-if="chosenForm === 'individual'">
@@ -119,9 +194,6 @@
                 </v-form>
               </v-card-text>
             </v-card>
-            <div class="bottom-text">
-              <router-link to="/login">Already have an account? Log in</router-link>
-            </div>
           </v-flex>
         </v-layout>
       </section>
@@ -233,6 +305,12 @@
           </v-flex>
         </v-layout>
       </section>
+
+      <div class="bottom-text">
+        <router-link to="/login">
+          Already have an account? <span style="text-decoration: underline;">Log in</span>
+        </router-link>
+      </div>
     </div>
 
     <div class="main-cont-large-clear" v-show="alreadyloggedin">
@@ -260,6 +338,7 @@ import axios from 'axios';
 import KunvetError from '#/KunvetError';
 import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
+import SignupComponent from '@/components/SignupComponent';
 
 export default {
   props: ['stage'],
@@ -292,7 +371,19 @@ export default {
         'Flyers & posters', 'Social media', 'Word of mouth', 'Email campaign', 'Other',
       ],
       alreadyloggedin: false,
+      signupType: '',
     };
+  },
+  components: {
+    SignupComponent,
+  },
+  watch: {
+    $route(to) {
+      if (to.path === '/signup') {
+        this.chosenForm = '';
+        this.signupType = '';
+      }
+    },
   },
   methods: {
     submit() {
@@ -320,8 +411,21 @@ export default {
     chooseFormB() {
       this.chosenForm = 'business';
     },
+    chooseSignup(type) {
+      this.signupType = type;
+      this.chosenForm = 'signup';
+      // this.$router.push(`/signup?type=${type}`);
+      this.$router.push(`/signup/${type}`);
+    },
     back() {
       this.chosenForm = '';
+    },
+    onSuccess() {
+      if (this.signupType === 'business') {
+        this.$router.push('/myorg');
+      } else {
+        this.$router.push('/account');
+      }
     },
     createIndividualAcct() {
       const headers = { emulateJSON: true };
@@ -501,6 +605,20 @@ export default {
   activated() {
     this.resetData();
     this.checkStage();
+    // document.addEventListener('backbutton', () => { console.log('TEST'); }, false);
+    // watch: {
+    // '$route' (to, from) {
+    // }
+    console.log('Activated');
+    if (this.$route.query.type) {
+      this.signupType = this.$route.query.type;
+      this.chosenForm = 'signup';
+    } else if (this.stage) {
+      this.signupType = this.stage;
+      this.chosenForm = 'signup';
+    } else {
+      this.chosenForm = '';
+    }
     userDataProvider.getUserData().then(data => {
       if (data.acct !== 0) {
         this.alreadyloggedin = true;

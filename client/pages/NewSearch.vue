@@ -2,13 +2,13 @@
   <!-- FIXME: Remove demo credentials and provide an offline fallback for development-->
   <div class="search">
     <ais-index
-      app-id="0EXR93R20L"
-      api-key="f2b308e2f23de66614cacd60f8f93b67"
+      :app-id="appId"
+      :api-key="searchApiKey"
       index-name="jobs"
     >
       <div class="searchBar">
         <ais-search-box></ais-search-box>
-        <ais-pagination></ais-pagination>
+        <!-- <ais-pagination></ais-pagination> -->
       </div>
       <ais-results class="results">
         <template slot-scope="{ result }">
@@ -22,10 +22,18 @@
 </template>
 <script>
 import MainJobCard from '@/components/MainJobCard';
+import Config from 'config';
 
 export default {
   components: {
     MainJobCard,
+  },
+  data() {
+    return {
+      algolia: Config.get('algolia'),
+      appId: Config.get('algolia.appId'),
+      searchApiKey: Config.get('algolia.searchApiKey'),
+    };
   },
 };
 </script>

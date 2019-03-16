@@ -269,6 +269,7 @@ router.get('/get/:id', async (ctx) => {
     };
     ctx.status = 404;
     ctx.body = JSON.stringify(response);
+    return;
   }
 
   let granted = false;

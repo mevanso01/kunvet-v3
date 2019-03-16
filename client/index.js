@@ -1,3 +1,5 @@
+import '@babel/polyfill';
+
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
@@ -8,6 +10,8 @@ import InstantSearch from 'vue-instantsearch';
 
 import Client from '@/apollo/client';
 import SearchHighlight from '@/components/SearchHighlight';
+import KButton from '@/components/general/KButton';
+import KTextField from '@/components/general/KTextField';
 
 import '@/options/axios';
 import '@/options/googleMaps';
@@ -35,6 +39,8 @@ Vue.use(VueTimeago, {
 });
 Vue.use(InstantSearch);
 Vue.component('highlight', SearchHighlight);
+Vue.component('k-btn', KButton);
+Vue.component('k-text-field', KTextField);
 
 const apolloProvider = new VueApollo({
   defaultClient: Client,
@@ -148,6 +154,11 @@ const router = new VueRouter({
     {
       path: '/view-applicant/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/ViewApplicant'),
+      props: true,
+    },
+    {
+      path: '/view-resume/:id',
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/ViewResume'),
       props: true,
     },
     {
