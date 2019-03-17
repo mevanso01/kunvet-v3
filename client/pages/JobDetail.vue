@@ -231,26 +231,6 @@
     }
 
     /*resume uploader*/
-    .existing-container {
-        width: 90%;
-        height: 500px;
-        margin: 0 auto;
-    }
-
-    .existing-file {
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: start;
-        background-color: #eee;
-        width: 99%;
-        height: 70px;
-    }
-
-    .existing-file p {
-        line-height: 70px;
-        transform: translateX(50px);
-    }
-
     .apply-text {
       color: #EA596B;
       font-size: 48px;
@@ -438,20 +418,21 @@
     }
 
     /*resume uploader*/
-
     .existing-container {
-        width: 90%;
-        height: 500px;
-        margin: 0 auto;
+      width: 100%;
+      padding-left: 20px;
+      padding-right: 20px;
+      height: 500px;
+      margin: 0 auto;
     }
 
     .existing-file {
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: start;
-        background-color: #eee;
-        width: 99%;
-        height: 70px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: start;
+      background-color: #eee;
+      width: 100%;
+      height: 70px;
     }
 
     .existing-file p {
@@ -707,16 +688,18 @@
 
             <v-card flat class="dialog-card" v-else-if="loginState==='resume'">
                 <div class="existing-container" enctype="multipart/form-data" novalidate>
-
                     <div style="padding-top: 20px" v-if="this.resumes.length > 0">
                         <h2>Select Existing Files or Upload More</h2>
                         <p v-if="resumeExists">{{selectedResumes.length}} {{selectedResumes.length | plural}}
                             selected</p>
-                        <div :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}" class="existing-file"
-                             v-for="(file, index) in this.resumes">
+                        <div v-for="(file, index) in this.resumes"
+                          :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}"
+                          class="existing-file">
                             <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
-                            <p v-if="file.name.length < 30">{{file.name}}</p>
-                            <p v-else>{{file.name | truncate}}</p>
+                            <p @click="file.selected = !file.selected">
+                             <span v-if="file.name.length < 30">{{file.name}}</span>
+                             <span v-else>{{file.name | truncate}}</span>
+                            </p>
                             <v-checkbox color="#ef5350" class="uploader-checkbox" v-model="file.selected"></v-checkbox>
                         </div>
                     </div>

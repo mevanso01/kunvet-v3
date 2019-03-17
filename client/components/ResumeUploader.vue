@@ -4,7 +4,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    width: 100%;
+    width: 90%;
     font-size: 1.25em;
     text-align: center;
   }
@@ -15,7 +15,7 @@
     min-height: 70px;
     position: relative;
     cursor: pointer;
-    margin: 0 2px 0 -3px;
+    // margin: 0 2px 0 -3px;
   }
   .dropbox .input-file {
     opacity: 0;
@@ -61,7 +61,8 @@
     padding-bottom: 0;
     .dropbox {
       height: 20%;
-      min-height: 80px;
+      min-height: 74px;
+      outline-offset: -2px;
     }
   }
 </style>
@@ -70,7 +71,7 @@
     <v-card flat class="resume-uploader-cont" :class="{ 'small': this.small }">
         <v-card-title style="height: 100%; padding: 0">
             <!--change bottom div width to 100% if small dropbox-->
-            <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="height: 100%; margin: 0 auto;" :style="{ width: this.small ? '100%' : '90%'}">
+            <div v-if="state === 'INITIAL' || state === 'UPLOADING'" style="height: 100%; width: 100%; margin: 0 auto;">
                 <h2 v-if="!this.small" style="margin-top: 25px; margin-bottom: 10px; ">{{ title }}</h2>
                 <form class="upload-form"
                   enctype="multipart/form-data" novalidate>
@@ -89,7 +90,8 @@
                                 <img class="file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
                                 <img class="file-icon" src="../assets/job_detail/doc-icon.svg" alt="">
                             </div>
-                            <p class="uploader-text">Drag or click to upload resumes and cover letters.</p>
+                            <p class="uploader-text mobile-hide">Drag or click to upload resumes and cover letters.</p>
+                            <p class="uploader-text mobile-show">Click to upload resumes and cover letters.</p>
                         </div>
                     </div>
                 </form>

@@ -322,7 +322,7 @@
                   </k-btn>
                 </div>
               </v-flex>
-              <v-flex xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
+              <v-flex v-show="!(userdata && userdata.account_type === 'student')" xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
                 <account-header
                   :svg="svgs.building"
                   :text="'My Organizations'"
@@ -356,7 +356,7 @@
                 </div>
               </v-flex>
             </v-layout>
-            <v-layout row wrap v-if="showResumeSection">
+            <v-layout v-show="!(userdata && userdata.account_type === 'student')" row wrap v-if="showResumeSection">
               <v-flex xs12 sm6 offset-sm6 md5 offset-md7 class="right-account-column padding-sm-left">
                 <account-header
                   :svg="svgs.suitcase"
