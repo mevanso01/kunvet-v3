@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexLS from './persist';
+// import VuexLS from './persist';
 
 Vue.use(Vuex);
 
@@ -133,12 +133,12 @@ const Store = new Vuex.Store({
       state.newUser = true;
     },
   },
-  plugins: [VuexLS.plugin],
-  getters: {
-    LS() {
-      return VuexLS.restoreState('vuex', window.localStorage);
-    },
-  },
+  // plugins: [VuexLS.plugin],
+  // getters: {
+  //   LS() {
+  //     return VuexLS.restoreState('vuex', window.localStorage);
+  //   },
+  // },
 });
 
 export default Store;
