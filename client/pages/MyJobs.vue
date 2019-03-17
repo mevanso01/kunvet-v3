@@ -45,7 +45,7 @@
 
 </style>
 <template>
-  <v-container fluid class="post-jobs list-post">
+  <v-container fluid class="post-jobs list-post page-height">
     <div class="header-splash" style="margin-bottom:50px;">
       <div class="main-cont-large bottom">
         <span class="counter-text">{{ unpostedJobs.length + activeJobs.length + expiredJobs.length }}</span>
@@ -85,9 +85,13 @@
             <v-flex xs12 sm6 md5>
               <v-layout>
                 <v-flex xs7 sm7  style="padding: 0px">
-                  <p style="padding-top: 50px; padding-right: 15px;">You haven't posted the job yet,   <br>continue working on it!  </p>
+                  <p>Applicants</p>
+                  <h2 style="color: grey">-</h2>
+                  <k-btn color="#448ef6" small disabled>
+                    View Applicants
+                  </k-btn>
                 </v-flex>
-                <v-flex xs5 sm5  style="padding: 0px text-align: center">
+                <v-flex xs5git  sm5  style="padding: 0px">
                   <p>Status</p>
                   <h2 style="color: orange">Unposted</h2>
                   <router-link :to="`/createjob/${job._id}`">

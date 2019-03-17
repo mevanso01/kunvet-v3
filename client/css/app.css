@@ -279,8 +279,11 @@ button:focus {
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 80px;
-  min-height: calc(100vh - 75px);
 }
+.page-height{
+  min-height: calc(100vh - 58px);
+}
+
 .v-text-field {
   padding-top: 0 !important;
   margin-top: 12px;

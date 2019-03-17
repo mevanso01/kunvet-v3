@@ -1,4 +1,4 @@
-<style scoped>
+<style lang="scss" scoped>
 .settings-page {
   padding: 0;
 }
@@ -40,37 +40,48 @@
   line-height: 56px;
 }
 
-.email_preferences{  
-  padding-top: 12px;
+.email_preferences {
+  // padding-top: 12px;
+  line-height: 48px;
   display: inline-block;
-  width:calc(100% - 60px);
-  font-size: 18px;
+  width: calc(100% - 60px);
+  color: #4d4d4d;
 }
 
-.switch_settings{
-  display:inline-block;
+.switch_settings {
+  display: inline-block;
   font-size: 18px;
-  padding:none;
-  height: 20px;
+  padding: none;
+  height: 48px;
+  line-height: 48px;
 }
 
-@media(min-width: 601px){
+@media (min-width: 601px) {
   .header-splash{
     height: 215px;
   }
-}
-
-@media(max-width: 601px){s
-  .email_preferences{
+  .email_preferences {
     font-size: 16px;
   }
+}
+@media (min-width: 968px) {
+  .email_preferences {
+    width: calc(80% - 60px);
+  }
+
+}
+
+@media (max-width: 600px){
+  /* .email_preferences{
+    font-size: 16px;
+  } */
 }
 
 
 </style>
 
 <template>
-  <v-container fluid class="settings-page">
+  <v-container fluid class="settings-page  page-height">
     <div class="header-splash">
       <div class="main-cont-large bottom" style="background: transparent;">
         <h1>Settings</h1>
@@ -108,14 +119,14 @@
         <div v-if="preferences">
           <!-- <div class="email_preferences">Recieve emails about new applicants</div>
           <v-switch color="red" class="switch_settings"></v-switch> -->
-
-          <div class="email_preferences">Aplication status</div>
+          <br>
+          <div class="email_preferences">Recieve emails about application status</div>
           <v-switch @change="savePreferences()" v-model="application_bool" color="red" class="switch_settings"></v-switch>
 
-          <div class="email_preferences">Job expiration</div>
+          <div class="email_preferences">Recieve emails about job expiration</div>
           <v-switch @change="savePreferences()" v-model="jobExpired_bool" color="red" class="switch_settings"></v-switch>
 
-          <div class="email_preferences">Newsletters</div>
+          <div class="email_preferences">Recieve emails about newsletters</div>
           <v-switch @change="savePreferences()" v-model="getNewsletter_bool" color="red" class="switch_settings"></v-switch>
         </div>
 

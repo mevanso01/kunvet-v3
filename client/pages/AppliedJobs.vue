@@ -68,7 +68,7 @@
 }
 </style>
 <template>
-  <v-container fluid class="appliedjobs">
+  <v-container fluid class="appliedjobs page-height">
     <div class="header-splash">
       <div class="main-cont-large bottom">
         <span v-if="jobsAndApplications.length > 0" class="header-text">
@@ -88,24 +88,29 @@
     <div class="main-cont-large list-bounds">
       <div v-for="({ job, application }, idx) in jobsAndApplications">
           <v-layout row wrap class="list-post">
-            <v-flex xs12 sm7>
+            <v-flex xs12 sm8>
               <router-link :to="`/job/${job._id}`">
               <p class="list-title">{{ job.posted_by }}</p>
               <h2 class="list-post-title">{{ job.title }}</h2>
               </router-link>
             </v-flex>
-            <v-flex xs4 sm2>
-              <p class="list-title">Applied</p>
-              <timeago class="post-time":since="job.date" />
-            </v-flex>
-            <v-flex xs2 sm2>
-              <p class="list-title">status</p>
-              <h2 v-if="application.status === 'submitted'" class="post-submitted">Submitted</h2>
-              <h2 v-else-if="application.status === 'opened'" class="post-valid">Seen</h2>
-              <h2 v-else class="post-expired">Expired</h2>
+            <v-flex xs12 sm4>
+              <v-layout row wrap class="list-post">
+              <v-flex xs8 sm7>
+                <p class="list-title">Applied</p>
+                <timeago class="post-time":since="job.date" />
+              </v-flex>
+              <v-flex xs4 sm5>
+                <p class="list-title">status</p>
+                <h2 v-if="application.status === 'submitted'" class="post-submitted">Submitted</h2>
+                <h2 v-else-if="application.status === 'opened'" class="post-valid">Seen</h2>
+                <h2 v-else class="post-expired">Expired</h2>
+              </v-flex>
+            </v-layout>
             </v-flex>
           </v-layout>
-          <hr v-if= "idx < jobsAndApplications.length - 1" style="size:20; width:88%;">
+          <hr v-if= "idx < jobsAndApplications.length - 1" style="size:20; width:100%;">
+
       </div>
     </div>
   </v-container>

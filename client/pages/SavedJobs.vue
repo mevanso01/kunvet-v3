@@ -17,7 +17,7 @@
 }
 </style>
 <template>
-  <v-container fluid style="padding: 0">
+  <v-container fluid style="padding: 0" class="page-height">
     <div class="header-splash" style="margin-bottom: 30px;">
       <div class="main-cont-large bottom">
         <span class="counter-text">{{ counter }}</span>

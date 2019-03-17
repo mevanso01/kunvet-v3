@@ -1072,9 +1072,9 @@ export default {
               this.orgId = orgId;
               this.$store.commit({ type: 'setAcctID', id: userId });
               if (isBusiness) {
-                EventBus.$emit('business');
+                EventBus.$emit('login', 'business');
               } else {
-                EventBus.$emit('individual');
+                EventBus.$emit('login', 'individual');
               }
               ret.loggedIn = true;
             } else {
