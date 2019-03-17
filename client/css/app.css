@@ -252,6 +252,9 @@ button:focus {
   padding-bottom: 8px;
 }
 /*  ---- Styles to globally override Vuetify ----  */
+.v-icon {
+  justify-content: unset;
+}
 .v-dialog {
   background-color: white;
 }
@@ -1078,6 +1081,7 @@ body {
     margin: 0 auto;
     left: 0;
     right: 0;
+    bottom: 0;
     padding: 4px 40px;
     color: #fff;
     box-sizing: border-box;
