@@ -55,13 +55,15 @@
   }
   .post-expired{
     color:grey;
+    font-size: 14px;
   }
   .post-valid{
     color:#ffc46a;
     font-size: 14px;
   }
   .post-submitted{
-    color:pink
+    color:pink;
+    font-size: 14px;
   }
 }
 </style>

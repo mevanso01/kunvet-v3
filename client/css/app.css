@@ -252,6 +252,10 @@ button:focus {
   padding-bottom: 8px;
 }
 /*  ---- Styles to globally override Vuetify ----  */
+.v-icon {
+  justify-content: unset;
+}
+
 .v-dialog {
   background-color: white;
 }
@@ -262,6 +266,9 @@ button:focus {
   .v-dialog--fullscreen > .v-card {
     min-height: unset;
   }
+  .index-page .searchBar .v-input .v-input__slot {
+    padding: 0 16px !important; /* instead of 24px */
+  }
 }
 @media (min-width: 601px) {
   .v-dialog {
@@ -269,7 +276,10 @@ button:focus {
   }
 }
 .container {
+  padding-left: 16px;
+  padding-right: 16px;
   padding-top: 80px;
+  min-height: calc(100vh - 75px);
 }
 .v-text-field {
   padding-top: 0 !important;
@@ -1078,6 +1088,7 @@ body {
     margin: 0 auto;
     left: 0;
     right: 0;
+    bottom: 0;
     padding: 4px 40px;
     color: #fff;
     box-sizing: border-box;
@@ -1167,9 +1178,9 @@ body {
     #nav-logo {
       height: 64px !important;
     }
-    /*.application--wrap {*/
-      /*padding-top: 64px;*/
-    /*}*/
+    .application--wrap {
+      min-height:50vh;
+    }
 }
 @media (max-width: 600px) {
     .v-dialog--active {
@@ -1192,11 +1203,6 @@ body {
     h1 {
       font-size: 1.8em;
       -webkit-margin-after: 0.83em;
-    }
-    .container {
-      /* padding-top: 72px; */
-      padding-left: 16px;
-      padding-right: 16px;
     }
     .hidden-xs {
       display: none;

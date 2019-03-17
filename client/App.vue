@@ -120,7 +120,7 @@
       <div id="bottom-content">
         <v-layout row wrap>
           <v-flex class="footer-big-text">
-            <p class="kunvet-red">Kunvet 2018 &copy; All rights reserved.</p>
+            <p class="kunvet-red">Kunvet 2019 &copy; All rights reserved.</p>
           </v-flex>
           <v-flex>
             <router-link to="/about"><p style="color: #b3b3b3">About Us</p></router-link>
@@ -294,7 +294,7 @@ export default {
     indexOffset(idx) {
       // calculate offset for mobile menu classes. 6 is the size of the largest dmenu item
       // plus 6 + 1 to account for first item with account name
-      return (7 - this.dmenuItems[this.acct].length) + idx;
+      return (7 - this.currentMobileMenuItems.length) + idx;
     },
     handleDMenuClick(item) {
       if (item.subItems) {

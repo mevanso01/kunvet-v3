@@ -215,8 +215,12 @@ section.search {
   position: relative;
   overflow-y: hidden;
   transition: all 0.3s ease;
-  padding: 0 24px;
+  // padding: 0 24px;
+  .v-input__slot {
+    padding-right: 14px !important; // weird hack I need to do to align icon
+  }
 }
+
 @media (min-width: 601px) {
   .large-thats-it {
     width: 100% !important;
@@ -235,7 +239,7 @@ section.search {
     }
     .search-field-cont,
     .search-go-cont {
-      padding: 10px 15px;
+      padding: 10px 8px;
       width: 100%;
     }
   }
@@ -288,6 +292,9 @@ section.search {
   // width: 960px;
   margin: 0 auto;
   padding: 4px 40px 8px 40px;
+  opacity: 0.1;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 </style>
 
@@ -316,6 +323,7 @@ section.search {
             <v-text-field
               class="search-params-field"
               solo
+              flat
               hide-details
               :placeholder="searchPlaceholder"
               clearable
@@ -409,8 +417,8 @@ section.search {
         <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
           <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please type in a different query or select a different location.</h3>
         </div>
-        <div class="algoliaLogo" style="color: white;">
-          <ais-powered-by></ais-powered-by>
+        <div class="algoliaLogo" style="color: grey;">
+          <ais-powered-by ></ais-powered-by>
         </div>
       </v-layout>
     </div>
@@ -439,6 +447,7 @@ import queries from '@/constants/queries';
 import EventBus from '@/EventBus';
 import Config from 'config';
 import algoliasearch from 'algoliasearch';
+import userDataProvider from '@/userDataProvider';
 
 const algoliaConfig = Config.get('algolia');
 
@@ -799,8 +808,10 @@ export default {
         sShifts: this.selectedShifts,
       });
     },
-    saveJob(id) {
-      if (!this.uid || this.$store.state.acct === 0) {
+    async saveJob(id) {
+      const userData = await userDataProvider.getUserData();
+
+      if (userData.acct === 0) {
         this.$log('Could not save - No user ID');
         return;
       }
