@@ -86,7 +86,7 @@
               <v-layout>
                 <v-flex xs7 sm7  style="padding: 0px">
                   <p>Applicants</p>
-                  <h2 style="color: #448ef6">-</h2>
+                  <h2 style="color: grey">-</h2>
                   <k-btn color="#448ef6" small disabled>
                     View Applicants
                   </k-btn>
