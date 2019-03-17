@@ -255,6 +255,7 @@ button:focus {
 .v-icon {
   justify-content: unset;
 }
+
 .v-dialog {
   background-color: white;
 }
