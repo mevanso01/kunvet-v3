@@ -40,7 +40,7 @@
   line-height: 56px;
 }
 
-.email_preferences{  
+.email_preferences{
   padding-top: 12px;
   display: inline-block;
   width:calc(100% - 60px);
@@ -70,7 +70,7 @@
 </style>
 
 <template>
-  <v-container fluid class="settings-page">
+  <v-container fluid class="settings-page  page-height">
     <div class="header-splash">
       <div class="main-cont-large bottom" style="background: transparent;">
         <h1>Settings</h1>

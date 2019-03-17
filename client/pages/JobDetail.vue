@@ -466,7 +466,7 @@
     }
 </style>
 <template>
-    <v-container fluid style="padding: 0" id="job-detail-container">
+    <v-container fluid style="padding: 0" id="job-detail-container" class=" page-height">
         <div class="header-splash mobile-hide">
             <div class="header-text-container">
                 <h1 class="header-text" style="top: 44%; font-size: 2.7em; margin: 0; min-height: 60px">

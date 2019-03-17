@@ -146,7 +146,7 @@
   //    overflow: hidden;
 </style>
 <template>
-  <v-container fluid class="applicants-page">
+  <v-container fluid class="applicants-page  page-height">
     <v-layout row wrap>
       <v-flex xs12 v-if="jobs.length === 0">
         <div v-if="pageLoading" style="margin-top: 48px;">
