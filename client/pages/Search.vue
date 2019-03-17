@@ -215,7 +215,10 @@ section.search {
   position: relative;
   overflow-y: hidden;
   transition: all 0.3s ease;
-  padding: 0 24px;
+  // padding: 0 24px;
+  .v-input__slot {
+    padding-right: 14px !important; // weird hack I need to do to align icon
+  }
 }
 @media (min-width: 601px) {
   .large-thats-it {
@@ -235,7 +238,7 @@ section.search {
     }
     .search-field-cont,
     .search-go-cont {
-      padding: 10px 15px;
+      padding: 10px 8px;
       width: 100%;
     }
   }
@@ -319,6 +322,7 @@ section.search {
             <v-text-field
               class="search-params-field"
               solo
+              flat
               hide-details
               :placeholder="searchPlaceholder"
               clearable
@@ -442,6 +446,7 @@ import queries from '@/constants/queries';
 import EventBus from '@/EventBus';
 import Config from 'config';
 import algoliasearch from 'algoliasearch';
+import userDataProvider from '@/userDataProvider';
 
 const algoliaConfig = Config.get('algolia');
 
@@ -802,8 +807,10 @@ export default {
         sShifts: this.selectedShifts,
       });
     },
-    saveJob(id) {
-      if (!this.uid || this.$store.state.acct === 0) {
+    async saveJob(id) {
+      const userData = await userDataProvider.getUserData();
+
+      if (userData.acct === 0) {
         this.$log('Could not save - No user ID');
         return;
       }
