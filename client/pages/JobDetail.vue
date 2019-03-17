@@ -696,7 +696,7 @@
                           :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}"
                           class="existing-file">
                             <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
-                            <p @click="file.selected = !file.selected">
+                            <p>
                              <span v-if="file.name.length < 30">{{file.name}}</span>
                              <span v-else>{{file.name | truncate}}</span>
                             </p>
