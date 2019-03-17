@@ -337,7 +337,7 @@
   display:block;
 }
 .search_show {
-  display:none;
+  display: none !important;
 }
 .search_button_text {
   line-height: 56px;
@@ -449,7 +449,7 @@
 }
 @media only screen and (max-width: 820px) {
   .search_show {
-    display:block;
+    display: block !important;
   }
   .search_hide {
     display:none;
@@ -663,16 +663,18 @@
     </div> -->
 
     <router-link :to="searchDestination">
-      <button v-ripple class="search_hide kunvet-search-btn med">
+      <button v-ripple class="search_hide kunvet-search-icon-btn med">
         <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
       </button>
     </router-link>
     <router-link :to="searchDestination">
-      <button v-ripple class="search_show kunvet-search-btn small block" style="width:80%; margin:auto;">
-        <span class="search_button_text">
-          Search
-        </span>
-      </button>
+      <div style="width:80%; margin:auto;">
+        <k-btn v-ripple class="search_show kunvet-search-btn" block>
+          <span class="search_button_text">
+            Search
+          </span>
+        </k-btn>
+      </div>
     </router-link>
   </div>
 

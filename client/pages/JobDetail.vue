@@ -252,13 +252,13 @@
     }
 
     .apply-text {
-        color: #EA596B;
-        font-size: 48px;
-        width: 80%;
-        margin: 0 auto;
-        padding: 40px 20px 20px 0;
-        font-weight: bold;
-        line-height: 1.3
+      color: #EA596B;
+      font-size: 48px;
+      width: 80%;
+      margin: 0 auto;
+      padding: 40px 20px 20px 0;
+      font-weight: bold;
+      line-height: 1.3
     }
 
     @media (min-width: 961px) {
@@ -295,6 +295,10 @@
     }
 
     @media (max-width: 600px) {
+        .apply-text {
+          font-size: 32px;
+          margin-bottom: 16px;
+        }
         .flex {
             padding: 10px 1px;
         }
@@ -730,7 +734,7 @@
             </v-card>
 
             <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'success'">
-                <v-card-title class="kunvet-red apply-text">Thank you! Your application is under review.</v-card-title>
+                <v-card-title class="kunvet-red apply-text">Thank you! Your application has been submitted.</v-card-title>
                 <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
                         @click="otherdialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
