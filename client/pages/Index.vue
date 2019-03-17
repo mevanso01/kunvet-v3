@@ -300,7 +300,7 @@
   margin-bottom: 50px;
 }
 .search_assist {
-  margin-left: 16px;
+  margin-left: 0;
   color: grey;
   font-size: 16px;
 }
@@ -526,9 +526,9 @@
     line-height: 48px;
     width: 20%;
   }
-  .search_assist {
-    margin-left: 4px;
-  }
+  // .search_assist {
+  //   margin-left: 4px;
+  // }
   .search_text_field,
   .search_select {
     height: 56px;
