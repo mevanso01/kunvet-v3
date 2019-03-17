@@ -225,13 +225,13 @@
                   </h3>
                 </div>
                 <p v-if="bdata.biography">{{ bdata.biography }}</p>
-                <v-btn
+                <k-btn
                   v-else
                   class="acct-btn"
                   @click="createEditModal('biography', '', 'biography')"
                 >
                   Add a Description
-                </v-btn>
+                </k-btn>
               </v-flex>
 
               <v-flex xs12 sm6 offset-md1 class="right-account-column padding-sm-left">
@@ -242,9 +242,9 @@
                 <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
                 <div>
                   <router-link to="/createjob">
-                    <v-btn class="acct-btn">
+                    <k-btn class="acct-btn">
                       Post a Job
-                    </v-btn>
+                    </k-btn>
                   </router-link>
                 </div>
 
