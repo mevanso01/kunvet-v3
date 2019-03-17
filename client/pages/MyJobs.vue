@@ -91,7 +91,7 @@
                     View Applicants
                   </k-btn>
                 </v-flex>
-                <v-flex xs5 sm5  style="padding: 0px">
+                <v-flex xs5git  sm5  style="padding: 0px">
                   <p>Status</p>
                   <h2 style="color: orange">Unposted</h2>
                   <router-link :to="`/createjob/${job._id}`">
