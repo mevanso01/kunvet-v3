@@ -980,10 +980,10 @@ export default {
     search() {
       this.page = 0;
       this.loadingJobs = true;
-      this.displayedJobs = [[], [], []];
       this.rawSearch();
     },
     rawSearch() {
+      this.displayedJobs = [[], [], []];
       if (!algoliaClient && process && process.env && process.env.NODE_ENV === 'development') {
         // Local DB
         this.$debug('Loading from local db for development purposes');
