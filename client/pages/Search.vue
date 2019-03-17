@@ -980,6 +980,12 @@ export default {
     search() {
       this.page = 0;
       this.loadingJobs = true;
+      this.$router.push({
+        path: '/search',
+        query: {
+          q: this.query,
+        },
+      });
       this.rawSearch();
     },
     rawSearch() {

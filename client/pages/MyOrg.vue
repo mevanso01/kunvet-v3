@@ -227,7 +227,6 @@
                 <p v-if="bdata.biography">{{ bdata.biography }}</p>
                 <k-btn
                   v-else
-                  class="acct-btn"
                   @click="createEditModal('biography', '', 'biography')"
                 >
                   Add a Description
@@ -242,7 +241,7 @@
                 <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
                 <div>
                   <router-link to="/createjob">
-                    <k-btn class="acct-btn">
+                    <k-btn>
                       Post a Job
                     </k-btn>
                   </router-link>
