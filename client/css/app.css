@@ -255,6 +255,9 @@ button:focus {
 .v-icon {
   justify-content: unset;
 }
+.search-params-field .v-input__icon--clear {
+  padding-left: 20px;
+}
 .v-dialog {
   background-color: white;
 }
