@@ -801,6 +801,7 @@ export default {
     },
     saveJob(id) {
       if (!this.uid || this.$store.state.acct === 0) {
+        this.$log('Could not save - No user ID');
         return;
       }
       if (this.saved_jobs.indexOf(id) === -1) {
