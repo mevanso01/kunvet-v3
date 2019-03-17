@@ -294,7 +294,7 @@ export default {
     indexOffset(idx) {
       // calculate offset for mobile menu classes. 6 is the size of the largest dmenu item
       // plus 6 + 1 to account for first item with account name
-      return (7 - this.dmenuItems[this.acct].length) + idx;
+      return (7 - this.currentMobileMenuItems.length) + idx;
     },
     handleDMenuClick(item) {
       if (item.subItems) {

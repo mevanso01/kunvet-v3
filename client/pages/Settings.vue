@@ -40,19 +40,29 @@
   line-height: 56px;
 }
 
-.email_preferences{
-  padding-bottom: 12px;
+.email_preferences{  
+  padding-top: 12px;
   display: inline-block;
-  width:80%;
+  width:calc(100% - 60px);
+  font-size: 18px;
 }
 
 .switch_settings{
   display:inline-block;
+  font-size: 18px;
+  padding:none;
+  height: 20px;
 }
 
 @media(min-width: 601px){
   .header-splash{
     height: 215px;
+  }
+}
+
+@media(max-width: 601px){
+  .email_preferences{
+    font-size: 16px;
   }
 }
 
@@ -99,13 +109,13 @@
           <!-- <div class="email_preferences">Recieve emails about new applicants</div>
           <v-switch color="red" class="switch_settings"></v-switch> -->
 
-          <div class="email_preferences">Recieve emails about application status</div>
+          <div class="email_preferences">Aplication status</div>
           <v-switch @change="savePreferences()" v-model="application_bool" color="red" class="switch_settings"></v-switch>
 
-          <div class="email_preferences">Recieve emails about job expiration</div>
+          <div class="email_preferences">Job expiration</div>
           <v-switch @change="savePreferences()" v-model="jobExpired_bool" color="red" class="switch_settings"></v-switch>
 
-          <div class="email_preferences">Recieve emails about newsletters</div>
+          <div class="email_preferences">Newsletters</div>
           <v-switch @change="savePreferences()" v-model="getNewsletter_bool" color="red" class="switch_settings"></v-switch>
         </div>
 
@@ -444,16 +454,31 @@
       if (this.$route.params && this.$route.params.command === 'logout') {
         this.logout();
       }
-      if (this.$store.state.acct === 2) {
-        this.uid = this.$store.state.userID;
-        this.loadOrgData(this.$store.state.businessID);
-        this.loadAcctData();
-      } else if (this.$store.state.acct === 1) {
-        this.uid = this.$store.state.userID;
-        this.loadAcctData();
-      } else {
-        this.$router.push('/login');
-      }
+
+      userDataProvider.getUserData().then(data => {
+        if (data.acct === 0) {
+          this.$router.push('/login');
+          return;
+        }
+        if (data.acct === 2) {
+          this.uid = data.uid;
+          this.loadOrgData(data.userdata.default_org);
+          // this.loadAcctData();
+        } else if (data.acct === 1) {
+          this.uid = data.uid;
+          // this.loadAcctData();
+        }
+        this.account_email = data.userdata.email;
+        this.preferences = data.userdata.preferences;
+
+        this.getNewsletter_bool = this.preferences.getNewsletters;
+        this.application_bool = (this.preferences.applicationStatusEmails === 'All');
+        this.jobExpired_bool = (this.preferences.jobExpiredEmails === 'All');
+
+        if (data.userdata.org_list && data.userdata.org_list[0] !== null) {
+          this.orgList = data.userdata.org_list;
+        }
+      });
     },
   };
 </script>
