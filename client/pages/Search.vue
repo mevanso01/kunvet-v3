@@ -220,6 +220,7 @@ section.search {
     padding-right: 14px !important; // weird hack I need to do to align icon
   }
 }
+
 @media (min-width: 601px) {
   .large-thats-it {
     width: 100% !important;
