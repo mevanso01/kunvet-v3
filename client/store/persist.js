@@ -1,4 +1,4 @@
-import VuexPersist from 'vuex-persist';
+import VuexPersist from 'vuex-persist/dist/umd/index';
 
 const vuexLS = new VuexPersist({
   key: 'vuex',
