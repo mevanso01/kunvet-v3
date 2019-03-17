@@ -8,7 +8,7 @@
 
 </style>
 <template>
-  <v-container fluid class="acct-page-container white-bg">
+  <v-container fluid class="acct-page-container white-bg  page-height">
     <div v-if="!userdata" style="margin-top: 48px;">
       <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
       style="display: block; margin: auto !important;"></v-progress-circular>

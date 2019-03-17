@@ -45,7 +45,7 @@
 
 </style>
 <template>
-  <v-container fluid class="post-jobs list-post">
+  <v-container fluid class="post-jobs list-post page-height">
     <div class="header-splash" style="margin-bottom:50px;">
       <div class="main-cont-large bottom">
         <span class="counter-text">{{ unpostedJobs.length + activeJobs.length + expiredJobs.length }}</span>
@@ -96,7 +96,7 @@
                   <h2 style="color: orange">Unposted</h2>
                   <router-link :to="`/createjob/${job._id}`">
                     <k-btn color="orange" small>
-                      Post It 
+                      Post It
                     </k-btn>
                   </router-link>
                 </v-flex>

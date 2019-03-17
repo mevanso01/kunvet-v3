@@ -68,7 +68,7 @@
 }
 </style>
 <template>
-  <v-container fluid class="appliedjobs">
+  <v-container fluid class="appliedjobs page-height">
     <div class="header-splash">
       <div class="main-cont-large bottom">
         <span v-if="jobsAndApplications.length > 0" class="header-text">

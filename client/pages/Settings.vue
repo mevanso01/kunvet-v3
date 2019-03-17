@@ -81,7 +81,7 @@
 </style>
 
 <template>
-  <v-container fluid class="settings-page">
+  <v-container fluid class="settings-page  page-height">
     <div class="header-splash">
       <div class="main-cont-large bottom" style="background: transparent;">
         <h1>Settings</h1>
