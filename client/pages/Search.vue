@@ -288,6 +288,9 @@ section.search {
   // width: 960px;
   margin: 0 auto;
   padding: 4px 40px 8px 40px;
+  opacity: 0.1;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 </style>
 
@@ -409,8 +412,8 @@ section.search {
         <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
           <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please type in a different query or select a different location.</h3>
         </div>
-        <div class="algoliaLogo" style="color: white;">
-          <ais-powered-by></ais-powered-by>
+        <div class="algoliaLogo" style="color: grey;">
+          <ais-powered-by ></ais-powered-by>
         </div>
       </v-layout>
     </div>
