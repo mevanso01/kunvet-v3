@@ -446,6 +446,7 @@ import queries from '@/constants/queries';
 import EventBus from '@/EventBus';
 import Config from 'config';
 import algoliasearch from 'algoliasearch';
+import userDataProvider from '@/userDataProvider';
 
 const algoliaConfig = Config.get('algolia');
 
@@ -806,8 +807,10 @@ export default {
         sShifts: this.selectedShifts,
       });
     },
-    saveJob(id) {
-      if (!this.uid || this.$store.state.acct === 0) {
+    async saveJob(id) {
+      const userData = await userDataProvider.getUserData();
+
+      if (userData.acct === 0) {
         this.$log('Could not save - No user ID');
         return;
       }
