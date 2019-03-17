@@ -11,6 +11,7 @@ const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VisualizerPlugin = require('webpack-visualizer-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const TargetsPlugin = require("targets-webpack-plugin");
 const HappyPack = require('happypack');
 const utils = require('./utils');
 
@@ -219,6 +220,9 @@ if (process.env.NODE_ENV === 'development') {
 
 if (process.env.NODE_ENV === 'production') {
   wpconf.devtool = 'hidden-source-map';
+  wpconf.plugins.push(new TargetsPlugin({
+    browsers: ['last 2 versions', 'chrome >= 41'],
+  }));
 }
 
 if (process.env.ENABLE_WEBPACK_VISUALIZER) {
