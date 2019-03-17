@@ -89,9 +89,9 @@
                 </v-flex>
                 <v-flex xs5 sm5  style="padding: 0px text-align: center">
                   <p>Status</p>
-                  <h2 style="color: red">Unposted</h2>
+                  <h2 style="color: orange">Unposted</h2>
                   <router-link :to="`/createjob/${job._id}`">
-                    <k-btn color="red" small>
+                    <k-btn color="orange" small>
                       Post It
                     </k-btn>
                   </router-link>
@@ -134,9 +134,9 @@
               <v-layout>
                 <v-flex xs7 sm7  style="padding: 0px">
                   <p>Applicants</p>
-                  <h2 style="color: Fuchsia">{{getApplicantsFromJobs(job._id)}}</h2>
+                  <h2 style="color: #448ef6">{{getApplicantsFromJobs(job._id)}}</h2>
                   <router-link :to="`/applicants/`">
-                    <k-btn color="Fuchsia" small>
+                    <k-btn color="#448ef6" small>
                       View Applicants
                     </k-btn>
                   </router-link>
@@ -144,7 +144,7 @@
 
                 <v-flex xs5 sm5  style="padding: 0px">
                   <p>Status</p>
-                  <h2 style="color: orange">Active</h2>
+                  <h2 style="color: #6effbf">Active</h2>
                   <k-btn disabled small>
                     Re-post Job
                   </k-btn>
