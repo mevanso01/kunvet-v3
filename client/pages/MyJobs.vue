@@ -69,7 +69,7 @@
               <v-layout>
                 <v-flex xs12 sm12 md4>
                   <router-link :to="`/createjob/${job._id}`" style="margin-right: 10px;">
-                    <k-btn color="#000" small>
+                    <k-btn color="#808080" small>
                       Edit
                     </k-btn>
                   </router-link>
@@ -116,7 +116,7 @@
               <v-layout>
               <v-flex xs12 sm12 md4>
                 <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
-                  <k-btn color="#000" small>
+                  <k-btn color="grey" small>
                     Edit
                   </k-btn>
                 </router-link>
