@@ -57,7 +57,8 @@
     color:grey;
   }
   .post-valid{
-    color:#ffc46a
+    color:#ffc46a;
+    font-size: 14px;
   }
   .post-submitted{
     color:pink
