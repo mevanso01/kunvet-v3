@@ -279,7 +279,7 @@
   background-color:#F3E1E1;
 }
 
-.search_find_near{
+.search_find_near {
   height: 72px;
   padding-top:24px;
   width: 10%;
@@ -300,9 +300,9 @@
   margin-bottom: 50px;
 }
 .search_assist {
-  margin-left:16px;
-  color:grey;
-  font-size:16px;
+  margin-left: 16px;
+  color: grey;
+  font-size: 16px;
 }
 .search_text_field {
   height: 72px;
@@ -321,8 +321,8 @@
   padding-top: 12px; // (72px - 48px) / 2
 }
 .search_mobile {
-  margin-left:10%;
-  margin-right:10%;
+  margin-left: 24px;
+  margin-right: 24px;
   margin-bottom: 20px;
   box-shadow: 0 10px 12px -4px #eaeaf9;
 }
@@ -415,11 +415,10 @@
   margin-left: auto;
   padding-left: 24px;
 }
-
 .artboard1_img_mobile {
-    height: 350px; // 50vh;
-    width:100%;
-    background-color: #ffe2e2;
+  height: 350px; // 50vh;
+  width:100%;
+  background-color: #ffe2e2;
 }
 @media (min-width: 821px) and (max-width: 960px) {
   .top_title_text {
@@ -455,8 +454,8 @@
     display:none;
   }
   .searchBar .innerCol {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 24px;
+    margin-right: 24px;
     margin-bottom: 20px;
     box-shadow: 0 8px 12px -3px #eaeaf9; // was previously 0 10px 12px -4px #eaeaf9
   }
@@ -492,7 +491,16 @@
     padding-top: 0;
   }
 }
-@media only screen and (max-width: 600px) {
+@media (max-width: 600px) {
+  .searchBar .v-text-field.v-text-field--enclosed .v-input__slot {
+    padding-left: 16px !important; // instead of 24px
+    padding-right: 16px !important;
+    background: black !important;
+    display: none;
+  }
+  .v-input {
+    // display: none !important;
+  }
   .top_container_style {
     height: 320px; // because vh doesnt work well on mobile browsers that change height
   }
@@ -501,9 +509,10 @@
     line-height: 40px;
     text-align:left;
   }
-  .top_title_pos{
-    margin-left:10%;
-    width:80%;
+  .top_title_pos {
+    width: auto;
+    margin-left: 24px;
+    margin-right: 24px;
     bottom:0;
     margin-bottom:20px;
   }
@@ -516,6 +525,9 @@
     height: 48px;
     line-height: 48px;
     width: 20%;
+  }
+  .search_assist {
+    margin-left: 4px;
   }
   .search_text_field,
   .search_select {
@@ -530,7 +542,6 @@
     font-size: 34px;
     text-align:left;
   }
-
   .loved_trusted_text {
     padding-left: 8%;
     padding-right: 8%;
@@ -551,7 +562,7 @@
     line-height: 26px;
     margin-left: 0;
   }
-  .loved_trusted_container{
+  .loved_trusted_container {
     height: 310px;
     width: 90%;
     margin: auto;
@@ -571,16 +582,15 @@
      margin-top:20px;
      margin-left:8%;
   }
-  // .row-1, .row-2 {
-  //   display: block;
-  //   position: relative;
-  //   height: 800px;
-  // }
+  .search-btn-cont-mobile {
+    width: 100%;
+    padding: 0 24px;
+  }
 }
 </style>
 
 <template>
-  <v-container fluid class="pa-0">
+  <v-container fluid class="pa-0 index-page">
   <div class="top_container_style">
     <div class="top_title_pos">
      <h1 class="top_title_text">Latest Opportunities Near Your School</h1> <!-- Changed from "College" by L.V. -->
@@ -667,15 +677,15 @@
         <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
       </button>
     </router-link>
-    <router-link :to="searchDestination">
-      <div style="width:80%; margin:auto;">
+    <div class="search-btn-cont-mobile">
+      <router-link :to="searchDestination">
         <k-btn v-ripple class="search_show kunvet-search-btn" block>
           <span class="search_button_text">
             Search
           </span>
         </k-btn>
-      </div>
-    </router-link>
+      </router-link>
+    </div>
   </div>
 
     <div style="width:100%; height:120px;"></div>

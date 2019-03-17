@@ -262,6 +262,9 @@ button:focus {
   .v-dialog--fullscreen > .v-card {
     min-height: unset;
   }
+  .index-page .searchBar .v-input .v-input__slot {
+    padding: 0 16px !important; /* instead of 24px */
+  }
 }
 @media (min-width: 601px) {
   .v-dialog {
