@@ -942,8 +942,6 @@ export default {
       }];
       const results = await algoliaClient.search(requests);
       const res = results.results[0];
-      console.log('Res', res);
-      // console.log(res);
       // if (res.page === 0) {
       //   this.filteredJobs = res.hits;
       // } else {
