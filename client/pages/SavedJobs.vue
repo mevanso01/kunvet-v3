@@ -30,7 +30,7 @@
       <div v-if="counter < 1">
         <p style="text-align: center;">
           You haven't saved any job yet. You can save jobs for later by clicking or tapping the bookmark icon in the top right corner of the job.<br>
-          <router-link to="/" style="font-weight: bold;">Click here</router-link> to browse the jobs available.
+          <router-link to="/search" style="font-weight: bold;">Click here</router-link> to browse the jobs available.
         </p>
       </div>
       <v-layout style="padding-bottom: 32px;">
