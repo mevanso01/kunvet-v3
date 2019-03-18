@@ -1026,31 +1026,37 @@ export default {
     this.rawSearch();
     this.searchPlaceholder = this.getSearchPlaceholderText();
     document.addEventListener('click', this.documentClick, { passive: true });
-    const data = this.$store.state;
-    if (data) {
-      if (data.firstSearch) {
-        this.firstSearch = data.firstSearch;
+    userDataProvider.getUserData().then(udata => {
+      const data = this.$store.state;
+      if (data) {
+        if (data.firstSearch) {
+          this.firstSearch = data.firstSearch;
+        }
+        if (data.selectedCity && data.selectedCity.length > 0) {
+          this.selectedCity = data.selectedCity;
+        }
+        if (data.selectedPositions) {
+          this.selectedPositions = data.selectedPositions;
+        }
+        if (data.selectedShifts) {
+          this.selectedShifts = data.selectedShifts;
+        }
+        if (data.selectedTypes) {
+          this.selectedTypes = data.selectedTypes;
+        }
+        if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
+          this.selectedPositions = data.selectedPositions;
+        }
       }
-      if (data.selectedCity && data.selectedCity.length > 0) {
-        this.selectedCity = data.selectedCity;
+      if (udata.uid && udata.acct !== 0) {
+        this.uid = data.uid;
+        if (udata.userdata.saved_jobs && udata.userdata.saved_jobs.length > 0) {
+          this.saved_jobs = udata.userdata.saved_jobs.concat([]);
+        } else {
+          this.getSavedJobs();
+        }
       }
-      if (data.selectedPositions) {
-        this.selectedPositions = data.selectedPositions;
-      }
-      if (data.selectedShifts) {
-        this.selectedShifts = data.selectedShifts;
-      }
-      if (data.selectedTypes) {
-        this.selectedTypes = data.selectedTypes;
-      }
-      if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
-        this.selectedPositions = data.selectedPositions;
-      }
-      if (data.userID && data.acct !== 0) {
-        this.uid = data.userID;
-        this.getSavedJobs();
-      }
-    }
+    });
   },
 };
 
