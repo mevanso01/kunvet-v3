@@ -853,6 +853,13 @@ export default {
             uid: this.uid,
           },
         }],
+      }).then(() => {
+        this.$store.commit({
+          type: 'keepUserdata',
+          userdata: {
+            saved_jobs: this.saved_jobs,
+          },
+        });
       }).catch((error) => {
         this.$error(error);
       });
