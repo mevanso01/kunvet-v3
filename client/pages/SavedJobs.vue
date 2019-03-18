@@ -54,7 +54,7 @@
   import queries from '@/constants/queries';
 
   const FindJobQuery = gql`query ($id: MongoID) {
-    findJob (filter: { _id: $id, is_deleted: false }) {
+    findJob (filter: { _id: $id }) {
       ${queries.FindJobRecordForJobCard}
     }
   }`;
