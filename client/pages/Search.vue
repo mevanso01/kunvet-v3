@@ -803,9 +803,9 @@ export default {
       this.$store.commit({
         type: 'keepSearch',
         sCities: this.selectedCity,
-        sTypes: this.selectedTypes,
-        sPositions: this.selectedPositions,
-        sShifts: this.selectedShifts,
+        // sTypes: this.selectedTypes,
+        // sPositions: this.selectedPositions,
+        // sShifts: this.selectedShifts,
       });
     },
     async saveJob(id) {
@@ -853,6 +853,13 @@ export default {
             uid: this.uid,
           },
         }],
+      }).then(() => {
+        this.$store.commit({
+          type: 'keepUserdata',
+          userdata: {
+            saved_jobs: this.saved_jobs,
+          },
+        });
       }).catch((error) => {
         this.$error(error);
       });
@@ -935,7 +942,6 @@ export default {
       }];
       const results = await algoliaClient.search(requests);
       const res = results.results[0];
-      // console.log(res);
       // if (res.page === 0) {
       //   this.filteredJobs = res.hits;
       // } else {
@@ -980,13 +986,20 @@ export default {
     search() {
       this.page = 0;
       this.loadingJobs = true;
-      this.displayedJobs = [[], [], []];
+      this.$router.push({
+        path: '/search',
+        query: {
+          q: this.query,
+        },
+      });
       this.rawSearch();
     },
     rawSearch() {
+      this.$debug('Started rawSearch');
+      this.displayedJobs = [[], [], []];
       if (!algoliaClient && process && process.env && process.env.NODE_ENV === 'development') {
         // Local DB
-        this.$debug('Loading from local db for development purposes');
+        console.log('Loading jobs from local db'); // this is left as console.log on purpose
         this.findAndFilterJobs();
       } else if (algoliaClient) {
         // Algolia
@@ -1003,48 +1016,71 @@ export default {
   },
   created() {
     EventBus.$on('deletedJob', id => {
-      const index = findIndex(this.filteredJobs, { '_id': id });
-      if (index !== -1) {
-        this.filteredJobs.splice(index, 1);
+      if (this.filteredJobs && this.filteredJobs.length > 0) {
+        const index = findIndex(this.filteredJobs, { '_id': id });
+        if (index !== -1) {
+          this.filteredJobs.splice(index, 1);
+        }
+      }
+      if (this.displayedJobs) {
+        for (let i = 0; i < 3; i++) {
+          const index = findIndex(this.displayedJobs[i], { '_id': id });
+          if (index !== -1) {
+            this.displayedJobs[i].splice(index, 1);
+          }
+        }
       }
     });
   },
   activated() {
     this.setSelectedLatlongs();
-    if (this.filteredJobs.length === 0) {
+    const hasJobsDisplayed = this.displayedJobs &&
+      (this.displayedJobs[0].length > 0 || this.displayedJobs[1].length > 0 || this.displayedJobs[2].length > 0);
+    if (!hasJobsDisplayed) {
       this.loadingJobs = true;
     }
+    const oldQuery = this.query;
     if (this.$route.query.q) {
       this.query = this.$route.query.q;
+    } else {
+      this.query = '';
     }
-    this.rawSearch();
-    this.searchPlaceholder = this.getSearchPlaceholderText();
+    if (!hasJobsDisplayed || oldQuery !== this.query) {
+      this.rawSearch();
+    }
     document.addEventListener('click', this.documentClick, { passive: true });
-    const data = this.$store.state;
-    if (data) {
-      if (data.firstSearch) {
-        this.firstSearch = data.firstSearch;
+    this.searchPlaceholder = this.getSearchPlaceholderText();
+    userDataProvider.getUserData().then(udata => {
+      const data = this.$store.state;
+      if (data) {
+        if (data.firstSearch) {
+          this.firstSearch = data.firstSearch;
+        }
+        if (data.selectedCity && data.selectedCity.length > 0) {
+          this.selectedCity = data.selectedCity;
+        }
+        if (data.selectedPositions) {
+          this.selectedPositions = data.selectedPositions;
+        }
+        if (data.selectedShifts) {
+          this.selectedShifts = data.selectedShifts;
+        }
+        if (data.selectedTypes) {
+          this.selectedTypes = data.selectedTypes;
+        }
+        if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
+          this.selectedPositions = data.selectedPositions;
+        }
       }
-      if (data.selectedCity && data.selectedCity.length > 0) {
-        this.selectedCity = data.selectedCity;
+      if (udata.uid && udata.acct !== 0) {
+        this.uid = data.uid;
+        if (udata.userdata.saved_jobs && udata.userdata.saved_jobs.length > 0) {
+          this.saved_jobs = udata.userdata.saved_jobs.concat([]);
+        } else {
+          this.getSavedJobs();
+        }
       }
-      if (data.selectedPositions) {
-        this.selectedPositions = data.selectedPositions;
-      }
-      if (data.selectedShifts) {
-        this.selectedShifts = data.selectedShifts;
-      }
-      if (data.selectedTypes) {
-        this.selectedTypes = data.selectedTypes;
-      }
-      if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
-        this.selectedPositions = data.selectedPositions;
-      }
-      if (data.userID && data.acct !== 0) {
-        this.uid = data.userID;
-        this.getSavedJobs();
-      }
-    }
+    });
   },
 };
 

@@ -838,11 +838,16 @@ export default {
   },
   computed: {
     searchDestination() {
+      if (this.query) {
+        return {
+          path: '/search',
+          query: {
+            q: this.query,
+          },
+        };
+      }
       return {
         path: '/search',
-        query: {
-          q: this.query,
-        },
       };
     },
     filteredAvailablePositionsObj() {

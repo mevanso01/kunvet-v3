@@ -85,7 +85,7 @@
 </style>
 
 <template>
-  <v-container fluid>
+  <v-container fluid class="page-height">
     <div id="signup" class="main-cont-large-clear" v-show="!alreadyloggedin">
       <section v-if="chosenForm === ''" class="choose-account-section">
           <div class="text-xs-center">

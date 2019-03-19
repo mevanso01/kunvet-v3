@@ -17,7 +17,7 @@
 }
 </style>
 <template>
-  <v-container fluid style="padding: 0">
+  <v-container fluid style="padding: 0" class="page-height">
     <div class="header-splash" style="margin-bottom: 30px;">
       <div class="main-cont-large bottom">
         <span class="counter-text">{{ counter }}</span>
@@ -30,7 +30,7 @@
       <div v-if="counter < 1">
         <p style="text-align: center;">
           You haven't saved any job yet. You can save jobs for later by clicking or tapping the bookmark icon in the top right corner of the job.<br>
-          <router-link to="/" style="font-weight: bold;">Click here</router-link> to browse the jobs available.
+          <router-link to="/search" style="font-weight: bold;">Click here</router-link> to browse the jobs available.
         </p>
       </div>
       <v-layout style="padding-bottom: 32px;">
@@ -54,7 +54,7 @@
   import queries from '@/constants/queries';
 
   const FindJobQuery = gql`query ($id: MongoID) {
-    findJob (filter: { _id: $id, is_deleted: false }) {
+    findJob (filter: { _id: $id }) {
       ${queries.FindJobRecordForJobCard}
     }
   }`;
@@ -158,6 +158,13 @@
               uid: this.uid,
             },
           }],
+        }).then(() => {
+          this.$store.commit({
+            type: 'keepUserdata',
+            userdata: {
+              saved_jobs: this.saved_jobs,
+            },
+          });
         }).catch((error) => {
           this.$error(error);
         });
