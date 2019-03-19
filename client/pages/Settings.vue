@@ -60,7 +60,7 @@
   }
 }
 
-@media(max-width: 601px){s
+@media(max-width: 601px){
   .email_preferences{
     font-size: 16px;
   }

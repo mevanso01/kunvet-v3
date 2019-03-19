@@ -173,7 +173,7 @@
                 <v-layout>
                   <v-flex xs12 sm12 md4>
                     <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
-                      <k-btn color="#000" small>
+                      <k-btn color="grey" small>
                         Edit
                       </k-btn>
                     </router-link>
@@ -189,10 +189,10 @@
               <v-layout>
                 <v-flex xs7 sm7  style="padding: 0px">
                   <p>Applicants</p>
-                  <h2 style="color: Fuchsia">{{getApplicantsFromJobs(job._id)}}</h2>
+                  <h2 style="color: #448ef6">{{getApplicantsFromJobs(job._id)}}</h2>
                   <router-link :to="`/applicants/`">
-                    <k-btn color="Fuchsia" small>
-                      View
+                    <k-btn color="#448ef6" small>
+                      View Applicants
                     </k-btn>
                   </router-link>
                 </v-flex>
@@ -200,7 +200,7 @@
                   <p>Status</p>
                   <h2 style="color: grey">Expired</h2>
                   <k-btn color="grey" small @click="repostJob(job._id)">
-                    Re-post
+                    Re-post Job
                   </k-btn>
                 </v-flex>
               </v-layout>
