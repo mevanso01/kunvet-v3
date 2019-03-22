@@ -56,124 +56,118 @@
     </div>
 
     <div style="margin-bottom:30px;">
-    <div v-if="(unpostedJobs.length + activeJobs.length + expiredJobs.length) > 0" >
-      <!--Unposted Jobs-->
-      <div class="main-cont-large">
-        <div v-if="unpostedJobs.length > 0"
-                  v-for="(job, idx) in unpostedJobs">
-          <v-layout row wrap class="new-applicant-card">
-            <v-flex xs12 sm6 md7>
-              <router-link :to="`/job/${job._id}`">
-              <p><timeago :since="job.date"/></p>
-              <h2 class="list-post-title">{{ job.title }}</h2>
-              <v-layout>
+      <div v-if="(unpostedJobs.length + activeJobs.length + expiredJobs.length) > 0" >
+        <!--Unposted Jobs-->
+        <div class="main-cont-large">
+          <div v-if="unpostedJobs.length > 0"
+                    v-for="(job, idx) in unpostedJobs">
+            <v-layout row wrap class="new-applicant-card">
+              <v-flex xs12 sm6 md7>
+                <p><timeago :since="job.date"/></p>
+                <router-link :to="`/job/${job._id}`">
+                  <h2 class="list-post-title">{{ job.title }}</h2>
+                </router-link>
+                <v-layout>
+                  <v-flex xs12 sm12 md4>
+                    <router-link :to="`/createjob/${job._id}`" style="margin-right: 10px;">
+                      <k-btn color="#808080" small>
+                        Edit
+                      </k-btn>
+                    </router-link>
+                    <k-btn color="Salmon" small @click="onShowJobDialog(job)">
+                      Delete
+                    </k-btn>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+              <v-flex xs12 sm6 md5>
+                <v-layout>
+                  <v-flex xs7 sm7  style="padding: 0px">
+                    <p>Applicants</p>
+                    <h2 style="color: grey">-</h2>
+                    <k-btn color="#448ef6" small disabled>
+                      View Applicants
+                    </k-btn>
+                  </v-flex>
+                  <v-flex xs5git  sm5  style="padding: 0px">
+                    <p>Status</p>
+                    <h2 style="color: orange">Unposted</h2>
+                    <router-link :to="`/createjob/${job._id}`">
+                      <k-btn color="orange" small>
+                        Post It
+                      </k-btn>
+                    </router-link>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+            </v-layout>
+            <hr v-if= "idx < unpostedJobs.length - 1"  >
+          </div>
+          <hr v-if= "unpostedJobs.length > 0"  >
+        </div>
+
+        <!--Active Jobs-->
+        <div class="main-cont-large">
+          <div v-if="activeJobs.length > 0" v-for="(job, idx) in activeJobs">
+            <v-layout row wrap class="new-applicant-card">
+              <v-flex xs12 sm6 md7>
+                <p><timeago :since="job.date"/></p>
+                <router-link :to="`/job/${job._id}`">
+                  <h2 class="list-post-title">{{ job.title }}</h2>
+                </router-link>
+                <v-layout>
                 <v-flex xs12 sm12 md4>
-                  <router-link :to="`/createjob/${job._id}`" style="margin-right: 10px;">
-                    <k-btn color="#808080" small>
+                  <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
+                    <k-btn color="grey" small>
                       Edit
                     </k-btn>
                   </router-link>
-                  <k-btn color="Salmon" small
-                    @click="onShowJobDialog(job)"
-                    >
+                  <k-btn color="Salmon" small @click="onShowJobDialog(job)">
                     Delete
                   </k-btn>
                 </v-flex>
               </v-layout>
-              </router-link>
-            </v-flex>
-            <v-flex xs12 sm6 md5>
-              <v-layout>
-                <v-flex xs7 sm7  style="padding: 0px">
-                  <p>Applicants</p>
-                  <h2 style="color: grey">-</h2>
-                  <k-btn color="#448ef6" small disabled>
-                    View Applicants
-                  </k-btn>
-                </v-flex>
-                <v-flex xs5git  sm5  style="padding: 0px">
-                  <p>Status</p>
-                  <h2 style="color: orange">Unposted</h2>
-                  <router-link :to="`/createjob/${job._id}`">
-                    <k-btn color="orange" small>
-                      Post It
+              </v-flex>
+              <v-flex xs12 sm6 md5>
+                <v-layout>
+                  <v-flex xs7 sm7  style="padding: 0px">
+                    <p>Applicants</p>
+                    <h2 style="color: #448ef6">{{getApplicantsFromJobs(job._id)}}</h2>
+                    <router-link :to="`/applicants/`">
+                      <k-btn color="#448ef6" small>
+                        View Applicants
+                      </k-btn>
+                    </router-link>
+                  </v-flex>
+
+                  <v-flex xs5 sm5  style="padding: 0px">
+                    <p>Status</p>
+                    <h2 style="color: #6effbf">Active</h2>
+                    <k-btn disabled small>
+                      Re-post Job
                     </k-btn>
-                  </router-link>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-          </v-layout>
-          <hr v-if= "idx < unpostedJobs.length - 1"  >
-        </div>
-        <hr v-if= "unpostedJobs.length > 0"  >
-      </div>
-
-      <!--Active Jobs-->
-      <div class="main-cont-large">
-        <div v-if="activeJobs.length > 0"
-                  v-for="(job, idx) in activeJobs">
-          <v-layout row wrap class="new-applicant-card">
-            <v-flex xs12 sm6 md7>
-              <router-link :to="`/job/${job._id}`">
-              <p><timeago :since="job.date"/></p>
-              <h2 class="list-post-title">{{ job.title }}</h2>
-              <v-layout>
-              <v-flex xs12 sm12 md4>
-                <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
-                  <k-btn color="grey" small>
-                    Edit
-                  </k-btn>
-                </router-link>
-
-                <k-btn color="Salmon" small
-                @click="onShowJobDialog(job)"
-              >
-                Delete
-              </k-btn>
-            </v-flex>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
             </v-layout>
-            </router-link>
-            </v-flex>
-            <v-flex xs12 sm6 md5>
-              <v-layout>
-                <v-flex xs7 sm7  style="padding: 0px">
-                  <p>Applicants</p>
-                  <h2 style="color: #448ef6">{{getApplicantsFromJobs(job._id)}}</h2>
-                  <router-link :to="`/applicants/`">
-                    <k-btn color="#448ef6" small>
-                      View Applicants
-                    </k-btn>
-                  </router-link>
-                </v-flex>
-
-                <v-flex xs5 sm5  style="padding: 0px">
-                  <p>Status</p>
-                  <h2 style="color: #6effbf">Active</h2>
-                  <k-btn disabled small>
-                    Re-post Job
-                  </k-btn>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-          </v-layout>
-          <hr v-if= "idx < activeJobs.length - 1"  >
+            <hr v-if= "idx < activeJobs.length - 1"  >
+          </div>
         </div>
-      </div>
 
-      <!--Expired Jobs-->
-      <div class="main-cont-large">
-        <hr v-if="expiredJobs.length > 0 && activeJobs.length > 0">
-        <div v-if="expiredJobs.length > 0"
-                  v-for="(job, idx) in expiredJobs">
-          <v-layout row wrap class="new-applicant-card">
-            <v-flex xs12 sm6 md7>
-              <router-link :to="`/job/${job._id}`">
+        <!--Expired Jobs-->
+        <div class="main-cont-large">
+          <hr v-if="expiredJobs.length > 0 && activeJobs.length > 0">
+          <div v-if="expiredJobs.length > 0" v-for="(job, idx) in expiredJobs">
+            <v-layout row wrap class="new-applicant-card">
+              <v-flex xs12 sm6 md7>
                 <p><timeago :since="job.date"/></p>
-                <h2 class="list-post-title">{{ job.title }}</h2>
+                <router-link :to="`/job/${job._id}`">
+                  <h2 class="list-post-title">{{ job.title }}</h2>
+                </router-link>
                 <v-layout>
                   <v-flex xs12 sm12 md4>
                     <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
-                      <k-btn color="#000" small>
+                      <k-btn color="grey" small>
                         Edit
                       </k-btn>
                     </router-link>
@@ -183,193 +177,52 @@
                     </k-btn>
                   </v-flex>
                 </v-layout>
-              </router-link>
-            </v-flex>
-            <v-flex xs12 sm6 md5>
-              <v-layout>
-                <v-flex xs7 sm7  style="padding: 0px">
-                  <p>Applicants</p>
-                  <h2 style="color: Fuchsia">{{getApplicantsFromJobs(job._id)}}</h2>
-                  <router-link :to="`/applicants/`">
-                    <k-btn color="Fuchsia" small>
-                      View
+              </v-flex>
+              <v-flex xs12 sm6 md5>
+                <v-layout>
+                  <v-flex xs7 sm7  style="padding: 0px">
+                    <p>Applicants</p>
+                    <h2 style="color: #448ef6">{{getApplicantsFromJobs(job._id)}}</h2>
+                    <router-link :to="`/applicants/`">
+                      <k-btn color="#448ef6" small>
+                        View Applicants
+                      </k-btn>
+                    </router-link>
+                  </v-flex>
+                  <v-flex xs5 sm5  style="padding: 0px">
+                    <p>Status</p>
+                    <h2 style="color: grey">Expired</h2>
+                    <k-btn disabled small color="grey" @click="repostJob(job._id)">
+                      Re-post Job
                     </k-btn>
-                  </router-link>
-                </v-flex>
-                <v-flex xs5 sm5  style="padding: 0px">
-                  <p>Status</p>
-                  <h2 style="color: grey">Expired</h2>
-                  <k-btn color="grey" small @click="repostJob(job._id)">
-                    Re-post
-                  </k-btn>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-          </v-layout>
-          <hr v-if= "idx < expiredJobs.length - 1">
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <div class="main-cont-large" style="text-align: center;">
-        <p>You have not posted any jobs yet,
-        <router-link :to="`/createjob/`" style="font-weight: bold;">
-          click here
-        </router-link> to post one.</p>
-      </div>
-    </div>
-    </div>
-<!--<div class="main-cont-large">
-      <v-layout row wrap>
-
-        <v-flex xs12 sm6
-          v-if="unpostedJobs.length > 0"
-          v-for="job in unpostedJobs"
-          class="new-applicant-card"
-        >
-          <div class="inner">
-            <div class="new-applicant-card__info">
-              <router-link :to="`/job/${job._id}`">
-                <h2 class="new-applicant-card__title">
-                  {{ job.title }}
-                </h2>
-              </router-link>
-            </div>
-            <div class="btn-holder">
-              <div class="btn-holder__right-elements">
-                <router-link :to="`/createjob/${job._id}`">
-                  <v-btn class="kunvet-accept-small-btn">
-                    Continue Editing
-                  </v-btn>
-                </router-link>
-                <v-btn
-                  class="kunvet-reject-small-btn"
-                  @click="onShowJobDialog(job)"
-                >
-                  Delete
-                </v-btn>
-               </div>
-            </div>
-          </div>
-        </v-flex>
-      </v-layout>
-
-      <v-layout row wrap>
-        <v-flex xs12 v-if="activeJobs.length > 0" class="job-page-headline">
-          <h1><span class="kunvet-red">{{ activeJobs.length }}</span> {{ getActiveJobsString }}</h1>
-        </v-flex>
-        <v-flex xs12 sm6
-          v-if="activeJobs.length > 0"
-          v-for="(job, index) in activeJobs"
-          :key="`job-${index}`"
-          class="new-applicant-card"
-        >
-          <div class="inner">
-            <div class="new-applicant-card__info">
-              <router-link :to="`/job/${job._id}`">
-                <h2 class="new-applicant-card__title">
-                  {{ job.title }}
-                </h2>
-              </router-link>
-              <div class="new-applicant-card__time-ago">
-                <timeago :since="job.date" />
-              </div>
-              <div class="post-address-container">
-                <p class="new-applicant-card__address">
-                  <img class="new-applicant-card__regular-icon" :src="svgs.locationMarker" />{{ job.address }}
-                </p>
-              </div>
-              <div>
-                <img
-                  class="job-post-icon"
-                  :src="svgs.information" /> {{ parseJobIntoMainInfo(job) }}
-              </div>
-              <div>
-                <span><img
-                  class="job-post-icon"
-                  :src="svgs.student" /> {{ job.studentfriendly ? '' : 'Not ' }} Student Friendly</span>
-                <span>{{ job.experience ? '&bull; Experience Required' : '' }}</span>
-              </div>
-            </div>
-            <div class="btn-holder">
-              <div class="btn-holder__right-elements">
-                <span style="color: grey;">
-                  Repost in {{ getRepostDaysString(job.date) }}
-                </span>
-                <router-link :to="`/editjob/${job._id}`">
-                  <v-icon style="margin-left: 5px;">edit</v-icon>
-                </router-link>
-                <v-icon style="cursor: pointer; margin-left: 5px;" @click="onShowJobDialog(job)">delete</v-icon>
-              </div>
-            </div>
-          </div>
-        </v-flex>
-      </v-layout>
-
-      <v-layout row wrap>
-        <v-flex xs12 v-if="expiredJobs.length > 0" class="job-page-headline">
-          <h1><span class="kunvet-red">{{ expiredJobs.length }}</span> {{ getExpiredJobsString }}</h1>
-        </v-flex>
-        <v-flex xs12 sm6
-          v-if="expiredJobs.length > 0"
-          v-for="(job, index) in expiredJobs"
-          :key="`expiredjob-${index}`"
-          class="new-applicant-card"
-        >
-          <div class="inner">
-            <div class="new-applicant-card__info">
-              <router-link :to="`/job/${job._id}`">
-                <h2 class="new-applicant-card__title">
-                  {{ job.title }}
-                </h2>
-              </router-link>
-            <div class="new-applicant-card__time-ago">
-              <timeago :since="job.date" />
-            </div>
-            <p class="post-intro">
-              <span class="new-applicant-card__address">
-                <img class="new-applicant-card__regular-icon" :src="svgs.locationMarker" />{{ job.address }}
-              </span>
-            </p>
-            <div>
-              <img
-                class="job-post-icon"
-                :src="svgs.information" /> {{ parseJobIntoMainInfo(job) }}
-            </div>
-            <div>
-              <span><img
-                class="job-post-icon"
-                :src="svgs.student" /> {{ job.studentfriendly ? '' : 'Not ' }} Student Friendly</span>
-              <span>{{ job.experience ? '&bull; Experience Required' : '' }}</span>
-            </div>
-          </div>
-          <div class="btn-holder">
-            <div class="btn-holder__right-elements">
-              <v-btn
-                class="kunvet-black-small-btn" style="margin: 0 8px;"
-                @click="openRepostDialog(job._id)"
-              >
-                Repost
-              </v-btn>
-              <router-link :to="`/editjob/${job._id}`">
-                <v-icon>edit</v-icon>
-              </router-link>
-              <v-icon @click="onShowJobDialog(job)">delete</v-icon>
-            </div>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+            </v-layout>
+            <hr v-if= "idx < expiredJobs.length - 1">
           </div>
         </div>
-      </v-flex>
-      </v-layout>
+      </div>
+
+      <div v-else>
+        <div class="main-cont-large" style="text-align: center;">
+          <p>You have not posted any jobs yet,
+          <router-link :to="`/createjob/`" style="font-weight: bold;">
+            click here
+          </router-link> to post one.</p>
+        </div>
+      </div>
+
     </div>
--->
-    <v-dialog v-model="dialogs.showDelete">
+
+    <v-dialog v-model="dialogs.showDelete" width="380">
       <v-card>
         <v-card-title class="headline">
-          Delete Job
+          Are you sure you want to delete this job?
         </v-card-title>
         <v-card-actions>
-          <v-btn flat="flat" @click.native="onJobDelete">
-            Confirm
+          <v-btn color="red darken-1" flat="flat" @click.native="onJobDelete">
+            Yes, delete it
           </v-btn>
           <v-btn flat="flat" @click.native="dialogs.showDelete = false">
             Cancel

@@ -1,10 +1,9 @@
 <template>
-<v-container fluid class="white-bg">
-  <div style="max-width: 420px; margin: auto; padding-top: 32px; padding-bottom: 32px;">
-    <LoginComponent @toSignup="goToSignup" @loggedIn="triggerRedirect"></LoginComponent>
-  </div>
-</v-container>
-
+  <v-container fluid class="white-bg">
+    <div style="max-width: 400px; margin: auto; padding: 32px 8px;">
+      <LoginComponent @toSignup="goToSignup" @loggedIn="triggerRedirect"></LoginComponent>
+    </div>
+  </v-container>
 </template>
 <script>
 import LoginComponent from '@/components/LoginComponent';

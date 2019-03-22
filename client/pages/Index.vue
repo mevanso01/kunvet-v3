@@ -420,6 +420,10 @@
   width:100%;
   background-color: #ffe2e2;
 }
+.search-btn-cont-mobile {
+  width: 100%;
+  padding: 0 24px;
+}
 @media (min-width: 821px) and (max-width: 960px) {
   .top_title_text {
     font-size: 3.3em;
@@ -581,10 +585,6 @@
   .postAJob2{
      margin-top:20px;
      margin-left:8%;
-  }
-  .search-btn-cont-mobile {
-    width: 100%;
-    padding: 0 24px;
   }
 }
 </style>

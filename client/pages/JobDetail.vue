@@ -228,6 +228,13 @@
     line-height: 1.3
   }
 
+  .login-card {
+    // margin: 150px auto !important;
+    height: 100%;
+    border: none !important;
+    padding: 48px 24px;
+  }
+
   @media (min-width: 961px) {
     .job-detail-container {
       margin: 0 18%;
@@ -243,7 +250,7 @@
   @media (min-width: 601px) {
     .job-detail-container {
       margin: 0 auto;
-      padding: 24px;
+      padding: 0 24px 24px 24px;
       max-width: 1008px;
     }
     .apply-card {
@@ -262,7 +269,9 @@
     .header-splash p {
       padding-top: 20px;
     }
-
+    .login-card {
+      padding: 48px 48px;
+    }
   }
 
   @media (max-width: 600px) {
@@ -312,7 +321,7 @@
       background: -o-linear-gradient(transparent, white);
     }
     .job-detail-container {
-      padding: 24px 24px 0 24px;
+      padding: 0 24px 0 24px;
     }
     .mobile-show {
       display: block;
@@ -336,7 +345,11 @@
     }
 
     .mobile-show li {
-      list-style: square;
+      list-style: none;
+      color: #292929;
+    }
+    .mobile-show ul {
+      padding-left: 0;
     }
     .header-splash {
       min-height: 206px;
@@ -364,9 +377,6 @@
     }
     .dialog-card {
       width: 100%;
-    }
-    .login-card {
-      margin: 150px auto !important;
     }
   }
 
@@ -462,24 +472,22 @@
       <div class="sub-container">
         <!--mobile job descriptions-->
         <div class="mobile-hide">
-          <div class="carditem mobile-hide " style="">Posted
+          <div class="carditem mobile-hide " style="color: #9e9e9e;">Posted
             <timeago :since="findJob.date"></timeago>
           </div>
           <div class="carditem" style="color: #A7A7A7;">
-            <p>
-
-              <!--<v-icon style="color: #A7A7A7; padding-right: 5px; font-size: 18px; transform: translateY(-1px);">location_city</v-icon>-->
+            <p style="margin-bottom: 0">
               <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
               <span style="padding-top: 2px;">
                 {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
             </p>
-            <p v-if="findJob.university" style="margin-left: 24px;">
+            <p v-if="findJob.university" style="margin-left: 24px; margin-bottom: 0;">
               {{ findJob.university }}
             </p>
           </div>
 
-          <div style="margin-top: 8px;">
+          <div>
             <div v-if="findJob.type2 && computedType2" class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.Internship"/>
               <span> {{ computedType2 }}</span>
@@ -574,7 +582,7 @@
         </div>
 
       </div>
-      <div class="v-divider"></div>
+      <div class="v-divider" style="color: #9e9e9e;"></div>
       <div class="sub-container job-desc-subcontainer" style="padding-top: 24px; word-wrap: break-spaces;">
         <h2 style="margin-bottom: 8px;">Job Overview</h2>
         <div class="long-text-cont" v-html="findJob.description"></div>
@@ -630,8 +638,7 @@
             </v-card>
 
             <v-card flat class="dialog-card" v-else-if="loginState === 'login'" color="white">
-                <div class="main-cont-small login-card"
-                     style="height: 100%; border: none !important; margin: 48px 0 !important;">
+                <div class="login-card">
                     <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
                     <div style="width: 50px; background-color: blue"></div>
                 </div>

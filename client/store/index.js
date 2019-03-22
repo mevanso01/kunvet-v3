@@ -109,6 +109,7 @@ const Store = new Vuex.Store({
       state.acct = 0;
       state.bdata = null;
       state.userdata = null;
+      state.udataLastFetched = null;
     },
     resetState(state) {
       state.userID = null;

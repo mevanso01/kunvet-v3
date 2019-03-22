@@ -20,9 +20,10 @@
   }
   .auth-form{
     border: none;
-    width: 80%;
+    /* width: 80%; */
     margin: 0 auto;
   }
+
 </style>
 <template>
   <div>
