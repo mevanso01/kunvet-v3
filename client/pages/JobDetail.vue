@@ -228,6 +228,13 @@
     line-height: 1.3
   }
 
+  .login-card {
+    // margin: 150px auto !important;
+    height: 100%;
+    border: none !important;
+    padding: 48px 24px;
+  }
+
   @media (min-width: 961px) {
     .job-detail-container {
       margin: 0 18%;
@@ -262,7 +269,9 @@
     .header-splash p {
       padding-top: 20px;
     }
-
+    .login-card {
+      padding: 48px 48px;
+    }
   }
 
   @media (max-width: 600px) {
@@ -368,9 +377,6 @@
     }
     .dialog-card {
       width: 100%;
-    }
-    .login-card {
-      margin: 150px auto !important;
     }
   }
 
@@ -635,8 +641,7 @@
             </v-card>
 
             <v-card flat class="dialog-card" v-else-if="loginState === 'login'" color="white">
-                <div class="main-cont-small login-card"
-                     style="height: 100%; border: none !important; margin: 48px 0 !important;">
+                <div class="login-card">
                     <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
                     <div style="width: 50px; background-color: blue"></div>
                 </div>

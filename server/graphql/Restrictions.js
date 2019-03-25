@@ -21,8 +21,8 @@ export default {
   },
   UploadJobToAlgolia: async (req, next) => {
     const appId = Config.get('algolia.appId');
-    if (!appId || (process && process.env.NODE_ENV === 'development')) {
-      // Algolia disabled
+    if (!appId || (process && process.env.NODE_ENV === 'development' && appId !== 'QDRYRAKU5K')) {
+      // Algolia disabled // Purposely don't disable index QDRYRAKU5K in dev mode
       return next(req);
     }
 
@@ -31,16 +31,22 @@ export default {
 
     const response = await next(req);
     if (response.recordId && response.record.active) {
-      const job = JSON.parse(JSON.stringify(response.record));
-      job.objectID = job._id;
-      if (job.latitude) {
-        job._geoloc = {
-          lat: job.latitude,
-          lng: job.longitude,
-        };
+      if (response.record.is_deleted) {
+        // Delete from algolia
+        index.deleteObjects([response.recordId]);
+        Logger.info(`Deleting ${response.recordId} from Algolia`);
+      } else {
+        const job = JSON.parse(JSON.stringify(response.record));
+        job.objectID = job._id;
+        if (job.latitude) {
+          job._geoloc = {
+            lat: job.latitude,
+            lng: job.longitude,
+          };
+        }
+        index.addObjects([job]);
+        Logger.info('Uploading to Algolia');
       }
-      index.addObjects([job]);
-      Logger.info('Uploading to Algolia');
     }
 
     return response;

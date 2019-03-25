@@ -1186,9 +1186,9 @@ body {
     }
 }
 @media (max-width: 600px) {
-    .v-dialog--active {
-        height: inherit;
-    }
+    /* .v-dialog--active {
+        height: inherit; causes bugs
+    } */
     #bottom .footer-big-text {
       width: 100%;
     }

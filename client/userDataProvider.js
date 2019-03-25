@@ -84,7 +84,7 @@ function getUserDataFromLS() {
 async function getUserData() {
   // Try to get data from local storage if it's been recently fetched.
   // Time difference is 10 minutes (600000ms)
-  if (Store.state.udataLastFetched && Store.state.udataLastFetched - Date.now() <= 600000) {
+  if (Store.state.udataLastFetched && Date.now() - Store.state.udataLastFetched <= 600000) {
     const lsData = getUserDataFromLS();
     if (lsData) {
       return lsData;
