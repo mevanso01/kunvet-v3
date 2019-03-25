@@ -466,7 +466,9 @@
       <div class="sub-container">
         <!--mobile job descriptions-->
         <div class="mobile-hide">
-          <div class="carditem mobile-hide " style="color: #9e9e9e;">Posted
+          <div class="carditem mobile-hide ">
+            <img class="job-info-icon" :src="svgs.Pushpin"/>
+            Posted
             <timeago :since="findJob.date"></timeago>
           </div>
           <div class="carditem" style="color: #A7A7A7;">
@@ -476,7 +478,8 @@
                 {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
             </p>
-            <p v-if="findJob.university" style="margin-left: 24px; margin-bottom: 0;">
+            <p v-if="findJob.university" style="margin-bottom: 0;">
+              <img class="job-info-icon" :src="svgs.Book"/>
               {{ findJob.university }}
             </p>
           </div>
@@ -717,6 +720,8 @@
 </template>
 <script>
   import gql from 'graphql-tag';
+  import BookSvg from '@/assets/job_detail/open-magazine.svg';
+  import PushpinSvg from '@/assets/job_detail/pushpin.svg';
   import InternshipSvg from '@/assets/job_detail/internship.svg';
   import StudentFriendlySvg from '@/assets/job_detail/student_friendly.svg';
   import SalarySvg from '@/assets/job_detail/salary.svg';
@@ -771,6 +776,8 @@
         profilePic: null,
         salary: null,
         svgs: {
+          Book: BookSvg,
+          Pushpin: PushpinSvg,
           Internship: InternshipSvg,
           Clock: ClockSvg,
           sfSvg: StudentFriendlySvg,

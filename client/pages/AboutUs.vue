@@ -7,7 +7,6 @@
 
                 <h2 style="color: #969494;">What is kunvet.com?</h2>
                 <p>Kunvet is a job platform that's designed for students. Our focus is to help students, including international students, to find jobs or opportunities immediately nearby.</p>
-
                 <h2 style="color: #969494;">Why use kunvet.com instead?</h2>
                 <p>We will provide the most recent and relevant opportunities for our students free of charge. Try to beat that.<br>We will include many unique opportunities, which you cannot find on any other platforms.</p>
 
