@@ -133,7 +133,7 @@
                   <v-flex xs7 sm7  style="padding: 0px">
                     <p>Applicants</p>
                     <h2 style="color: #448ef6; padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
-                    <router-link :to="`/applicants/`">
+                    <router-link :to="`/applicants`">
                       <k-btn v-if="getApplicantsFromJobs(job._id) > 0" color="#448ef6" small>
                         View Applicants
                       </k-btn>
@@ -186,7 +186,7 @@
                   <v-flex xs7 sm7  style="padding: 0px">
                     <p>Applicants</p>
                     <h2 style="color: #448ef6; padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
-                    <router-link :to="`/applicants/`">
+                    <router-link :to="`/applicants`">
                       <k-btn v-if="getApplicantsFromJobs(job._id) > 0" color="#448ef6" small>
                         View Applicants
                       </k-btn>
