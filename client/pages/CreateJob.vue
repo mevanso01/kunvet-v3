@@ -85,7 +85,7 @@
                     </v-flex>
                   </v-layout>
 
-                  <!--
+
                   <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
                   <v-radio-group v-model="postingAs" column required class="pt-0 mb-0" required
                     :rules="[(v) => !submit1Pressed || !!(v) || 'Required']">
@@ -103,7 +103,7 @@
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  -->
+
                 </template>
                 <template v-else>
                   <p class="mb-2">Welcome back {{ userdata.firstname }} {{ userdata.lastname }}</p>
@@ -1027,6 +1027,7 @@ export default {
           lat: this.job.latitude,
           long: this.job.longitude,
         },
+        account_type: isBusiness ? 'business' : 'individual',
       };
       var registerSuccess = false;
       var userId;
