@@ -44,19 +44,17 @@ export default {
             lng: job.longitude,
           };
         }
-        index.addObjects([job], function(err, content) {
+        index.addObjects([job], (err, content) => {
           if (err) {
             console.log('Error uploading to algolia', err);
             Logger.error(`Error occured while uploading to Algolia for ${job.objectID}`);
-          }
-          else if (content) {
+          } else if (content) {
             console.log('Uploaded to Algolia', content);
             Logger.info(`Uploaded to Algolia ${job.objectID}`);
           }
         });
       }
     }
-
     return response;
   },
   LoggedIn: (req, next) => {
