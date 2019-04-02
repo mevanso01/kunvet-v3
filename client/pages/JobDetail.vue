@@ -275,6 +275,10 @@
   }
 
   @media (max-width: 600px) {
+    .sub-container .overview-container div {
+      display: block;
+      float: unset;
+    }
     .apply-text {
       font-size: 32px;
       margin-bottom: 16px;
@@ -339,17 +343,8 @@
     .sub-container {
       padding: 0;
     }
-
     .sub-container h2 {
       font-size: 22px;
-    }
-
-    .mobile-show li {
-      list-style: none;
-      color: #292929;
-    }
-    .mobile-show ul {
-      padding-left: 0;
     }
     .header-splash {
       min-height: 206px;
@@ -467,17 +462,18 @@
         Posted by {{ findJob.posted_by }}
       </p>
 
+
     </div>
     <div class="job-detail-container">
       <div class="sub-container">
-        <!--mobile job descriptions-->
-        <div class="mobile-hide">
-          <div class="carditem mobile-hide ">
+        <div class="overview-container">
+          <p class="small-p">Basic Overview</p>
+          <div class="carditem blue-row">
             <img class="job-info-icon" :src="svgs.Pushpin"/>
             Posted
             <timeago :since="findJob.date"></timeago>
           </div>
-          <div class="carditem" style="color: #A7A7A7;">
+          <div class="carditem blue-row">
             <p style="margin-bottom: 0">
               <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
               <span style="padding-top: 2px;">
@@ -540,48 +536,6 @@
               v-if="index + 1 < findJob.shift.length">,</span></span>
           </div>
           <div v-else style="width: 100%; height: 16px;"></div>
-        </div>
-
-        <div class="mobile-show" style="font-size: 1.1em">
-          <ul>
-            <li>Posted
-              <timeago :since="findJob.date"></timeago>
-            </li>
-            <li>{{ findJob.address }}
-              <template v-if="findJob.address2"> {{ findJob.address2 }}</template>
-            </li>
-            <li v-if="findJob.university">{{ findJob.university }}</li>
-          </ul>
-          <div>
-            <p v-show="findJob.type2 && computedType2 || findJob.studentfriendly || jobType" class="small-p"
-               style="margin-bottom: 2px; margin-top: 5px;">Basic Overview:</p>
-            <ul>
-              <li v-if="findJob.type2 && computedType2"> {{ computedType2 }}</li>
-              <li v-if="findJob.studentfriendly">Student Friendly</li>
-              <li><span v-for="(type, index) in jobType"> {{ type }}<span
-                v-if="index + 1 < jobType.length">,</span></span></li>
-            </ul>
-          </div>
-          <div
-            v-show=" (findJob.education && findJob.education !== 'None') || findJob.preferred_major || findJob.language">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
-            <ul>
-              <li v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</li>
-              <li v-if="findJob.preferred_major"> Majors preferred: {{ findJob.preferred_major }}</li>
-              <li v-if="findJob.language"> Additional language: {{ findJob.language }}</li>
-              <li v-if="findJob.age"> Age: {{ findJob.age }}</li>
-            </ul>
-          </div>
-
-          <div v-if="findJob.shift && findJob.shift.length > 0" style="margin-bottom: 16px;">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
-            <ul>
-              <li v-for="(shift, index) in findJob.shift"> {{ shift }}<span
-                v-if="index + 1 < findJob.shift.length">,</span></li>
-            </ul>
-          </div>
-          <div v-else style="width: 100%; height: 16px;"></div>
-
         </div>
 
       </div>
