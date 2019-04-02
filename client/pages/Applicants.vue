@@ -212,7 +212,8 @@
                 <div class="btn-row">
                   <!-- <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
                   <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn> -->
-                  <a @click="openSideResume(item);">Show Resume</a>
+                  <a v-if="item.resume != null" @click="openSideResume(item);">Show Resume</a>
+                  <a v-else style="text-decoration: none">No Resume</a>
                   <a style="color: #616161;" @click="openInNewTab(item)">View More Information</a>
                   <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
                   <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->

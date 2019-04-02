@@ -16,6 +16,7 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
+    'linebreak-style': 0,
     'no-console': 0,
     'no-multi-spaces': 0,
     'quote-props': 0,
