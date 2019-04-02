@@ -710,7 +710,12 @@
             </v-card>
 
             <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'success'">
-                <v-card-title class="kunvet-red apply-text">Thank you! Your application has been submitted.</v-card-title>
+                <v-card-title class="kunvet-red apply-text">
+                  Thank you! Your application has been submitted.
+                </v-card-title>
+                <div style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
+                  <k-btn to="/search">Back to Search</k-btn>
+                </div>
                 <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
                         @click="otherdialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>

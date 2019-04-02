@@ -101,7 +101,7 @@
             <v-layout row wrap class="list-post">
               <v-flex xs8 sm7 class="pa-0">
                 <p class="list-title">Applied</p>
-                <timeago class="post-time":since="job.date" />
+                <timeago class="post-time" :since="application.date" />
               </v-flex>
               <v-flex xs4 sm5 class="pa-0">
                 <p class="list-title">status</p>
