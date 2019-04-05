@@ -3,7 +3,8 @@ import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
 import Logger from 'winston';
 import Files from '@/utils/Files';
-import EmailFunctions from '@/utils/EmailFunctions';
+import Mailer from '@/utils/Mailer';
+// import EmailFunctions from '@/utils/EmailFunctions';
 import Models from '../mongodb/Models';
 import Restrictions from './Restrictions';
 // GraphQL types
@@ -92,13 +93,25 @@ async function sendNewApplicationNotification(req, next) {
     }
   }
 
-  const templateObject = {
-    email: employer.email,
-    status: 'application-created',
-    locals: locals,
-  };
-
-  EmailFunctions.sendApplicantInfo(templateObject);
+  // const templateObject = {
+  //   email: employer.email,
+  //   status: 'application-created',
+  //   locals: locals,
+  // };
+  // EmailFunctions.sendApplicantInfo(templateObject);
+  try {
+    const mailer = new Mailer();
+    await mailer.sendTemplate(
+      employer.email,
+      'application-created',
+      locals,
+    );
+    Logger.log(`Sent application created email to ${employer.email}`);
+  } catch (e) {
+    Logger.log(`Failed to send application created email to ${employer.email}`);
+    Logger.error(e);
+    // throw Error('Employer could not be emailed');
+  }
   try {
     employer.notifications.push({
       text: `New applicant: ${user.firstname} ${user.lastname}`, // Important: change code in applicants.vue before removing
