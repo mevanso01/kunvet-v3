@@ -275,6 +275,10 @@
   }
 
   @media (max-width: 600px) {
+    .sub-container .overview-container div {
+      display: block;
+      float: unset;
+    }
     .apply-text {
       font-size: 32px;
       margin-bottom: 16px;
@@ -339,17 +343,8 @@
     .sub-container {
       padding: 0;
     }
-
     .sub-container h2 {
       font-size: 22px;
-    }
-
-    .mobile-show li {
-      list-style: none;
-      color: #292929;
-    }
-    .mobile-show ul {
-      padding-left: 0;
     }
     .header-splash {
       min-height: 206px;
@@ -467,22 +462,26 @@
         Posted by {{ findJob.posted_by }}
       </p>
 
+
     </div>
     <div class="job-detail-container">
       <div class="sub-container">
-        <!--mobile job descriptions-->
-        <div class="mobile-hide">
-          <div class="carditem mobile-hide " style="color: #9e9e9e;">Posted
+        <div class="overview-container">
+          <p class="small-p">Basic Overview</p>
+          <div class="carditem blue-row">
+            <img class="job-info-icon" :src="svgs.Pushpin"/>
+            Posted
             <timeago :since="findJob.date"></timeago>
           </div>
-          <div class="carditem" style="color: #A7A7A7;">
+          <div class="carditem blue-row">
             <p style="margin-bottom: 0">
               <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
               <span style="padding-top: 2px;">
                 {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
             </p>
-            <p v-if="findJob.university" style="margin-left: 24px; margin-bottom: 0;">
+            <p v-if="findJob.university" style="margin-bottom: 0;">
+              <img class="job-info-icon" :src="svgs.Book"/>
               {{ findJob.university }}
             </p>
           </div>
@@ -537,48 +536,6 @@
               v-if="index + 1 < findJob.shift.length">,</span></span>
           </div>
           <div v-else style="width: 100%; height: 16px;"></div>
-        </div>
-
-        <div class="mobile-show" style="font-size: 1.1em">
-          <ul>
-            <li>Posted
-              <timeago :since="findJob.date"></timeago>
-            </li>
-            <li>{{ findJob.address }}
-              <template v-if="findJob.address2"> {{ findJob.address2 }}</template>
-            </li>
-            <li v-if="findJob.university">{{ findJob.university }}</li>
-          </ul>
-          <div>
-            <p v-show="findJob.type2 && computedType2 || findJob.studentfriendly || jobType" class="small-p"
-               style="margin-bottom: 2px; margin-top: 5px;">Basic Overview:</p>
-            <ul>
-              <li v-if="findJob.type2 && computedType2"> {{ computedType2 }}</li>
-              <li v-if="findJob.studentfriendly">Student Friendly</li>
-              <li><span v-for="(type, index) in jobType"> {{ type }}<span
-                v-if="index + 1 < jobType.length">,</span></span></li>
-            </ul>
-          </div>
-          <div
-            v-show=" (findJob.education && findJob.education !== 'None') || findJob.preferred_major || findJob.language">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
-            <ul>
-              <li v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</li>
-              <li v-if="findJob.preferred_major"> Majors preferred: {{ findJob.preferred_major }}</li>
-              <li v-if="findJob.language"> Additional language: {{ findJob.language }}</li>
-              <li v-if="findJob.age"> Age: {{ findJob.age }}</li>
-            </ul>
-          </div>
-
-          <div v-if="findJob.shift && findJob.shift.length > 0" style="margin-bottom: 16px;">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
-            <ul>
-              <li v-for="(shift, index) in findJob.shift"> {{ shift }}<span
-                v-if="index + 1 < findJob.shift.length">,</span></li>
-            </ul>
-          </div>
-          <div v-else style="width: 100%; height: 16px;"></div>
-
         </div>
 
       </div>
@@ -707,7 +664,25 @@
             </v-card>
 
             <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'success'">
-                <v-card-title class="kunvet-red apply-text">Thank you! Your application has been submitted.</v-card-title>
+                <v-card-title class="kunvet-red apply-text">
+                  Thank you! Your application has been submitted.
+                </v-card-title>
+                <div style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
+                  <k-btn to="/search">Back to Search</k-btn>
+                </div>
+                <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
+                        @click="otherdialog=false">
+                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+                </button>
+            </v-card>
+
+            <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'error'">
+                <v-card-title>
+                  <h2>Oops, an error occured. Please try again later.</h2>
+                </v-card-title>
+                <div style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
+                  <k-btn to="/search">Back to Search</k-btn>
+                </div>
                 <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
                         @click="otherdialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
@@ -722,6 +697,8 @@
 </template>
 <script>
   import gql from 'graphql-tag';
+  import BookSvg from '@/assets/job_detail/open-magazine.svg';
+  import PushpinSvg from '@/assets/job_detail/pushpin.svg';
   import InternshipSvg from '@/assets/job_detail/internship.svg';
   import StudentFriendlySvg from '@/assets/job_detail/student_friendly.svg';
   import SalarySvg from '@/assets/job_detail/salary.svg';
@@ -776,6 +753,8 @@
         profilePic: null,
         salary: null,
         svgs: {
+          Book: BookSvg,
+          Pushpin: PushpinSvg,
           Internship: InternshipSvg,
           Clock: ClockSvg,
           sfSvg: StudentFriendlySvg,
@@ -1186,7 +1165,9 @@
               this.applied = true;
             } else {
               this.$debug('no data returned when creating application');
-              this.applydialog = false;
+              this.loginState = 'success';
+              this.applied = true;
+              // this.applydialog = false;
             }
           }).catch((error) => {
             this.loading = false;

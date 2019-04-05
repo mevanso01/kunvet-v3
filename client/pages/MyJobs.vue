@@ -84,14 +84,14 @@
                 <v-layout>
                   <v-flex xs7 sm7  style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: grey">-</h2>
+                    <h2 style="color: grey; padding-bottom: 10px;">-</h2>
                     <k-btn color="#448ef6" small disabled>
                       View Applicants
                     </k-btn>
                   </v-flex>
                   <v-flex xs5git  sm5  style="padding: 0px">
                     <p>Status</p>
-                    <h2 style="color: orange">Unposted</h2>
+                    <h2 style="color: orange; padding-bottom: 10px;">Unposted</h2>
                     <router-link :to="`/createjob/${job._id}`">
                       <k-btn color="orange" small>
                         Post It
@@ -132,17 +132,20 @@
                 <v-layout>
                   <v-flex xs7 sm7  style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: #448ef6">{{getApplicantsFromJobs(job._id)}}</h2>
-                    <router-link :to="`/applicants/`">
-                      <k-btn color="#448ef6" small>
+                    <h2 style="color: #448ef6; padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
+                    <router-link :to="`/applicants`">
+                      <k-btn v-if="getApplicantsFromJobs(job._id) > 0" color="#448ef6" small>
                         View Applicants
                       </k-btn>
-                    </router-link>
+                      </router-link>
+                      <k-btn v-if="getApplicantsFromJobs(job._id) === 0" disabled small>
+                        View Applicants
+                      </k-btn>
                   </v-flex>
 
                   <v-flex xs5 sm5  style="padding: 0px">
                     <p>Status</p>
-                    <h2 style="color: #6effbf">Active</h2>
+                    <h2 style="color: #6effbf; padding-bottom: 10px;">Active</h2>
                     <k-btn disabled small>
                       Re-post Job
                     </k-btn>
@@ -182,17 +185,17 @@
                 <v-layout>
                   <v-flex xs7 sm7  style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: #448ef6">{{getApplicantsFromJobs(job._id)}}</h2>
-                    <router-link :to="`/applicants/`">
-                      <k-btn color="#448ef6" small>
+                    <h2 style="color: #448ef6; padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
+                    <router-link :to="`/applicants`">
+                      <k-btn v-if="getApplicantsFromJobs(job._id) > 0" color="#448ef6" small>
                         View Applicants
                       </k-btn>
                     </router-link>
                   </v-flex>
                   <v-flex xs5 sm5  style="padding: 0px">
                     <p>Status</p>
-                    <h2 style="color: grey">Expired</h2>
-                    <k-btn disabled small color="grey" @click="repostJob(job._id)">
+                    <h2 style="color: grey; padding-bottom: 10px;">Expired</h2>
+                    <k-btn small color="grey" @click="repostJob(job._id)">
                       Re-post Job
                     </k-btn>
                   </v-flex>
@@ -298,6 +301,7 @@
         user: null,
         jobs: [],
         applicants: [],
+        applicantLength: 0,
         dialogs: {
           currentJob: null,
           showDelete: false,
