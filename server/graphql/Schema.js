@@ -106,9 +106,9 @@ async function sendNewApplicationNotification(req, next) {
       'application-created',
       locals,
     );
-    Logger.log(`Sent application created email to ${employer.email}`);
+    Logger.info(`Sent application created email to ${employer.email}`);
   } catch (e) {
-    Logger.log(`Failed to send application created email to ${employer.email}`);
+    Logger.info(`Failed to send application created email to ${employer.email}`);
     Logger.error(e);
     // throw Error('Employer could not be emailed');
   }

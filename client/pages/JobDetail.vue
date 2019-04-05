@@ -676,6 +676,19 @@
                 </button>
             </v-card>
 
+            <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'error'">
+                <v-card-title>
+                  <h2>Oops, an error occured. Please try again later.</h2>
+                </v-card-title>
+                <div style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
+                  <k-btn to="/search">Back to Search</k-btn>
+                </div>
+                <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
+                        @click="otherdialog=false">
+                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
+                </button>
+            </v-card>
+
         </v-dialog>
       </div>
     </div>
@@ -1152,7 +1165,9 @@
               this.applied = true;
             } else {
               this.$debug('no data returned when creating application');
-              this.applydialog = false;
+              this.loginState = 'success';
+              this.applied = true;
+              // this.applydialog = false;
             }
           }).catch((error) => {
             this.loading = false;
