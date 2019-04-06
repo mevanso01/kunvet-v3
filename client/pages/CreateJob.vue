@@ -204,6 +204,7 @@
                   <v-radio label="Full time" value="fulltime" class="pt-0"></v-radio>
                   <v-radio label="Part time" value="parttime" class="pt-0"></v-radio>
                   <v-radio label="Both" value="both" class="pt-0"></v-radio>
+                  <v-radio label="Per Quarter" value="perquarter" class="pt-0"></v-radio>
                 </v-radio-group>
 
                 <p>Is it also an internship or contract position? (Optional)</p>
