@@ -110,7 +110,7 @@ const JobSchema = Mongoose.Schema({
   },
   type: [{
     type: String,
-    enum: ['fulltime', 'parttime', 'internship', 'contract', 'other'],
+    enum: ['fulltime', 'parttime', 'perquarter', 'internship', 'contract', 'other'],
   }],
   type2: [{
     type: String,
