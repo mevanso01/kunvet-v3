@@ -7,7 +7,6 @@ import Mailer from '@/utils/Mailer';
 
 // Scheduler
 import Scheduler from '@/Scheduler';
-import Mongoose from 'mongoose';
 import Models from '@/mongodb/Models';
 
 const bodyParser = require('koa-bodyparser');
