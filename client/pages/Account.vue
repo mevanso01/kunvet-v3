@@ -381,6 +381,7 @@
                 title="Upload new resume or cover letter"
                 @uploaded="resumeUploaded"
                 @cancel="closeFileModal"
+                style="padding-right: 20px; padding-left: 20px;"
               />
             </v-dialog>
 
