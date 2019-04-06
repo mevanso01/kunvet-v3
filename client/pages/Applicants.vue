@@ -212,8 +212,9 @@
                 <div class="btn-row">
                   <!-- <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
                   <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn> -->
-                  <a v-if="item.resume != null" @click="openSideResume(item);">Show Resume</a>
+                  <a v-if="item.resumes.length >0" @click="openSideResume(item);">Show Resume</a>
                   <a v-else style="text-decoration: none">No Resume</a>
+                  {{item.resume}}
                   <a style="color: #616161;" @click="openInNewTab(item)">View More Information</a>
                   <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
                   <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->
@@ -249,14 +250,15 @@
        v-model="showSideResume"
        fixed right width="900"
        temporary class="sp-drawer">
-       <div class="sp-heading">
+       <div class="sp-heading" style="padding-right: 0px;">
          <v-layout class="pb-3">
-           <v-flex xs12 sm6 class="pa-0">
+           <v-flex xs12 sm6 md6 class="pa-0">
              <h2 v-if="currentApplicant" class="mb-0" style="text-align: left; line-height: 36px;">
                {{ currentApplicant.name }}
              </h2>
            </v-flex>
-           <v-flex xs12 sm6 class="pa-0 sp-buttons" style="text-align: right;">
+           <v-flex xs12 sm6 md6 class="pa-0 sp-buttons" style="text-align: right;">
+
              <v-btn flat class="kunvet-v-btn light" style="margin-right: 12px;" @click="showSideResume = false;">Hide Resume</v-btn>
              <v-btn flat :disabled="!currentResumeSrc" class="ma-0 kunvet-v-btn light" @click="downloadResume(currentResumeSrc)">Download Resume</v-btn>
              <!-- <a :href="currentResumeSrc" download>Download Resume</a> -->
@@ -269,7 +271,7 @@
          </h2>
        </div>
        <div class="sp-content">
-         <div class="pdfframe-container">
+         <div class="pdfframe-container" style="overflow: auto;">
            <PdfFrame
              v-if="currentApplicant && currentApplicant.resumes.length > 0 && currentResumeSrc"
              :href="currentResumeSrc"
