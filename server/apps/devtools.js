@@ -7,14 +7,57 @@ import Mailer from '@/utils/Mailer';
 
 // Scheduler
 import Scheduler from '@/Scheduler';
+import Mongoose from 'mongoose';
+import Models from '@/mongodb/Models';
 
 const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
 const router = new KoaRouter();
+const scheduler = require('node-schedule');
 
 app.use(bodyParser());
 
+// select all expired: true jobs
+router.get('/getAllExpired', async ctx => {
+  Models.Job.find({
+    expired: true,
+  }, (err, docs) => {
+    console.log(docs);
+  });
+  ctx.body = 'showing expired';
+});
+
+// schedule the filtering and updating of expired jobs
+router.get('/scheduleExpiration', async (ctx) => {
+  const interval = '10 * * * * *'; // every 10 seconds (useful for testing)
+  // const interval = '* 1 * * *'; // once a day (hour 1)
+  const expireJobs = () => { // filter all expired jobs and update attribute
+    Models.Job
+      .find({}, (err, docs) => {
+        const toExpire = docs // all jobs whose expiration date have passed
+          .filter(job => {
+            const expiration = job.expiry_date;
+            const today = new Date();
+            return today.getTime() > expiration.getTime();
+          })
+          .map(job => job._id); // extract id from job object
+        console.log(toExpire);
+        for (let i = 0; i < toExpire.length; ++i) {
+          Models.Job.findOneAndUpdate(
+            { '_id': toExpire[i]._id },
+            { $set: { 'expired': true } },
+            { new: true },
+            (err1, docs1) => {
+              console.log(docs1);
+            },
+          );
+        }
+      });
+  };
+  scheduler.scheduleJob(interval, expireJobs);
+  ctx.body = 'job scheduled';
+});
 // Help info
 router.get('/', (ctx) => {
   ctx.body = `
