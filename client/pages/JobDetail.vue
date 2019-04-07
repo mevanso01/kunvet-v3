@@ -468,7 +468,7 @@
       <div class="sub-container">
         <div class="overview-container">
           <p class="small-p">Basic Overview</p>
-          <div class="carditem blue-row">
+          <div class="carditem" style="font-size: 15px; color: #666;">
             <img class="job-info-icon" :src="svgs.Pushpin"/>
             Posted
             <timeago :since="findJob.date"></timeago>
