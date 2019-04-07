@@ -14,8 +14,8 @@ const oneDay = 24 * 60 * 60 * 1000;
 
 Scheduler.schedule(() => { // filter all expired jobs and update attribute
   console.log('Scheduling expired job removal');
-  console.log('Expire:', Config.get('daysToExpire'));
-  console.log('Delete from algolia:', Config.get('daysToDeleteFromAlgolia'));
+  console.log('Expire time is', Config.get('daysToExpire'));
+  console.log('Delete from algolia time is', Config.get('daysToDeleteFromAlgolia'));
   Models.Job.find({}, (err, jobsFound) => {
     const today = new Date();
     const expiredJobIds = [];
