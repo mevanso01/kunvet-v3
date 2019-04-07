@@ -50,7 +50,7 @@
             required
           ></k-text-field>
           <p id="ask-sign-up" style="color: #616161; margin-bottom: 4px; margin-top: 38px">
-            <a @click="$emit('toSignup')" class="link">Don't have an account? Sign Up</a>
+            <a @click="$emit('toSignup')" class="link">Don't have an account? <span style="font-weight:bold;">Sign Up</span></a>
           </p>
           <p id="forgot-password" style="margin-bottom: 38px">
             <a @click="forgetpwd=1" class="link">Forgot your password?</a>

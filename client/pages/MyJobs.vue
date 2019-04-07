@@ -210,7 +210,7 @@
       <div v-else>
         <div class="main-cont-large" style="text-align: center;">
           <p>You have not posted any jobs yet,
-          <router-link :to="`/createjob/`" style="font-weight: bold;">
+          <router-link :to="`/createjob`" style="font-weight: bold;">
             click here
           </router-link> to post one.</p>
         </div>

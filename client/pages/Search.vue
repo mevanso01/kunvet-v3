@@ -803,9 +803,7 @@ export default {
       this.$store.commit({
         type: 'keepSearch',
         sCities: this.selectedCity,
-        // sTypes: this.selectedTypes,
-        // sPositions: this.selectedPositions,
-        // sShifts: this.selectedShifts,
+        query: this.query,
       });
     },
     async saveJob(id) {
@@ -932,9 +930,10 @@ export default {
     },
     async algoliaSearch() {
       const coordinates = this.getCityCoordinates();
+      const query = this.query || '';
       const requests = [{
         params: {
-          query: this.query,
+          query: query,
           page: this.page,
           aroundLatLng: `${coordinates.latitude}, ${coordinates.longitude}`,
         },
@@ -986,12 +985,18 @@ export default {
     search() {
       this.page = 0;
       this.loadingJobs = true;
-      this.$router.push({
-        path: '/search',
-        query: {
-          q: this.query,
-        },
-      });
+      if (this.query) {
+        this.$router.push({
+          path: '/search',
+          query: {
+            q: this.query,
+          },
+        });
+      } else {
+        this.$router.push({
+          path: '/search',
+        });
+      }
       this.rawSearch();
     },
     rawSearch() {
@@ -1032,6 +1037,14 @@ export default {
       }
     });
   },
+  watch: {
+    '$route.query.q'() {
+      if (this.$route.query.q && this.$route.query.q !== this.query) {
+        this.query = this.$route.query.q;
+        this.rawSearch();
+      }
+    },
+  },
   activated() {
     this.setSelectedLatlongs();
     const hasJobsDisplayed = this.displayedJobs &&
@@ -1042,9 +1055,20 @@ export default {
     const oldQuery = this.query;
     if (this.$route.query.q) {
       this.query = this.$route.query.q;
-    } else {
-      this.query = '';
+    } else if (this.query && this.$route.query.q !== this.query) {
+      this.$router.push({
+        path: '/search',
+        query: {
+          q: this.query,
+        },
+      });
     }
+    // else if (this.$store.state && this.$store.state.prevSearchQuery) {
+    //   this.query = this.$store.state.prevSearchQuery;
+    //   this.$store.commit('setPrevQuery', '');
+    // } else {
+    //   this.query = '';
+    // }
     if (!hasJobsDisplayed || oldQuery !== this.query) {
       this.rawSearch();
     }

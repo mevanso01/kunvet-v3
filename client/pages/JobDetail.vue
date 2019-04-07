@@ -1,3 +1,4 @@
+applyDialog
 <style lang="scss" scoped>
   .file-icon {
     width: 85px;
@@ -384,6 +385,7 @@
   .header-splash h1 {
     padding-top: 160px;
   }
+
   .header-splash p {
     padding-bottom: 20px;
   }
@@ -441,7 +443,8 @@
   }
 </style>
 <template>
-  <v-container fluid style="padding: 0" id="job-detail-container" class=" page-height">
+  <v-container fluid style="padding: 0" id="job-detail-container"
+               class=" page-height">
     <div class="header-splash mobile-hide">
       <div class="header-text-container">
         <h1 class="header-text" style="font-size: 2.7em;">
@@ -468,14 +471,15 @@
       <div class="sub-container">
         <div class="overview-container">
           <p class="small-p">Basic Overview</p>
-          <div class="carditem blue-row">
+          <div class="carditem" style="font-size: 15px; color: #666;">
             <img class="job-info-icon" :src="svgs.Pushpin"/>
             Posted
             <timeago :since="findJob.date"></timeago>
           </div>
           <div class="carditem blue-row">
             <p style="margin-bottom: 0">
-              <img class="job-info-icon" style="transform: translateY(2px);" :src="svgs.building"></img>
+              <img class="job-info-icon" style="transform: translateY(2px);"
+                   :src="svgs.building"></img>
               <span style="padding-top: 2px;">
                 {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
@@ -487,11 +491,13 @@
           </div>
 
           <div>
-            <div v-if="findJob.type2 && computedType2" class="blue-row float-left pr-10">
+            <div v-if="findJob.type2 && computedType2"
+                 class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.Internship"/>
               <span> {{ computedType2 }}</span>
             </div>
-            <div v-if="findJob.studentfriendly" class="blue-row float-left pr-10">
+            <div v-if="findJob.studentfriendly"
+                 class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.sfSvg"/>
               <span>student friendly</span>
             </div>
@@ -509,8 +515,10 @@
           <div style="min-height: 42px" v-show="
             (findJob.education && findJob.education !== 'None')
             || findJob.preferred_major || findJob.language">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Preferences:</p>
-            <div v-show="findJob.education && findJob.education !== 'None'" class="blue-row float-sm-up">
+            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">
+              Preferences:</p>
+            <div v-show="findJob.education && findJob.education !== 'None'"
+                 class="blue-row float-sm-up">
               <img class="job-info-icon" :src="svgs.degree"/>
               <span v-if="findJob.education">Degree: {{ findJob.education.replace("_", " ") }}</span>
             </div>
@@ -530,7 +538,8 @@
 
           <div class="blue-row" style="clear: both; margin-bottom: 16px;"
                v-if="findJob.shift && findJob.shift.length > 0">
-            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">Working hours (shifts):</p>
+            <p class="small-p" style="margin-bottom: 2px; margin-top: 5px;">
+              Working hours (shifts):</p>
             <img class="job-info-icon" :src="svgs.Clock"/>
             <span v-for="(shift, index) in findJob.shift"> {{ shift }}<span
               v-if="index + 1 < findJob.shift.length">,</span></span>
@@ -540,7 +549,8 @@
 
       </div>
       <div class="v-divider" style="color: #9e9e9e;"></div>
-      <div class="sub-container job-desc-subcontainer" style="padding-top: 24px; word-wrap: break-spaces;">
+      <div class="sub-container job-desc-subcontainer"
+           style="padding-top: 24px; word-wrap: break-spaces;">
         <h2 style="margin-bottom: 8px;">Job Overview</h2>
         <div class="long-text-cont" v-html="findJob.description"></div>
 
@@ -550,149 +560,191 @@
         <h2 style="margin-bottom: 8px;">Responsibilities</h2>
         <div class="long-text-cont" v-html="findJob.responsibilities"></div>
 
-        <v-container v-if="findJob.images && findJob.images.length > 0" fluid grid-list-sm
+        <v-container v-if="findJob.images && findJob.images.length > 0" fluid
+                     grid-list-sm
                      style="margin: 20px 0;">
           <v-layout row wrap>
-            <v-flex xs4 sm3 md2 class="image-container" v-for="image in findJob.images">
-              <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image"
+            <v-flex xs4 sm3 md2 class="image-container"
+                    v-for="image in findJob.images">
+              <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`"
+                   alt="loading image"
                    width="100%">
             </v-flex>
           </v-layout>
         </v-container>
         <div class="bottom-button-container">
-          <k-btn style="padding: 0 32px;" @click="openApplyDialog" :disabled="applied">{{ applied ? 'Applied'
+          <k-btn style="padding: 0 32px;" @click="openApplyDialog"
+                 :disabled="applied">{{ applied ? 'Applied'
             : 'Apply' }}
           </k-btn>
-          <k-btn icon outline v-if="isSaved(findJob._id)" @click="saveJob(findJob._id)" color="orange"
-                 class="ml-2">
-            <img src="../assets/job_detail/bookmark_full.svg" alt="">
-          </k-btn>
-          <k-btn v-else icon outline @click="saveJob(findJob._id)" color="#b3b3b3" class="ml-2">
-            <img src="../assets/icons/Asset(36).svg" alt="">
-          </k-btn>
+
+          <v-tooltip bottom v-if="this.$store.state.acct === 0">
+            <template slot="activator">
+              <k-btn icon outline
+                     color="#b3b3b3" class="ml-2">
+                <img src="../assets/icons/Asset(36).svg" alt="">
+              </k-btn>
+            </template>
+            <span>Please log in</span>
+          </v-tooltip>
+          <div v-else>
+            <k-btn icon outline v-if="isSaved(findJob._id)"
+                   @click="saveJob(findJob._id)" color="orange"
+                   class="ml-2">
+              <img src="../assets/job_detail/bookmark_full.svg" alt="">
+            </k-btn>
+            <k-btn v-else icon outline
+                   @click="saveJob(findJob._id)"
+                   color="#b3b3b3" class="ml-2">
+              <img src="../assets/icons/Asset(36).svg" alt="">
+            </k-btn>
+          </div>
         </div>
         <!--dialog for apply job flow-->
-        <v-dialog class="other-dialog" v-model="otherdialog"
+        <v-dialog class="other-dialog" v-model="applyDialog"
                   :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
-            <v-card v-if="loginState === 'start'" flat class="dialog-card"
-                    style="height: 500px; display: flex; flex-direction: column;">
-                <div style="height: 40%">
-                    <p class="kunvet-red apply-text">Welcome to Kunvet!</p>
+          <v-card v-if="loginState === 'start'" flat class="dialog-card"
+                  style="height: 500px; display: flex; flex-direction: column;">
+            <div style="height: 40%">
+              <p class="kunvet-red apply-text">Welcome to Kunvet!</p>
+            </div>
+
+            <div style="height: 60%; text-align: center">
+              <button @click="handleSignup" class="kunvet-v-btn dialog-button"
+                      style="width: 80%; position: relative;top: 42%">Sign Up
+              </button>
+              <button @click="handleLogin" class="loginRedButton dialog-button"
+                      style=" width: 80%; position: relative;top: 46%">Log In
+              </button>
+
+            </div>
+            <button class="mobile-show" style="position: relative; bottom: 0;"
+                    @click="applyDialog=false">
+              <i class="fa fa-times-circle"
+                 style="font-size: 48px; color: lightgrey;"></i>
+            </button>
+          </v-card>
+
+          <v-card flat class="dialog-card" v-else-if="loginState === 'login'"
+                  color="white">
+            <div class="login-card">
+              <LoginComponent @toSignup="handleSignup"
+                              @loggedIn="handleResume"></LoginComponent>
+              <div style="width: 50px; background-color: blue"></div>
+            </div>
+            <button class="mobile-show"
+                    style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)"
+                    @click="applyDialog=false">
+              <i class="fa fa-times-circle"
+                 style="font-size: 48px; color: lightgrey;"></i>
+            </button>
+          </v-card>
+
+          <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
+            <SignupComponent @account="getColor" @success="handleResume"
+                             style="padding: 30px"></SignupComponent>
+            <!--<k-btn @click="loginState='login'" :color="accountColor"-->
+            <!--style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">-->
+            <!--Back to Login-->
+            <!--</k-btn>-->
+            <div style="text-align: center; padding-bottom: 30px;">
+              Already have an account?
+              <a @click="loginState='login'"
+                 style="text-decoration: underline;">Log in</a>
+            </div>
+            <button class="mobile-show"
+                    style="position: relative; bottom: -50px; left: 50%; transform: translateX(-50%)"
+                    @click="applyDialog=false">
+              <i class="fa fa-times-circle"
+                 style="font-size: 48px; color: lightgrey;"></i>
+            </button>
+          </v-card>
+
+          <v-card flat class="dialog-card" v-else-if="loginState === 'verify'">
+            <CodeVerification ref="cver" @verified="handleVerified"
+                              style="margin-top: 32px; margin-bottom: 32px;"></CodeVerification>
+            <button class="mobile-show"
+                    style="position: relative; left: 50%; transform: translateX(-50%)"
+                    @click="applyDialog=false">
+              <i class="fa fa-times-circle"
+                 style="font-size: 48px; color: lightgrey;"></i>
+            </button>
+          </v-card>
+
+          <v-card flat class="dialog-card" v-else-if="loginState==='resume'">
+            <div class="existing-container" enctype="multipart/form-data"
+                 novalidate>
+              <div style="padding-top: 20px" v-if="this.resumes.length > 0">
+                <h2>Select Existing Files or Upload More</h2>
+                <p v-if="resumeExists">{{selectedResumes.length}}
+                  {{selectedResumes.length | plural}}
+                  selected</p>
+                <div v-for="(file, index) in this.resumes"
+                     :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}"
+                     class="existing-file">
+                  <img class="smaller-file-icon"
+                       src="../assets/job_detail/pdf-icon.svg" alt="">
+                  <p>
+                    <span v-if="file.name.length < 30">{{file.name}}</span>
+                    <span v-else>{{file.name | truncate}}</span>
+                  </p>
+                  <v-checkbox color="#ef5350" class="uploader-checkbox"
+                              v-model="file.selected"></v-checkbox>
                 </div>
+              </div>
+              <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded"
+                              style="width: 100%;"></ResumeUploader>
+              <k-btn v-if="resumeExists" @click="createApplication"
+                     :disabled="!selectedResumes.length"
+                     style="margin: 20px auto;">Confirm Files
+              </k-btn>
+              <button class="mobile-show"
+                      style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
+                      @click="applyDialog=false">
+                <i class="fa fa-times-circle"
+                   style="font-size: 48px; color: lightgrey;"></i>
+              </button>
+            </div>
+          </v-card>
 
-                <div style="height: 60%; text-align: center">
-                    <button @click="handleSignup" class="kunvet-v-btn dialog-button"
-                            style="width: 80%; position: relative;top: 42%">Sign Up
-                    </button>
-                    <button @click="handleLogin" class="loginRedButton dialog-button"
-                            style=" width: 80%; position: relative;top: 46%">Log In
-                    </button>
+          <v-card flat style="height: 500px;" class="dialog-card"
+                  v-else-if="loginState === 'success'">
+            <v-card-title class="kunvet-red apply-text">
+              Thank you! Your application has been submitted.
+            </v-card-title>
+            <div
+              style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
+              <k-btn to="/search">Back to Search</k-btn>
+            </div>
+            <button class="mobile-show"
+                    style="position: relative; left: 50%; transform: translateX(-50%)"
+                    @click="applyDialog=false">
+              <i class="fa fa-times-circle"
+                 style="font-size: 48px; color: lightgrey;"></i>
+            </button>
+          </v-card>
 
-                </div>
-                <button class="mobile-show" style="position: relative; bottom: 0;" @click="otherdialog=false">
-                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-                </button>
-            </v-card>
-
-            <v-card flat class="dialog-card" v-else-if="loginState === 'login'" color="white">
-                <div class="login-card">
-                    <LoginComponent @toSignup="handleSignup" @loggedIn="handleResume"></LoginComponent>
-                    <div style="width: 50px; background-color: blue"></div>
-                </div>
-                <button class="mobile-show"
-                        style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
-                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-                </button>
-            </v-card>
-
-            <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
-                <SignupComponent @account="getColor" @success="handleResume"
-                                 style="padding: 30px"></SignupComponent>
-                <!--<k-btn @click="loginState='login'" :color="accountColor"-->
-                       <!--style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">-->
-                    <!--Back to Login-->
-                <!--</k-btn>-->
-                <div style="text-align: center; padding-bottom: 30px;">
-                    Already have an account?
-                    <a @click="loginState='login'" style="text-decoration: underline;">Log in</a>
-                </div>
-                <button class="mobile-show"
-                        style="position: relative; bottom: -50px; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
-                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-                </button>
-            </v-card>
-
-            <v-card flat class="dialog-card" v-else-if="loginState === 'verify'">
-                <CodeVerification ref="cver" @verified="handleVerified"
-                                  style="margin-top: 32px; margin-bottom: 32px;"></CodeVerification>
-                <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
-                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-                </button>
-            </v-card>
-
-            <v-card flat class="dialog-card" v-else-if="loginState==='resume'">
-                <div class="existing-container" enctype="multipart/form-data" novalidate>
-                    <div style="padding-top: 20px" v-if="this.resumes.length > 0">
-                        <h2>Select Existing Files or Upload More</h2>
-                        <p v-if="resumeExists">{{selectedResumes.length}} {{selectedResumes.length | plural}}
-                            selected</p>
-                        <div v-for="(file, index) in this.resumes"
-                          :style="{'background-color' : (file.selected ? '#f6e3e3' : '#eee')}"
-                          class="existing-file">
-                            <img class="smaller-file-icon" src="../assets/job_detail/pdf-icon.svg" alt="">
-                            <p>
-                             <span v-if="file.name.length < 30">{{file.name}}</span>
-                             <span v-else>{{file.name | truncate}}</span>
-                            </p>
-                            <v-checkbox color="#ef5350" class="uploader-checkbox" v-model="file.selected"></v-checkbox>
-                        </div>
-                    </div>
-                    <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded"
-                                    style="width: 100%;"></ResumeUploader>
-                    <k-btn v-if="resumeExists" @click="createApplication" :disabled="!selectedResumes.length"
-                           style="margin: 20px auto;">Confirm Files
-                    </k-btn>
-                    <button class="mobile-show"
-                            style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
-                            @click="otherdialog=false">
-                        <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-                    </button>
-                </div>
-            </v-card>
-
-            <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'success'">
-                <v-card-title class="kunvet-red apply-text">
-                  Thank you! Your application has been submitted.
-                </v-card-title>
-                <div style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
-                  <k-btn to="/search">Back to Search</k-btn>
-                </div>
-                <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
-                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-                </button>
-            </v-card>
-
-            <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'error'">
-                <v-card-title>
-                  <h2>Oops, an error occured. Please try again later.</h2>
-                </v-card-title>
-                <div style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
-                  <k-btn to="/search">Back to Search</k-btn>
-                </div>
-                <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
-                    <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
-                </button>
-            </v-card>
+          <v-card flat style="height: 500px;" class="dialog-card"
+                  v-else-if="loginState === 'error'">
+            <v-card-title>
+              <h2>Oops, an error occured. Please try again later.</h2>
+            </v-card-title>
+            <div
+              style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
+              <k-btn to="/search">Back to Search</k-btn>
+            </div>
+            <button class="mobile-show"
+                    style="position: relative; left: 50%; transform: translateX(-50%)"
+                    @click="applyDialog=false">
+              <i class="fa fa-times-circle"
+                 style="font-size: 48px; color: lightgrey;"></i>
+            </button>
+          </v-card>
 
         </v-dialog>
       </div>
     </div>
-    </v-container>
+  </v-container>
 
 </template>
 <script>
@@ -748,7 +800,7 @@
         jobType: [],
         resumes: [],
         serverUrl: Config.get('serverUrl'),
-        otherdialog: false,
+        applyDialog: false,
         loginState: 'start',
         profilePic: null,
         salary: null,
@@ -770,7 +822,6 @@
           age: Asset41,
         },
         uid: null,
-        applydialog: false,
         userdata: {
           firstname: null,
           lastname: null,
@@ -850,6 +901,7 @@
         this.loginState = 'signup';
       },
       handleResume() {
+        // called aftere signup or login, and from openApplyDialog()
         this.loginState = 'resume';
         this._getUserData();
       },
@@ -927,8 +979,7 @@
         });
       },
       openApplyDialog() {
-        this.dialog = true;
-        this.otherdialog = true;
+        this.applyDialog = true;
         if (this.uid) { // user is already logged in
           this.handleResume();
         }
@@ -1059,6 +1110,7 @@
           this.$debug('my application data', data);
           if (data.data.findMyApplication) {
             this.applied = true;
+            this.applyDialog = false;
           }
         }).catch((error) => {
           this.$error(error);

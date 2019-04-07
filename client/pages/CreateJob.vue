@@ -254,7 +254,7 @@
                     <v-select class="pa-0 ma-0" style="max-width: 125px;"
                       v-model="job.pay_denomination"
                       :disabled = "salary_select != 'paid'"
-                      :items="[ 'per hour', 'per week', 'per month', 'per year', 'per task' ]"
+                      :items="[ 'per hour', 'per week', 'per month', 'per quarter', 'per year', 'per task' ]"
                       >
                     </v-select>
                   </v-flex>
@@ -1665,6 +1665,9 @@ export default {
         input.setAttribute('placeholder', '');
         this.autocomplete = new window.google.maps.places.Autocomplete(input);
         this.geocoder = new window.google.maps.Geocoder();
+        this.autocomplete.setComponentRestrictions({
+          country: ['us'],
+        });
         this.autocomplete.addListener('place_changed', () => {
           this.prevAutocompleteAddress = this.job.address;
           if (this.autocomplete === null) {

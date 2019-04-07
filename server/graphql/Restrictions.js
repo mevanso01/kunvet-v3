@@ -33,8 +33,8 @@ export default {
     if (response.recordId && response.record.active) {
       if (response.record.is_deleted) {
         // Delete from algolia
-        index.deleteObjects([response.recordId]);
-        Logger.info(`Deleting ${response.recordId} from Algolia`);
+        index.deleteObjects([response.record._id]);
+        Logger.info(`Deleting ${response.record._id} from Algolia`);
       } else {
         const job = JSON.parse(JSON.stringify(response.record));
         job.objectID = job._id;
@@ -43,6 +43,7 @@ export default {
             lat: job.latitude,
             lng: job.longitude,
           };
+          job.date = Date.parse(job.date) / 1000;
         }
         index.addObjects([job], (err, content) => {
           if (err) {

@@ -7,6 +7,7 @@
   .quill-editor .ql-editor p,
   .quill-editor .ql-editor li {
     color: #333;
+    margin-bottom: 16px;
   }
   .quill-editor .error-text {
     color: red !important;

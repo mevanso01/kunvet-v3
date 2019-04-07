@@ -16,6 +16,7 @@ const Store = new Vuex.Store({
     selectedTypes: [],
     selectedPositions: [],
     selectedShifts: [],
+    prevSearchQuery: '',
     bdata: null,
     userdata: null,
     udataLastFetched: null,
@@ -63,6 +64,9 @@ const Store = new Vuex.Store({
       state.selectedTypes = payload.sTypes;
       state.selectedPositions = payload.sPositions;
       state.selectedShifts = payload.sShifts;
+      if (payload.query && typeof payload.query === 'string') {
+        state.prevSearchQuery = payload.query;
+      }
     },
     keepUserdata(state, payload) {
       if (!state.userdata) {
