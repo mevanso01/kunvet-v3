@@ -696,7 +696,9 @@ applyDialog
                               style="width: 100%;"></ResumeUploader>
               <k-btn v-if="resumeExists" @click="createApplication"
                      :disabled="!selectedResumes.length"
-                     style="margin: 20px auto;">Confirm Files
+                     :working="loading"
+                     color="#FF6969"
+                     style="margin: 20px auto; color:white">Confirm Files
               </k-btn>
               <button class="mobile-show"
                       style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
