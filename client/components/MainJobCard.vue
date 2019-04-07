@@ -35,7 +35,7 @@
           </h3></div>
           <div class="carditem" style="color: #A7A7A7">
             <!-- <timeago :datetime="job.date" /> -->
-            <timeago :since="job.date" />
+            <timeago :since="computedJobDate" />
           </div>
           <div class="carditem">
             <div class="post-address-container">
@@ -119,6 +119,12 @@ export default {
     },
     isIndividualJob() {
       return !this.job.business_id;
+    },
+    computedJobDate() {
+      if (typeof this.job.date === 'number') {
+        return new Date(this.job.date * 1000);
+      }
+      return this.job.date;
     },
   },
   methods: {
