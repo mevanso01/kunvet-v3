@@ -906,8 +906,6 @@
                 this.jobType.push('full time');
               } else if (type === 'parttime') {
                 this.jobType.push('part time');
-              } else if (type === 'perquarter') {
-                this.jobType.push('per quarter');
               } else {
                 this.jobType.push(type);
               }
