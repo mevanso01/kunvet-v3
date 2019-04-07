@@ -45,7 +45,6 @@ export default {
     CodeVerification,
   },
   activated() {
-    console.log('activated');
     // Reset data
     Object.assign(this.$data, this.$options.data.call(this));
     // Init code verifications
@@ -53,15 +52,12 @@ export default {
       this.$refs.codever.init();
       userDataProvider.getUserData().then(data => {
         if (data.userdata.account_type === 'business') {
-          console.log('working');
           this.isBusiness = true;
         }
       });
-      console.log('aah');
     } else {
       // must be authenticated
       userDataProvider.getUserData().then(data => {
-        console.log(data);
         if (data.acct !== 0) {
           this.$refs.codever.init();
         } else {
