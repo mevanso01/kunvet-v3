@@ -1665,6 +1665,9 @@ export default {
         input.setAttribute('placeholder', '');
         this.autocomplete = new window.google.maps.places.Autocomplete(input);
         this.geocoder = new window.google.maps.Geocoder();
+        this.autocomplete.setComponentRestrictions({
+          country: ['us'],
+        });
         this.autocomplete.addListener('place_changed', () => {
           this.prevAutocompleteAddress = this.job.address;
           if (this.autocomplete === null) {
