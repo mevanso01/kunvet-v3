@@ -337,6 +337,7 @@ export default {
       }
     },
     setAcctData(acct, acctType) {
+      console.log('Setting acct data', acct, acctType);
       this.acct = acct;
       this.acctType = acctType;
       this.$store.commit({
