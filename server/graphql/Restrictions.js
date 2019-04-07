@@ -43,7 +43,7 @@ export default {
             lat: job.latitude,
             lng: job.longitude,
           };
-          job.date = job.date.getTime() / 1000;
+          job.date = Date.parse(job.date) / 1000;
         }
         index.addObjects([job], (err, content) => {
           if (err) {

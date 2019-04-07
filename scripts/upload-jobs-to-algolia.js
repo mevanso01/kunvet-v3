@@ -27,6 +27,7 @@ Mongoose.connect(mongodb).then(() => {
           lat: job.latitude,
           lng: job.longitude,
         };
+        job.date = Date.parse(job.date) / 1000;
       }
       return job;
     });
