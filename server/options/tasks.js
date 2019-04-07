@@ -7,22 +7,35 @@ Scheduler.schedule(() => {
   Logger.debug('The scheduler works!');
 });
 
+const daysToExpireFallback = 30;
+const daysToDeleteFromAlgoliaFallback = 90;
+
+const oneDay = 24 * 60 * 60 * 1000;
+
 Scheduler.schedule(() => { // filter all expired jobs and update attribute
-  console.log('hello');
-  console.log(Config.get('jobExpirationPeriod'));
-  Models.Job
-    .find({}, (err, docs) => {
-      const toExpire = docs // all jobs whose expiration date have passed
-        .filter(job => {
-          const expiration = job.expiry_date;
-          const today = new Date();
-          return today.getTime() > expiration.getTime();
-        })
-        .map(job => job._id); // extract id from job object
-      console.log(toExpire);
-      for (let i = 0; i < toExpire.length; ++i) {
+  console.log('Scheduling expired job removal');
+  console.log('Expire:', Config.get('daysToExpire'));
+  console.log('Delete from algolia:', Config.get('daysToDeleteFromAlgolia'));
+  Models.Job.find({}, (err, jobsFound) => {
+      const today = new Date();
+      const expiredJobIds = [];
+      const toDeleteJobIds = [];
+      const daysToExpire = Config.get('daysToExpire') || daysToExpireFallback;
+      const daysToDeleteFromAlgolia = Config.get('daysToDeleteFromAlgolia') || daysToDeleteFromAlgoliaFallback;
+
+      jobsFound.forEach((job) => {
+        const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
+        if (!job.expired && today.getTime() > expiredDate.getTime()) {
+          expiredJobIds.push(job._id);
+        }
+        const toBeDeletedTime = new Date(Date.parse(job.date) + (daysToDeleteFromAlgolia * oneDay));
+        if (today.getTime() > toBeDeletedTime.getTime()) {
+          toDeleteJobIds.push(job._id)
+        }
+      });
+      for (let i = 0; i < expiredJobIds.length; ++i) {
         Models.Job.findOneAndUpdate(
-          { '_id': toExpire[i]._id },
+          { '_id': expiredJobIds[i] },
           { $set: { 'expired': true } },
           { new: true },
           (err1, docs1) => {
