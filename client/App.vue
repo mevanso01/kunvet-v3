@@ -468,6 +468,7 @@ export default {
     EventBus.$on('login', acctType => {
       if (acctType === 'update' && this.acctType) { // special case
         this.setAcctData(this.acct, this.acctType);
+        return;
       }
       const acct = acctType === 'business' ? 2 : 1; // 2 for business, 1 for individual and student
       this.setAcctData(acct, acctType);

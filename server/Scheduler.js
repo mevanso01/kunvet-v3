@@ -14,29 +14,39 @@ import Config from 'config';
 import Logger from 'winston';
 import Models from '@/mongodb/Models';
 
+const daysToExpire = 30;
+const daysToDeleteFromAlgolia = 90;
+
+const oneDay = 24 * 60 * 60 * 1000;
+
 const tasks = [
   () => { // filter all expired jobs and update attribute
-    Models.Job
-      .find({}, (err, docs) => {
-        const toExpire = docs // all jobs whose expiration date have passed
-          .filter(job => {
-            const expiration = job.expiry_date;
-            const today = new Date();
-            return today.getTime() > expiration.getTime();
-          })
-          .map(job => job._id); // extract id from job object
-        console.log(toExpire);
-        for (let i = 0; i < toExpire.length; ++i) {
-          Models.Job.findOneAndUpdate(
-            { '_id': toExpire[i]._id },
-            { $set: { 'expired': true } },
-            { new: true },
-            (err1, docs1) => {
-              console.log(docs1);
-            },
-          );
+    Models.Job.find({}, (err, jobsFound) => {
+      const today = new Date();
+      const expiredJobIds = [];
+      const toDeleteJobIds = [];
+
+      jobsFound.forEach((job) => {
+        const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
+        if (!job.expired && today.getTime() > expiredDate.getTime()) {
+          expiredJobIds.push(job._id);
+        }
+        const toBeDeletedTime = new Date(Date.parse(job.date) + (daysToDeleteFromAlgolia * oneDay));
+        if (today.getTime() > toBeDeletedTime.getTime()) {
+          toDeleteJobIds.push(job._id)
         }
       });
+      for (let i = 0; i < expiredJobIds.length; ++i) {
+        Models.Job.findOneAndUpdate(
+          { '_id': expiredJobs[i] },
+          { $set: { 'expired': true } },
+          { new: true },
+          (err1, docs1) => {
+            console.log(docs1);
+          },
+        );
+      }
+    });
   },
 ];
 
