@@ -10,9 +10,17 @@
       <CodeVerification v-if="!validated" ref="codever" @verified="codeValidated" />
       <div v-if="validated" style="text-align: center;">
         <h2>Your email is verified!</h2>
-        <v-btn dark class="kunvet-red-bg" @click="goTo('/account')">
-          Go to your account
+        <div v-if="isBusiness">
+        <v-btn dark class="kunvet-red-bg" @click="goTo('/myorg')">
+          go to your account
         </v-btn>
+        </div>
+        <div v-if="!isBusiness">
+        <v-btn dark class="kunvet-red-bg" @click="goTo('/account')">
+          go to your account
+        </v-btn>
+        </div>
+
       </div>
     </div>
   </v-container>
@@ -30,20 +38,30 @@ export default {
       wasEditingJob: false,
       readyToPost: false,
       jobId: null,
+      isBusiness: false,
     };
   },
   components: {
     CodeVerification,
   },
   activated() {
+    console.log('activated');
     // Reset data
     Object.assign(this.$data, this.$options.data.call(this));
     // Init code verifications
     if (this.$store.state.userID) {
       this.$refs.codever.init();
+      userDataProvider.getUserData().then(data => {
+        if (data.userdata.account_type === 'business') {
+          console.log('working');
+          this.isBusiness = true;
+        }
+      });
+      console.log('aah');
     } else {
       // must be authenticated
       userDataProvider.getUserData().then(data => {
+        console.log(data);
         if (data.acct !== 0) {
           this.$refs.codever.init();
         } else {
