@@ -932,9 +932,10 @@ export default {
     },
     async algoliaSearch() {
       const coordinates = this.getCityCoordinates();
+      const query = this.query || '';
       const requests = [{
         params: {
-          query: this.query,
+          query: query,
           page: this.page,
           aroundLatLng: `${coordinates.latitude}, ${coordinates.longitude}`,
         },
@@ -986,12 +987,18 @@ export default {
     search() {
       this.page = 0;
       this.loadingJobs = true;
-      this.$router.push({
-        path: '/search',
-        query: {
-          q: this.query,
-        },
-      });
+      if (this.query) {
+        this.$router.push({
+          path: '/search',
+          query: {
+            q: this.query,
+          },
+        });
+      } else {
+        this.$router.push({
+          path: '/search',
+        });
+      }
       this.rawSearch();
     },
     rawSearch() {
@@ -1031,6 +1038,14 @@ export default {
         }
       }
     });
+  },
+  watch: {
+    '$route.query.q'() {
+      if (this.$route.query.q && this.$route.query.q !== this.query) {
+        this.query = this.$route.query.q;
+        this.rawSearch();
+      }
+    },
   },
   activated() {
     this.setSelectedLatlongs();

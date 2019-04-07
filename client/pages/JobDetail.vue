@@ -1,4 +1,4 @@
-<style lang="scss" scoped>
+applyDialog<style lang="scss" scoped>
   .file-icon {
     width: 85px;
     margin: 0 15px;
@@ -572,7 +572,7 @@
           </k-btn>
         </div>
         <!--dialog for apply job flow-->
-        <v-dialog class="other-dialog" v-model="otherdialog"
+        <v-dialog class="other-dialog" v-model="applyDialog"
                   :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
             <v-card v-if="loginState === 'start'" flat class="dialog-card"
                     style="height: 500px; display: flex; flex-direction: column;">
@@ -589,7 +589,7 @@
                     </button>
 
                 </div>
-                <button class="mobile-show" style="position: relative; bottom: 0;" @click="otherdialog=false">
+                <button class="mobile-show" style="position: relative; bottom: 0;" @click="applyDialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
                 </button>
             </v-card>
@@ -601,7 +601,7 @@
                 </div>
                 <button class="mobile-show"
                         style="position: relative; bottom: 25%; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
+                        @click="applyDialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
                 </button>
             </v-card>
@@ -619,7 +619,7 @@
                 </div>
                 <button class="mobile-show"
                         style="position: relative; bottom: -50px; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
+                        @click="applyDialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
                 </button>
             </v-card>
@@ -628,7 +628,7 @@
                 <CodeVerification ref="cver" @verified="handleVerified"
                                   style="margin-top: 32px; margin-bottom: 32px;"></CodeVerification>
                 <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
+                        @click="applyDialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
                 </button>
             </v-card>
@@ -657,7 +657,7 @@
                     </k-btn>
                     <button class="mobile-show"
                             style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
-                            @click="otherdialog=false">
+                            @click="applyDialog=false">
                         <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
                     </button>
                 </div>
@@ -671,7 +671,7 @@
                   <k-btn to="/search">Back to Search</k-btn>
                 </div>
                 <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
+                        @click="applyDialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
                 </button>
             </v-card>
@@ -684,7 +684,7 @@
                   <k-btn to="/search">Back to Search</k-btn>
                 </div>
                 <button class="mobile-show" style="position: relative; left: 50%; transform: translateX(-50%)"
-                        @click="otherdialog=false">
+                        @click="applyDialog=false">
                     <i class="fa fa-times-circle" style="font-size: 48px; color: lightgrey;"></i>
                 </button>
             </v-card>
@@ -748,7 +748,7 @@
         jobType: [],
         resumes: [],
         serverUrl: Config.get('serverUrl'),
-        otherdialog: false,
+        applyDialog: false,
         loginState: 'start',
         profilePic: null,
         salary: null,
@@ -770,7 +770,6 @@
           age: Asset41,
         },
         uid: null,
-        applydialog: false,
         userdata: {
           firstname: null,
           lastname: null,
@@ -850,6 +849,7 @@
         this.loginState = 'signup';
       },
       handleResume() {
+        // called aftere signup or login, and from openApplyDialog()
         this.loginState = 'resume';
         this._getUserData();
       },
@@ -927,8 +927,7 @@
         });
       },
       openApplyDialog() {
-        this.dialog = true;
-        this.otherdialog = true;
+        this.applyDialog = true;
         if (this.uid) { // user is already logged in
           this.handleResume();
         }
@@ -1059,6 +1058,7 @@
           this.$debug('my application data', data);
           if (data.data.findMyApplication) {
             this.applied = true;
+            this.applyDialog = false;
           }
         }).catch((error) => {
           this.$error(error);
