@@ -3,7 +3,6 @@ import Scheduler from '@/Scheduler';
 import Config from 'config';
 import Models from '@/mongodb/Models';
 import AlgoliaSearch from 'algoliasearch';
-import Logger from 'winston';
 
 // Test task
 Scheduler.schedule(() => {
