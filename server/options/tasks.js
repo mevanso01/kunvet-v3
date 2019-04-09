@@ -2,6 +2,9 @@ import Logger from 'winston';
 import Scheduler from '@/Scheduler';
 import Config from 'config';
 import Models from '@/mongodb/Models';
+import AlgoliaSearch from 'algoliasearch';
+import Logger from 'winston';
+
 // Test task
 Scheduler.schedule(() => {
   Logger.debug('The scheduler works!');
@@ -14,8 +17,8 @@ const oneDay = 24 * 60 * 60 * 1000;
 
 Scheduler.schedule(() => { // filter all expired jobs and update attribute
   console.log('Scheduling expired job removal');
-  console.log('Expire:', Config.get('daysToExpire'));
-  console.log('Delete from algolia:', Config.get('daysToDeleteFromAlgolia'));
+  console.log('Expire time is', Config.get('daysToExpire'));
+  console.log('Delete from algolia time is', Config.get('daysToDeleteFromAlgolia'));
   Models.Job.find({}, (err, jobsFound) => {
     const today = new Date();
     const expiredJobIds = [];
@@ -42,6 +45,18 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
           console.log(docs1);
         },
       );
+    }
+    const appId = Config.get('algolia.appId');
+    const apiKey = Config.get('private.algolia.adminApiKey');
+    if (toDeleteJobIds.length > 0 && appId && apiKey) {
+      const client = AlgoliaSearch(appId, apiKey);
+      const index = client.initIndex('jobs');
+      for (let i = 0; i < toDeleteJobIds.length; ++i) {
+        const id = toDeleteJobIds[i];
+        // Delete from algolia
+        index.deleteObjects([id]);
+        Logger.info(`Automatically deleting ${id} from Algolia`);
+      }
     }
   });
 });

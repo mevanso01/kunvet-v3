@@ -803,9 +803,7 @@ export default {
       this.$store.commit({
         type: 'keepSearch',
         sCities: this.selectedCity,
-        // sTypes: this.selectedTypes,
-        // sPositions: this.selectedPositions,
-        // sShifts: this.selectedShifts,
+        query: this.query,
       });
     },
     async saveJob(id) {
@@ -1057,9 +1055,20 @@ export default {
     const oldQuery = this.query;
     if (this.$route.query.q) {
       this.query = this.$route.query.q;
-    } else {
-      this.query = '';
+    } else if (this.query && this.$route.query.q !== this.query) {
+      this.$router.push({
+        path: '/search',
+        query: {
+          q: this.query,
+        },
+      });
     }
+    // else if (this.$store.state && this.$store.state.prevSearchQuery) {
+    //   this.query = this.$store.state.prevSearchQuery;
+    //   this.$store.commit('setPrevQuery', '');
+    // } else {
+    //   this.query = '';
+    // }
     if (!hasJobsDisplayed || oldQuery !== this.query) {
       this.rawSearch();
     }
