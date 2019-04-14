@@ -56,6 +56,11 @@ module.exports = {
     appId: Credentials.algolia.appId,
     searchApiKey: Credentials.algolia.searchApiKey,
   },
+  braintree: {
+    sandbox: Credentials.braintree.sandbox,
+    publicKey: Credentials.braintree.publicKey,
+    merchantId: Credentials.braintree.merchantId,
+  },
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
 
@@ -89,6 +94,9 @@ module.exports = {
     },
     algolia: {
       adminApiKey: Credentials.algolia.adminApiKey,
+    },
+    braintree: {
+      privateKey: Credentials.braintree.privateKey,
     },
   },
 };
