@@ -72,11 +72,19 @@
 
     .app_card{
       width: 500px; 
-      margin-bottom: 20px;
-      -webkit-box-shadow: 3px 3px 5px 2px rgba(189,189,189,1);
-      -moz-box-shadow: 3px 3px 5px 2px rgba(189,189,189,1);
-      box-shadow: 3px 3px 5px 2px rgba(189,189,189,1);      
+      margin-bottom: 16px;
+      border: 1px solid grey; 
     }
+
+    .app_card:hover{
+      width: 500px; 
+      margin-bottom: 20px;
+      -webkit-box-shadow: 0px 0px 30px rgb(177, 176, 176);
+      -moz-box-shadow: 0px 0px 30px rgb(177, 176, 176);
+      box-shadow: 0px 0px 30px rgb(177, 176, 176);  
+    }
+
+    
 
     .app_card_inside_black{
       margin-bottom: 4px;
@@ -92,7 +100,7 @@
 
     .app_name{
       color:white; 
-      padding-left:116px; 
+      padding-left:110px; 
       padding-top: 12px;
       text-overflow: ellipsis;
       font-size: 20px;
@@ -110,7 +118,6 @@
     }
 
     .app_card_top_half{
-      width: 100%; 
       height: 40px; 
       background-color: #FF8080;
     }
@@ -230,7 +237,7 @@
               <div class="app_name">{{item.name}}</div>
             </div>
             <v-card-title>
-              <div style="padding-left: calc(116px - 16px);">
+              <div style="padding-left: calc(110px - 16px);">
                 <p class="grey--text app_card_inside_grey">Applied x days ago</p>
                 <p  v-if="item.school">School: {{item.school}}</p>
                 <p class="app_card_inside_black" v-else>School: No information provided</p>
