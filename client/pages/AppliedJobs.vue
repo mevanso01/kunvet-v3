@@ -54,19 +54,20 @@
     margin-bottom: 12px;
   }
   .post-time{
-    color:#ff9897;
+    color: grey;
+    font-size: 16px;
   }
   .post-expired{
-    color:grey;
-    font-size: 14px;
+    color: #af1506;
+    font-size: 16px;
   }
   .post-valid{
-    color:#ffc46a;
-    font-size: 14px;
+    color: #10b52e;
+    font-size: 16px;
   }
   .post-submitted{
-    color:pink;
-    font-size: 14px;
+    color:#ffc46a;
+    font-size: 16px;
   }
 }
 </style>
@@ -104,7 +105,7 @@
                 <timeago class="post-time" :since="application.date" />
               </v-flex>
               <v-flex xs4 sm5 class="pa-0">
-                <p class="list-title">status</p>
+                <p class="list-title">Status</p>
                 <h2 v-if="application.status === 'submitted'" class="post-submitted">Submitted</h2>
                 <h2 v-else-if="application.status === 'opened'" class="post-valid">Seen</h2>
                 <h2 v-else class="post-expired">Expired</h2>
