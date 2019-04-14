@@ -50,7 +50,7 @@
     overflow: hidden;
   }
   .list-title{
-    color: grey;
+    color: #535954;
     margin-bottom: 12px;
   }
   .post-time{
@@ -101,11 +101,11 @@
           <v-flex xs12 sm4>
             <v-layout row wrap class="list-post">
               <v-flex xs8 sm7 class="pa-0">
-                <p class="list-title">Applied</p>
+                <p class="list-title">Date Applied</p>
                 <timeago class="post-time" :since="application.date" />
               </v-flex>
               <v-flex xs4 sm5 class="pa-0">
-                <p class="list-title">Status</p>
+                <p class="list-title">Applicant Status</p>
                 <h2 v-if="application.status === 'submitted'" class="post-submitted">Submitted</h2>
                 <h2 v-else-if="application.status === 'opened'" class="post-valid">Seen</h2>
                 <h2 v-else class="post-expired">Expired</h2>
