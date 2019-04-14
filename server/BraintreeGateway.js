@@ -10,5 +10,6 @@ const gateway = Braintree.connect({
   publicKey: btConfig.publicKey,
   privateKey: btPrivateConfig.privateKey,
 });
-
+/*eslint-disable */
 export default gateway;
+/* eslint-enable */
