@@ -33,6 +33,7 @@ import ApplicationApp from '@/apps/application';
 import JobApp from '@/apps/job';
 import ProfilePicApp from '@/apps/profile_pic';
 import ResetPasswordApp from '@/apps/reset_password';
+import BillingApp from '@/apps/billing';
 
 // Our stuff
 import Db from '@/mongodb/Db';
@@ -71,6 +72,7 @@ app.use(KoaMount('/application', ApplicationApp));
 app.use(KoaMount('/job', JobApp));
 app.use(KoaMount('/profile-pic', ProfilePicApp));
 app.use(KoaMount('/reset-password', ResetPasswordApp));
+app.use(KoaMount('/billing', BillingApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
