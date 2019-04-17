@@ -513,6 +513,7 @@ export default {
 @import 'css/nav.css';
 // @import 'css/postsAndSearch.css';
 @import 'css/JobsAndSearch.scss';
+@import 'css/about.css';
 
 body, html {
   height: 100%;
