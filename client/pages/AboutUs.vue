@@ -1,7 +1,3 @@
-<style>
-  @import "../css/about.css";
-</style>
-
 <template>
     <v-container fluid>
         <div class="main-cont-large">
