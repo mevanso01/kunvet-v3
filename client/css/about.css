@@ -1,0 +1,4 @@
+h1 {
+  font-family:'Lora', serif; font-weight:400; font-size:3.2em; margin:40px 0; display:inline-block; line-height:90%;
+  background:linear-gradient(to right, #FF5F6D 0%, #FFC371 100%) left bottom #fff no-repeat; padding-bottom:4px; background-size:100% 12px;
+}
