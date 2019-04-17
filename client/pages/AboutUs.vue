@@ -18,7 +18,7 @@
 
                 <div class="section">
                     <h2>What is our Mission?</h2>
-                    <p>We once were people searching for new opportunities, too. We were frustrated of seeing irrelevant, repetitive and insufficient amount of local opportunities on the internet. So, we decided to create a platform where people would not experience the frustrations we did.</p>
+                    <p>We once were people searching for new opportunities, too. We were frustrated by seeing irrelevant, repetitive and insufficient amount of local opportunities on the internet. So, we decided to create a platform where people would not experience the frustrations we did.</p>
                 </div>
 
                 <div class="section">
