@@ -5,7 +5,7 @@
                 <h1>Terms and Conditions</h1>
 
                 <div class="section">
-                    <h2>Service</2>
+                    <h2>Service</h2>
 
                     <h3>Terms</h3>
 
@@ -18,19 +18,19 @@
 
                     <p>
                     1. Permission is granted to temporarily download one copy of the materials (information or software) on Kunvet's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
-                        a. modify or copy the materials;
-                        b. use the materials for any commercial purpose, or for any public display (commercial or non-commercial);
-                        c. attempt to decompile or reverse engineer any software contained on Kunvet's website;
-                        d. remove any copyright or other proprietary notations from the materials; or
-                        e. transfer the materials to another person or "mirror" the materials on any other server.
+                        a. modify or copy the materials;<br>
+                        b. use the materials for any commercial purpose, or for any public display (commercial or non-commercial);<br>
+                        c. attempt to decompile or reverse engineer any software contained on Kunvet's website;<br>
+                        d. remove any copyright or other proprietary notations from the materials; or<br>
+                        e. transfer the materials to another person or "mirror" the materials on any other server.<br>
                     2. This license shall automatically terminate if you violate any of these restrictions and may be terminated by Kunvet at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
                     </p>
 
                     <h3>Disclaimer</h3>
 
                     <p>
-                    1. The materials on Kunvet's website are provided on an 'as is' basis. Kunvet makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
-                    2. Further, Kunvet does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its website or otherwise relating to such materials or on any sites linked to this site.
+                    1. The materials on Kunvet's website are provided on an 'as is' basis. Kunvet makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.<br>
+                    2. Further, Kunvet does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its website or otherwise relating to such materials or on any sites linked to this site.<br>
                     </p>
 
                     <h3>Limitations</h3>
@@ -62,12 +62,12 @@
                     <p>It is Kunvet's policy to respect your privacy regarding any information we may collect while operating our website. Accordingly, we have developed this privacy policy in order for you to understand how we collect, use, communicate, disclose and otherwise make use of personal information. We have outlined our privacy policy below.</p>
 
                     <p>
-                    1. We will collect personal information by lawful and fair means and, where appropriate, with the knowledge or consent of the individual concerned.
-                    2. Before or at the time of collecting personal information, we will identify the purposes for which information is being collected.
-                    3. We will collect and use personal information solely for fulfilling those purposes specified by us and for other ancillary purposes, unless we obtain the consent of the individual concerned or as required by law.
-                    4. Personal data should be relevant to the purposes for which it is to be used, and, to the extent necessary for those purposes, should be accurate, complete, and up-to-date.
-                    5. >We will protect personal information by using reasonable security safeguards against loss or theft, as well as unauthorized access, disclosure, copying, use or modification.
-                    6. We will make readily available to customers information about our policies and practices relating to the management of personal information.
+                    1. We will collect personal information by lawful and fair means and, where appropriate, with the knowledge or consent of the individual concerned.<br>
+                    2. Before or at the time of collecting personal information, we will identify the purposes for which information is being collected.<br>
+                    3. We will collect and use personal information solely for fulfilling those purposes specified by us and for other ancillary purposes, unless we obtain the consent of the individual concerned or as required by law.<br>
+                    4. Personal data should be relevant to the purposes for which it is to be used, and, to the extent necessary for those purposes, should be accurate, complete, and up-to-date.<br>
+                    5. We will protect personal information by using reasonable security safeguards against loss or theft, as well as unauthorized access, disclosure, copying, use or modification.<br>
+                    6. We will make readily available to customers information about our policies and practices relating to the management of personal information.<br>
                     6. We will only retain personal information for as long as necessary for the fulfilment of those purposes.
                     </p>
 
