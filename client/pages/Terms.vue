@@ -17,12 +17,12 @@
                     <h3>Use License</h3>
 
                     <p>
-                    1. Permission is granted to temporarily download one copy of the materials (information or software) on Kunvet's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
-                        a. modify or copy the materials;<br>
-                        b. use the materials for any commercial purpose, or for any public display (commercial or non-commercial);<br>
-                        c. attempt to decompile or reverse engineer any software contained on Kunvet's website;<br>
-                        d. remove any copyright or other proprietary notations from the materials; or<br>
-                        e. transfer the materials to another person or "mirror" the materials on any other server.<br>
+                    1. Permission is granted to temporarily download one copy of the materials (information or software) on Kunvet's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:<br>
+                    &nbsp;&nbsp;a. modify or copy the materials;<br>
+                    &nbsp;&nbsp;b. use the materials for any commercial purpose, or for any public display (commercial or non-commercial);<br>
+                    &nbsp;&nbsp;c. attempt to decompile or reverse engineer any software contained on Kunvet's website;<br>
+                    &nbsp;&nbsp;d. remove any copyright or other proprietary notations from the materials; or<br>
+                    &nbsp;&nbsp;e. transfer the materials to another person or "mirror" the materials on any other server.<br>
                     2. This license shall automatically terminate if you violate any of these restrictions and may be terminated by Kunvet at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
                     </p>
 
@@ -68,7 +68,7 @@
                     4. Personal data should be relevant to the purposes for which it is to be used, and, to the extent necessary for those purposes, should be accurate, complete, and up-to-date.<br>
                     5. We will protect personal information by using reasonable security safeguards against loss or theft, as well as unauthorized access, disclosure, copying, use or modification.<br>
                     6. We will make readily available to customers information about our policies and practices relating to the management of personal information.<br>
-                    6. We will only retain personal information for as long as necessary for the fulfilment of those purposes.
+                    7. We will only retain personal information for as long as necessary for the fulfilment of those purposes.
                     </p>
 
                     <p>We are committed to conducting our business in accordance with these principles in order to ensure that the confidentiality of personal information is protected and maintained. Kunvet may change this privacy policy from time to time at Kunvet's sole discretion.</p>
