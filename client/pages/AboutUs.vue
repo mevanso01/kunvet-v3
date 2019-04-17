@@ -1,9 +1,12 @@
+<style>
+  @import "../css/about.css";
+</style>
+
 <template>
     <v-container fluid>
         <div>
             <div class="main-cont-large">
-                <h1 style="font-family:'Lora', serif; font-weight:400; font-size:3.2em; margin:40px 0; display:inline-block; line-height:90%;
-                background:linear-gradient(to right, #FF5F6D 0%, #FFC371 100%) left bottom #fff no-repeat; padding-bottom:4px; background-size:100% 12px;">About Us</h1>
+                <h1 style="">About Us</h1>
 
                 <div style="margin-bottom:30px;">
                   <h2 style="font-family:'Lora', serif; font-weight:400; font-size:1.4em; margin-top:0; margin-bottom:10px;">What is Kunvet?</h2>
