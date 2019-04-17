@@ -728,7 +728,7 @@
           <v-flex xs12 sm6>
             <div class="container-right hire_kunvet_container">
                 <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
-                <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free!</div>
+                <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free. No credit card required.</div>
                 <router-link to="/createjob">
                   <button v-ripple class="postAJob">Post a Job</button>
                 </router-link>
@@ -743,7 +743,7 @@
           <v-flex xs12 sm6 style="z-index:5;">
             <div class="container-left loved_trusted_container">
               <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
-              <div class="loved_trusted_text">Kunvet is used by hundreds of students and local businesses. Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
+              <div class="loved_trusted_text">Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
               <router-link to="/createjob">
                 <button v-ripple class="postAJob2">Post a Job</button>
               </router-link>
