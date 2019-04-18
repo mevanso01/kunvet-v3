@@ -5,6 +5,9 @@
   </div>
 </template>
 <script>
+// Drop-in documentation
+// https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html#~cardPaymentMethodPayload
+
 import Axios from 'axios';
 
 function loadBraintreeDropin() {
@@ -39,8 +42,14 @@ export default {
   methods: {
     confirmPayment() {
       this.instance.requestPaymentMethod((err, payload) => {
-        console.log(err, payload);
+        console.log(err, payload.description);
+        const creditCardNonce = payload.nonce;
+        this.chargeUser(creditCardNonce);
       });
+    },
+    chargeUser(nonce) {
+      console.log(nonce);
+      // todo: send nonce data to our server to charge user
     },
   },
 };
