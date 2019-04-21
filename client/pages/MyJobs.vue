@@ -150,6 +150,16 @@
                       Re-post Job
                     </k-btn>
                   </v-flex>
+                  <v-flex xs5 sm5  style="padding: 0px">
+                    <p>Promoted</p>
+                    <h2 style="padding-bottom: 10px;">
+                      {{job.promoted?'Yes':'No'}}
+                    </h2>
+                    <k-btn :disabled="job.promoted" small>
+                      <!--todo: initiate billing on click-->
+                      Promote Job
+                    </k-btn>
+                  </v-flex>
                 </v-layout>
               </v-flex>
             </v-layout>

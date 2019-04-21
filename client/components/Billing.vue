@@ -7,32 +7,22 @@
 <script>
 // Drop-in documentation
 // https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html#~cardPaymentMethodPayload
-
 import Axios from 'axios';
 
-function loadBraintreeDropin() {
-  return new Promise((resolve) => {
-    const script = document.createElement('script');
-    script.src = 'https://js.braintreegateway.com/web/dropin/1.17.1/js/dropin.min.js';
-    script.addEventListener('load', resolve);
-    document.head.appendChild(script);
-  });
-}
+const dropin = require('braintree-web-drop-in');
 
 export default {
+  props: {
+    actions: Array,
+  },
   data() {
     return {
       instance: null,
     };
   },
   async mounted() {
-    if (!window.braintree) {
-      await loadBraintreeDropin();
-    }
-
     const tokenResponse = await Axios.get('/billing/getAuthorization');
-
-    window.braintree.dropin.create({
+    dropin.create({
       authorization: tokenResponse.data,
       container: '.dropin-container',
     }, (createErr, instance) => {
@@ -48,8 +38,24 @@ export default {
       });
     },
     chargeUser(nonce) {
-      console.log(nonce);
-      // todo: send nonce data to our server to charge user
+      // const testAction = {
+      //   name: 'activateJob',
+      //   jobId: '5bd24ada2f0af760a64acf56',
+      // };
+
+      const paymentData = {
+        actions: this.actions,
+        paymentMethodNonce: nonce,
+      };
+
+      Axios.post('/postTransaction', paymentData).then((res => {
+        if (res.data.success) {
+          console.log('success');
+          // show them thanks for creating a job/promoting
+        } else {
+          console.log('error');
+        }
+      }));
     },
   },
 };
