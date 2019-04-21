@@ -86,6 +86,10 @@ const JobSchema = Mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  promoted: {
+    type: Boolean,
+    default: false,
+  },
   title: {
     // Name of the job
     type: String,
