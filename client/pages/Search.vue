@@ -992,10 +992,12 @@ export default {
             q: this.query,
           },
         });
+        this.$setTitle(`${this.query} - Kunvet`);
       } else {
         this.$router.push({
           path: '/search',
         });
+        this.$setTitle('Kunvet');
       }
       this.rawSearch();
     },
