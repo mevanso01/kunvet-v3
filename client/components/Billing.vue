@@ -48,7 +48,7 @@ export default {
         paymentMethodNonce: nonce,
       };
 
-      Axios.post('/postTransaction', paymentData).then((res => {
+      Axios.post('/billing/postTransaction', paymentData).then((res => {
         if (res.data.success) {
           console.log('success');
           // show them thanks for creating a job/promoting
