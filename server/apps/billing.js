@@ -2,6 +2,7 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import BraintreeGateway from '@/BraintreeGateway';
+import Models from '@/mongodb/Models';
 import util from 'util';
 
 const bodyParser = require('koa-bodyparser');
@@ -15,25 +16,57 @@ const ACTIONS = {
   activateJob: {
     description: 'Post a draft job, or re-post an expired job',
     price: 500,
-    validate(ctx, action) {
-      console.log(ctx, action);
-      return true;
+    async validate(ctx, action) {
+      if (!action.job) {
+        throw new Error('Job ID is required');
+      }
+      const job = await Models.Job.findOne({
+        _id: action.job,
+      });
+
+      if (!job) {
+        throw new Error('Invalid job ID supplied');
+      }
+      if (job.active) {
+        throw new Error('Job already active');
+      }
     },
-    fulfill(ctx, action) {
-      console.log(ctx, action);
-      return true;
+    async fulfill(ctx, action) {
+      // FIXME: Race condition
+      const job = await Models.Job.findOne({
+        _id: action.job,
+      });
+
+      job.active = true;
+      return job.save();
     },
   },
   promoteJob: {
     description: 'Promote a job',
     price: 200,
-    validate(ctx, action) {
-      console.log(ctx, action);
-      return true;
+    async validate(ctx, action) {
+      if (!action.job) {
+        throw new Error('Job ID is required');
+      }
+      const job = await Models.Job.findOne({
+        _id: action.job,
+      });
+
+      if (!job) {
+        throw new Error('Invalid job ID supplied');
+      }
+      if (job.promoted) {
+        throw new Error('Job already promoted');
+      }
     },
-    fulfill(ctx, action) {
-      console.log(ctx, action);
-      return true;
+    async fulfill(ctx, action) {
+      // FIXME: Race condition
+      const job = await Models.Job.findOne({
+        _id: action.job,
+      });
+
+      job.promoted = true;
+      return job.save();
     },
   },
 };
@@ -119,6 +152,15 @@ router.post('/postTransaction', async (ctx) => {
   // Validation
   let credits = 0;
 
+  if (!Array.isArray(req.actions)) {
+    ctx.status = 401;
+    ctx.body = JSON.stringify({
+      success: false,
+      message: 'Invalid actions array',
+    });
+    return;
+  }
+
   for (const action of req.actions) {
     if (!Object.prototype.hasOwnProperty.call(ACTIONS, action.name)) {
       // Invalid action
@@ -130,7 +172,7 @@ router.post('/postTransaction', async (ctx) => {
       return;
     }
     try {
-      ACTIONS[action.name].validate(ctx, action);
+      await ACTIONS[action.name].validate(ctx, action);
     } catch (e) {
       ctx.status = 401;
       ctx.body = JSON.stringify({
@@ -153,27 +195,38 @@ router.post('/postTransaction', async (ctx) => {
         submitForSettlement: true,
       },
     });
-    console.log(result);
+
+    if (!result.success) {
+      throw new Error(result.message);
+    }
   } catch (e) {
     ctx.status = 401;
     ctx.body = JSON.stringify({
       success: false,
       message: `Failed to charge the user: ${e.getMessage()}`,
     });
-    // return;
+
+    return;
+  }
+
+  // Fulfillment
+  for (const action of req.actions) {
+    try {
+      await ACTIONS[action.name].fulfill(ctx, action);
+    } catch (e) {
+      ctx.status = 401;
+      ctx.body = JSON.stringify({
+        success: false,
+        message: `${action.name} could not be fulfilled: ${e.getMessage()}`,
+      });
+      return;
+    }
   }
 
   ctx.body = JSON.stringify({
     success: true,
-    message: 'Thanks for the cash!',
+    message: 'Purchase completed successfully',
   });
-
-  /*
-
-  // Fulfillment
-  for (const action of req.actions) {
-  }
-  */
 });
 
 app.use(router.routes());
