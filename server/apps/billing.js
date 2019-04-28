@@ -27,7 +27,7 @@ const ACTIONS = {
       if (!job) {
         throw new Error('Invalid job ID supplied');
       }
-      if (job.active) {
+      if (job.active && !job.expired) {
         throw new Error('Job already active');
       }
     },
