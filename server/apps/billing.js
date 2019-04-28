@@ -153,7 +153,7 @@ router.post('/createTransaction', async (ctx) => {
   let credits = 0;
 
   if (!Array.isArray(req.actions)) {
-    ctx.status = 401;
+    ctx.status = 400;
     ctx.body = JSON.stringify({
       success: false,
       message: 'Invalid actions array',
@@ -164,7 +164,7 @@ router.post('/createTransaction', async (ctx) => {
   for (const action of req.actions) {
     if (!Object.prototype.hasOwnProperty.call(ACTIONS, action.name)) {
       // Invalid action
-      ctx.status = 401;
+      ctx.status = 400;
       ctx.body = JSON.stringify({
         success: false,
         message: `${action.name} is not a valid action`,
@@ -174,7 +174,7 @@ router.post('/createTransaction', async (ctx) => {
     try {
       await ACTIONS[action.name].validate(ctx, action);
     } catch (e) {
-      ctx.status = 401;
+      ctx.status = 400;
       ctx.body = JSON.stringify({
         success: false,
         message: `${action.name} failed validation: ${e.getMessage()}`,
@@ -200,7 +200,7 @@ router.post('/createTransaction', async (ctx) => {
       throw new Error(result.message);
     }
   } catch (e) {
-    ctx.status = 401;
+    ctx.status = 500;
     ctx.body = JSON.stringify({
       success: false,
       message: `Failed to charge the user: ${e.getMessage()}`,
@@ -214,7 +214,7 @@ router.post('/createTransaction', async (ctx) => {
     try {
       await ACTIONS[action.name].fulfill(ctx, action);
     } catch (e) {
-      ctx.status = 401;
+      ctx.status = 500;
       ctx.body = JSON.stringify({
         success: false,
         message: `${action.name} could not be fulfilled: ${e.getMessage()}`,
