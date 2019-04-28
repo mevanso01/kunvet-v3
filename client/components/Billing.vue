@@ -1,10 +1,13 @@
-<style scoped>
-  .bi-cont {
+<style>
+  .billing-component .bi-cont {
     border-bottom: 1px solid #e1e4e8;
+  }
+  .dropin-container .braintree-placeholder {
+    display: none !important;
   }
 </style>
 <template>
-  <div>
+  <div class="billing-component">
     <!-- <div v-if="true || hasPostJobAction">
       Post your job ($5.99)
     </div> -->
@@ -12,7 +15,7 @@
       <h2 class="mb-1">Post your job</h2>
       <p>Your job will be displayed for 30 days before expiring</p>
     </div>
-    <div class="bi-cont">
+    <div class="bi-cont mb-3">
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
     <div class="dropin-container"></div>
@@ -77,7 +80,6 @@ export default {
       //   name: 'activateJob',
       //   jobId: '5bd24ada2f0af760a64acf56',
       // };
-
       const paymentData = {
         actions: this.actions,
         paymentMethodNonce: nonce,
