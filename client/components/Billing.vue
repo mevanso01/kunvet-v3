@@ -1,19 +1,20 @@
 <template>
   <div>
     <div class="dropin-container"></div>
-    <k-btn @click="confirmPayment">Confirm</k-btn>
+    <k-btn @click="confirmPayment">{{ confirmButtonText }}</k-btn>
   </div>
 </template>
 <script>
-// Drop-in documentation
-// https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html#~cardPaymentMethodPayload
 import Axios from 'axios';
 
+// Drop-in documentation
+// https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html#~cardPaymentMethodPayload
 const dropin = require('braintree-web-drop-in');
 
 export default {
   props: {
     actions: Array,
+    buttonText: String,
   },
   data() {
     return {
@@ -28,6 +29,11 @@ export default {
     }, (createErr, instance) => {
       this.instance = instance;
     });
+  },
+  computed: {
+    confirmButtonText() {
+      return this.buttonText || 'confirm';
+    },
   },
   methods: {
     confirmPayment() {
@@ -48,9 +54,10 @@ export default {
         paymentMethodNonce: nonce,
       };
 
-      Axios.post('/billing/postTransaction', paymentData).then((res => {
+      Axios.post('/billing/createTransaction', paymentData).then((res => {
         if (res.data.success) {
           console.log('success');
+          this.$emit('success');
           // show them thanks for creating a job/promoting
         } else {
           console.log('error');

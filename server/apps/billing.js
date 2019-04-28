@@ -17,11 +17,11 @@ const ACTIONS = {
     description: 'Post a draft job, or re-post an expired job',
     price: 500,
     async validate(ctx, action) {
-      if (!action.job) {
+      if (!action.jobId) {
         throw new Error('Job ID is required');
       }
       const job = await Models.Job.findOne({
-        _id: action.job,
+        _id: action.jobId,
       });
 
       if (!job) {
@@ -34,7 +34,7 @@ const ACTIONS = {
     async fulfill(ctx, action) {
       // FIXME: Race condition
       const job = await Models.Job.findOne({
-        _id: action.job,
+        _id: action.jobId,
       });
 
       job.active = true;
@@ -45,11 +45,11 @@ const ACTIONS = {
     description: 'Promote a job',
     price: 200,
     async validate(ctx, action) {
-      if (!action.job) {
+      if (!action.jobId) {
         throw new Error('Job ID is required');
       }
       const job = await Models.Job.findOne({
-        _id: action.job,
+        _id: action.jobId,
       });
 
       if (!job) {
@@ -62,7 +62,7 @@ const ACTIONS = {
     async fulfill(ctx, action) {
       // FIXME: Race condition
       const job = await Models.Job.findOne({
-        _id: action.job,
+        _id: action.jobId,
       });
 
       job.promoted = true;
@@ -137,7 +137,7 @@ router.get('/getAuthorization', async (ctx) => {
   ctx.body = JSON.stringify(response.clientToken);
 });
 
-router.post('/postTransaction', async (ctx) => {
+router.post('/createTransaction', async (ctx) => {
   if (!ctx.isAuthenticated() || !ctx.state.user) {
     ctx.status = 401;
     ctx.body = JSON.stringify({
