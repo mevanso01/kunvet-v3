@@ -177,7 +177,7 @@ router.post('/createTransaction', async (ctx) => {
       ctx.status = 400;
       ctx.body = JSON.stringify({
         success: false,
-        message: `${action.name} failed validation: ${e.getMessage()}`,
+        message: `${action.name} failed validation: ${e.message}`,
       });
       return;
     }
@@ -203,7 +203,7 @@ router.post('/createTransaction', async (ctx) => {
     ctx.status = 500;
     ctx.body = JSON.stringify({
       success: false,
-      message: `Failed to charge the user: ${e.getMessage()}`,
+      message: `Failed to charge the user: ${e.message}`,
     });
 
     return;
@@ -217,7 +217,7 @@ router.post('/createTransaction', async (ctx) => {
       ctx.status = 500;
       ctx.body = JSON.stringify({
         success: false,
-        message: `${action.name} could not be fulfilled: ${e.getMessage()}`,
+        message: `${action.name} could not be fulfilled: ${e.message}`,
       });
       return;
     }
