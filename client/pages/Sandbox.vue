@@ -1,7 +1,7 @@
 <template>
   <v-container fluid style="padding-right: 0; padding-left: 0;">
     <div style="max-width: 420px; margin: auto;">
-      <Billing buttonText="Post job" />
+      <Billing />
     </div>
   </v-container>
 </template>

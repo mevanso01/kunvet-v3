@@ -1,5 +1,20 @@
+<style scoped>
+  .bi-cont {
+    border-bottom: 1px solid #e1e4e8;
+  }
+</style>
 <template>
   <div>
+    <!-- <div v-if="true || hasPostJobAction">
+      Post your job ($5.99)
+    </div> -->
+    <div class="bi-cont mb-2">
+      <h2 class="mb-1">Post your job</h2>
+      <p>Your job will be displayed for 30 days before expiring</p>
+    </div>
+    <div class="bi-cont">
+      <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
+    </div>
     <div class="dropin-container"></div>
     <k-btn @click="confirmPayment">{{ confirmButtonText }}</k-btn>
   </div>
@@ -13,12 +28,15 @@ const dropin = require('braintree-web-drop-in');
 
 export default {
   props: {
-    actions: Array,
+    // actions: Array,
+    jobId: String,
     buttonText: String,
   },
   data() {
     return {
       instance: null,
+      actions: [],
+      postJobPrice: 4.99,
     };
   },
   async mounted() {
@@ -32,11 +50,22 @@ export default {
   },
   computed: {
     confirmButtonText() {
-      return this.buttonText || 'confirm';
+      return this.buttonText || 'Confirm';
+    },
+    hasPostJobAction() {
+      return this.actions && this.actions.find(x => x.name === 'activateJob' && x.jobId);
+    },
+    totalPriceString() {
+      const total = this.postJobPrice; // later will be combined with promote job price and stuff
+      return `$${total}`;
     },
   },
   methods: {
     confirmPayment() {
+      this.actions = [{
+        name: 'activateJob',
+        jobId: this.jobId,
+      }];
       this.instance.requestPaymentMethod((err, payload) => {
         console.log(err, payload.description);
         const creditCardNonce = payload.nonce;
