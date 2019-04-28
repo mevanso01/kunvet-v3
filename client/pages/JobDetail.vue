@@ -698,7 +698,7 @@ applyDialog
                      :disabled="!selectedResumes.length"
                      :working="loading"
                      color="#FF6969"
-                     style="margin: 20px auto; color:white">Confirm Files
+                     style="margin: 20px auto; color:white">Apply
               </k-btn>
               <button class="mobile-show"
                       style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
