@@ -63,7 +63,7 @@
                     v-for="(job, idx) in unpostedJobs">
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
-                <p><timeago :since="job.date"/></p>
+                <p>Posted <timeago :since="job.date"/></p>
                 <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
@@ -84,19 +84,28 @@
                 <v-layout>
                   <v-flex xs7 sm7  style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: grey; padding-bottom: 10px;">-</h2>
+                    <h2 style="color: grey; padding-bottom: 10px; ">—</h2>
                     <k-btn color="#448ef6" small disabled>
                       View Applicants
                     </k-btn>
                   </v-flex>
                   <v-flex xs5git  sm5  style="padding: 0px">
-                    <p>Status</p>
+                    <p>Job Status</p>
                     <h2 style="color: orange; padding-bottom: 10px;">Unposted</h2>
                     <router-link :to="`/createjob/${job._id}`">
                       <k-btn color="orange" small>
-                        Post It
+                        Post Job
                       </k-btn>
                     </router-link>
+                  </v-flex>
+                  <v-flex xs5 sm5  style="padding: 0px">
+                    <p>Promotion Status</p>
+                    <h2 style="padding-bottom: 10px; ">
+                      —
+                    </h2>
+                    <k-btn disabled small color="grey">
+                      Post Job First
+                    </k-btn>
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -111,7 +120,7 @@
           <div v-if="activeJobs.length > 0" v-for="(job, idx) in activeJobs">
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
-                <p><timeago :since="job.date"/></p>
+                <p>Posted <timeago :since="job.date"/></p>
                 <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
@@ -122,7 +131,7 @@
                       Edit
                     </k-btn>
                   </router-link>
-                  <k-btn color="Salmon" small @click="onShowJobDialog(job)">
+                  <k-btn color="Salmon" @click="onShowJobDialog(job)" small>
                     Delete
                   </k-btn>
                 </v-flex>
@@ -132,9 +141,9 @@
                 <v-layout>
                   <v-flex xs7 sm7  style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: #448ef6; padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
+                    <h2 style="padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
                     <router-link :to="`/applicants`">
-                      <k-btn v-if="getApplicantsFromJobs(job._id) > 0" color="#448ef6" small>
+                      <k-btn v-if="getApplicantsFromJobs(job._id) > 0" small>
                         View Applicants
                       </k-btn>
                       </router-link>
@@ -144,18 +153,19 @@
                   </v-flex>
 
                   <v-flex xs5 sm5  style="padding: 0px">
-                    <p>Status</p>
-                    <h2 style="color: #6effbf; padding-bottom: 10px;">Active</h2>
+                    <p>Job Status</p>
+                    <h2 style="padding-bottom: 10px; color: #38a238;">Active</h2>
                     <k-btn disabled small>
                       Re-post Job
                     </k-btn>
                   </v-flex>
                   <v-flex xs5 sm5  style="padding: 0px">
-                    <p>Promoted</p>
-                    <h2 style="padding-bottom: 10px;">
-                      {{job.promoted?'Yes':'No'}}
+                    <p>Promotion Status</p>
+                    <h2 style="padding-bottom: 10px;" :style="{color:
+                    job.promoted ? 'black': 'orange'}">
+                      {{job.promoted?'Promoted':'Unpromoted'}}
                     </h2>
-                    <k-btn :disabled="job.promoted" small>
+                    <k-btn :disabled="job.promoted" color="orange" small>
                       <!--todo: initiate billing on click-->
                       Promote Job
                     </k-btn>
@@ -173,7 +183,7 @@
           <div v-if="expiredJobs.length > 0" v-for="(job, idx) in expiredJobs">
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
-                <p><timeago :since="job.date"/></p>
+                <p>Posted <timeago :since="job.date"/></p>
                 <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
@@ -184,7 +194,6 @@
                         Edit
                       </k-btn>
                     </router-link>
-
                     <k-btn color="Salmon" small @click="onShowJobDialog(job)">
                       Delete
                     </k-btn>
@@ -195,18 +204,28 @@
                 <v-layout>
                   <v-flex xs7 sm7  style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: #448ef6; padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
+                    <h2 style="padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
                     <router-link :to="`/applicants`">
-                      <k-btn v-if="getApplicantsFromJobs(job._id) > 0" color="#448ef6" small>
+                      <k-btn color="grey" v-if="getApplicantsFromJobs(job._id) >
+                       0" small>
                         View Applicants
                       </k-btn>
                     </router-link>
                   </v-flex>
                   <v-flex xs5 sm5  style="padding: 0px">
-                    <p>Status</p>
-                    <h2 style="color: grey; padding-bottom: 10px;">Expired</h2>
-                    <k-btn small color="grey" @click="repostJob(job._id)">
+                    <p>Job Status</p>
+                    <h2 style="padding-bottom: 10px; color: red;">Expired</h2>
+                    <k-btn small color="red" @click="repostJob(job._id)">
                       Re-post Job
+                    </k-btn>
+                  </v-flex>
+                  <v-flex xs5 sm5  style="padding: 0px">
+                    <p>Promotion Status</p>
+                    <h2 style="padding-bottom: 10px;">
+                      —
+                    </h2>
+                    <k-btn disabled small>
+                      Repost Job First
                     </k-btn>
                   </v-flex>
                 </v-layout>
