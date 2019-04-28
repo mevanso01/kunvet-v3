@@ -47,6 +47,7 @@ export default {
     dropin.create({
       authorization: tokenResponse.data,
       container: '.dropin-container',
+      vaultManager: true,
     }, (createErr, instance) => {
       this.instance = instance;
     });

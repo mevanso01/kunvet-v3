@@ -389,6 +389,13 @@ const FileSchema = Mongoose.Schema({
   ],
 });
 
+const PrivateAccountDetailsSchema = Mongoose.Schema({
+  jobCount: {
+    type: Number,
+    required: true,
+  },
+});
+
 const AccountSchema = Mongoose.Schema({
   /*  Added by passport-local-mongoose:
   username: {...},
@@ -506,6 +513,7 @@ export default {
   Job: Mongoose.model('Job', JobSchema),
   Resume: Mongoose.model('Resume', ResumeSchema),
   Account: Mongoose.model('Account', AccountSchema),
+  PrivateAccountDetails: Mongoose.model('PrivateAccountDetails', PrivateAccountDetailsSchema),
   Applicant: Mongoose.model('Applicant', ApplicantSchema),
   TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
   VerificationCode: Mongoose.model('VerificationCode', VerificationCodeSchema),
