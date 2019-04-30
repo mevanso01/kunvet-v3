@@ -1,18 +1,15 @@
 <template>
   <v-container fluid>
     <div class="main-cont-large">
-        <div style="padding: 20px;">
-            <h1>We'd like to invite you to join our startup group</h1><br>
+        <div class="about">
+            <h1>Join Kunvet</h1><br>
 
-            <p>Hello, thank you for your interest in the Kunvet Team.</p>
-
-            <p>Currently, we are looking for the following people:
-                <br><br>
-                <ul>
-                <li><u><a href="https://kunvet.com/job/5af16eac00eeccb516706027" target="_blank">Awesome Designer</a></u></li>
-                <li><u><a href="https://kunvet.com/job/5b6909f71f621047bb756b12" target="_blank">Awesome Web Developer</a></u></li>
-                </ul>
-            </p>
+            <div class="section">
+                <h2>Opening Positions</h2>
+                <p>&#8226;  Become a <a href="https://kunvet.com/job/5af16eac00eeccb516706027" target="_blank">Designer</a> at Kunvet<br>
+                &#8226;  Become a <a href="https://kunvet.com/job/5b6909f71f621047bb756b12" target="_blank">Web Developer</a> at Kunvet<br>
+                &#8226;  Become a <a href="https://kunvet.com/job/5befb53e56baac8db47c3b43" target="_blank">Marketing Specialist</a> at Kunvet</p>
+            </div>
         </div>
     </div>
   </v-container>

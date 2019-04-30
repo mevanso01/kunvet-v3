@@ -1,0 +1,41 @@
+.about h1 {
+  display:inline-block;
+  margin: 40px 0;
+  font-family: 'Lora', serif;
+  font-weight: 400;
+  font-size: 3.2em;
+  line-height: 90%;
+  background: linear-gradient(to right, #FF5F6D 0%, #FFC371 100%) left bottom #fff no-repeat;
+  padding-bottom: 4px;
+  background-size: 100% 12px;
+}
+
+.about h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-family:'Lora', serif;
+  font-size: 1.6em;
+  font-weight:400;
+  color: #000;
+}
+
+.about h3 {
+  margin-top: 16px;
+  margin-bottom: 4px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight:400;
+  color: #000;
+}
+
+.about p {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 180%;
+  color: #000;
+}
+
+.about .section {
+  margin-bottom: 30px;
+}

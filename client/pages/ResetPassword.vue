@@ -45,7 +45,7 @@
               color="green darken-1" type="success"
               v-model="successAlert"
               transition="slide-x-transition">
-                Password reset successfully. <router-link style="text-decoration: underline" to="/login">Login</router-link>
+                Password reset successfully. <router-link style="text-decoration: underline" to="/login?redirect=/search">Login</router-link>
             </v-alert>
           </v-form>
         </v-card>

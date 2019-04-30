@@ -18,7 +18,8 @@
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
         <template v-if="tab !== 'success-tab'">
-          <v-tab v-for="(item, i) in tabItems" :href="`#${i}`" :key="`${i}`" :disabled="i > furthest_tab" >
+          <v-tab v-for="(item, i) in tabItems" :href="`#${i}`" :key="`${i}`"
+                 :disabled="i > furthest_tab" >
             <div class="tab-text-container" style="width: 100%; height: 100%;"
               :class="{ 'tab-no-error': isTabValid(i), 'tab-error': isTabInvalid(i) }">
               <span style="line-height: 36px;">{{ item }}</span>
@@ -1130,7 +1131,7 @@ export default {
       if (!this.loading) {
         this.loading = true;
         this.job.active = this.email_verified; // should be true
-        this.saveJob(true); // pass in true to view job
+        this.saveJob('viewJob'); // pass in true to view job
       }
     },
     validateFullJob() {
@@ -1158,7 +1159,12 @@ export default {
       this.clearErrors();
       const validation = this.validateFullJob();
       if (validation[0]) {
-        this.postJob();
+        if (true) { // REPLACE
+          this.postJob();
+        } else {
+          this.loading = true;
+          this.saveJob('goToBilling');
+        }
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }
@@ -1180,7 +1186,7 @@ export default {
         this.saveJob();
       }
     },
-    saveJob(viewJob = false) {
+    saveJob(option = null) {
       if (this.jobId) {
         // SAVE EXISTING JOB
         const job = this.createJobArray();
@@ -1214,7 +1220,7 @@ export default {
           } else {
             this.$store.commit('resetJobProgress');
           }
-          if (viewJob) {
+          if (option === 'viewJob') {
             if (this.email_verified) {
               this.tab = 'success-tab';
             } else {
@@ -1222,6 +1228,8 @@ export default {
               this.$refs.codever.init();
               this.tab = 'verify-email';
             }
+          } else if (option === 'goToBilling') {
+            this.tab = 'billing';
           }
         }).catch((err) => {
           this.loading = false;

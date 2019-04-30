@@ -198,17 +198,17 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== '/login' || to.query.redirect) {
+  const authRoutes = ['/login', '/signup'];
+  if (authRoutes.includes(from.path) && !to.query.redirect) {
+    next({
+      path: to.path,
+      query: {
+        redirect: from.path,
+      },
+    });
+  } else {
     next();
-    return;
   }
-
-  next({
-    path: '/login',
-    query: {
-      redirect: from.path,
-    },
-  });
 });
 
 router.afterEach(() => {

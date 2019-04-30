@@ -1,45 +1,24 @@
-
-<style scoped>
-/*eslint-disable */
-.form{
-  max-width: 480px; 
-  margin-top: 100px;
-  border: 1px solid black;
-}
-.form_header{
-  font-weight: bold;
-  font-size: 27px;
-  padding-left: 40px; 
-  padding-top: 20px;
-}
-.form_headline{
-  font-weight: bold;
-  font-size: 12px;
-  padding-left: 40px;
-  padding-bottom: 10px;
-}
-.form_checkbox{
-  padding-top: 40px;
-}
-.form_checkbox_label{
-  font-size: 12px;
-  text-transform: uppercase;
-  line-height:32px;
-  font-weight: bolder;
-}
-
-.form_subscribe{
-  position: absolute;
-  margin-top: 40px;
-  margin-left: 300px;
-  height: 35px !important;
-  line-height: 35px !important;
-}
-
-</style>
 <template>
-<div style="width:600px; height: 400px;">
-  <div class="_form_1"></div>
-</div>
+  <v-container fluid style="padding-right: 0; padding-left: 0;">
+    <div style="max-width: 420px; margin: auto;">
+      <Billing />
+    </div>
+  </v-container>
 </template>
-<script src="https://kunvet.activehosted.com/f/embed.php?id=1" type="text/javascript" charset="utf-8"></script>
+<script>
+/* eslint-disable no-unused-vars */
+import gql from 'graphql-tag';
+// import CodeVerification from '@/components/CodeVerification';
+
+import Billing from '@/components/Billing';
+
+export default {
+  // data() {
+  // },
+  components: {
+    Billing,
+  },
+  methods: {
+  },
+};
+</script>
