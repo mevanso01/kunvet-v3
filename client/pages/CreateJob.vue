@@ -932,10 +932,10 @@ export default {
         },
       });
       this.jobs = data.findJobs.concat();
-      //const jobs = this.jobs.filter(x => !x.is_deleted);
-      //const jobIds = jobs.map(({ _id }) => _id);
-      //const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
-      //this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
+      // const jobs = this.jobs.filter(x => !x.is_deleted);
+      // const jobIds = jobs.map(({ _id }) => _id);
+      // const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
+      // this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
     },
     next(n) {
       // this handles all the logic of moving from one step to the next
