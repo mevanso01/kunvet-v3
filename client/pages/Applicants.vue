@@ -249,7 +249,7 @@
               </div>
             </v-card-title>
             <div style="padding-bottom: 20px;">
-              <k-btn small style="margin-left: 115px;">Show Resume</k-btn>
+              <k-btn @click="openSideResume(item)" small style="margin-left: 115px;">Show Resume</k-btn>
               <k-btn v-if="item.notes" small color="grey" style="margin-left: 16px">Edit Notes</k-btn>
               <k-btn v-else small color="grey" style="margin-left: 16px">Add Notes</k-btn>
 
