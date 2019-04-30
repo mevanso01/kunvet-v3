@@ -50,6 +50,7 @@ export default {
       vaultManager: true,
     }, (createErr, instance) => {
       this.instance = instance;
+      console.log(createErr);
     });
   },
   computed: {
