@@ -488,6 +488,14 @@
             </div>
           </v-tab-item>
 
+          <v-tab-item id="billing">
+            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;">
+              <Billing
+              :jobId="jobId"
+              />
+            </div>
+          </v-tab-item>
+
           <v-tab-item id="review-tab">
             <div class="main-cont-large" style="margin-bottom: 16px;">
               <div class="cust-spacer"></div>
@@ -707,6 +715,7 @@ import Asset77 from '@/assets/icons/Asset77.svg';
 import Asset78 from '@/assets/icons/Asset78.svg';
 import Asset79 from '@/assets/icons/Asset79.svg';
 import Welcome3 from '@/assets/images/welcome3.jpg';
+import Billing from '@/components/Billing';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -748,10 +757,12 @@ export default {
     PicUploader,
     QuillEditor,
     CodeVerification,
+    Billing,
   },
   data() {
     return {
       tab: '0',
+      jobs: [],
       furthest_tab: 0, // 0 - 2
       form1Valid: false,
       form2Valid: false,
@@ -906,8 +917,30 @@ export default {
     disableChangeEmail() {
       return (this.newEmail === this.email);
     },
+    activeJobs() { // and unexpired
+      return this.jobs.filter(x => x.active && !x.is_deleted && !x.expired);
+    },
+    expiredJobs() {
+      // you can also use JobHelper.isJobExpired if you have expiry_date
+      return this.jobs.filter(x => x.expired);
+    },
   },
   methods: {
+    async getData(networkOnly = false) {
+      const { data } = await this.$apollo.query({
+        fetchPolicy: networkOnly ? 'network-only' : 'cache-first',
+        query: findJobsQuery,
+        variables: {
+          userId: this.$store.state.userID,
+          businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+        },
+      });
+      this.jobs = data.findJobs.concat();
+      const jobs = this.jobs.filter(x => !x.is_deleted);
+      const jobIds = jobs.map(({ _id }) => _id);
+      const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
+      this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
+    },
     next(n) {
       // this handles all the logic of moving from one step to the next
       this.clearErrors();
@@ -1159,7 +1192,13 @@ export default {
       this.clearErrors();
       const validation = this.validateFullJob();
       if (validation[0]) {
-        if (true) { // REPLACE
+        if ((this.activeJobs.length + this.expiredJobs.length < 1)) {
+          console.log('this.jobs.length');
+          console.log(this.jobs.length);
+          console.log('this.activeJobs.length');
+          console.log(this.activeJobs.length);
+          console.log('this.expiredJobs.length');
+          console.log(this.expiredJobs.length); // REPLACE
           this.postJob();
         } else {
           this.loading = true;
@@ -1694,6 +1733,7 @@ export default {
     if (this.tab === 'success-tab') {
       this.resetData();
     }
+    this.getData();
     if (this.$store.state && this.$store.state.userdata) {
       this.email_verified = Boolean(this.$store.state.userdata.email_verified);
     }
