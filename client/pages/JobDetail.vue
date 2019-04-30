@@ -1120,6 +1120,8 @@ applyDialog
       },
       createApplication() {
         // verify email if it isnt verified at this point for some reason
+        console.log('Hello from CreateApplication');
+        console.log(this.email_verified);
         if (!this.email_verified) {
           this.showCodeValidation();
           return;
@@ -1304,6 +1306,7 @@ applyDialog
     activated() {
       this.resetData();
       this.getData();
+      this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {
         this.stickToBottom = true;
         setTimeout(() => {
