@@ -917,12 +917,8 @@ export default {
     disableChangeEmail() {
       return (this.newEmail === this.email);
     },
-    activeJobs() { // and unexpired
-      return this.jobs.filter(x => x.active && !x.is_deleted && !x.expired);
-    },
-    expiredJobs() {
-      // you can also use JobHelper.isJobExpired if you have expiry_date
-      return this.jobs.filter(x => x.expired);
+    postedJobs() {
+      return this.jobs.filter(x => x.active || x.expired);
     },
   },
   methods: {
@@ -936,10 +932,10 @@ export default {
         },
       });
       this.jobs = data.findJobs.concat();
-      const jobs = this.jobs.filter(x => !x.is_deleted);
-      const jobIds = jobs.map(({ _id }) => _id);
-      const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
-      this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
+      //const jobs = this.jobs.filter(x => !x.is_deleted);
+      //const jobIds = jobs.map(({ _id }) => _id);
+      //const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
+      //this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
     },
     next(n) {
       // this handles all the logic of moving from one step to the next
@@ -1192,17 +1188,11 @@ export default {
       this.clearErrors();
       const validation = this.validateFullJob();
       if (validation[0]) {
-        if ((this.activeJobs.length + this.expiredJobs.length < 1)) {
-          console.log('this.jobs.length');
-          console.log(this.jobs.length);
-          console.log('this.activeJobs.length');
-          console.log(this.activeJobs.length);
-          console.log('this.expiredJobs.length');
-          console.log(this.expiredJobs.length); // REPLACE
-          this.postJob();
+        if ((this.postedJobs.length < 1)) {
+          this.postJob(); // post job for free
         } else {
           this.loading = true;
-          this.saveJob('goToBilling');
+          this.saveJob('goToBilling'); // save job and go to billing in
         }
       } else if (validation[1]) {
         this.form3Error = validation[1];
