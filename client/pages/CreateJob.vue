@@ -489,10 +489,12 @@
           </v-tab-item>
 
           <v-tab-item id="billing">
-            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;">
-              <Billing
-              :jobId="jobId"
-              />
+            <div class="main-cont-large" >
+              <div style="width: 100%; max-width: 500px; margin: auto; margin-top: 100px;">
+                <Billing
+                :jobId="jobId"
+                />
+              </div>
             </div>
           </v-tab-item>
 

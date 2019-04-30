@@ -215,7 +215,7 @@
                   <v-flex xs5 sm5  style="padding: 0px">
                     <p>Job Status</p>
                     <h2 style="padding-bottom: 10px; color: red;">Expired</h2>
-                    <k-btn small color="red" @click="repostJob(job._id)">
+                    <k-btn small color="red" @click="openRepostDialog(job._id)">
                       Re-post Job
                     </k-btn>
                   </v-flex>
@@ -263,13 +263,13 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialogs.showRepost">
+    <v-dialog v-model="dialogs.showRepost" max-width="500px">
       <v-card>
-        <v-card-title class="headline">
-          Repost this job
-        </v-card-title>
-        <v-card-text class="pt-0">
-          This will re-activate your job and display it again for another 30 days
+        <v-card-text class="pt-0" style="margin-top: 20px;">
+          <Billing
+          :jobId="dialogs.currentJobId" title="Repost this job"
+          @success="afterRepost"
+          />
         </v-card-text>
         <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">
           Some kind of error occured. Please try again later.
@@ -283,15 +283,16 @@
           </v-btn>
         </v-card-actions>
         <v-card-actions v-else>
-          <v-btn flat="flat" @click.native="repostJob(dialogs.currentJobId)">
+          <!--<v-btn flat="flat" @click.native="repostJob(dialogs.currentJobId)">
             Repost
           </v-btn>
-          <v-btn flat="flat" @click.native="dialogs.showRepost = false">
+          <v-btn flat="flat" @click.native="dialogs.showRepost = false" style="padding-top:0px;">
             Cancel
-          </v-btn>
+          </v-btn>-->
         </v-card-actions>
       </v-card>
     </v-dialog>
+
   </v-container>
 </template>
 <script>
@@ -306,6 +307,7 @@
   import queries from '@/constants/queries';
   import EventBus from '@/EventBus';
   import axios from 'axios';
+  import Billing from '@/components/Billing';
   // import findIndex from 'lodash/findIndex';
 
   const findJobsQuery = gql`
@@ -323,6 +325,9 @@
         return;
       }
       this.getData();
+    },
+    components: {
+      Billing,
     },
     data() {
       return {
@@ -448,7 +453,16 @@
         this.dialogs.currentJobId = jobId;
         this.dialogs.showRepost = true;
       },
+
+      afterRepost() {
+        this.dialogs.success = true;
+        this.getData(true); // fetches using networkOnly
+        window.setTimeout(() => { this.dialogs.showRepost = false; }, 2000);
+      },
+
       repostJob(jobId) {
+        // the older version to repost the job directly without paying. No longer used after creating the Billing component,
+        // currently using afterRepost to close the dialog, reposting is handled by the function in Billing component
         axios.post(`job/repost/${jobId}`).then(res => {
           if (res.data.success) {
             this.dialogs.success = true;

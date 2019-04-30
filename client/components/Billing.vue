@@ -12,7 +12,7 @@
       Post your job ($5.99)
     </div> -->
     <div class="bi-cont mb-2">
-      <h2 class="mb-1">Post your job</h2>
+      <h2 class="mb-1">{{computeTitleText}}</h2>
       <p>Your job will be displayed for 30 days before expiring</p>
     </div>
     <div class="bi-cont mb-3">
@@ -34,6 +34,7 @@ export default {
     // actions: Array,
     jobId: String,
     buttonText: String,
+    title: String,
   },
   data() {
     return {
@@ -63,6 +64,9 @@ export default {
     totalPriceString() {
       const total = this.postJobPrice; // later will be combined with promote job price and stuff
       return `$${total}`;
+    },
+    computeTitleText() {
+      return this.title || 'Post your job';
     },
   },
   methods: {
