@@ -461,14 +461,14 @@
     },
     computed: {
       activeJobs() { // and unexpired
-        return this.jobs.filter(x => x.active && !x.is_deleted && this.getExpiredDaysDiff(x.date) > 0);
+        return this.jobs.filter(x => x.active && !x.is_deleted && !x.expired);
       },
       unpostedJobs() {
         return this.jobs.filter(x => !x.active && !x.is_deleted && !x.expired);
       },
       expiredJobs() {
         // you can also use JobHelper.isJobExpired if you have expiry_date
-        return this.jobs.filter(x => this.getExpiredDaysDiff(x.date) <= 0 && !x.is_deleted);
+        return this.jobs.filter(x => x.expired);
       },
       getUnpostedJobsString() {
         return this.getJobCountString('Unposted', this.unpostedJobs.length);
