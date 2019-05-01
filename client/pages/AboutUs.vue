@@ -6,24 +6,22 @@
 
                 <div class="section">
                     <h2>What is Kunvet?</h2>
-                    <p>Kunvet is a professional, local collaboration platform, where people looking for help are connected with people seeking for new opportunities. People use Kunvet for a variety of purposes, from looking for help on a personal project to hiring a new employee.</p>
+                    <p>Kunvet is a professional, local collaboration platform where people looking for help are connected with people seeking for new opportunities. People use Kunvet for a variety of purposes, from professionals seeking qualified candidates for a job opening, to students looking for the perfect tutor.</p>
                 </div>
 
                 <div class="section">
                     <h2>Why choose Kunvet?</h2>
-                    <p>Kunvet is user-centric. We put the needs of our users as our top priority.<br>
-                    For an opportunity-seeker, Kunvet provides her with the latest opportunities in the local community. On top of that, she has much more control over her application sent through Kunvet, since she would know what happened to her application after she has applied to an opportunity.<br>
-                    For someone seeking for help, Kunvet provides him with local and relevant applicants within a short amount of time. On top of that, it costs as little as $5 to seek for help on Kunvet.</p>
+                    <p>Kunvet is user-centric. The needs of our users are our top priority. For an opportunity-seeker, Kunvet provides the applicant with the most recent, up-to-date, and relevant opportunities local to her location. After applying, Kunvet keeps the applicant informed in the application process, with updates and messages from the employer. For someone seeking help, Kunvet efficiently provides connections to qualified, local applicants. It costs as little as the price of a cup of coffee to post an opportunity on Kunvet!</p>
                 </div>
 
                 <div class="section">
                     <h2>What is our Mission?</h2>
-                    <p>We once were people searching for new opportunities, too. We were frustrated by seeing irrelevant, repetitive and insufficient amount of local opportunities on the internet. So, we decided to create a platform where people would not experience the frustrations we did.</p>
+                    <p>In the job search process, we experienced first-hand the inefficiencies and flaws on various job sites. There was frustration in the number of irrelevant, repetitive, and out-of-date postings, and oftentimes a much too broad geographical filter. We created Kunvet to take these frustrations out of the job search process. Our mission is to provide applicants and employers alike with a seamless application process with highly-relevant, up-to-date, and local postings.</p>
                 </div>
 
                 <div class="section">
                     <h2>What is next?</h2>
-                    <p>We are constantly upgrading our platform to provide our users with better service.</p>
+                    <p>We are constantly upgrading our platform to provide our users with a better experience. Please feel free to let us know your comments and feedback through our Contact Us page.</p>
                 </div>
             </div>
         </div>
