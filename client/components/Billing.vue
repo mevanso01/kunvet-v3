@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     async init() {
-      console.log('function called');
       const tokenResponse = await Axios.get('/billing/getAuthorization');
       dropin.create({
         authorization: tokenResponse.data,
@@ -105,11 +104,8 @@ export default {
         actions: this.actions,
         paymentMethodNonce: nonce,
       };
-      console.log('in chargeUser.');
-      console.log(this.jobId);
       Axios.post('/billing/createTransaction', paymentData).then((res => {
         if (res.data.success) {
-          console.log('success');
           this.$emit('success');
           // show them thanks for creating a job/promoting
           this.nonceUsed = true;

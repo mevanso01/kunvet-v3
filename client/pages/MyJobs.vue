@@ -269,7 +269,7 @@
         <v-card-text class="pt-0" style="margin-top: 20px;">
           <Billing ref="BillingCMP"
           :jobId="dialogs.currentJobId" title="Repost this job"
-          @success="afterRepost(dialogs.currentJob)"
+          @success="afterRepost()"
           />
         </v-card-text>
         <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">
@@ -278,11 +278,6 @@
         <v-card-text v-else-if="dialogs.success" class="pt-0" style="color: green;">
           Successfully reposted!
         </v-card-text>
-        <v-card-actions v-if="dialogs.success && !dialogs.errorOccured">
-          <v-btn flat="flat" @click.native="dialogs.showRepost = false">
-            Close
-          </v-btn>
-        </v-card-actions>
         <v-card-actions v-else>
           <!--<v-btn flat="flat" @click.native="repostJob(dialogs.currentJobId)">
             Repost
@@ -449,25 +444,16 @@
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
       },
       openRepostDialog(job) {
-        console.log(this.$refs.BillingCMP);
         this.$refs.BillingCMP.refreshDropIn();
         this.dialogs.errorOccured = false;
         this.dialogs.success = false;
         this.dialogs.currentJobId = job._id;
-        this.dialogs.currentJob = job;
-        console.log('job');
-        console.log(job);
-        console.log('job._id');
-        console.log(job._id);
         this.dialogs.showRepost = true;
       },
 
-      afterRepost(job) {
+      afterRepost() {
         this.dialogs.success = true;
         this.getData(true); // fetches using networkOnly
-        console.log('successful');
-        console.log(job);
-        console.log(this.jobs);
         window.setTimeout(() => { this.dialogs.showRepost = false; }, 1000);
       },
 

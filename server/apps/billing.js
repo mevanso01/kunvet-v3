@@ -3,6 +3,7 @@ import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import BraintreeGateway from '@/BraintreeGateway';
 import Models from '@/mongodb/Models';
+import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
 
 const bodyParser = require('koa-bodyparser');
@@ -38,8 +39,9 @@ const ACTIONS = {
       });
 
       job.active = true;
+      job.date = new Date(Date.now());
+      job.expiry_date = DateHelper.getExpiryDate(job.date, 30);
       job.expired = false;
-      job.expiry_date = new Date(Date.now());
       return job.save();
     },
   },
@@ -148,13 +150,11 @@ router.post('/createTransaction', async (ctx) => {
     });
     return;
   }
-  console.log('trying to post the job');
 
   const req = ctx.request.body;
 
   // Validation
   let credits = 0;
-  console.log('trying to post the job 1');
   if (!Array.isArray(req.actions)) {
     ctx.status = 400;
     ctx.body = JSON.stringify({
@@ -163,7 +163,6 @@ router.post('/createTransaction', async (ctx) => {
     });
     return;
   }
-  console.log('trying to post the job 2');
   for (const action of req.actions) {
     if (!Object.prototype.hasOwnProperty.call(ACTIONS, action.name)) {
       // Invalid action
@@ -187,7 +186,6 @@ router.post('/createTransaction', async (ctx) => {
 
     credits += ACTIONS[action.name].price;
   }
-  console.log('trying to post the job 3', req);
   // Charge
   try {
     const sale = util.promisify(BraintreeGateway.transaction.sale).bind(BraintreeGateway.transaction);
@@ -198,13 +196,9 @@ router.post('/createTransaction', async (ctx) => {
         submitForSettlement: true,
       },
     });
-    console.log('trying to post the job 4');
     if (!result.success) {
-      console.log('trying to post the job 5');
-      console.log(result);
       throw new Error(result.message);
     }
-    console.log('trying to post the job 6');
   } catch (e) {
     ctx.status = 500;
     ctx.body = JSON.stringify({
@@ -228,7 +222,6 @@ router.post('/createTransaction', async (ctx) => {
       return;
     }
   }
-  console.log('successfully posted the job');
   ctx.body = JSON.stringify({
     success: true,
     message: 'Purchase completed successfully',
