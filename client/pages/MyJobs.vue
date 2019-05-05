@@ -134,6 +134,7 @@
                   <k-btn color="Salmon" @click="onShowJobDialog(job)" small>
                     Delete
                   </k-btn>
+                  <!--<k-btn @click="openRepostDialog(job._id)"> Test </k-btn>-->
                 </v-flex>
               </v-layout>
               </v-flex>
@@ -215,7 +216,7 @@
                   <v-flex xs5 sm5  style="padding: 0px">
                     <p>Job Status</p>
                     <h2 style="padding-bottom: 10px; color: red;">Expired</h2>
-                    <k-btn small color="red" @click="openRepostDialog(job._id)">
+                    <k-btn small color="red" @click="openRepostDialog(job)">
                       Re-post Job
                     </k-btn>
                   </v-flex>
@@ -266,9 +267,9 @@
     <v-dialog v-model="dialogs.showRepost" max-width="500px">
       <v-card>
         <v-card-text class="pt-0" style="margin-top: 20px;">
-          <Billing
+          <Billing ref="BillingCMP"
           :jobId="dialogs.currentJobId" title="Repost this job"
-          @success="afterRepost"
+          @success="afterRepost(dialogs.currentJob)"
           />
         </v-card-text>
         <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">
@@ -447,17 +448,27 @@
       getJobCountString(jobType, length) {
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
       },
-      openRepostDialog(jobId) {
+      openRepostDialog(job) {
+        console.log(this.$refs.BillingCMP);
+        this.$refs.BillingCMP.refreshDropIn();
         this.dialogs.errorOccured = false;
         this.dialogs.success = false;
-        this.dialogs.currentJobId = jobId;
+        this.dialogs.currentJobId = job._id;
+        this.dialogs.currentJob = job;
+        console.log('job');
+        console.log(job);
+        console.log('job._id');
+        console.log(job._id);
         this.dialogs.showRepost = true;
       },
 
-      afterRepost() {
+      afterRepost(job) {
         this.dialogs.success = true;
         this.getData(true); // fetches using networkOnly
-        window.setTimeout(() => { this.dialogs.showRepost = false; }, 2000);
+        console.log('successful');
+        console.log(job);
+        console.log(this.jobs);
+        window.setTimeout(() => { this.dialogs.showRepost = false; }, 1000);
       },
 
       repostJob(jobId) {
@@ -467,7 +478,7 @@
           if (res.data.success) {
             this.dialogs.success = true;
             this.getData(true); // fetches using networkOnly
-            window.setTimeout(() => { this.dialogs.showRepost = false; }, 2000);
+            window.setTimeout(() => { this.dialogs.showRepost = false; }, 1000);
           } else {
             this.dialogs.errorOccured = true;
           }

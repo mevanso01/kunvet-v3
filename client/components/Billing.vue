@@ -18,7 +18,7 @@
     <div class="bi-cont mb-3">
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
-    <div class="dropin-container"></div>
+    <div ref="dropin" class="dropin-container"></div>
     <k-btn @click="confirmPayment">{{ confirmButtonText }}</k-btn>
   </div>
 </template>
@@ -41,18 +41,11 @@ export default {
       instance: null,
       actions: [],
       postJobPrice: 4.99,
+      nonceUsed: false,
     };
   },
-  async mounted() {
-    const tokenResponse = await Axios.get('/billing/getAuthorization');
-    dropin.create({
-      authorization: tokenResponse.data,
-      container: '.dropin-container',
-      vaultManager: true,
-    }, (createErr, instance) => {
-      this.instance = instance;
-      console.log(createErr);
-    });
+  mounted() {
+    this.init();
   },
   computed: {
     confirmButtonText() {
@@ -70,13 +63,35 @@ export default {
     },
   },
   methods: {
+    async init() {
+      console.log('function called');
+      const tokenResponse = await Axios.get('/billing/getAuthorization');
+      dropin.create({
+        authorization: tokenResponse.data,
+        container: '.dropin-container',
+        vaultManager: true,
+      }, (createErr, instance) => {
+        this.instance = instance;
+        console.log(createErr);
+      });
+    },
+
+    refreshDropIn() {
+      if (this.nonceUsed === true) {
+        console.log('this.$refs.dropin ', this.$refs.dropin);
+        this.$refs.dropin.innerHTML = '';
+        this.init();
+      }
+    },
+
     confirmPayment() {
       this.actions = [{
         name: 'activateJob',
         jobId: this.jobId,
       }];
       this.instance.requestPaymentMethod((err, payload) => {
-        console.log(err, payload.description);
+        console.log(err, payload);
+        console.log('payload nonce ', payload.nonce);
         const creditCardNonce = payload.nonce;
         this.chargeUser(creditCardNonce);
       });
@@ -90,12 +105,14 @@ export default {
         actions: this.actions,
         paymentMethodNonce: nonce,
       };
-
+      console.log('in chargeUser.');
+      console.log(this.jobId);
       Axios.post('/billing/createTransaction', paymentData).then((res => {
         if (res.data.success) {
           console.log('success');
           this.$emit('success');
           // show them thanks for creating a job/promoting
+          this.nonceUsed = true;
         } else {
           console.log('error');
         }
