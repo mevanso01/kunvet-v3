@@ -454,7 +454,7 @@
       afterRepost() {
         this.dialogs.success = true;
         this.getData(true); // fetches using networkOnly
-        window.setTimeout(() => { this.dialogs.showRepost = false; }, 1000);
+        window.setTimeout(() => { this.dialogs.showRepost = false; }, 400);
       },
 
       repostJob(jobId) {
