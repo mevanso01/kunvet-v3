@@ -448,6 +448,7 @@ const AccountSchema = Mongoose.Schema({
     ],
   },
   major: String,
+  summary: String,
   display_email: {
     type: String,
   },
