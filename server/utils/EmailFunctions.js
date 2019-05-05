@@ -46,19 +46,23 @@ export default {
     };
   */
   async sendApplicationStatus(user, emailBody) {
+    console.log('sendApplicationStatus');
     if (user.preferences.applicationStatusEmails === 'Off') {
+      console.log('User has application status emails turned off');
       return ApiResponse();
     }
+    console.log('User has application status emails turned on');
     checkEmailBody(emailBody); // verifies that the emailBody is sending all values
+    console.log('meow');
     try {
       const mailer = new Mailer();
       await mailer.sendTemplate(
         user.email,
-        `application-${status}`,
+        `application-${emailBody.status}`,
         { replyTo: emailBody.replyTo,
           fname: emailBody.fname,
           name: emailBody.name,
-          jobname: emailBody.jobName },
+          jobName: emailBody.jobName },
       );
     } catch (e) {
       Logger.error(e);
