@@ -38,6 +38,8 @@ const ACTIONS = {
       });
 
       job.active = true;
+      job.expired = false;
+      job.expiry_date = new Date(Date.now());
       return job.save();
     },
   },
