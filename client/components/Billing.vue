@@ -15,14 +15,19 @@
       Post your job ($5.99)
     </div> -->
     <div class="bi-cont mb-2">
-      <h2 class="mb-1">Post your job</h2>
+      <h2 class="mb-1">{{computeTitleText}}</h2>
       <p>Your job will be displayed for 30 days before expiring</p>
     </div>
     <div class="bi-cont mb-3">
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
+<<<<<<< HEAD
     <div class="dropin-container"></div>
     <k-btn class="mt-3" @click="confirmPayment">{{ confirmButtonText }}</k-btn>
+=======
+    <div ref="dropin" class="dropin-container"></div>
+    <k-btn @click="confirmPayment">{{ confirmButtonText }}</k-btn>
+>>>>>>> 16fe39cdc5ec9aa456b5c9fb3480f4066d6e1553
   </div>
 </template>
 <script>
@@ -37,24 +42,18 @@ export default {
     // actions: Array,
     jobId: String,
     buttonText: String,
+    title: String,
   },
   data() {
     return {
       instance: null,
       actions: [],
       postJobPrice: 4.99,
+      nonceUsed: false,
     };
   },
-  async mounted() {
-    const tokenResponse = await Axios.get('/billing/getAuthorization');
-    dropin.create({
-      authorization: tokenResponse.data,
-      container: '.dropin-container',
-      vaultManager: true,
-    }, (createErr, instance) => {
-      this.instance = instance;
-      console.log(createErr);
-    });
+  mounted() {
+    this.init();
   },
   computed: {
     confirmButtonText() {
@@ -67,15 +66,39 @@ export default {
       const total = this.postJobPrice; // later will be combined with promote job price and stuff
       return `$${total}`;
     },
+    computeTitleText() {
+      return this.title || 'Post your job';
+    },
   },
   methods: {
+    async init() {
+      const tokenResponse = await Axios.get('/billing/getAuthorization');
+      dropin.create({
+        authorization: tokenResponse.data,
+        container: '.dropin-container',
+        vaultManager: true,
+      }, (createErr, instance) => {
+        this.instance = instance;
+        console.log(createErr);
+      });
+    },
+
+    refreshDropIn() {
+      if (this.nonceUsed === true) {
+        console.log('this.$refs.dropin ', this.$refs.dropin);
+        this.$refs.dropin.innerHTML = '';
+        this.init();
+      }
+    },
+
     confirmPayment() {
       this.actions = [{
         name: 'activateJob',
         jobId: this.jobId,
       }];
       this.instance.requestPaymentMethod((err, payload) => {
-        console.log(err, payload.description);
+        console.log(err, payload);
+        console.log('payload nonce ', payload.nonce);
         const creditCardNonce = payload.nonce;
         this.chargeUser(creditCardNonce);
       });
@@ -89,12 +112,11 @@ export default {
         actions: this.actions,
         paymentMethodNonce: nonce,
       };
-
       Axios.post('/billing/createTransaction', paymentData).then((res => {
         if (res.data.success) {
-          console.log('success');
           this.$emit('success');
           // show them thanks for creating a job/promoting
+          this.nonceUsed = true;
         } else {
           console.log('error');
         }

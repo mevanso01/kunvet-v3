@@ -492,11 +492,20 @@
           </v-tab-item>
 
           <v-tab-item id="billing">
+<<<<<<< HEAD
             <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;">
               <Billing
               :jobId="jobId"
               @success="tab = 'success-tab'"
               />
+=======
+            <div class="main-cont-large" >
+              <div style="width: 100%; max-width: 500px; margin: auto; margin-top: 100px;">
+                <Billing
+                :jobId="jobId"
+                />
+              </div>
+>>>>>>> 16fe39cdc5ec9aa456b5c9fb3480f4066d6e1553
             </div>
           </v-tab-item>
 

@@ -3,6 +3,7 @@ import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import BraintreeGateway from '@/BraintreeGateway';
 import Models from '@/mongodb/Models';
+import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
 
 const bodyParser = require('koa-bodyparser');
@@ -38,8 +39,9 @@ const ACTIONS = {
       });
 
       job.active = true;
+      job.date = new Date(Date.now());
+      job.expiry_date = DateHelper.getExpiryDate(job.date, 30);
       job.expired = false;
-      job.expiry_date = new Date(Date.now());
       return job.save();
     },
   },
@@ -153,7 +155,6 @@ router.post('/createTransaction', async (ctx) => {
 
   // Validation
   let credits = 0;
-
   if (!Array.isArray(req.actions)) {
     ctx.status = 400;
     ctx.body = JSON.stringify({
@@ -162,7 +163,6 @@ router.post('/createTransaction', async (ctx) => {
     });
     return;
   }
-
   for (const action of req.actions) {
     if (!Object.prototype.hasOwnProperty.call(ACTIONS, action.name)) {
       // Invalid action
@@ -186,7 +186,6 @@ router.post('/createTransaction', async (ctx) => {
 
     credits += ACTIONS[action.name].price;
   }
-
   // Charge
   try {
     const sale = util.promisify(BraintreeGateway.transaction.sale).bind(BraintreeGateway.transaction);
@@ -197,7 +196,6 @@ router.post('/createTransaction', async (ctx) => {
         submitForSettlement: true,
       },
     });
-
     if (!result.success) {
       throw new Error(result.message);
     }
@@ -224,7 +222,6 @@ router.post('/createTransaction', async (ctx) => {
       return;
     }
   }
-
   ctx.body = JSON.stringify({
     success: true,
     message: 'Purchase completed successfully',
