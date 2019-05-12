@@ -13,7 +13,6 @@
       height: 230px;
       .header-text {
         font-size: 18px;
-
         // font-weight: bold;
       }
       .counter-text {

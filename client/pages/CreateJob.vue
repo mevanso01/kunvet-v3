@@ -577,7 +577,7 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog v-model="true || dialogs.welcome" width="480" content-class="custom-width">
+      <v-dialog v-model="dialogs.welcome" width="480" content-class="custom-width">
         <v-card>
           <v-card-text style="padding-bottom: 24px;">
             <img :src="welcomeImg" style="display: block; margin: auto; max-height: 42px; max-width: 100%;" alt="welcome"/>
