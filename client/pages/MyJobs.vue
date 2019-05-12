@@ -82,14 +82,14 @@
               </v-flex>
               <v-flex xs12 sm6 md5>
                 <v-layout>
-                  <v-flex xs7 sm7  style="padding: 0px">
+                  <v-flex xs6 style="padding: 0px">
                     <p>Applicants</p>
                     <h2 style="color: grey; padding-bottom: 10px; ">—</h2>
                     <k-btn color="#448ef6" small disabled>
                       View Applicants
                     </k-btn>
                   </v-flex>
-                  <v-flex xs5git  sm5  style="padding: 0px">
+                  <v-flex xs6 style="padding: 0px">
                     <p>Job Status</p>
                     <h2 style="color: orange; padding-bottom: 10px;">Unposted</h2>
                     <router-link :to="`/createjob/${job._id}`">
@@ -98,7 +98,7 @@
                       </k-btn>
                     </router-link>
                   </v-flex>
-                  <v-flex xs5 sm5  style="padding: 0px">
+                  <!-- <v-flex xs5 sm5  style="padding: 0px">
                     <p>Promotion Status</p>
                     <h2 style="padding-bottom: 10px; ">
                       —
@@ -106,7 +106,7 @@
                     <k-btn disabled small color="grey">
                       Post Job First
                     </k-btn>
-                  </v-flex>
+                  </v-flex> -->
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -140,7 +140,7 @@
               </v-flex>
               <v-flex xs12 sm6 md5>
                 <v-layout>
-                  <v-flex xs7 sm7  style="padding: 0px">
+                  <v-flex xs6  style="padding: 0px">
                     <p>Applicants</p>
                     <h2 style="padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
                     <router-link :to="`/applicants`">
@@ -153,24 +153,23 @@
                       </k-btn>
                   </v-flex>
 
-                  <v-flex xs5 sm5  style="padding: 0px">
+                  <v-flex xs6  style="padding: 0px">
                     <p>Job Status</p>
                     <h2 style="padding-bottom: 10px; color: #38a238;">Active</h2>
                     <k-btn disabled small>
                       Re-post Job
                     </k-btn>
                   </v-flex>
-                  <v-flex xs5 sm5  style="padding: 0px">
+                  <!-- <v-flex xs5 sm5  style="padding: 0px">
                     <p>Promotion Status</p>
                     <h2 style="padding-bottom: 10px;" :style="{color:
                     job.promoted ? 'black': 'orange'}">
                       {{job.promoted?'Promoted':'Unpromoted'}}
                     </h2>
-                    <k-btn :disabled="job.promoted" color="orange" small>
-                      <!--todo: initiate billing on click-->
+                    <k-btn :disabled="job.promoted" color="orange" small>\
                       Promote Job
                     </k-btn>
-                  </v-flex>
+                  </v-flex> -->
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -203,7 +202,7 @@
               </v-flex>
               <v-flex xs12 sm6 md5>
                 <v-layout>
-                  <v-flex xs7 sm7  style="padding: 0px">
+                  <v-flex xs6 style="padding: 0px">
                     <p>Applicants</p>
                     <h2 style="padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
                     <router-link :to="`/applicants`">
@@ -213,14 +212,14 @@
                       </k-btn>
                     </router-link>
                   </v-flex>
-                  <v-flex xs5 sm5  style="padding: 0px">
+                  <v-flex xs6 style="padding: 0px">
                     <p>Job Status</p>
                     <h2 style="padding-bottom: 10px; color: red;">Expired</h2>
                     <k-btn small color="red" @click="openRepostDialog(job)">
                       Re-post Job
                     </k-btn>
                   </v-flex>
-                  <v-flex xs5 sm5  style="padding: 0px">
+                  <!-- <v-flex xs5 sm5  style="padding: 0px">
                     <p>Promotion Status</p>
                     <h2 style="padding-bottom: 10px;">
                       —
@@ -228,7 +227,7 @@
                     <k-btn disabled small>
                       Repost Job First
                     </k-btn>
-                  </v-flex>
+                  </v-flex> -->
                 </v-layout>
               </v-flex>
             </v-layout>
