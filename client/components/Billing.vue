@@ -5,6 +5,9 @@
   .dropin-container .braintree-placeholder {
     display: none !important;
   }
+  .dropin-container .braintree-upper-container:before {
+    background-color: white !important;
+  }
 </style>
 <template>
   <div class="billing-component">
@@ -19,7 +22,7 @@
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
     <div class="dropin-container"></div>
-    <k-btn @click="confirmPayment">{{ confirmButtonText }}</k-btn>
+    <k-btn class="mt-3" @click="confirmPayment">{{ confirmButtonText }}</k-btn>
   </div>
 </template>
 <script>
