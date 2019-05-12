@@ -21,13 +21,8 @@
     <div class="bi-cont mb-3">
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
-<<<<<<< HEAD
-    <div class="dropin-container"></div>
-    <k-btn class="mt-3" @click="confirmPayment">{{ confirmButtonText }}</k-btn>
-=======
     <div ref="dropin" class="dropin-container"></div>
-    <k-btn @click="confirmPayment">{{ confirmButtonText }}</k-btn>
->>>>>>> 16fe39cdc5ec9aa456b5c9fb3480f4066d6e1553
+    <k-btn class="mt-3" @click="confirmPayment">{{ confirmButtonText }}</k-btn>
   </div>
 </template>
 <script>
