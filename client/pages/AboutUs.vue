@@ -6,12 +6,12 @@
 
                 <div class="section">
                     <h2>What is Kunvet?</h2>
-                    <p>Kunvet is a professional, local collaboration platform where people looking for help are connected with people seeking for new opportunities. People use Kunvet for a variety of purposes, from professionals seeking qualified candidates for a job opening, to students looking for the perfect tutor.</p>
+                    <p>Kunvet is a professional, local job platform where people looking for help are connected with people seeking for new opportunities. People use Kunvet for a variety of purposes, from professionals seeking qualified candidates for a job opening, to students looking for the perfect tutor.</p>
                 </div>
 
                 <div class="section">
                     <h2>Why choose Kunvet?</h2>
-                    <p>Kunvet is user-centric. The needs of our users are our top priority. For an opportunity-seeker, Kunvet provides the applicant with the most recent, up-to-date, and relevant opportunities local to her location. After applying, Kunvet keeps the applicant informed in the application process, with updates and messages from the employer. For someone seeking help, Kunvet efficiently provides connections to qualified, local applicants. It costs as little as the price of a cup of coffee to post an opportunity on Kunvet!</p>
+                    <p>Kunvet is user-centric. The needs of our users are our top priority.<br>For an opportunity-seeker, Kunvet provides the applicant with the most recent, up-to-date, and relevant opportunities local to her location. After applying, Kunvet keeps the applicant informed in the application process, with updates and messages from the employer. For someone seeking help, Kunvet efficiently provides connections to qualified, local applicants. It costs as little as the price of a cup of coffee to post an opportunity on Kunvet!</p>
                 </div>
 
                 <div class="section">
