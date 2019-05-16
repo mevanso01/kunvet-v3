@@ -264,7 +264,7 @@
             <v-divider class="acct-divider" />
 
             <v-layout row wrap>
-              <v-flex v-if="true || showResumeSection" xs12 sm6 md5 class="padding-sm-right">
+              <v-flex v-if="showResumeSection" xs12 sm6 md5 class="padding-sm-right">
                 <account-header
                   :svg="svgs.resume"
                   :text="'My Files'"
