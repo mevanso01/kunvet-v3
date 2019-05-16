@@ -3,6 +3,7 @@ import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import BraintreeGateway from '@/BraintreeGateway';
 import Models from '@/mongodb/Models';
+import Mailer from '@/utils/Mailer';
 import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
 
@@ -42,7 +43,19 @@ const ACTIONS = {
       job.date = new Date(Date.now());
       job.expiry_date = DateHelper.getExpiryDate(job.date, 30);
       job.expired = false;
-      return job.save();
+      await job.save();
+
+      const mailer = new Mailer();
+      const locals = {
+        jobname: job.title,
+        fname: ctx.state.user.firstname,
+        lname: ctx.state.user.lastname,
+      };
+      await mailer.sendTemplate(
+        ctx.state.user.email,
+        'job-created',
+        locals,
+      );
     },
   },
   promoteJob: {
