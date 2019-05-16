@@ -573,10 +573,21 @@ applyDialog
           </v-layout>
         </v-container>
         <div class="bottom-button-container">
-          <k-btn style="padding: 0 32px;" @click="openApplyDialog"
-                 :disabled="applied">{{ applied ? 'Applied'
-            : 'Apply' }}
-          </k-btn>
+          <v-tooltip bottom :disabled="!findJob.expired">
+            <template slot="activator">
+              <k-btn style="padding: 0 32px;" @click="openApplyDialog"
+                     :disabled="applied || findJob.expired">{{ findJob.expired ?
+                'Expired': applied ?
+                'Applied'
+                : 'Apply' }}
+              </k-btn>
+            </template>
+            <span>This job is not taking new
+              applications
+              at the
+              moment</span>
+
+          </v-tooltip>
 
           <v-tooltip bottom v-if="this.$store.state.acct === 0">
             <template slot="activator">
