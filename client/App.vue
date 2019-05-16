@@ -132,7 +132,12 @@
             <router-link to="/contact"><p style="color: #b3b3b3">Contact Us</p></router-link>
           </v-flex>
           <v-flex>
-            <router-link to="/terms"><p style="color: #b3b3b3">Terms & Policy</p></router-link>
+            <router-link
+              to="/terms"><p style="color: #b3b3b3">Terms and Conditions</p></router-link>
+          </v-flex>
+          <v-flex>
+            <router-link
+              to="/pricing"><p style="color: #b3b3b3">Pricing and Refunds</p></router-link>
           </v-flex>
         </v-layout>
       </div>
