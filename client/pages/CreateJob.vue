@@ -492,7 +492,7 @@
           </v-tab-item>
 
           <v-tab-item id="billing">
-            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;">
+            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;" v-if="tab === 'billing'">
               <Billing
               :jobId="jobId"
               @success="tab = 'success-tab'"

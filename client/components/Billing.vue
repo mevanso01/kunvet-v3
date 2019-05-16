@@ -67,10 +67,11 @@ export default {
   },
   methods: {
     async init() {
+      this.$refs.dropin.innerHTML = ''; // just in case
       const tokenResponse = await Axios.get('/billing/getAuthorization');
       dropin.create({
         authorization: tokenResponse.data,
-        container: '.dropin-container',
+        container: this.$refs.dropin,
         vaultManager: true,
       }, (createErr, instance) => {
         this.instance = instance;

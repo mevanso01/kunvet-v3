@@ -69,59 +69,6 @@
         margin-bottom: 0;
       }
     }
-
-    .app_card{
-      width: 500px; 
-      margin-bottom: 16px;
-      border: 1px solid grey; 
-    }
-
-    .app_card:hover{
-      width: 500px; 
-      margin-bottom: 20px;
-      -webkit-box-shadow: 0px 0px 30px rgb(177, 176, 176);
-      -moz-box-shadow: 0px 0px 30px rgb(177, 176, 176);
-      box-shadow: 0px 0px 30px rgb(177, 176, 176);  
-    }
-
-    
-
-    .app_card_inside_black{
-      margin-bottom: 4px;
-      color: black;
-      font-size: 14npx;
-    }
-
-    .app_card_inside_grey{
-      margin-bottom: 4px;
-      color: grey; 
-      font-size: 12px; 
-    }
-
-    .app_name{
-      color:white; 
-      padding-left:110px; 
-      padding-top: 12px;
-      text-overflow: ellipsis;
-      font-size: 20px;
-    }
-
-    .app_img{
-      border-radius: 50%; 
-      position:absolute; 
-      width: 50px; 
-      margin-left:25px; 
-      margin-top:14px; 
-      -webkit-box-shadow: 1px 1px 5px 0px rgba(189,189,189,1);
-      -moz-box-shadow: 1px 1px 5px 0px rgba(189,189,189,1);
-      box-shadow: 1px 1px 5px 0px rgba(189,189,189,1);
-    }
-
-    .app_card_top_half{
-      height: 40px; 
-      background-color: #FF8080;
-    }
-
     @media (min-width: 601px) {
       .btn-row > a {
         padding-right: 8px;
@@ -200,7 +147,7 @@
 </style>
 <template>
   <v-container fluid class="applicants-page  page-height">
-    <v-layout row wrap> 
+    <v-layout row wrap>
       <v-flex xs12 v-if="jobs.length === 0">
         <div v-if="pageLoading" style="margin-top: 48px;">
           <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
@@ -230,31 +177,51 @@
         </v-flex>
         <div class="main-cont-large">
           <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="applicant">
+            <div class="inner" style="position: relative;">
+              <div class="">
+                <v-layout row wrap style="padding-bottom: 12px;">
+                  <v-flex xs12 sm6 style="padding-bottom: 0; cursor: pointer;" @click="openSideResume(item);">
+                      <h2 class="new-applicant-card__title">{{ item.name }}</h2>
+                      <p v-if="item.school" style="overflow: hidden; margin-bottom: 0;">
+                          School: {{ item.school }}
+                      </p>
+                      <p v-else style="overflow: hidden; margin-bottom: 0;">
+                          No school info
+                      </p>
+                      <p v-if="item.degree" style="overflow: hidden; margin-bottom: 0;">
+                          Degree: {{ item.degree }}
+                      </p>
+                      <p v-if="item.major" style="overflow: hidden; margin-bottom: 0;">
+                          Major: {{ item.major }}
+                      </p>
+                      <!-- <p style="overflow: hidden; margin-bottom: 0;">
 
-          <v-card class="app_card">
-            <div class="app_card_top_half">
-              <img class="app_img" src="https://res.cloudinary.com/teepublic/image/private/s--qi-rS6WM--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-105,y_-76/co_rgb:ffffff,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-105,y_-76/bo_105px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1134,w_1134/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_jpg,h_630,q_90,w_630/v1510152305/production/designs/2035997_1.jpg">
-              <div class="app_name">{{item.name}}</div>
-            </div>
-            <v-card-title>
-              <div style="padding-left: calc(110px - 16px);">
-                <p class="grey--text app_card_inside_grey">Applied x days ago</p>
-                <p  v-if="item.school">School: {{item.school}}</p>
-                <p class="app_card_inside_black" v-else>School: No information provided</p>
-                <p class="app_card_inside_black" v-if="item.degree">Degree: {{item.degree}}</p>
-                <p class="app_card_inside_black" v-else>Degree: No information provided</p>
-                <p class="app_card_inside_black" v-if="item.major">Major: {{item.major}}</p>
-                <p class="app_card_inside_black" v-else>Major: No information provided</p>
-                <p class="app_card_inside_black" v-if="item.notes"><span class="app_card_inside_grey">Notes:</span><br>{{item.notes}}</p>
+                      </p> -->
+                  </v-flex>
+                  <v-flex xs12 sm6 style="padding-bottom: 0;">
+                    <div style="padding-top: 25px;">
+                      <span v-if="item.notes" style="color: grey;">
+                        <!-- Notes: {{ getApplicantNotesDisplayText(item) }} -->
+                        <pre style="font-family: Verdana; white-space: pre-line;">
+                          {{ item.notes }}
+                        </pre>
+                      </span>
+                    </div>
+                  </v-flex>
+                </v-layout>
+                <div class="btn-row">
+                  <!-- <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
+                  <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn> -->
+                  <a v-if="item.resumes.length >0" @click="openSideResume(item);">Show Resume</a>
+                  <a v-else style="text-decoration: none">No Resume</a>
+                  {{item.resume}}
+                  <a style="color: #616161;" @click="openInNewTab(item)">View More Information</a>
+                  <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
+                  <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->
+                </div>
+                <!-- <v-btn @click="openResumeInNewTab(item);">Open in new tab</v-btn> -->
               </div>
-            </v-card-title>
-            <div style="padding-bottom: 20px;">
-              <k-btn @click="openSideResume(item)" small style="margin-left: 115px;">Show Resume</k-btn>
-              <k-btn v-if="item.notes" small color="grey" style="margin-left: 16px">Edit Notes</k-btn>
-              <k-btn v-else small color="grey" style="margin-left: 16px">Add Notes</k-btn>
-
             </div>
-          </v-card>
           </div>
         </div>
       </template>

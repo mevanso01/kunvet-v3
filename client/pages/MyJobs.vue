@@ -3,11 +3,11 @@
     padding: 0;
     .main-cont-large {
       padding: 0 16px;
-      hr{
-          margin-top: 20px;
-          margin-bottom: 20px;
-          size:20px;
-        }
+      hr {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        size:20px;
+      }
     }
     .header-splash {
       height: 230px;
@@ -22,7 +22,7 @@
         line-height: 84px;
       }
     }
-    .list-bounds{
+    .list-bounds {
       margin-top: 30px;
     }
     @media (min-width: 601px) {
@@ -40,8 +40,6 @@
       }
     }
   }
-
-
 </style>
 <template>
   <v-container fluid class="post-jobs list-post page-height">
