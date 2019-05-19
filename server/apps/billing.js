@@ -50,6 +50,10 @@ const ACTIONS = {
         jobname: job.title,
         fname: ctx.state.user.firstname,
         lname: ctx.state.user.lastname,
+        postedby: job.posted_by,
+        address: job.address,
+        type: job.type,
+        salary: job.salary,
       };
       await mailer.sendTemplate(
         ctx.state.user.email,
