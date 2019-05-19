@@ -154,6 +154,7 @@
 </template>
 <script>
   import axios from 'axios';
+  import Store from '@/store';
 
   export default {
     props: ['emailProp'],
@@ -244,6 +245,13 @@
             this.$emit('verified');
           } else if (res.data.message && res.data.message === 'Invalid code') {
             this.invalidCode = true;
+          }
+          if (this.isVerified) {
+            Store.commit({
+              type: 'keepUserdata',
+              userdata: { email_verified: true },
+              updateLastFetched: false,
+            });
           }
         }).catch((err) => {
           this.loading = false;

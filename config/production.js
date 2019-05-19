@@ -41,7 +41,7 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  daysToExpire: 30,
+  daysToExpire: 60,
   daysToDeleteFromAlgolia: 90, // remove from algolia after expiration for > 90 days
   serverUrl: Credentials.serverUrl,
   googleMapsKey: Credentials.googleMapsKey,
@@ -55,6 +55,11 @@ module.exports = {
   algolia: {
     appId: Credentials.algolia.appId,
     searchApiKey: Credentials.algolia.searchApiKey,
+  },
+  braintree: {
+    sandbox: Credentials.braintree.sandbox,
+    publicKey: Credentials.braintree.publicKey,
+    merchantId: Credentials.braintree.merchantId,
   },
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
@@ -89,6 +94,9 @@ module.exports = {
     },
     algolia: {
       adminApiKey: Credentials.algolia.adminApiKey,
+    },
+    braintree: {
+      privateKey: Credentials.braintree.privateKey,
     },
   },
 };

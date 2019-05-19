@@ -1,5 +1,6 @@
 import AwsServerlessExpress from 'aws-serverless-express';
 import Scheduler from '@/Scheduler';
+import Logger from 'winston';
 
 export default class Lambda {
   static get(app) {
@@ -7,6 +8,7 @@ export default class Lambda {
     return (event, context) => {
       if (event.scheduler) {
         // Scheduler trigger
+        Logger.info('Running scheduled tasks');
         Scheduler.trigger().then(() => {
           context.succeed({
             success: true,

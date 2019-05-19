@@ -56,6 +56,15 @@ module.exports = {
     adminApiKey: '',
   },
 
+  // Braintree
+  // Get your Sandbox keys at https://www.braintreepayments.com/sandbox
+  braintree: {
+    sandbox: false,
+    merchantId: '',
+    privateKey: '',
+    publicKey: '',
+  },
+
   // Sentry
   sentryClientDsn: '',
   sentryServerDsn: '',

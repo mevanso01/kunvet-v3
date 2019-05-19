@@ -3,17 +3,16 @@
     padding: 0;
     .main-cont-large {
       padding: 0 16px;
-      hr{
-          margin-top: 20px;
-          margin-bottom: 20px;
-          size:20px;
-        }
+      hr {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        size:20px;
+      }
     }
     .header-splash {
       height: 230px;
       .header-text {
         font-size: 18px;
-
         // font-weight: bold;
       }
       .counter-text {
@@ -23,7 +22,7 @@
         line-height: 84px;
       }
     }
-    .list-bounds{
+    .list-bounds {
       margin-top: 30px;
     }
     @media (min-width: 601px) {
@@ -41,8 +40,6 @@
       }
     }
   }
-
-
 </style>
 <template>
   <v-container fluid class="post-jobs list-post page-height">
@@ -63,7 +60,7 @@
                     v-for="(job, idx) in unpostedJobs">
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
-                <p><timeago :since="job.date"/></p>
+                <p>Posted <timeago :since="job.date"/></p>
                 <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
@@ -82,22 +79,31 @@
               </v-flex>
               <v-flex xs12 sm6 md5>
                 <v-layout>
-                  <v-flex xs7 sm7  style="padding: 0px">
+                  <v-flex xs6 style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: grey; padding-bottom: 10px;">-</h2>
+                    <h2 style="color: grey; padding-bottom: 10px; ">—</h2>
                     <k-btn color="#448ef6" small disabled>
                       View Applicants
                     </k-btn>
                   </v-flex>
-                  <v-flex xs5git  sm5  style="padding: 0px">
-                    <p>Status</p>
+                  <v-flex xs6 style="padding: 0px">
+                    <p>Job Status</p>
                     <h2 style="color: orange; padding-bottom: 10px;">Unposted</h2>
                     <router-link :to="`/createjob/${job._id}`">
                       <k-btn color="orange" small>
-                        Post It
+                        Post Job
                       </k-btn>
                     </router-link>
                   </v-flex>
+                  <!-- <v-flex xs5 sm5  style="padding: 0px">
+                    <p>Promotion Status</p>
+                    <h2 style="padding-bottom: 10px; ">
+                      —
+                    </h2>
+                    <k-btn disabled small color="grey">
+                      Post Job First
+                    </k-btn>
+                  </v-flex> -->
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -111,7 +117,7 @@
           <div v-if="activeJobs.length > 0" v-for="(job, idx) in activeJobs">
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
-                <p><timeago :since="job.date"/></p>
+                <p>Posted <timeago :since="job.date"/></p>
                 <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
@@ -122,19 +128,20 @@
                       Edit
                     </k-btn>
                   </router-link>
-                  <k-btn color="Salmon" small @click="onShowJobDialog(job)">
+                  <k-btn color="Salmon" @click="onShowJobDialog(job)" small>
                     Delete
                   </k-btn>
+                  <!--<k-btn @click="handleRepostButton(job._id)"> Test </k-btn>-->
                 </v-flex>
               </v-layout>
               </v-flex>
               <v-flex xs12 sm6 md5>
                 <v-layout>
-                  <v-flex xs7 sm7  style="padding: 0px">
+                  <v-flex xs6  style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: #448ef6; padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
+                    <h2 style="padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
                     <router-link :to="`/applicants`">
-                      <k-btn v-if="getApplicantsFromJobs(job._id) > 0" color="#448ef6" small>
+                      <k-btn v-if="getApplicantsFromJobs(job._id) > 0" small>
                         View Applicants
                       </k-btn>
                       </router-link>
@@ -143,13 +150,23 @@
                       </k-btn>
                   </v-flex>
 
-                  <v-flex xs5 sm5  style="padding: 0px">
-                    <p>Status</p>
-                    <h2 style="color: #6effbf; padding-bottom: 10px;">Active</h2>
+                  <v-flex xs6  style="padding: 0px">
+                    <p>Job Status</p>
+                    <h2 style="padding-bottom: 10px; color: #38a238;">Active</h2>
                     <k-btn disabled small>
                       Re-post Job
                     </k-btn>
                   </v-flex>
+                  <!-- <v-flex xs5 sm5  style="padding: 0px">
+                    <p>Promotion Status</p>
+                    <h2 style="padding-bottom: 10px;" :style="{color:
+                    job.promoted ? 'black': 'orange'}">
+                      {{job.promoted?'Promoted':'Unpromoted'}}
+                    </h2>
+                    <k-btn :disabled="job.promoted" color="orange" small>\
+                      Promote Job
+                    </k-btn>
+                  </v-flex> -->
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -163,7 +180,7 @@
           <div v-if="expiredJobs.length > 0" v-for="(job, idx) in expiredJobs">
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
-                <p><timeago :since="job.date"/></p>
+                <p>Posted <timeago :since="job.date"/></p>
                 <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
@@ -174,7 +191,6 @@
                         Edit
                       </k-btn>
                     </router-link>
-
                     <k-btn color="Salmon" small @click="onShowJobDialog(job)">
                       Delete
                     </k-btn>
@@ -183,22 +199,32 @@
               </v-flex>
               <v-flex xs12 sm6 md5>
                 <v-layout>
-                  <v-flex xs7 sm7  style="padding: 0px">
+                  <v-flex xs6 style="padding: 0px">
                     <p>Applicants</p>
-                    <h2 style="color: #448ef6; padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
+                    <h2 style="padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
                     <router-link :to="`/applicants`">
-                      <k-btn v-if="getApplicantsFromJobs(job._id) > 0" color="#448ef6" small>
+                      <k-btn color="grey" v-if="getApplicantsFromJobs(job._id) >
+                       0" small>
                         View Applicants
                       </k-btn>
                     </router-link>
                   </v-flex>
-                  <v-flex xs5 sm5  style="padding: 0px">
-                    <p>Status</p>
-                    <h2 style="color: grey; padding-bottom: 10px;">Expired</h2>
-                    <k-btn small color="grey" @click="repostJob(job._id)">
+                  <v-flex xs6 style="padding: 0px">
+                    <p>Job Status</p>
+                    <h2 style="padding-bottom: 10px; color: red;">Expired</h2>
+                    <k-btn small color="red" @click="handleRepostButton(job)">
                       Re-post Job
                     </k-btn>
                   </v-flex>
+                  <!-- <v-flex xs5 sm5  style="padding: 0px">
+                    <p>Promotion Status</p>
+                    <h2 style="padding-bottom: 10px;">
+                      —
+                    </h2>
+                    <k-btn disabled small>
+                      Repost Job First
+                    </k-btn>
+                  </v-flex> -->
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -234,13 +260,13 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialogs.showRepost">
+    <v-dialog v-model="dialogs.showRepost" max-width="500px">
       <v-card>
-        <v-card-title class="headline">
-          Repost this job
-        </v-card-title>
-        <v-card-text class="pt-0">
-          This will re-activate your job and display it again for another 30 days
+        <v-card-text class="pt-0" style="margin-top: 20px;">
+          <Billing ref="BillingCMP"
+          :jobId="dialogs.currentJobId" title="Repost this job"
+          @success="afterRepost()"
+          />
         </v-card-text>
         <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">
           Some kind of error occured. Please try again later.
@@ -248,21 +274,17 @@
         <v-card-text v-else-if="dialogs.success" class="pt-0" style="color: green;">
           Successfully reposted!
         </v-card-text>
-        <v-card-actions v-if="dialogs.success && !dialogs.errorOccured">
-          <v-btn flat="flat" @click.native="dialogs.showRepost = false">
-            Close
-          </v-btn>
-        </v-card-actions>
         <v-card-actions v-else>
-          <v-btn flat="flat" @click.native="repostJob(dialogs.currentJobId)">
+          <!--<v-btn flat="flat" @click.native="repostJob(dialogs.currentJobId)">
             Repost
           </v-btn>
-          <v-btn flat="flat" @click.native="dialogs.showRepost = false">
+          <v-btn flat="flat" @click.native="dialogs.showRepost = false" style="padding-top:0px;">
             Cancel
-          </v-btn>
+          </v-btn>-->
         </v-card-actions>
       </v-card>
     </v-dialog>
+
   </v-container>
 </template>
 <script>
@@ -277,6 +299,7 @@
   import queries from '@/constants/queries';
   import EventBus from '@/EventBus';
   import axios from 'axios';
+  import Billing from '@/components/Billing';
   // import findIndex from 'lodash/findIndex';
 
   const findJobsQuery = gql`
@@ -294,6 +317,9 @@
         return;
       }
       this.getData();
+    },
+    components: {
+      Billing,
     },
     data() {
       return {
@@ -413,18 +439,27 @@
       getJobCountString(jobType, length) {
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
       },
-      openRepostDialog(jobId) {
-        this.dialogs.errorOccured = false;
-        this.dialogs.success = false;
-        this.dialogs.currentJobId = jobId;
-        this.dialogs.showRepost = true;
+      handleRepostButton(job) {
+        // this.$refs.BillingCMP.refreshDropIn();
+        // this.dialogs.errorOccured = false;
+        // this.dialogs.success = false;
+        // this.dialogs.currentJobId = job._id;
+        // this.dialogs.showRepost = true;
+        this.repostJob(job._id);
+      },
+      afterRepost() {
+        this.dialogs.success = true;
+        this.getData(true); // fetches using networkOnly
+        window.setTimeout(() => { this.dialogs.showRepost = false; }, 400);
       },
       repostJob(jobId) {
+        // the older version to repost the job directly without paying. No longer used after creating the Billing component,
+        // currently using afterRepost to close the dialog, reposting is handled by the function in Billing component
         axios.post(`job/repost/${jobId}`).then(res => {
           if (res.data.success) {
             this.dialogs.success = true;
             this.getData(true); // fetches using networkOnly
-            window.setTimeout(() => { this.dialogs.showRepost = false; }, 2000);
+            window.setTimeout(() => { this.dialogs.showRepost = false; }, 1000);
           } else {
             this.dialogs.errorOccured = true;
           }

@@ -698,7 +698,7 @@ applyDialog
                      :disabled="!selectedResumes.length"
                      :working="loading"
                      color="#FF6969"
-                     style="margin: 20px auto; color:white">Confirm Files
+                     style="margin: 20px auto; color:white">Apply
               </k-btn>
               <button class="mobile-show"
                       style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
@@ -903,7 +903,7 @@ applyDialog
         this.loginState = 'signup';
       },
       handleResume() {
-        // called aftere signup or login, and from openApplyDialog()
+        // called after signup or login, and from openApplyDialog()
         this.loginState = 'resume';
         this._getUserData();
       },
@@ -1078,7 +1078,7 @@ applyDialog
         userDataProvider.getUserData().then(data => {
           if (data.acct === 0) {
             this.$store.commit({ type: 'setAcctID', id: null }); // reset userID to prevent infinite redirect loop
-            this.$router.push('/login');
+            this.uid = 0;
           } else {
             this.uid = data.uid;
             this.userdata = data.userdata;
@@ -1087,6 +1087,7 @@ applyDialog
             if (this.resumes.length > 0) {
               this.selectedResume = this.resumes[0].filename;
             }
+            this._checkIsApplied();
           }
         });
       },
@@ -1120,6 +1121,8 @@ applyDialog
       },
       createApplication() {
         // verify email if it isnt verified at this point for some reason
+        console.log('Hello from CreateApplication');
+        console.log(this.email_verified);
         if (!this.email_verified) {
           this.showCodeValidation();
           return;
@@ -1304,6 +1307,7 @@ applyDialog
     activated() {
       this.resetData();
       this.getData();
+      this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {
         this.stickToBottom = true;
         setTimeout(() => {

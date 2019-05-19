@@ -271,7 +271,7 @@ button:focus {
   }
 }
 @media (min-width: 601px) {
-  .v-dialog {
+  .v-dialog:not(.custom-width) {
     max-width: 420px;
   }
 }

@@ -18,7 +18,8 @@
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
         <template v-if="tab !== 'success-tab'">
-          <v-tab v-for="(item, i) in tabItems" :href="`#${i}`" :key="`${i}`" :disabled="i > furthest_tab" >
+          <v-tab v-for="(item, i) in tabItems" :href="`#${i}`" :key="`${i}`"
+                 :disabled="i > furthest_tab" >
             <div class="tab-text-container" style="width: 100%; height: 100%;"
               :class="{ 'tab-no-error': isTabValid(i), 'tab-error': isTabInvalid(i) }">
               <span style="line-height: 36px;">{{ item }}</span>
@@ -458,6 +459,9 @@
               </div>
 
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
+                <!-- <v-flex xs12 style="text-align: center;">
+                  <p v-show="true || isFirstJob" class="mb-0 mt-2">Posting your first job on Kunvet is free. The second job and onwards costs only $4.99 per job.</p>
+                </v-flex> -->
                 <v-flex xs12 style="text-align: center;">
                   <v-btn flat class="prev-btn" @click="_moveToPrevTab">Previous Step</v-btn>
                   <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid) || loading" @click="submitLastForm">
@@ -484,6 +488,15 @@
                   </span>
                 </v-alert>
               </v-flex>
+            </div>
+          </v-tab-item>
+
+          <v-tab-item id="billing">
+            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;" v-if="tab === 'billing'">
+              <Billing
+              :jobId="jobId"
+              @success="tab = 'success-tab'"
+              />
             </div>
           </v-tab-item>
 
@@ -515,22 +528,6 @@
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <br>
-              <!-- <h4 class="cust-subheader mb-2 center">Verify your email</h4>
-              <p class="center">
-                Before we can display your job, we need you to verify your email.<span class="hidden-xs" hidden-xs><br></span>
-                We've sent a verification email to <strong style="color: #333;">{{ this.email }}</strong> to make sure you own it.
-              </p>
-              <br>
-              <p class="center">
-                If you haven't received it yet, please check that the email address above is correct.<br>
-                You can request to <a @click="resendEmail">resend email</a>, or <a @click="openChangeEmail">edit email address</a>
-              </p>
-              <p style="opacity: 0.45" class="center">If you've already verified your email, simply refresh this page.</p>
-              <p v-if="loading" class="center">
-                <span style="padding: 0 4px;">
-                  <v-progress-circular indeterminate :size="16" :width="2" color="red darken-1"></v-progress-circular>
-                </span>
-              </p> -->
               <CodeVerification ref="codever" @verified="codeValidated" />
             </div>
           </v-tab-item>
@@ -571,7 +568,7 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog v-model="dialogs.welcome">
+      <v-dialog v-model="dialogs.welcome" width="480" content-class="custom-width">
         <v-card>
           <v-card-text style="padding-bottom: 24px;">
             <img :src="welcomeImg" style="display: block; margin: auto; max-height: 42px; max-width: 100%;" alt="welcome"/>
@@ -583,6 +580,7 @@
                 </td>
                 <td>
                   <p style="font-size: 16px; color: #333; margin-bottom: 0;">Fill out job description</p>
+                  <p style="font-size: 11px; color: #666; margin-bottom: 0;">Our fields help students find jobs relevant to them more easily</p>
                 </td>
               </tr>
               <tr>
@@ -591,6 +589,7 @@
                 </td>
                 <td>
                   <p style="font-size: 16px; color: #333; margin-bottom: 0; line-height: 20px;">Choose how you want students to apply</p>
+                  <p style="font-size: 11px; color: #666; margin-bottom: 0;">By default, you can view your applicants in your email and on this site</p>
                 </td>
               </tr>
               <tr>
@@ -598,7 +597,9 @@
                   <img :src="svgs.paperAirplane" alt=""/>
                 </td>
                 <td>
-                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your job (for free!)</p>
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your job for free!</p>
+                  <p style="font-size: 11px; color: #666; margin-bottom: 0;">(No payment info required)</p>
+                  <!-- <p style="font-size: 11px; color: #666; margin-bottom: 0;">The second job and onwards costs only $4.99 per job</p> -->
                 </td>
               </tr>
             </table>
@@ -706,6 +707,7 @@ import Asset77 from '@/assets/icons/Asset77.svg';
 import Asset78 from '@/assets/icons/Asset78.svg';
 import Asset79 from '@/assets/icons/Asset79.svg';
 import Welcome3 from '@/assets/images/welcome3.jpg';
+import Billing from '@/components/Billing';
 
 const createJobMutation = gql`
   mutation ($job: CreateOneJobInput!) {
@@ -747,10 +749,12 @@ export default {
     PicUploader,
     QuillEditor,
     CodeVerification,
+    Billing,
   },
   data() {
     return {
       tab: '0',
+      jobs: [],
       furthest_tab: 0, // 0 - 2
       form1Valid: false,
       form2Valid: false,
@@ -905,8 +909,29 @@ export default {
     disableChangeEmail() {
       return (this.newEmail === this.email);
     },
+    postedJobs() {
+      return this.jobs.filter(x => x.active || x.expired);
+    },
+    isFirstJob() {
+      return this.postedJobs.length < 1;
+    },
   },
   methods: {
+    async getData(networkOnly = false) {
+      const { data } = await this.$apollo.query({
+        fetchPolicy: networkOnly ? 'network-only' : 'cache-first',
+        query: findJobsQuery,
+        variables: {
+          userId: this.$store.state.userID,
+          businessId: this.$store.state.acct === 2 ? this.$store.state.businessID : null,
+        },
+      });
+      this.jobs = data.findJobs.concat();
+      // const jobs = this.jobs.filter(x => !x.is_deleted);
+      // const jobIds = jobs.map(({ _id }) => _id);
+      // const resolved = await Promise.all(jobIds.map(this.getApplicationsFromJob));
+      // this.applicants = resolved.reduce((total, curr) => total.concat(curr), []);
+    },
     next(n) {
       // this handles all the logic of moving from one step to the next
       this.clearErrors();
@@ -1130,7 +1155,7 @@ export default {
       if (!this.loading) {
         this.loading = true;
         this.job.active = this.email_verified; // should be true
-        this.saveJob(true); // pass in true to view job
+        this.saveJob('viewJob'); // pass in true to view job
       }
     },
     validateFullJob() {
@@ -1158,7 +1183,13 @@ export default {
       this.clearErrors();
       const validation = this.validateFullJob();
       if (validation[0]) {
-        this.postJob();
+        this.postJob(); // post job for free
+        // if (this.isFirstJob) {
+        //   this.postJob(); // post job for free
+        // } else {
+        //   this.loading = true;
+        //   this.saveJob('goToBilling'); // save job and go to billing in
+        // }
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }
@@ -1180,7 +1211,7 @@ export default {
         this.saveJob();
       }
     },
-    saveJob(viewJob = false) {
+    saveJob(option = null) {
       if (this.jobId) {
         // SAVE EXISTING JOB
         const job = this.createJobArray();
@@ -1214,7 +1245,7 @@ export default {
           } else {
             this.$store.commit('resetJobProgress');
           }
-          if (viewJob) {
+          if (option === 'viewJob') {
             if (this.email_verified) {
               this.tab = 'success-tab';
             } else {
@@ -1222,6 +1253,8 @@ export default {
               this.$refs.codever.init();
               this.tab = 'verify-email';
             }
+          } else if (option === 'goToBilling') {
+            this.tab = 'billing';
           }
         }).catch((err) => {
           this.loading = false;
@@ -1686,6 +1719,7 @@ export default {
     if (this.tab === 'success-tab') {
       this.resetData();
     }
+    this.getData();
     if (this.$store.state && this.$store.state.userdata) {
       this.email_verified = Boolean(this.$store.state.userdata.email_verified);
     }
@@ -1695,10 +1729,13 @@ export default {
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
-        if (this.$store.state.newUser) {
+        if (this.tab === '0') {
           this.dialogs.welcome = true;
-          this.$store.commit('notNewUser');
         }
+        // if (this.$store.state.newUser) {
+        //   this.dialogs.welcome = true;
+        //   this.$store.commit('notNewUser');
+        // }
       } else {
         this.email_verified = res.userdata.email_verified;
         this.email = res.userdata.email;

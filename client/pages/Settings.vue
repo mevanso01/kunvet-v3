@@ -103,7 +103,8 @@
         <p style="padding-left: 12px; font-size: 20px; font-style: italic;">{{account_email}}</p>
         <br>
 
-       <!-- <SwitchAccount :bottomPadding="true" />  -->
+        <!-- Useful for debugging -->
+        <!-- <SwitchAccount style="display: none;" :bottomPadding="true" /> -->
 
         <div>
           <k-btn block @click="logout">Logout</k-btn>

@@ -67,6 +67,10 @@ async function sendNewApplicationNotification(req, next) {
 
   const results = await next(req);
 
+  const rejectUrl = `mailto:${user.email}?subject=Response%20to%20your%20application%20for%20${encodeURIComponent(job.title)}&body=Dear%20${encodeURIComponent(user.firstname)}%2C%0A%0AThank%20you%20for%20applying%20to%20our%20job%2C%20${encodeURIComponent(job.title)}%21%20We%20received%20your%20application%20via%20Kunvet.%0A%0AWhile%20your%20skills%20and%20background%20are%20impressive%2C%20after%20assessing%20all%20of%20the%20candidates%20that%20came%20in%20for%20this%20position%2C%20we%20have%20decided%20to%20proceed%20with%20other%20applicants%20who%20more%20closely%20fit%20our%20needs%20at%20this%20time.%0A%0AWe%20wish%20you%20success%20in%20your%20job%20search%20and%20future%20career.%0A%0ASincerely%2C%0A${encodeURIComponent(employer.firstname)}%20${encodeURIComponent(employer.lastname)}`;
+
+  const replyUrl = `mailto:${user.email}?subject=Response%20to%20your%20application%20for%20${encodeURIComponent(job.title)}&body=Hi%20${encodeURIComponent(user.firstname)}%2C%0A%0A%0A%0ABest%20Regards%2C%0A${encodeURIComponent(employer.firstname)}%20${encodeURIComponent(employer.lastname)}`;
+
   const locals = {
     replyTo: user.email,
     name: `${user.firstname} ${user.lastname}`,
@@ -79,6 +83,8 @@ async function sendNewApplicationNotification(req, next) {
     message: req.args.record.applicant_message,
     trackingToken: req.args.record.tracking_token,
     appId: results.record._id,
+    rejectUrl: rejectUrl,
+    replyUrl: replyUrl,
     attachments: [
     ],
   };

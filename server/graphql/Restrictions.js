@@ -33,7 +33,7 @@ export default {
     if (response.recordId && response.record.active) {
       if (response.record.is_deleted) {
         // Delete from algolia
-        index.deleteObjects([response.record._id]);
+        await index.deleteObjects([response.record._id]);
         Logger.info(`Deleting ${response.record._id} from Algolia`);
       } else {
         const job = JSON.parse(JSON.stringify(response.record));
@@ -45,7 +45,7 @@ export default {
           };
           job.date = Date.parse(job.date) / 1000;
         }
-        index.addObjects([job], (err, content) => {
+        await index.addObjects([job], (err, content) => {
           if (err) {
             console.log('Error uploading to algolia', err);
             Logger.error(`Error occured while uploading to Algolia for ${job.objectID}`);
