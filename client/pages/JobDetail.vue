@@ -903,12 +903,9 @@ applyDialog
         this.loginState = 'signup';
       },
       handleResume() {
-        // called aftere signup or login, and from openApplyDialog()
+        // called after signup or login, and from openApplyDialog()
         this.loginState = 'resume';
         this._getUserData();
-        if (this.uid === 0) {
-          this.$router.push('/login');
-        }
       },
       handleVerified() {
         this.email_verified = true;
@@ -1090,6 +1087,7 @@ applyDialog
             if (this.resumes.length > 0) {
               this.selectedResume = this.resumes[0].filename;
             }
+            this._checkIsApplied();
           }
         });
       },
