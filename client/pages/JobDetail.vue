@@ -906,6 +906,9 @@ applyDialog
         // called aftere signup or login, and from openApplyDialog()
         this.loginState = 'resume';
         this._getUserData();
+        if (this.uid === 0) {
+          this.$router.push('/login');
+        }
       },
       handleVerified() {
         this.email_verified = true;
@@ -1078,7 +1081,7 @@ applyDialog
         userDataProvider.getUserData().then(data => {
           if (data.acct === 0) {
             this.$store.commit({ type: 'setAcctID', id: null }); // reset userID to prevent infinite redirect loop
-            this.$router.push('/login');
+            this.uid = 0;
           } else {
             this.uid = data.uid;
             this.userdata = data.userdata;
