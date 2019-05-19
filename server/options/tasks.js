@@ -9,7 +9,7 @@ Scheduler.schedule(() => {
   Logger.debug('The scheduler works!');
 });
 
-const daysToExpireFallback = 30;
+const daysToExpireFallback = 60;
 const daysToDeleteFromAlgoliaFallback = 90;
 
 const oneDay = 24 * 60 * 60 * 1000;

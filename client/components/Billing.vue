@@ -16,7 +16,7 @@
     </div> -->
     <div class="bi-cont mb-2">
       <h2 class="mb-1">{{computeTitleText}}</h2>
-      <p>Your job will be displayed for 30 days before expiring</p>
+      <p>Your job will be displayed for 60 days before expiring</p>
     </div>
     <div class="bi-cont mb-3">
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
