@@ -1727,10 +1727,13 @@ export default {
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
-        if (this.$store.state.newUser) {
+        if (this.tab === '0') {
           this.dialogs.welcome = true;
-          this.$store.commit('notNewUser');
         }
+        // if (this.$store.state.newUser) {
+        //   this.dialogs.welcome = true;
+        //   this.$store.commit('notNewUser');
+        // }
       } else {
         this.email_verified = res.userdata.email_verified;
         this.email = res.userdata.email;

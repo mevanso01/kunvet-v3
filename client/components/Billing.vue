@@ -22,7 +22,7 @@
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
     <div ref="dropin" class="dropin-container"></div>
-    <k-btn class="mt-3" @click="confirmPayment">{{ confirmButtonText }}</k-btn>
+    <k-btn class="mt-3" @click="confirmPayment" :working="loading">{{ confirmButtonText }}</k-btn>
   </div>
 </template>
 <script>
@@ -45,6 +45,7 @@ export default {
       actions: [],
       postJobPrice: 4.99,
       nonceUsed: false,
+      loading: false,
     };
   },
   mounted() {
@@ -92,8 +93,10 @@ export default {
         name: 'activateJob',
         jobId: this.jobId,
       }];
+      this.loading = true;
       this.instance.requestPaymentMethod((err, payload) => {
         console.log(err, payload);
+        if (err) { this.loading = false; }
         console.log('payload nonce ', payload.nonce);
         const creditCardNonce = payload.nonce;
         this.chargeUser(creditCardNonce);
@@ -109,6 +112,7 @@ export default {
         paymentMethodNonce: nonce,
       };
       Axios.post('/billing/createTransaction', paymentData).then((res => {
+        this.loading = false;
         if (res.data.success) {
           this.$emit('success');
           // show them thanks for creating a job/promoting
