@@ -427,7 +427,35 @@ export default {
         this.$router.push('/account');
       }
     },
+    cleanInput() {
+      // For presentation only - Security-relevant restrictions are applied server-side
+      const fields = {
+        fname: {
+          trim: true,
+          firstCap: true,
+        },
+        lname: {
+          trim: true,
+          firstCap: true,
+        },
+        business_name: {
+          trim: true,
+        },
+        hdyh: {
+          trim: true,
+        },
+      };
+      for (const [k, v] of Object.entries(fields)) {
+        if (v.trim) {
+          this[k] = this[k].trim();
+        }
+        if (v.firstCap) {
+          this[k] = this[k].slice(0, 1).toUpperCase() + this[k].slice(1).toLowerCase();
+        }
+      }
+    },
     createIndividualAcct() {
+      this.cleanInput();
       const headers = { emulateJSON: true };
       const data = {
         email: this.email,
@@ -459,6 +487,7 @@ export default {
       });
     },
     createBusinessAcct() {
+      this.cleanInput();
       const headers = { emulateJSON: true };
       const bdata = {
         email: this.email,
