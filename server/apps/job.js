@@ -2,9 +2,12 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
 
+import AlgoliaSearch from 'algoliasearch';
+
 // Utils
 // import ErrorCode from '#/ErrorCode';
 // import ApiResponse from '@/utils/ApiResponse';
+import Config from 'config';
 import Models from '@/mongodb/Models';
 // import Mailer from '@/utils/Mailer';
 // import Data from '@/utils/Data';
@@ -59,6 +62,20 @@ router.post('/repost/:id', async (ctx) => {
     job.active = true;
     job.expired = false;
     job.save();
+
+    const appId = Config.get('algolia.appId');
+    const client = AlgoliaSearch(appId, Config.get('private.algolia.adminApiKey'));
+    const index = client.initIndex('jobs');
+    const jobRecord = Object.assign({}, job);
+    jobRecord.objectID = jobRecord._id;
+    if (jobRecord.latitude) {
+      jobRecord._geoloc = {
+        lat: jobRecord.latitude,
+        lng: jobRecord.longitude,
+      };
+      jobRecord.date = Date.parse(jobRecord.date) / 1000;
+    }
+    await index.addObjects([jobRecord]);
   } catch (e) {
     const response = {
       success: false,
