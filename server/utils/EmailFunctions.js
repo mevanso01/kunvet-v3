@@ -39,10 +39,9 @@ export default {
     The emailBody looks like this.
     user: account schema
     emailBody: {
-      replyTo: employer.email,
-      fname: user.firstname,
-      name: application.name,
-      jobname: job.title,
+      employer: employer,
+      application: application,
+      job: job,
     };
   */
   async sendApplicationStatus(user, emailBody) {
@@ -59,10 +58,16 @@ export default {
       await mailer.sendTemplate(
         user.email,
         `application-${emailBody.status}`,
-        { replyTo: emailBody.replyTo,
-          fname: emailBody.fname,
-          name: emailBody.name,
-          jobName: emailBody.jobName },
+        {
+          replyTo: emailBody.employer.email,
+          fname: emailBody.user.firstname,
+          name: emailBody.application.name,
+          jobName: emailBody.job.title,
+          address: emailBody.job.address,
+          salary: emailBody.job.salary,
+          posted_by: emailBody.job.posted_by,
+          type: emailBody.job.type,
+        },
       );
     } catch (e) {
       Logger.error(e);

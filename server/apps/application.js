@@ -95,10 +95,9 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
 
   const emailBody = {
     status: status,
-    replyTo: employer.email,
-    fname: user.firstname,
-    name: application.name,
-    jobname: job.title,
+    employer: employer,
+    application: application,
+    job: job,
   };
 
 
