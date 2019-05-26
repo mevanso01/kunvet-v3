@@ -76,6 +76,7 @@ router.post('/repost/:id', async (ctx) => {
       jobRecord.date = Date.parse(jobRecord.date) / 1000;
     }
     await index.addObjects([jobRecord]);
+    console.log(`Added ${jobRecord.objectID} to Algolia`);
   } catch (e) {
     const response = {
       success: false,
