@@ -66,7 +66,8 @@ router.post('/repost/:id', async (ctx) => {
     const appId = Config.get('algolia.appId');
     const client = AlgoliaSearch(appId, Config.get('private.algolia.adminApiKey'));
     const index = client.initIndex('jobs');
-    const jobRecord = Object.assign({}, job);
+    const jobRecord = job.toObject();
+
     jobRecord.objectID = jobRecord._id;
     if (jobRecord.latitude) {
       jobRecord._geoloc = {
