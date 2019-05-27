@@ -14,8 +14,8 @@
         -o-perspective: 800px;
         perspective: 800px;
         margin-bottom: 10px;
-        margin-top: 100px;
-        margin-left: 100px;
+        margin-top: 50px;
+        margin-left: 30px;
     }
     .card {
         width: 100%;
@@ -172,8 +172,10 @@
   }
 
   .v-elip{
-    padding-left: 160px;
-    padding-top: 32px;
+    height: 40px !important;
+    width: 40px !important;
+    left: 210px;
+    top: 28px;
   }
 
   .resume_img{
@@ -213,19 +215,19 @@
                       <v-list-tile v-if="item.notes" @click="editNotes(item.notes)" style="width: 140px;">
                         <p>Edit Notes</p>
                       </v-list-tile>
-                      <v-list-tile v-else @click="flipped" style="width: 140px;">
+                      <v-list-tile v-else @click="editNotes(item.notes)" style="width: 140px;">
                         <p>Add Notes</p>
                       </v-list-tile>
                     </v-list>
                   </v-menu>
                 </div>
             
-                <div class = "school_style">{{ item.school }} Hello</div>
-                <div class = "degree_style">{{ item.degree }} there</div>
-                <div class = "major_style">{{ item.major }} testing</div>
+                <div class = "school_style">{{ item.school }} </div>
+                <div class = "degree_style">{{ item.degree }} </div>
+                <div class = "major_style">{{ item.major }} </div>
                 <div class = "notes_style"> Notes: {{ getApplicantNotesDisplayText(item) }}
                   <!--<div style="padding-left: 6px; margin-top: -10px;"><v-icon>chevron_right</v-icon></div>-->
-                  <v-btn @click="flipped" icon class="edit_notes_icon"><v-icon style="line-height: 32px;">chevron_right</v-icon></v-btn>
+                  <v-btn @click="editNotes(item.notes)" icon class="edit_notes_icon"><v-icon style="line-height: 32px;">chevron_right</v-icon></v-btn>
                 </div>
             <!--<v-btn icon @click="works" class="v-ellipsis" ><img :src="svg.vel" class="vert_elip"></v-btn>-->
             <!--<k-btn outline class="button_style" v-if="show_btn" @click="flipped">
@@ -264,6 +266,7 @@ import velip from '@/assets/elipses.svg';
 import resume from '@/assets/resume.svg';
 import FileClient from '@/utils/FileClient';
 import StringHelper from '@/utils/StringHelper';
+import ProfilePicHelper from '@/utils/GetProfilePic';
 //  import queries from '@/constants/queries';
 //  import gql from 'graphql-tag';
 
@@ -337,6 +340,14 @@ export default {
         str += ' ';
       }
       return str;
+    },
+    async loadProfilePic(userId) {
+      try {
+        this.profile_pic_url = await ProfilePicHelper.getProfilePic(userId, null);
+      } catch (e) {
+        this.$debug(e);
+        this.profile_pic_url = 'https://github.com/leovinogradov/letteravatarpics/blob/master/Letter_Avatars/default_profile.jpg?raw=true';
+      }
     },
     async openSideResume(item) {
       this.updateApplicantStatus('opened', item._id);

@@ -186,7 +186,7 @@
 
 <template>
 <div style="margin-top: 200px;">
-  <v-textarea no-resize full-width maxlength="80" rows="3" value="Hello there" style="overflow: none !important;" ></v-textarea>
+  <v-textarea no-resize full-width maxlength="140" value="Hello there"></v-textarea>
 </div>
 </template>
 

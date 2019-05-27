@@ -38,6 +38,7 @@
         background: none !important;
       }
     }
+
     .sp-heading {
       position: sticky;
       top: 64px;
@@ -71,6 +72,10 @@
         margin-bottom: 0;
       }
     }
+    .app_cards{
+      display: inline-block;
+    }
+
     @media (min-width: 601px) {
       .btn-row > a {
         padding-right: 8px;
@@ -169,54 +174,11 @@
             </p> -->
           </div>
         </v-flex>
-        <div class="main-cont-large">
-          <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="applicant">
+        <div class="main-cont-large" style="max-width: 1080px; margin-left: auto;">
+          <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="app_cards">
             
             <appCard :item="item" @openSideResume="openSideResume(item)"></appCard>
                         
-            <div class="inner" style="position: relative;">
-              <div class="">
-                <v-layout row wrap style="padding-bottom: 12px;">
-                  <v-flex xs12 sm6 style="padding-bottom: 0; cursor: pointer;" @click="openSideResume(item);">
-                      <h2 class="new-applicant-card__title">{{ getApplicantName(item) }}</h2>
-                      <p v-if="item.school" style="overflow: hidden; margin-bottom: 0;">
-                          School: {{ item.school }}
-                      </p>
-                      <p v-else style="overflow: hidden; margin-bottom: 0;">
-                          No school info
-                      </p>
-                      <p v-if="item.degree" style="overflow: hidden; margin-bottom: 0;">
-                          Degree: {{ item.degree }}
-                      </p>
-                      <p v-if="item.major" style="overflow: hidden; margin-bottom: 0;">
-                          Major: {{ item.major }}
-                      </p>
-                      <!-- <p style="overflow: hidden; margin-bottom: 0;">
-                      </p> -->
-                  </v-flex>
-                  <v-flex xs12 sm6 style="padding-bottom: 0;">
-                    <div style="padding-top: 25px;">
-                      <span v-if="item.notes" style="color: grey;">
-                        <!-- Notes: {{ getApplicantNotesDisplayText(item) }} -->
-                        <pre style="font-family: Verdana; white-space: pre-line;">
-                          {{ getApplicantNotesDisplayText(item) }}
-                        </pre>
-                      </span>
-                    </div>
-                  </v-flex>
-                </v-layout>
-                <div class="btn-row">
-                  <!-- <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
-                  <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn> -->
-                  <a v-if="item.resumes.length > 0" @click="openSideResume(item);">Show Resume</a>
-                  <a v-else style="text-decoration: none">No Resume</a>
-                  <a style="color: #616161;" @click="openInNewTab(item)">View More Information</a>
-                  <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
-                  <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->
-                </div>
-                <!-- <v-btn @click="openResumeInNewTab(item);">Open in new tab</v-btn> -->
-              </div>
-            </div>
           </div>
         </div>
       </template>
