@@ -1,4 +1,6 @@
-<style lang="scss">
+<style lang="scss" scoped>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Sriracha);
   .applicants-page {
     padding-left: 0;
     padding-right: 0;
@@ -136,14 +138,6 @@
       }
     }
   }
-  // height: auto;
-  //    width: 100%;
-  //    background-color: #f2f7ff;
-  //    z-index: 9;
-  //    position: fixed;
-  //    top: 64px;
-  //    padding: 0;
-  //    overflow: hidden;
 </style>
 <template>
   <v-container fluid class="applicants-page  page-height">
@@ -177,11 +171,14 @@
         </v-flex>
         <div class="main-cont-large">
           <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="applicant">
+            
+            <appCard :item="item" @openSideResume="openSideResume(item)"></appCard>
+                        
             <div class="inner" style="position: relative;">
               <div class="">
                 <v-layout row wrap style="padding-bottom: 12px;">
                   <v-flex xs12 sm6 style="padding-bottom: 0; cursor: pointer;" @click="openSideResume(item);">
-                      <h2 class="new-applicant-card__title">{{ item.name }}</h2>
+                      <h2 class="new-applicant-card__title">{{ getApplicantName(item) }}</h2>
                       <p v-if="item.school" style="overflow: hidden; margin-bottom: 0;">
                           School: {{ item.school }}
                       </p>
@@ -195,7 +192,6 @@
                           Major: {{ item.major }}
                       </p>
                       <!-- <p style="overflow: hidden; margin-bottom: 0;">
-
                       </p> -->
                   </v-flex>
                   <v-flex xs12 sm6 style="padding-bottom: 0;">
@@ -203,7 +199,7 @@
                       <span v-if="item.notes" style="color: grey;">
                         <!-- Notes: {{ getApplicantNotesDisplayText(item) }} -->
                         <pre style="font-family: Verdana; white-space: pre-line;">
-                          {{ item.notes }}
+                          {{ getApplicantNotesDisplayText(item) }}
                         </pre>
                       </span>
                     </div>
@@ -212,9 +208,8 @@
                 <div class="btn-row">
                   <!-- <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
                   <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn> -->
-                  <a v-if="item.resumes.length >0" @click="openSideResume(item);">Show Resume</a>
+                  <a v-if="item.resumes.length > 0" @click="openSideResume(item);">Show Resume</a>
                   <a v-else style="text-decoration: none">No Resume</a>
-                  {{item.resume}}
                   <a style="color: #616161;" @click="openInNewTab(item)">View More Information</a>
                   <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
                   <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->
@@ -367,12 +362,10 @@
   import axios from 'axios';
   import differenceBy from 'lodash/differenceBy';
   import EventBus from '@/EventBus';
-
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import KunvetCharacterSvg from '@/assets/account/default_profile_picture.svg';
   import MajorSvg from '@/assets/account/account_major.svg';
   import DegreeSvg from '@/assets/account/degree.svg';
-
   import DateHelper from '@/utils/DateHelper';
   import StringHelper from '@/utils/StringHelper';
   import { degreeDbToString } from '@/constants/degrees';
@@ -380,7 +373,10 @@
   import ProfilePicHelper from '@/utils/GetProfilePic';
   import FileClient from '@/utils/FileClient';
   import PdfFrame from '@/components/PdfFrame';
-
+  import velip from '@/assets/elipses.svg';
+  import resume from '@/assets/resume.svg';
+  import applicationCard from '@/components/ApplicationCard';
+  
   export default {
     created() {
       if (this.$store.state.acct === 0) {
@@ -396,6 +392,10 @@
     },
     data() {
       return {
+        show_btn: true,
+        flip: false,
+        edit_btn: false,
+        cancel_btn: false,
         pageLoading: true,
         loading: false,
         // user: null,
@@ -422,6 +422,8 @@
           kunvetCharacter: KunvetCharacterSvg,
           major: MajorSvg,
           degree: DegreeSvg,
+          vel: velip,
+          res: resume,
         },
         currentApplicant: null,
         currentResumeSrc: null,
@@ -431,6 +433,7 @@
     },
     components: {
       PdfFrame,
+      appCard: applicationCard,
     },
     methods: {
       // async getSrc(resume) {
@@ -440,6 +443,13 @@
       //   const src = await FileClient.getLink(resume.filename);
       //   return src;
       // },
+      flipped() {
+        this.flip = !this.flip;
+        this.show_btn = !this.show_btn;
+      },
+      works() {
+        this.$debug('Sample text lol');
+      },
       async openSideResume(item) {
         this.updateApplicantStatus('opened', item._id);
         this.showSideResume = true;
@@ -661,14 +671,38 @@
         const { applicants } = this;
         return applicants.filter(({ job_id: id }) => id === jobId);
       },
-      getApplicantNotesDisplayText({ notes }) {
-        if (!notes) return '';
-        return StringHelper.truncate(notes, 80);
-      },
       getApplicantsString(num) {
         if (num === 1) { return 'applicant'; }
         return 'applicants';
       },
+      getApplicantName({ name }) {
+        if (!name) return '';
+        var names = name.split(' ');
+        var initials;
+        initials = names[0].charAt(0).toUpperCase() + names[0].substring(1, names[0].length);
+        initials += ' ';
+        if (names.length > 1) {
+          initials += names[names.length - 1].substring(0, 1).toUpperCase();
+        }
+        initials += '.';
+        return initials;
+      },
+      getApplicantNotesDisplayText({ notes }) {
+        if (!notes) return 'N/A';
+        return StringHelper.truncate(notes, 52);
+      },
+      getApplicantDisplayDate({ date }) {
+        this.$debug(date);
+        var strDate = new Date(date).toDateString().split(' ');
+        strDate = strDate.slice(1, strDate.length);
+        var str = '';
+        for (var i = 0; i < strDate.length; ++i) {
+          str += strDate[i];
+          str += ' ';
+        }
+        return str;
+      },
+
     },
     computed: {
       getApplicantsCount() {
