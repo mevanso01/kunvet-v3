@@ -9,7 +9,7 @@
       padding: 0 16px;
     }
     .job-headline {
-      background-color: #f2f7ff;
+      background-color: white;
       padding-top: 16px;
       padding-bottom: 16px;
       p, h2 {
@@ -33,7 +33,7 @@
       // height: 95vh;
       padding: 64px 32px 32px 32px;
       overflow: scroll;
-      background-color: #f2f7ff;
+      background-color: white;
       .more {
         background: none !important;
       }
@@ -47,7 +47,7 @@
       padding: 18px 32px 0px 32px;
       // background-color: #ef5350;
       // background-color: #ff6969;
-      background-color: #f2f7ff;
+      background-color: white;
       .v-btn__content {
         text-transform: none;
       }
@@ -60,11 +60,11 @@
       bottom: 0px;
       height: 60px;
       padding: 8px 32px;
-      background-color: #f2f7ff;
+      background-color: white;
       h2 {
         font-size: 18px;
         line-height: 42px;
-        color: #616161;
+        color: #b99e9e;
         font-weight: 400;
       }
       button {
@@ -124,7 +124,7 @@
       }
       .sp-heading-mobile {
         display: block;
-        background-color: #f2f7ff;
+        background-color: white;
         position: sticky;
         top: 0;
         height: 40px;
@@ -138,7 +138,7 @@
         position: sticky;
         bottom: 0;
         height: 72px;
-        background-color: #f2f7ff;
+        background-color: white;
         z-index: 5;
       }
     }
@@ -165,8 +165,7 @@
       >
         <v-flex xs12 style="margin-top: 12px" class="job-headline job-page-headline">
           <div class="main-cont-large">
-            <p class="mb-1">{{ getApplicantsFromJobs(job._id).length }} {{ getApplicantsString(getApplicantsFromJobs(job._id).length) }} for</p>
-            <h2>{{ job.title }}</h2>
+            <h1 class="mb-1">{{ getApplicantsString(getApplicantsFromJobs(job._id).length) }} for {{ job.title }}</h1>
             <!-- <p class="mb-1">
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
@@ -175,6 +174,10 @@
           </div>
         </v-flex>
         <div class="main-cont-large" style="max-width: 1080px; margin-left: auto;">
+          <div v-if=" getApplicantsFromJobs(job._id).length == 0" style="height: 60px;">
+            <h2 style="margin-top: 40px; margin-left: 50px;">There are no applicants for this job.</h2>
+          </div>
+
           <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="app_cards">
             
             <appCard :item="item" @openSideResume="openSideResume(item)"></appCard>
@@ -634,8 +637,8 @@
         return applicants.filter(({ job_id: id }) => id === jobId);
       },
       getApplicantsString(num) {
-        if (num === 1) { return 'applicant'; }
-        return 'applicants';
+        if (num === 1) { return 'Applicant'; }
+        return 'Applicants';
       },
       getApplicantName({ name }) {
         if (!name) return '';
