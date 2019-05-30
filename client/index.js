@@ -182,6 +182,10 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "about" */ '@/pages/Terms'),
     },
     {
+      path: '/pricing',
+      component: () => import(/* webpackChunkName: "about" */ '@/pages/Pricing'),
+    },
+    {
       path: '/join',
       component: () => import(/* webpackChunkName: "about" */ '@/pages/JoinUs'),
     },
