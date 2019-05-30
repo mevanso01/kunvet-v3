@@ -320,6 +320,7 @@ section.search {
 
 .suggestions-card {
   position: fixed;
+  z-index: 1;
 }
 </style>
 
