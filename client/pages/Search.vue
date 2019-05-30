@@ -259,6 +259,9 @@ section.search {
     padding: 0 20px;
     height: 150px;
   }
+  .suggestions-card {
+    display: none;
+  }
 }
 @media (min-width: 961px) {
   .job-distance-indicator {
@@ -296,6 +299,29 @@ section.search {
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
+.chip-container {
+  display: inline-block;
+  margin: 8px 2px;
+}
+
+.search-chip:hover{
+  background-color: #ff6969;
+  color: white;
+  cursor: pointer;
+}
+
+.search-chip {
+  border: 1px solid #ff6969;
+  display: inline;
+  padding: 6px;
+  border-radius: 6px;
+  color: #ff6969;
+}
+
+.suggestions-card {
+  position: fixed;
+  z-index: 1;
+}
 </style>
 
 <template>
@@ -319,8 +345,9 @@ section.search {
               </div>
             </div>
           </div>
-          <div class="search-field-cont">
+          <div class="search-field-cont" id="dropdown-header">
             <v-text-field
+
               class="search-params-field"
               solo
               flat
@@ -328,8 +355,28 @@ section.search {
               :placeholder="searchPlaceholder"
               clearable
               v-model="query"
+              @focus="searchFocus=true"
+              @blur="searchFocus=false"
             ></v-text-field>
+            <!--v-if="searchFocus && !query"-->
+            <v-card v-show="searchFocus && !query" class="suggestions-card">
+              <!--{{width}}-->
+              <v-card-title>Try searching for...</v-card-title>
+              <div style="padding: 0 0 20px 14px; max-width: 70%; position:
+              absolute;">
+                <div v-for="job in suggestedJobs"
+                class="chip-container"
+                @mousedown="query=job">
+                  <p class="search-chip">{{job}}</p>
+                </div>
+              </div>
+            </v-card>
+            <!--<p v-if="searchFocus && query">AUTOCOMPLETE</p>-->
+            <!--<p v-if="searchFocus && !query">SUGGESTIONS UI</p>-->
+
           </div>
+
+
           <div class="search-go-cont">
             <button @click="search()" v-ripple class="mobile-hide kunvet-search-icon-btn small">
               <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
@@ -462,13 +509,27 @@ export default {
   components: {
     MainJobCard,
   },
+  mounted() {
+    const el = document.querySelector('#dropdown-header .v-input__slot');
+    el.addEventListener('click', () => {
+      this.setSearchWidth();
+    });
+    window.onresize = () => {
+      this.setSearchWidth();
+    };
+  },
   data() {
     return {
+      width: 0,
+      searchFocus: false,
+      searchHasText: false,
+      searchWidth: 0,
       uid: null,
       // findJobs: [],
       saved_jobs: [],
       filteredJobs: [],
       openSelectField: null,
+      suggestedJobs: ['Developer', 'Marketing', 'Brand Ambassador', 'Caretaker', 'Tutor'],
       firstSearchTypes: [
         'Latest jobs',
       ],
@@ -582,6 +643,13 @@ export default {
     },
   },
   methods: {
+    setSearchWidth() {
+      const el = document.querySelector('#dropdown-header .v-input__slot');
+      const width = window.getComputedStyle(el, null).width;
+      if (document.querySelector('.suggestions-card')) {
+        document.querySelector('.suggestions-card').style.width = width;
+      }
+    },
     // Randomly pick search search placeholder text
     getSearchPlaceholderText() {
       const textList = searchTexts.placeholderList;
