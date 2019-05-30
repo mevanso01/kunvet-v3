@@ -203,7 +203,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const authRoutes = ['/login', '/signup'];
-  if (authRoutes.includes(from.path) && !to.query.redirect) {
+  if (authRoutes.includes(to.path) && !to.query.redirect) {
     next({
       path: to.path,
       query: {
