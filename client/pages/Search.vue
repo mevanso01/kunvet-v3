@@ -1004,7 +1004,7 @@ export default {
     rawSearch() {
       this.$debug('Started rawSearch');
       this.displayedJobs = [[], [], []];
-      if (!algoliaClient && process && process.env && process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development') {
         // Local DB
         console.log('Loading jobs from local db'); // this is left as console.log on purpose
         this.findAndFilterJobs();
