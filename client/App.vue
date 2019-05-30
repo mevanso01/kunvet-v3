@@ -263,6 +263,15 @@ export default {
     Notifications,
     SwitchAccount,
   },
+  watch: {
+    drawer() {
+      if (this.drawer) {
+        document.querySelector('body').style.overflow = 'hidden';
+      } else {
+        document.querySelector('body').style.overflow = 'scroll';
+      }
+    },
+  },
   computed: {
     devmode() {
       return process.env.NODE_ENV !== 'production';
