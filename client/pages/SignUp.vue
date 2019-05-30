@@ -148,7 +148,7 @@
               <v-card-text>
                 <h2>Just enter your name and email to get started</h2>
                 <p v-if="error === 'UserExistsError'" style="color: #f00">
-                  An account with this email already exists. Would you like to <router-link to="/login" style="text-decoration: underline;">login?</router-link>
+                  An account with this email already exists. Would you like to <router-link :to="loginPath" style="text-decoration: underline;">login?</router-link>
                 </p>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
@@ -307,7 +307,7 @@
       </section>
 
       <div class="bottom-text">
-        <router-link to="/login">
+        <router-link :to="loginPath">
           Already have an account? <span style="text-decoration: underline;">Log in</span>
         </router-link>
       </div>
@@ -655,6 +655,16 @@ export default {
         this.alreadyloggedin = false;
       }
     });
+  },
+  computed: {
+    loginPath() {
+      return {
+        path: '/login',
+        query: {
+          redirect: this.$route.query.redirect,
+        },
+      };
+    },
   },
 };
 </script>
