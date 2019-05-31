@@ -17,7 +17,7 @@ app.use(bodyParser());
 const ACTIONS = {
   activateJob: {
     description: 'Post a draft job, or re-post an expired job',
-    price: 500,
+    price: 40,
     async validate(ctx, action) {
       if (!action.jobId) {
         throw new Error('Job ID is required');

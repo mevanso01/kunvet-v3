@@ -43,7 +43,7 @@ export default {
     return {
       instance: null,
       actions: [],
-      postJobPrice: 4.99,
+      postJobPrice: 0.40,
       nonceUsed: false,
       loading: false,
     };
