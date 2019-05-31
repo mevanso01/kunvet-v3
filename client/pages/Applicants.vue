@@ -164,8 +164,8 @@
         v-for="job in jobs"
       >
         <v-flex xs12 style="margin-top: 12px" class="job-headline job-page-headline">
-          <div class="main-cont-large">
-            <h1 class="mb-1">{{ getApplicantsString(getApplicantsFromJobs(job._id).length) }} for {{ job.title }}</h1>
+          <div class="main-cont-large" style="max-width: 1080px; margin-left: auto;">
+            <h1 class="mb-1" style="margin-left: 30px; font-weight: 900;">{{ getApplicantsString(getApplicantsFromJobs(job._id).length) }} for {{ job.title }}</h1>
             <!-- <p class="mb-1">
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
@@ -175,7 +175,7 @@
         </v-flex>
         <div class="main-cont-large" style="max-width: 1080px; margin-left: auto;">
           <div v-if=" getApplicantsFromJobs(job._id).length == 0" style="height: 60px;">
-            <h2 style="margin-top: 40px; margin-left: 50px;">There are no applicants for this job.</h2>
+            <h2 style="margin-left: 30px; font-size: 1.2em; font-style: italic; color: #888888">There are no applicants for this job.</h2>
           </div>
 
           <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="app_cards">

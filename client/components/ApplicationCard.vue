@@ -14,7 +14,7 @@
         -o-perspective: 800px;
         perspective: 800px;
         margin-bottom: 10px;
-        margin-top: 50px;
+        margin-top: 15px;
         margin-left: 30px;
     }
     .card {
@@ -174,7 +174,7 @@
   .v-elip{
     height: 40px !important;
     width: 40px !important;
-    left: 210px;
+    left: 242px;
     top: 28px;
   }
 
@@ -244,14 +244,14 @@
           <div class="back">
             <div class="notes_title">Notes</div>
             <div  v-if="editingNotes" style = "height: 250px; width: 300px; top: 50px;">
-             <v-textarea no-resize full-width maxlength="140" class="app_card-textarea" autofocus=true v-model="newNotes"></v-textarea>
+             <v-textarea no-resize full-width maxlength="140" class="app_card-textarea" v-model="newNotes"></v-textarea>
             </div>
             <div v-else style = "height: 250px; width: 300px; top: 50px;">
              <v-textarea no-resize full-width maxlength="140" class="app_card-textarea" style="color:black !important;" readonly v-model="item.notes"></v-textarea>
             </div>            
               <k-btn v-if="editingNotes" small color="black" class="cancel_back_btn" @click="editingNotes = false">Cancel</k-btn>
               <k-btn v-else small color="black" class="cancel_back_btn" @click="flipped">Back</k-btn>
-              <k-btn v-if="editingNotes" small class="edit_save_btn" @click="saveNotes">Save</k-btn>
+              <k-btn v-if="editingNotes" small class="edit_save_btn" @click="saveNotes(newNotes)">Save</k-btn>
               <k-btn v-else small class="edit_save_btn" @click="editNotes2(item.notes)">Edit</k-btn>
           </div>
         </div>    
@@ -267,8 +267,8 @@ import resume from '@/assets/resume.svg';
 import FileClient from '@/utils/FileClient';
 import StringHelper from '@/utils/StringHelper';
 import ProfilePicHelper from '@/utils/GetProfilePic';
-//  import queries from '@/constants/queries';
-//  import gql from 'graphql-tag';
+import queries from '@/constants/queries';
+import gql from 'graphql-tag';
 
 export default {
   data() {
@@ -310,8 +310,45 @@ export default {
       this.editingNotes = true;
       this.newNotes = text;
     },
-    saveNotes() {
-      this.editingNotes = false;
+    saveNotes(text) {
+      // var newText = text.replace(/\n/, '<br>');
+      this.notes = text;
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation($aplId: MongoID, $notes: String) {
+              updateApplication(
+                filter: { _id: $aplId }
+                record: { notes: $notes }
+              ) {
+                recordId
+              }
+            }
+          `,
+          variables: {
+            aplId: this.item._id,
+            notes: text,
+          },
+          refetchQueries: [
+            {
+              query: gql`
+                query($aplId: MongoID) {
+                  findApplicant(filter: { _id: $aplId }) {
+                    ${queries.FindApplicantRecord}
+                    notes
+                  }
+                }
+              `,
+              variables: { aplId: this.id },
+            },
+          ],
+        }).then(data => {
+          this.$debug(data);
+          this.item.notes = text;
+          this.editingNotes = false;
+        }).catch(error => {
+          this.$error(error);
+        });
     },
     getApplicantName({ name }) {
       if (!name) return '';
