@@ -47,6 +47,7 @@ const ACTIONS = {
 
       const mailer = new Mailer();
       const locals = {
+        jobId: job._id,
         jobname: job.title,
         fname: ctx.state.user.firstname,
         lname: ctx.state.user.lastname,
