@@ -597,9 +597,8 @@
                   <img :src="svgs.paperAirplane" alt=""/>
                 </td>
                 <td>
-                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your job for free!</p>
-                  <p style="font-size: 11px; color: #666; margin-bottom: 0;">(No payment info required)</p>
-                  <!-- <p style="font-size: 11px; color: #666; margin-bottom: 0;">The second job and onwards costs only $4.99 per job</p> -->
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your first job for free! (No payment required)</p>
+                  <p style="font-size: 11px; color: #666; margin-bottom: 0;">The second job and onwards costs only $4.99 per job</p>
                 </td>
               </tr>
             </table>
@@ -1183,13 +1182,12 @@ export default {
       this.clearErrors();
       const validation = this.validateFullJob();
       if (validation[0]) {
-        this.postJob(); // post job for free
-        // if (this.isFirstJob) {
-        //   this.postJob(); // post job for free
-        // } else {
-        //   this.loading = true;
-        //   this.saveJob('goToBilling'); // save job and go to billing in
-        // }
+        if (this.isFirstJob) {
+          this.postJob(); // post job for free
+        } else {
+          this.loading = true;
+          this.saveJob('goToBilling'); // save job and go to billing in
+        }
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }

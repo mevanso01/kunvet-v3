@@ -131,7 +131,7 @@
                   <k-btn color="Salmon" @click="onShowJobDialog(job)" small>
                     Delete
                   </k-btn>
-                  <!--<k-btn @click="handleRepostButton(job._id)"> Test </k-btn>-->
+                  <!--<k-btn @click="openRepostDialog(job._id)"> Test </k-btn>-->
                 </v-flex>
               </v-layout>
               </v-flex>
@@ -212,7 +212,7 @@
                   <v-flex xs6 style="padding: 0px">
                     <p>Job Status</p>
                     <h2 style="padding-bottom: 10px; color: red;">Expired</h2>
-                    <k-btn small color="red" @click="handleRepostButton(job)">
+                    <k-btn small color="red" @click="openRepostDialog(job)">
                       Re-post Job
                     </k-btn>
                   </v-flex>
@@ -439,19 +439,20 @@
       getJobCountString(jobType, length) {
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
       },
-      handleRepostButton(job) {
-        // this.$refs.BillingCMP.refreshDropIn();
-        // this.dialogs.errorOccured = false;
-        // this.dialogs.success = false;
-        // this.dialogs.currentJobId = job._id;
-        // this.dialogs.showRepost = true;
-        this.repostJob(job._id);
+      openRepostDialog(job) {
+        this.$refs.BillingCMP.refreshDropIn();
+        this.dialogs.errorOccured = false;
+        this.dialogs.success = false;
+        this.dialogs.currentJobId = job._id;
+        this.dialogs.showRepost = true;
       },
+
       afterRepost() {
         this.dialogs.success = true;
         this.getData(true); // fetches using networkOnly
         window.setTimeout(() => { this.dialogs.showRepost = false; }, 400);
       },
+
       repostJob(jobId) {
         // the older version to repost the job directly without paying. No longer used after creating the Billing component,
         // currently using afterRepost to close the dialog, reposting is handled by the function in Billing component
