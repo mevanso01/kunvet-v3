@@ -4,6 +4,7 @@ import KoaRouter from 'koa-router';
 import BraintreeGateway from '@/BraintreeGateway';
 import Models from '@/mongodb/Models';
 import Mailer from '@/utils/Mailer';
+import Algolia from '@/utils/Algolia';
 import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
 
@@ -44,6 +45,7 @@ const ACTIONS = {
       job.expiry_date = DateHelper.getExpiryDate(job.date, 30);
       job.expired = false;
       await job.save();
+      await Algolia.uploadJob(job);
 
       const mailer = new Mailer();
       const locals = {
