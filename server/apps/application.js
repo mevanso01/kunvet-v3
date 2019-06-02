@@ -104,7 +104,7 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
   // Send notification to applicant //working on this function
   if (['opened', 'accepted', 'rejected'].includes(status)) {
     try {
-      EmailFunctions.sendApplicationStatus(user, emailBody); // moved previous code into EmailFunctions.js
+      await EmailFunctions.sendApplicationStatus(user, emailBody); // moved previous code into EmailFunctions.js
     } catch (e) {
       console.log('ERROR', e);
     }
