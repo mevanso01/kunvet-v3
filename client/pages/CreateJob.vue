@@ -492,10 +492,10 @@
           </v-tab-item>
 
           <v-tab-item id="billing">
-            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;" v-if="tab === 'billing'">
+            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;">
               <Billing
-              :jobId="jobId"
-              @success="tab = 'success-tab'"
+                ref="billing"
+                @success="tab = 'success-tab'"
               />
             </div>
           </v-tab-item>
@@ -1252,6 +1252,7 @@ export default {
               this.tab = 'verify-email';
             }
           } else if (option === 'goToBilling') {
+            this.$refs.billing.show(this.jobId);
             this.tab = 'billing';
           }
         }).catch((err) => {

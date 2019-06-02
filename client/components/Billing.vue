@@ -10,7 +10,7 @@
   }
 </style>
 <template>
-  <div class="billing-component">
+  <div class="billing-component" v-show="!completed">
     <!-- <div v-if="true || hasPostJobAction">
       Post your job ($5.99)
     </div> -->
@@ -33,14 +33,12 @@ import Axios from 'axios';
 const dropin = require('braintree-web-drop-in');
 
 export default {
-  props: {
-    // actions: Array,
-    jobId: String,
-    buttonText: String,
-    title: String,
-  },
   data() {
     return {
+      jobId: '',
+      buttonText: '',
+      title: '',
+      completed: true,
       instance: null,
       actions: [],
       postJobPrice: 0.40,
@@ -49,7 +47,6 @@ export default {
     };
   },
   mounted() {
-    this.init();
   },
   computed: {
     confirmButtonText() {
@@ -67,7 +64,11 @@ export default {
     },
   },
   methods: {
-    async init() {
+    async show(jobId, buttonText = '', title = '') {
+      this.jobId = jobId;
+      this.buttonText = buttonText;
+      this.title = title;
+
       this.$refs.dropin.innerHTML = ''; // just in case
       const tokenResponse = await Axios.get('/billing/getAuthorization');
       dropin.create({
@@ -78,6 +79,8 @@ export default {
         this.instance = instance;
         console.log(createErr);
       });
+
+      this.completed = false;
     },
 
     refreshDropIn() {
