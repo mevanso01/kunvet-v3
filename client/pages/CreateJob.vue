@@ -1151,8 +1151,14 @@ export default {
     },
     postJob() {
       if (!this.loading) {
-        this.loading = true;
-        this.saveJob('goToBilling');
+        if (!this.email_verified) {
+          this.setJobProgress(true); // set postOnOpen to true
+          this.$refs.codever.init();
+          this.tab = 'verify-email';
+        } else {
+          this.loading = true;
+          this.saveJob('goToBilling');
+        }
       }
     },
     validateFullJob() {
@@ -1180,8 +1186,7 @@ export default {
       this.clearErrors();
       const validation = this.validateFullJob();
       if (validation[0]) {
-        this.loading = true;
-        this.saveJob('goToBilling'); // save job and go to billing in
+        this.postJob();
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }
@@ -1237,15 +1242,7 @@ export default {
           } else {
             this.$store.commit('resetJobProgress');
           }
-          if (option === 'viewJob') {
-            if (this.email_verified) {
-              this.tab = 'success-tab';
-            } else {
-              this.setJobProgress(true); // set postOnOpen to true
-              this.$refs.codever.init();
-              this.tab = 'verify-email';
-            }
-          } else if (option === 'goToBilling') {
+          if (option === 'goToBilling') {
             this.$refs.billing.show(this.jobId);
             this.tab = 'billing';
           }
@@ -1567,7 +1564,7 @@ export default {
         udata.email_verified = true;
         this.$store.commit({ type: 'keepUserdata', userdata: udata });
       }
-      this.tab = 'success-tab';
+      this.postJob();
     },
     resetData() {
       console.log('Resetting data');
