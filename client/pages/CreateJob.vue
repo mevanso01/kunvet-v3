@@ -1153,8 +1153,7 @@ export default {
     postJob() {
       if (!this.loading) {
         this.loading = true;
-        this.job.active = this.email_verified; // should be true
-        this.saveJob('viewJob'); // pass in true to view job
+        this.saveJob('goToBilling');
       }
     },
     validateFullJob() {
@@ -1182,12 +1181,8 @@ export default {
       this.clearErrors();
       const validation = this.validateFullJob();
       if (validation[0]) {
-        if (this.isFirstJob) {
-          this.postJob(); // post job for free
-        } else {
-          this.loading = true;
-          this.saveJob('goToBilling'); // save job and go to billing in
-        }
+        this.loading = true;
+        this.saveJob('goToBilling'); // save job and go to billing in
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }
@@ -1358,7 +1353,6 @@ export default {
         user_id: this.uid,
         business_id: this.orgId,
         posted_by: this.job.posted_by,
-        active: this.job.active,
         title: this.job.title,
         date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
@@ -1574,7 +1568,7 @@ export default {
         udata.email_verified = true;
         this.$store.commit({ type: 'keepUserdata', userdata: udata });
       }
-      this.postJob(); // try to post job again
+      this.tab = 'success-tab';
     },
     resetData() {
       console.log('Resetting data');
