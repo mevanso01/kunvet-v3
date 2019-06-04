@@ -39,8 +39,8 @@
             </h2>
           </div>
           <div class="float-right">
-            <v-btn flat @click="saveForLater" v-if="!job.active">Save for later</v-btn>
-            <v-btn v-else style="margin-left: 0;" @click="updateActiveJob">Save</v-btn>
+            <v-btn flat @click="saveForLater" :working="loading" v-if="!job.active">Save for later</v-btn>
+            <v-btn v-else style="margin-left: 0;" @click="updateActiveJob" :working="loading">Save</v-btn>
           </div>
         </div>
         <v-divider></v-divider>
@@ -292,11 +292,11 @@
 
         <br>
         <v-layout v-if="!job.active">
-          <v-btn style="margin-left: 0;" @click="saveForLater">Save for later</v-btn>
-          <v-btn @click="validateBeforePosting(true)">Save and Post</v-btn>
+          <k-btn style="margin-left: 0;" @click="saveForLater">Save for later</k-btn>
+          <k-btn @click="validateBeforePosting(true)">Save and Post</k-btn>
         </v-layout>
         <v-layout v-else>
-          <v-btn style="margin-left: 0;" @click="updateActiveJob">Save</v-btn>
+          <k-btn style="margin-left: 0;" @click="updateActiveJob">Save</k-btn>
         </v-layout>
 
         <br>
@@ -664,6 +664,7 @@ export default {
       this.validateBeforePosting();
       if (this.valid && this.$route.params.id) {
         this.job.active = true;
+        this.loading = true;
         this._save();
       }
     },
@@ -691,7 +692,11 @@ export default {
               variables: { userId: this.$store.state.userID, businessId: this.$store.state.businessID },
             },
           ],
-        }).then((res) => {
+        }).then((res) => new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(res);
+          }, 4000);
+        })).then((res) => {
           this.loading = false;
           const recordId = res.data.updateJob.recordId;
           if (viewJob) {
@@ -790,7 +795,6 @@ export default {
         user_id: this.uid,
         business_id: this.orgId,
         posted_by: this.job.posted_by,
-        active: this.job.active,
         title: this.job.title,
         date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
