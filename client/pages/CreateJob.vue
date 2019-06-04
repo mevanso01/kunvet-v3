@@ -34,8 +34,7 @@
               <div class="cust-spacer"></div>
 
               <v-form v-model="form1Valid" ref="form1">
-                <template v-if="!email_verified">
-                  <!-- Email not verified -->
+                <template v-if="!userdata._id">
                   <p class="mb-0">
                     First, we need some basic information about who's posting.<br>
                     You will receive your applicants' information through email, unless you opt out of this feature at the end of this form.<br>
