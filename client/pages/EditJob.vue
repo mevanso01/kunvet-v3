@@ -39,8 +39,8 @@
             </h2>
           </div>
           <div class="float-right">
-            <v-btn flat @click="saveForLater" :working="loading" v-if="!job.active">Save for later</v-btn>
-            <v-btn v-else style="margin-left: 0;" @click="updateActiveJob" :working="loading">Save</v-btn>
+            <k-btn flat @click="saveForLater" :working="loading" v-if="!job.active">Save for later</k-btn>
+            <k-btn v-else style="margin-left: 0;" @click="updateActiveJob" :working="loading">Save</k-btn>
           </div>
         </div>
         <v-divider></v-divider>
@@ -296,7 +296,7 @@
           <k-btn @click="validateBeforePosting(true)">Save and Post</k-btn>
         </v-layout>
         <v-layout v-else>
-          <k-btn style="margin-left: 0;" @click="updateActiveJob">Save</k-btn>
+          <k-btn style="margin-left: 0;" :working="loading" @click="updateActiveJob">Save</k-btn>
         </v-layout>
 
         <br>
@@ -665,7 +665,9 @@ export default {
       if (this.valid && this.$route.params.id) {
         this.job.active = true;
         this.loading = true;
-        this._save();
+        setTimeout(() => {
+          this._save();
+        }, 0);
       }
     },
     _save(viewJob = false) {
