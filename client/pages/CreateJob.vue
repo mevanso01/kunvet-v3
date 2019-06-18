@@ -1697,8 +1697,11 @@ export default {
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
+        this.furthest_tab = 1;
         if (this.tab === '0') {
           this.dialogs.welcome = true;
+        } else {
+          this.tab = '0';
         }
         // if (this.$store.state.newUser) {
         //   this.dialogs.welcome = true;
