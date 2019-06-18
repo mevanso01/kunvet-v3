@@ -63,8 +63,8 @@
               </v-form>
 
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
-                <v-flex xs12 style="text-align: center;">
-                  <v-btn class="kunvet-red-bg" :disabled="loading" @click="next(1)">Save and Continue</v-btn>
+                <v-flex xs12 style="text-align: center;" v-show="uid">
+                  <v-btn class="kunvet-red-bg" :disabled="loading" @click="next(1)">Continue</v-btn>
                   <p v-if="loading">
                     <span style="padding: 0 4px;">
                       <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
@@ -1705,6 +1705,9 @@ export default {
         //   this.$store.commit('notNewUser');
         // }
       } else {
+        if (this.tab === '0') {
+          this.next(1);
+        }
         this.email_verified = res.userdata.email_verified;
         this.email = res.userdata.email;
         this.fname = res.userdata.firstname;
