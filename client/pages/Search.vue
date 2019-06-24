@@ -675,13 +675,6 @@ export default {
         this.openSelectField = name;
       }
     },
-    searchAndFilter() {
-      this.openSelect(null);
-      this.setSelectedLatlongs();
-      this.page = 0;
-      this.findAndFilterJobs();
-      // this.loadInitialJobs();
-    },
     documentClick(e) {
       const selects = document.getElementsByClassName('custom-select-2-wrapper');
       const target = e.target;
@@ -1071,6 +1064,7 @@ export default {
     },
     rawSearch() {
       this.$debug('Started rawSearch');
+      this.setSelectedLatlongs();
       this.displayedJobs = [[], [], []];
       if (process.env.NODE_ENV === 'development') {
         // Local DB
