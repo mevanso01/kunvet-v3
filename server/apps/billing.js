@@ -5,6 +5,8 @@ import BraintreeGateway from '@/BraintreeGateway';
 import Models from '@/mongodb/Models';
 import Mailer from '@/utils/Mailer';
 import Algolia from '@/utils/Algolia';
+import ErrorCode from '#/ErrorCode';
+import ApiResponse from '@/utils/ApiResponse';
 import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
 
@@ -221,10 +223,10 @@ router.post('/createTransaction', async (ctx) => {
     }
   } catch (e) {
     ctx.status = 500;
-    ctx.body = JSON.stringify({
-      success: false,
-      message: `Failed to charge the user: ${e.message}`,
-    });
+    ctx.body = ApiResponse(
+      ErrorCode.PaymentError,
+      e.message,
+    );
 
     return;
   }
@@ -235,10 +237,10 @@ router.post('/createTransaction', async (ctx) => {
       await ACTIONS[action.name].fulfill(ctx, action);
     } catch (e) {
       ctx.status = 500;
-      ctx.body = JSON.stringify({
-        success: false,
-        message: `${action.name} could not be fulfilled: ${e.message}`,
-      });
+      ctx.body = ApiResponse(
+        ErrorCode.PaymentError,
+        `Action "${action.name}" yielded "${e.message}"`,
+      );
       return;
     }
   }
