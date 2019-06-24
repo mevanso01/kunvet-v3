@@ -5,20 +5,17 @@ import Logger from 'winston';
 export default class Lambda {
   static get(app) {
     const server = AwsServerlessExpress.createServer(app.callback());
-    return (event, context) => {
+    return async (event) => {
       if (event.scheduler) {
         // Scheduler trigger
         Logger.info('Running scheduled tasks');
-        Scheduler.trigger().then(() => {
-          context.succeed({
-            success: true,
-          });
-        }).catch((e) => {
-          context.fail(e);
-        });
+        await Scheduler.trigger();
+        return {
+          success: true,
+        };
       } else {
         // Web request
-        AwsServerlessExpress.proxy(server, event, context);
+        return AwsServerlessExpress.proxy(server, event, {}, 'PROMISE').promise;
       }
     };
   }
