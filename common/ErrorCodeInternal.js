@@ -6,6 +6,8 @@ const errors = [
   ['BadRequest', 'Bad request. Naughty kid.'],
   ['UnsupportedFileType', 'Unsupported file type. Kunvet only supports PDF, Word and image files.'],
   ['FileTooLarge', 'File too large'],
+  ['PaymentError', 'Failed to complete transaction'],
+  ['FulfillmentError', 'Failed to fulfill order'],
 ];
 
 const result = {
