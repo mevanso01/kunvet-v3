@@ -691,8 +691,10 @@ export default {
     getCityCoordinates() {
       const selected = locations.search_locations.find(el => el.name === this.selectedCity);
       if (!selected) {
+        this.$debug('Location not found');
         return Coordinates.uci;
       }
+      this.$debug('Selected', selected);
       return { latitude: selected.latitude, longitude: selected.longitude };
     },
     findAndFilterJobs() {
@@ -992,6 +994,7 @@ export default {
     async algoliaSearch() {
       const coordinates = this.getCityCoordinates();
       const query = this.query || '';
+      this.$debug(coordinates);
       const requests = [{
         params: {
           query: query,
@@ -1066,7 +1069,8 @@ export default {
       this.$debug('Started rawSearch');
       this.setSelectedLatlongs();
       this.displayedJobs = [[], [], []];
-      if (process.env.NODE_ENV === 'development') {
+      // if (process.env.NODE_ENV === 'development') {
+      if (false) {
         // Local DB
         console.log('Loading jobs from local db'); // this is left as console.log on purpose
         this.findAndFilterJobs();

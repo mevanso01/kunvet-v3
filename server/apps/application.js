@@ -158,6 +158,12 @@ router.post('/:id/setStatus/:status', async (ctx) => {
   ctx.body = await setStatus(applicationId, ctx.params.status, ctx);
 });
 
+router.get('/test', async (ctx) => {
+  const response = new ApiResponse(ErrorCode.InternalError, '', ctx);
+  // response.send();
+  ctx.body = response;
+});
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 

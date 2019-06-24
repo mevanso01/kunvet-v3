@@ -38,6 +38,7 @@ import BillingApp from '@/apps/billing';
 // Our stuff
 import Db from '@/mongodb/Db';
 import Models from '@/mongodb/Models';
+import Algolia from '@/utils/Algolia';
 
 // ========
 // | Main |
@@ -89,6 +90,7 @@ Db.connect()
       const r = REPL.start('kunvet> ');
       r.context.Models = Models;
       r.context.mongoose = Db.mongoose;
+      r.context.Algolia = Algolia;
     }
   })
   .catch((reason) => {

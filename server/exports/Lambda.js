@@ -13,10 +13,8 @@ export default class Lambda {
         return {
           success: true,
         };
-      } else {
-        // Web request
-        return AwsServerlessExpress.proxy(server, event, {}, 'PROMISE').promise;
       }
+      return AwsServerlessExpress.proxy(server, event, {}, 'PROMISE').promise;
     };
   }
 }

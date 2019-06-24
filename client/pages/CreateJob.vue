@@ -69,7 +69,7 @@
                     <span style="padding: 0 4px;">
                       <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
                     </span>
-                    Loading...
+                    Loading.
                   </p>
                 </v-flex>
                 <v-flex v-if="form1Error" xs12>
@@ -872,6 +872,7 @@ export default {
     },
     onSignup() {
       userDataProvider.getUserData().then(async res => {
+        this.$debug('meow');
         this.pageloading = false;
         this.uid = res.uid;
         if (res.acct === 0) {
