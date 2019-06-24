@@ -465,6 +465,8 @@ const AccountSchema = Mongoose.Schema({
   org_list: [],
   notifications: [{
     text: String,
+    job_title: String,
+    count: Number,
     route: String,
     notification_type: String,
     date: {

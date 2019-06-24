@@ -186,7 +186,34 @@
 
 <template>
 <div style="margin-top: 200px;">
-  <v-textarea no-resize full-width maxlength="140" value="Hello there"></v-textarea>
+  <v-layout
+    d-flex
+    justify-center
+  >
+    <v-menu
+      v-model="showMenu"
+      absolute
+      offset-y
+    >
+      <template slot="activator">
+        <v-card
+          class="portrait"
+          img="https://cdn.vuetifyjs.com/images/cards/girl.jpg"
+          height="300"
+          width="600"
+        ></v-card>
+      </template>
+
+      <v-list style="width: 200px;">
+        <v-list-tile
+          v-for="(item, index) in items"
+          :key="index"
+        >
+          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+  </v-layout>
 </div>
 </template>
 
@@ -213,6 +240,13 @@ export default {
         vel: velip,
         res: resume,
       },
+      showMenu: false,
+      items: [
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me 2' },
+      ],
     };
   },
 

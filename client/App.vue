@@ -22,13 +22,12 @@
         <!--TODO: notification mark-->
         <!-- <v-btn flat @click="goTo('/notifications');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn> -->
         <!-- <v-btn flat @click="goTo('/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn> -->
-        <v-menu fixed offset-y left :close-on-content-click="false">
-          <v-btn flat style="min-width: 64px;" slot="activator" class="white--text nav-notifications-btn">
-            <img v-if="navHasBg" class="nav-img notranslate" src="./assets/navbar/bell4_red.svg"></img>
-            <img v-else class="nav-img notranslate" src="./assets/navbar/bell4_white.svg"></img>
+        <v-menu fixed offset-y left :close-on-content-click="false" class="notif_fixed">
+          <v-btn flat style="min-width: 64px; text-transform: capitalize;" slot="activator" class="white--text nav-notifications-btn">
+              Notifications
             <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>
           </v-btn>
-          <Notifications isNavbar />
+          <Notifications isNavbar/>
         </v-menu>
         <v-menu fixed offset-y left>
           <v-btn flat slot="activator" class="white--text" style="min-width: 64px; background-color: inherit;">

@@ -217,7 +217,7 @@ button:focus {
   line-height: 16px;
   border-radius: 8px;
   top: -3px;
-  left: 17px;
+  left: 78px;
   background-color: #ef5350;
   color: #fff;
 }
@@ -1257,4 +1257,21 @@ body {
     #bottom-content {
         padding: 0px 16px;
     }
+}
+.navCustomList.v-list--dense.theme--light{
+  padding-top: 10px !important;
+  padding-bottom: 12px !important;
+}
+
+.navCustomTile.v-list__tile.theme--light{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.v-menu__content{
+  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+}
+
+.v-menu__content.theme--light{
+  position: fixed;
 }
