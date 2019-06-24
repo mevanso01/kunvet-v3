@@ -4,12 +4,18 @@ import ErrorCodeInternal from 'static_error_code_internal';
 const result = ErrorCodeInternal.codes;
 const messages = ErrorCodeInternal.messages;
 
-result.getMessage = (code) => {
+result.getMessage = (code, extraMessage = null) => {
+  let message = messages[result.UnknownError];
+
   if (Object.prototype.hasOwnProperty.call(messages, code)) {
-    return messages[code];
+    message = messages[code];
   }
 
-  return messages[result.UnknownError];
+  if (extraMessage) {
+    message += `: ${extraMessage}`;
+  }
+
+  return message;
 };
 
 export default result;
