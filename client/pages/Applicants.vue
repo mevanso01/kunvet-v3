@@ -1,4 +1,6 @@
-<style lang="scss">
+<style lang="scss" scoped>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Sriracha);
   .applicants-page {
     padding-left: 0;
     padding-right: 0;
@@ -7,7 +9,7 @@
       padding: 0 16px;
     }
     .job-headline {
-      background-color: #f2f7ff;
+      background-color: white;
       padding-top: 16px;
       padding-bottom: 16px;
       p, h2 {
@@ -31,11 +33,12 @@
       // height: 95vh;
       padding: 64px 32px 32px 32px;
       overflow: scroll;
-      background-color: #f2f7ff;
+      background-color: white;
       .more {
         background: none !important;
       }
     }
+
     .sp-heading {
       position: sticky;
       top: 64px;
@@ -44,7 +47,7 @@
       padding: 18px 32px 0px 32px;
       // background-color: #ef5350;
       // background-color: #ff6969;
-      background-color: #f2f7ff;
+      background-color: white;
       .v-btn__content {
         text-transform: none;
       }
@@ -57,11 +60,11 @@
       bottom: 0px;
       height: 60px;
       padding: 8px 32px;
-      background-color: #f2f7ff;
+      background-color: white;
       h2 {
         font-size: 18px;
         line-height: 42px;
-        color: #616161;
+        color: #b99e9e;
         font-weight: 400;
       }
       button {
@@ -69,6 +72,10 @@
         margin-bottom: 0;
       }
     }
+    .app_cards{
+      display: inline-block;
+    }
+
     @media (min-width: 601px) {
       .btn-row > a {
         padding-right: 8px;
@@ -117,7 +124,7 @@
       }
       .sp-heading-mobile {
         display: block;
-        background-color: #f2f7ff;
+        background-color: white;
         position: sticky;
         top: 0;
         height: 40px;
@@ -131,19 +138,11 @@
         position: sticky;
         bottom: 0;
         height: 72px;
-        background-color: #f2f7ff;
+        background-color: white;
         z-index: 5;
       }
     }
   }
-  // height: auto;
-  //    width: 100%;
-  //    background-color: #f2f7ff;
-  //    z-index: 9;
-  //    position: fixed;
-  //    top: 64px;
-  //    padding: 0;
-  //    overflow: hidden;
 </style>
 <template>
   <v-container fluid class="applicants-page  page-height">
@@ -165,9 +164,8 @@
         v-for="job in jobs"
       >
         <v-flex xs12 style="margin-top: 12px" class="job-headline job-page-headline">
-          <div class="main-cont-large">
-            <p class="mb-1">{{ getApplicantsFromJobs(job._id).length }} {{ getApplicantsString(getApplicantsFromJobs(job._id).length) }} for</p>
-            <h2>{{ job.title }}</h2>
+          <div class="main-cont-large" style="max-width: 1080px; margin-left: auto;">
+            <h1 class="mb-1" style="margin-left: 30px; font-weight: 900;">{{ getApplicantsString(getApplicantsFromJobs(job._id).length) }} for {{ job.title }}</h1>
             <!-- <p class="mb-1">
               <span class="kunvet-red">
                 {{ getApplicantsFromJobs(job._id).length }}
@@ -175,53 +173,15 @@
             </p> -->
           </div>
         </v-flex>
-        <div class="main-cont-large">
-          <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="applicant">
-            <div class="inner" style="position: relative;">
-              <div class="">
-                <v-layout row wrap style="padding-bottom: 12px;">
-                  <v-flex xs12 sm6 style="padding-bottom: 0; cursor: pointer;" @click="openSideResume(item);">
-                      <h2 class="new-applicant-card__title">{{ item.name }}</h2>
-                      <p v-if="item.school" style="overflow: hidden; margin-bottom: 0;">
-                          School: {{ item.school }}
-                      </p>
-                      <p v-else style="overflow: hidden; margin-bottom: 0;">
-                          No school info
-                      </p>
-                      <p v-if="item.degree" style="overflow: hidden; margin-bottom: 0;">
-                          Degree: {{ item.degree }}
-                      </p>
-                      <p v-if="item.major" style="overflow: hidden; margin-bottom: 0;">
-                          Major: {{ item.major }}
-                      </p>
-                      <!-- <p style="overflow: hidden; margin-bottom: 0;">
+        <div class="main-cont-large" style="max-width: 1080px; margin-left: auto;">
+          <div v-if=" getApplicantsFromJobs(job._id).length == 0" style="height: 60px;">
+            <h2 style="margin-left: 30px; font-size: 1.2em; font-style: italic; color: #888888">There are no applicants for this job.</h2>
+          </div>
 
-                      </p> -->
-                  </v-flex>
-                  <v-flex xs12 sm6 style="padding-bottom: 0;">
-                    <div style="padding-top: 25px;">
-                      <span v-if="item.notes" style="color: grey;">
-                        <!-- Notes: {{ getApplicantNotesDisplayText(item) }} -->
-                        <pre style="font-family: Verdana; white-space: pre-line;">
-                          {{ item.notes }}
-                        </pre>
-                      </span>
-                    </div>
-                  </v-flex>
-                </v-layout>
-                <div class="btn-row">
-                  <!-- <v-btn class="kunvet-v-btn light mr-2" @click="openSideResume(item);">Show Resume</v-btn>
-                  <v-btn class="kunvet-v-btn light" @click="openInNewTab(item)">Open In New Tab</v-btn> -->
-                  <a v-if="item.resumes.length >0" @click="openSideResume(item);">Show Resume</a>
-                  <a v-else style="text-decoration: none">No Resume</a>
-                  {{item.resume}}
-                  <a style="color: #616161;" @click="openInNewTab(item)">View More Information</a>
-                  <!-- <v-btn flat class="ml-0" @click="openSideResume(item);">Show Resume</v-btn>
-                  <v-btn flat @click="openInNewTab(item)">Open In New Tab</v-btn> -->
-                </div>
-                <!-- <v-btn @click="openResumeInNewTab(item);">Open in new tab</v-btn> -->
-              </div>
-            </div>
+          <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="app_cards">
+            
+            <appCard :item="item" @openSideResume="openSideResume(item)"></appCard>
+                        
           </div>
         </div>
       </template>
@@ -367,12 +327,10 @@
   import axios from 'axios';
   import differenceBy from 'lodash/differenceBy';
   import EventBus from '@/EventBus';
-
   import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
   import KunvetCharacterSvg from '@/assets/account/default_profile_picture.svg';
   import MajorSvg from '@/assets/account/account_major.svg';
   import DegreeSvg from '@/assets/account/degree.svg';
-
   import DateHelper from '@/utils/DateHelper';
   import StringHelper from '@/utils/StringHelper';
   import { degreeDbToString } from '@/constants/degrees';
@@ -380,7 +338,10 @@
   import ProfilePicHelper from '@/utils/GetProfilePic';
   import FileClient from '@/utils/FileClient';
   import PdfFrame from '@/components/PdfFrame';
-
+  import velip from '@/assets/elipses.svg';
+  import resume from '@/assets/resume.svg';
+  import applicationCard from '@/components/ApplicationCard';
+  
   export default {
     created() {
       if (this.$store.state.acct === 0) {
@@ -396,6 +357,10 @@
     },
     data() {
       return {
+        show_btn: true,
+        flip: false,
+        edit_btn: false,
+        cancel_btn: false,
         pageLoading: true,
         loading: false,
         // user: null,
@@ -422,6 +387,8 @@
           kunvetCharacter: KunvetCharacterSvg,
           major: MajorSvg,
           degree: DegreeSvg,
+          vel: velip,
+          res: resume,
         },
         currentApplicant: null,
         currentResumeSrc: null,
@@ -431,6 +398,7 @@
     },
     components: {
       PdfFrame,
+      appCard: applicationCard,
     },
     methods: {
       // async getSrc(resume) {
@@ -440,6 +408,13 @@
       //   const src = await FileClient.getLink(resume.filename);
       //   return src;
       // },
+      flipped() {
+        this.flip = !this.flip;
+        this.show_btn = !this.show_btn;
+      },
+      works() {
+        this.$debug('Sample text lol');
+      },
       async openSideResume(item) {
         this.updateApplicantStatus('opened', item._id);
         this.showSideResume = true;
@@ -661,14 +636,38 @@
         const { applicants } = this;
         return applicants.filter(({ job_id: id }) => id === jobId);
       },
-      getApplicantNotesDisplayText({ notes }) {
-        if (!notes) return '';
-        return StringHelper.truncate(notes, 80);
-      },
       getApplicantsString(num) {
-        if (num === 1) { return 'applicant'; }
-        return 'applicants';
+        if (num === 1) { return 'Applicant'; }
+        return 'Applicants';
       },
+      getApplicantName({ name }) {
+        if (!name) return '';
+        var names = name.split(' ');
+        var initials;
+        initials = names[0].charAt(0).toUpperCase() + names[0].substring(1, names[0].length);
+        initials += ' ';
+        if (names.length > 1) {
+          initials += names[names.length - 1].substring(0, 1).toUpperCase();
+        }
+        initials += '.';
+        return initials;
+      },
+      getApplicantNotesDisplayText({ notes }) {
+        if (!notes) return 'N/A';
+        return StringHelper.truncate(notes, 52);
+      },
+      getApplicantDisplayDate({ date }) {
+        this.$debug(date);
+        var strDate = new Date(date).toDateString().split(' ');
+        strDate = strDate.slice(1, strDate.length);
+        var str = '';
+        for (var i = 0; i < strDate.length; ++i) {
+          str += strDate[i];
+          str += ' ';
+        }
+        return str;
+      },
+
     },
     computed: {
       getApplicantsCount() {

@@ -438,7 +438,7 @@ export default {
           this.data.email = res.email;
           this.data.wechat = res.wechat_id;
           this.data.notes = res.notes;
-          this.data.status = res.status;
+          this.data.status = status;
           this.data.degree = degreeDbToString(res.degree);
           this.data.major = res.major;
           this.rawResumes = res.resumes;

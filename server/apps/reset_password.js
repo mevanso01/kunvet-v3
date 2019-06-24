@@ -91,6 +91,9 @@ router.post('/reset', async (ctx) => {
     ctx.body = 'Internal server error';
     return;
   }
+
+  // ADD MAILER STUFF HERE - VIVEK
+
   const response = {
     success: true,
     message: 'Password reset!',

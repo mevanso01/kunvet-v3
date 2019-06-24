@@ -120,10 +120,12 @@ async function sendNewApplicationNotification(req, next) {
   }
   try {
     employer.notifications.push({
-      text: `New applicant: ${user.firstname} ${user.lastname}`, // Important: change code in applicants.vue before removing
+      text: job._id, // Important: change code in applicants.vue before removing
+      job_title: job.title,
+      count: 0,
       route: '/applicants',
       notification_type: 'application',
-      date: Date.now,
+      date: Date.now(),
     });
     employer.save();
   } catch (e) {
