@@ -1549,6 +1549,7 @@ export default {
       console.log('Resetting data');
       this.$store.commit('resetJobProgress');
       Object.assign(this.$data, this.$options.data.call(this), { autocomplete: this.autocomplete, geocoder: this.geocoder });
+      this.pageloading = false;
     },
     fetchAndSetBusinessData(id) {
       this.$apollo.query({
