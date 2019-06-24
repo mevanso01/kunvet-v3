@@ -70,7 +70,7 @@ router.post('/create', Middlewares.RequireAuth, async (ctx) => {
   const allowedMimeTypes = Config.get('private.files.allowedMimeTypes');
 
   if (!req.mimeType.startsWith('image/') && !allowedMimeTypes.includes(req.mimeType)) {
-    ctx.body = ApiResponse(
+    ctx.body = new ApiResponse(
       ErrorCode.UnsupportedFileType,
     );
     return;

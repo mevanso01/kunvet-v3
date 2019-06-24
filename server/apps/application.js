@@ -52,33 +52,33 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
       });
     }
   } catch (e) {
-    return ApiResponse(
+    return new ApiResponse(
       ErrorCode.InvalidApplication,
     );
   }
 
   if (ctx && !ctx.state.user._id.equals(job.user_id)) {
     // Not the employer
-    return ApiResponse(
+    return new ApiResponse(
       ErrorCode.InvalidApplication,
     );
   }
 
   if (token && application.tracking_token !== token) {
     // Token incorrect
-    return ApiResponse(
+    return new ApiResponse(
       ErrorCode.InvalidApplication,
     );
   }
 
   if (application.status === status) {
     // application status is already set
-    return ApiResponse();
+    return new ApiResponse();
   }
 
   if (application.status !== 'submitted' && status === 'opened') {
     // application can only be set to 'opened' in the 'submitted' state
-    return ApiResponse(
+    return new ApiResponse(
       ErrorCode.BadRequest,
     );
   }
@@ -88,7 +88,7 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
   try {
     await application.save();
   } catch (e) {
-    return ApiResponse(
+    return new ApiResponse(
       ErrorCode.InternalError,
     );
   }
@@ -129,7 +129,7 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
     // if user has notifications enabled, send notification
   }
 
-  return ApiResponse();
+  return new ApiResponse();
 }
 
 router.get('/:id/tracking/:token', async (ctx) => {

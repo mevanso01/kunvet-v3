@@ -223,9 +223,10 @@ router.post('/createTransaction', async (ctx) => {
     }
   } catch (e) {
     ctx.status = 500;
-    ctx.body = ApiResponse(
+    ctx.body = new ApiResponse(
       ErrorCode.PaymentError,
       e.message,
+      ctx,
     );
 
     return;
@@ -237,9 +238,10 @@ router.post('/createTransaction', async (ctx) => {
       await ACTIONS[action.name].fulfill(ctx, action);
     } catch (e) {
       ctx.status = 500;
-      ctx.body = ApiResponse(
+      ctx.body = new ApiResponse(
         ErrorCode.PaymentError,
         `Action "${action.name}" yielded "${e.message}"`,
+        ctx,
       );
       return;
     }
