@@ -593,7 +593,7 @@
   <v-container fluid class="pa-0 index-page">
   <div class="top_container_style">
     <div class="top_title_pos">
-     <h1 class="top_title_text">Latest Opportunities Near Your School</h1> <!-- Changed from "College" by L.V. -->
+     <h1 class="top_title_text">Latest Job Opportunities Near You.</h1>
     </div>
   </div>
 
