@@ -190,8 +190,8 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "about" */ '@/pages/JoinUs'),
     },
     {
-      path: '/employers',
-      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Employers'),
+      path: '/hire',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Hire'),
     },
     // Debug pages
     {

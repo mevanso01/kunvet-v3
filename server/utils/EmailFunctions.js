@@ -48,7 +48,7 @@ export default {
     console.log('sendApplicationStatus');
     if (user.preferences.applicationStatusEmails === 'Off') {
       console.log('User has application status emails turned off');
-      return ApiResponse();
+      return new ApiResponse();
     }
     console.log('User has application status emails turned on');
     checkEmailBody(emailBody); // verifies that the emailBody is sending all values
@@ -71,9 +71,9 @@ export default {
       );
     } catch (e) {
       Logger.error(e);
-      return ApiResponse(ErrorCode.InternalError);
+      return new ApiResponse(ErrorCode.InternalError);
     }
-    return ApiResponse();
+    return new ApiResponse();
   },
   /*
     sendApplicantInfo: This function takes a templateObject and sends the email template.
@@ -110,5 +110,5 @@ export default {
   },
 };
 
-//    if(user.preferences.jobExpiredEmails === 'Off'){return ApiResponse();}
-//    if(user.preferences.getNewsLetters === false){return ApiResponse();}
+//    if(user.preferences.jobExpiredEmails === 'Off'){return new ApiResponse();}
+//    if(user.preferences.getNewsLetters === false){return new ApiResponse();}
