@@ -1,4 +1,3 @@
-applyDialog
 <style lang="scss" scoped>
   .file-icon {
     width: 85px;
@@ -441,6 +440,10 @@ applyDialog
     right: 10%;
     transform: translateY(19px);
   }
+
+  .location_link {
+    text-decoration: underline;
+  }
 </style>
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container"
@@ -481,7 +484,7 @@ applyDialog
               <img class="job-info-icon" style="transform: translateY(2px);"
                    :src="svgs.building"></img>
               <span style="padding-top: 2px;">
-                {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
+                <a class="location_link" @click="changeLocation()" target="_blank">{{ findJob.address }}</a><template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
             </p>
             <p v-if="findJob.university" style="margin-bottom: 0;">
@@ -808,6 +811,7 @@ applyDialog
     props: ['id'],
     data() {
       return {
+        job_dest_url: '',
         selected: [],
         findJob: {},
         jobType: [],
@@ -962,7 +966,10 @@ applyDialog
                             Node.js Developer at Kunvet in Irvine, CA
                           */
           this.$setTitle(this.findJob.title);
-
+          this.job_dest_url = 'https://maps.google.com/?q=';
+          this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
+          this.$debug(this.job_dest_url);
+          this.$debug(this.findJob.address);
           this.jobType = [];
           for (const i in this.findJob.type) {
             if (typeof this.findJob.type[i] === 'string') {
@@ -990,6 +997,9 @@ applyDialog
           }
           this.fetchProfilePic();
         });
+      },
+      changeLocation() {
+        window.open(this.job_dest_url, '__blank');
       },
       openApplyDialog() {
         this.applyDialog = true;

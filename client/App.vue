@@ -22,7 +22,7 @@
         <!--TODO: notification mark-->
         <!-- <v-btn flat @click="goTo('/notifications');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn> -->
         <!-- <v-btn flat @click="goTo('/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn> -->
-        <v-menu fixed offset-y left :close-on-content-click="false" class="notif_fixed">
+        <v-menu fixed offset-y left :close-on-content-click="false" dark>
           <v-btn flat style="min-width: 64px; text-transform: capitalize;" slot="activator" class="white--text nav-notifications-btn">
               Notifications
             <div class="nav-notification-mark" v-show="numNotifications > 0">{{ numNotifications }}</div>

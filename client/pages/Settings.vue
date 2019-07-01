@@ -123,12 +123,13 @@
           <br>
           <div class="email_preferences">Recieve emails about application status</div>
           <v-switch @change="savePreferences()" v-model="application_bool" color="red" class="switch_settings"></v-switch>
-
-          <div class="email_preferences">Recieve emails about job expiration</div>
-          <v-switch @change="savePreferences()" v-model="jobExpired_bool" color="red" class="switch_settings"></v-switch>
-
+          
+          <div v-if="orgname" class="email_preferences">Recieve emails about job expiration</div>
+          <v-switch v-if="orgname" @change="savePreferences()" v-model="jobExpired_bool" color="red" class="switch_settings"></v-switch>
+          <!--
           <div class="email_preferences">Recieve emails about newsletters</div>
           <v-switch @change="savePreferences()" v-model="getNewsletter_bool" color="red" class="switch_settings"></v-switch>
+          -->
         </div>
 
         <br><br><br>

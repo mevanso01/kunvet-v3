@@ -225,7 +225,11 @@
                 <div class = "school_style">{{ item.school }} </div>
                 <div class = "degree_style">{{ item.degree }} </div>
                 <div class = "major_style">{{ item.major }} </div>
-                <div class = "notes_style"> Notes: {{ getApplicantNotesDisplayText(item) }}
+                <div v-if="item.notes" class = "notes_style"> Notes: {{ getApplicantNotesDisplayText(item) }}
+                  <!--<div style="padding-left: 6px; margin-top: -10px;"><v-icon>chevron_right</v-icon></div>-->
+                  <v-btn @click="editNotes(item.notes)" icon class="edit_notes_icon"><v-icon style="line-height: 32px;">chevron_right</v-icon></v-btn>
+                </div>
+                <div v-else class = "notes_style"> Leave a note!
                   <!--<div style="padding-left: 6px; margin-top: -10px;"><v-icon>chevron_right</v-icon></div>-->
                   <v-btn @click="editNotes(item.notes)" icon class="edit_notes_icon"><v-icon style="line-height: 32px;">chevron_right</v-icon></v-btn>
                 </div>
@@ -363,7 +367,7 @@ export default {
       return initials;
     },
     getApplicantNotesDisplayText({ notes }) {
-      if (!notes) return 'N/A';
+      if (!notes) return '';
       return StringHelper.truncate(notes, 60);
     },
 

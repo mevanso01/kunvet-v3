@@ -247,7 +247,8 @@
     <v-dialog v-model="dialogs.showDelete" width="380">
       <v-card>
         <v-card-title class="headline">
-          Are you sure you want to delete this job?
+          Delete this job? 
+          <span style="font-size: 16px; color: #333333">This action cannot be undone.</span>
         </v-card-title>
         <v-card-actions>
           <v-btn color="red darken-1" flat="flat" @click.native="onJobDelete">

@@ -1258,20 +1258,30 @@ body {
         padding: 0px 16px;
     }
 }
-.navCustomList.v-list--dense.theme--light{
-  padding-top: 10px !important;
-  padding-bottom: 12px !important;
-}
-
-.navCustomTile.v-list__tile.theme--light{
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-}
 
 .v-menu__content{
   box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
 }
 
-.v-menu__content.theme--light{
+
+/*The Dark theme is used from the v-menus in the navbar.
+The light theme is used for v-menus outside of the navbar.
+This is to prevent a certain bug from happening.
+To see the bug, simply comment out the next 3 styles.*/
+
+.v-menu__content.theme--dark{
+  background-color: white;
   position: fixed;
+  top: 64px !important;
+}
+
+.navCustomList.v-list--dense.theme--dark{
+  padding-top: 10px !important;
+  padding-bottom: 12px !important;
+  background-color: white;
+}
+
+.navCustomTile.v-list__tile.theme--dark{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
