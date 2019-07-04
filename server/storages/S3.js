@@ -34,6 +34,9 @@ export default class S3 extends Storage {
         Key: name,
         ContentType: file.mimeType,
         'Content-Type': file.mimeType,
+        Metadata: {
+          'Content-Type': file.mimeType,
+        },
       },
       Conditions: [
         ['content-length-range', 1, 10485760], // 10MB max
