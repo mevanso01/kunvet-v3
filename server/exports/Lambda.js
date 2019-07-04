@@ -5,7 +5,6 @@ import Logger from '@/Logger';
 // https://github.com/winstonjs/winston/issues/1250
 async function waitForLogger() {
   const done = new Promise(resolve => Logger.on('finish', resolve));
-  Logger.end();
   return done;
 }
 
