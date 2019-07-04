@@ -80,9 +80,7 @@
                           type="file"
                           :disabled="state === 'UPLOADING'"
                           @change="updateFile($event.target.files)"
-                          accept="application/pdf, application/msword,
-        application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-        application/vnd.oasis.opendocument.text"
+                          accept="application/pdf"
                           class="input-file"
                         >
                         <div v-if="state === 'INITIAL'" >
