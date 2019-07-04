@@ -21,11 +21,13 @@ export default class Lambda {
         };
       }
       const response = await AwsServerlessExpress.proxy(server, event, {}, 'PROMISE').promise;
+      /*
       try {
         await waitForLogger();
       } catch (e) {
         console.error(e);
       }
+      */
       return response;
     };
   }
