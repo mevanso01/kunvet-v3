@@ -2,6 +2,13 @@ import AwsServerlessExpress from 'aws-serverless-express';
 import Scheduler from '@/Scheduler';
 import Logger from '@/Logger';
 
+// https://github.com/winstonjs/winston/issues/1250
+async function waitForLogger() {
+  const done = new Promise(resolve => Logger.on('finish', resolve));
+  Logger.end();
+  return done;
+}
+
 export default class Lambda {
   static get(app) {
     const server = AwsServerlessExpress.createServer(app.callback());
@@ -14,7 +21,9 @@ export default class Lambda {
           success: true,
         };
       }
-      return AwsServerlessExpress.proxy(server, event, {}, 'PROMISE').promise;
+      const response = await AwsServerlessExpress.proxy(server, event, {}, 'PROMISE').promise;
+      await waitForLogger();
+      return response;
     };
   }
 }
