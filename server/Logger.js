@@ -6,7 +6,6 @@ const transports = {
   console: new Winston.transports.Console({
     level: 'info',
     handleExceptions: true,
-    json: false,
   }),
   sentry: new Sentry({
     dsn: Config.get('private.sentry.dsn'),
@@ -22,12 +21,6 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   enabled.push(transports.sentry);
 }
-
-if (process.env.LAMBDA_TASK_ROOT && process.env.AWS_EXECUTION_ENV) {
-  // Log in JSON on AWS Lambda
-  transports.console.json = true;
-}
-
 
 const logger = Winston.createLogger({
   level: 'info',
