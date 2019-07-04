@@ -1,6 +1,6 @@
 import AwsServerlessExpress from 'aws-serverless-express';
 import Scheduler from '@/Scheduler';
-import Logger from 'winston';
+import Logger from '@/Logger';
 
 export default class Lambda {
   static get(app) {

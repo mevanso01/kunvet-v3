@@ -15,7 +15,7 @@ import Mailer from '@/utils/Mailer';
 import Models from '@/mongodb/Models';
 
 // Other
-import Logger from 'winston';
+import Logger from '@/Logger';
 import promisify from 'es6-promisify';
 import uuidv1 from 'uuid/v1';
 

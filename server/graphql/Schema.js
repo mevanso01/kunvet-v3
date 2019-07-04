@@ -1,7 +1,7 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
 import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
-import Logger from 'winston';
+import Logger from '@/Logger';
 import Files from '@/utils/Files';
 import Mailer from '@/utils/Mailer';
 // import EmailFunctions from '@/utils/EmailFunctions';

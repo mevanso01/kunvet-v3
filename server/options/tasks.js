@@ -1,4 +1,4 @@
-import Logger from 'winston';
+import Logger from '@/Logger';
 import Scheduler from '@/Scheduler';
 import Config from 'config';
 import Models from '@/mongodb/Models';

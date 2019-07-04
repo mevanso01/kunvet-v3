@@ -1,9 +1,9 @@
-import Logger from 'winston';
+import Winston from 'winston';
 import Sentry from 'winston-raven-sentry';
 import Config from 'config';
 
 const transports = {
-  console: new Logger.transports.Console({
+  console: new Winston.transports.Console({
     level: 'info',
     handleExceptions: true,
     json: false,
@@ -28,6 +28,10 @@ if (process.env.LAMBDA_TASK_ROOT && process.env.AWS_EXECUTION_ENV) {
   transports.console.json = true;
 }
 
-Logger.configure({
+
+const logger = Winston.createLogger({
+  level: 'info',
   transports: enabled,
 });
+
+export default logger;

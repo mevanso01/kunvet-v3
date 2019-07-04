@@ -14,14 +14,13 @@ import KoaPassport from 'koa-passport';
 
 import REPL from 'repl';
 
-import Logger from 'winston';
+import Logger from '@/Logger';
 
 // CORS
 import Cors from '@/Cors';
 
 // Options
 import '@/options/passport';
-import '@/options/logger';
 import '@/options/tasks';
 
 // Sub apps
