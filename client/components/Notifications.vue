@@ -32,6 +32,7 @@
 
 .notif-list-items{
   height: 60px;
+  color: black;
 }
 </style>
 

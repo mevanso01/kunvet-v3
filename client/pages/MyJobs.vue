@@ -264,9 +264,10 @@
     <v-dialog v-model="dialogs.showRepost" max-width="500px">
       <v-card>
         <v-card-text class="pt-0" style="margin-top: 20px;">
-          <Billing ref="BillingCMP"
-          :jobId="dialogs.currentJobId" title="Repost this job"
-          @success="afterRepost()"
+          <Billing
+            ref="BillingCMP"
+            title="Repost this job"
+            @success="afterRepost()"
           />
         </v-card-text>
         <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">

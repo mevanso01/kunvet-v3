@@ -51,6 +51,7 @@
                         dontValidate
                         :type="chosenAccountType"
                         @success="onSignup"
+                        @select="selectAccountType"
                       />
                     </div>
                   </v-layout>
@@ -509,7 +510,9 @@
             Oh no, an error occured
           </v-card-title>
           <v-card-text>
-            Please try again later
+            Please refresh or try again later<br>
+            If you need any support, <a style="text-decoration: underline;" href="/contact" target="_blank">click here</a> for help!<br>
+            We are more than willing to assist you!
           </v-card-text>
           <v-card-actions>
             <v-btn flat="flat" @click.native="dialogs.errorOccured = false;">Close</v-btn>

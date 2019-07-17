@@ -620,7 +620,8 @@
           <v-card v-if="loginState === 'start'" flat class="dialog-card"
                   style="height: 500px; display: flex; flex-direction: column;">
             <div style="height: 40%">
-              <p class="kunvet-red apply-text">Welcome to Kunvet!</p>
+              <p class="kunvet-red apply-text" style="text-align: center;">Welcome to Kunvet!</p>
+              <p class="apply-text" style="font-size: 16px; text-align: center;"> Please sign up or login to continue the process.</p>
             </div>
 
             <div style="height: 60%; text-align: center">
@@ -707,7 +708,7 @@
                 </div>
               </div>
               <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded"
-                              style="width: 100%;"></ResumeUploader>
+                              style="width: 100%;" type="Job"></ResumeUploader>
               <k-btn v-if="resumeExists" @click="createApplication"
                      :disabled="!selectedResumes.length"
                      :working="loading"
@@ -740,11 +741,16 @@
             </button>
           </v-card>
 
-          <v-card flat style="height: 500px;" class="dialog-card"
+          <v-card flat style="height: 300px;" class="dialog-card"
                   v-else-if="loginState === 'error'">
-            <v-card-title>
-              <h2>Oops, an error occured. Please try again later.</h2>
+            <v-card-title style="padding-left: 150px; padding-top: 50px;">
+              <h2>Oops, an error occured. </h2>
             </v-card-title>
+            <v-card-text style="padding-left: 150px;">
+              Please refresh or try again later<br>
+              If you need any support, <a style="text-decoration: underline;" href="/contact" target="_blank">click here</a> for help!<br>
+              We are more than willing to assist you!
+            </v-card-text>
             <div
               style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
               <k-btn to="/search">Back to Search</k-btn>

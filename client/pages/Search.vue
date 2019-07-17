@@ -1070,7 +1070,7 @@ export default {
       this.setSelectedLatlongs();
       this.displayedJobs = [[], [], []];
       // if (process.env.NODE_ENV === 'development') {
-      if (false) {
+      if (process.env.NODE_ENV === 'development') {
         // Local DB
         console.log('Loading jobs from local db'); // this is left as console.log on purpose
         this.findAndFilterJobs();
