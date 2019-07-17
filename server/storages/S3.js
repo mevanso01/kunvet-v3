@@ -32,6 +32,11 @@ export default class S3 extends Storage {
       Bucket: Config.get('private.files.s3.bucket'),
       Fields: {
         Key: name,
+        ContentType: file.mimeType,
+        'Content-Type': file.mimeType,
+        Metadata: {
+          'Content-Type': file.mimeType,
+        },
       },
       Conditions: [
         ['content-length-range', 1, 10485760], // 10MB max

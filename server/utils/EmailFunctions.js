@@ -1,7 +1,7 @@
 import ErrorCode from '#/ErrorCode';
 import ApiResponse from '@/utils/ApiResponse';
 import Mailer from '@/utils/Mailer';
-import Logger from 'winston';
+import Logger from '@/Logger';
 
 
 /*

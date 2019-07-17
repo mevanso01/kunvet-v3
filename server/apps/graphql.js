@@ -5,7 +5,7 @@ import Koa from 'koa';
 import { ApolloServer } from 'apollo-server-koa';
 
 // Logger
-import Logger from 'winston';
+import Logger from '@/Logger';
 
 // Our stuff
 import Schema from '../graphql/Schema';
