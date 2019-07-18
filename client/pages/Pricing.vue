@@ -238,7 +238,8 @@
       <p class="card_title_btm"> Perfect for startup & small organization. </p>
       <img class="card_title_img" :src="svgs.business">
       <router-link to="/signup/business"><k-btn class="card_get_account">Get Business Account</k-btn></router-link>
-      <p class="card_list" style="padding-top: 48px;"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>$10 per job posting</p>
+      <strike style="color:red;"><p class="card_list" style="padding-top: 24px; color: black; padding-left: 86px;">$15</p></strike>
+      <p class="card_list" style="padding-top: 0px;"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>$10 per job posting<span style="font-weight: bold; color: #FF6766;"> - Early Bird Price!</span></p>
       <p class="card_list"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>Posting stays active for 60 days</p>
       <p class="card_list"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>Advanced Job Posting</p>
       <p class="card_list"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>Receive Resume Through Email</p>
