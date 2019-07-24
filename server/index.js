@@ -33,6 +33,7 @@ import JobApp from '@/apps/job';
 import ProfilePicApp from '@/apps/profile_pic';
 import ResetPasswordApp from '@/apps/reset_password';
 import BillingApp from '@/apps/billing';
+import MailChimpApp from '@/apps/mailchimp';
 
 // Our stuff
 import Db from '@/mongodb/Db';
@@ -73,6 +74,7 @@ app.use(KoaMount('/job', JobApp));
 app.use(KoaMount('/profile-pic', ProfilePicApp));
 app.use(KoaMount('/reset-password', ResetPasswordApp));
 app.use(KoaMount('/billing', BillingApp));
+app.use(KoaMount('/mailchimp', MailChimpApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies

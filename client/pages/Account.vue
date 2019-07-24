@@ -351,8 +351,12 @@
                 </div>
               </v-list>
             </div>
+
             <k-btn @click="showFileModal = true">
               Add File
+            </k-btn>
+            <k-btn @click="addMemberToMailChimp()">
+              add member
             </k-btn>
           </v-flex>
           <v-flex v-else xs12 sm6 md5 class="padding-sm-left">
@@ -642,6 +646,9 @@
           </v-card>
         </v-dialog>
       </section>
+      <NewsLetter  />
+      <k-btn @click="addTags()">Sign Up</k-btn>
+      <k-btn @click="deleteTags()">Manage Tags</k-btn>
     </div>
   </v-container>
 </template>
@@ -659,6 +666,7 @@
     from '@/components/JobsAndApplicationsCounters';
   import ResumeUploader from '@/components/ResumeUploader';
   import PicUploader from '@/components/PicUploader';
+  import NewsLetter from '@/components/newsLetterSubscribe';
 
   import AccountDegreeSvg from '@/assets/account/degree.svg';
   import AccountMajorSvg from '@/assets/account/account_major.svg';
@@ -669,6 +677,8 @@
   import BuildingSvg from '@/assets/account/org_building_full_black.svg';
   import Asset31 from '@/assets/icons/Asset(31).svg';
   import Asset76 from '@/assets/icons/Asset(76).svg';
+
+  import positions from '@/constants/positions';
 
   import getCountersFromJobsAndApplications
     from '@/utils/getCountersFromJobsAndApplications';
@@ -758,6 +768,7 @@
       JobsAndApplicationsCounters,
       ResumeUploader,
       PicUploader,
+      NewsLetter,
     },
     computed: {
       doesNotHaveJobs() {
@@ -1325,6 +1336,41 @@
           this.$error(error);
           this.emailSent = null;
           this.loading = false;
+        });
+      },
+      deleteTags() {
+        const data = {
+          email: this.userdata.email,
+        };
+        axios.post('/mailchimp/deleteTags', data).then(() => {
+          console.log('view Tags');
+        }, (error) => {
+          this.$error(error);
+        });
+      },
+      addTags() {
+        const data = {
+          email: this.userdata.email,
+        };
+        axios.post('/mailchimp/addTags', data).then(() => {
+          console.log('view Tags');
+        }, (error) => {
+          this.$error(error);
+        });
+      },
+      addTagToMailChimp() {
+        var postData = {
+          email_address: '934329384294829293482@email.edu',
+          fname: 'jueyingl',
+          tags: positions,
+          status: 'subscribed',
+        };
+        console.log(postData);
+
+        axios.post('/mailchimp/addMember', postData).then(() => {
+          console.log('posted on mailchimp');
+        }, (error) => {
+          this.$error(error);
         });
       },
     },

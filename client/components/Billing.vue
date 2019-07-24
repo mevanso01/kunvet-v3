@@ -128,6 +128,7 @@ export default {
           this.$emit('success');
           // show them thanks for creating a job/promoting
           this.nonceUsed = true;
+          console.log('true');
         } else {
           console.log('error');
         }
