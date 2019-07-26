@@ -193,6 +193,10 @@ const router = new VueRouter({
       path: '/hire',
       component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Hire'),
     },
+    {
+      path: '/choose',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Choose'),
+    },
     // Debug pages
     {
       path: '/debug/triggerError',

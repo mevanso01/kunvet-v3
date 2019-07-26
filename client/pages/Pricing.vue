@@ -1,4 +1,6 @@
 <style lang="scss" scoped>
+@import url("https://use.typekit.net/bfb5jiv.css");
+
 .pricing_page{
   padding-top: 162px;
   padding-left: 280px;
@@ -90,7 +92,7 @@
   padding-top: 44px;
   font-weight: bold;
   padding-left: 46px;
-  font-family: 'Roboto', sans-serif;  
+  font-family: proxima-nova, sans-serif; 
   font-size: 24px;
 }
 
@@ -98,7 +100,7 @@
   padding-left: 46px;
   color: grey;
   font-size: 16px;
-  font-family: 'Roboto', sans-serif;
+  font-family: proxima-nova, sans-serif;
   margin: none;
   float: left;
 }
@@ -139,21 +141,21 @@
   font-size: 34px;
   color: #FF6766;
   font-weight: bold;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 30px;
 }
 
 .warning_text{
   font-size: 26px;
   color: black;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 20px;
 }
 
 .grey_warning{
   font-size: 16px;
   color: grey;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 20px;
 }
 
@@ -161,14 +163,14 @@
   font-size: 32px;
   color: #83ADFF;
   font-weight: bold;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 26px;
 }
 
 .refund_text{
   font-size: 26px;
   color: black;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 20px;
 }
 
@@ -176,14 +178,14 @@
   font-size: 32px;
   color: #F9B81E;
   font-weight: bold;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 26px;
 }
 
 .question_text{
   font-size: 26px;
   color: black;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 20px;
 }
 
@@ -196,14 +198,14 @@
   font-size: 32px;
   color: black;
   font-weight: bold;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 26px;
 }
 
 .privacy_text{
   font-size: 24px;
   color: black;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: proxima-nova, sans-serif;
   padding-top: 20px;
 }
 
