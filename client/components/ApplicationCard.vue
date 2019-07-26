@@ -1,7 +1,4 @@
 <style lang="scss" scoped>
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
-@import url(https://fonts.googleapis.com/css?family=Sriracha);
-
     .applicationCard {
         margin: none;
         padding: none;
