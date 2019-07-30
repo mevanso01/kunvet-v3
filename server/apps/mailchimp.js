@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Koa
 import Koa from 'koa';
 import KoaRouter from 'koa-router';

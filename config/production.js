@@ -50,6 +50,7 @@ module.exports = {
   },
   analytics: {
     googleAnalytics: true,
+    googleTagManager: true,
     hotjar: true,
   },
   algolia: {
