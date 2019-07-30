@@ -49,7 +49,7 @@ module.exports = {
     dsn: Credentials.sentryClientDsn,
   },
   analytics: {
-    googleAnalytics: true,
+    //googleAnalytics: true,
     googleTagManager: true,
     hotjar: true,
   },
