@@ -24,7 +24,7 @@ import store from '@/store';
 
 import Config from 'config';
 
-import gtagjs from 'vue-gtagjs';
+// import gtagjs from 'vue-gtagjs';
 
 Vue.use(Title);
 Vue.use(Logger);
@@ -247,9 +247,9 @@ if (process.env.NODE_ENV === 'development') {
 // Always disabled for non-production NODE_ENVs
 // FIXME: Move all tracking IDs to config
 if (process.env.NODE_ENV === 'production' && Config.get('analytics')) {
-  if (Config.get('analytics.googleAnalytics')) {
+  /* if (Config.get('analytics.googleAnalytics')) {
     gtagjs(router, 'UA-93340207-1');
-  }
+  } */
 
   if (Config.get('analytics.googleTagManager')) {
     // eslint-disable-next-line
