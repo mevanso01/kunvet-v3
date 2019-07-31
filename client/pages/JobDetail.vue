@@ -697,6 +697,7 @@ applyDialog
               <k-btn v-if="resumeExists" @click="createApplication"
                      :disabled="!selectedResumes.length"
                      :working="loading"
+                     id="apply-button"  
                      color="#FF6969"
                      style="margin: 20px auto; color:white">Apply
               </k-btn>
