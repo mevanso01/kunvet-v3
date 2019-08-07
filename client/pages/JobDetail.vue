@@ -693,7 +693,6 @@ applyDialog
                 </div>
               </div>
               <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded"
-<<<<<<< HEAD
                               style="width: 100%;"></ResumeUploader>
               <k-btn v-if="resumeExists" @click="createApplication"
                      :disabled="!selectedResumes.length"
@@ -702,14 +701,6 @@ applyDialog
                      color="#FF6969"
                      style="margin: 20px auto; color:white">Apply
               </k-btn>
-=======
-                              style="width: 100%;" type="Job"></ResumeUploader>
-                <ApplyBtn v-if="resumeExists && selectedResumes.length"
-                      :working="loading"
-                      color="#FF6969"
-                      style="margin: 20px auto; color:white">Apply
-                </ApplyBtn>
->>>>>>> 3df0c82... apply button for gtm tags
               <button class="mobile-show"
                       style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
                       @click="applyDialog=false">
@@ -787,7 +778,6 @@ applyDialog
   import SignupComponent from '@/components/SignupComponent';
   import ResumeUploader from '@/components/ResumeUploader';
   import CodeVerification from '@/components/CodeVerification';
-  import ApplyBtn from '@/components/general/ApplyBtn';
 
   export default {
     filters: {
@@ -804,7 +794,6 @@ applyDialog
       SignupComponent,
       ResumeUploader,
       CodeVerification,
-      ApplyBtn,
     },
     props: ['id', 'isapplied'],
     data() {
