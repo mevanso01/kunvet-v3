@@ -68,18 +68,18 @@
 </style>
 <template>
   <div 
-    id="gtm-tag" 
+    id="apply-btn" 
     class="apply-btn"
     @click="click"
     :class="{ 'block': block, 'icon': icon, 'outline': outline, 'disabled': disabled, 'small': small }"
     :style="buttonStyle"
   >
     <!--class="spinner-overlay" :class="{ 'working': working }"-->
-    <div id="gtm-tag" style="position: relative;">
-      <span id="gtm-tag" class="apply-btn--text" :class="{ 'working': showSpinner }">
-        <slot id="gtm-tag"></slot>
+    <div id="apply-btn" style="position: relative;">
+      <span id="apply-btn" class="apply-btn--text" :class="{ 'working': showSpinner }">
+        <slot id="apply-btn"></slot>
       </span>
-      <v-progress-circular v-if="showSpinner" class="apply-btn-spinner" id="gtm-tag" indeterminate></v-progress-circular>
+      <v-progress-circular v-if="showSpinner" class="apply-btn-spinner" id="apply-btn" indeterminate></v-progress-circular>
     </div>
   </div>
 </template>
