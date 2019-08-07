@@ -709,7 +709,7 @@
               </div>
               <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded"
                               style="width: 100%;" type="Job"></ResumeUploader>
-                <ApplyBtn v-if="resumeExists && selectedResumes.length"
+                <ApplyBtn v-if="resumeExists && selectedResumes.length" @click="createApplication"
                       :working="loading"
                       color="#FF6969"
                       style="margin: 20px auto; color:white">Apply
