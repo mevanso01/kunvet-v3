@@ -709,12 +709,11 @@
               </div>
               <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded"
                               style="width: 100%;" type="Job"></ResumeUploader>
-              <k-btn v-if="resumeExists" @click="createApplication"
-                     :disabled="!selectedResumes.length"
-                     :working="loading"
-                     color="#FF6969"
-                     style="margin: 20px auto; color:white">Apply
-              </k-btn>
+                <ApplyBtn v-if="resumeExists && selectedResumes.length"
+                      :working="loading"
+                      color="#FF6969"
+                      style="margin: 20px auto; color:white">Apply
+                </ApplyBtn>
               <button class="mobile-show"
                       style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
                       @click="applyDialog=false">
@@ -797,6 +796,7 @@
   import SignupComponent from '@/components/SignupComponent';
   import ResumeUploader from '@/components/ResumeUploader';
   import CodeVerification from '@/components/CodeVerification';
+  import ApplyBtn from '@/components/general/ApplyBtn';
 
   export default {
     filters: {
@@ -813,6 +813,7 @@
       SignupComponent,
       ResumeUploader,
       CodeVerification,
+      ApplyBtn,
     },
     props: ['id', 'isapplied'],
     data() {
