@@ -55,10 +55,19 @@ const router = new VueRouter({
     {
       path: '/',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
+      meta: {
+        htmlMeta: {
+          description: 'Welcome to Kunvet',
+        },
+      },
     },
     {
       path: '/search',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
+      meta: {
+        description: 'Bruh. U right.',
+      },
+
     },
     {
       path: '/newSearch',
@@ -67,6 +76,12 @@ const router = new VueRouter({
     {
       path: '*',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
+      meta: {
+        htmlMeta: {
+          description: 'Nani?',
+        },
+      },
+
     },
     {
       path: '/login',
@@ -86,11 +101,11 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
       props: true,
     },
-    {
-      path: '/job/:id/applied=:isapplied',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
-      props: true,
-    },
+    /* {
+    path: '/job/:id/applied=:isapplied',
+    // component: () => import(/* webpackChunkName: "employee" */ // '@/pages/JobDetail'),
+    // props: true,
+    // },
     {
       path: '/validate',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/Validate'),
