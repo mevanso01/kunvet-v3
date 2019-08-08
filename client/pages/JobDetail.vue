@@ -723,8 +723,7 @@
             </div>
           </v-card>
 
-          <v-card flat style="height: 500px;" class="dialog-card" v-on="urlChange()"
-                  v-else-if="loginState === 'success'">
+          <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'success'">
             <v-card-title class="kunvet-red apply-text">
               Thank you! Your application has been submitted.
             </v-card-title>
@@ -902,7 +901,7 @@
     methods: {
       urlChange() {
         this.isapplied = true;
-        this.$router.push(`/job/${this.id}/applied=${this.isapplied}`);
+        // this.$router.push(`/job/${this.id}/applied=${this.isapplied}`);
       },
       getColor(info) {
         this.accountColor = info.color;
