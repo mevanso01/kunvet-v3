@@ -479,6 +479,9 @@
               <div class="cust-spacer"></div>
               <br>
               <CodeVerification ref="codever" @verified="codeValidated" />
+              <div style="text-align: center;">
+                <v-btn class="kunvet-red-bg" v-if="email_verified" @click="moveToBilling">Continue</v-btn>
+              </div>
             </div>
           </v-tab-item>
           <v-tab-item id="success-tab">
@@ -1140,9 +1143,14 @@ export default {
           this.tab = 'verify-email';
         } else {
           this.loading = true;
-          this.saveJob('goToBilling');
+          this.saveJob();
         }
       }
+    },
+    moveToBilling() {
+      this.$router.push('/createjob');
+      this.$refs.billing.show(this.jobId);
+      this.tab = 'billing';
     },
     validateFullJob() {
       for (var i = 2; i >= 0; i--) {
@@ -1191,7 +1199,7 @@ export default {
         this.saveJob();
       }
     },
-    saveJob(option = null) {
+    saveJob() {
       if (this.jobId) {
         // SAVE EXISTING JOB
         const job = this.createJobArray();
@@ -1224,10 +1232,6 @@ export default {
             this.setJobProgress();
           } else {
             this.$store.commit('resetJobProgress');
-          }
-          if (option === 'goToBilling') {
-            this.$refs.billing.show(this.jobId);
-            this.tab = 'billing';
           }
         }).catch((err) => {
           this.loading = false;
@@ -1542,6 +1546,7 @@ export default {
     },
     codeValidated() {
       this.email_verified = true;
+      this.$router.push('/createjob/signup=true');
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;
         udata.email_verified = true;

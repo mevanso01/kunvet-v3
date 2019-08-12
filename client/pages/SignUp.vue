@@ -207,9 +207,9 @@ export default {
     },
     onSuccess() {
       if (this.signupType === 'business') {
-        this.$router.push('/myorg');
+        this.$router.push('/myorg/signup=true');
       } else {
-        this.$router.push('/account');
+        this.$router.push('/account/signup=true');
       }
     },
     goToLogin() {

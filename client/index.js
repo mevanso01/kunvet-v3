@@ -55,19 +55,10 @@ const router = new VueRouter({
     {
       path: '/',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
-      meta: {
-        htmlMeta: {
-          description: 'Welcome to Kunvet',
-        },
-      },
     },
     {
       path: '/search',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
-      meta: {
-        description: 'Bruh. U right.',
-      },
-
     },
     {
       path: '/newSearch',
@@ -76,12 +67,6 @@ const router = new VueRouter({
     {
       path: '*',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
-      meta: {
-        htmlMeta: {
-          description: 'Nani?',
-        },
-      },
-
     },
     {
       path: '/login',
@@ -101,14 +86,17 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
       props: true,
     },
-    /* {
-    path: '/job/:id/applied=:isapplied',
-    // component: () => import(/* webpackChunkName: "employee" */ // '@/pages/JobDetail'),
-    // props: true,
-    // },
+    {
+      path: '/job/:id/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
+    },
     {
       path: '/validate',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/Validate'),
+    },
+    {
+      path: '/validate/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Validate'),
     },
     {
       path: '/validate-email/:code',
@@ -141,6 +129,10 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "account" */ '@/pages/Account'),
     },
     {
+      path: '/account/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Account'),
+    },
+    {
       path: '/settings',
       component: () => import(/* webpackChunkName: "settings" */ '@/pages/Settings'),
     },
@@ -162,8 +154,22 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
     },
     {
+      path: '/createjob/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
+    },
+    {
       path: '/createjob/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
+      props: { id: null },
+    },
+    {
+      path: '/createjob/:id/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
+      props: { id: null },
+    },
+    {
+      path: '/createjob/signup=true:id',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
       props: { id: null },
     },
     {
@@ -184,6 +190,10 @@ const router = new VueRouter({
     {
       path: '/myorg',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/MyOrg'),
+    },
+    {
+      path: '/myorg/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/MyOrg'),
     },
     {
       path: '/applicants',

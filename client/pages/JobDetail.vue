@@ -644,7 +644,7 @@
                   color="white">
             <div class="login-card">
               <LoginComponent @toSignup="handleSignup"
-                              @loggedIn="handleResume"></LoginComponent>
+                              @loggedIn="handleResume()"></LoginComponent>
               <div style="width: 50px; background-color: blue"></div>
             </div>
             <button class="mobile-show"
@@ -656,7 +656,7 @@
           </v-card>
 
           <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
-            <SignupComponent @account="getColor" @success="handleResume"
+            <SignupComponent @account="getColor" @success="handleResume(true)"
                              style="padding: 30px"></SignupComponent>
             <!--<k-btn @click="loginState='login'" :color="accountColor"-->
             <!--style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">-->
@@ -927,9 +927,16 @@
       handleSignup() {
         this.loginState = 'signup';
       },
-      handleResume() {
+      handleResume(verif) {
+        var verifSuccess = false;
+        if (verif) {
+          verifSuccess = verif;
+        }
         // called after signup or login, and from openApplyDialog()
         this.loginState = 'resume';
+        if (verifSuccess === true) {
+          this.$router.push(`/job/${this.id}/signup=true`);
+        }
         this._getUserData();
       },
       handleVerified() {
