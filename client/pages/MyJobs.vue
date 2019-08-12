@@ -265,7 +265,7 @@
       <v-card>
         <v-card-text class="pt-0" style="margin-top: 20px;">
           <Billing
-            ref="BillingCMP"
+            ref="billing"
             title="Repost this job"
             @success="afterRepost()"
           />
@@ -442,7 +442,7 @@
         return `${jobType} ${StringHelper.pluralize('Job', length)}`;
       },
       openRepostDialog(job) {
-        this.$refs.BillingCMP.refreshDropIn();
+        this.$refs.billing.refreshDropIn();
         this.dialogs.errorOccured = false;
         this.dialogs.success = false;
         this.dialogs.currentJobId = job._id;

@@ -22,7 +22,7 @@
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
     <div ref="dropin" class="dropin-container"></div>
-    <k-btn class="mt-3" @click="confirmPayment" :working="loading">{{ confirmButtonText }}</k-btn>
+    <k-btn class="mt-3" @click="confirmPayment" :working="loading">Confirm</k-btn>
   </div>
 </template>
 <script>
@@ -91,8 +91,8 @@ export default {
 
     refreshDropIn() {
       if (this.nonceUsed === true) {
-        console.log('this.$refs.dropin ', this.$refs.dropin);
-        console.log('AAAAAAAAAH');
+        // console.log('this.$refs.dropin ', this.$refs.dropin);
+        // console.log('AAAAAAAAAH');
         this.$refs.dropin.innerHTML = '';
         this.init();
       }
@@ -105,10 +105,11 @@ export default {
         jobId: this.jobId,
       }];
       this.loading = true;
+      this.$debug(this.instance);
       this.instance.requestPaymentMethod((err, payload) => {
-        console.log(err, payload);
+        // console.log(err, payload);
         if (err) { this.loading = false; }
-        console.log('payload nonce ', payload.nonce);
+        // console.log('payload nonce ', payload.nonce);
         const creditCardNonce = payload.nonce;
         this.chargeUser(creditCardNonce);
       });

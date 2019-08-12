@@ -1178,6 +1178,7 @@ export default {
       const validation = this.validateFullJob();
       if (validation[0]) {
         this.postJob();
+        this.moveToBilling();
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }
