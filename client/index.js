@@ -276,14 +276,6 @@ if (process.env.NODE_ENV === 'production' && Config.get('analytics')) {
     })(window, document, 'script', 'dataLayer', 'GTM-KMXJH5V');
   }
 
-  if (Config.get('analytics.googleAdSense')) {
-    // eslint-disable-next-line
-    (adsbygoogle = window.adsbygoogle || []).push({
-      google_ad_client: 'ca-pub-1512364122724802',
-      enable_page_level_ads: true,
-    });
-  }
-
   if (Config.get('analytics.hotjar')) {
     const hotjar = document.createElement('script');
     hotjar.text = `
