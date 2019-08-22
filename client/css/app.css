@@ -1285,3 +1285,25 @@ To see the bug, simply comment out the next 3 styles.*/
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
+
+@media (min-width: 961px){}
+
+@media (min-width: 801px) and (max-width: 960px) {
+  .v-carousel__controls{
+    background: none;
+    margin-bottom: 80px;
+  }
+  .testimonials.v-carousel{
+    height: initial;
+  }
+}
+
+@media (max-width: 800px) {
+  .v-carousel__controls{
+    background: none;
+    margin-bottom: 60px;
+  }
+  .testimonials.v-carousel{
+    height: initial;
+  }
+}
