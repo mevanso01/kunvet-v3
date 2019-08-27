@@ -1,22 +1,22 @@
 <style lang="scss" scoped>
 // css for desktop
 @media (min-width: 961px){
-  .employer_page{}
   .emp_page_content{
-    padding-top: 162px;
+    margin-top: 120px;
   }
   .summary{
     width: 960px;
-    margin-left: 270px;
-    height: 1px;
+    height: auto;
+    margin-left: calc( (100vw - 970px) / 2);
   }
   .summary_text_div{
-    width: 390px;
-    height: 560px;
-    float: left;
+    width: 400px;
+    padding-left: 24px;
+    margin-right: calc( (960px - 400px - 502px) /2);
+    display: inline-block;
   }
   .summary_title{
-    padding-top: 84px;
+    padding-top: 126px;
     font-weight: bold;
     padding-left: 10px;
     font-family: proxima-nova, sans-serif;
@@ -39,24 +39,30 @@
     margin-top: 12px;
     margin-left: 10px;
   }
+  .summary_collage_students{
+    width: 502px;
+    height: 580px;
+    padding-right: 24px;
+    display: inline-block;
+  }
   .effective{
     width: 960px;
-    margin-left: 270px;
+    margin-left: calc( (100vw - 970px) / 2);
   }
   .effective_img{
-    height: 64px; 
-    margin-top: 120px; 
-    margin-left: 56px; 
+    width: 84px;
+    margin-top: 120px;
+    margin-left: calc((960px - 84px) / 2);
     margin-bottom: 11px;
   }
   .effective_img_btm{
-    width: 70px; 
-    margin-left: 454px; 
+    width: 84px; 
+    margin-left: calc((960px - 84px) / 2);
     height:4px; 
     background-color:black;
   }
   .effective_title{
-    padding-top: 28px;
+    padding-top: 30px;
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
     text-align: center;
@@ -65,51 +71,53 @@
   }
   .effective_text{
     padding-top: 30px;
+    padding-left:30px;
+    padding-right: 30px;
     font-family: proxima-nova, sans-serif; 
     text-align: center;
     font-size: 26px;
     color: black;
   }
   .logo_style{
-    width: 190px;
-    margin-right: 42px;
+    width: calc(860px / 4);
+    margin-right: 20px;
   }
   .logo_first_row{
-    margin-top: 38px;
-    margin-left: 20px;
+    margin-top: 40px;
   }
   .logo_second_row{
-    margin-top: 70px;
-    margin-left: 20px;
+    margin-top: 40px;
   }
   .testimonials{
     margin-top: 120px;
-    height: 620px;
     background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
   }
   .test_slide{
-    width: 1100px;
-    margin-left: 270px;
+    width: 100vw;
+    margin-left: 0px;
   }
   .slide_info{
-    width: 700px;
-    padding-top: 78px;
-    padding-left: 8px;
-    float: left;
+    width: 960px;
+    margin-left: calc( (100vw - 970px) / 2);
+    padding-left: 34px;
+    padding-right: 24px;
+    padding-top: 60px;
   }
   .test_title{
     font-weight: bold;
     font-family: proxima-nova, sans-serif; 
-    font-size: 34px;
+    font-size: 32px;
     color: white;
   }
   .test_text{
     padding-top: 40px;
+    width: 70%;
     font-family: proxima-nova, sans-serif; 
     font-size: 26px;
     font-weight: 100;
     color: white;
     line-height: 40px;
+    float: left;
   }
   .quote{
     margin-left: -26px;
@@ -122,38 +130,12 @@
     font-size: 16px;
     color: white;
     line-height: 20px;
-  }
-  .test_btns_div{
-    margin-left: 430px;
-    margin-top: 44px;
-    width: 106px;
-    height: 30px;
-  }
-  .dot{
-    cursor: pointer;
-    height: 10px;
-    width: 10px;
-    margin-top: 10px;
-    margin-left: 20px;
-    background-color: white;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-  }
-  .dot_not{
-    cursor: pointer;
-    height: 10px;
-    width: 10px;
-    margin-top: 10px;
-    margin-left: 20px;
-    background-color: #FFB7B8;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
+    width: 70%;
   }
   .bio{
-    margin-top: 140px;
-    width: 300px;
+    margin-top: 30px;
+    margin-right: 24px;
+    width: 224px;
     height: 200px;
     float: right;
   }
@@ -178,31 +160,32 @@
   }
   .faq{
     width: 960px;
-    margin-left: 270px;
+    margin-left: calc( (100vw - 970px) / 2);
   }
   .faq_img{
-    height: 64px; 
-    margin-top: 120px; 
-    margin-left: 458px; 
-    margin-bottom: 4px;
+    width: 84px;
+    margin-top: 120px;
+    margin-left: calc((960px - 84px) / 2);
+    margin-bottom: 11px;
   }
   .faq_img_btm{
-    width: 70px; 
-    margin-left: 454px; 
+    width: 84px; 
+    margin-left: calc((960px - 84px) / 2);
     height:4px; 
     background-color:black;
   }
   .faq_title{
-    padding-top: 28px;
+    padding-top: 30px;
     font-weight: bold;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     text-align: center;
     font-size: 34px;
     color: black;
   }
   .faq_text{
-    padding-top: 20px;
-    padding-left: 5px;
+    padding-top: 30px;
+    padding-left:30px;
+    padding-right: 30px;
     font-family: proxima-nova, sans-serif; 
     text-align: center;
     font-size: 26px;
@@ -210,24 +193,24 @@
   }
   .faq_box{
     margin-top: 30px;
-    margin-left: 30px;
     height: 500px;
-    width: 900px; 
+    width: 960px; 
   }
   .faq_questions{
-    margin-left: 36px;
+    margin-left: 24px;
     height: 470px;
-    width: 430px; 
+    width: 432px; 
     float: left;
   }
   .faq_answers{
     height: 470px;
-    width: 434px; 
+    width: 432px; 
+    margin-right: 24px;
     float: right;
   }
   .faq_question_div{
     height: 62px;
-    width: 402px; 
+    width: 100%; 
     margin-top: 14px;
     margin-left: 8px;
     box-shadow: #ccc 0px 2px 2px;
@@ -242,7 +225,7 @@
   }
   .faq_question_div_sel{
     height: 62px;
-    width: 402px; 
+    width: 100%; 
     margin-top: 14px;
     margin-left: 8px;
     box-shadow: #ccc 0px 2px 2px;
@@ -257,45 +240,51 @@
     font-family: proxima-nova, sans-serif; 
   }
   .faq_answers_div{
+    text-align: center;
     background-color: #FAFBFD;
     margin-top: 14px;
-    margin-left: 8px;
-    width: 400px;
+    width: 100%;
     height: 442px;
     border: 1px solid black;
     box-shadow: #ccc 0px 2px 2px;
   }
   .faq_answers_title{
-    padding-top: 26px;
-    padding-left: 30px;
+    padding-top: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 100%;
     font-size: 28px;
     font-weight: bold;
     line-height: 38px;
     font-family: proxima-nova, sans-serif; 
   }
   .faq_answers_text{
+    text-align: left;
     padding-top: 10px;
-    padding-left: 30px;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 100%;
     font-size: 16px;
     font-family: proxima-nova, sans-serif; 
   }
   .coffee_money{
-    margin-left: 270px;
+    width: 960px;
+    margin-left: calc( (100vw - 970px) / 2);
   }
   .coffee_img{
-    height: 88px; 
-    margin-top: 72px; 
-    margin-left: 462px; 
-    margin-bottom: 6px;
+    width: 84px;
+    margin-top: 120px;
+    margin-left: calc((960px - 84px) / 2);
+    margin-bottom: 11px;
   }
   .coffee_img_btm{
-    width: 70px; 
-    margin-left: 454px; 
+    width: 84px; 
+    margin-left: calc((960px - 84px) / 2);
     height:4px; 
     background-color:black;
   }
   .coffee_title{
-    width: 960px;
+    width: 100%;
     padding-top: 28px;
     font-weight: bold;
     font-family: 'Roboto', sans-serif; 
@@ -310,24 +299,23 @@
     width: 100%;
   }
   .hands{
-    width: 1270px;
+    width: 100%;
+    text-align: center;
+    vertical-align: top;
     margin-top: 22px;
   }
   .hand_one{
-    margin-left: -40px;
-    width: 380px;
-    height: 920px;
-    float: left;
+    margin-left: 0px;
+    width: calc( (100% - 30px) / 3);
+    display: inline-block;
   }
   .hand_two{
-    width: 420px;
-    height: 920px;
-    float:left;
+    width: calc( (100% - 30px) / 3);
+    display: inline-block;
   }
   .hand_three{
-    width: 420px;
-    height: 920px;
-    float: left;
+    width: calc( (100% - 30px) / 3);
+    display: inline-block;
   }
   .hand_header{
     font-size: 28px;
@@ -341,14 +329,20 @@
     font-size: 16px;
     font-family: proxima-nova, sans-serif; 
   }
+
   .waste{
     width: 960px;
-    margin-left: 270px; 
+    margin-left: calc( (100vw - 970px) / 2);
+  }
+  .warning_img{
+    width: 84px;
+    margin-top: 120px;
+    margin-left: calc((960px - 84px) / 2);
+    margin-bottom: 11px;
   }
   .warning_img_btm{
-    width: 70px; 
-    margin-top: 12px;
-    margin-left: 454px; 
+    width: 84px; 
+    margin-left: calc((960px - 84px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -358,33 +352,37 @@
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
     padding-top: 30px;
-    padding-left: 16px;
     text-align: center;
   }
   .warning_text{
     font-size: 26px;
     color: black;
     font-family: proxima-nova, sans-serif;
-    padding-top: 20px;
-    padding-left: 16px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
     text-align: center;
   }
   .grey_warning{
     font-size: 16px;
     color: grey;
     font-family: proxima-nova, sans-serif;
-    padding-top: 20px;
-    padding-left: 46px;
+    padding-top: 24px;
     text-align: center;
   }
   .refund{
     width: 960px;
-    margin-left: 270px; 
+    margin-left: calc( (100vw - 970px) / 2);
+  }
+  .refund_img{
+    width: 84px;
+    margin-top: 120px;
+    margin-left: calc((960px - 84px) / 2);
+    margin-bottom: 11px;
   }
   .refund_img_btm{
-    width: 70px; 
-    margin-top: 12px;
-    margin-left: 454px; 
+    width: 84px; 
+    margin-left: calc((960px - 84px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -394,7 +392,8 @@
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
     padding-top: 28px;
-    padding-left: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
     text-align: center;
   }
   .refund_text{
@@ -402,7 +401,8 @@
     color: black;
     font-family: proxima-nova, sans-serif;
     padding-top: 20px;
-    padding-left: 16px;
+    padding-left: 24px;
+    padding-right: 24px;  
     text-align: center;
   }
   .refund_btn{
@@ -410,8 +410,8 @@
     height: 68px !important;
     line-height: 68px !important;
     background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%) !important;
-    margin-top: 40px;
-    margin-left: 378px;
+    margin-top: 44px;
+    margin-left: calc( 50% - 110px); 
     color: white;
     font-weight: bold; 
   }
@@ -422,16 +422,20 @@
     font-family: proxima-nova, sans-serif;
     font-size: 16px;
     font-weight: bold;
-    padding-left: 20px;
   }
   .versus{
     width: 960px;
-    margin-left: 270px; 
+    margin-left: calc( (100vw - 970px) / 2);
+  }
+  .versus_img{
+    width: 84px;
+    margin-top: 120px;
+    margin-left: calc((960px - 84px) / 2);
+    margin-bottom: 11px;
   }
   .versus_img_btm{
-    width: 70px; 
-    margin-top: 12px;
-    margin-left: 454px; 
+    width: 84px; 
+    margin-left: calc((960px - 84px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -441,7 +445,8 @@
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
     padding-top: 28px;
-    padding-left: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
     text-align: center;
   }
   .versus_text{
@@ -449,6 +454,8 @@
     color: black;
     font-family: proxima-nova, sans-serif;
     padding-top: 30px;
+    padding-left: 24px;
+    padding-right: 24px;
     text-align: center;
   }
   .versus_subtitle{
@@ -457,7 +464,6 @@
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
     padding-top: 54px;
-    padding-left: 18px;
     text-align: center;
   }
   .versus_subdiv{
@@ -470,18 +476,20 @@
     float: left;
   }
   .versus_subtext{
-    margin-left: 28px;
+    padding-left: 30px;
+    padding-right: 6px;
     padding-top: 48px;
-    width: 348px;
+    width: calc(50% - 100px);
     color: black;
     font-size: 16px;
     font-family: proxima-nova, sans-serif;
     display: inline-block;
   }
   .versus_subtext2{
-    padding-left: 16px;
+    padding-left: 6px;
+    padding-right: 24px;
     margin-top: 48px;
-    width: 348px;
+    width: calc(50% - 100px);
     height: 110px;
     color: black;
     font-size: 16px;
@@ -496,12 +504,17 @@
   }
   .limited{
     width: 960px;
-    margin-left: 270px; 
+    margin-left: calc( (100vw - 970px) / 2);
+  }
+  .limited_img{
+    width: 84px;
+    margin-top: 120px;
+    margin-left: calc((960px - 84px) / 2);
+    margin-bottom: 11px;
   }
   .limited_img_btm{
-    width: 70px; 
-    margin-top: 12px;
-    margin-left: 454px; 
+    width: 84px; 
+    margin-left: calc((960px - 84px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -510,8 +523,9 @@
     color: black;
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
-    padding-top: 26px;
-    padding-left: 16px;
+    padding-top: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
     text-align: center;
   }
   .limited_text{
@@ -519,7 +533,8 @@
     color: black;
     font-family: proxima-nova, sans-serif;
     padding-top: 20px;
-    padding-left: 56px;
+    padding-left: 24px;
+    padding-right: 24px;
     text-align: center;
   }
   .limited_btn{
@@ -527,7 +542,7 @@
     height: 68px !important;
     line-height: 68px !important;
     margin-top: 40px;
-    margin-left: 378px;
+    margin-left: calc( 50% - 110px);
     color: white;
     font-weight: bold; 
   }
@@ -538,9 +553,9 @@
     font-family: proxima-nova, sans-serif;
     font-size: 16px;
     font-weight: bold;
-    padding-left: 20px;
     padding-bottom: 140px;
   }
+
 }
 // css for ipad size
 @media (min-width: 801px) and (max-width: 960px) {
@@ -635,7 +650,7 @@
     margin-top: 40px;
     margin-left: calc( (100vw - 684px) / 2);
   }
- .testimonials{
+  .testimonials{
     margin-top: 120px;
     background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
   }
@@ -647,7 +662,7 @@
     width: 100vw;
     padding-top: 80px;
     padding-left: 50px;
-    padding-bottom: 100px;
+    padding-bottom: 20px;
   }
   .test_title{
     font-weight: bold;
@@ -677,35 +692,6 @@
     color: white;
     line-height: 20px;
     width: 62vw;
-  }
-  .test_btns_div{
-    margin-left: calc( 50vw - 106px );
-    margin-top: 20px;
-    width: 106px;
-    height: 30px;
-    padding-bottom: 80px;
-  }
-  .dot{
-    cursor: pointer;
-    height: 10px;
-    width: 10px;
-    margin-top: 10px;
-    margin-left: 20px;
-    background-color: white;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-  }
-  .dot_not{
-    cursor: pointer;
-    height: 10px;
-    width: 10px;
-    margin-top: 10px;
-    margin-left: 20px;
-    background-color: #FFB7B8;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
   }
   .bio{
     margin-top: 30px;
@@ -1196,7 +1182,6 @@
     padding-top: 60px;
     padding-left: 24px;
     padding-right: 24px;
-    padding-bottom: 90px;
   }
   .test_title{
     font-weight: bold;
@@ -1319,17 +1304,86 @@
     font-weight: normal;
     font-family: proxima-nova, sans-serif; 
   }
-
-
-
-
-
-
-
-
+  .coffee_img{
+    width: 52px; 
+    margin-top: 60px; 
+    margin-left: calc( 50vw - (52px / 2)); 
+    margin-bottom: 6px;
+  }
+  .coffee_img_btm{
+    width: 70px;
+    margin-left: calc( 50vw - (70px / 2));
+    height:4px; 
+    background-color:black;
+  }
+  .coffee_title{
+    width: 100vw;
+    padding-top: 28px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif; 
+    text-align: center;
+    font-size: 24px;
+    color: black;
+  }
+  .coffee_btm{
+    margin-left: 94px;
+    margin-top: 84px;
+    height: 500px;
+    width: 100%;
+  }
+  .hands{
+    width: 100vw;
+    padding-top: 60px;
+    height: 860px;
+  }
+  .nums{
+    height: 50px;
+    width: 50px;
+    z-index: 100;
+  }
+  .blackbar_p1{
+    height: 2px;
+    background-color: black;
+    width: 50vw;
+    margin-left: 50vw;
+    margin-top: -32px;
+    z-index: 1;
+  }
+  .blackbar_p2{
+    height: 2px;
+    background-color: black;
+    width: 100vw;
+    margin-top: -32px;
+    z-index: 1;
+  }
+  .blackbar_p3{
+    height: 2px;
+    background-color: black;
+    width: 50vw;
+    margin-top: -32px;
+    z-index: 1;
+  }
+  .hand_header{
+    font-size: 18px;
+    padding-top: 20px;
+    font-weight: bold;
+    color: black;
+    font-family: proxima-nova, sans-serif; 
+  }
+  .hand_text{
+    color: black;
+    font-size: 16px;
+    font-family: proxima-nova, sans-serif; 
+    padding-left: 52px; 
+    padding-right: 52px;
+  }
 
  .waste{
     width: 100vw;
+    padding-top: 80px;
   }
   .warning_img_btm{
     width: 80px; 
@@ -1559,9 +1613,9 @@
             website made for local hiring, Kunvet is here to help
             you to find your next hire easier and cheaper.</p>
           <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 26px !important; font-weight: bold;">Post a Job</span></k-btn>
-          <p class="summary_text" style="padding-top: 0px;">Satisfaction guarateed. Or money back.</p>
+          <p class="summary_text" style="padding-top: 0px; font-size: 12px;">Satisfaction guarateed. Or money back.</p>
         </div>
-        <img style="height: 580px; float: right; margin-top: -24px;" :src="pngs.students">
+        <img class="summary_collage_students" :src="pngs.students">
       </div>
       <div class="effective">
         <img class="effective_img" :src="svgs.gas">
@@ -1584,65 +1638,57 @@
         <img class="logo_style" :src="pngs.newportpark">
         </div>
       </div>
-      <div class="testimonials">
-        <div class="test_slide" v-if="slide_display === 1">
-          <div class="slide_info">
-            <div style="height:400px;">
+      <div style="width: 100vw;">
+        <v-carousel class="hire_monials testimonials" cycle interval="4000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
-              <p class="test_text"><span class="quote">"</span>  Wow... I recommend Kunvet to every small business. It has
+              <p class="test_text"><span class="quote">“</span>  Wow... I recommend Kunvet to every small business. It has
                 helped us find many talented and enthusiastic candidates
                 from Orange County to serve as our Code Coaches. The
                 quality of the resumes of those who applied through
                 Kunvet exceeded our expectations. We’re grateful to the
                 Kunvet site organizers for providing this valuable service!</p>
-              <p class="test_undertext"> - theCoderSchool at Irvine offers a specialized after-school enrichment 
+              <div class="bio">
+                <img class="bio_img" :src="pngs.mark"/>
+                <div style="display: inline-block; margin-left: 10px;">
+                  <p class="bio_header">Mark Freedkin</p>
+                  <p class="bio_text">General Manager</p>
+                  <p class="bio_text">of theCoderSchool - Irvine</p>
+                </div>
+              </div>
+                  <p class="test_undertext"> - theCoderSchool at Irvine offers a specialized after-school enrichment 
                 program that teaches young students (ages 7-18) how to write computer software. 
-                <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" style="font-weight: bold; text-decoration: underline;">Learn More</a></p>
+              <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" style="font-weight: bold; text-decoration: underline; cursor: pointer;">Learn More</a></p>
             </div>
-            <div class="test_btns_div">
-              <div v-bind:class="{ 'dot': slide_display === 1, 'dot_not': slide_display != 1}" @click="slide_display = 1"/>
-              <div v-bind:class="{ 'dot': slide_display === 2, 'dot_not': slide_display != 2}" @click="slide_display = 2"/>
-              <div v-bind:class="{ 'dot': slide_display === 3, 'dot_not': slide_display != 3}" @click="slide_display = 3"/>
-            </div>
-          </div>
-          <div class="bio">
-            <img class="bio_img" :src="pngs.mark">
-            <p class="bio_header">Mark Freedkin</p>
-            <p class="bio_text">General Manager</p>
-            <p class="bio_text">of theCoderSchool - Irvine</p>
-          </div>
-        </div>
-        <div class="test_slide" v-if="slide_display === 2">
-          <div class="slide_info">
-            <div style="height:400px;">
+            <div style="height: 100px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
-              <p class="test_text" style="min-height: 350px;"><span class="quote">"</span>This is Ally, from Irvine Agape Christian Church, again :)
-              My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time. 
-              We've also spent plenty of money on other websites already but didn’t find who we are looking for. 
-              Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
+              <p class="test_text"><span class="quote">“</span>This is Ally, from Irvine Agape Christian Church, again :)
+                My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time. 
+                We've also spent plenty of money on other websites already but didn’t find who we are looking for. 
+                Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
+                <div class="bio">
+                  <div class="bio_img" style="height: 80px; width:90px; background-color: blue;"/>
+                  <div style="display: inline-block;">
+                    <p class="bio_header">Ally Zeng</p>
+                    <p class="bio_text">Organizer</p>
+                    <p class="bio_text">of IA Christian Church</p>
+                  </div>
+                </div>
             </div>
-            <div class="test_btns_div">
-              <div v-bind:class="{ 'dot': slide_display === 1, 'dot_not': slide_display != 1}" @click="slide_display = 1"/>
-              <div v-bind:class="{ 'dot': slide_display === 2, 'dot_not': slide_display != 2}" @click="slide_display = 2"/>
-              <div v-bind:class="{ 'dot': slide_display === 3, 'dot_not': slide_display != 3}" @click="slide_display = 3"/>
+            <div style="height: 100px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <div style="height: 400px;"/>
             </div>
-          </div>
-          <div class="bio">
-            <div style="height: 94px;"/> <!--No bio image, do this--> 
-            <p class="bio_header">Ally Zeng</p>
-            <p class="bio_text">Organizer</p>
-            <p class="bio_text">of IA Christian Church</p>
-          </div>
-        </div>
-        <div class="test_slide" v-if="slide_display === 3">
-          <div class="slide_info">
-            <div class="test_btns_div" style="padding-top: 400px;">
-              <div v-bind:class="{ 'dot': slide_display === 1, 'dot_not': slide_display != 1}" @click="slide_display = 1"/>
-              <div v-bind:class="{ 'dot': slide_display === 2, 'dot_not': slide_display != 2}" @click="slide_display = 2"/>
-              <div v-bind:class="{ 'dot': slide_display === 3, 'dot_not': slide_display != 3}" @click="slide_display = 3"/>
-            </div> 
-          </div>   
-        </div>
+            <div style="height: 100px;"/>
+          </v-carousel-item>
+        </v-carousel>
       </div>
       <div class="faq">
         <img class="faq_img" :src="svgs.faq">
@@ -1663,7 +1709,7 @@
           </div>
           <div class="faq_answers">
             <div class="faq_answers_div" v-if="question_num === 1">
-              <div style="width: 370px;">
+              <div style=";">
               <h2 class="faq_answers_title">Is Kunvet right for me?</h2>
               <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
                 to hire locally.</p>
@@ -1675,7 +1721,7 @@
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 2">
-              <div style="width: 370px;">
+              <div style="">
               <h2 class="faq_answers_title">Is Kunvet a recruiting agency?</h2>
               <p class="faq_answers_text">No. We are not a recruiting agency.</p>
               <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
@@ -1684,7 +1730,7 @@
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 3">
-              <div style="width: 370px;">
+              <div style="">
               <h2 class="faq_answers_title">How much does it cost to post on Kunvet?</h2>
               <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
               <p class="faq_answers_text">The cost of each job postings is from $5 to $10, depending on the type of account 
@@ -1695,7 +1741,7 @@
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 4">
-              <div style="width: 370px;">
+              <div style="">
               <h2 class="faq_answers_title">What is the refund policy?</h2>
               <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
                 If you are not completely satisfied with the service you received, we are glad to issue you a full
@@ -1706,7 +1752,7 @@
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 5">
-              <div style="width: 370px;">
+              <div style="">
               <h2 class="faq_answers_title">How does Kunvet work?</h2>
               <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
               <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
@@ -1717,7 +1763,7 @@
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 6">
-              <div style="width: 370px;">
+              <div style="">
               <h2 class="faq_answers_title">How is Kunvet different from other sites?</h2>
               <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
                 local area.</p>
@@ -1734,44 +1780,44 @@
         <img class="coffee_img" :src="svgs.coffee">
         <div class="coffee_img_btm"/>
         <h2 class="coffee_title">What can you do with “coffee money”?</h2>
-        <img style="width: 802px; margin-top: 76px; margin-left: 88px;" :src="svgs.line">
+        <div style="text-align: center;"> <img style="width: 74%; margin-top: 76px;" :src="svgs.line"> </div>
         <div class="hands">
           <div class="hand_one">
-            <h2 class="hand_header" style="padding-left: 84px;">Post a Job</h2>
-            <p class="hand_text" style="padding-left:52px; width: 246px;">It takes only about 5 min to post a job. Your job stays
+            <h2 class="hand_header" style="">Post a Job</h2>
+            <p class="hand_text" style="padding-left: 40px; padding-right: 30px;">It takes only about 5 min to post a job. Your job stays
               active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
-            <img style="height: 750px;" :src="svgs.hand1">
+            <img style="height: 654px; margin-left: 20px;" :src="svgs.hand1">
           </div>
-          <div class="hand_two">
-            <h2 class="hand_header" style="padding-left: 40px;">Review Resumes</h2>
-            <p class="hand_text" style="padding-left:12px; width: 280px;">Applicant’s resume is sent to your email and your Kunvet account. 
+           <div class="hand_two">
+            <h2 class="hand_header" style="">Review Resumes</h2>
+            <p class="hand_text" style="">Applicant’s resume is sent to your email and your Kunvet account. 
               If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
-            <img style="height: 750px;" :src="svgs.hand2">
+            <img style="height: 654px; margin-left: 20px;" :src="svgs.hand2">
           </div>
           <div class="hand_three">
-            <h2 class="hand_header" style="padding-left: 86px;">Hire</h2>
-            <p class="hand_text" style="padding-left: 6px; width: 220px;">Ta-Da!<br> Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
+            <h2 class="hand_header" style="padding-left: 40px;">Hire</h2>
+            <p class="hand_text" style="padding-left: 30px;">Ta-Da!<br> Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
               you and pick your next hire.</p>
-            <img style="height: 750px; margin-left: -30px;" :src="svgs.hand3">
+            <img style="height: 654px; margin-left: 40px;" :src="svgs.hand3">
           </div>
         </div>
       </div>
       <div class="waste">
-        <img style="height: 68px; margin-top: 100px; margin-left: 452px;" :src="svgs.warning">
+        <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
         <h2 class="warning_title">Stop Wasting Your Money or Effort!</h2>
         <p class="warning_text">The average cost of posting a job online is $124 for every 30 days*. However, with
             Kunvet, the starting price is only $5 per 60 days, or $2.5 per month. You could
             save yourself $121.5 every month, or $1,458 every year! Save that money for a new
             once table, a new advertising campaign, or a trip to Europe. Try Kunvet today.</p>
-        <p class="warning_text" style="font-weight: bold; padding-top: 36px;">Is Kunvet Right for Me?</p>
+        <p class="warning_text" style="font-weight: bold; padding-top: 44px;">Is Kunvet Right for Me?</p>
         <p class="warning_text" style="padding-top: 14px;">Kunvet is very effective for businesses hiring locally and offering entry-level,
-            <br>part-time, temporary job, internship, and volunteering. If that describes your
+            part-time, temporary job, internship, and volunteering. If that describes your
             business, try Kunvet now. Stop wasting your money and effort on hiring.</p>
         <p class="grey_warning">* Average cost of posting jobs on popular US job sites in 2018.</p>
       </div>
       <div class="refund">
-        <img style="height: 68px; margin-top: 100px; margin-left: 452px;" :src="svgs.refund">
+        <img class="refund_img" :src="svgs.refund">
         <div class="refund_img_btm"/>
         <h2 class="refund_title">Get Full Refund Immediately. No Question Asked.</h2>
         <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
@@ -1781,7 +1827,7 @@
         <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
       </div>
       <div class="versus">
-        <img style="height: 68px; margin-top: 100px; margin-left: 452px;" :src="svgs.versus">
+        <img class="versus_img" :src="svgs.versus">
         <div class="versus_img_btm"/>
         <h2 class="versus_title">Kunvet vs. Competitors - Why You Should Be Using Kunvet.</h2>
         <p class="versus_text">See it for yourself why you should be using Kunvet now, especially if you are hiring
@@ -1833,7 +1879,7 @@
         </div>
       </div>
       <div class="limited">
-        <img style="height: 70px; margin-top: 80px; margin-left: 452px;" :src="svgs.discount">
+        <img class="limited_img" :src="svgs.discount">
         <div class="warning_img_btm"/>
         <h2 class="limited_title">Limited Offer for Local Businesses.</h2>
         <p class="limited_text">If you are hiring on behalf of a business, then enjoy 33% of for <span style="font-weight: bold;">all</span> your job
@@ -1878,8 +1924,8 @@
         </div>
       </div>
       <div style="width: 100vw;">
-        <v-carousel class="testimonials" cycle interval="4000" hide-controls='true'>
-          <v-carousel-item>
+        <v-carousel class="hire_monials testimonials" cycle interval="4000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
               <p class="test_text"><span class="quote">“</span>  Wow... I recommend Kunvet to every small business. It has
@@ -1899,10 +1945,10 @@
                   <p class="test_undertext"> - theCoderSchool at Irvine offers a specialized after-school enrichment 
                 program that teaches young students (ages 7-18) how to write computer software. 
               <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" style="font-weight: bold; text-decoration: underline; cursor: pointer;">Learn More</a></p>
-              <div style="height: 30px;"/>
             </div>
+            <div style="height: 100px;"/>
           </v-carousel-item>
-          <v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
               <p class="test_text"><span class="quote">“</span>This is Ally, from Irvine Agape Christian Church, again :)
@@ -1917,14 +1963,15 @@
                     <p class="bio_text">of IA Christian Church</p>
                   </div>
                 </div>
-              <div style="height: 380px;"/>
             </div>
+            <div style="height: 100px;"/>
           </v-carousel-item>
-          <v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
               <div style="height: 400px;"/>
             </div>
+            <div style="height: 100px;"/>
           </v-carousel-item>
         </v-carousel>
       </div>
@@ -2160,8 +2207,8 @@
         </div>
       </div>
       <div style="width: 100vw;">
-        <v-carousel class="testimonials" cycle interval="4000" hide-controls='true'>
-          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+        <v-carousel class="hire_monials testimonials" cycle interval="4000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
               <p class="test_text"><span class="quote">“</span>  Wow... I recommend Kunvet to every small business. It has
@@ -2181,10 +2228,10 @@
                   <p class="test_undertext"> - theCoderSchool at Irvine offers a specialized after-school enrichment 
                 program that teaches young students (ages 7-18) how to write computer software. 
               <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" style="font-weight: bold; text-decoration: underline; cursor: pointer;">Learn More</a></p>
-              <div style="height: 30px;"/>
             </div>
+            <div style="height: 100px;"/>
           </v-carousel-item>
-          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
               <p class="test_text"><span class="quote">“</span>This is Ally, from Irvine Agape Christian Church, again :)
@@ -2193,20 +2240,21 @@
                 Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
                 <div class="bio">
                   <div class="bio_img" style="height: 80px; width:90px; background-color: blue;"/>
-                  <div style="display: inline-block; margin-left: 10px;">
+                  <div style="display: inline-block;">
                     <p class="bio_header">Ally Zeng</p>
                     <p class="bio_text">Organizer</p>
                     <p class="bio_text">of IA Christian Church</p>
                   </div>
                 </div>
-              <div style="height: 80px;"/>
             </div>
+            <div style="height: 100px;"/>
           </v-carousel-item>
-          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
               <div style="height: 400px;"/>
             </div>
+            <div style="height: 100px;"/>
           </v-carousel-item>
         </v-carousel>
       </div>
@@ -2284,6 +2332,43 @@
               policy that most competitors cannot match.</p>
           </div>
         </div>
+      </div>
+      <div class="hands">
+        <img class="coffee_img" :src="svgs.coffee">
+        <div class="coffee_img_btm"/>
+        <h2 class="coffee_title">What can you do with “coffee money”?</h2>
+        <v-window style="height: 100%;">
+          <v-window-item style="text-align:center;">
+            <div style="height: 54px;">
+              <img :src="svgs.num1" class="nums">
+              <div class="blackbar_p1"/>
+            </div>
+            <h2 class="hand_header">Post a Job</h2>
+            <p class="hand_text">It takes only about 5 min to post a job. Your job stays
+              active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
+            <img :src="pngs.nohand1">
+          </v-window-item>
+          <v-window-item style="text-align:center;">
+            <div style="height: 54px;">
+              <img :src="svgs.num2" class="nums">
+              <div class="blackbar_p2"/>
+            </div>
+            <h2 class="hand_header">Review Resumes</h2>
+            <p class="hand_text">Applicant’s resume is sent to your email and your Kunvet account. 
+              If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            <img :src="pngs.nohand2">
+          </v-window-item>
+          <v-window-item style="text-align:center;">
+            <div style="height: 54px;">
+              <img :src="svgs.num3" class="nums">
+              <div class="blackbar_p3"/>
+            </div>
+            <h2 class="hand_header">Hire</h2>
+            <p class="hand_text">Ta-Da! Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
+              you and pick your next hire.</p>
+            <img :src="pngs.nohand3">
+          </v-window-item>
+        </v-window>
       </div>
       <div class="waste">
         <img style="width: 80px; margin-top: 100px; margin-left: calc(50vw - 40px);" :src="svgs.warning">
@@ -2421,6 +2506,9 @@ import versus from '@/assets/hire/emp_pg_icons/boxing.svg';
 import company from '@/assets/hire/emp_pg_icons/company.svg';
 import gradlogo from '@/assets/hire/emp_pg_icons/gradient_logo.svg';
 import discount from '@/assets/hire/emp_pg_icons/discount.svg';
+import num1 from '@/assets/hire/emp_pg_icons/one.svg';
+import num2 from '@/assets/hire/emp_pg_icons/two.svg';
+import num3 from '@/assets/hire/emp_pg_icons/three.svg';
 import userDataProvider from '@/userDataProvider';
 
 export default {
@@ -2450,6 +2538,9 @@ export default {
         company: company,
         gradlogo: gradlogo,
         discount: discount,
+        num1: num1,
+        num2: num2,
+        num3: num3,
       },
       pngs: {
         students: students,

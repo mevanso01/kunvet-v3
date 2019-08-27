@@ -1286,24 +1286,54 @@ To see the bug, simply comment out the next 3 styles.*/
   padding-right: 0px !important;
 }
 
-@media (min-width: 961px){}
-
-@media (min-width: 801px) and (max-width: 960px) {
-  .v-carousel__controls{
+@media (min-width: 961px){
+  .hire_monials div.v-carousel__controls{
     background: none;
-    margin-bottom: 80px;
+    padding-bottom: 60px;
   }
-  .testimonials.v-carousel{
+  .hire_monials .v-carousel{
+    height: initial;
+  }
+}
+
+@media (min-width: 801px) and (max-width: 960px){
+  .hire_monials div.v-carousel__controls{
+    background: none;
+    padding-bottom: 60px;
+  }
+  .hire_monials .v-carousel{
     height: initial;
   }
 }
 
 @media (max-width: 800px) {
-  .v-carousel__controls{
+  .hire_monials div.v-carousel__controls{
     background: none;
-    margin-bottom: 60px;
+    padding-bottom: 60px;
   }
-  .testimonials.v-carousel{
-    height: initial;
-  }
+}
+
+.testing_slide_transition .v-window-x-transition-leave-to{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-x-transition-leave-active{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-x-transition-enter-to{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-x-transition-enter-active{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-x-reverse-transition-leave-to{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-x-reverse-transition-leave-active{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-x-reverse-transition-enter-to{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-x-reverse-transition-enter-active{
+  transition: all 0.6s ease;
 }
