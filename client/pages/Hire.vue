@@ -2,62 +2,63 @@
 // css for desktop
 @media (min-width: 961px){
   .emp_page_content{
-    margin-top: 120px;
+    margin-top: 124px;
   }
   .summary{
     width: 960px;
-    height: auto;
+    //height: 1000px;
     margin-left: calc( (100vw - 970px) / 2);
   }
   .summary_text_div{
-    width: 400px;
-    padding-left: 24px;
-    margin-right: calc( (960px - 400px - 502px) /2);
-    display: inline-block;
+    width: (960px - 440px);
+    height: 510px;
+    padding-right: 100px;
+    float: left;
   }
   .summary_title{
-    padding-top: 126px;
+    padding-top: 68px;
     font-weight: bold;
-    padding-left: 10px;
+    padding-left: 6px;
     font-family: proxima-nova, sans-serif;
     font-size: 38px;
-    color: #FF6968;
+    line-height: 120%;
+    color: #FF6969;
   }
   .summary_text{
     font-size: 16px;
-    font-weight: bold;
     font-family: proxima-nova, sans-serif;
-    padding-top: 12px;
-    padding-left: 10px;
+    padding-top: 20px;
+    padding-left: 4px;
+    line-height: 180%;
     color: black;
   }
   .summary_btn{
-    width: 220px;
-    height: 68px !important;
-    line-height: 68px !important;
+    width: 200px;
+    height: 60px !important;
+    line-height: 60px !important;
     font-family: proxima-nova, sans-serif;
-    margin-top: 12px;
-    margin-left: 10px;
+    border-radius: 0px !important;
+    margin-top: 2px;
+    margin-left: 4px;
   }
   .summary_collage_students{
-    width: 502px;
-    height: 580px;
-    padding-right: 24px;
-    display: inline-block;
+    width: 440px;
+    height: 510px;
+    float: right;
   }
   .effective{
     width: 960px;
     margin-left: calc( (100vw - 970px) / 2);
   }
   .effective_img{
-    width: 84px;
-    margin-top: 120px;
-    margin-left: calc((960px - 84px) / 2);
+    width: 80px;
+    margin-top: 154px;
+    margin-left: calc((960px - 80px) / 2);
     margin-bottom: 11px;
   }
   .effective_img_btm{
-    width: 84px; 
-    margin-left: calc((960px - 84px) / 2);
+    width: 80px; 
+    margin-left: calc((960px - 80px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -68,29 +69,32 @@
     text-align: center;
     font-size: 34px;
     color: black;
+    margin-bottom: 0px;
   }
   .effective_text{
     padding-top: 30px;
-    padding-left:30px;
-    padding-right: 30px;
     font-family: proxima-nova, sans-serif; 
     text-align: center;
+    line-height: 150%;
     font-size: 26px;
     color: black;
+    margin-bottom: 0px;
   }
   .logo_style{
-    width: calc(860px / 4);
-    margin-right: 20px;
+    width: 190px;
+    height: 80px;
+    margin-right: 60px;
   }
   .logo_first_row{
     margin-top: 40px;
   }
   .logo_second_row{
-    margin-top: 40px;
+    margin-top: 80px;
   }
   .testimonials{
     margin-top: 120px;
     background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+    box-shadow: none;
   }
   .test_slide{
     width: 100vw;
@@ -99,63 +103,69 @@
   .slide_info{
     width: 960px;
     margin-left: calc( (100vw - 970px) / 2);
-    padding-left: 34px;
-    padding-right: 24px;
-    padding-top: 60px;
   }
   .test_title{
     font-weight: bold;
+    padding-top: 80px;
     font-family: proxima-nova, sans-serif; 
-    font-size: 32px;
+    font-size: 34px;
+    margin-bottom: 0px;
     color: white;
   }
   .test_text{
-    padding-top: 40px;
-    width: 70%;
+    padding-top: 28px;
+    width: 660px;
     font-family: proxima-nova, sans-serif; 
-    font-size: 26px;
-    font-weight: 100;
+    font-size: 24px;
     color: white;
-    line-height: 40px;
+    line-height: 160%;
     float: left;
+    margin-bottom: 40px;
   }
   .quote{
     margin-left: -26px;
     font-size: 50px;
   }
   .test_undertext{
-    padding-top: 8px;
+    padding-top: 40px;
+    margin-left: calc( (100vw - 970px) / 2);
+    margin-bottom: 0px;
+    padding-bottom: 80px;
     font-family: proxima-nova, sans-serif; 
     font-weight: 100;
     font-size: 16px;
     color: white;
     line-height: 20px;
-    width: 70%;
+    width: 660px;
   }
   .bio{
     margin-top: 30px;
-    margin-right: 24px;
-    width: 224px;
     height: 200px;
     float: right;
   }
   .bio_img{
-    height: 66px;
-    margin-top: 28px;
-    margin-left: 10px;
+    height: 60px;
+    width: 60px;
+    margin-top: 10px;
+    margin-left: 22px;
+    display: block;
   }
   .bio_header{
     padding-top: 18px;
     font-size: 16px;
     padding-left: 12px;  
     color: white;
+    font-family: proxima-nova, sans-serif; 
     font-weight: bold;
+    font-size: 16px;
     line-height: 14px;
   }
   .bio_text{
     font-size: 16px;
     padding-left: 12px;  
     color: white;
+    font-family: proxima-nova, sans-serif; 
+    font-size: 16px;
     line-height: 12px;
   }
   .faq{
@@ -163,14 +173,15 @@
     margin-left: calc( (100vw - 970px) / 2);
   }
   .faq_img{
-    width: 84px;
-    margin-top: 120px;
-    margin-left: calc((960px - 84px) / 2);
-    margin-bottom: 11px;
+    height: 60px;
+    width: 60px;
+    margin-top: 124px;
+    margin-left: calc((960px - 60px) / 2);
+    margin-bottom: 14px;
   }
   .faq_img_btm{
-    width: 84px; 
-    margin-left: calc((960px - 84px) / 2);
+    width: 68px; 
+    margin-left: calc((960px - 68px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -181,43 +192,45 @@
     text-align: center;
     font-size: 34px;
     color: black;
+    margin-bottom: 0px;
   }
   .faq_text{
     padding-top: 30px;
-    padding-left:30px;
-    padding-right: 30px;
+    padding-left:24px;
+    padding-right: 24px;
     font-family: proxima-nova, sans-serif; 
     text-align: center;
-    font-size: 26px;
+    font-size: 24px;
+    line-height: 150%;
     color: black;
   }
   .faq_box{
     margin-top: 30px;
     height: 500px;
-    width: 960px; 
+    width: 960px;
+    padding-left: 60px;
   }
   .faq_questions{
-    margin-left: 24px;
     height: 470px;
-    width: 432px; 
+    width: 432px;
+    padding-right: 36px;
     float: left;
   }
   .faq_answers{
     height: 470px;
-    width: 432px; 
-    margin-right: 24px;
+    width: 400px; 
+    margin-right: 54px;
     float: right;
   }
   .faq_question_div{
     height: 62px;
     width: 100%; 
     margin-top: 14px;
-    margin-left: 8px;
     box-shadow: #ccc 0px 2px 2px;
     border-radius: 2px;
     background-color: #FAFBFD;
-    padding-left: 30px;
     padding-top: 18px;
+    padding-left: 24px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -227,12 +240,11 @@
     height: 62px;
     width: 100%; 
     margin-top: 14px;
-    margin-left: 8px;
     box-shadow: #ccc 0px 2px 2px;
     border-radius: 2px;
     background-color: #FAFBFD;
-    padding-left: 30px;
     padding-top: 18px;
+    padding-left: 24px;
     font-size: 16px;
     font-weight: bold;
     border: 1px solid black;
@@ -252,6 +264,7 @@
     padding-top: 24px;
     padding-left: 24px;
     padding-right: 24px;
+    text-align: left;
     width: 100%;
     font-size: 28px;
     font-weight: bold;
@@ -264,6 +277,7 @@
     padding-left: 24px;
     padding-right: 24px;
     width: 100%;
+    color: #000;
     font-size: 16px;
     font-family: proxima-nova, sans-serif; 
   }
@@ -272,14 +286,15 @@
     margin-left: calc( (100vw - 970px) / 2);
   }
   .coffee_img{
-    width: 84px;
-    margin-top: 120px;
-    margin-left: calc((960px - 84px) / 2);
-    margin-bottom: 11px;
+    width: 48px;
+    height: 80px;
+    margin-top: 76px;
+    margin-left: calc((960px - 48px) / 2);
+    margin-bottom: 20px;
   }
   .coffee_img_btm{
-    width: 84px; 
-    margin-left: calc((960px - 84px) / 2);
+    width: 64px; 
+    margin-left: calc((960px - 64px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -287,7 +302,7 @@
     width: 100%;
     padding-top: 28px;
     font-weight: bold;
-    font-family: 'Roboto', sans-serif; 
+    font-family: proxima-nova, sans-serif; 
     text-align: center;
     font-size: 34px;
     color: black;
@@ -302,7 +317,7 @@
     width: 100%;
     text-align: center;
     vertical-align: top;
-    margin-top: 22px;
+    margin-top: 30px;
   }
   .hand_one{
     margin-left: 0px;
@@ -318,15 +333,19 @@
     display: inline-block;
   }
   .hand_header{
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
     color: black;
+    margin-bottom: 10px;
     font-family: proxima-nova, sans-serif; 
   }
   .hand_text{
     text-align: center;
     color: black;
     font-size: 16px;
+    width: 220px; 
+    height: 96px;
+    margin-bottom: 20px;
     font-family: proxima-nova, sans-serif; 
   }
 
@@ -335,14 +354,15 @@
     margin-left: calc( (100vw - 970px) / 2);
   }
   .warning_img{
-    width: 84px;
+    width: 66px;
+    height: 60px;
     margin-top: 120px;
-    margin-left: calc((960px - 84px) / 2);
-    margin-bottom: 11px;
+    margin-left: calc((960px - 66px) / 2);
+    margin-bottom: 20px;
   }
   .warning_img_btm{
-    width: 84px; 
-    margin-left: calc((960px - 84px) / 2);
+    width: 70px; 
+    margin-left: calc((960px - 70px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -353,21 +373,25 @@
     font-family: proxima-nova, sans-serif;
     padding-top: 30px;
     text-align: center;
+    margin-bottom: 0px;
   }
   .warning_text{
-    font-size: 26px;
+    font-size: 24px;
     color: black;
     font-family: proxima-nova, sans-serif;
     padding-top: 30px;
     padding-left: 30px;
     padding-right: 30px;
     text-align: center;
+    line-height: 150%;
+    margin-bottom: 0px;
   }
   .grey_warning{
     font-size: 16px;
     color: grey;
     font-family: proxima-nova, sans-serif;
-    padding-top: 24px;
+    padding-top: 40px;
+    margin-bottom: 0px;
     text-align: center;
   }
   .refund{
@@ -375,14 +399,15 @@
     margin-left: calc( (100vw - 970px) / 2);
   }
   .refund_img{
-    width: 84px;
+    width: 62px;
+    height: 60px;
     margin-top: 120px;
-    margin-left: calc((960px - 84px) / 2);
-    margin-bottom: 11px;
+    margin-left: calc((960px - 62px) / 2);
+    margin-bottom: 20px;
   }
   .refund_img_btm{
-    width: 84px; 
-    margin-left: calc((960px - 84px) / 2);
+    width: 70px; 
+    margin-left: calc((960px - 70px) / 2);
     height:4px; 
     background-color:black;
   }
@@ -391,36 +416,41 @@
     color: black;
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
-    padding-top: 28px;
+    padding-top: 30px;
     padding-left: 24px;
     padding-right: 24px;
     text-align: center;
+    margin-bottom: 0px;
   }
   .refund_text{
-    font-size: 26px;
+    font-size: 24px;
+    line-height: 150%;
     color: black;
     font-family: proxima-nova, sans-serif;
-    padding-top: 20px;
+    padding-top: 30px;
     padding-left: 24px;
-    padding-right: 24px;  
+    padding-right: 24px;
+    margin-bottom: 0px;  
     text-align: center;
   }
   .refund_btn{
-    width: 220px;
-    height: 68px !important;
-    line-height: 68px !important;
+    width: 200px;
+    height: 60px !important;
+    line-height: 60px !important;
+    border-radius: none;
     background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%) !important;
-    margin-top: 44px;
+    margin-top: 40px;
     margin-left: calc( 50% - 110px); 
     color: white;
     font-weight: bold; 
   }
   .refund_undertext{
-    padding-top: 2px;
+    padding-top: 10px;
+    margin-bottom: 0px;
     color: black;
     text-align: center;
     font-family: proxima-nova, sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
   }
   .versus{
@@ -1607,13 +1637,13 @@
     <div class="emp_page_content medium_hide mobile_hide">
       <div class="summary">
         <div class="summary_text_div">
-          <h2 class="summary_title">How to hire the right person? With almost no cost or effort?</h2>
+          <h1 class="summary_title">How to hire the right person? With almost no cost or effort?</h1>
           <p class="summary_text">Hiring the right person is cheap and easy - only if
             you’ve used the right tool. As a professional job
             website made for local hiring, Kunvet is here to help
             you to find your next hire easier and cheaper.</p>
-          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 26px !important; font-weight: bold;">Post a Job</span></k-btn>
-          <p class="summary_text" style="padding-top: 0px; font-size: 12px;">Satisfaction guarateed. Or money back.</p>
+          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
+          <p class="summary_text" style="font-weight: bold; padding-top: 0px; font-size: 12px; ">Satisfaction guarateed. Or money back.</p>
         </div>
         <img class="summary_collage_students" :src="pngs.students">
       </div>
@@ -1624,26 +1654,26 @@
         <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet. Overall,
           every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job
           post starts at only $5 for 60 days. Satisfication guaranteed. Or money back.</p>
-        <h2 class="effective_title" style="padding-top: 36px; font-size: 28px;">Some of Our Returning Employers</h2>
+        <h2 class="effective_title" style="padding-top: 54px; font-size: 24px;">Some of Our Returning Employers</h2>
         <div class="logo_first_row">
         <img class="logo_style" :src="pngs.coderschool">
         <img class="logo_style" :src="pngs.prolite">
         <img class="logo_style" :src="pngs.readingtown">
-        <img class="logo_style" :src="pngs.cygolite">
+        <img class="logo_style" style="margin-right: 0px;" :src="pngs.cygolite">
         </div>
         <div class="logo_second_row">
         <img class="logo_style" :src="pngs.conroys">
         <img class="logo_style" :src="pngs.seacrest">
         <img class="logo_style" :src="pngs.banban">
-        <img class="logo_style" :src="pngs.newportpark">
+        <img class="logo_style" style="margin-right: 0px;" :src="pngs.newportpark">
         </div>
       </div>
       <div style="width: 100vw;">
-        <v-carousel class="hire_monials testimonials" cycle interval="4000" :hide-controls="true" height="auto">
+        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
-              <p class="test_text"><span class="quote">“</span>  Wow... I recommend Kunvet to every small business. It has
+              <p class="test_text"><span class="quote">“</span>   Wow... I recommend Kunvet to every small business. It has
                 helped us find many talented and enthusiastic candidates
                 from Orange County to serve as our Code Coaches. The
                 quality of the resumes of those who applied through
@@ -1657,11 +1687,11 @@
                   <p class="bio_text">of theCoderSchool - Irvine</p>
                 </div>
               </div>
-                  <p class="test_undertext"> - theCoderSchool at Irvine offers a specialized after-school enrichment 
+            </div>
+            <p class="test_undertext"> - theCoderSchool at Irvine offers a specialized after-school enrichment 
                 program that teaches young students (ages 7-18) how to write computer software. 
               <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" style="font-weight: bold; text-decoration: underline; cursor: pointer;">Learn More</a></p>
-            </div>
-            <div style="height: 100px;"/>
+            <div style="height: 60px;"/>
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
@@ -1671,7 +1701,7 @@
                 We've also spent plenty of money on other websites already but didn’t find who we are looking for. 
                 Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
                 <div class="bio">
-                  <div class="bio_img" style="height: 80px; width:90px; background-color: blue;"/>
+                  <div class="bio_img" style="background-color: blue;"/>
                   <div style="display: inline-block;">
                     <p class="bio_header">Ally Zeng</p>
                     <p class="bio_text">Organizer</p>
@@ -1679,14 +1709,14 @@
                   </div>
                 </div>
             </div>
-            <div style="height: 100px;"/>
+            <div style="height: 200px;"/>
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
               <div style="height: 400px;"/>
             </div>
-            <div style="height: 100px;"/>
+            <div style="height: 200px;"/>
           </v-carousel-item>
         </v-carousel>
       </div>
@@ -1702,10 +1732,10 @@
           <div class="faq_questions">
             <div v-bind:class="{ 'faq_question_div_sel': question_num === 1, 'faq_question_div': question_num != 1}" @click="question_num = 1">Is Kunvet right for me?</div>
             <div v-bind:class="{ 'faq_question_div_sel': question_num === 2, 'faq_question_div': question_num != 2}" @click="question_num = 2">Is Kunvet a recruiting agency?</div>
-            <div v-bind:class="{ 'faq_question_div_sel': question_num === 3, 'faq_question_div': question_num != 3}" @click="question_num = 3">How much does it cost to post on Kunvet?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 3, 'faq_question_div': question_num != 3}" @click="question_num = 3">How much does it cost to post a job?</div>
             <div v-bind:class="{ 'faq_question_div_sel': question_num === 4, 'faq_question_div': question_num != 4}" @click="question_num = 4">What is the refund policy?</div>
             <div v-bind:class="{ 'faq_question_div_sel': question_num === 5, 'faq_question_div': question_num != 5}" @click="question_num = 5">How does Kunvet work?</div>
-            <div v-bind:class="{ 'faq_question_div_sel': question_num === 6, 'faq_question_div': question_num != 6}" @click="question_num = 6">How is Kunvet different from other sites?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 6, 'faq_question_div': question_num != 6}" @click="question_num = 6">How is Kunvet different from others?</div>
           </div>
           <div class="faq_answers">
             <div class="faq_answers_div" v-if="question_num === 1">
@@ -1779,26 +1809,25 @@
       <div class="coffee_money">
         <img class="coffee_img" :src="svgs.coffee">
         <div class="coffee_img_btm"/>
-        <h2 class="coffee_title">What can you do with “coffee money”?</h2>
-        <div style="text-align: center;"> <img style="width: 74%; margin-top: 76px;" :src="svgs.line"> </div>
+        <h2 class="coffee_title">How does Kunvet Work?</h2>
+        <div style="text-align: center;"> <img style="width: 82%; margin-top: 76px;" :src="svgs.line"> </div>
         <div class="hands">
           <div class="hand_one">
-            <h2 class="hand_header" style="">Post a Job</h2>
-            <p class="hand_text" style="padding-left: 40px; padding-right: 30px;">It takes only about 5 min to post a job. Your job stays
-              active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
-            <img style="height: 654px; margin-left: 20px;" :src="svgs.hand1">
+            <h2 class="hand_header" style="width: 200px;">Post a Job</h2>
+            <p class="hand_text">It takes only about 5 min to post a job. Each job posting starts at <span style="font-weight:bold;">only 80¢ per day</span>! Cancel anytime.</p>
+            <img style="height: 761px; margin-left: -30px;" :src="pngs.hand1">
           </div>
            <div class="hand_two">
             <h2 class="hand_header" style="">Review Resumes</h2>
-            <p class="hand_text" style="">Applicant’s resume is sent to your email and your Kunvet account. 
+            <p class="hand_text" style="width: 280px; margin-left: 15px;">Applicant’s resume is sent to your email and to your Kunvet account. 
               If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
-            <img style="height: 654px; margin-left: 20px;" :src="svgs.hand2">
+            <img style="height: 761px; margin-left: 20px;" :src="pngs.hand2">
           </div>
           <div class="hand_three">
-            <h2 class="hand_header" style="padding-left: 40px;">Hire</h2>
-            <p class="hand_text" style="padding-left: 30px;">Ta-Da!<br> Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
-              you and pick your next hire.</p>
-            <img style="height: 654px; margin-left: 40px;" :src="svgs.hand3">
+            <h2 class="hand_header" style="padding-left: 130px;">Hire</h2>
+            <p class="hand_text" style="margin-left: 110px;">Voila! Starting at <span style="font-weight:bold;">only 80¢ per day</span>, you can explore all the talents near
+              you and pick your ideal hire.</p>
+            <img style="height: 761px; margin-left: 90px;" :src="pngs.hand3">
           </div>
         </div>
       </div>
@@ -1810,8 +1839,8 @@
             Kunvet, the starting price is only $5 per 60 days, or $2.5 per month. You could
             save yourself $121.5 every month, or $1,458 every year! Save that money for a new
             once table, a new advertising campaign, or a trip to Europe. Try Kunvet today.</p>
-        <p class="warning_text" style="font-weight: bold; padding-top: 44px;">Is Kunvet Right for Me?</p>
-        <p class="warning_text" style="padding-top: 14px;">Kunvet is very effective for businesses hiring locally and offering entry-level,
+        <p class="warning_text" style="font-weight: bold; padding-top: 60px;">Is Kunvet Right for Me?</p>
+        <p class="warning_text" style="padding-top: 30px;">Kunvet is very effective for businesses hiring locally and offering entry-level,
             part-time, temporary job, internship, and volunteering. If that describes your
             business, try Kunvet now. Stop wasting your money and effort on hiring.</p>
         <p class="grey_warning">* Average cost of posting jobs on popular US job sites in 2018.</p>
@@ -1823,7 +1852,7 @@
         <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
           the service you have received, get a <span style="font-weight:bold;">full refund</span> immediately on your inquiry.
           No question will be asked. Click on the button below, and start hiring now.</p>
-        <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 28px;">Post a Job</span></k-btn>
+        <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
         <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
       </div>
       <div class="versus">
@@ -2497,9 +2526,9 @@ import gas from '@/assets/hire/emp_pg_icons/gas.svg';
 import faq from '@/assets/hire/emp_pg_icons/faq.svg';
 import coffee from '@/assets/hire/emp_pg_icons/coffee.svg';
 import line from '@/assets/hire/emp_pg_icons/line.svg';
-import hand1 from '@/assets/hire/emp_pg_icons/step_1.svg';
-import hand2 from '@/assets/hire/emp_pg_icons/step_2.svg';
-import hand3 from '@/assets/hire/emp_pg_icons/step_3.svg';
+import hand1 from '@/assets/hire/emp_pg_icons/post-a-job-on-kunvet-demonstration.png';
+import hand2 from '@/assets/hire/emp_pg_icons/review-resume-on-kunvet-demonstration.png';
+import hand3 from '@/assets/hire/emp_pg_icons/email-job-applicant-demonstration.png';
 import warning from '@/assets/hire/emp_pg_icons/warning.svg';
 import refund from '@/assets/hire/emp_pg_icons/return.svg';
 import versus from '@/assets/hire/emp_pg_icons/boxing.svg';
@@ -2529,9 +2558,6 @@ export default {
         faq: faq,
         coffee: coffee,
         line: line,
-        hand1: hand1,
-        hand2: hand2,
-        hand3: hand3,
         warning: warning,
         refund: refund,
         versus: versus,
@@ -2556,6 +2582,9 @@ export default {
         nohand1: nohand1,
         nohand2: nohand2,
         nohand3: nohand3,
+        hand1: hand1,
+        hand2: hand2,
+        hand3: hand3,
       },
       account_type: '',
     };

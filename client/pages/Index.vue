@@ -1,782 +1,515 @@
 <style lang="scss" scoped>
-.promo-block {
-  p {
-    font-size: 1.2em;
+// big desktop
+@media (min-width: 961px){
+  .home_content{
+    width: 100vw;
+    padding-top: 64px;
   }
-  h2 {
-    font-size: 1.5em;
+  .index_top{
+    width: 960px;
+    height: 1000px;
+    margin-left: calc( (100vw - 960px) / 2);
   }
-}
-.general-dropdown-items select, .general-dropdown-items label {
-  width: 100%;
-  height: 100%;
-  padding: 5px 20px;
-}
-.expansion-panel--popout .expansion-panel__container  {
-  margin: 0;
-  max-width: 100%;
-}
-/* .input-group--select {
-  height: 66px;
-} */
-.firstSearch .input-group__details{
-  display: none !important;
-}
-/* --- old selects --- */
-.search .input-group--select .input-group__input {
-  padding: 0 16px;
-  height: 48px;
-  flex: 1 0 100%;
-}
-.search .input-group--select {
-  padding-top: 0;
-  height: 48px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-.list__tile__action .checkbox .input-group__input {
-  padding-top: 6px;
-}
-.home-page-cont .list__tile__title {
-  color: #616161 !important;
-}
-.search .input-group--select i.icon {
-  padding: 8px 0;
-}
-.search .input-group__selections {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  overflow: auto !important;
-}
-.search .input-group--select.input-group--single-line label {
-  top: 8px;
-  left: 16px;
-}
-/* --- new selects --- */
-.search .menu {
-  width: 100%;
-}
-
-.input-group--text-field.input-group--dirty.input-group--select label,
-.input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
-  transform: translate3d(0,-28px,0) scale(.75);
-}
-.chip--select-multi {
-  margin: 5px 5px 5px 0;
-}
-.bottom-text{
-  font-size:2em;
-  color:#ef5350;
-  z-index:12;
-  bottom:550px;
-}
-.category{
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  border-left: 1px solid #d2d2d3;
-  padding-left: 10px;
-  height: 48px;
-}
-.fs-select-cities.v-input {
-  margin-top: 0;
-  height: 46px;
-  box-shadow: none !important;
-  border-radius: 6px 0px 0px 6px;
-}
-.fs-select-cities .v-input-group__selections {
-  padding: 0 !important;
-  width: calc(100% - 36px) !important;
-  text-overflow: ellipsis;
-}
-.fs-select-cities .v-input-group__input > div > div {
-  padding: 0 !important;
-}
-.fs-select-cities .v-input-group__input::before {
-  display: none;
-}
-// .v-text-field.v-text-field--solo .v-input__control {
-//   min-height: 56px; // Doesnt work??
-// }
-.no-padding {
-  padding: 0;
-}
-.search .v-input-group__details {
-  display: none;
-}
-.city-img-holder {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.bottom-row {
-  position: absolute;
-  bottom: 30px;
-  width: calc(100% - 52px);
-}
-.bottom-img {
-  position: absolute;
-  left:0px;
-  right:0px;
-  top: 450px;
-  width:100%;
-  z-index: 10;
-}
-.bottom-row .skew-div {
-  margin: auto;
-  padding: 8px 0;
-  width: 400px;
-  position: relative;
-}
-.bottom-row .skew-div p {
-  margin: 0;
-}
-.bottom-row .skew-div::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  background: rgba(0,0,0,.05);
-  right: 0;
-  top: 0;
-  transform: skew(-30deg);
-}
-
-@media (min-width: 601px) {
-  .search .flex {
-    padding: 10px 15px;
+  .interview_woman{
+    padding-top: 100px;
+    width: 680px;
+    margin-left: -214px;
+    float: left;
   }
-  .bottom-row {
-    width: calc(100% - 128px);
+  .search_area{
+    margin-top: 60px;
+    width: 494px;
+    height: 520px;
+    background-color: white;
+    float:right;
   }
-  .bottom-img {
-    width:100%;
+  .search_title{
+    padding-top: 76px;
+    padding-left: 80px;
+    font-family: proxima-nova, sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 140%;
+    color: #ff6969;
+    letter-spacing: 3px;
+    text-align: left;
+  }
+  .search_bar_container{
+    margin-left: 80px;
+    width: 400px;
+    height: 64px;
+    background-color: #F8F8F8;
+  }
+  .search_bar_head{
+    font-weight: bold;
+    font-size: 16px;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 2px;
+    padding-left: 24px;
+    padding-top: 20px;
+    width: 80px;
+    float:left;
+  }
+  .search_bar_field{
+    float: right;
+    width: 320px;
+    padding-right: 12px;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_btn{
+    margin-left: 80px; 
+    margin-top: 20px;
+    width: 150px;
+    height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 2px; 
+    font-weight: bold;
   }
 }
-@media (max-width: 600px) {
-  // .firstSearch {
-  //   padding-left: 26px;
-  //   padding-right: 26px;
-  //   height: calc(100vh - 56px);
-  // }
-  #banner {
-    display: none;
+// small desktop
+@media (min-width: 801px) and (max-width: 960px) {
+  .large_hide{
+    display: none !important;
   }
-  .home-page-cont {
-    padding-left: 0;
-    padding-right: 0;
+  .home_content{
+    width: 100vw;
+    padding-top: 64px;
   }
-  .bottom-row {
-    bottom: 10px;
+  .index_top{
+    width: 800px;
+    height: 1000px;
+    margin-left: calc((100vw - 800px));
+  }
+  .interview_woman{
+    padding-top: 60px;
+    margin-left: -166px;
+    width: 520.181px;
+    float: left;
+  }
+  .search_area{
+    margin-top: 60px;
+    width: 444px;
+    background-color: white;
+    float:right;
+  }
+  .search_title{
+    padding-top: 50px;
+    padding-left: 60px;
+    font-family: proxima-nova, sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 140%;
+    color: #ff6969;
+    letter-spacing: 3px;
+    text-align: left;
+  }
+  .search_bar_container{
+    margin-left: 60px;
+    width: 360px;
+    height: 64px;
+    background-color: #F8F8F8;
+  }
+  .search_bar_head{
+    font-weight: bold;
+    font-size: 16px;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 2px;
+    padding-left: 24px;
+    padding-top: 20px;
+    width: 80px;
+    float:left;
+  }
+  .search_bar_field{
+    float: right;
+    width: 260px;
+    padding-right: 12px;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_btn{
+    margin-left: 60px; 
+    margin-top: 20px;
+    width: 150px;
+    height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 2px; 
+    font-weight: bold;
+  }
+}
+// tablet
+@media (min-width: 661px) and (max-width: 800px) {
+  .medium_hide{
+    display: none !important;
+  }
+  .home_content{
+    width: 100vw;
+    padding-top: 64px;
+  }
+  .index_top{
+    width: 660px;
+    height: 700px;
+    margin-left: calc((100vw - 660px));
+  }
+  .interview_woman{
+    padding-top: 60px;
+    margin-left: -140px;
+    width: 405.01px;
+    float: left;
+  }
+  .search_area{
+    margin-top: 60px;
+    width: 394px;
+    background-color: white;
+    float:right;
+  }
+  .search_title{
+    padding-top: 30px;
+    padding-left: 54px;
+    font-family: proxima-nova, sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 140%;
+    color: #ff6969;
+    letter-spacing: 3px;
+    text-align: left;
+  }
+  .search_bar_container{
+    margin-left: 54px;
+    width: 320px;
+    height: 58px;
+    background-color: #F8F8F8;
+  }
+  .search_bar_head{
+    font-weight: bold;
+    font-size: 16px;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 2px;
+    padding-left: 20px;
+    padding-top: 20px;
+    width: 80px;
+    float:left;
+  }
+  .search_bar_field{
+    float: right;
+    width: 220px;
+    padding-right: 8px;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_btn{
+    margin-left: 54px; 
+    margin-top: 20px;
+    width: 150px;
+    height: 58px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 2px; 
+    font-weight: bold;
+  }
+}
+// mobile
+@media (max-width: 660px) {
+  .small_hide{
+    display: none !important;
+  }
+  .home_content{
+    width: 100vw;
+  }
+  .home_page_top{
+    background-color: #FF6969;
+    width: 100vw;
+  }
+  .search_title{
+    padding-top: calc(120px + 64px);
+    padding-left: calc( 100vw - 90vw );
+    padding-bottom: calc( 32px + 20px);
+    font-family: proxima-nova, sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 140%;
+    color: white;
+    letter-spacing: 3px;
+    text-align: left;
+  }
+ .search_bar_container{
+    margin-left: 10vw;
+    width: 80vw;
+    height: 64px;
+    background-color: #F8F8F8;
+  }
+  .search_bar_head{
+    font-weight: bold;
+    font-size: 16px;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 2px;
+    padding-left: 20px;
+    padding-top: 20px;
+    width: 68px;
+    float:left;
+  }
+  .search_bar_field{
+    float: right;
+    width: calc(80vw - 68px);
+    padding-right: 8px;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_btn{
+    margin-left: 10vw; 
+    margin-top: 20px;
+    width: 80vw;
+    height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 2px; 
+    font-weight: bold;
+  }
+}
+//titles
+@media (max-width: 640px) {
+  .search_title{
+    font-size: 34px;
+  }
+}
+@media (max-width: 560px) {
+  .search_title{
+    font-size: 28px;
+  }
+}
+@media (max-width: 470px) {
+  .search_title{
+    font-size: 24px;
+  }
+}
+@media (max-width: 420px) {
+  .search_title{
+    font-size: 24px;
+    padding-right: 45px;
+  }
+  .search_bar_field{
+    padding-right: 4px;
+  }
+  .search_bar_head{
+    padding-left: 16px;
+  }
+}
+@media (max-width: 418px) {
+  .search_title{
+    font-size: 36px;
+  }
+}
+@media (max-width: 330px) {
+  .search_title{
+    font-size: 34px;
+  }
+}
+// These are the 'shows'
+@media (min-width: 961px) {
+  .large_show{
+    display: none !important;
+  }
+}
+@media (min-width: 801px) {
+  .medium_show{
+    display: none !important;
   }
 }
 @media (min-width: 961px) {
-  // .firstSearch {
-  //   height: calc(100vh - 64px);
-  // }
-  .city-img-holder {
-    padding: 0 48px;
-  }
-  section.search {
-    padding: 16px 16px 32px 16px;
-  }
-  .bottom-img {
-    width:100%;
-  }
-}
-@media (min-width: 601px) and (max-width: 960px) {
-  // .firstSearch {
-  //   height: calc(100vh - 64px);
-  // }
-}
-#rua {
-  width: 100%;
-  flex-wrap: nowrap;
-  overflow-x: hidden;
-  justify-content: center;
-  background: #FCFCFC;
-  .card {
-    flex: 0 0 auto;
-    width: 200px;
-    margin: 10px;
-  }
-}
-
-
-//-------------------------------Implemented main classes----------------------------------------------
-.main-container {
-  position: relative;
-  width: 100%;
-  max-width: 960px;
-  background-color: none;
-  /* border: 1px solid #eeeeee; */
-  box-sizing: border-box;
-  margin-top: -36px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.top_container_style {
-  width: 100%; height: 58vh; // was 60vh
-  background:  #ff8f8f;
-  background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
-  background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
-  position: relative;
-}
-
-.iconRedButton {
-  display: block;
-  height: 72px;
-  width: 64px;
-  background-color:#FF6969;
-  text-align: center;
-  box-shadow: 0 10px 12px -4px #F3E1E1;
-  font-family: "Roboto";
-  outline: none !important;
-}
-
-.iconRedButton:hover {
-  background-color:#ef5350;
-}
-
-.postAJob {
-  display: block;
-  height: 56px;
-  width: 200px;
-  background-color:#FFFFFF;
-  text-align: center;
-  box-shadow: 0 5px 6px -2px #DF696C;
-  font-family: "Roboto",sans-serif;
-  color:#FF786D;
-  font-weight:bold;
-  font-size:16px;
-  outline: none !important;
-  margin-top:20px;
-  margin-left:10%
-}
-
-.postAJob:hover {
-  background-color:#F3E1E1;
-}
-
-.postAJob2 {
-  display: block;
-  height: 56px;
-  width: 200px;
-  background-color:#FFFFFF;
-  text-align: center;
-  box-shadow: 0 5px 6px -2px #5471F6;
-  font-family: "Roboto",sans-serif;
-  color:#5E85FD;
-  font-weight:bold;
-  font-size:16px;
-  outline: none !important;
-  margin-top:20px;
-  margin-left:auto;
-  margin-right:10%;
-}
-
-.postAJob2:hover {
-  background-color:#F3E1E1;
-}
-
-.search_find_near {
-  height: 72px;
-  padding-top:24px;
-  width: 10%;
-  background-color:white;
-  float:left;
-}
-
-.top_title_text{
-  color: white;
-  font-size: 3.9em;
-  text-align: center;
-}
-
-.top_title_pos{
-  position:absolute;
-  width:100%;
-  bottom:0;
-  margin-bottom: 50px;
-}
-.search_assist {
-  margin-left: 0;
-  color: grey;
-  font-size: 16px;
-}
-.search_text_field {
-  height: 72px;
-  width: 36%;
-  outline: none !important;
-  background-color: white;
-  float: left;
-  padding-top: 12px; // (72px - 48px) / 2
-}
-.search_select {
-  height: 72px;
-  width: 44%;
-  outline: none !important;
-  background-color: white;
-  float: left;
-  padding-top: 12px; // (72px - 48px) / 2
-}
-.search_mobile {
-  margin-left: 24px;
-  margin-right: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 12px -4px #eaeaf9;
-}
-.container-left {
-  width: calc(100% + 8px);
-}
-.container-right {
-  width: calc(100% + 8px);
-  transform: translateX(-8px);
-}
-.search_hide {
-  display:block;
-}
-.search_show {
-  display: none !important;
-}
-.search_button_text {
-  line-height: 56px;
-  font-size: 20px;
-  font-family: 'Roboto', sans-serif;
-}
-.artboard1_img {
-  background-color: #ffe2e2;
-  height: 400px;
-  text-align: right;
-}
-.artboard2_img{
-  z-index:0;
-  height: 400px;
-  background-color: #dbefff;
-  text-align: left;
-}
-.artboard1_img_style {
-  padding-right:50px;
-  margin-top: 80px;
-  max-width: 400px;
-}
-.artboard2_img_style {
-  padding-left:50px;
-  margin-top: 80px;
-  max-width: 400px;
-}
-.hire_kunvet_container {
-  height: 300px; margin-top:40px;
-  background:  #FFC371;
-  background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
-  background: linear-gradient(to right,  #ff5f6d, #FFC371);
-  position: relative;
-}
-
-.hire_kunvet_title{
-  padding-top: 3%;
-  padding-left:10%;
-  color:white;
-  font-size:38px;
-}
-
-.hire_kunvet_text{
-  padding-top: 12px;
-  margin-left:10%;
-  color:white;
-  font-size:18px;
-  max-width: 400px;
-  line-height: 26px;
-}
-
-.loved_trusted_container {
-  height: 350px;
-  margin-top:22px;
-  background:  #2f89fc;
-  background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
-  background: linear-gradient(to right,  #a57fff , #2f89fc);
-}
-
-.loved_trusted_title {
-  padding-top: 28px;
-  padding-right: 10%;
-  color: white;
-  font-size: 38px;
-  text-align:right;
-}
-
-.loved_trusted_text {
-  padding-top: 12px;
-  color: white;
-  font-size: 18px;
-  max-width: 450px;
-  padding-right: 10%;
-  text-align: right;
-  margin-left: auto;
-  padding-left: 24px;
-}
-.artboard1_img_mobile {
-  height: 350px; // 50vh;
-  width:100%;
-  background-color: #ffe2e2;
-}
-.search-btn-cont-mobile {
-  width: 100%;
-  padding: 0 24px;
-}
-@media (min-width: 821px) and (max-width: 960px) {
-  .top_title_text {
-    font-size: 3.3em;
-    text-align:left;
-  }
-  .top_title_text,
-  .main-container {
-    margin-left: 16px;
-    margin-right: 16px;
-    width: auto;
-  }
-  .top_title_pos {
-    bottom:0;
-    margin-bottom:50px;
-  }
-}
-@media only screen and (min-width: 821px) {
-  .searchBar {
-    width: 89%;
-    width: calc(100% - 82px);
-    float:left;
-    background-color:white;
-    box-shadow: 0 10px 12px -4px #eaeaf9;
-    margin-right:10px;
-  }
-}
-@media only screen and (max-width: 820px) {
-  .search_show {
-    display: block !important;
-  }
-  .search_hide {
-    display:none;
-  }
-  .searchBar .innerCol {
-    margin-left: 24px;
-    margin-right: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 12px -3px #eaeaf9; // was previously 0 10px 12px -4px #eaeaf9
-  }
-}
-@media (min-width: 601px) and (max-width: 820px) {
-  .top_title_text {
-    font-size: 2.8em;
-    line-height: 40px;
-    text-align:left;
-  }
-  .top_title_pos {
-    margin-left:10%;
-    width:80%;
-    bottom:0;
-    margin-bottom:50px;
-  }
-  .main-container {
-    margin-top:-36px;
-  }
-  .search_text_field {
-    width: auto;
-    float: none;
-  }
-  .search_select {
-    width: auto;
-    float: none;
-  }
-}
-@media only screen and (min-width: 601px) {
-  .search_find_near {
-    height: 72px;
-    line-height: 72px;
-    padding-top: 0;
-  }
-}
-@media (max-width: 600px) {
-  .searchBar .v-text-field.v-text-field--enclosed .v-input__slot {
-    padding-left: 16px !important; // instead of 24px
-    padding-right: 16px !important;
-    background: black !important;
-    display: none;
-  }
-  .v-input {
-    // display: none !important;
-  }
-  .top_container_style {
-    height: 320px; // because vh doesnt work well on mobile browsers that change height
-  }
-  .top_title_text {
-    font-size: 2.2em;
-    line-height: 40px;
-    text-align:left;
-  }
-  .top_title_pos {
-    width: auto;
-    margin-left: 24px;
-    margin-right: 24px;
-    bottom:0;
-    margin-bottom:20px;
-  }
-  .main-container {
-    margin-top:-28px;
-  }
-  .search_find_near {
-    margin-top: 4px;
-    padding-top: 0;
-    height: 48px;
-    line-height: 48px;
-    width: 20%;
-  }
-  // .search_assist {
-  //   margin-left: 4px;
-  // }
-  .search_text_field,
-  .search_select {
-    height: 56px;
-    width: auto;
-    float: none;
-    padding-top: 4px;
-  }
-  .loved_trusted_title {
-    padding-top: 3%;
-    padding-left:8%;
-    font-size: 34px;
-    text-align:left;
-  }
-  .loved_trusted_text {
-    padding-left: 8%;
-    padding-right: 8%;
-    font-size: 16px;
-    line-height: 26px;
-    text-align: left;
-    margin-left: 0;
-  }
-  .hire_kunvet_title {
-    padding-top:3%;
-    padding-left:8%;
-    font-size:34px;
-  }
-  .hire_kunvet_text {
-    padding-left: 8%;
-    padding-right: 8%;
-    font-size: 16px;
-    line-height: 26px;
-    margin-left: 0;
-  }
-  .loved_trusted_container {
-    height: 310px;
-    width: 90%;
-    margin: auto;
-    transform: translate(0px, -80px);
-  }
-  .hire_kunvet_container {
-    height: 280px;
-    width: 90%;
-    margin:auto;
-    transform: translate(0px, -80px);
-  }
-  .postAJob {
-    margin-top:20px;
-    margin-left:8%;
-  }
-  .postAJob2{
-     margin-top:20px;
-     margin-left:8%;
+  .small_show{
+    display: none !important;
   }
 }
 </style>
 
 <template>
-  <v-container fluid class="pa-0 index-page">
-  <div class="top_container_style">
-    <div class="top_title_pos">
-     <h1 class="top_title_text">Latest Job Opportunities Near You.</h1>
-    </div>
-  </div>
-
-<div class="main-container">
-  <div class="searchBar">
-    <div class="innerCol">
-      <div class="search_find_near">
-        <strong class="search_assist">Find</strong>
-      </div>
-      <div class="search_text_field">
-        <v-text-field
-          solo
-          flat
-          hide-details
-          label="All jobs"
-          clearable
-          v-model="query"
-        ></v-text-field>
-      </div>
-    </div>
-    <div class="innerCol">
-      <div class="search_find_near">
-        <strong class="search_assist">Near</strong>
-      </div>
-      <!-- v-bind:class="{ 'active': openSelectField === 'city' }" -->
-      <div class="search_select">
-          <v-select
-            label="School or City"
-            item-text="name"
-            item-value="name"
-            v-bind:items="availableCities"
-            v-model="selectedCity"
-            solo
-            flat
-            hide-details
-            content-class="fsSelect-menu"
-            autocomplete
-            >
-          </v-select>
+  <div class="home_page">
+    <!-- xxl size -->
+    <div class="home_content small_hide medium_hide large_hide">
+      <div class="index_top">
+          <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
+          <div class="search_area">
+            <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
+            <div class="search_bar_container" style="margin-top: 40px;">
+              <div class="search_bar_head">FIND</div>
+              <div class="search_bar_field">
+                <v-text-field
+                  solo flat hide-details clearable
+                  label="Part time web developer"
+                  v-model="query"
+                  class="search_bar_text_field"
+                ></v-text-field>
+              </div>
+            </div>
+            <div class="search_bar_container" style="margin-top: 10px;">
+              <div class="search_bar_head">NEAR</div>
+              <div class="search_bar_field">
+                <v-select
+                  label="School or City"
+                  item-text="name"
+                  item-value="name"
+                  v-bind:items="availableCities"
+                  v-model="selectedCity"
+                  solo flat hide-details autocomplete
+                  class="search_bar_text_field"
+                >
+                </v-select>
+              </div>
+            </div>
+            <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+          </div>
       </div>
     </div>
-  </div>
-
-  <!-- <div class="search_mobile search_hide search_show">
-        <div class="search_find_near">
-          <strong class="search_assist">Find</strong>
+    <!-- large size -->
+    <div class="home_content small_hide medium_hide large_show">
+      <div class="index_top">
+          <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
+          <div class="search_area">
+            <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
+            <div class="search_bar_container" style="margin-top: 30px;">
+              <div class="search_bar_head">FIND</div>
+              <div class="search_bar_field">
+                <v-text-field
+                  solo flat hide-details clearable
+                  label="Part time web developer"
+                  v-model="query"
+                  class="search_bar_text_field"
+                ></v-text-field>
+              </div>
+            </div>
+            <div class="search_bar_container" style="margin-top: 10px;">
+              <div class="search_bar_head">NEAR</div>
+              <div class="search_bar_field">
+                <v-select
+                  label="School or City"
+                  item-text="name"
+                  item-value="name"
+                  v-bind:items="availableCities"
+                  v-model="selectedCity"
+                  solo flat hide-details autocomplete
+                  class="search_bar_text_field"
+                >
+                </v-select>
+              </div>
+            </div>
+            <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+          </div>
+      </div>
+    </div>
+    <!-- medium size -->
+    <div class="home_content small_hide medium_show large_hide">
+      <div class="index_top">
+          <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
+          <div class="search_area">
+            <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
+            <div class="search_bar_container" style="margin-top: 26px;">
+              <div class="search_bar_head">FIND</div>
+              <div class="search_bar_field">
+                <v-text-field
+                  solo flat hide-details clearable
+                  label="Part time design intern"
+                  v-model="query"
+                  class="search_bar_text_field"
+                ></v-text-field>
+              </div>
+            </div>
+            <div class="search_bar_container" style="margin-top: 10px;">
+              <div class="search_bar_head">NEAR</div>
+              <div class="search_bar_field">
+                <v-select
+                  label="School or City"
+                  item-text="name"
+                  item-value="name"
+                  v-bind:items="availableCities"
+                  v-model="selectedCity"
+                  solo flat hide-details autocomplete
+                  class="search_bar_text_field"
+                >
+                </v-select>
+              </div>
+            </div>
+            <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+          </div>
+      </div>
+    </div>
+    <!-- small size -->
+    <div class="home_content small_show medium_hide large_hide">
+      <div class="home_page_top_section">
+        <div class="home_page_top">
+          <h2 class="search_title">Fresh Job Opportunities <br>Near You.</h2>
         </div>
-        <div class="search_text_field">
+        <div class="search_bar_container" style="margin-top: -38px;">
+          <div class="search_bar_head">FIND</div>
+          <div class="search_bar_field">
           <v-text-field
-            solo
-            flat
-            hide-details
-            label="All jobs"
-            clearable
+            solo flat hide-details clearable
+            label="Part time web developer"
+            v-model="query"
+            class="search_bar_text_field"
           ></v-text-field>
+          </div>
         </div>
-  </div> -->
-
-  <!-- <div class="search_mobile search_show">
-        <div class="search_find_near">
-          <strong class="search_assist">Near</strong>
-        </div>
-        <div class="search_select" v-bind:class="{ 'active': openSelectField === 'city' }">
-          <v-select
-            label="School or City"
-            item-text="name"
-            item-value="name"
-            v-bind:items="availableCities"
-            solo
-            flat
-            hide-details
-            content-class="fsSelect-menu"
-            autocomplete
+        <div class="search_bar_container" style="margin-top: 10px;">
+          <div class="search_bar_head">NEAR</div>
+          <div class="search_bar_field">
+            <v-select
+              label="School or City"
+              item-text="name"
+              item-value="name"
+              v-bind:items="availableCities"
+              v-model="selectedCity"
+              solo flat hide-details autocomplete
+              class="search_bar_text_field"
             >
-          </v-select>
+            </v-select>
+          </div>
         </div>
-    </div> -->
-
-    <router-link :to="searchDestination">
-      <button v-ripple class="search_hide kunvet-search-icon-btn med">
-        <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
-      </button>
-    </router-link>
-    <div class="search-btn-cont-mobile">
-      <router-link :to="searchDestination">
-        <k-btn v-ripple class="search_show kunvet-search-btn" block>
-          <span class="search_button_text">
-            Search
-          </span>
-        </k-btn>
-      </router-link>
+        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+      </div>
     </div>
   </div>
-
-    <div style="width:100%; height:120px;"></div>
-    <div style="width:100%; height:30px;" class="mobile-hide"></div>
-
-    <div class="mobile-show">
-      <div class="artboard1_img_mobile">
-        <img src="@/assets/artboard1.png" width="96%" style="margin-top: 15%; margin-left: 2%;"/>
-      </div>
-
-      <div class="hire_kunvet_container">
-        <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
-        <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free!</div>
-        <router-link to="/createjob">
-          <button v-ripple class="postAJob">Post a Job</button>
-        </router-link>
-      </div>
-
-      <div style="height: 350px; width: 100%; background-color: #dbefff;">
-        <img src="@/assets/artboard2.png" width="86%" style="margin-top: 15%; margin-left: 7%;"/>
-      </div>
-
-      <div class="loved_trusted_container">
-        <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
-        <div class="loved_trusted_text">Kunvet is used by hundreds of students and local businesses. Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
-        <router-link to="/createjob">
-          <button v-ripple class="postAJob2">Post a Job</button>
-        </router-link>
-      </div>
-    </div>
-
-    <div class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
-        <v-layout row wrap>
-          <v-flex xs12 sm6>
-            <div class="container-left artboard1_img">
-              <img src="@/assets/artboard1.png" width="100%" class="artboard1_img_style" />
-            </div>
-          </v-flex>
-
-          <v-flex xs12 sm6>
-            <div class="container-right hire_kunvet_container">
-                <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
-                <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free. No credit card required.</div>
-                <router-link to="/createjob">
-                  <button v-ripple class="postAJob">Post a Job</button>
-                </router-link>
-            </div>
-          </v-flex>
-        </v-layout>
-
-        <!-- Some padding -->
-        <div style="width:100%; height:150px;"></div>
-
-        <v-layout row wrap>
-          <v-flex xs12 sm6 style="z-index:5;">
-            <div class="container-left loved_trusted_container">
-              <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
-              <div class="loved_trusted_text">Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
-              <router-link to="/createjob">
-                <button v-ripple class="postAJob2">Post a Job</button>
-              </router-link>
-            </div>
-          </v-flex>
-          <v-flex xs12 sm6>
-            <div class="container-right artboard2_img">
-              <img src="@/assets/artboard2.png" width="100%" class="artboard2_img_style"/>
-            </div>
-          </v-flex>
-        </v-layout>
-
-        <!-- Some padding -->
-        <div style="width:100%; height:150px;"></div>
-    </div>
-
-
-  </v-container>
 </template>
 <script>
+import phone from '@/assets/index/iphone.png';
+import woman from '@/assets/index/female-job-applicant-waiting-for-job-interview.png';
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import InformationSvg from '@/assets/job_posts/information.svg';
-import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
-import Asset70 from '@/assets/icons/Asset(70).svg';
-import vc from '@/assets/vc.svg';
-import mag from '@/assets/magnifier.svg';
-
 import PromoTextContainer from '@/components/PromoTextContainer';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
+
 
 Vue.use(VueApollo);
 
@@ -786,6 +519,12 @@ export default {
   },
   data() {
     return {
+      svgs: {
+      },
+      pngs: {
+        phone,
+        woman,
+      },
       first_city_guess: 'UC Irvine',
       uid: null,
       findJobs: [],
@@ -817,13 +556,6 @@ export default {
       selectedPositions: this.$store.selectedPositions || [],
       selectedLat: Coordinates.uci.latitude,
       selectedLong: Coordinates.uci.longitude,
-      svgs: {
-        information: InformationSvg,
-        locationMarker: LocationMarkerSvg,
-        kunvetDude: Asset70,
-        citySvg: vc,
-        mag: mag,
-      },
       selectedPositionsInital: 'All / Any',
       loadingJobs: false,
       inUsePositions: [],
