@@ -1,5 +1,49 @@
 <style lang="scss" scoped>
 // css for desktop
+@media (min-width: 961px) and (max-width: 1008px) {
+  .summary_text_div{
+    padding-left: 24px;
+    padding-right: 80px !important; 
+  }
+  .summary_collage_students{
+    width: 440px;
+    height: 510px;
+    margin-left: -28px !important;
+    display: inline-block;
+  }
+   .summary_text{
+     width: 414px !important;
+   }
+   .effective_text{
+     padding-left: 24px;
+     padding-right: 24px;
+   }
+   .logo_style{
+     width: 180px !important;
+   }
+   .logo_first_row, .logo_second_row{
+     padding-right: 24px;
+     padding-left: 24px;
+   }
+   .test_title{
+     padding-left: 48px;
+   }
+   .test_text{
+     padding-left: 48px !important;
+   }
+   .quote{
+     margin-left: -22px;
+   }
+   .test_undertext{
+     padding-left: 48px;
+   }
+   .bio{
+     padding-right: 24px;
+   }
+   .bio_text{
+
+   }
+}
 @media (min-width: 961px){
   .emp_page_content{
     margin-top: 124px;
@@ -7,30 +51,32 @@
   .summary{
     width: 960px;
     //height: 1000px;
-    margin-left: calc( (100vw - 970px) / 2);
+    margin-right: 24px;
+    margin-left: calc( (100vw - 960px) / 2);
   }
   .summary_text_div{
-    width: (960px - 440px);
-    height: 510px;
-    padding-right: 100px;
-    float: left;
+    width: 520px;
+    //height: 510px;
+    padding-right: 56px;
+    display: inline-block;
   }
   .summary_title{
-    padding-top: 68px;
     font-weight: bold;
-    padding-left: 6px;
+    margin-bottom: 0px;
     font-family: proxima-nova, sans-serif;
-    font-size: 38px;
+    font-size: 44px;
     line-height: 120%;
     color: #FF6969;
   }
   .summary_text{
-    font-size: 16px;
+    font-size: 18px;
+    width: 440px;
     font-family: proxima-nova, sans-serif;
     padding-top: 20px;
-    padding-left: 4px;
     line-height: 180%;
     color: black;
+    margin-bottom: 0px;
+    padding-bottom: 40px;
   }
   .summary_btn{
     width: 200px;
@@ -38,13 +84,23 @@
     line-height: 60px !important;
     font-family: proxima-nova, sans-serif;
     border-radius: 0px !important;
+    box-shadow: none !important;
     margin-top: 2px;
     margin-left: 4px;
+  }
+  .summary_btn_undertext{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 300; 
+    padding-top: 8px; 
+    line-height: 100%;
+    font-size: 14px; 
+    margin-bottom: 0px;
   }
   .summary_collage_students{
     width: 440px;
     height: 510px;
-    float: right;
+    margin-left: -4px;
+    display: inline-block;
   }
   .effective{
     width: 960px;
@@ -52,11 +108,12 @@
   }
   .effective_img{
     width: 80px;
-    margin-top: 154px;
+    margin-top: 120px;
     margin-left: calc((960px - 80px) / 2);
-    margin-bottom: 11px;
+    margin-bottom: 20px;
   }
   .effective_img_btm{
+    margin-top: -5px;
     width: 80px; 
     margin-left: calc((960px - 80px) / 2);
     height:4px; 
@@ -64,10 +121,11 @@
   }
   .effective_title{
     padding-top: 30px;
+    line-height: 100%;
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
     text-align: center;
-    font-size: 34px;
+    font-size: 40px;
     color: black;
     margin-bottom: 0px;
   }
@@ -77,6 +135,7 @@
     text-align: center;
     line-height: 150%;
     font-size: 26px;
+    margin-bottom: 0px;
     color: black;
     margin-bottom: 0px;
   }
@@ -86,10 +145,10 @@
     margin-right: 60px;
   }
   .logo_first_row{
-    margin-top: 40px;
+    padding-top: 30px;
   }
   .logo_second_row{
-    margin-top: 80px;
+    padding-top: 80px;
   }
   .testimonials{
     margin-top: 120px;
@@ -105,6 +164,7 @@
     margin-left: calc( (100vw - 970px) / 2);
   }
   .test_title{
+    line-height: 100%;
     font-weight: bold;
     padding-top: 80px;
     font-family: proxima-nova, sans-serif; 
@@ -113,17 +173,18 @@
     color: white;
   }
   .test_text{
-    padding-top: 28px;
-    width: 660px;
+    padding-top: 30px;
+    padding-left: 4px;
+    width: 650px;
     font-family: proxima-nova, sans-serif; 
-    font-size: 24px;
+    font-size: 22px;
     color: white;
-    line-height: 160%;
+    line-height: 150%;
     float: left;
     margin-bottom: 40px;
   }
   .quote{
-    margin-left: -26px;
+    margin-left: -20px;
     font-size: 50px;
   }
   .test_undertext{
@@ -133,13 +194,16 @@
     padding-bottom: 80px;
     font-family: proxima-nova, sans-serif; 
     font-weight: 100;
-    font-size: 16px;
+    font-size: 14px; 
+    line-height: 100%; 
+    font-weight: 300; 
     color: white;
     line-height: 20px;
     width: 660px;
   }
   .bio{
     margin-top: 30px;
+    width: 210px;
     height: 200px;
     float: right;
   }
@@ -147,26 +211,25 @@
     height: 60px;
     width: 60px;
     margin-top: 10px;
-    margin-left: 22px;
     display: block;
   }
   .bio_header{
-    padding-top: 18px;
+    padding-top: 20px;
     font-size: 16px;
-    padding-left: 12px;  
     color: white;
     font-family: proxima-nova, sans-serif; 
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 14px;
+    font-weight: 600;
+    line-height: 100%;
+    margin-bottom: 0px;
   }
   .bio_text{
     font-size: 16px;
-    padding-left: 12px;  
+    padding-top: 12px;
+    font-weight: 300;
     color: white;
     font-family: proxima-nova, sans-serif; 
-    font-size: 16px;
-    line-height: 12px;
+    line-height: 100%;
+    margin-bottom: 0px;
   }
   .faq{
     width: 960px;
@@ -180,6 +243,7 @@
     margin-bottom: 14px;
   }
   .faq_img_btm{
+    margin-top: -5px;
     width: 68px; 
     margin-left: calc((960px - 68px) / 2);
     height:4px; 
@@ -293,6 +357,7 @@
     margin-bottom: 20px;
   }
   .coffee_img_btm{
+    margin-top: -5px;
     width: 64px; 
     margin-left: calc((960px - 64px) / 2);
     height:4px; 
@@ -361,6 +426,7 @@
     margin-bottom: 20px;
   }
   .warning_img_btm{
+    margin-top: -5px;
     width: 70px; 
     margin-left: calc((960px - 70px) / 2);
     height:4px; 
@@ -406,6 +472,7 @@
     margin-bottom: 20px;
   }
   .refund_img_btm{
+    margin-top: -5px;
     width: 70px; 
     margin-left: calc((960px - 70px) / 2);
     height:4px; 
@@ -437,10 +504,11 @@
     width: 200px;
     height: 60px !important;
     line-height: 60px !important;
+    box-shadow: none !important;
     border-radius: none;
     background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%) !important;
     margin-top: 40px;
-    margin-left: calc( 50% - 110px); 
+    margin-left: calc( 50% - 100px); 
     color: white;
     font-weight: bold; 
   }
@@ -458,29 +526,33 @@
     margin-left: calc( (100vw - 970px) / 2);
   }
   .versus_img{
-    width: 84px;
+    width: 68px;
+    height: 60px;
     margin-top: 120px;
-    margin-left: calc((960px - 84px) / 2);
-    margin-bottom: 11px;
+    margin-left: calc((960px - 68px) / 2);
+    margin-bottom: 20px;
   }
   .versus_img_btm{
-    width: 84px; 
-    margin-left: calc((960px - 84px) / 2);
+    margin-top: -5px;
+    width: 78px; 
+    margin-left: calc((960px - 78px) / 2);
     height:4px; 
     background-color:black;
   }
   .versus_title{
     font-size: 34px;
+    margin-bottom: 0px;
     color: black;
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
-    padding-top: 28px;
+    padding-top: 30px;
     padding-left: 24px;
     padding-right: 24px;
     text-align: center;
   }
   .versus_text{
-    font-size: 26px;
+    font-size: 24px;
+    line-height: 150%;
     color: black;
     font-family: proxima-nova, sans-serif;
     padding-top: 30px;
@@ -489,26 +561,26 @@
     text-align: center;
   }
   .versus_subtitle{
-    font-size: 26px;
+    margin-bottom: 0px;
+    font-size: 20px;
+    line-height: 100%;
     color: black;
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
-    padding-top: 54px;
+    padding-top: 80px;
     text-align: center;
   }
   .versus_subdiv{
-    height: 158px;
+    margin-top: 40px;
   }
   .versus_company_img{
-    height: 66px; 
-    margin-top: 48px; 
-    margin-left: 26px; 
+    height: 60px;
+    margin-left: 24px;
     float: left;
   }
   .versus_subtext{
     padding-left: 30px;
     padding-right: 6px;
-    padding-top: 48px;
     width: calc(50% - 100px);
     color: black;
     font-size: 16px;
@@ -516,9 +588,8 @@
     display: inline-block;
   }
   .versus_subtext2{
-    padding-left: 6px;
     padding-right: 24px;
-    margin-top: 48px;
+    margin-left: 30px;
     width: calc(50% - 100px);
     height: 110px;
     color: black;
@@ -527,9 +598,7 @@
     float: right;
   }
   .versus_kunvet_logo{
-    height: 62px; 
-    margin-top: 52px; 
-    margin-right: 24px; 
+    height: 60px; 
     float: right;
   }
   .limited{
@@ -537,53 +606,61 @@
     margin-left: calc( (100vw - 970px) / 2);
   }
   .limited_img{
-    width: 84px;
+    width: 60px;
+    height: 60px;
     margin-top: 120px;
-    margin-left: calc((960px - 84px) / 2);
-    margin-bottom: 11px;
+    margin-left: calc((960px - 60px) / 2);
+    margin-bottom: 20px;
   }
   .limited_img_btm{
-    width: 84px; 
-    margin-left: calc((960px - 84px) / 2);
+    margin-top: -5px;
+    width: 70px; 
+    margin-left: calc((960px - 70px) / 2);
     height:4px; 
     background-color:black;
   }
   .limited_title{
-    font-size: 34px;
+    font-size: 40px;
+    line-height: 100%;
     color: black;
     font-weight: bold;
     font-family: proxima-nova, sans-serif;
-    padding-top: 24px;
+    padding-top: 30px;
     padding-left: 24px;
     padding-right: 24px;
+    margin-bottom: 0px;
     text-align: center;
   }
   .limited_text{
     font-size: 28px;
     color: black;
     font-family: proxima-nova, sans-serif;
-    padding-top: 20px;
+    padding-top: 30px;
     padding-left: 24px;
     padding-right: 24px;
     text-align: center;
+    margin-bottom: 0px;
   }
   .limited_btn{
-    width: 220px;
-    height: 68px !important;
-    line-height: 68px !important;
+    width: 200px;
+    height: 60px !important;
+    line-height: 60px !important;
     margin-top: 40px;
-    margin-left: calc( 50% - 110px);
+    margin-left: calc( 50% - 100px);
     color: white;
+    box-shadow: none !important;
     font-weight: bold; 
   }
   .limited_undertext{
-    padding-top: 2px;
+    font-size: 14px;
+    padding-top: 8px;
+    font-weight: 300;
+    line-height: 100%;
     color: black;
     text-align: center;
     font-family: proxima-nova, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
     padding-bottom: 140px;
+    margin-bottom: 0px;
   }
 
 }
@@ -1637,13 +1714,11 @@
     <div class="emp_page_content medium_hide mobile_hide">
       <div class="summary">
         <div class="summary_text_div">
-          <h1 class="summary_title">How to hire the right person? With almost no cost or effort?</h1>
-          <p class="summary_text">Hiring the right person is cheap and easy - only if
-            you’ve used the right tool. As a professional job
-            website made for local hiring, Kunvet is here to help
-            you to find your next hire easier and cheaper.</p>
+          <h2 class="summary_title">How to find the right person? With almost no cost or effort?</h2>
+          <p class="summary_text">Finding the right person can be painless and costless —only if you choose 
+            the right tool. Designed for local hiring, Kunvet can save you time and money on your next hire</p>
           <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
-          <p class="summary_text" style="font-weight: bold; padding-top: 0px; font-size: 12px; ">Satisfaction guarateed. Or money back.</p>
+          <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
         <img class="summary_collage_students" :src="pngs.students">
       </div>
@@ -1654,7 +1729,7 @@
         <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet. Overall,
           every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job
           post starts at only $5 for 60 days. Satisfication guaranteed. Or money back.</p>
-        <h2 class="effective_title" style="padding-top: 54px; font-size: 24px;">Some of Our Returning Employers</h2>
+        <h2 class="effective_title" style="padding-top: 70px; font-size: 24px;">Some of Our Returning Employers</h2>
         <div class="logo_first_row">
         <img class="logo_style" :src="pngs.coderschool">
         <img class="logo_style" :src="pngs.prolite">
@@ -1673,7 +1748,7 @@
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
-              <p class="test_text"><span class="quote">“</span>   Wow... I recommend Kunvet to every small business. It has
+              <p class="test_text"><span class="quote">“</span>Wow... I recommend Kunvet to every small business. It has
                 helped us find many talented and enthusiastic candidates
                 from Orange County to serve as our Code Coaches. The
                 quality of the resumes of those who applied through
@@ -1681,16 +1756,15 @@
                 Kunvet site organizers for providing this valuable service!</p>
               <div class="bio">
                 <img class="bio_img" :src="pngs.mark"/>
-                <div style="display: inline-block; margin-left: 10px;">
-                  <p class="bio_header">Mark Freedkin</p>
-                  <p class="bio_text">General Manager</p>
-                  <p class="bio_text">of theCoderSchool - Irvine</p>
-                </div>
+                <p class="bio_header">Mark Freedkin</p>
+                <p class="bio_text">General Manager</p>
+                <p class="bio_text">of theCoderSchool - Irvine</p>
               </div>
             </div>
-            <p class="test_undertext"> - theCoderSchool at Irvine offers a specialized after-school enrichment 
-                program that teaches young students (ages 7-18) how to write computer software. 
-              <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" style="font-weight: bold; text-decoration: underline; cursor: pointer;">Learn More</a></p>
+            <p class="test_undertext"> — <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" 
+                style="font-style: italic; text-decoration: underline; cursor: pointer;">theCoderSchool at Irvine</a>
+                 offers a specialized after-school enrichment program that teaches young students (ages 7-18) how to write 
+                computer software.</p>
             <div style="height: 60px;"/>
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
@@ -1839,7 +1913,7 @@
             Kunvet, the starting price is only $5 per 60 days, or $2.5 per month. You could
             save yourself $121.5 every month, or $1,458 every year! Save that money for a new
             once table, a new advertising campaign, or a trip to Europe. Try Kunvet today.</p>
-        <p class="warning_text" style="font-weight: bold; padding-top: 60px;">Is Kunvet Right for Me?</p>
+        <p class="warning_text" style="font-weight: bold; padding-top: 60px; line-height: 100%;">Is Kunvet Right for Me?</p>
         <p class="warning_text" style="padding-top: 30px;">Kunvet is very effective for businesses hiring locally and offering entry-level,
             part-time, temporary job, internship, and volunteering. If that describes your
             business, try Kunvet now. Stop wasting your money and effort on hiring.</p>
@@ -1862,7 +1936,7 @@
         <p class="versus_text">See it for yourself why you should be using Kunvet now, especially if you are hiring
           locally. A side-by-side comparison between Kunvet and some of its competitors.</p>
 
-        <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
+        <h2 class="versus_subtitle" style="padding-top: 70px;">Nationwide Hiring for Large Companies</h2>
         <div class="versus_subdiv">
           <img class="versus_company_img" :src="svgs.company">
           <div class="versus_subtext">Most job websites in the market are heavily used by large enterprises for nationwide hiring.
@@ -1884,7 +1958,7 @@
         <h2 class="versus_subtitle">Real Customer Support</h2>
         <div class="versus_subdiv">
           <img class="versus_company_img" :src="svgs.company">
-          <div class="versus_subtext" style="padding-top: 60px;">Plenty of companies only offer limited support. Some companies do not offer any real support.</div>
+          <div class="versus_subtext">Plenty of companies only offer limited support. Some companies do not offer any real support.</div>
           <div class="versus_subtext2" style="padding-top: 12px;">Of course! We offer real support. Our customer service representatives are nice, polite people.</div>
           <img class="versus_kunvet_logo" :src="svgs.gradlogo">
         </div>
@@ -1892,7 +1966,7 @@
         <h2 class="versus_subtitle">Pricing Policy</h2>
         <div class="versus_subdiv">
           <img class="versus_company_img" :src="svgs.company">
-          <div class="versus_subtext" style="padding-top: 34px;">Some offer unintuitive pricing model such as “click bids”. Some offer “job slots” that charges
+          <div class="versus_subtext">Some offer unintuitive pricing model such as “click bids”. Some offer “job slots” that charges
             you every month, regardless whether you are hiring or not.</div>
           <div class="versus_subtext2" style="padding-top: 22px;">Simple. Pay as you go. No hidden costs.</div>
           <img class="versus_kunvet_logo" :src="svgs.gradlogo">
@@ -1901,7 +1975,7 @@
         <h2 class="versus_subtitle">Refund Policy</h2>
         <div class="versus_subdiv">
           <img class="versus_company_img" :src="svgs.company">
-          <div class="versus_subtext" style="padding-top: 46px;">Refunds that take 3 - 5 business days to process.
+          <div class="versus_subtext">Refunds that take 3 - 5 business days to process.
             Get ready to be bombard with questions before you can see a penny.</div>
           <div class="versus_subtext2" style="padding-top: 12px;">Not Happy? Full refund immediately. No Question Asked.</div>
           <img class="versus_kunvet_logo" :src="svgs.gradlogo">
@@ -1911,9 +1985,9 @@
         <img class="limited_img" :src="svgs.discount">
         <div class="warning_img_btm"/>
         <h2 class="limited_title">Limited Offer for Local Businesses.</h2>
-        <p class="limited_text">If you are hiring on behalf of a business, then enjoy 33% of for <span style="font-weight: bold;">all</span> your job
-          postings - for a limited time.</p>
-        <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 28px;">Post a Job</span></k-btn>
+        <p class="limited_text">If you are hiring on behalf of a business, then enjoy 50% off for <span style="font-weight: bold;">all</span>
+         your job postings - for a limited time.</p>
+        <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
         <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
       </div>
     </div>
