@@ -93,6 +93,7 @@
     line-height: 100%;
     font-size: 14px; 
     margin-bottom: 0px;
+    margin-top: -2px;
     color: #000000;
   }
   .summary_collage_students{
@@ -133,7 +134,7 @@
     font-family: proxima-nova, sans-serif; 
     text-align: center;
     line-height: 150%;
-    font-size: 26px;
+    font-size: 24px;
     margin-bottom: 0px;
     color: black;
     margin-bottom: 0px;
