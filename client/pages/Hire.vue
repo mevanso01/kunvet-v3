@@ -80,21 +80,20 @@
   }
   .summary_btn{
     width: 200px;
-    height: 60px !important;
-    line-height: 60px !important;
+    height: 68px !important;
+    line-height: 68px !important;
     font-family: proxima-nova, sans-serif;
     border-radius: 0px !important;
     box-shadow: none !important;
-    margin-top: 2px;
-    margin-left: 4px;
   }
   .summary_btn_undertext{
     font-family: proxima-nova, sans-serif;
     font-weight: 300; 
-    padding-top: 8px; 
+    padding-top: 6px; 
     line-height: 100%;
     font-size: 14px; 
     margin-bottom: 0px;
+    color: #000000;
   }
   .summary_collage_students{
     width: 440px;
@@ -1715,7 +1714,7 @@
       <div class="summary">
         <div class="summary_text_div">
           <h2 class="summary_title">How to find the right person? With almost no cost or effort?</h2>
-          <p class="summary_text">Finding the right person can be painless and costless —only if you choose 
+          <p class="summary_text">Finding the right person can be painless and costless<br>—only if you choose 
             the right tool. Designed for local hiring, Kunvet can save you time and money on your next hire</p>
           <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
           <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
