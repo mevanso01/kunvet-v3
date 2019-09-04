@@ -238,9 +238,9 @@
   .faq_img{
     height: 60px;
     width: 60px;
-    margin-top: 124px;
+    margin-top: 120px;
     margin-left: calc((960px - 60px) / 2);
-    margin-bottom: 14px;
+    margin-bottom: 20px;
   }
   .faq_img_btm{
     margin-top: -5px;
@@ -266,11 +266,12 @@
     text-align: center;
     font-size: 24px;
     line-height: 150%;
+    margin-bottom: 0px;
     color: black;
   }
   .faq_box{
     margin-top: 30px;
-    height: 500px;
+    height: 462px;
     width: 960px;
     padding-left: 60px;
   }
@@ -352,7 +353,7 @@
   .coffee_img{
     width: 48px;
     height: 80px;
-    margin-top: 76px;
+    margin-top: 120px;
     margin-left: calc((960px - 48px) / 2);
     margin-bottom: 20px;
   }
@@ -371,6 +372,7 @@
     text-align: center;
     font-size: 34px;
     color: black;
+    margin-bottom: 0px;
   }
   .coffee_btm{
     margin-left: 94px;
