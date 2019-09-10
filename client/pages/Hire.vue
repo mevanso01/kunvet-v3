@@ -609,7 +609,7 @@
     max-width: 700px;
     margin-top: 120px;
     margin: 120px auto 0;
-    background-image: url( '/client/assets/hire/discount-for-business-job-postings-background.svg' );
+    background-image: url( '/client/assets/hire/discount-background.svg' );
     background-size: cover;
     margin-bottom: 120px;
   }
@@ -2629,7 +2629,6 @@ import discount from '@/assets/hire/emp_pg_icons/discount.svg';
 import num1 from '@/assets/hire/emp_pg_icons/one.svg';
 import num2 from '@/assets/hire/emp_pg_icons/two.svg';
 import num3 from '@/assets/hire/emp_pg_icons/three.svg';
-import limitedBackground from '@/assets/hire/discount-for-business-job-postings-background.svg';
 import userDataProvider from '@/userDataProvider';
 
 export default {
@@ -2656,7 +2655,6 @@ export default {
         company: company,
         gradlogo: gradlogo,
         discount: discount,
-        limitedBackground: limitedBackground,
         num1: num1,
         num2: num2,
         num3: num3,
