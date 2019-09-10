@@ -11,9 +11,9 @@
     flex-wrap: nowrap;
   }
   .summary_text_div{
-    width: 464px;
-    height: 510px;
-    margin-right: 56px;
+    width: 420px;
+    vertical-align: middle;
+    margin-right: 100px;
   }
   .summary_title{
     font-weight: 600;
@@ -36,18 +36,22 @@
     margin-bottom: 0px;
   }
   .summary_btn{
-    margin-top: 40px;
     width: 200px;
     height: 68px !important;
     line-height: 68px !important;
-    font-family: proxima-nova, sans-serif;
-    border-radius: 0px !important;
     box-shadow: none !important;
+    border-radius: 0px !important;
+    background-color: #ff6969 !important;
+    margin-top: 40px;
+    font-family: proxima-nova, sans-serif;
+    display: block !important;
+    color: white !important;
+    font-weight: 600; 
   }
   .summary_btn_undertext{
     font-family: proxima-nova, sans-serif;
     font-weight: 300; 
-    padding-top: 6px; 
+    padding-top: 8px; 
     line-height: 100%;
     font-size: 14px; 
     margin-bottom: 0px;
@@ -56,7 +60,7 @@
   }
   .summary_collage_students{
     width: 440px;
-    height: 510px;
+    vertical-align: middle;
     margin-left: -2px;
   }
   .effective{
@@ -462,11 +466,11 @@
     text-align: center;
   }
   .refund{
-    max-width: 960px;
+    max-width: 912px;
     margin: 0 auto;
     margin-top: 120px;
     background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%);
-    padding: 0 24px;
+    padding: 0;
   }
   .refund_title{
     padding-top: 80px;
@@ -597,8 +601,6 @@
     margin-bottom: 0px;
     color: #505050;
   }
-
-//DELETE JUST HERE FOR TEMP
   .limited{
     max-width: 960px;
     margin: 0 auto;
@@ -657,9 +659,6 @@
     color: #ffffff;
     text-align: center;
   }
-  //END DELETE
-
-
 }
 // css for ipad size
 @media (min-width: 801px) and (max-width: 1024px) {
