@@ -680,7 +680,7 @@
     align-items: center;
   }
   .summary_text_div{
-    width: 46%;
+    width: 48%;
     max-height: 395.2px;
     margin-right: 6%;
   }
@@ -801,10 +801,11 @@
     width: 100%;
     font-weight: bold;
     padding-top: 80px;
-   margin-left: 24px; 
+    margin-left: 24px; 
     font-family: proxima-nova, sans-serif; 
     font-size: 32px;
     color: white;
+    margin-bottom: 0px;
   }
   .test_text{
     padding-top: 30px;
@@ -1125,9 +1126,12 @@
     margin-bottom: 0px;
   }
   .refund{
-    max-width: 737px;
-    margin: 0 auto;
-    margin-top: 120px;
+    max-width: 1008px;
+    padding: 0 24px;
+    text-align: center;
+    margin: 120px auto 0px;
+  }
+  .refund_main_div{
     background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%);
   }
   .refund_title{
@@ -1159,7 +1163,6 @@
     border-radius: 0px !important;
     background-color: white !important;
     margin-top: 40px;
-    margin-left: calc( 50% - 100px); 
     color: #6478d5 !important;
     font-weight: 600; 
   }
@@ -1821,8 +1824,11 @@
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1024px) {
   .medium_show{
+    display: none !important;
+  }
+  .mobile_show{
     display: none !important;
   }
 }
@@ -2141,7 +2147,7 @@
           <h2 class="summary_title">How to find the right person with almost no cost?</h2>
           <p class="summary_text">Finding the right person can be painless and costless-only if you choose the right tool. 
             Designed for local hiring, Kunvet can save you time and money on your next hire.</p>
-          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 18px !important; font-weight: bold;">Post a Job</span></k-btn>
+          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
           <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
         <img class="summary_collage_students" :src="pngs.students">
@@ -2331,12 +2337,14 @@
             try Kunvet now. Stop wasting your time and money on hiring.</p>
       </div>
       <div class="refund">
-        <h2 class="refund_title">Full Refund. No Question Asked.</h2>
-        <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
-          the service you have received, get a <span style="font-weight:bold;">full refund</span> immediately on your inquiry.
-          No question will be asked. Click on the button below, and start hiring now.</p>
-        <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 18px;">Post a Job</span></k-btn>
-        <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
+        <div class="refund_main_div">
+          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
+          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
+            the service you have received, get a full refund immediately on your inquiry.
+            No question will be asked. Click on the button below, and start hiring now.</p>
+          <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
+          <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
       </div>
       <div class="versus">
         <img class="versus_img" :src="svgs.versus">
@@ -2430,7 +2438,7 @@
           <h2 class="limited_title">Limited Offer for Local Businesses</h2>
           <p class="limited_text">If you create a business account today, you can access all the employer features
              on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
-          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 18px;">Post a Job</span></k-btn>
+          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
       </div>
