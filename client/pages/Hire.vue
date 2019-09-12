@@ -1015,7 +1015,7 @@
   }
   .hands_img{
     max-height: 612px;
-    margin-left: calc((100% - 757px) / 2);
+    margin-left: calc((100% - 784px) / 2);
   }
   .one_two_three_line{
     max-width: 601px;
@@ -1363,7 +1363,7 @@
     width: 220px;
     height: 68px !important;
     line-height: 68px !important;
-    margin-top: 30px;
+    margin-top: 40px;
     color: white;
     font-weight: bold; 
   }
@@ -1824,16 +1824,16 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .medium_show{
     display: none !important;
   }
+}
+@media (min-width: 801px) {
   .mobile_show{
     display: none !important;
   }
 }
-
-
 </style>
 <template>
   
