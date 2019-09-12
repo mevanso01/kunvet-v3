@@ -677,10 +677,11 @@
     margin: 0 auto;
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
   }
   .summary_text_div{
-    width: 48%;
-    vertical-align: middle;
+    width: 46%;
+    max-height: 395.2px;
     margin-right: 6%;
   }
   .summary_title{
@@ -710,7 +711,7 @@
     box-shadow: none !important;
     border-radius: 0px !important;
     background-color: #ff6969 !important;
-    margin-top: 40px;
+    margin-top: 30px;
     font-family: proxima-nova, sans-serif;
     display: block !important;
     color: white !important;
@@ -1329,6 +1330,495 @@
   .mobile_hide{
     display: none !important;
   }
+  .emp_page_content{
+    padding-top: 36px;
+  }
+  .summary{
+    width: 100vw;
+    margin-left: 0px;
+  }
+  .summary_text_div{
+    width: 100vw;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .summary_title{
+    padding-top: 60px;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    font-size: 32px;
+    color: #FF6968;
+  }
+  .summary_text{
+    font-size: 16px;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 12px;
+    color: black;
+  }
+  .summary_btn{
+    width: 220px;
+    height: 68px !important;
+    line-height: 68px !important;
+    margin-top: 30px;
+    color: white;
+    font-weight: bold; 
+  }
+  .summary_collage_students{
+    width: 100vw;
+  }
+  .effective{
+    width: 100vw;
+    margin-left: 0px;
+  }
+  .effective_img{
+    width: 64px;
+    margin-left: calc(50vw - 32px);
+    margin-top: 120px;
+    margin-bottom: 11px;
+  }
+  .effective_img_btm{
+    width: 70px; 
+    margin-left: calc( 50vw - 35px ); 
+    height:4px; 
+    background-color:black;
+  }
+  .effective_title{
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    text-align: center;
+    font-size: 24px;
+    color: black;
+  }
+  .effective_text{
+    padding-top: 30px;
+    padding-left:30px;
+    padding-right: 30px;
+    font-family: proxima-nova, sans-serif; 
+    text-align: center;
+    font-size: 16px;
+    color: black;
+  }
+  .logo_style{
+    width: calc(50vw - 20px);
+    padding-bottom: 20px;
+  }
+  .testimonials{
+    margin-top: 120px;
+    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+  }
+  .slide_info{
+    width: 100vw;
+    padding-top: 60px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .test_title{
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif; 
+    font-size: 24px;
+    color: white;
+  }
+  .test_text{
+    padding-top: 30px;
+    width: 80vw;
+    font-family: proxima-nova, sans-serif; 
+    font-size: 18px;
+    font-weight: 100;
+    color: white;
+  }
+  .quote{
+    margin-left: -18px;
+    font-size: 36px;
+    line-height: 18px;
+  }
+  .bio{
+    padding-top: 20px;
+    height: 68px;
+  }
+  .bio_img{
+    height: 64px;
+    display: inline-block;
+  }
+  .bio_header{
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0px;
+  }
+  .bio_text{
+    font-size: 14px;
+    color: white;
+    margin-bottom: 0px;
+  }
+  .test_undertext{
+    font-family: proxima-nova, sans-serif; 
+    font-weight: 100;
+    font-size: 16px;
+    color: white;
+    padding-top: 44px;
+    width: 100%;
+  }
+  .faq{
+    width: 100vw;
+    margin-left: 0px;
+  }
+  .faq_img{
+    width: 68px;
+    margin-left: calc( 50vw - 34px );
+    margin-top: 120px;  
+    margin-bottom: 4px;
+  }
+  .faq_img_btm{
+    width: 70px;
+    margin-left: calc( 50vw - 34px );
+    height:4px; 
+    background-color:black;
+  }
+  .faq_title{
+    padding-top: 30px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    text-align: center;
+    font-size: 24px;
+    color: black;
+  }
+  .faq_text{
+    padding-top: 30px;
+    padding-left:24px;
+    padding-right: 24px;
+    font-family: proxima-nova, sans-serif; 
+    text-align: center;
+    font-size: 16px;
+    color: black;
+  }
+  .faq_question_div{
+    width: 90vw; 
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: #ccc 0px 2px 2px;
+    border-radius: 2px;
+    background-color: #FAFBFD;
+    padding-left: 30px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: proxima-nova, sans-serif; 
+  }
+  .faq_question_div_sel{
+    width: 90vw; 
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: #ccc 0px 2px 2px;
+    border-radius: 2px;
+    background-color: #FAFBFD;
+    padding-left: 30px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid black;
+    cursor: pointer;
+    font-family: proxima-nova, sans-serif; 
+  }
+  .faq_answers_text{
+    padding-top: 10px;
+    padding-right: 24px;
+    font-size: 16px;
+    font-weight: normal;
+    font-family: proxima-nova, sans-serif; 
+  }
+  .coffee_img{
+    width: 52px; 
+    margin-top: 60px; 
+    margin-left: calc( 50vw - (52px / 2)); 
+    margin-bottom: 6px;
+  }
+  .coffee_img_btm{
+    width: 70px;
+    margin-left: calc( 50vw - (70px / 2));
+    height:4px; 
+    background-color:black;
+  }
+  .coffee_title{
+    width: 100vw;
+    padding-top: 28px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif; 
+    text-align: center;
+    font-size: 24px;
+    color: black;
+  }
+  .coffee_btm{
+    margin-left: 94px;
+    margin-top: 84px;
+    height: 500px;
+    width: 100%;
+  }
+  .hands{
+    width: 100vw;
+    padding-top: 60px;
+    height: 860px;
+  }
+  .nums{
+    height: 50px;
+    width: 50px;
+    z-index: 100;
+  }
+  .blackbar_p1{
+    height: 2px;
+    background-color: black;
+    width: 50vw;
+    margin-left: 50vw;
+    margin-top: -32px;
+    z-index: 1;
+  }
+  .blackbar_p2{
+    height: 2px;
+    background-color: black;
+    width: 100vw;
+    margin-top: -32px;
+    z-index: 1;
+  }
+  .blackbar_p3{
+    height: 2px;
+    background-color: black;
+    width: 50vw;
+    margin-top: -32px;
+    z-index: 1;
+  }
+  .hand_header{
+    font-size: 18px;
+    padding-top: 20px;
+    font-weight: bold;
+    color: black;
+    font-family: proxima-nova, sans-serif; 
+  }
+  .hand_text{
+    color: black;
+    font-size: 16px;
+    font-family: proxima-nova, sans-serif; 
+    padding-left: 52px; 
+    padding-right: 52px;
+  }
+ .waste{
+    width: 100vw;
+    padding-top: 80px;
+  }
+  .warning_img_btm{
+    width: 80px; 
+    margin-top: 12px;
+    margin-left: calc(50vw - 40px);
+    height:4px; 
+    background-color:black;
+  }
+  .warning_title{
+    font-size: 24px;
+    color: black;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 30px;
+    text-align: center;
+  }
+  .warning_text{
+    font-size: 16px;
+    color: black;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+  }
+  .grey_warning{
+    font-size: 14px;
+    color: grey;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 24px;
+    text-align: center;
+  }
+  .refund{
+    width: 100vw;
+    margin-left: 0px; 
+  }
+  .refund_img_btm{
+    width: 80px; 
+    margin-top: 12px;
+    margin-left: calc( 50vw - 40px); 
+    height:4px; 
+    background-color:black;
+  }
+  .refund_title{
+    font-size: 24px;
+    color: black;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 28px;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+  }
+  .refund_text{
+    font-size: 16px;
+    color: black;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 20px;
+    padding-left: 24px;
+    padding-right: 24px;  
+    text-align: center;
+  }
+  .refund_btn{
+    width: 220px;
+    height: 68px !important;
+    line-height: 68px !important;
+    background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%) !important;
+    margin-top: 44px;
+    margin-left: calc( 50vw - 110px); 
+    color: white;
+    font-weight: bold; 
+  }
+  .refund_undertext{
+    padding-top: 2px;
+    color: black;
+    text-align: center;
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .versus{
+    width: 100vw;
+    margin-left: 0px; 
+  }
+  .versus_img_btm{
+    width: 80px; 
+    margin-top: 12px;
+    margin-left: calc( 50vw - 40px); 
+    height:4px; 
+    background-color:black;
+  }
+  .versus_title{
+    font-size: 24px;
+    color: black;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 28px;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+  }
+  .versus_text{
+    font-size: 16px;
+    color: black;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 30px;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+  }
+  .versus_subtitle{
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 54px;
+    text-align: center;
+  }
+  .versus_subdiv{
+    padding-bottom: 40px;
+  }
+  .versus_company_img{
+    width: 68px; 
+    margin-top: 48px; 
+    display: inline-block;
+  }
+  .versus_subtext{
+    vertical-align: top;
+    padding-left: 20px;
+    padding-top: 20px;
+    width: calc(70vw - 20px);
+    color: black;
+    font-size: 16px;
+    font-family: proxima-nova, sans-serif;
+    display: inline-block;
+    text-align: left;
+  }
+  .versus_subtext2{
+    vertical-align: top;
+    padding-top: 20px;
+    padding-left: 20px;
+    width: calc(70vw - 20px);
+    color: black;
+    font-size: 16px;
+    font-family: proxima-nova, sans-serif;
+    display: inline-block;
+    text-align: left;
+  }
+  .versus_kunvet_logo{
+    width: 48px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 20px;
+    display: inline-block;
+  }
+  .limited{
+    width: 100vw;
+    margin-left: 0px; 
+  }
+  .limited_img_btm{
+    width: 80px; 
+    margin-top: 12px;
+    margin-left: calc( 50vw - 40px); 
+    height:4px; 
+    background-color:black;
+  }
+  .limited_title{
+    font-size: 24px;
+    color: black;
+    font-weight: bold;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+  }
+  .limited_text{
+    font-size: 16px;
+    color: black;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+  }
+  .limited_btn{
+    width: 220px;
+    height: 68px !important;
+    line-height: 68px !important;
+    margin-top: 40px;
+    margin-left: calc( 50vw - 110px);
+    color: white;
+    font-weight: bold; 
+  }
+  .limited_undertext{
+    padding-top: 2px;
+    color: black;
+    text-align: center;
+    font-family: proxima-nova, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 140px;
+  }
 }
 
 @media (min-width: 1025px) {
@@ -1336,11 +1826,7 @@
     display: none !important;
   }
 }
-@media (min-width: 801px) {
-  .mobile_show{
-    display: none !important;
-  }
-}
+
 
 </style>
 <template>
@@ -2268,7 +2754,7 @@ import newportpark from '@/assets/hire/companys/newportpark.png';
 import mark from '@/assets/hire/testimonials/MarkCoderSchool.png';
 import ally from '@/assets/hire/testimonials/ally-zeng-profile-picture.png';
 import handsDesk from '@/assets/hire/emp_pg_icons/kunvet-post-job-demonstration-desktop.png';
-import handsMed from '@/assets/hire/emp_pg_icons/kunvet-post-job-demonstration-medium.png';
+import handsMed from '@/assets/hire/emp_pg_icons/posting-a-job-on-kunvet-demonstration-medium.png';
 import gas from '@/assets/hire/emp_pg_icons/gas.svg';
 import faq from '@/assets/hire/emp_pg_icons/faq.svg';
 import coffee from '@/assets/hire/emp_pg_icons/coffee.svg';
