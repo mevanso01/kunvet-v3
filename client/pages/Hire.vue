@@ -604,11 +604,17 @@
   .limited{
     max-width: 960px;
     margin: 0 auto;
+    text-align: center;
+  }
+  .limited_main_img{
+    max-width: 700px;
+    height: 485px;
+    margin-top: 120px;
+    margin: 120px auto 0;
   }
   .limited_main_div{ 
     max-width: 700px;
-    margin-top: 120px;
-    margin: 120px auto 0;
+    margin: -490px auto 0;
     margin-bottom: 120px;
   }
   .limited_title{
@@ -641,7 +647,6 @@
     border-radius: 0px !important;
     background-color: white !important;
     margin-top: 40px;
-    margin-left: calc( 50% - 100px); 
     color: #ff9090 !important;
     font-weight: 600; 
   }
@@ -1257,19 +1262,24 @@
     color: #505050;
   }
   .limited{
-    max-width: 960px;
+    max-width: 1008px;
+    padding: 0 24px;
     margin: 0 auto;
+    text-align: center;
+  }
+  .limited_main_img{
+    max-width: 700px;
+    height: 485px;
+    margin-top: 120px;
+    margin: 120px auto 0;
   }
   .limited_main_div{ 
     max-width: 700px;
-    margin-top: 120px;
-    margin: 120px auto 0;
-    background-image: url(`backgroundUrl`);
-    background-size: cover;
+    margin: -490px auto 0;
     margin-bottom: 120px;
   }
   .limited_title{
-    font-size: 34px;
+    font-size: 32px;
     line-height: 100%;
     font-weight: 600;
     color: #ffffff;
@@ -1279,7 +1289,7 @@
     text-align: center;
   }
   .limited_text{
-    font-size: 22px;
+    font-size: 20px;
     max-width: 520px;
     margin: 0 auto;
     color: #ffffff;
@@ -1287,7 +1297,7 @@
     line-height: 150%;
     letter-spacing: 0;
     font-family: proxima-nova, sans-serif;
-    padding-top: 30px;
+    padding-top: 26px;
     text-align: center;
   }
   .limited_btn{
@@ -1298,7 +1308,6 @@
     border-radius: 0px !important;
     background-color: white !important;
     margin-top: 40px;
-    margin-left: calc( 50% - 100px); 
     color: #ff9090 !important;
     font-weight: 600; 
   }
@@ -1629,7 +1638,14 @@
 
       </div>
       <div class="limited">
-        <div style="height: 240px"/>
+        <img class="limited_main_img" :src="svgs.backgroundUrl">
+        <div class="limited_main_div">
+          <h2 class="limited_title">Limited Offer for Local Businesses</h2>
+          <p class="limited_text">If you create a business account today, you can access all the employer features
+             on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 18px;">Post a Job</span></k-btn>
+          <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
       </div>
     </div>
     <!-- Ipad size -->
@@ -1923,6 +1939,7 @@
 
       </div>
       <div class="limited">
+        <img class="limited_main_img" :src="svgs.backgroundUrl">
         <div class="limited_main_div">
           <h2 class="limited_title">Limited Offer for Local Businesses</h2>
           <p class="limited_text">If you create a business account today, you can access all the employer features
