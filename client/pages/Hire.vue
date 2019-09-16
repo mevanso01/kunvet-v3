@@ -1380,7 +1380,7 @@
   .summary_btn_undertext{
     font-family: proxima-nova, sans-serif;
     font-weight: 300; 
-    padding-top: 6px; 
+    padding-top: 8px; 
     line-height: 100%;
     font-size: 14px; 
     margin-bottom: 0px;
@@ -1773,7 +1773,7 @@
   .refund_undertext{
     font-family: proxima-nova, sans-serif;
     font-weight: 300; 
-    padding-top: 6px; 
+    padding-top: 8px; 
     padding-bottom: 60px;
     line-height: 100%;
     font-size: 14px; 
@@ -1918,7 +1918,7 @@
   .limited_undertext{
     font-family: proxima-nova, sans-serif;
     font-weight: 300; 
-    padding-top: 6px; 
+    padding-top: 8px; 
     padding-bottom: 60px;
     line-height: 100%;
     font-size: 14px; 
@@ -2633,11 +2633,11 @@
           job websites, we want to help you find the right person effciently in your local area.</p>
         <h2 class="faq_title" style="padding-top: 50px; font-size: 20px;">Frequently Asked Questions</h2>
         <div style="margin-top: 20px;" 
-          v-bind:class="{ 'faq_question_div_sel': question_num === 1, 'faq_question_div': question_num != 1}" 
-          @click="question_num = 1">
-          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num === 1, 'faq_answer_title': question_num != 1}">
-            Is Kunvet right for me?</h2><img v-if="question_num !== 1" class="faq_plus" :src="svgs.plusSign">
-          <div v-if="question_num === 1">
+          v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 1, 'faq_question_div': question_num_mobile != 1}" 
+          @click="question_num_mobile = 1">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 1, 'faq_answer_title': question_num_mobile != 1}">
+            Is Kunvet right for me?</h2><img v-if="question_num_mobile !== 1" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 1">
             <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
               to hire locally.</p>
             <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
@@ -2647,22 +2647,22 @@
               on Kunvet</p>
           </div>
         </div>
-        <div v-bind:class="{ 'faq_question_div_sel': question_num === 2, 'faq_question_div': question_num != 2}" 
-          @click="question_num = 2">
-          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num === 2, 'faq_answer_title': question_num != 2}">
-            Is Kunvet a recruiting agency?</h2><img v-if="question_num !== 2" class="faq_plus" :src="svgs.plusSign">
-          <div v-if="question_num === 2">
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 2, 'faq_question_div': question_num_mobile != 2}" 
+          @click="question_num_mobile = 2">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 2, 'faq_answer_title': question_num_mobile != 2}">
+            Is Kunvet a recruiting agency?</h2><img v-if="question_num_mobile !== 2" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 2">
             <p class="faq_answers_text">No. We are not a recruiting agency.</p>
             <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
               come to our website, see your job posting, and apply to it directly</p>
             <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
           </div>
         </div>
-        <div v-bind:class="{ 'faq_question_div_sel': question_num === 3, 'faq_question_div': question_num != 3}" 
-          @click="question_num = 3">
-          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num === 3, 'faq_answer_title': question_num != 3}">
-            How much does it cost to use Kunvet?</h2><img v-if="question_num !== 3" class="faq_plus" :src="svgs.plusSign">
-          <div v-if="question_num === 3">
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 3, 'faq_question_div': question_num_mobile != 3}" 
+          @click="question_num_mobile = 3">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
+            How much does it cost to use Kunvet?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 3">
             <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
             <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
               of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
@@ -2672,11 +2672,11 @@
               target="_blank"> pricing page</router-link></span>.</p>
           </div>
         </div>
-        <div v-bind:class="{ 'faq_question_div_sel': question_num === 4, 'faq_question_div': question_num != 4}" 
-          @click="question_num = 4">
-          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num === 4, 'faq_answer_title': question_num != 4}">
-            What is the refund policy?</h2><img v-if="question_num !== 4" class="faq_plus" :src="svgs.plusSign">
-          <div v-if="question_num === 4">
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}" 
+          @click="question_num_mobile = 4">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 4, 'faq_answer_title': question_num_mobile != 4}">
+            What is the refund policy?</h2><img v-if="question_num_mobile !== 4" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 4">
             <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
               If you are not completely satisfied with the service you received, we are glad to issue you a full
                 refund on your inquiry.</p>
@@ -2685,11 +2685,11 @@
               internship, and volunteering</p>
           </div>
         </div>
-        <div v-bind:class="{ 'faq_question_div_sel': question_num === 5, 'faq_question_div': question_num != 5}" 
-          @click="question_num = 5">
-          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num === 5, 'faq_answer_title': question_num != 5}">
-            How does Kunvet work?</h2><img v-if="question_num !== 5" class="faq_plus" :src="svgs.plusSign">
-          <div v-if="question_num === 5">
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 5, 'faq_question_div': question_num_mobile != 5}" 
+          @click="question_num_mobile = 5">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
+            How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 5">
             <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
             <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
               6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
@@ -2698,11 +2698,11 @@
               You can also find and manage all resumes you have received in your account.</p>
           </div>
         </div>
-        <div v-bind:class="{ 'faq_question_div_sel': question_num === 6, 'faq_question_div': question_num != 6}" 
-          @click="question_num = 6">
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 6, 'faq_question_div': question_num_mobile != 6}" 
+          @click="question_num_mobile = 6">
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num === 6, 'faq_answer_title': question_num != 6}">
-            How is Kunvet different from others?</h2><img v-if="question_num !== 6" class="faq_plus" :src="svgs.plusSign">
-          <div v-if="question_num === 6">
+            How is Kunvet different from others?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 6">
             <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
               local area.</p>
             <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
@@ -2914,6 +2914,10 @@ export default {
       default: 1,
     },
     question_num: {
+      type: Number,
+      default: 3,
+    },
+    question_num_mobile: {
       type: Number,
     },
   },
