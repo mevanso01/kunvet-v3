@@ -1464,22 +1464,21 @@
     line-height: 100%;
     width: 100%;
     font-weight: bold;
-    padding-top: 80px;
+    padding-top: 60px;
     margin-left: 24px; 
     font-family: proxima-nova, sans-serif; 
-    font-size: 32px;
+    font-size: 26px;
     color: white;
     margin-bottom: 0px;
   }
   .test_text{
     padding-top: 30px;
-    max-width: 802px;
-    width: 59.9%;
+    max-width: 100%;
+    width: calc(100% - 25px);
     font-family: proxima-nova, sans-serif; 
-    font-size: 20px;
+    font-size: 18x;
     color: white;
     line-height: 150%;
-    margin-right: 86px;
     margin-bottom: 0px;
     font-weight: 300; 
   }
@@ -1492,12 +1491,12 @@
     font-size: 64px;
   }
   .test_undertext{
-    max-width: 802px;
-    width: 59.9%;
+    max-width: 100%;
+    width: calc(100% - 24px);
+    padding-left: 25px;
     font-style: italic;
-    margin-top: 40px;
+    margin-top: 30px;
     margin-bottom: 40px;
-    margin-left: 24px;
     font-family: proxima-nova, sans-serif; 
     font-size: 14px; 
     line-height: 120%; 
@@ -1506,18 +1505,25 @@
   }
   .bio{
     margin-top: 30px;
-    width: 184px;
-    height: 200px;
+    padding-left: 25px;
+    width: 100%;
+    display: flex;
+    align-content: flex-end;
   }
   .bio_img{
     height: 60px;
     width: 60px;
-    margin-top: 10px;
-    display: block;
+    margin-top: auto;
+  }
+  .bio_text_div{
+    padding-left: 20px;
+    height: auto;
+    margin-top: auto;
+    vertical-align: bottom;
   }
   .bio_header{
-    padding-top: 20px;
-    font-size: 16px;
+    padding-top: 4px;
+    font-size: 14px;
     color: white;
     font-family: proxima-nova, sans-serif; 
     font-weight: 600;
@@ -1525,8 +1531,8 @@
     margin-bottom: 0px;
   }
   .bio_text{
-    font-size: 16px;
-    padding-top: 12px;
+    font-size: 14px;
+    padding-top: 4px;
     font-weight: 300;
     color: white;
     font-family: proxima-nova, sans-serif; 
@@ -1688,24 +1694,23 @@
     max-height: 612px;
   }
   .waste{
-    max-width: 1008px;
+    max-width: 100%;
     padding: 0 24px;
     text-align: center;
     margin: 0 auto;
   }
   .warning_img{
-    height: 50px;
-    margin: 120px auto 18px;
+    height: 44px;
+    margin: 120px auto 16px;
   }
   .warning_img_btm{
-    margin-top: -5px;
     margin: -5px auto 0px;
-    width: 62px; 
-    height: 3px; 
+    width: 54px; 
+    height: 2.5px; 
     background-color:black;
   }
   .warning_title{
-    font-size: 36px;
+    font-size: 30px;
     line-height: 100%;
     color: black;
     font-weight: bold;
@@ -1715,7 +1720,7 @@
     margin-bottom: 0px;
   }
   .warning_text{
-    font-size: 24px;
+    font-size: 20px;
     color: black;
     font-family: proxima-nova, sans-serif;
     padding-top: 20px;
@@ -1726,7 +1731,7 @@
     margin-bottom: 0px;
   }
   .refund{
-    max-width: 1008px;
+    max-width: 100% ;
     padding: 0 24px;
     text-align: center;
     margin: 120px auto 0px;
@@ -1735,8 +1740,8 @@
     background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%);
   }
   .refund_title{
-    padding-top: 80px;
-    font-size: 32px;
+    padding-top: 60px;
+    font-size: 26px;
     line-height: 100%;
     font-weight: 600;
     color:  #ffffff;
@@ -1745,9 +1750,8 @@
     margin-bottom: 0px;
   }
   .refund_text{
-    padding-top: 26px;
-    max-width: 704px;
-    font-size: 20px;
+    padding: 20px 24px 0px;
+    font-size: 18px;
     line-height: 150%;
     font-weight: 300;
     color:  #ffffff;
@@ -1756,9 +1760,9 @@
     text-align: center;
   }
   .refund_btn{
-    width: 200px;
-    height: 68px !important;
-    line-height: 68px !important;
+    width: 170px;
+    height: 62px !important;
+    line-height: 62px !important;
     box-shadow: none !important;
     border-radius: 0px !important;
     background-color: white !important;
@@ -1770,7 +1774,7 @@
     font-family: proxima-nova, sans-serif;
     font-weight: 300; 
     padding-top: 6px; 
-    padding-bottom: 80px;
+    padding-bottom: 60px;
     line-height: 100%;
     font-size: 14px; 
     margin-bottom: 0px;
@@ -1779,24 +1783,24 @@
     text-align: center;
   }
   .versus{
-    max-width: 1008px;
+    max-width: 100%;
     padding: 0 24px;
     text-align: center;
     margin: 0 auto;
   }
   .versus_img{
-    height: 50px;
-    margin: 120px auto 18px;
+    height: 44px;
+    margin: 120px auto 16px;
   }
   .versus_img_btm{
     margin-top: -5px;
     margin: -5px auto 0px;
-    width: 62px; 
-    height: 3px; 
+    width: 54px; 
+    height: 2.5px; 
     background-color:black;
   }
   .versus_title{
-    font-size: 36px;
+    font-size: 30px;
     line-height: 100%;
     color: black;
     font-weight: bold;
@@ -1806,7 +1810,7 @@
     margin-bottom: 0px;
   }
   .versus_text{
-    font-size: 24px;
+    font-size: 20px;
     line-height: 150%;
     font-weight: 300;
     padding-top: 20px;
@@ -1816,9 +1820,9 @@
     margin-bottom: 0px;
   }
   .versus_subtitle{
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 0px;
-    padding-top: 60px;
+    padding-top: 50px;
     padding-bottom: 20px;
     line-height: 100%;
     font-weight: 600;
@@ -1828,23 +1832,21 @@
     width: 100%;
   }
   .compare_div{
-    display: flex;
-    flex-wrap: wrap;
-    width: 737px;
-    margin: 0 auto;
+    width: 100%;
   }
   .competitor_div{
-    width: calc( 50% - 2px);
-    margin-right: 4px;
+    width: 460px;
     background-color: #dcdcdc;
     padding: 16px 20px;
     text-align: left;
+    margin: 0px auto 4px;
   }
   .kunvet_div{
-    width: calc( 50% - 2px);
+    width: 460px;
     background-color: #ff6969;
     padding: 16px 20px;
     text-align: left;
+    margin: 0 auto;
   }
   .compare_header{
     font-size: 14PX;
@@ -1866,48 +1868,46 @@
     color: #505050;
   }
   .limited{
-    max-width: 1008px;
+    max-width: 100%;
     padding: 0 24px;
     margin: 0 auto;
     text-align: center;
   }
   .limited_main_img{
-    max-width: 700px;
-    height: 485px;
+    width: 460px;
     margin-top: 120px;
     margin: 120px auto 0;
   }
   .limited_main_div{ 
-    max-width: 700px;
-    margin: -490px auto 0;
+    width: 460px;
+    margin: -398px auto 0;
     margin-bottom: 120px;
   }
   .limited_title{
-    font-size: 32px;
+    font-size: 26px;
     line-height: 100%;
     font-weight: 600;
     color: #ffffff;
     font-family: proxima-nova, sans-serif;
-    padding-top: 80px;
+    padding: 60px 34px 0px;
     margin-bottom: 0px;
     text-align: center;
   }
   .limited_text{
-    font-size: 20px;
-    max-width: 520px;
+    font-size: 18px;
     margin: 0 auto;
     color: #ffffff;
     font-weight: 300;
     line-height: 150%;
     letter-spacing: 0;
     font-family: proxima-nova, sans-serif;
-    padding-top: 26px;
+    padding: 20px 24px 0px;
     text-align: center;
   }
   .limited_btn{
-    width: 200px;
-    height: 68px !important;
-    line-height: 68px !important;
+    width: 170px;
+    height: 62px !important;
+    line-height: 62px !important;
     box-shadow: none !important;
     border-radius: 0px !important;
     background-color: white !important;
@@ -1918,8 +1918,8 @@
   .limited_undertext{
     font-family: proxima-nova, sans-serif;
     font-weight: 300; 
-    padding-top: 8px; 
-    padding-bottom: 80px;
+    padding-top: 6px; 
+    padding-bottom: 60px;
     line-height: 100%;
     font-size: 14px; 
     margin-bottom: 0px;
@@ -2593,9 +2593,11 @@
                 Kunvet site organizers for providing this valuable service!</p>
               <div class="bio">
                 <img class="bio_img" :src="pngs.mark"/>
-                <p class="bio_header">Mark Freedkin</p>
-                <p class="bio_text">General Manager</p>
-                <p class="bio_text">of theCoderSchool - Irvine</p>
+                <div class="bio_text_div">
+                  <p class="bio_header">Mark Freedkin</p>
+                  <p class="bio_text">General Manager</p>
+                  <p class="bio_text">of theCoderSchool - Irvine</p>
+                </div>
               </div>
               <p class="test_undertext"> — <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" 
                 style="text-decoration: underline; cursor: pointer;">theCoderSchool at Irvine</a>
@@ -2613,12 +2615,13 @@
                  Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
               <div class="bio">
                 <img class="bio_img" :src="pngs.ally"/>
-                <p class="bio_header">Ally Zeng</p>
-                <p class="bio_text">Organizer</p>
-                <p class="bio_text">of IA Christian Church</p>
+                <div class="bio_text_div">
+                  <p class="bio_header">Ally Zeng</p>
+                  <p class="bio_text">Organizer</p>
+                  <p class="bio_text">of IA Christian Church</p>
+                </div>
               </div>
             </div>
-            <div style="height: 100px;"/>
           </v-carousel-item>
         </v-carousel>
       </div>
@@ -2752,7 +2755,7 @@
            but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
             Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day. 
             If you are not completely satisfied, we will issue a full refund.</p>
-        <p class="warning_text" style="font-weight: 600; padding-top: 70px; line-height: 100%;">Is Kunvet Right for Me?</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Is Kunvet Right for Me?</p>
         <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
            part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
             try Kunvet now. Stop wasting your time and money on hiring.</p>
@@ -2763,7 +2766,7 @@
           <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
             the service you have received, get a full refund immediately on your inquiry.
             No question will be asked. Click on the button below, and start hiring now.</p>
-          <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
+          <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 18px;">Post a Job</span></k-btn>
           <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
       </div>
@@ -2854,12 +2857,12 @@
 
       </div>
       <div class="limited">
-        <img class="limited_main_img" :src="svgs.backgroundUrl">
+        <img class="limited_main_img" :src="svgs.backgroundUrl2">
         <div class="limited_main_div">
-          <h2 class="limited_title">Limited Offer for Local Businesses</h2>
+          <h2 class="limited_title">Limited Offer for Businesses.</h2>
           <p class="limited_text">If you create a business account today, you can access all the employer features
              on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
-          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
+          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 18px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
       </div>
@@ -2897,6 +2900,7 @@ import company from '@/assets/hire/emp_pg_icons/company.svg';
 import gradlogo from '@/assets/hire/emp_pg_icons/gradient_logo.svg';
 import discount from '@/assets/hire/emp_pg_icons/discount.svg';
 import backgroundUrl from '@/assets/hire/discount-background.svg';
+import backgroundUrl2 from '@/assets/hire/business-discount-background.svg';
 import plusSign from '@/assets/hire/emp_pg_icons/plus-sign.svg';
 import num1 from '@/assets/hire/emp_pg_icons/one.svg';
 import num2 from '@/assets/hire/emp_pg_icons/two.svg';
@@ -2927,6 +2931,7 @@ export default {
         company: company,
         gradlogo: gradlogo,
         backgroundUrl: backgroundUrl,
+        backgroundUrl2: backgroundUrl2,
         discount: discount,
         plusSign: plusSign,
         num1: num1,
