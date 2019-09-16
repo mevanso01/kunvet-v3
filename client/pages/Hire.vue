@@ -2700,7 +2700,7 @@
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 6, 'faq_question_div': question_num_mobile != 6}" 
           @click="question_num_mobile = 6">
-          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num === 6, 'faq_answer_title': question_num != 6}">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 6, 'faq_answer_title': question_num_mobile != 6}">
             How is Kunvet different from others?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 6">
             <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
