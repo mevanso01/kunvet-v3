@@ -613,8 +613,8 @@
       max-width: 700px;
       margin: 120px auto 0;
       margin-bottom: 120px;
-      background-image: url('~@/assets/hire/discount-background.svg');
-      background-size: cover;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
     }
     .limited_title{
       font-size: 34px;
@@ -1273,8 +1273,8 @@
     .limited_main_div{ 
       max-width: 700px;
       margin: 120px auto;
-      background-image: url('~@/assets/hire/discount-background.svg');
-      background-size: cover;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
     }
     .limited_title{
       font-size: 32px;
@@ -1870,8 +1870,8 @@
     .limited_main_div{ 
       max-width: 460px;
       margin: 120px auto 0;
-      background-image: url('~@/assets/hire/discount-background.svg');
-      background-size: cover;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
     }
     .limited_title{
       font-size: 26px;
@@ -2467,8 +2467,8 @@
     .limited_main_div{ 
       max-width: 700px;
       margin: 100px auto;
-      background-image: url('~@/assets/hire/discount-background.svg');
-      background-size: cover;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
     }
     .limited_title{
       font-size: 26px;
@@ -3068,8 +3068,8 @@
     .limited_main_div{ 
       max-width: 460px;
       margin: 80px auto;
-      background-image: url('~@/assets/hire/discount-background.svg');
-      background-size: cover;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
     }
     .limited_title{
       font-size: 26px;
@@ -4726,8 +4726,6 @@ import versus from '@/assets/hire/emp_pg_icons/boxing.svg';
 import company from '@/assets/hire/emp_pg_icons/company.svg';
 import gradlogo from '@/assets/hire/emp_pg_icons/gradient_logo.svg';
 import discount from '@/assets/hire/emp_pg_icons/discount.svg';
-import backgroundUrl from '@/assets/hire/discount-background.svg';
-import backgroundUrl2 from '@/assets/hire/business-discount-background.svg';
 import plusSign from '@/assets/hire/emp_pg_icons/plus-sign.svg';
 import num1 from '@/assets/hire/emp_pg_icons/one.svg';
 import num2 from '@/assets/hire/emp_pg_icons/two.svg';
@@ -4761,8 +4759,6 @@ export default {
         versus: versus,
         company: company,
         gradlogo: gradlogo,
-        backgroundUrl: backgroundUrl,
-        backgroundUrl2: backgroundUrl2,
         discount: discount,
         plusSign: plusSign,
         num1: num1,

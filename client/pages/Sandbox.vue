@@ -12,7 +12,7 @@
       display: none !important;
     }
   }
-  @media (min-width: 451px) and (max-width: 600px) {
+  @media (min-width: 450px) and (max-width: 600px) {
     .small_hide{
       display: none !important;
     }
