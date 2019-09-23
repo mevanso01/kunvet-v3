@@ -1146,7 +1146,7 @@
     .refund_text{
       padding-top: 26px;
       max-width: 704px;
-      font-size: 20px;
+      font-size: 22px;
       line-height: 150%;
       font-weight: 300;
       color:  #ffffff;
@@ -1287,7 +1287,7 @@
       text-align: center;
     }
     .limited_text{
-      font-size: 20px;
+      font-size: 22px;
       max-width: 520px;
       margin: 0 auto;
       color: #ffffff;
@@ -1735,7 +1735,7 @@
     }
     .refund_title{
       padding-top: 60px;
-      font-size: 26px;
+      font-size: 28px;
       line-height: 100%;
       font-weight: 600;
       color:  #ffffff;
@@ -2047,7 +2047,7 @@
       flex-wrap: wrap;
     }
     .test_title{
-      line-height: 100%;
+      line-height: 120%;
       width: 100%;
       font-weight: bold;
       padding-top: 60px;
