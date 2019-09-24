@@ -1341,6 +1341,11 @@ To see the bug, simply comment out the next 3 styles.*/
   height: 64px;
   background: none !important;
 }
+.search_bar_text_field.v-text-field.v-text-field--enclosed > .v-input__control > .v-input__slot{
+  padding: 0 24px 0 10px;
+}
+
+
 @media (min-width: 661px) and (max-width: 800px) {
   .search_bar_text_field div.v-input__slot{
     height: 58px;

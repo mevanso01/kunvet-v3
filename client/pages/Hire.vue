@@ -3176,7 +3176,7 @@
         </div>
       </div>
       <div style="width: 100%;">
-        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
+        <v-carousel class="hire_monials testimonials" cycle interval="6000" :hide-controls="true" height="auto">
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <h2 class="test_title">Kunvet is great for every local organization.</h2>
