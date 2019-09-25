@@ -1300,7 +1300,7 @@ To see the bug, simply comment out the next 3 styles.*/
 @media (min-width: 801px) and (max-width: 1024px){
   .hire_monials div.v-carousel__controls{
     background: none;
-    padding-bottom: 88px;
+    padding-bottom: 108px;
   }
 }
 
