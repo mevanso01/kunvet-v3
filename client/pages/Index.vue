@@ -17,7 +17,6 @@
     justify-content: flex-end;
   }
   .interview_woman{
-    width: 680px;
     height: 550px;
     margin-right: 90px;
   }
@@ -35,7 +34,7 @@
     font-size: 50px;
     line-height: 140%;
     color: #ff6969;
-    letter-spacing: 3px;
+    letter-spacing: 0.06em;
     text-align: left;
     margin-bottom: 0px;
   }
@@ -631,7 +630,7 @@
           <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
           <div class="search_area">
             <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
-            <div class="search_bar_container" style="margin-top: 40px;">
+            <div class="search_bar_container" style="margin-top: 36px;">
               <div class="search_bar_head">FIND</div>
               <div class="search_bar_field">
                 <v-text-field
