@@ -1342,7 +1342,7 @@ To see the bug, simply comment out the next 3 styles.*/
   background: none !important;
 }
 .search_bar_text_field.v-text-field.v-text-field--enclosed > .v-input__control > .v-input__slot{
-  padding: 0 24px 0 10px;
+  padding: 0 0 0 10px;
 }
 
 

@@ -55,9 +55,14 @@
     margin-bottom: 0px;
   }
   .search_bar_field{
-    width: 320px;
+    width: 292px;
     height: 100%;
     background-color: none;
+  } 
+  .search_bar_icon{
+    font-size: 16px;
+    margin-right: 24px;
+    color: lightgrey;
   }
   .search_bar_text_field{
     height: 52px;
@@ -316,21 +321,22 @@
     justify-content: flex-end;
   }
   .interview_woman{
-    width: 520px;
-    margin-right: 60px;
+    height: 520px;
+    margin-right: 70px;
   }
   .search_area{
-    width: 380px;
+    width: 356px;
     height: 442px;
     background-color: white;
     margin-top: auto;
     margin-bottom: auto;
   }
   .search_title{
+    width: 356px;
     font-family: proxima-nova, sans-serif;
     font-weight: 600;
     letter-spacing: 0.06em;
-    font-size: 40px;
+    font-size: 44px;
     line-height: 140%;
     color: #ff6969;
     letter-spacing: 3px;
@@ -355,16 +361,19 @@
     margin-bottom: 0px;
   }
   .search_bar_field{
-    width: 312px;
+    width: 100%;
     height: 100%;
     background-color: none;
   }
   .search_bar_text_field{
     height: 52px;
   }
+  .search_bar_icon{
+    font-size: 16px;
+  }
   .search_btn{
     margin-top: 20px;
-    width: 150px;
+    width: 100%;
     height: 64px !important;
     line-height: 64px !important;
     box-shadow: none !important;
@@ -605,6 +614,77 @@
   .desktop, .medium, .small, .extra_small {
     display: none !important;
   }
+  .home_content{
+    width: 100%;
+  }
+  .index_top{
+    width: 100%;
+    background-color: #ff6969;
+  }
+  .index_area{
+    width: 552px;
+    margin: -32px auto 0;
+  }
+  .search_title{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    font-size: 42px;
+    line-height: 140%;
+    color: #ffffff;
+    letter-spacing: 3px;
+    text-align: left;
+    padding-top: 240px;
+    padding-bottom: 56px;
+    width: 552px;
+    margin: 0 auto;
+  }
+  .search_bar_container{
+    width: 100%;
+    height: 64px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
+    font-size: 16px;
+    display: flex;
+  }
+  .search_bar_head{
+    width: 68px;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.12em;
+    margin-left: 24px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+  }
+  .search_bar_field{
+    width: 100%;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_bar_icon{
+    font-size: 16px;
+    padding-right: 24px;
+    padding-left: 10px;
+    color: lightgrey;
+  }
+  .search_btn{
+    margin-top: 20px;
+    width: 100%;
+    height: 64px !important;
+    line-height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 0.12em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
 
 }
 // small
@@ -612,11 +692,162 @@
   .desktop, .medium, .mobile, .extra_small {
     display: none !important;
   }
+  .home_content{
+    width: 100%;
+  }
+  .index_top{
+    width: 100%;
+    background-color: #ff6969;
+  }
+  .index_area{
+    width: calc(100% - 48px);
+    margin: -32px auto 0;
+  }
+  .search_title{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 140%;
+    color: #ffffff;
+    letter-spacing: 3px;
+    text-align: left;
+    padding-top: 200px;
+    padding-bottom: 56px;
+    width: calc(100% - 48px);
+    margin: 0 auto;
+  }
+ .search_bar_container{
+    width: 100%;
+    height: 64px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
+    font-size: 16px;
+    display: flex;
+  }
+  .search_bar_head{
+    width: 68px;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.12em;
+    padding-left: 24px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+  }
+  .search_bar_field{
+    width: 100%;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_bar_icon{
+    font-size: 16px;
+    padding-right: 24px;
+    padding-left: 10px;
+    color: lightgrey;
+  }
+  .search_btn{
+    margin-top: 20px;
+    width: 100%;
+    height: 64px !important;
+    line-height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 0.12em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+}
+@media (min-width: 521px) and (max-width: 600px) {
+  .search_title{
+    font-size: 38px;
+  }
+}
+@media (min-width: 451px) and (max-width: 520px) {
+  .search_title{
+    font-size: 32px;
+  }
 }
 // extra small
 @media (max-width: 450px) {
   .desktop, .medium, .mobile, .small {
     display: none !important;
+  }
+  .home_content{
+    width: 100%;
+  }
+  .index_top{
+    width: 100%;
+    background-color: #ff6969;
+  }
+  .index_area{
+    width: calc(100% - 48px);
+    margin: -32px auto 0;
+  }
+  .search_title{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 140%;
+    color: #ffffff;
+    letter-spacing: 3px;
+    text-align: left;
+    font-size: 28px;
+    padding-top: 140px;
+    padding-bottom: 52px;
+    width: calc(100% - 48px);
+    margin: 0 auto;
+  }
+ .search_bar_container{
+    width: 100%;
+    height: 64px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
+    font-size: 16px;
+    display: flex;
+  }
+  .search_bar_head{
+    width: 68px;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.12em;
+    padding-left: 20px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+  }
+  .search_bar_field{
+    width: 100%;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_bar_icon{
+    font-size: 16px;
+    padding-right: 20px;
+    padding-left: 10px;
+    color: lightgrey;
+  }
+  .search_btn{
+    margin-top: 20px;
+    width: 100%;
+    height: 64px !important;
+    line-height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 0.12em; 
+    line-height: 120%;
+    font-weight: 600;
   }
 }
 
@@ -639,7 +870,9 @@
                   v-model="query"
                   class="search_bar_text_field"
                 ></v-text-field>
+
               </div>
+              <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
             </div>
             <div class="search_bar_container" style="margin-top: 10px;">
               <div class="search_bar_head">NEAR</div>
@@ -655,6 +888,7 @@
                 >
                 </v-select>
               </div>
+              <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
             </div>
             <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
           </div>
@@ -887,7 +1121,114 @@
         </div>
       </div>
     </div>
-
+    <div class="home_content mobile">
+      <div class="index_top">
+        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
+      </div>
+      <div class="index_area">
+        <div class="search_bar_container">
+          <div class="search_bar_head">FIND</div>
+          <div class="search_bar_field">
+            <v-text-field
+              solo flat hide-details clearable
+              label="Part time web developer"
+              v-model="query"
+              class="search_bar_text_field"
+            ></v-text-field>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <div class="search_bar_container" style="margin-top: 10px;">
+          <div class="search_bar_head">NEAR</div>
+          <div class="search_bar_field">
+            <v-select
+              label="School or City"
+              item-text="name"
+              item-value="name"
+              v-bind:items="availableCities"
+              v-model="selectedCity"
+              solo flat hide-details autocomplete
+              class="search_bar_text_field"
+            >
+            </v-select>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+      </div>
+    </div>
+    <div class="home_content small">
+      <div class="index_top">
+        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
+      </div>
+      <div class="index_area">
+        <div class="search_bar_container">
+          <div class="search_bar_head">FIND</div>
+          <div class="search_bar_field">
+            <v-text-field
+              solo flat hide-details clearable
+              label="Part time web developer"
+              v-model="query"
+              class="search_bar_text_field"
+            ></v-text-field>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <div class="search_bar_container" style="margin-top: 10px;">
+          <div class="search_bar_head">NEAR</div>
+          <div class="search_bar_field">
+            <v-select
+              label="School or City"
+              item-text="name"
+              item-value="name"
+              v-bind:items="availableCities"
+              v-model="selectedCity"
+              solo flat hide-details autocomplete
+              class="search_bar_text_field"
+            >
+            </v-select>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+      </div>
+    </div>
+    <div class="home_content extra_small">
+      <div class="index_top">
+        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
+      </div>
+      <div class="index_area">
+        <div class="search_bar_container">
+          <div class="search_bar_head">FIND</div>
+          <div class="search_bar_field">
+            <v-text-field
+              solo flat hide-details clearable
+              label="Part time web developer"
+              v-model="query"
+              class="search_bar_text_field"
+            ></v-text-field>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <div class="search_bar_container" style="margin-top: 10px;">
+          <div class="search_bar_head">NEAR</div>
+          <div class="search_bar_field">
+            <v-select
+              label="School or City"
+              item-text="name"
+              item-value="name"
+              v-bind:items="availableCities"
+              v-model="selectedCity"
+              solo flat hide-details autocomplete
+              class="search_bar_text_field"
+            >
+            </v-select>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+      </div>
+    </div>
   </div>
 </template>
 <script>
