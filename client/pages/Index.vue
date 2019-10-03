@@ -22,7 +22,7 @@
   }
   .search_area{
     width: 400px;
-    height: 472px;
+    height: 540px;
     background-color: white;
     margin-top: auto;
     margin-bottom: auto;
@@ -34,7 +34,6 @@
     font-size: 50px;
     line-height: 140%;
     color: #ff6969;
-    letter-spacing: 0.06em;
     text-align: left;
     margin-bottom: 0px;
   }
@@ -63,6 +62,20 @@
     font-size: 16px;
     margin-right: 24px;
     color: lightgrey;
+  }
+  .search_bar_icon_cross{
+    font-size: 16px;
+    margin-left: 24px;
+    color: #5a8cff; 
+  }
+  .search_bar_current{
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    padding-left: 10px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    color: #5a8cff; 
   }
   .search_bar_text_field{
     height: 52px;
@@ -339,7 +352,6 @@
     font-size: 44px;
     line-height: 140%;
     color: #ff6969;
-    letter-spacing: 3px;
     text-align: left;
     margin-bottom: 0px;
   }
@@ -628,11 +640,10 @@
   .search_title{
     font-family: proxima-nova, sans-serif;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
     font-size: 42px;
     line-height: 140%;
     color: #ffffff;
-    letter-spacing: 3px;
     text-align: left;
     padding-top: 240px;
     padding-bottom: 56px;
@@ -706,10 +717,9 @@
   .search_title{
     font-family: proxima-nova, sans-serif;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
     line-height: 140%;
     color: #ffffff;
-    letter-spacing: 3px;
     text-align: left;
     padding-top: 200px;
     padding-bottom: 56px;
@@ -792,10 +802,9 @@
   .search_title{
     font-family: proxima-nova, sans-serif;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
     line-height: 140%;
     color: #ffffff;
-    letter-spacing: 3px;
     text-align: left;
     font-size: 28px;
     padding-top: 140px;
@@ -877,23 +886,27 @@
             <div class="search_bar_container" style="margin-top: 10px;">
               <div class="search_bar_head">NEAR</div>
               <div class="search_bar_field">
-                <v-select
-                  label="School or City"
-                  item-text="name"
-                  item-value="name"
-                  v-bind:items="availableCities"
-                  v-model="selectedCity"
-                  solo flat hide-details autocomplete
+                <v-text-field
+                  v-model="job.address"
+                  ref="addressField"
                   class="search_bar_text_field"
-                >
-                </v-select>
+                  label="Address"
+                  required
+                  @change="setLatLongs"
+                  :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+                ></v-text-field>
               </div>
               <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+            </div>
+            <div class="search_bar_container" style="margin-top: 10px;">
+              <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
+              <p class="search_bar_current">Use Current Location</p>
             </div>
             <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
           </div>
       </div>
-      <div class="ykunvet_div">
+
+      <!-- <div class="ykunvet_div">
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
             <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
@@ -973,7 +986,7 @@
             <div style="height: 104px;"/>
           </v-carousel-item>
         </v-carousel>
-      </div>
+      </div> 
       <div class="next_job_div">
         <img class="next_job_pic" :src="pngs.nextJob" alt="Job applicants at an Interview">
         <h2 class="next_job_title">Your Next Job is Waiting for You.</h2>
@@ -988,7 +1001,7 @@
           <router-link :to="searchDestination"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="home_content medium">
       <div class="index_top">
@@ -1245,6 +1258,7 @@ import PromoTextContainer from '@/components/PromoTextContainer';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
+import * as VueGoogleMaps from 'vue2-google-maps';
 
 
 Vue.use(VueApollo);
@@ -1265,6 +1279,15 @@ export default {
         woman: woman,
         nextJob: nextJob,
       },
+      job: {
+        address: '',
+        address2: null,
+        latitude: null,
+        longitude: null,
+      },
+      geocoder: null,
+      addressValid: true,
+      prevAutocompleteAddress: null,
       first_city_guess: 'UC Irvine',
       uid: null,
       findJobs: [],
@@ -1422,8 +1445,63 @@ export default {
         }
       });
     },
+    setPlace(place) {
+      if (!place.geometry) {
+        this.job.addressValid = false;
+        return;
+      }
+      this.job.addressValid = true;
+      this.job.address = place.formatted_address;
+      this.job.latitude = place.geometry.location.lat();
+      this.job.longitude = place.geometry.location.lng();
+    },
+    setLatLongs() {
+      setTimeout(() => {
+        if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
+          this.geocoder.geocode({ 'address': this.job.address }, (results, status) => {
+            if (status === 'OK' && results.length === 1) {
+              this.job.latitude = results[0].geometry.location.lat();
+              this.job.longitude = results[0].geometry.location.lng();
+              this.job.addressValid = true;
+              this.$refs.addressField.validate();
+            } else {
+              this.job.latitude = null;
+              this.job.longitude = null;
+              this.job.addressValid = false;
+              this.$refs.addressField.validate();
+            }
+          });
+        }
+      }, 500);
+    },
+    initGoogleMaps() {
+      if (!this.autocomplete || !this.geocoder) {
+        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
+        input.setAttribute('placeholder', '');
+        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        this.geocoder = new window.google.maps.Geocoder();
+        this.autocomplete.setComponentRestrictions({
+          country: ['us'],
+        });
+        this.autocomplete.addListener('place_changed', () => {
+          this.prevAutocompleteAddress = this.job.address;
+          if (this.autocomplete === null) {
+            this.initGoogleMaps();
+            return;
+          }
+          this.setPlace(this.autocomplete.getPlace());
+        });
+      }
+      if (this.job.address) {
+        this.setLatLongs();
+      }
+    },
   },
   activated() {
+    // Initialize Google maps
+    VueGoogleMaps.loaded.then(() => {
+      this.initGoogleMaps();
+    });
   },
 };
 

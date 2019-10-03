@@ -1345,6 +1345,12 @@ To see the bug, simply comment out the next 3 styles.*/
   padding: 0 0 0 10px;
 }
 
+.search_bar_text_field .application--light .input-group:not(.input-group--error):not(.input-group--disabled) .input-group--selection-controls label, .input-group--text-field:not(.input-group--error):not(.input-group--disabled) label, .radio-group:not(.input-group--error):not(.input-group--disabled) label, .radio-group:not(.input-group--error):not(.input-group--disabled) i, .v-input:not(.input-group--error):not(.v-input--is-disabled) label, .v-input:not(.input-group--error):not(.v-input--is-disabled) i{
+  display: none;
+}
+.v-menu__content theme--light menuable__content__active v-autocomplete__content {
+  top: 100px;
+}
 
 @media (min-width: 661px) and (max-width: 800px) {
   .search_bar_text_field div.v-input__slot{
