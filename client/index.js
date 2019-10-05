@@ -1,6 +1,7 @@
 import '@babel/polyfill';
 
 import Vue from 'vue';
+import VueMeta from 'vue-meta';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
@@ -31,6 +32,9 @@ Vue.use(Logger);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(Vuex);
+Vue.use(VueMeta, {
+  refreshOnceOnNavigation: true,
+});
 Vue.use(VueTimeago, {
   locale: 'en-US',
   locales: {
@@ -236,6 +240,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  console.log(to.meta);
   const authRoutes = ['/login', '/signup'];
   if (authRoutes.includes(to.path) && !to.query.redirect) {
     next({

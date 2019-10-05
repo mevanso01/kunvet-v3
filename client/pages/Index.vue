@@ -1301,10 +1301,13 @@ export default {
       },
       job: {
         address: '',
-        address2: null,
+        addressList: [],
+        latList: [],
+        longList: [],
         latitude: null,
         longitude: null,
       },
+      addressList: [],
       searchFocus: false,
       geocoder: null,
       addressValid: true,
@@ -1511,6 +1514,7 @@ export default {
             return;
           }
           this.setPlace(this.autocomplete.getPlace());
+          this.setPlaces(this.autocomplete.getPlaces());
         });
       }
       if (this.job.address) {
