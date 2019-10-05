@@ -52,7 +52,7 @@ h1 {
 
         <k-text-field v-model="email" label="Email Address" :rules="emailRules" required></k-text-field>
         <k-text-field v-model="password" toggleVisibility label="Password" :rules="passwordRules" required></k-text-field>
-        
+
         <k-btn :working="loading" color="#c2c6cf" @click="chooseSignup('')" class="back_button_style">Back</k-btn>
         <k-btn @click="signup" :working="loading" :color="accountTypeInfo.color">Sign Up</k-btn>
       </v-form>
@@ -147,6 +147,21 @@ export default {
     chooseSignup(type) {
       this.$emit('select', type);
     },
+    addTagToMailChimp() {
+      var postData = {
+        email_address: this.email,
+        fname: this.fname,
+        tags: ['no preference'],
+        status: 'subscribed',
+      };
+      console.log(postData);
+
+      Axios.post('/mailchimp/addMember', postData).then(() => {
+        console.log('posted on mailchimp');
+      }, (error) => {
+        this.$error(error);
+      });
+    },
     signup() {
       if (!this.$refs.form.validate()) {
         this.$debug('Failed validation');
@@ -171,6 +186,11 @@ export default {
 
       Axios.post('/auth/register', data, headers).then((res) => {
         if (res.data.success) {
+          console.log('after success');
+          console.log(this.type);
+          if (this.type === 'student') {
+            this.addTagToMailChimp();
+          }
           this.logIntoAcct(this.email, this.password); // go to step 2
         } else {
           this.loading = false;

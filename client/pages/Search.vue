@@ -231,6 +231,9 @@ section.search {
   .bottom-img {
     width: calc(100% - 128px);
   }
+  .banner-mobile {
+    display: none;
+  }
 }
 @media (max-width: 600px) {
   section.search {
@@ -247,6 +250,9 @@ section.search {
     padding-left: 26px;
     padding-right: 26px;
     height: calc(100vh - 56px);
+  }
+  .banner-desktop {
+    display: none;
   }
   #banner {
     display: none;
@@ -468,7 +474,52 @@ section.search {
           <ais-powered-by ></ais-powered-by>
         </div>
       </v-layout>
+
+      <div class="banner-desktop">
+        <div class="main-cont-large">
+          <v-layout row wrap style="padding: 50px 80px; border-top:5px solid red; background-color: #f6f6f8;">
+            <v-flex xs12 sm4>
+              <img src="@/assets/woman with phone.png" style="width:100%;"/>
+            </v-flex>
+            <v-flex xs12 sm8 style="padding-left: 50px;">
+              <NewsletterForm banner/>
+            </v-flex>
+          </v-layout>
+        </div>
+      </div>
+      <div class="banner-mobile">
+          <v-layout row wrap style="padding: 0px; border-top:5px solid red;">
+            <v-flex xs12 md4 style="padding: 0px">
+              <img src="@/assets/woman with phone gradiant.png" style="width: 100%;"/>
+            </v-flex>
+            <v-flex xs12 md8 style="padding:0px 50px 50px 50px; background-color: linear-gradient(to bottom, #ffffff, #f8f8f8));">
+              <NewsletterForm banner/>
+            </v-flex>
+          </v-layout>
+      </div>
     </div>
+
+    <v-dialog v-model="dialogs.showJobAlertForm" max-width="500px">
+      <v-card>
+        <v-card-text style="margin: 0px; padding: 0px;">
+          <NewsletterForm @notNow="onClickChild"/>
+        </v-card-text>
+        <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">
+          Some kind of error occured. Please try again later.
+        </v-card-text>
+        <v-card-text v-else-if="dialogs.success" class="pt-0" style="color: green;">
+          Successfully reposted!
+        </v-card-text>
+        <v-card-actions v-else>
+          <!--<v-btn flat="flat" @click.native="repostJob(dialogs.currentJobId)">
+            Repost
+          </v-btn>
+          <v-btn flat="flat" @click.native="dialogs.showRepost = false" style="padding-top:0px;">
+            Cancel
+          </v-btn>-->
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -482,6 +533,7 @@ import vc from '@/assets/vc.svg';
 import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import DistanceHelper from '@/utils/DistanceHelper';
+import NewsletterForm from '@/components/newsLetterSubscribe';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
@@ -508,6 +560,7 @@ Vue.use(VueApollo);
 export default {
   components: {
     MainJobCard,
+    NewsletterForm,
   },
   mounted() {
     const el = document.querySelector('#dropdown-header .v-input__slot');
@@ -517,6 +570,7 @@ export default {
     window.onresize = () => {
       this.setSearchWidth();
     };
+    window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
   },
   data() {
     return {
@@ -557,6 +611,9 @@ export default {
       selectedShifts: this.$store.state.selectedShifts || [],
       selectedLat: Coordinates.uci.latitude,
       selectedLong: Coordinates.uci.longitude,
+      dialogs: {
+        showJobAlertForm: false,
+      },
       svgs: {
         information: InformationSvg,
         locationMarker: LocationMarkerSvg,
@@ -649,6 +706,11 @@ export default {
       if (document.querySelector('.suggestions-card')) {
         document.querySelector('.suggestions-card').style.width = width;
       }
+    },
+    onClickChild (value) {
+      console.log('onClickChild is clicked');
+      console.log(value); // someValue
+      window.setTimeout(() => { this.dialogs.showJobAlertForm = false; }, 200);
     },
     // Randomly pick search search placeholder text
     getSearchPlaceholderText() {
