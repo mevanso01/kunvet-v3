@@ -1,150 +1,4804 @@
 <style lang="scss" scoped>
-.panel:nth-child(odd) {
-  background-repeat: repeat;
-  background-color: #ff8000;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 1000'%3E%3Cg %3E%3Ccircle fill='%23ff8000' cx='50' cy='0' r='50'/%3E%3Cg fill='%23ff8700' %3E%3Ccircle cx='0' cy='50' r='50'/%3E%3Ccircle cx='100' cy='50' r='50'/%3E%3C/g%3E%3Ccircle fill='%23ff8f02' cx='50' cy='100' r='50'/%3E%3Cg fill='%23ff9606' %3E%3Ccircle cx='0' cy='150' r='50'/%3E%3Ccircle cx='100' cy='150' r='50'/%3E%3C/g%3E%3Ccircle fill='%23ff9d0b' cx='50' cy='200' r='50'/%3E%3Cg fill='%23fea311' %3E%3Ccircle cx='0' cy='250' r='50'/%3E%3Ccircle cx='100' cy='250' r='50'/%3E%3C/g%3E%3Ccircle fill='%23feaa17' cx='50' cy='300' r='50'/%3E%3Cg fill='%23feb11e' %3E%3Ccircle cx='0' cy='350' r='50'/%3E%3Ccircle cx='100' cy='350' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fdb724' cx='50' cy='400' r='50'/%3E%3Cg fill='%23fdbe2a' %3E%3Ccircle cx='0' cy='450' r='50'/%3E%3Ccircle cx='100' cy='450' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fcc431' cx='50' cy='500' r='50'/%3E%3Cg fill='%23fbca37' %3E%3Ccircle cx='0' cy='550' r='50'/%3E%3Ccircle cx='100' cy='550' r='50'/%3E%3C/g%3E%3Ccircle fill='%23fbd03e' cx='50' cy='600' r='50'/%3E%3Cg fill='%23fad645' %3E%3Ccircle cx='0' cy='650' r='50'/%3E%3Ccircle cx='100' cy='650' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f9dc4c' cx='50' cy='700' r='50'/%3E%3Cg fill='%23f9e253' %3E%3Ccircle cx='0' cy='750' r='50'/%3E%3Ccircle cx='100' cy='750' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f8e85b' cx='50' cy='800' r='50'/%3E%3Cg fill='%23f7ee62' %3E%3Ccircle cx='0' cy='850' r='50'/%3E%3Ccircle cx='100' cy='850' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f6f46a' cx='50' cy='900' r='50'/%3E%3Cg fill='%23f6f972' %3E%3Ccircle cx='0' cy='950' r='50'/%3E%3Ccircle cx='100' cy='950' r='50'/%3E%3C/g%3E%3Ccircle fill='%23f5ff7a' cx='50' cy='1000' r='50'/%3E%3C/g%3E%3C/svg%3E");
-  background-attachment: fixed;
-  background-size: contain;
-  background-position: center;
+  // css for desktop
+  @media (min-width: 1025px){
+    .emp_page_content{
+      margin-top: 124px;
+    }
+    .summary{
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: nowrap;
+    }
+    .summary_text_div{
+      width: 420px;
+      vertical-align: middle;
+      margin-right: 100px;
+    }
+    .summary_title{
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      font-size: 44px;
+      line-height: 120%;
+      letter-spacing: 0;
+      color: #FF6969;
+      margin-bottom: 0px;
+    }
+    .summary_text{
+      padding-top: 20px;
+      font-size: 20px;
+      line-height: 180%;
+      font-weight: 300;
+      max-width: 440px;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .summary_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: #ff6969 !important;
+      margin-top: 40px;
+      font-family: proxima-nova, sans-serif;
+      display: block !important;
+      color: white !important;
+      font-weight: 600; 
+    }
+    .summary_btn_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -2px;
+      color: #000000;
+    }
+    .summary_collage_students{
+      width: 440px;
+      height: 435px;
+      align-items: center;
+      margin-left: -2px;
+    }
+    .effective{
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .effective_img{
+      width: 80px;
+      margin-top: 120px;
+      margin-left: calc((960px - 80px) / 2);
+      margin-bottom: 20px;
+    }
+    .effective_img_btm{
+      margin-top: -5px;
+      width: 80px; 
+      margin-left: calc((960px - 80px) / 2);
+      height:4px; 
+      background-color:black;
+    }
+    .effective_title{
+      padding-top: 30px;
+      line-height: 100%;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 40px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .effective_text{
+      padding-top: 30px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      line-height: 150%;
+      font-size: 24px;
+      margin-bottom: 0px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .logo_style{
+      width: 190px;
+      height: 80px;
+      margin-right: 60px;
+    }
+    .logo_first_row{
+      padding-top: 30px;
+    }
+    .logo_second_row{
+      padding-top: 60px;
+    }
+    .testimonials{
+      margin-top: 120px;
+      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+      box-shadow: none;
+    }
+    .test_slide{
+      width: 100%;
+      margin-left: 0px;
+    }
+    .slide_info{
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .test_title{
+      line-height: 100%;
+      width: 100%;
+      max-width: 960px;
+      font-weight: bold;
+      padding-top: 80px;
+      margin-left: 24px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 34px;
+      margin-bottom: 0px;
+      color: white;
+    }
+    .test_text{
+      padding-top: 40px;
+      width: 644px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 22px;
+      color: white;
+      line-height: 150%;
+      margin-right: 100px;
+      margin-bottom: 0px;
+      font-weight: 300; 
+    }
+    .quote{
+      font-family: proxima-nova, sans-serif; 
+      color: white;
+      margin-left: 0px;
+      margin-bottom: 0px;
+      margin-top: 6px;
+      font-size: 64px;
+    }
+    .test_undertext{
+      font-style: italic;
+      margin-top: 40px;
+      margin-bottom: 84px;
+      padding-right: 292px;
+      padding-left: 24px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 14px; 
+      line-height: 120%; 
+      font-weight: 300; 
+      color: white;
+    }
+    .bio{
+      margin-top: 30px;
+      width: 190px;
+      height: 200px;
+    }
+    .bio_img{
+      height: 60px;
+      width: 60px;
+      margin-top: 10px;
+      display: block;
+    }
+    .bio_header{
+      padding-top: 20px;
+      font-size: 16px;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      font-weight: 600;
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .bio_text{
+      font-size: 16px;
+      padding-top: 12px;
+      font-weight: 300;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .faq{
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .faq_img{
+      height: 60px;
+      width: 60px;
+      margin-top: 120px;
+      margin-left: calc((960px - 60px) / 2);
+      margin-bottom: 20px;
+    }
+    .faq_img_btm{
+      margin-top: -5px;
+      width: 68px; 
+      margin-left: calc((960px - 68px) / 2);
+      height:4px; 
+      background-color:black;
+    }
+    .faq_title{
+      padding-top: 30px;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 40px;
+      line-height: 100%;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .faq_text{
+      padding-top: 30px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      font-size: 24px;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      margin-bottom: 0px;
+      color: black;
+    }
+    .faq_box{
+      margin-top: 30px;
+      width: 960px;
+      padding-left: 60px;
+      display: flex;
+      flex-wrap: nowrap;
+    }
+    .faq_questions{
+      width: 432px;
+      padding-right: 36px;
+    }
+    .faq_answers{
+      width: 400px; 
+      margin-right: 54px;
+    }
+    .faq_question_div{
+      height: 62px;
+      width: 400px; 
+      margin-top: 14px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      line-height: 100%;
+      padding-top: 22px;
+      padding-left: 24px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .faq_question_div_sel{
+      height: 62px;
+      width: 400px; 
+      margin-top: 14px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      line-height: 100%;
+      padding-top: 22px;
+      padding-left: 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 1px solid black;
+      cursor: pointer;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .faq_answers_div{
+      text-align: center;
+      background-color: #f7f7f7;
+      width: 100%;
+      height: 442px;
+      border: 1px solid black;
+      border-radius: 2px;
+      box-shadow: #cccccc 0px 1px 1px;
+    }
+    .faq_answers_title{
+      padding-top: 24px;
+      padding-left: 24px;
+      padding-right: 24px;
+      text-align: left;
+      width: 100%;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 0px;
+      line-height: 130%;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .faq_answers_text{
+      text-align: left;
+      padding-top: 20px;
+      padding-left: 24px;
+      padding-right: 24px;
+      margin-bottom: 0px;
+      width: 100%;
+      color: #000;
+      font-size: 16px;
+      line-height: 150%;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .how_works{
+      width: 100%;
+      background-color: #f4f4f4;
+      margin-top: 120px;
+      font-size: 0;
+    }
+    .coffee_money{
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .coffee_title{
+      width: 100%;
+      padding-top: 114px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      font-size: 40px;
+      line-height: 100%;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .hands{
+      width: 100%;
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: nowrap;
+      text-align: center;
+    }
+    .hands_img{
+      margin-left: -20px;
+    }
+    .one_two_three_line{
+      width: 770px;
+      margin-top: 80px;
+    }
+    .hand_header_1{
+      width: 220px;
+      line-height: 100%;
+      font-size: 24px;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 10px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_header_2{
+      width: 280px;
+      font-size: 24px;
+      line-height: 100%;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 10px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_header_3{
+      width: 220px;
+      font-size: 24px;
+      line-height: 100%;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 10px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text_1{
+      text-align: center;
+      color: black;
+      font-size: 16px;
+      width: 220px; 
+      height: 96px;
+      margin-bottom: 20px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text_2{
+      text-align: center;
+      color: black;
+      font-size: 16px;
+      height: 96px;
+      width: 280px; 
+      margin-bottom: 20px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text_3{
+      text-align: center;
+      color: black;
+      font-size: 16px;
+      width: 220px; 
+      height: 96px;
+      margin-bottom: 20px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_img_1{
+      height: 761px;
+      margin-left: 60px;
+    }
+    .hand_img_2{
+      height: 761px;
+      margin-left: -30px;
+    }
+    .hand_img_3{
+      height: 761px;
+      margin-left: -76px;
+    }
+    .waste{
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .warning_img{
+      width: 66px;
+      height: 60px;
+      margin-top: 120px;
+      margin-left: calc((960px - 66px) / 2);
+      margin-bottom: 20px;
+    }
+    .warning_img_btm{
+      margin-top: -5px;
+      width: 70px; 
+      margin-left: calc((960px - 70px) / 2);
+      height:4px; 
+      background-color:black;
+    }
+    .warning_title{
+      font-size: 40px;
+      line-height: 100%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 30px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .warning_text{
+      font-size: 24px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 30px;
+      letter-spacing: 0;
+      font-weight: 300;
+      text-align: center;
+      line-height: 150%;
+      margin-bottom: 0px;
+    }
+    .grey_warning{
+      font-size: 16px;
+      color: grey;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 40px;
+      margin-bottom: 0px;
+      text-align: center;
+    }
+    .refund{
+      max-width: 912px;
+      margin: 0 auto;
+      margin-top: 120px;
+      background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%);
+      padding: 0;
+    }
+    .refund_title{
+      padding-top: 80px;
+      font-size: 34px;
+      line-height: 100%;
+      font-weight: 600;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .refund_text{
+      padding-top: 30px;
+      max-width: 704px;
+      font-size: 22px;
+      line-height: 150%;
+      font-weight: 300;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .refund_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      margin-left: calc( 50% - 100px); 
+      color: #6478d5 !important;
+      font-weight: 600; 
+    }
+    .refund_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 6px; 
+      padding-bottom: 80px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+    .versus{
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .versus_img{
+      width: 68px;
+      height: 60px;
+      margin-top: 120px;
+      margin-left: calc((960px - 68px) / 2);
+      margin-bottom: 20px;
+    }
+    .versus_img_btm{
+      margin-top: -5px;
+      width: 78px; 
+      margin-left: calc((960px - 78px) / 2);
+      height:4px; 
+      background-color:black;
+    }
+    .versus_title{
+      font-size: 40px;
+      line-height: 100%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 30px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_text{
+      font-size: 24px;
+      line-height: 150%;
+      font-weight: 300;
+      padding-top: 30px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_subtitle{
+      font-size: 20px;
+      margin-bottom: 0px;
+      padding-top: 70px;
+      padding-bottom: 30px;
+      line-height: 100%;
+      font-weight: 600;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      width: 960px;
+    }
+    .compare_div{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .competitor_div{
+      width: calc( 50% - 2px);
+      margin-right: 4px;
+      background-color: #dcdcdc;
+      padding: 20px 24px;
+    }
+    .kunvet_div{
+      width: calc( 50% - 2px);
+      background-color: #ff6969;
+      padding: 20px 24px;
+    }
+    .compare_header{
+      font-size: 14PX;
+      line-height: 100%;
+      font-weight: 600;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+      padding-bottom: 4px;
+    }
+    .compare_text{
+      font-size: 16PX;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+    }
+    .limited{
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .limited_main_div{ 
+      max-width: 700px;
+      margin: 120px auto 0;
+      margin-bottom: 120px;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
+    }
+    .limited_title{
+      font-size: 34px;
+      line-height: 100%;
+      font-weight: 600;
+      color: #ffffff;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 80px;
+      margin-bottom: 0px;
+      text-align: center;
+    }
+    .limited_text{
+      font-size: 22px;
+      max-width: 520px;
+      margin: 0 auto;
+      color: #ffffff;
+      font-weight: 300;
+      line-height: 150%;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 30px;
+      text-align: center;
+    }
+    .limited_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #ff9090 !important;
+      font-weight: 600; 
+    }
+    .limited_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 6px; 
+      padding-bottom: 80px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
+  // css for ipad size
+  @media (min-width: 801px) and (max-width: 1024px) { 
+    .medium_hide{
+      display: none !important;
+    }
+    .emp_page_content{
+      margin-top: 124px;
+    }
+    .summary{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+    .summary_text_div{
+      width: 46%;
+      max-height: 395.2px;
+      margin-right: 8%;
+    }
+    .summary_title{
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      font-size: 36px;
+      line-height: 120%;
+      letter-spacing: 0;
+      color: #FF6969;
+      margin-bottom: 0px;
+    }
+    .summary_text{
+      padding-top: 20px;
+      font-size: 18px;
+      line-height: 180%;
+      font-weight: 300;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .summary_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: #ff6969 !important;
+      margin-top: 30px;
+      font-family: proxima-nova, sans-serif;
+      display: block !important;
+      color: white !important;
+      font-weight: 600; 
+    }
+    .summary_btn_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -2px;
+      color: #000000;
+    }
+    .summary_collage_students{
+      width: 46%;
+      vertical-align: middle;
+      margin-left: -2px;
+    }
+    .effective{
+      max-width: 1008px;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .effective_img{
+      height: 50px;
+      margin: 120px auto 18px;
+    }
+    .effective_img_btm{
+      margin-top: -5px;
+      margin: -5px auto 0px;
+      width: 62px; 
+      height: 3px; 
+      background-color:black;
+    }
+    .effective_title{
+      padding-top: 26px;
+      line-height: 100%;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 36px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .effective_text{
+      padding-top: 20px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      line-height: 150%;
+      font-size: 24px;
+      margin-bottom: 0px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .logo_style{
+      width: 150px;
+      height: 70px;
+      margin-right: 42px;
+    }
+    .logo_first_row{
+      padding-top: 20px;
+    }
+    .logo_second_row{
+      padding-top: 50px;
+    }
+    .testimonials{
+      margin-top: 120px;
+      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+      box-shadow: none;
+    }
+    .test_slide{
+      width: 100%;
+      margin-left: 0px;
+    }
+    .slide_info{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .test_title{
+      line-height: 100%;
+      width: 100%;
+      font-weight: bold;
+      padding-top: 80px;
+      margin-left: 24px; 
+      font-family: proxima-nova, sans-serif; 
+      font-size: 32px;
+      color: white;
+      margin-bottom: 0px;
+    }
+    .test_text{
+      padding-top: 30px;
+      max-width: 802px;
+      width: 59.9%;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 20px;
+      color: white;
+      line-height: 150%;
+      margin-right: 86px;
+      margin-bottom: 0px;
+      font-weight: 300; 
+    }
+    .quote{
+      font-family: proxima-nova, sans-serif; 
+      color: white;
+      margin-left: 0px;
+      margin-bottom: 0px;
+      margin-top: 6px;
+      font-size: 64px;
+    }
+    .test_undertext{
+      max-width: 802px;
+      width: 59.9%;
+      font-style: italic;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      margin-left: 24px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 14px; 
+      line-height: 120%; 
+      font-weight: 300; 
+      color: white;
+    }
+    .bio{
+      margin-top: 30px;
+      width: 184px;
+      height: 200px;
+    }
+    .bio_img{
+      height: 60px;
+      width: 60px;
+      margin-top: 10px;
+      display: block;
+    }
+    .bio_header{
+      padding-top: 20px;
+      font-size: 16px;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      font-weight: 600;
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .bio_text{
+      font-size: 16px;
+      padding-top: 12px;
+      font-weight: 300;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .faq{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .faq_img{
+      height: 50px;
+      margin: 120px auto 18px;
 
-  /*
-  box-shadow:
-    inset 0px 11px 8px -10px #555,
-    inset 0px -11px 8px -10px #555;
-  */
-}
+    }
+    .faq_img_btm{
+      margin-top: -5px;
+      margin: -5px auto 0px;
+      width: 62px; 
+      height: 3px; 
+      background-color:black;
+    }
+    .faq_title{
+      padding-top: 26px;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 36px;
+      line-height: 100%;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .faq_text{
+      padding-top: 20px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      font-size: 24px;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      margin-bottom: 0px;
+      color: black;
+    }
+    .faq_box{
+      display: flex;
+      max-width: 753px;
+      margin: 20px auto 0px;
+      flex-wrap: nowrap;
+    }
+    .faq_questions{
+      width: 360px;
+      margin-right: 30px;
+    }
+    .faq_answers{
+      width: 363px;
+    }
+    .faq_question_div{
+      height: 62px;
+      width: 360px; 
+      margin-top: 14px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      line-height: 100%;
+      padding-top: 22px;
+      padding-left: 24px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: proxima-nova, sans-serif; 
+      text-align: left;
+    }
+    .faq_question_div_sel{
+      height: 62px;
+      width: 360px; 
+      margin-top: 14px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      line-height: 100%;
+      padding-top: 22px;
+      padding-left: 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 1px solid black;
+      cursor: pointer;
+      font-family: proxima-nova, sans-serif; 
+      text-align: left;
+    }
+    .faq_answers_div{
+      text-align: center;
+      background-color: #f7f7f7;
+      width: 100%;
+      height: 442px;
+      border: 1px solid black;
+      border-radius: 2px;
+      box-shadow: #cccccc 0px 1px 1px;
+    }
+    .faq_answers_title{
+      padding: 24px 24px 0px;
+      text-align: left;
+      width: 100%;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 0px;
+      line-height: 130%;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .faq_answers_text{
+      text-align: left;
+      padding: 20px 24px 0px;
+      margin-bottom: 0px;
+      width: 100%;
+      color: #000;
+      font-size: 16px;
+      line-height: 150%;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .how_works{
+      width: 100%;
+      background-color: #f4f4f4;
+      margin-top: 120px;
+      font-size: 0;
+    }
+    .coffee_money{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .coffee_title{
+      width: 100%;
+      padding-top: 97px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      font-size: 36px;
+      line-height: 100%;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .hands{
+      width: 753px;
+      margin: 30px auto 0px;
+      display: flex;
+      flex-wrap: nowrap;
+      text-align: center;
+    }
+    .hands_img{
+      max-height: 612px;
+      margin-left: calc((100% - 784px) / 2);
+    }
+    .one_two_three_line{
+      max-width: 601px;
+      margin-top: 70px;
+    }
+    .hand_header_1{
+      width: 182px;
+      line-height: 100%;
+      font-size: 24px;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 10px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_header_2{
+      width: 280px;
+      font-size: 24px;
+      line-height: 100%;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 10px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_header_3{
+      width: 182px;
+      font-size: 24px;
+      line-height: 100%;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 10px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text_1{
+      text-align: center;
+      color: black;
+      font-size: 16px;
+      width: 182px; 
+      height: 92px;
+      margin-bottom: 20px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text_2{
+      text-align: center;
+      color: black;
+      font-size: 16px;
+      height: 92px;
+      width: 280px; 
+      margin-bottom: 20px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text_3{
+      text-align: center;
+      color: black;
+      font-size: 16px;
+      width: 182px; 
+      height: 92px;
+      margin-bottom: 20px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_img_1{
+      height: 761px;
+      margin-left: 60px;
+    }
+    .hand_img_2{
+      height: 761px;
+      margin-left: -30px;
+    }
+    .hand_img_3{
+      height: 761px;
+      margin-left: -76px;
+    }
+    .waste{
+      max-width: 1008px;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .warning_img{
+      height: 50px;
+      margin: 120px auto 18px;
+    }
+    .warning_img_btm{
+      margin-top: -5px;
+      margin: -5px auto 0px;
+      width: 62px; 
+      height: 3px; 
+      background-color:black;
+    }
+    .warning_title{
+      font-size: 36px;
+      line-height: 100%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 26px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .warning_text{
+      font-size: 24px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 20px;
+      letter-spacing: 0;
+      font-weight: 300;
+      text-align: center;
+      line-height: 150%;
+      margin-bottom: 0px;
+    }
+    .refund{
+      max-width: 1008px;
+      padding: 0 24px;
+      text-align: center;
+      margin: 120px auto 0px;
+    }
+    .refund_main_div{
+      background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%);
+    }
+    .refund_title{
+      padding-top: 80px;
+      font-size: 32px;
+      line-height: 100%;
+      font-weight: 600;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .refund_text{
+      padding-top: 26px;
+      max-width: 704px;
+      font-size: 22px;
+      line-height: 150%;
+      font-weight: 300;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .refund_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #6478d5 !important;
+      font-weight: 600; 
+    }
+    .refund_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 6px; 
+      padding-bottom: 80px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+    .versus{
+      max-width: 1008px;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .versus_img{
+      height: 50px;
+      margin: 120px auto 18px;
+    }
+    .versus_img_btm{
+      margin-top: -5px;
+      margin: -5px auto 0px;
+      width: 62px; 
+      height: 3px; 
+      background-color:black;
+    }
+    .versus_title{
+      font-size: 36px;
+      line-height: 100%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 26px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_text{
+      font-size: 24px;
+      line-height: 150%;
+      font-weight: 300;
+      padding-top: 20px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_subtitle{
+      font-size: 22px;
+      margin-bottom: 0px;
+      padding-top: 60px;
+      padding-bottom: 20px;
+      line-height: 100%;
+      font-weight: 600;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      width: 100%;
+    }
+    .compare_div{
+      display: flex;
+      flex-wrap: wrap;
+      width: 737px;
+      margin: 0 auto;
+    }
+    .competitor_div{
+      width: calc( 50% - 2px);
+      margin-right: 4px;
+      background-color: #dcdcdc;
+      padding: 16px 20px;
+      text-align: left;
+    }
+    .kunvet_div{
+      width: calc( 50% - 2px);
+      background-color: #ff6969;
+      padding: 16px 20px;
+      text-align: left;
+    }
+    .compare_header{
+      font-size: 14PX;
+      line-height: 100%;
+      font-weight: 600;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+      padding-bottom: 4px;
+    }
+    .compare_text{
+      font-size: 16PX;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+    }
+    .limited{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .limited_main_div{ 
+      max-width: 700px;
+      margin: 120px auto;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
+    }
+    .limited_title{
+      font-size: 32px;
+      line-height: 100%;
+      font-weight: 600;
+      color: #ffffff;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 80px;
+      margin-bottom: 0px;
+      text-align: center;
+    }
+    .limited_text{
+      font-size: 22px;
+      max-width: 520px;
+      margin: 0 auto;
+      color: #ffffff;
+      font-weight: 300;
+      line-height: 150%;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 26px;
+      text-align: center;
+    }
+    .limited_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #ff9090 !important;
+      font-weight: 600; 
+    }
+    .limited_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      padding-bottom: 80px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
+  // css for mobile size
+  @media (min-width: 601px) and (max-width: 800px) {
+    .mobile_hide{
+      display: none !important;
+    }
+    .emp_page_content{
+      margin-top: 144px;
+    }
+    .summary{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .summary_title{
+      padding-top: 30px;
+      font-weight: 600;
+      width: 552px;
+      margin: 0 auto;
+      letter-spacing: 0;
+      line-height: 120%;
+      font-family: proxima-nova, sans-serif;
+      font-size: 40px;
+      color: #FF6969;
+      margin-bottom: 0px;
+    }
+    .summary_text{
+      font-size: 20px;
+      max-width: 552px;
+      margin: 0 auto;
+      line-height: 180%;
+      font-weight: 300;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 20px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .summary_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: #ff6969 !important;
+      margin-top: 40px;
+      font-family: proxima-nova, sans-serif;
+      color: white !important;
+      font-weight: 600; 
+    }
+    .summary_btn_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #000000;
+    }
+    .summary_collage_students{
+      max-width: 552px;
+    }
+    .effective{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .effective_img{
+      height: 44px;
+      margin: 120px auto 16px;
+    }
+    .effective_img_btm{
+      margin: -5px auto 0px;
+      width: 54px; 
+      height: 2.5px; 
+      background-color:black;
+    }
+    .effective_title{
+      padding-top: 26px;
+      line-height: 100%;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 30px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .effective_text{
+      padding-top: 20px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      line-height: 150%;
+      font-size: 22px;
+      margin-bottom: 0px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .logo_style{
+      width: 120px;
+      margin-right: 24px;
+    }
+    .logo_first_row{
+      padding-top: 20px;
+      display: flex;
+      flex-wrap: nowrap;
+      max-width: 552px;
+      margin: 0 auto;
+    }
+    .logo_second_row{
+      padding-top: 30px;
+      display: flex;
+      flex-wrap: nowrap;
+      max-width: 552px;
+      margin: 0 auto;
+    }
+    .testimonials{
+      margin-top: 120px;
+      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+      box-shadow: none;
+    }
+    .test_slide{
+      width: 100%;
+      margin-left: 0px;
+    }
+    .slide_info{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .test_title{
+      line-height: 100%;
+      width: 100%;
+      font-weight: bold;
+      padding-top: 60px;
+      margin-left: 24px; 
+      font-family: proxima-nova, sans-serif; 
+      font-size: 26px;
+      color: white;
+      margin-bottom: 0px;
+    }
+    .test_text{
+      padding-top: 30px;
+      max-width: 100%;
+      width: calc(100% - 25px);
+      font-family: proxima-nova, sans-serif; 
+      font-size: 18px;
+      color: white;
+      line-height: 150%;
+      margin-bottom: 0px;
+      font-weight: 300; 
+    }
+    .quote{
+      font-family: proxima-nova, sans-serif; 
+      color: white;
+      margin-left: 0px;
+      margin-bottom: 0px;
+      margin-top: 6px;
+      font-size: 64px;
+    }
+    .test_undertext{
+      max-width: 100%;
+      width: calc(100% - 24px);
+      padding-left: 25px;
+      font-style: italic;
+      margin-top: 30px;
+      margin-bottom: 40px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 14px; 
+      line-height: 120%; 
+      font-weight: 300; 
+      color: white;
+    }
+    .bio{
+      margin-top: 30px;
+      padding-left: 25px;
+      width: 100%;
+      display: flex;
+      align-content: flex-end;
+    }
+    .bio_img{
+      height: 60px;
+      width: 60px;
+      margin-top: auto;
+    }
+    .bio_text_div{
+      padding-left: 20px;
+      height: auto;
+      margin-top: auto;
+      vertical-align: bottom;
+    }
+    .bio_header{
+      padding-top: 0px;
+      font-size: 14px;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      font-weight: 600;
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .bio_text{
+      font-size: 14px;
+      padding-top: 8px;
+      font-weight: 300;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .faq{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .faq_img{
+      height: 44px;
+      margin: 120px auto 16px;
+    }
+    .faq_img_btm{
+      margin: -5px auto 0px;
+      width: 54px; 
+      height: 2.5px; 
+      background-color:black;
+    }
+    .faq_title{
+      padding-top: 26px;
+      line-height: 100%;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 30px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .faq_text{
+      padding-top: 20px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      line-height: 150%;
+      font-size: 22px;
+      margin-bottom: 0px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .faq_question_div{
+      width: 460px;
+      height: 62px; 
+      margin: 10px auto 0px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      padding: 23px 32px 0px;  
+      cursor: pointer;
+      text-align: left;
+      align-items: center;
+    }
+    .faq_question_div_sel{
+      width: 460px;
+      margin: 10px auto 0px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border: 1px solid black;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      padding: 32px 32px 40px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .faq_answer_title{
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      font-size: 16px;
+      line-height: 100%;
+      font-weight: 600;
+      float: left;
+    }
+    .faq_answer_title_sel{
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      font-size: 28px;
+      line-height: 130%;
+      letter-spacing: 0;
+      font-weight: 600;
+    }
+    .faq_plus{
+      width: 10px;
+      float: right;
+    }
+    .faq_answers_text{
+      padding-top: 20px;
+      padding-right: 0px;
+      margin-bottom: 0px;
+      font-size: 16px;
+      font-weight: normal;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hands{
+      max-width: 100%;
+      margin: 120px auto 0px;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    .coffee_title{
+      padding-top: 88.5px;
+      padding-bottom: 70px;
+      margin-bottom: 0px;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;  
+      text-align: center;
+      font-size: 30px;
+      color: black;
+    }
+    .nums{
+      height: 34px;
+      width: 34px;
+      z-index: 100;
+    }
+    .num_bar_container{
+      height: 34px;
+    }
+    .blackbar_p1{
+      height: 2px;
+      background-color: black;
+      width: 50%;
+      margin-left: 50%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .blackbar_p2{
+      height: 2px;
+      background-color: black;
+      width: 100%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .blackbar_p3{
+      height: 2px;
+      background-color: black;
+      width: 50%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .hand_header{
+      font-size: 24px;
+      padding-top: 30px;
+      line-height: 100%;
+      letter-spacing: 0;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 0px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text{
+      color: black;
+      font-size: 16px;
+      max-width: 552px;
+      margin: 10px auto 20px;
+      line-height: 150%;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .single_hand{
+      max-height: 612px;
+    }
+    .waste{
+      max-width: 100%;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .warning_img{
+      height: 44px;
+      margin: 120px auto 16px;
+    }
+    .warning_img_btm{
+      margin: -5px auto 0px;
+      width: 54px; 
+      height: 2.5px; 
+      background-color:black;
+    }
+    .warning_title{
+      font-size: 30px;
+      line-height: 100%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 26px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .warning_text{
+      font-size: 22px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 20px;
+      letter-spacing: 0;
+      font-weight: 300;
+      text-align: center;
+      line-height: 150%;
+      margin-bottom: 0px;
+    }
+    .refund{
+      max-width: 100% ;
+      padding: 0 24px;
+      text-align: center;
+      margin: 120px auto 0px;
+    }
+    .refund_main_div{
+      background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%);
+    }
+    .refund_title{
+      padding-top: 60px;
+      font-size: 28px;
+      line-height: 100%;
+      font-weight: 600;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .refund_text{
+      padding: 20px 24px 0px;
+      font-size: 20px;
+      line-height: 150%;
+      font-weight: 300;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .refund_btn{
+      width: 170px;
+      height: 62px !important;
+      line-height: 62px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #6478d5 !important;
+      font-weight: 600; 
+    }
+    .refund_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      padding-bottom: 60px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+    .versus{
+      max-width: 100%;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .versus_img{
+      height: 44px;
+      margin: 120px auto 16px;
+    }
+    .versus_img_btm{
+      margin-top: -5px;
+      margin: -5px auto 0px;
+      width: 54px; 
+      height: 2.5px; 
+      background-color:black;
+    }
+    .versus_title{
+      font-size: 30px;
+      line-height: 100%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 26px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_text{
+      font-size: 22px;
+      line-height: 150%;
+      font-weight: 300;
+      padding-top: 20px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_subtitle{
+      font-size: 20px;
+      margin-bottom: 0px;
+      padding-top: 50px;
+      padding-bottom: 20px;
+      line-height: 100%;
+      font-weight: 600;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      width: 100%;
+    }
+    .compare_div{
+      width: 100%;
+    }
+    .competitor_div{
+      width: 460px;
+      background-color: #dcdcdc;
+      padding: 16px 20px;
+      text-align: left;
+      margin: 0px auto 4px;
+    }
+    .kunvet_div{
+      width: 460px;
+      background-color: #ff6969;
+      padding: 16px 20px;
+      text-align: left;
+      margin: 0 auto;
+    }
+    .compare_header{
+      font-size: 14PX;
+      line-height: 100%;
+      font-weight: 600;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+      padding-bottom: 4px;
+    }
+    .compare_text{
+      font-size: 16PX;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+    }
+    .limited{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .limited_main_div{ 
+      max-width: 460px;
+      margin: 120px auto 0;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
+    }
+    .limited_title{
+      font-size: 26px;
+      line-height: 100%;
+      font-weight: 600;
+      color: #ffffff;
+      font-family: proxima-nova, sans-serif;
+      padding: 60px 34px 0px;
+      margin-bottom: 0px;
+      text-align: center;
+    }
+    .limited_text{
+      font-size: 18px;
+      margin: 0 auto;
+      color: #ffffff;
+      font-weight: 300;
+      line-height: 150%;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      padding: 20px 24px 0px;
+      text-align: center;
+    }
+    .limited_btn{
+      width: 170px;
+      height: 62px !important;
+      line-height: 62px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #ff9090 !important;
+      font-weight: 600; 
+    }
+    .limited_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      padding-bottom: 60px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
 
-.image {
-  display: block;
-  width: 50%;
-  margin: 0 auto;
-}
+  // css for small size
+  @media (min-width: 451px) and (max-width: 600px) {
+    .small_hide{
+      display: none !important;
+    }
+    .emp_page_content{
+      margin-top: 120px;
+    }
+    .summary{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0;
+    }
+    .summary_title{
+      padding-top: 30px;
+      font-weight: 600;
+      max-width: 552px;
+      margin: 0 auto;
+      letter-spacing: 0;
+      line-height: 120%;
+      font-family: proxima-nova, sans-serif;
+      font-size: 36px;
+      color: #FF6969;
+      margin-bottom: 0px;
+    }
+    .summary_text{
+      font-size: 20px;
+      max-width: 552px;
+      margin: 0 auto;
+      line-height: 180%;
+      font-weight: 300;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 20px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .summary_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: #ff6969 !important;
+      margin-top: 40px;
+      font-family: proxima-nova, sans-serif;
+      color: white !important;
+      font-weight: 600; 
+    }
+    .summary_btn_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #000000;
+    }
+    .summary_collage_students{
+      width: 100%;
+    }
+    .effective{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .effective_img{
+      height: 40px;
+      margin: 100px auto 14px;
+    }
+    .effective_img_btm{
+      margin: -5px auto 0px;
+      width: 48px; 
+      height: 2px; 
+      background-color:black;
+    }
+    .effective_title{
+      padding-top: 26px;
+      line-height: 120%;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 28px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .effective_text{
+      padding-top: 20px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      line-height: 150%;
+      font-size: 20px;
+      margin-bottom: 0px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .logo_style{
+      width: 126px;
+      margin-right: 50px;
+      margin-top: 30px;
+    }
+    .logos_row{
+      padding-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 302px;
+      margin: 0 auto;
+    }
+    .testimonials{
+      margin-top: 100px;
+      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+      box-shadow: none;
+    }
+    .test_slide{
+      width: 100%;
+      margin-left: 0px;
+    }
+    .slide_info{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .test_title{
+      line-height: 120%;
+      width: 100%;
+      font-weight: bold;
+      padding-top: 60px;
+      margin-left: 24px; 
+      font-family: proxima-nova, sans-serif; 
+      font-size: 26px;
+      color: white;
+      margin-bottom: 0px;
+    }
+    .test_text{
+      padding-top: 30px;
+      max-width: 100%;
+      width: calc(100% - 25px);
+      font-family: proxima-nova, sans-serif; 
+      font-size: 18px;
+      color: white;
+      line-height: 150%;
+      margin-bottom: 0px;
+      font-weight: 300; 
+    }
+    .quote{
+      font-family: proxima-nova, sans-serif; 
+      color: white;
+      margin-left: 0px;
+      margin-bottom: 0px;
+      margin-top: 6px;
+      font-size: 64px;
+    }
+    .test_undertext{
+      max-width: 100%;
+      width: calc(100% - 24px);
+      padding-left: 25px;
+      font-style: italic;
+      margin-top: 30px;
+      margin-bottom: 40px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 14px; 
+      line-height: 120%; 
+      font-weight: 300; 
+      color: white;
+    }
+    .bio{
+      margin-top: 30px;
+      padding-left: 25px;
+      width: 100%;
+      display: flex;
+      align-content: flex-end;
+    }
+    .bio_img{
+      height: 60px;
+      width: 60px;
+      margin-top: auto;
+    }
+    .bio_text_div{
+      padding-left: 20px;
+      height: auto;
+      margin-top: auto;
+      vertical-align: bottom;
+    }
+    .bio_header{
+      padding-top: 0px;
+      font-size: 14px;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      font-weight: 600;
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .bio_text{
+      font-size: 14px;
+      padding-top: 8px;
+      font-weight: 300;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .faq{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .faq_img{
+      height: 40px;
+      margin: 100px auto 14px;
+    }
+    .faq_img_btm{
+      margin: -5px auto 0px;
+      width: 48px; 
+      height: 2px; 
+      background-color:black;
+    }
+    .faq_title{
+      padding-top: 26px;
+      line-height: 120%;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 28px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .faq_text{
+      padding-top: 20px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      line-height: 150%;
+      font-size: 20px;
+      margin-bottom: 0px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .faq_question_div{
+      width: 100%;
+      max-width: 460px;
+      height: 62px; 
+      margin: 10px auto 0px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      padding: 23px 24px 0px;  
+      cursor: pointer;
+      text-align: left;
+      align-items: center;
+    }
+    .faq_question_div_sel{
+      width: 100%;
+      max-width: 460px;
+      margin: 10px auto 0px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border: 1px solid black;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      padding: 24px 24px 32px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .faq_answer_title{
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      font-size: 16px;
+      line-height: 100%;
+      font-weight: 600;
+      float: left;
+    }
+    .faq_answer_title_sel{
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      font-size: 28px;
+      line-height: 130%;
+      letter-spacing: 0;
+      font-weight: 600;
+    }
+    .faq_plus{
+      width: 10px;
+      float: right;
+    }
+    .faq_answers_text{
+      padding-top: 20px;
+      padding-right: 0px;
+      margin-bottom: 0px;
+      font-size: 16px;
+      font-weight: normal;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hands{
+      max-width: 100%;
+      margin: 100px auto 0px;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    .coffee_title{
+      padding-top: 82px;
+      padding-bottom: 60px;
+      margin-bottom: 0px;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;  
+      text-align: center;
+      font-size: 28px;
+      color: black;
+    }
+    .nums{
+      height: 34px;
+      width: 34px;
+      z-index: 100;
+    }
+    .num_bar_container{
+      height: 34px;
+    }
+    .blackbar_p1{
+      height: 2px;
+      background-color: black;
+      width: 50%;
+      margin-left: 50%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .blackbar_p2{
+      height: 2px;
+      background-color: black;
+      width: 100%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .blackbar_p3{
+      height: 2px;
+      background-color: black;
+      width: 50%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .hand_header{
+      font-size: 24px;
+      padding-top: 30px;
+      line-height: 100%;
+      letter-spacing: 0;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 0px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text{
+      color: black;
+      font-size: 16px;
+      width: 100%;
+      padding: 0 24px;
+      margin: 10px auto 20px;
+      line-height: 150%;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .single_hand{
+      max-height: 612px;
+    }
+    .waste{
+      max-width: 100%;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .warning_img{
+      height: 40px;
+      margin: 100px auto 14px;
+    }
+    .warning_img_btm{
+      margin: -5px auto 0px;
+      width: 48px; 
+      height: 2px; 
+      background-color:black;
+    }
+    .warning_title{
+      font-size: 28px;
+      line-height: 120%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 26px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .warning_text{
+      font-size: 20px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 20px;
+      letter-spacing: 0;
+      font-weight: 300;
+      text-align: center;
+      line-height: 150%;
+      margin-bottom: 0px;
+    }
+    .refund{
+      max-width: 100% ;
+      padding: 0 24px;
+      text-align: center;
+      margin: 100px auto 0px;
+    }
+    .refund_main_div{
+      background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%);
+    }
+    .refund_title{
+      padding: 60px 24px 0px;
+      font-size: 26px;
+      line-height: 120%;
+      font-weight: 600;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .refund_text{
+      padding: 20px 24px 0px;
+      font-size: 18px;
+      line-height: 150%;
+      font-weight: 300;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .refund_btn{
+      width: 170px;
+      height: 62px !important;
+      line-height: 62px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #6478d5 !important;
+      font-weight: 600; 
+    }
+    .refund_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      padding-bottom: 60px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+    .versus{
+      max-width: 100%;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .versus_img{
+      height: 40px;
+      margin: 100px auto 14px;
+    }
+    .versus_img_btm{
+      margin-top: -5px;
+      margin: -5px auto 0px;
+      width: 48px; 
+      height: 2px; 
+      background-color:black;
+    }
+    .versus_title{
+      font-size: 28px;
+      line-height: 120%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 26px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_text{
+      font-size: 20px;
+      line-height: 150%;
+      font-weight: 300;
+      padding-top: 20px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_subtitle{
+      font-size: 18px;
+      margin-bottom: 0px;
+      padding-top: 50px;
+      padding-bottom: 20px;
+      line-height: 100%;
+      font-weight: 600;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      width: 100%;
+    }
+    .compare_div{
+      width: 100%;
+    }
+    .competitor_div{
+      width: 100%;
+      max-width: 460px;
+      background-color: #dcdcdc;
+      padding: 16px 20px;
+      text-align: left;
+      margin: 0px auto 4px;
+    }
+    .kunvet_div{
+      width: 100%;
+      max-width: 460px;
+      background-color: #ff6969;
+      padding: 16px 20px;
+      text-align: left;
+      margin: 0 auto;
+    }
+    .compare_header{
+      font-size: 14px;
+      line-height: 100%;
+      font-weight: 600;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+      padding-bottom: 4px;
+    }
+    .compare_text{
+      font-size: 16px;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+    }
+    .limited{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .limited_main_div{ 
+      max-width: 700px;
+      margin: 100px auto;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
+    }
+    .limited_title{
+      font-size: 26px;
+      line-height: 120%;
+      font-weight: 600;
+      color: #ffffff;
+      font-family: proxima-nova, sans-serif;
+      padding: 60px 34px 0px;
+      margin-bottom: 0px;
+      text-align: center;
+    }
+    .limited_text{
+      font-size: 18px;
+      margin: 0 auto;
+      color: #ffffff;
+      font-weight: 300;
+      line-height: 150%;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      padding: 20px 24px 0px;
+      text-align: center;
+    }
+    .limited_btn{
+      width: 170px;
+      height: 62px !important;
+      line-height: 62px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #ff9090 !important;
+      font-weight: 600; 
+    }
+    .limited_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      padding-bottom: 60px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
 
-.fakebtn {
-  pointer-events: none;
-  border: 1px solid #616161;
-  color: #616161;
-}
+  // css for xsmall size
+  @media (max-width: 451px) {
+    .xs_hide{
+      display: none !important;
+    }
+    .emp_page_content{
+      margin-top: 84px;
+    }
+    .summary{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0;
+    }
+    .summary_title{
+      padding-top: 30px;
+      font-weight: 600;
+      max-width: 552px;
+      margin: 0 auto;
+      letter-spacing: 0;
+      line-height: 120%;
+      font-family: proxima-nova, sans-serif;
+      font-size: 32px;
+      color: #FF6969;
+      margin-bottom: 0px;
+    }
+    .summary_text{
+      font-size: 18px;
+      max-width: 552px;
+      margin: 0 auto;
+      line-height: 180%;
+      font-weight: 300;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 20px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .summary_btn{
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: #ff6969 !important;
+      margin-top: 40px;
+      font-family: proxima-nova, sans-serif;
+      color: white !important;
+      font-weight: 600; 
+    }
+    .summary_btn_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #000000;
+    }
+    .summary_collage_students{
+      width: 100%;
+    }
+    .effective{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .effective_img{
+      height: 40px;
+      margin: 80px auto 14px;
+    }
+    .effective_img_btm{
+      margin: -5px auto 0px;
+      width: 48px; 
+      height: 2px; 
+      background-color:black;
+    }
+    .effective_title{
+      padding-top: 22px;
+      line-height: 120%;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 24px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .effective_text{
+      padding-top: 18px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      line-height: 150%;
+      font-size: 18px;
+      margin-bottom: 0px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .logo_style{
+      width: 110px;
+      margin-right: 50px;
+      margin-top: 30px;
+    }
+    .logos_row{
+      padding-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+    .testimonials{
+      margin-top: 80px;
+      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+      box-shadow: none;
+    }
+    .test_slide{
+      width: 100%;
+      margin-left: 0px;
+    }
+    .slide_info{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .test_title{
+      line-height: 100%;
+      width: 100%;
+      font-weight: bold;
+      padding-top: 50px;
+      margin-left: 24px; 
+      font-family: proxima-nova, sans-serif; 
+      font-size: 24px;
+      color: white;
+      margin-bottom: 0px;
+    }
+    .test_text{
+      padding-top: 24px;
+      max-width: 100%;
+      width: calc(100% - 25px);
+      font-family: proxima-nova, sans-serif; 
+      font-size: 18px;
+      color: white;
+      line-height: 150%;
+      margin-bottom: 0px;
+      font-weight: 300; 
+    }
+    .quote{
+      font-family: proxima-nova, sans-serif; 
+      color: white;
+      margin-left: 0px;
+      margin-bottom: 0px;
+      margin-top: 6px;
+      font-size: 64px;
+    }
+    .test_undertext{
+      max-width: 100%;
+      width: calc(100% - 24px);
+      padding-left: 25px;
+      font-style: italic;
+      margin-top: 30px;
+      margin-bottom: 40px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 14px; 
+      line-height: 120%; 
+      font-weight: 300; 
+      color: white;
+    }
+    .bio{
+      margin-top: 30px;
+      padding-left: 25px;
+      width: 100%;
+      display: flex;
+      align-content: flex-end;
+    }
+    .bio_img{
+      height: 60px;
+      width: 60px;
+      margin-top: auto;
+    }
+    .bio_text_div{
+      padding-left: 20px;
+      height: auto;
+      margin-top: auto;
+      vertical-align: bottom;
+    }
+    .bio_header{
+      padding-top: 0px;
+      font-size: 14px;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      font-weight: 600;
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .bio_text{
+      font-size: 14px;
+      padding-top: 8px;
+      font-weight: 300;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .faq{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .faq_img{
+      height: 40px;
+      margin: 100px auto 14px;
+    }
+    .faq_img_btm{
+      margin: -5px auto 0px;
+      width: 48px; 
+      height: 2px; 
+      background-color:black;
+    }
+    .faq_title{
+      padding-top: 22px;
+      line-height: 120%;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      font-size: 24px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .faq_text{
+      padding-top: 18px;
+      font-family: proxima-nova, sans-serif; 
+      text-align: center;
+      line-height: 150%;
+      font-size: 18px;
+      margin-bottom: 0px;
+      color: black;
+      margin-bottom: 0px;
+    }
+    .faq_question_div{
+      width: 100%;
+      max-width: 402px;
+      min-height: 62px; 
+      margin: 10px auto 0px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      padding: 23px 24px 23px;  
+      cursor: pointer;
+      text-align: left;
+      align-items: center;
+      display: flex;
+      flex-wrap: nowrap;
+    }
+    .faq_question_div_sel{
+      width: 100%;
+      max-width: 402px;
+      margin: 10px auto 0px;
+      box-shadow: #cccccc 0px 1px 1px;
+      border: 1px solid black;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      padding: 24px 24px 32px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .faq_answer_title{
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      width: calc(100% - 24px);
+      font-size: 16px;
+      line-height: 120%;
+      font-weight: 600;
+    }
+    .faq_answer_title_sel{
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      font-size: 28px;
+      line-height: 130%;
+      letter-spacing: 0;
+      font-weight: 600;
+    }
+    .faq_plus{
+      width: 10px;
+      margin-top: 4.25px;
+      margin-bottom: auto;
+    }
+    .faq_answers_text{
+      padding-top: 20px;
+      padding-right: 0px;
+      margin-bottom: 0px;
+      font-size: 16px;
+      font-weight: normal;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hands{
+      max-width: 100%;
+      margin: 80px auto 0px;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    .coffee_title{
+      padding-top: 78px;
+      padding-bottom: 60px;
+      margin-bottom: 0px;
+      line-height: 120%;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;  
+      text-align: center;
+      font-size: 24px;
+      color: black;
+    }
+    .nums{
+      height: 34px;
+      width: 34px;
+      z-index: 100;
+    }
+    .num_bar_container{
+      height: 34px;
+    }
+    .blackbar_p1{
+      height: 2px;
+      background-color: black;
+      width: 50%;
+      margin-left: 50%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .blackbar_p2{
+      height: 2px;
+      background-color: black;
+      width: 100%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .blackbar_p3{
+      height: 2px;
+      background-color: black;
+      width: 50%;
+      margin-top: -24px;
+      z-index: 1;
+    }
+    .hand_header{
+      font-size: 24px;
+      padding-top: 30px;
+      line-height: 120%;
+      letter-spacing: 0;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 0px;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .hand_text{
+      color: black;
+      font-size: 16px;
+      width: 100%;
+      padding: 0 24px;
+      margin: 10px auto 20px;
+      line-height: 150%;
+      font-family: proxima-nova, sans-serif; 
+    }
+    .single_hand{
+      max-height: 612px;
+    }
+    .waste{
+      max-width: 100%;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .warning_img{
+      height: 40px;
+      margin: 80px auto 14px;
+    }
+    .warning_img_btm{
+      margin: -5px auto 0px;
+      width: 48px; 
+      height: 2px; 
+      background-color:black;
+    }
+    .warning_title{
+      font-size: 24px;
+      line-height: 120%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 22px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .warning_text{
+      font-size: 18px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 18px;
+      letter-spacing: 0;
+      font-weight: 300;
+      text-align: center;
+      line-height: 150%;
+      margin-bottom: 0px;
+    }
+    .refund{
+      max-width: 100% ;
+      padding: 0 24px;
+      text-align: center;
+      margin: 80px auto 0px;
+    }
+    .refund_main_div{
+      background-image: linear-gradient(to right, #7F7FD5 0%, #86A8E7 51%, #8AB4FF 100%);
+    }
+    .refund_title{
+      padding: 50px 24px 0px;
+      font-size: 24px;
+      line-height: 120%;
+      font-weight: 600;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .refund_text{
+      padding: 18px 24px 0px;
+      font-size: 18px;
+      line-height: 150%;
+      font-weight: 300;
+      color:  #ffffff;
+      font-family: proxima-nova, sans-serif;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .refund_btn{
+      width: 170px;
+      height: 62px !important;
+      line-height: 62px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #6478d5 !important;
+      font-weight: 600; 
+    }
+    .refund_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      padding-bottom: 60px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+    .versus{
+      max-width: 100%;
+      padding: 0 24px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .versus_img{
+      height: 40px;
+      margin: 80px auto 14px;
+    }
+    .versus_img_btm{
+      margin-top: -5px;
+      margin: -5px auto 0px;
+      width: 48px; 
+      height: 2px; 
+      background-color:black;
+    }
+    .versus_title{
+      font-size: 24px;
+      line-height: 120%;
+      color: black;
+      font-weight: bold;
+      font-family: proxima-nova, sans-serif;
+      padding-top: 22px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_text{
+      font-size: 18px;
+      line-height: 150%;
+      font-weight: 300;
+      padding-top: 18px;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+    .versus_subtitle{
+      font-size: 18px;
+      margin-bottom: 0px;
+      padding-top: 50px;
+      padding-bottom: 20px;
+      line-height: 120%;
+      font-weight: 600;
+      color: black;
+      font-family: proxima-nova, sans-serif;
+      text-align: center;
+      width: 100%;
+    }
+    .compare_div{
+      width: 100%;
+    }
+    .competitor_div{
+      width: 100%;
+      max-width: 460px;
+      background-color: #dcdcdc;
+      padding: 16px 20px;
+      text-align: left;
+      margin: 0px auto 4px;
+    }
+    .kunvet_div{
+      width: 100%;
+      max-width: 460px;
+      background-color: #ff6969;
+      padding: 16px 20px;
+      text-align: left;
+      margin: 0 auto;
+    }
+    .compare_header{
+      font-size: 14px;
+      line-height: 100%;
+      font-weight: 600;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+      padding-bottom: 4px;
+    }
+    .compare_text{
+      font-size: 16px;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0px;
+      color: #505050;
+    }
+    .limited{
+      max-width: 100%;
+      padding: 0 24px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .limited_main_div{ 
+      max-width: 460px;
+      margin: 80px auto;
+      background-image: url('~@/assets/hire/discount-background.png');
+      background-size: 100% 100%;
+    }
+    .limited_title{
+      font-size: 26px;
+      line-height: 120%;
+      font-weight: 600;
+      color: #ffffff;
+      font-family: proxima-nova, sans-serif;
+      padding: 60px 34px 0px;
+      margin-bottom: 0px;
+      text-align: center;
+    }
+    .limited_text{
+      font-size: 18px;
+      margin: 0 auto;
+      color: #ffffff;
+      font-weight: 300;
+      line-height: 150%;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      padding: 20px 24px 0px;
+      text-align: center;
+    }
+    .limited_btn{
+      width: 170px;
+      height: 62px !important;
+      line-height: 62px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+      margin-top: 40px;
+      color: #ff9090 !important;
+      font-weight: 600; 
+    }
+    .limited_undertext{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 300; 
+      padding-top: 8px; 
+      padding-bottom: 60px;
+      line-height: 100%;
+      font-size: 14px; 
+      margin-bottom: 0px;
+      margin-top: -6px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .medium_show{
+      display: none !important;
+    }
+  }
+  @media (min-width: 801px) {
+    .mobile_show{
+      display: none !important;
+    }
+  }
+  @media (min-width: 601px) {
+    .small_show{
+      display: none !important;
+    }
+  }
+  @media (min-width: 451px) {
+    .xs_show{
+      display: none !important;
+    }
+  }
 </style>
 <template>
-  <v-container fluid class="pa-0" style="max-width: 100%; font-size: 1.2em;">
-    <v-layout row wrap class="panel px-3 py-5">
-      <div style="max-width: 960px; margin: 0 auto;">
-        <h2 class="black--text display-1 py-3">
-          We're glad you're here
-        </h2>
-        <p style="color: #333;">
-          Kunvet is designed for students/gradutes, smaller organizations and personal hirings. It's free.
-        </p>
-
-        <h2 class="black--text display-1 py-3">
-          Can I post on Kunvet?
-        </h2>
-        <p style="color: #333;">
-          As long as you are requesting for help from students/graduates or offering opportunities that allow students to learn and build experience, you can post on Kunvet.
-        </p>
-      </div>
-    </v-layout>
-
-    <v-container fluid class="panel py-5">
-      <v-layout row wrap justify-center>
-        <v-flex xs12 md5 lg4 xl3 v-for="(type, index) in accountTypes" :key="index">
-          <div class="ma-2">
-            <v-card class="white pa-3">
-              <img :src="type.image" class="image">
-              <v-card-title class="headline">
-                {{ type.title }}
-              </v-card-title>
-              <v-card-text style="padding-top: 8px;">
-                {{ type.description }}
-                <p style="margin-bottom: 8px; color: rgb(150, 148, 148);">For example...</p>
-                <ul>
-                  <li v-for="scenario of type.scenarios">{{ scenario }}</li>
-                </ul>
-              </v-card-text>
-            </v-card>
-            <v-btn dark block class="kunvet-red-bg" :to="type.to">
-              {{ type.actionText }}
-            </v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
-
-      <v-layout row wrap>
-        <div style="max-width: 960px; margin: 0 auto; text-align: center;">
-          <h2 class="black--text display-1 py-3">
-            What if I change my mind later?
-          </h2>
-          <p>
-            Kunvet has a flexible system. You can create an organization page whenever you’re ready.
-          </p>
-          <p>
-            Just click <v-btn small flat outline class="fakebtn">Create Organization</v-btn> under your profile page.
-          </p>
+  
+  <div class="employer_page">
+    <h1 style="width: 1px; height: 1px; color: white; font-size: 1px;">Employer Post a Job</h1>
+    <!-- regular size -->
+    <div class="emp_page_content medium_hide mobile_hide small_hide xs_hide">
+      <div class="summary">
+        <div class="summary_text_div">
+          <h2 class="summary_title">How to find the right person with almost no cost?</h2>
+          <p class="summary_text">Finding the right person can be painless and costless—only if you choose the right tool. 
+            Designed for local hiring, Kunvet can save you time and money on your next hire.</p>
+          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
+          <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
-      </v-layout>
-    </v-container>
-
-    <v-layout row wrap class="panel px-3 py-5">
-      <div style="width: 960px; max-width: 960px; margin: 0 auto;">
-        <h2 class="black--text display-1 py-3" style="text-align: center;">
-          How does it work?
-        </h2>
-        <p>
-          It's as easy as 1, 2, 3!
-        </p>
-        <ol>
-          <li>Create an account</li>
-          <li>Post a job and choose how you want to receive application:</li>
-            <ul class="pl-3">
-              <li>receive resumes on Kunvet</li>
-              <li>or use your existing Google Form</li>
-              <li>or ask them to send their resume to your email</li>
-            </ul>
-          </li>
-          <li>That's it!</li>
-        </ol>
-        <p>
-          Note: your job expires in a month. If you’re still hiring, click <v-btn small flat outline class="fakebtn">Repost</v-btn> for that job. We do this because we want to make sure students are always looking at the latest job in the market.
-        </p>
+        <img class="summary_collage_students" :src="pngs.students">
       </div>
-    </v-layout>
-  </v-container>
+      <div class="effective">
+        <img class="effective_img" :src="svgs.gas">
+        <div class="effective_img_btm"></div>
+        <h2 class="effective_title">How Effective is Kunvet?</h2>
+        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet. 
+          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
+           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title" style="padding-top: 70px; font-size: 24px;">Some of Our Returning Employers</h2>
+        <div class="logo_first_row">
+        <img class="logo_style" :src="pngs.coderschool">
+        <img class="logo_style" :src="pngs.prolite">
+        <img class="logo_style" :src="pngs.readingtown">
+        <img class="logo_style" style="margin-right: 0px;" :src="pngs.cygolite">
+        </div>
+        <div class="logo_second_row">
+        <img class="logo_style" :src="pngs.conroys">
+        <img class="logo_style" :src="pngs.seacrest">
+        <img class="logo_style" :src="pngs.banban">
+        <img class="logo_style" style="margin-right: 0px;" :src="pngs.newportpark">
+        </div>
+      </div>
+      <div style="width: 100%;">
+        <v-carousel class="hire_monials testimonials" cycle interval="6000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
+                helped us find many talented and enthusiastic candidates
+                from Orange County to serve as our Code Coaches. The
+                quality of the resumes of those who applied through
+                Kunvet exceeded our expectations. We’re grateful to the
+                Kunvet site organizers for providing this valuable service!</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.mark"/>
+                <p class="bio_header">Mark Freedkin</p>
+                <p class="bio_text">General Manager</p>
+                <p class="bio_text">of theCoderSchool - Irvine</p>
+              </div>
+              <p class="test_undertext"> — <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" 
+                style="text-decoration: underline; cursor: pointer;">theCoderSchool at Irvine</a>
+                 offers a specialized after-school enrichment program that teaches young students (ages 7-18) how to write 
+                computer software.</p>
+            </div>
+            <div style="height: 60px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :) 
+                My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
+                 We've also spent plenty of money on other websites already but didn’t find who we are looking for. 
+                 Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.ally"/>
+                <p class="bio_header">Ally Zeng</p>
+                <p class="bio_text">Organizer</p>
+                <p class="bio_text">of IA Christian Church</p>
+              </div>
+            </div>
+            <div style="height: 200px;"/>
+          </v-carousel-item>
+        </v-carousel>
+      </div>
+      <div class="faq">
+        <img class="faq_img" :src="svgs.faq">
+        <div class="faq_img_btm"/>
+        <h2 class="faq_title">What is Kunvet?</h2>
+        <p class="faq_text">Simply put, Kunvet is a professional job website made for local hiring.
+           Unlike other job websites, we want to help you find the right person efficiently in your local area.</p>
+        <h2 class="faq_title" style="padding-top: 70px; font-size: 24px;">Frequently Asked Questions</h2>
+        <div class="faq_box">
+          <div class="faq_questions">
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 1, 'faq_question_div': question_num != 1}" @click="question_num = 1" style="margin-top: 0px;">Is Kunvet right for me?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 2, 'faq_question_div': question_num != 2}" @click="question_num = 2">Is Kunvet a recruiting agency?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 3, 'faq_question_div': question_num != 3}" @click="question_num = 3">How much does it cost to use Kunvet?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 4, 'faq_question_div': question_num != 4}" @click="question_num = 4">What is the refund policy?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 5, 'faq_question_div': question_num != 5}" @click="question_num = 5">How does Kunvet work?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 6, 'faq_question_div': question_num != 6}" @click="question_num = 6">How is Kunvet different from others?</div>
+          </div>
+          <div class="faq_answers">
+            <div class="faq_answers_div" v-if="question_num === 1">
+              <div style=";">
+              <h2 class="faq_answers_title">Is Kunvet right for me?</h2>
+              <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
+                to hire locally.</p>
+              <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
+                process.</p>
+              <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
+                volunteering opportunity are especially popular
+                on Kunvet</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 2">
+              <div style="">
+              <h2 class="faq_answers_title">Is Kunvet a recruiting agency?</h2>
+              <p class="faq_answers_text">No. We are not a recruiting agency.</p>
+              <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
+                come to our website, see your job posting, and apply to it directly</p>
+              <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 3">
+              <div style="">
+              <h2 class="faq_answers_title">How much does it cost to use Kunvet?</h2>
+              <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
+              <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
+                of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
+                different features.</p>
+              <p class="faq_answers_text">To learn more about what each type of the accounts can do, 
+                please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing" target="_blank"> pricing page</router-link></span>.</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 4">
+              <div style="">
+              <h2 class="faq_answers_title">What is the refund policy?</h2>
+              <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
+                If you are not completely satisfied with the service you received, we are glad to issue you a full
+                  refund on your inquiry.</p>
+              <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
+                startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
+                internship, and volunteering</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 5">
+              <div style="">
+              <h2 class="faq_answers_title">How does Kunvet work?</h2>
+              <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
+              <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
+                6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
+                  depend on the type of opportunity you offer.</p>
+              <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email. 
+                You can also find and manage all resumes you have received in your account.</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 6">
+              <div style="">
+              <h2 class="faq_answers_title">How is Kunvet different from other sites?</h2>
+              <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
+                local area.</p>
+              <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
+                effective at the same time</p>
+              <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
+                policy that most competitors cannot match.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how_works">
+        <div class="coffee_money">
+          <h2 class="coffee_title">How Does Kunvet Work?</h2>
+          <div style="text-align: center;"> <img class="one_two_three_line" :src="svgs.stepsDesk"> </div>
+          <div class="hands">
+            <div class="hand_one" style="margin-left: 0px;">
+              <h2 class="hand_header_1">Post a Job</h2>
+              <p class="hand_text_1">It takes only about 5 min to post a job. Each job posting starts at <span style="font-weight:bold;">only 80¢ per day</span>! Cancel anytime.</p>
+            </div>
+            <div class="hand_two" style="margin: 0 120px;">
+              <h2 class="hand_header_2">Review Resumes</h2>
+              <p class="hand_text_2">Applicant’s resume is sent to your email and to your Kunvet account. 
+                If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            </div>
+            <div class="hand_three" style="margin-right: 0px;">
+              <h2 class="hand_header_3">Hire</h2>
+              <p class="hand_text_3">Voila! Starting at <span style="font-weight:bold;">only 80¢ per day</span>, you can explore all the talents near
+                you and pick your ideal hire.</p>
+            </div>
+          </div>
+          <img class="hands_img" :src="pngs.handsDesk">
+        </div>
+      </div>
+      <div class="waste">
+        <img class="warning_img" :src="svgs.warning">
+        <div class="warning_img_btm"/>
+        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
+        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
+           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
+            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day. 
+            If you are not completely satisfied, we will issue a full refund.</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 70px; line-height: 100%;">Is Kunvet Right for Me?</p>
+        <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
+           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
+            try Kunvet now. Stop wasting your time and money on hiring.</p>
+      </div>
+      <div class="refund">
+        <h2 class="refund_title">Full Refund. No Question Asked.</h2>
+        <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
+          the service you have received, get a <span style="font-weight:bold;">full refund</span> immediately on your inquiry.
+          No question will be asked. Click on the button below, and start hiring now.</p>
+        <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
+        <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
+      </div>
+      <div class="versus">
+        <img class="versus_img" :src="svgs.versus">
+        <div class="versus_img_btm"/>
+
+        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
+        <p class="versus_text">See it for yourself why you should be using Kunvet now, 
+          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>        
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Most job websites in the market are heavily used by large
+              enterprises for nationwide hiring. These websites are pretty
+              effective for this purpose.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Local Hiring for Local Employers</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Your job will most likely be pushed aside by jobs from large
+              companies, which have hundreds of openings every day.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">
+              Our website is completely designed for local businesses
+              that are hiring locally. Every local employer’s voice will be
+              heard equally.
+            </p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Real Customer Support</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Plenty of companies only offer imited support. Some
+              companies do not offer any real support.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
+              are nice, polite people.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Pricing Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Some offer unintuitive pricing model such as “click bids”.
+              Some offer “job slots” that charges you every month,
+              regardless whether you are hiring or not.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Refund Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Refunds that take 3 - 5 business days to process. Get ready
+              to be bombard with questions before you can see a penny.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="limited">
+        <div class="limited_main_div">
+          <h2 class="limited_title">Limited Offer for Businesses</h2>
+          <p class="limited_text">If you create a business account today, you can access all the employer features
+             on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 18px;">Post a Job</span></k-btn>
+          <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Ipad size -->
+    <div class="emp_page_content medium_show mobile_hide small_hide xs_hide">
+      <div class="summary">
+        <div class="summary_text_div">
+          <h2 class="summary_title">How to find the right person with almost no cost?</h2>
+          <p class="summary_text">Finding the right person can be painless and costless—only if you choose the right tool. 
+            Designed for local hiring, Kunvet can save you time and money on your next hire.</p>
+          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
+          <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+        <img class="summary_collage_students" :src="pngs.students">
+      </div>
+      <div class="effective">
+        <img class="effective_img" :src="svgs.gas">
+        <div class="effective_img_btm"></div>
+        <h2 class="effective_title">How Effective is Kunvet?</h2>
+        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet. 
+          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
+           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title" style="padding-top: 60px; font-size: 24px;">Some of Our Returning Employers</h2>
+        <div class="logo_first_row">
+        <img class="logo_style" :src="pngs.coderschool">
+        <img class="logo_style" :src="pngs.prolite">
+        <img class="logo_style" :src="pngs.readingtown">
+        <img class="logo_style" style="margin-right: 0px;" :src="pngs.cygolite">
+        </div>
+        <div class="logo_second_row">
+        <img class="logo_style" :src="pngs.conroys">
+        <img class="logo_style" :src="pngs.seacrest">
+        <img class="logo_style" :src="pngs.banban">
+        <img class="logo_style" style="margin-right: 0px;" :src="pngs.newportpark">
+        </div>
+      </div>
+      <div style="width: 100%;">
+        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
+                helped us find many talented and enthusiastic candidates
+                from Orange County to serve as our Code Coaches. The
+                quality of the resumes of those who applied through
+                Kunvet exceeded our expectations. We’re grateful to the
+                Kunvet site organizers for providing this valuable service!</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.mark"/>
+                <p class="bio_header">Mark Freedkin</p>
+                <p class="bio_text">General Manager</p>
+                <p class="bio_text">of theCoderSchool - Irvine</p>
+              </div>
+              <p class="test_undertext"> — <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" 
+                style="text-decoration: underline; cursor: pointer;">theCoderSchool at Irvine</a>
+                 offers a specialized after-school enrichment program that teaches young students (ages 7-18) how to write 
+                computer software.</p>
+            </div>
+            <div style="height: 100px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :) 
+                My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
+                 We've also spent plenty of money on other websites already but didn’t find who we are looking for. 
+                 Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.ally"/>
+                <p class="bio_header">Ally Zeng</p>
+                <p class="bio_text">Organizer</p>
+                <p class="bio_text">of IA Christian Church</p>
+              </div>
+            </div>
+            <div style="height: 100px;"/>
+          </v-carousel-item>
+        </v-carousel>
+      </div>
+      <div class="faq">
+        <img class="faq_img" :src="svgs.faq">
+        <div class="faq_img_btm"/>
+        <h2 class="faq_title">What is Kunvet?</h2>
+        <p class="faq_text">Simply put, Kunvet is a professional job website made for local hiring.
+           Unlike other job websites, we want to help you find the right person efficiently in your local area.</p>
+        <h2 class="faq_title" style="padding-top: 44px; font-size: 24px;">Frequently Asked Questions</h2>
+        <div class="faq_box">
+          <div class="faq_questions">
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 1, 'faq_question_div': question_num != 1}" @click="question_num = 1" style="margin-top: 0px;">Is Kunvet right for me?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 2, 'faq_question_div': question_num != 2}" @click="question_num = 2">Is Kunvet a recruiting agency?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 3, 'faq_question_div': question_num != 3}" @click="question_num = 3">How much does it cost to use Kunvet?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 4, 'faq_question_div': question_num != 4}" @click="question_num = 4">What is the refund policy?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 5, 'faq_question_div': question_num != 5}" @click="question_num = 5">How does Kunvet work?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 6, 'faq_question_div': question_num != 6}" @click="question_num = 6">How is Kunvet different from others?</div>
+          </div>
+          <div class="faq_answers">
+            <div class="faq_answers_div" v-if="question_num === 1">
+              <div style="">
+              <h2 class="faq_answers_title">Is Kunvet right for me?</h2>
+              <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
+                to hire locally.</p>
+              <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
+                process.</p>
+              <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
+                volunteering opportunity are especially popular
+                on Kunvet</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 2">
+              <div style="">
+              <h2 class="faq_answers_title">Is Kunvet a recruiting agency?</h2>
+              <p class="faq_answers_text">No. We are not a recruiting agency.</p>
+              <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
+                come to our website, see your job posting, and apply to it directly</p>
+              <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 3">
+              <div style="">
+              <h2 class="faq_answers_title">How much does it cost to use Kunvet?</h2>
+              <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
+              <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
+                of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
+                different features.</p>
+              <p class="faq_answers_text">To learn more about what each type of the accounts can do, 
+                please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing" target="_blank"> pricing page</router-link></span>.</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 4">
+              <div style="">
+              <h2 class="faq_answers_title">What is the refund policy?</h2>
+              <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
+                If you are not completely satisfied with the service you received, we are glad to issue you a full
+                  refund on your inquiry.</p>
+              <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
+                startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
+                internship, and volunteering</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 5">
+              <div style="">
+              <h2 class="faq_answers_title">How does Kunvet work?</h2>
+              <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
+              <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
+                6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
+                  depend on the type of opportunity you offer.</p>
+              <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email. 
+                You can also find and manage all resumes you have received in your account.</p>
+              </div>
+            </div>
+            <div class="faq_answers_div" v-else-if="question_num === 6">
+              <div style="">
+              <h2 class="faq_answers_title">How is Kunvet different from others?</h2>
+              <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
+                local area.</p>
+              <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
+                effective at the same time</p>
+              <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
+                policy that most competitors cannot match.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how_works">
+        <div class="coffee_money">
+          <h2 class="coffee_title">How Does Kunvet Work?</h2>
+          <div style="text-align: center;"> <img class="one_two_three_line" :src="svgs.stepsMed"> </div>
+          <div class="hands">
+            <div class="hand_one" style="margin-left: 0px;">
+              <h2 class="hand_header_1">Post a Job</h2>
+              <p class="hand_text_1">It takes only about 5 min to post a job. Each job posting starts at <span style="font-weight:bold;">only 80¢ per day</span>! Cancel anytime.</p>
+            </div>
+            <div class="hand_two" style="margin: 0 54.5px;">
+              <h2 class="hand_header_2">Review Resumes</h2>
+              <p class="hand_text_2">Applicant’s resume is sent to your email and to your Kunvet account. 
+                If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            </div>
+            <div class="hand_three" style="margin-right: 0px;">
+              <h2 class="hand_header_3">Hire</h2>
+              <p class="hand_text_3">Voila! Starting at <span style="font-weight:bold;">only 80¢ per day</span>, you can explore all the talents near
+                you and pick your ideal hire.</p>
+            </div>
+          </div>
+          <img class="hands_img" :src="pngs.handsMed">
+        </div>
+      </div>
+      <div class="waste">
+        <img class="warning_img" :src="svgs.warning">
+        <div class="warning_img_btm"/>
+        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
+        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
+           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
+            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day. 
+            If you are not completely satisfied, we will issue a full refund.</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 60px; line-height: 100%;">Is Kunvet Right for Me?</p>
+        <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
+           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
+            try Kunvet now. Stop wasting your time and money on hiring.</p>
+      </div>
+      <div class="refund">
+        <div class="refund_main_div">
+          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
+          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
+            the service you have received, get a full refund immediately on your inquiry.
+            No question will be asked. Click on the button below, and start hiring now.</p>
+          <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
+          <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+      </div>
+      <div class="versus">
+        <img class="versus_img" :src="svgs.versus">
+        <div class="versus_img_btm"/>
+
+        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
+        <p class="versus_text">See it for yourself why you should be using Kunvet now, 
+          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>        
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Most job websites in the market are heavily used by large
+              enterprises for nationwide hiring. These websites are pretty
+              effective for this purpose.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Local Hiring for Local Employers</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Your job will most likely be pushed aside by jobs from large
+              companies, which have hundreds of openings every day.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">
+              Our website is completely designed for local businesses
+              that are hiring locally. Every local employer’s voice will be
+              heard equally.
+            </p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Real Customer Support</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Plenty of companies only offer imited support. Some
+              companies do not offer any real support.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
+              are nice, polite people.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Pricing Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Some offer unintuitive pricing model such as “click bids”.
+              Some offer “job slots” that charges you every month,
+              regardless whether you are hiring or not.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Refund Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Refunds that take 3 - 5 business days to process. Get ready
+              to be bombard with questions before you can see a penny.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="limited">
+        <div class="limited_main_div">
+          <h2 class="limited_title">Limited Offer for Local Businesses</h2>
+          <p class="limited_text">If you create a business account today, you can access all the employer features
+             on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
+          <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile size -->
+    <div class="emp_page_content medium_hide mobile_show small_hide xs_hide">
+      <div class="summary">
+          <img class="summary_collage_students" :src="pngs.studentsMobile">
+          <h2 class="summary_title">How to hire the right person? With almost no cost or effort?</h2>
+          <p class="summary_text">Finding the right person can be painless and costless—only if
+            you choose the right tool. Designed for local hiring, Kunvet can
+            save you time and money on your next hire.</p>
+          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
+          <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
+      </div>
+      <div class="effective">
+        <img class="effective_img" :src="svgs.gas">
+        <div class="effective_img_btm"></div>
+        <h2 class="effective_title">How Effective is Kunvet?</h2>
+        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet. 
+          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
+           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title" style="padding-top: 50px; font-size: 22px;">Some of Our Returning Employers</h2>
+        <div class="logo_first_row">
+        <img class="logo_style" :src="pngs.coderschool">
+        <img class="logo_style" :src="pngs.prolite">
+        <img class="logo_style" :src="pngs.readingtown">
+        <img class="logo_style" style="margin-right: 0px;" :src="pngs.cygolite">
+        </div>
+        <div class="logo_second_row">
+        <img class="logo_style" :src="pngs.conroys">
+        <img class="logo_style" :src="pngs.seacrest">
+        <img class="logo_style" :src="pngs.banban">
+        <img class="logo_style" style="margin-right: 0px;" :src="pngs.newportpark">
+        </div>
+      </div>
+      <div style="width: 100%;">
+        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
+                helped us find many talented and enthusiastic candidates
+                from Orange County to serve as our Code Coaches. The
+                quality of the resumes of those who applied through
+                Kunvet exceeded our expectations. We’re grateful to the
+                Kunvet site organizers for providing this valuable service!</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.mark"/>
+                <div class="bio_text_div">
+                  <p class="bio_header">Mark Freedkin</p>
+                  <p class="bio_text">General Manager</p>
+                  <p class="bio_text">of theCoderSchool - Irvine</p>
+                </div>
+              </div>
+              <p class="test_undertext"> — <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" 
+                style="text-decoration: underline; cursor: pointer;">theCoderSchool at Irvine</a>
+                 offers a specialized after-school enrichment program that teaches young students (ages 7-18) how to write 
+                computer software.</p>
+            </div>
+            <div style="height: 82px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :) 
+                My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
+                 We've also spent plenty of money on other websites already but didn’t find who we are looking for. 
+                 Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.ally"/>
+                <div class="bio_text_div">
+                  <p class="bio_header">Ally Zeng</p>
+                  <p class="bio_text">Organizer</p>
+                  <p class="bio_text">of IA Christian Church</p>
+                </div>
+              </div>
+            </div>
+          </v-carousel-item>
+        </v-carousel>
+      </div>
+      <div class="faq">
+        <img class="faq_img" :src="svgs.faq">
+        <div class="faq_img_btm"/>
+        <h2 class="faq_title">What is “Kunvet” [con-vit]?</h2>
+        <p class="faq_text">To put simply, Kunvet is a professional job website made for local hiring. Unlike other
+          job websites, we want to help you find the right person effciently in your local area.</p>
+        <h2 class="faq_title" style="padding-top: 50px; font-size: 22px;">Frequently Asked Questions</h2>
+        <div style="margin-top: 20px;" 
+          v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 1, 'faq_question_div': question_num_mobile != 1}" 
+          @click="question_num_mobile = 1">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 1, 'faq_answer_title': question_num_mobile != 1}">
+            Is Kunvet right for me?</h2><img v-if="question_num_mobile !== 1" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 1">
+            <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
+              to hire locally.</p>
+            <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
+              process.</p>
+            <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
+              volunteering opportunity are especially popular
+              on Kunvet</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 2, 'faq_question_div': question_num_mobile != 2}" 
+          @click="question_num_mobile = 2">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 2, 'faq_answer_title': question_num_mobile != 2}">
+            Is Kunvet a recruiting agency?</h2><img v-if="question_num_mobile !== 2" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 2">
+            <p class="faq_answers_text">No. We are not a recruiting agency.</p>
+            <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
+              come to our website, see your job posting, and apply to it directly</p>
+            <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 3, 'faq_question_div': question_num_mobile != 3}" 
+          @click="question_num_mobile = 3">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
+            How much does it cost to use Kunvet?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 3">
+            <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
+            <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
+              of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
+              different features.</p>
+            <p class="faq_answers_text">To learn more about what each type of the accounts can do, 
+              please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing" 
+              target="_blank"> pricing page</router-link></span>.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}" 
+          @click="question_num_mobile = 4">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 4, 'faq_answer_title': question_num_mobile != 4}">
+            What is the refund policy?</h2><img v-if="question_num_mobile !== 4" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 4">
+            <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
+              If you are not completely satisfied with the service you received, we are glad to issue you a full
+                refund on your inquiry.</p>
+            <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
+              startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
+              internship, and volunteering</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 5, 'faq_question_div': question_num_mobile != 5}" 
+          @click="question_num_mobile = 5">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
+            How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 5">
+            <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
+            <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
+              6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
+                depend on the type of opportunity you offer.</p>
+            <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email. 
+              You can also find and manage all resumes you have received in your account.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 6, 'faq_question_div': question_num_mobile != 6}" 
+          @click="question_num_mobile = 6">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 6, 'faq_answer_title': question_num_mobile != 6}">
+            How is Kunvet different from others?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 6">
+            <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
+              local area.</p>
+            <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
+              effective at the same time</p>
+            <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
+              policy that most competitors cannot match.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hands">
+        <h2 class="coffee_title">How Does Kunvet Work?</h2>
+        <v-window style="height: 778px;">
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num1" class="nums">
+              <div class="blackbar_p1"/>
+            </div>
+            <h2 class="hand_header">Post a Job</h2>
+            <p class="hand_text">It takes only about 5 min to post a job. Your job stays
+              active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
+            <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
+          </v-window-item>
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num2" class="nums">
+              <div class="blackbar_p2"/>
+            </div>
+            <h2 class="hand_header">Review Resumes</h2>
+            <p class="hand_text">Applicant’s resume is sent to your email and your Kunvet account. 
+              If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            <img class="single_hand" style="margin-left: 60px;" :src="pngs.hand2">
+          </v-window-item>
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num3" class="nums">
+              <div class="blackbar_p3"/>
+            </div>
+            <h2 class="hand_header">Hire</h2>
+            <p class="hand_text">Ta-Da! Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
+              you and pick your next hire.</p>
+            <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
+          </v-window-item>
+        </v-window>
+      </div>
+      <div class="waste">
+        <img class="warning_img" :src="svgs.warning">
+        <div class="warning_img_btm"/>
+        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
+        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
+           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
+            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day. 
+            If you are not completely satisfied, we will issue a full refund.</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Is Kunvet Right for Me?</p>
+        <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
+           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
+            try Kunvet now. Stop wasting your time and money on hiring.</p>
+      </div>
+      <div class="refund">
+        <div class="refund_main_div">
+          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
+          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
+            the service you have received, get a full refund immediately on your inquiry.
+            No question will be asked. Click on the button below, and start hiring now.</p>
+          <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
+          <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+      </div>
+      <div class="versus">
+        <img class="versus_img" :src="svgs.versus">
+        <div class="versus_img_btm"/>
+
+        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
+        <p class="versus_text">See it for yourself why you should be using Kunvet now, 
+          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>        
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Most job websites in the market are heavily used by large
+              enterprises for nationwide hiring. These websites are pretty
+              effective for this purpose.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Local Hiring for Local Employers</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Your job will most likely be pushed aside by jobs from large
+              companies, which have hundreds of openings every day.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">
+              Our website is completely designed for local businesses
+              that are hiring locally. Every local employer’s voice will be
+              heard equally.
+            </p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Real Customer Support</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Plenty of companies only offer imited support. Some
+              companies do not offer any real support.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
+              are nice, polite people.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Pricing Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Some offer unintuitive pricing model such as “click bids”.
+              Some offer “job slots” that charges you every month,
+              regardless whether you are hiring or not.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Refund Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Refunds that take 3 - 5 business days to process. Get ready
+              to be bombard with questions before you can see a penny.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="limited">
+        <div class="limited_main_div">
+          <h2 class="limited_title">Limited Offer for Businesses.</h2>
+          <p class="limited_text">If you create a business account today, you can access all the employer features
+             on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
+          <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+      </div>
+    </div>
+    <!-- small size -->
+    <div class="emp_page_content medium_hide mobile_hide small_show xs_hide">
+      <div class="summary">
+          <img class="summary_collage_students" :src="pngs.studentsMobile">
+          <h2 class="summary_title">How to hire the right person? With almost no cost or effort?</h2>
+          <p class="summary_text">Finding the right person can be painless and costless—only if
+            you choose the right tool. Designed for local hiring, Kunvet can
+            save you time and money on your next hire.</p>
+          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
+          <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
+      </div>
+      <div class="effective">
+        <img class="effective_img" :src="svgs.gas">
+        <div class="effective_img_btm"></div>
+        <h2 class="effective_title">How Effective is Kunvet?</h2>
+        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet. 
+          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
+           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title" style="padding-top: 50px; font-size: 20px;">Some of Our Returning Employers</h2>
+        <div class="logos_row">
+          <img class="logo_style" style="margin-top: 0px;" :src="pngs.coderschool">
+          <img class="logo_style" style="margin-right: 0px; margin-top: 0px;" :src="pngs.prolite">
+          <img class="logo_style" :src="pngs.readingtown">
+          <img class="logo_style" style="margin-right: 0px;" :src="pngs.cygolite">
+          <img class="logo_style" :src="pngs.conroys">
+          <img class="logo_style" style="margin-right: 0px;" :src="pngs.seacrest">
+          <img class="logo_style" :src="pngs.banban">
+          <img class="logo_style" style="margin-right: 0px;" :src="pngs.newportpark">
+        </div>
+      </div>
+      <div style="width: 100%;">
+        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
+                helped us find many talented and enthusiastic candidates
+                from Orange County to serve as our Code Coaches. The
+                quality of the resumes of those who applied through
+                Kunvet exceeded our expectations. We’re grateful to the
+                Kunvet site organizers for providing this valuable service!</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.mark"/>
+                <div class="bio_text_div">
+                  <p class="bio_header">Mark Freedkin</p>
+                  <p class="bio_text">General Manager</p>
+                  <p class="bio_text">of theCoderSchool - Irvine</p>
+                </div>
+              </div>
+              <p class="test_undertext"> — <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" 
+                style="text-decoration: underline; cursor: pointer;">theCoderSchool at Irvine</a>
+                 offers a specialized after-school enrichment program that teaches young students (ages 7-18) how to write 
+                computer software.</p>
+            </div>
+            <div style="height: 82px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :) 
+                My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
+                 We've also spent plenty of money on other websites already but didn’t find who we are looking for. 
+                 Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.ally"/>
+                <div class="bio_text_div">
+                  <p class="bio_header">Ally Zeng</p>
+                  <p class="bio_text">Organizer</p>
+                  <p class="bio_text">of IA Christian Church</p>
+                </div>
+              </div>
+            </div>
+          </v-carousel-item>
+        </v-carousel>
+      </div>
+      <div class="faq">
+        <img class="faq_img" :src="svgs.faq">
+        <div class="faq_img_btm"/>
+        <h2 class="faq_title">What is “Kunvet” [con-vit]?</h2>
+        <p class="faq_text">To put simply, Kunvet is a professional job website made for local hiring. Unlike other
+          job websites, we want to help you find the right person effciently in your local area.</p>
+        <h2 class="faq_title" style="padding-top: 50px; font-size: 20px;">Frequently Asked Questions</h2>
+        <div style="margin-top: 20px;" 
+          v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 1, 'faq_question_div': question_num_mobile != 1}" 
+          @click="question_num_mobile = 1">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 1, 'faq_answer_title': question_num_mobile != 1}">
+            Is Kunvet right for me?</h2><img v-if="question_num_mobile !== 1" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 1">
+            <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
+              to hire locally.</p>
+            <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
+              process.</p>
+            <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
+              volunteering opportunity are especially popular
+              on Kunvet</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 2, 'faq_question_div': question_num_mobile != 2}" 
+          @click="question_num_mobile = 2">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 2, 'faq_answer_title': question_num_mobile != 2}">
+            Is Kunvet a recruiting agency?</h2><img v-if="question_num_mobile !== 2" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 2">
+            <p class="faq_answers_text">No. We are not a recruiting agency.</p>
+            <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
+              come to our website, see your job posting, and apply to it directly</p>
+            <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 3, 'faq_question_div': question_num_mobile != 3}" 
+          @click="question_num_mobile = 3">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
+            How much does it cost to use Kunvet?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 3">
+            <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
+            <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
+              of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
+              different features.</p>
+            <p class="faq_answers_text">To learn more about what each type of the accounts can do, 
+              please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing" 
+              target="_blank"> pricing page</router-link></span>.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}" 
+          @click="question_num_mobile = 4">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 4, 'faq_answer_title': question_num_mobile != 4}">
+            What is the refund policy?</h2><img v-if="question_num_mobile !== 4" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 4">
+            <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
+              If you are not completely satisfied with the service you received, we are glad to issue you a full
+                refund on your inquiry.</p>
+            <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
+              startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
+              internship, and volunteering</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 5, 'faq_question_div': question_num_mobile != 5}" 
+          @click="question_num_mobile = 5">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
+            How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 5">
+            <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
+            <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
+              6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
+                depend on the type of opportunity you offer.</p>
+            <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email. 
+              You can also find and manage all resumes you have received in your account.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 6, 'faq_question_div': question_num_mobile != 6}" 
+          @click="question_num_mobile = 6">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 6, 'faq_answer_title': question_num_mobile != 6}">
+            How is Kunvet different from others?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 6">
+            <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
+              local area.</p>
+            <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
+              effective at the same time</p>
+            <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
+              policy that most competitors cannot match.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hands">
+        <h2 class="coffee_title">How Does Kunvet Work?</h2>
+        <v-window style="height: 778px;">
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num1" class="nums">
+              <div class="blackbar_p1"/>
+            </div>
+            <h2 class="hand_header">Post a Job</h2>
+            <p class="hand_text">It takes only about 5 min to post a job. Your job stays
+              active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
+            <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
+          </v-window-item>
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num2" class="nums">
+              <div class="blackbar_p2"/>
+            </div>
+            <h2 class="hand_header">Review Resumes</h2>
+            <p class="hand_text">Applicant’s resume is sent to your email and your Kunvet account. 
+              If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            <img class="single_hand" style="margin-left: 60px;" :src="pngs.hand2">
+          </v-window-item>
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num3" class="nums">
+              <div class="blackbar_p3"/>
+            </div>
+            <h2 class="hand_header">Hire</h2>
+            <p class="hand_text">Ta-Da! Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
+              you and pick your next hire.</p>
+            <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
+          </v-window-item>
+        </v-window>
+      </div>
+      <div class="waste">
+        <img class="warning_img" :src="svgs.warning">
+        <div class="warning_img_btm"/>
+        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
+        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
+           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
+            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day. 
+            If you are not completely satisfied, we will issue a full refund.</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Is Kunvet Right for Me?</p>
+        <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
+           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
+            try Kunvet now. Stop wasting your time and money on hiring.</p>
+      </div>
+      <div class="refund">
+        <div class="refund_main_div">
+          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
+          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
+            the service you have received, get a full refund immediately on your inquiry.
+            No question will be asked. Click on the button below, and start hiring now.</p>
+          <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
+          <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+      </div>
+      <div class="versus">
+        <img class="versus_img" :src="svgs.versus">
+        <div class="versus_img_btm"/>
+
+        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
+        <p class="versus_text">See it for yourself why you should be using Kunvet now, 
+          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>        
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Most job websites in the market are heavily used by large
+              enterprises for nationwide hiring. These websites are pretty
+              effective for this purpose.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Local Hiring for Local Employers</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Your job will most likely be pushed aside by jobs from large
+              companies, which have hundreds of openings every day.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">
+              Our website is completely designed for local businesses
+              that are hiring locally. Every local employer’s voice will be
+              heard equally.
+            </p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Real Customer Support</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Plenty of companies only offer imited support. Some
+              companies do not offer any real support.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
+              are nice, polite people.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Pricing Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Some offer unintuitive pricing model such as “click bids”.
+              Some offer “job slots” that charges you every month,
+              regardless whether you are hiring or not.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Refund Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Refunds that take 3 - 5 business days to process. Get ready
+              to be bombard with questions before you can see a penny.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="limited">
+        <div class="limited_main_div">
+            <h2 class="limited_title">Limited Offer for Businesses.</h2>
+            <p class="limited_text">If you create a business account today, you can access all the employer features
+              on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+            <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
+            <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
+          </div>
+        </div>
+    </div>
+    <!-- xsmall size -->
+    <div class="emp_page_content medium_hide mobile_hide small_hide xs_show">
+      <div class="summary">
+          <img class="summary_collage_students" :src="pngs.studentsMobile">
+          <h2 class="summary_title">How to hire the right person? With almost no cost or effort?</h2>
+          <p class="summary_text">Finding the right person can be painless and costless—only if
+            you choose the right tool. Designed for local hiring, Kunvet can
+            save you time and money on your next hire.</p>
+          <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
+          <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
+      </div>
+      <div class="effective">
+        <img class="effective_img" :src="svgs.gas">
+        <div class="effective_img_btm"></div>
+        <h2 class="effective_title">How Effective is Kunvet?</h2>
+        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet. 
+          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
+           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title" style="padding-top: 50px; font-size: 18px;">Some of Our Returning Employers</h2>
+        <div class="logos_row">
+          <img class="logo_style" style="margin-top: 0px;" :src="pngs.coderschool">
+          <img class="logo_style" style="margin-right: 0px; margin-top: 0px;" :src="pngs.prolite">
+          <img class="logo_style" :src="pngs.readingtown">
+          <img class="logo_style" style="margin-right: 0px;" :src="pngs.cygolite">
+          <img class="logo_style" :src="pngs.conroys">
+          <img class="logo_style" style="margin-right: 0px;" :src="pngs.seacrest">
+          <img class="logo_style" :src="pngs.banban">
+          <img class="logo_style" style="margin-right: 0px;" :src="pngs.newportpark">
+        </div>
+      </div>
+      <div style="width: 100%;">
+        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
+                helped us find many talented and enthusiastic candidates
+                from Orange County to serve as our Code Coaches. The
+                quality of the resumes of those who applied through
+                Kunvet exceeded our expectations. We’re grateful to the
+                Kunvet site organizers for providing this valuable service!</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.mark"/>
+                <div class="bio_text_div">
+                  <p class="bio_header">Mark Freedkin</p>
+                  <p class="bio_text">General Manager</p>
+                  <p class="bio_text">of theCoderSchool - Irvine</p>
+                </div>
+              </div>
+              <p class="test_undertext"> — <a href="https://www.thecoderschool.com/locations/irvine/" target="_blank" 
+                style="text-decoration: underline; cursor: pointer;">theCoderSchool at Irvine</a>
+                 offers a specialized after-school enrichment program that teaches young students (ages 7-18) how to write 
+                computer software.</p>
+            </div>
+            <div style="height: 82px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :) 
+                My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
+                 We've also spent plenty of money on other websites already but didn’t find who we are looking for. 
+                 Thanks to you guys, we finally found the ideal applicant to fill in the position! God bless you.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.ally"/>
+                <div class="bio_text_div">
+                  <p class="bio_header">Ally Zeng</p>
+                  <p class="bio_text">Organizer</p>
+                  <p class="bio_text">of IA Christian Church</p>
+                </div>
+              </div>
+            </div>
+          </v-carousel-item>
+        </v-carousel>
+      </div>
+      <div class="faq">
+        <img class="faq_img" :src="svgs.faq">
+        <div class="faq_img_btm"/>
+        <h2 class="faq_title">What is “Kunvet” [con-vit]?</h2>
+        <p class="faq_text">To put simply, Kunvet is a professional job website made for local hiring. Unlike other
+          job websites, we want to help you find the right person effciently in your local area.</p>
+        <h2 class="faq_title" style="padding-top: 44px; font-size: 18px; line-height: 120%;">Frequently Asked Questions</h2>
+        <div style="margin-top: 20px;" 
+          v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 1, 'faq_question_div': question_num_mobile != 1}" 
+          @click="question_num_mobile = 1">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 1, 'faq_answer_title': question_num_mobile != 1}">
+            Is Kunvet right for me?</h2><img v-if="question_num_mobile !== 1" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 1">
+            <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
+              to hire locally.</p>
+            <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
+              process.</p>
+            <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
+              volunteering opportunity are especially popular
+              on Kunvet</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 2, 'faq_question_div': question_num_mobile != 2}" 
+          @click="question_num_mobile = 2">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 2, 'faq_answer_title': question_num_mobile != 2}">
+            Is Kunvet a recruiting agency?</h2><img v-if="question_num_mobile !== 2" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 2">
+            <p class="faq_answers_text">No. We are not a recruiting agency.</p>
+            <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
+              come to our website, see your job posting, and apply to it directly</p>
+            <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 3, 'faq_question_div': question_num_mobile != 3}" 
+          @click="question_num_mobile = 3">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
+            How much does it cost to use Kunvet?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 3">
+            <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
+            <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
+              of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
+              different features.</p>
+            <p class="faq_answers_text">To learn more about what each type of the accounts can do, 
+              please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing" 
+              target="_blank"> pricing page</router-link></span>.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}" 
+          @click="question_num_mobile = 4">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 4, 'faq_answer_title': question_num_mobile != 4}">
+            What is the refund policy?</h2><img v-if="question_num_mobile !== 4" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 4">
+            <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
+              If you are not completely satisfied with the service you received, we are glad to issue you a full
+                refund on your inquiry.</p>
+            <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
+              startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
+              internship, and volunteering</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 5, 'faq_question_div': question_num_mobile != 5}" 
+          @click="question_num_mobile = 5">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
+            How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 5">
+            <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
+            <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
+              6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
+                depend on the type of opportunity you offer.</p>
+            <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email. 
+              You can also find and manage all resumes you have received in your account.</p>
+          </div>
+        </div>
+        <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 6, 'faq_question_div': question_num_mobile != 6}" 
+          @click="question_num_mobile = 6">
+          <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 6, 'faq_answer_title': question_num_mobile != 6}">
+            How is Kunvet different from others?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
+          <div v-if="question_num_mobile === 6">
+            <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
+              local area.</p>
+            <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
+              effective at the same time</p>
+            <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
+              policy that most competitors cannot match.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hands">
+        <h2 class="coffee_title">How Does Kunvet Work?</h2>
+        <v-window style="height: 778px;">
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num1" class="nums">
+              <div class="blackbar_p1"/>
+            </div>
+            <h2 class="hand_header">Post a Job</h2>
+            <p class="hand_text">It takes only about 5 min to post a job. Your job stays
+              active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
+            <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
+          </v-window-item>
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num2" class="nums">
+              <div class="blackbar_p2"/>
+            </div>
+            <h2 class="hand_header">Review Resumes</h2>
+            <p class="hand_text">Applicant’s resume is sent to your email and your Kunvet account. 
+              If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            <img class="single_hand" style="margin-left: 60px;" :src="pngs.hand2">
+          </v-window-item>
+          <v-window-item style="text-align:center;">
+            <div class="num_bar_container">
+              <img :src="svgs.num3" class="nums">
+              <div class="blackbar_p3"/>
+            </div>
+            <h2 class="hand_header">Hire</h2>
+            <p class="hand_text">Ta-Da! Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
+              you and pick your next hire.</p>
+            <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
+          </v-window-item>
+        </v-window>
+      </div>
+      <div class="waste">
+        <img class="warning_img" :src="svgs.warning">
+        <div class="warning_img_btm"/>
+        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
+        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
+           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
+            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day. 
+            If you are not completely satisfied, we will issue a full refund.</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 44px; line-height: 120%;">Is Kunvet Right for Me?</p>
+        <p class="warning_text" style="padding-top: 20px;">Kunvet is effective for people or businesses that hire locally and offer entry-level,
+           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
+            try Kunvet now. Stop wasting your time and money on hiring.</p>
+      </div>
+      <div class="refund">
+        <div class="refund_main_div">
+          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
+          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
+            the service you have received, get a full refund immediately on your inquiry.
+            No question will be asked. Click on the button below, and start hiring now.</p>
+          <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
+          <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+      </div>
+      <div class="versus">
+        <img class="versus_img" :src="svgs.versus">
+        <div class="versus_img_btm"/>
+
+        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
+        <p class="versus_text">See it for yourself why you should be using Kunvet now, 
+          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>        
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Most job websites in the market are heavily used by large
+              enterprises for nationwide hiring. These websites are pretty
+              effective for this purpose.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Local Hiring for Local Employers</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Your job will most likely be pushed aside by jobs from large
+              companies, which have hundreds of openings every day.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">
+              Our website is completely designed for local businesses
+              that are hiring locally. Every local employer’s voice will be
+              heard equally.
+            </p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Real Customer Support</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Plenty of companies only offer imited support. Some
+              companies do not offer any real support.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
+              are nice, polite people.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Pricing Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Some offer unintuitive pricing model such as “click bids”.
+              Some offer “job slots” that charges you every month,
+              regardless whether you are hiring or not.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+          </div>
+        </div>
+        <div class="compare_div">
+          <h2 class="versus_subtitle">Refund Policy</h2>
+          <div class="competitor_div">
+            <p class="compare_header">Competitors:</p>
+            <p class="compare_text">
+              Refunds that take 3 - 5 business days to process. Get ready
+              to be bombard with questions before you can see a penny.
+            </p>
+          </div>
+          <div class="kunvet_div">
+            <p class="compare_header white--text">Kunvet:</p>
+            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="limited">
+        <div class="limited_main_div">
+          <h2 class="limited_title">Limited Offer for Businesses.</h2>
+          <p class="limited_text">If you create a business account today, you can access all the employer features
+            on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+          <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
+          <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+
 <script>
-import PersonalImage from '@/assets/personal.svg';
-import OrganizationImage from '@/assets/organization.svg';
+import students from '@/assets/hire/smiling_job_applicants.png';
+import studentsMobile from '@/assets/hire/job-applicants-smiling-mobile.png';
+import coderschool from '@/assets/hire/companys/coderschool.png';
+import prolite from '@/assets/hire/companys/prolite.png';
+import readingtown from '@/assets/hire/companys/readingtown.png';
+import cygolite from '@/assets/hire/companys/cygolite.png';
+import conroys from '@/assets/hire/companys/conroys.png';
+import seacrest from '@/assets/hire/companys/seacrest.png';
+import banban from '@/assets/hire/companys/banban.png';
+import newportpark from '@/assets/hire/companys/newportpark.png';
+import mark from '@/assets/hire/testimonials/MarkCoderSchool.png';
+import ally from '@/assets/hire/testimonials/ally-zeng-profile-picture.png';
+import handsDesk from '@/assets/hire/emp_pg_icons/kunvet-post-job-demonstration-desktop.png';
+import handsMed from '@/assets/hire/emp_pg_icons/posting-a-job-on-kunvet-demonstration-medium.png';
+import hand1 from '@/assets/hire/emp_pg_icons/post-a-job-step-1.png';
+import hand2 from '@/assets/hire/emp_pg_icons/review-resumes-step-2.png';
+import hand3 from '@/assets/hire/emp_pg_icons/give-job-offer-step-3.png';
+import gas from '@/assets/hire/emp_pg_icons/gas.svg';
+import faq from '@/assets/hire/emp_pg_icons/faq.svg';
+import coffee from '@/assets/hire/emp_pg_icons/coffee.svg';
+import stepsDesk from '@/assets/hire/emp_pg_icons/steps-desktop.svg';
+import stepsMed from '@/assets/hire/emp_pg_icons/steps-medium.svg';
+import warning from '@/assets/hire/emp_pg_icons/warning.svg';
+import refund from '@/assets/hire/emp_pg_icons/return.svg';
+import versus from '@/assets/hire/emp_pg_icons/boxing.svg';
+import company from '@/assets/hire/emp_pg_icons/company.svg';
+import gradlogo from '@/assets/hire/emp_pg_icons/gradient_logo.svg';
+import discount from '@/assets/hire/emp_pg_icons/discount.svg';
+import plusSign from '@/assets/hire/emp_pg_icons/plus-sign.svg';
+import num1 from '@/assets/hire/emp_pg_icons/one.svg';
+import num2 from '@/assets/hire/emp_pg_icons/two.svg';
+import num3 from '@/assets/hire/emp_pg_icons/three.svg';
+import userDataProvider from '@/userDataProvider';
 
 export default {
+  props: {
+    slide_display: {
+      type: Number,
+      default: 1,
+    },
+    question_num: {
+      type: Number,
+      default: 3,
+    },
+    question_num_mobile: {
+      type: Number,
+    },
+  },
   data() {
     return {
-      accountTypes: [
-        {
-          title: 'Hire as an individual',
-          description: '',
-          scenarios: [
-            'Mom looking for babysitter',
-            'Professor looking for assistant',
-            'Student looking for tutor',
-          ],
-          image: PersonalImage,
-          actionText: 'Create individual account',
-          to: '/signup/personal',
-        },
-        {
-          title: 'Hire for an organization',
-          description: '',
-          scenarios: [
-            'School club',
-            'Business',
-            'School program',
-          ],
-          image: OrganizationImage,
-          actionText: 'Create organization account',
-          to: '/signup/organization',
-        },
-      ],
+      svgs: {
+        gas: gas,
+        faq: faq,
+        coffee: coffee,
+        stepsDesk: stepsDesk,
+        stepsMed: stepsMed,
+        warning: warning,
+        refund: refund,
+        versus: versus,
+        company: company,
+        gradlogo: gradlogo,
+        discount: discount,
+        plusSign: plusSign,
+        num1: num1,
+        num2: num2,
+        num3: num3,
+      },
+      pngs: {
+        students: students,
+        studentsMobile: studentsMobile,
+        coderschool: coderschool,
+        prolite: prolite,
+        readingtown: readingtown,
+        cygolite: cygolite,
+        conroys: conroys,
+        seacrest: seacrest,
+        banban: banban,
+        newportpark: newportpark,
+        mark: mark,
+        ally: ally,
+        handsDesk: handsDesk,
+        handsMed: handsMed,
+        hand1: hand1,
+        hand2: hand2,
+        hand3: hand3,
+      },
+      account_type: '',
     };
+  },
+  methods: {
+    routeGen() {
+      userDataProvider.getUserData().then(data => {
+        if (data.acct === 0) {
+          this.$router.push('/choose');
+        } else if (data.acct === 2) {
+          this.$router.push('/createjob');
+        } else {
+          this.$router.push('/search');
+        }
+      });
+    },
   },
 };
 </script>

@@ -1,782 +1,1265 @@
 <style lang="scss" scoped>
-.promo-block {
-  p {
-    font-size: 1.2em;
+// big desktop
+@media (min-width: 1025px){
+  .medium, .mobile, .small, .extra_small {
+    display: none !important;
   }
-  h2 {
-    font-size: 1.5em;
+  .home_content{
+    width: 100%;
+    padding-top: 164px;
   }
-}
-.general-dropdown-items select, .general-dropdown-items label {
-  width: 100%;
-  height: 100%;
-  padding: 5px 20px;
-}
-.expansion-panel--popout .expansion-panel__container  {
-  margin: 0;
-  max-width: 100%;
-}
-/* .input-group--select {
-  height: 66px;
-} */
-.firstSearch .input-group__details{
-  display: none !important;
-}
-/* --- old selects --- */
-.search .input-group--select .input-group__input {
-  padding: 0 16px;
-  height: 48px;
-  flex: 1 0 100%;
-}
-.search .input-group--select {
-  padding-top: 0;
-  height: 48px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-.list__tile__action .checkbox .input-group__input {
-  padding-top: 6px;
-}
-.home-page-cont .list__tile__title {
-  color: #616161 !important;
-}
-.search .input-group--select i.icon {
-  padding: 8px 0;
-}
-.search .input-group__selections {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  overflow: auto !important;
-}
-.search .input-group--select.input-group--single-line label {
-  top: 8px;
-  left: 16px;
-}
-/* --- new selects --- */
-.search .menu {
-  width: 100%;
-}
-
-.input-group--text-field.input-group--dirty.input-group--select label,
-.input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
-  transform: translate3d(0,-28px,0) scale(.75);
-}
-.chip--select-multi {
-  margin: 5px 5px 5px 0;
-}
-.bottom-text{
-  font-size:2em;
-  color:#ef5350;
-  z-index:12;
-  bottom:550px;
-}
-.category{
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  border-left: 1px solid #d2d2d3;
-  padding-left: 10px;
-  height: 48px;
-}
-.fs-select-cities.v-input {
-  margin-top: 0;
-  height: 46px;
-  box-shadow: none !important;
-  border-radius: 6px 0px 0px 6px;
-}
-.fs-select-cities .v-input-group__selections {
-  padding: 0 !important;
-  width: calc(100% - 36px) !important;
-  text-overflow: ellipsis;
-}
-.fs-select-cities .v-input-group__input > div > div {
-  padding: 0 !important;
-}
-.fs-select-cities .v-input-group__input::before {
-  display: none;
-}
-// .v-text-field.v-text-field--solo .v-input__control {
-//   min-height: 56px; // Doesnt work??
-// }
-.no-padding {
-  padding: 0;
-}
-.search .v-input-group__details {
-  display: none;
-}
-.city-img-holder {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.bottom-row {
-  position: absolute;
-  bottom: 30px;
-  width: calc(100% - 52px);
-}
-.bottom-img {
-  position: absolute;
-  left:0px;
-  right:0px;
-  top: 450px;
-  width:100%;
-  z-index: 10;
-}
-.bottom-row .skew-div {
-  margin: auto;
-  padding: 8px 0;
-  width: 400px;
-  position: relative;
-}
-.bottom-row .skew-div p {
-  margin: 0;
-}
-.bottom-row .skew-div::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  background: rgba(0,0,0,.05);
-  right: 0;
-  top: 0;
-  transform: skew(-30deg);
-}
-
-@media (min-width: 601px) {
-  .search .flex {
-    padding: 10px 15px;
+  .index_top{
+    max-width: 1008px;
+    padding: 0 24px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
   }
-  .bottom-row {
-    width: calc(100% - 128px);
+  .interview_woman{
+    height: 550px;
+    margin-right: 90px;
   }
-  .bottom-img {
-    width:100%;
+  .search_area{
+    width: 400px;
+    height: 540px;
+    background-color: white;
+    margin-top: auto;
+    margin-bottom: auto;
   }
-}
-@media (max-width: 600px) {
-  // .firstSearch {
-  //   padding-left: 26px;
-  //   padding-right: 26px;
-  //   height: calc(100vh - 56px);
-  // }
-  #banner {
-    display: none;
-  }
-  .home-page-cont {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .bottom-row {
-    bottom: 10px;
-  }
-}
-@media (min-width: 961px) {
-  // .firstSearch {
-  //   height: calc(100vh - 64px);
-  // }
-  .city-img-holder {
-    padding: 0 48px;
-  }
-  section.search {
-    padding: 16px 16px 32px 16px;
-  }
-  .bottom-img {
-    width:100%;
-  }
-}
-@media (min-width: 601px) and (max-width: 960px) {
-  // .firstSearch {
-  //   height: calc(100vh - 64px);
-  // }
-}
-#rua {
-  width: 100%;
-  flex-wrap: nowrap;
-  overflow-x: hidden;
-  justify-content: center;
-  background: #FCFCFC;
-  .card {
-    flex: 0 0 auto;
-    width: 200px;
-    margin: 10px;
-  }
-}
-
-
-//-------------------------------Implemented main classes----------------------------------------------
-.main-container {
-  position: relative;
-  width: 100%;
-  max-width: 960px;
-  background-color: none;
-  /* border: 1px solid #eeeeee; */
-  box-sizing: border-box;
-  margin-top: -36px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.top_container_style {
-  width: 100%; height: 58vh; // was 60vh
-  background:  #ff8f8f;
-  background: -webkit-linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
-  background: linear-gradient(to bottom, #FF6969, #ff7f7f, #ff8f8f );
-  position: relative;
-}
-
-.iconRedButton {
-  display: block;
-  height: 72px;
-  width: 64px;
-  background-color:#FF6969;
-  text-align: center;
-  box-shadow: 0 10px 12px -4px #F3E1E1;
-  font-family: "Roboto";
-  outline: none !important;
-}
-
-.iconRedButton:hover {
-  background-color:#ef5350;
-}
-
-.postAJob {
-  display: block;
-  height: 56px;
-  width: 200px;
-  background-color:#FFFFFF;
-  text-align: center;
-  box-shadow: 0 5px 6px -2px #DF696C;
-  font-family: "Roboto",sans-serif;
-  color:#FF786D;
-  font-weight:bold;
-  font-size:16px;
-  outline: none !important;
-  margin-top:20px;
-  margin-left:10%
-}
-
-.postAJob:hover {
-  background-color:#F3E1E1;
-}
-
-.postAJob2 {
-  display: block;
-  height: 56px;
-  width: 200px;
-  background-color:#FFFFFF;
-  text-align: center;
-  box-shadow: 0 5px 6px -2px #5471F6;
-  font-family: "Roboto",sans-serif;
-  color:#5E85FD;
-  font-weight:bold;
-  font-size:16px;
-  outline: none !important;
-  margin-top:20px;
-  margin-left:auto;
-  margin-right:10%;
-}
-
-.postAJob2:hover {
-  background-color:#F3E1E1;
-}
-
-.search_find_near {
-  height: 72px;
-  padding-top:24px;
-  width: 10%;
-  background-color:white;
-  float:left;
-}
-
-.top_title_text{
-  color: white;
-  font-size: 3.9em;
-  text-align: center;
-}
-
-.top_title_pos{
-  position:absolute;
-  width:100%;
-  bottom:0;
-  margin-bottom: 50px;
-}
-.search_assist {
-  margin-left: 0;
-  color: grey;
-  font-size: 16px;
-}
-.search_text_field {
-  height: 72px;
-  width: 36%;
-  outline: none !important;
-  background-color: white;
-  float: left;
-  padding-top: 12px; // (72px - 48px) / 2
-}
-.search_select {
-  height: 72px;
-  width: 44%;
-  outline: none !important;
-  background-color: white;
-  float: left;
-  padding-top: 12px; // (72px - 48px) / 2
-}
-.search_mobile {
-  margin-left: 24px;
-  margin-right: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 12px -4px #eaeaf9;
-}
-.container-left {
-  width: calc(100% + 8px);
-}
-.container-right {
-  width: calc(100% + 8px);
-  transform: translateX(-8px);
-}
-.search_hide {
-  display:block;
-}
-.search_show {
-  display: none !important;
-}
-.search_button_text {
-  line-height: 56px;
-  font-size: 20px;
-  font-family: 'Roboto', sans-serif;
-}
-.artboard1_img {
-  background-color: #ffe2e2;
-  height: 400px;
-  text-align: right;
-}
-.artboard2_img{
-  z-index:0;
-  height: 400px;
-  background-color: #dbefff;
-  text-align: left;
-}
-.artboard1_img_style {
-  padding-right:50px;
-  margin-top: 80px;
-  max-width: 400px;
-}
-.artboard2_img_style {
-  padding-left:50px;
-  margin-top: 80px;
-  max-width: 400px;
-}
-.hire_kunvet_container {
-  height: 300px; margin-top:40px;
-  background:  #FFC371;
-  background: -webkit-linear-gradient(to right,  #ff5f6d,#FFC371);
-  background: linear-gradient(to right,  #ff5f6d, #FFC371);
-  position: relative;
-}
-
-.hire_kunvet_title{
-  padding-top: 3%;
-  padding-left:10%;
-  color:white;
-  font-size:38px;
-}
-
-.hire_kunvet_text{
-  padding-top: 12px;
-  margin-left:10%;
-  color:white;
-  font-size:18px;
-  max-width: 400px;
-  line-height: 26px;
-}
-
-.loved_trusted_container {
-  height: 350px;
-  margin-top:22px;
-  background:  #2f89fc;
-  background: -webkit-linear-gradient(to right,  #a57fff ,#2f89fc);
-  background: linear-gradient(to right,  #a57fff , #2f89fc);
-}
-
-.loved_trusted_title {
-  padding-top: 28px;
-  padding-right: 10%;
-  color: white;
-  font-size: 38px;
-  text-align:right;
-}
-
-.loved_trusted_text {
-  padding-top: 12px;
-  color: white;
-  font-size: 18px;
-  max-width: 450px;
-  padding-right: 10%;
-  text-align: right;
-  margin-left: auto;
-  padding-left: 24px;
-}
-.artboard1_img_mobile {
-  height: 350px; // 50vh;
-  width:100%;
-  background-color: #ffe2e2;
-}
-.search-btn-cont-mobile {
-  width: 100%;
-  padding: 0 24px;
-}
-@media (min-width: 821px) and (max-width: 960px) {
-  .top_title_text {
-    font-size: 3.3em;
-    text-align:left;
-  }
-  .top_title_text,
-  .main-container {
-    margin-left: 16px;
-    margin-right: 16px;
-    width: auto;
-  }
-  .top_title_pos {
-    bottom:0;
-    margin-bottom:50px;
-  }
-}
-@media only screen and (min-width: 821px) {
-  .searchBar {
-    width: 89%;
-    width: calc(100% - 82px);
-    float:left;
-    background-color:white;
-    box-shadow: 0 10px 12px -4px #eaeaf9;
-    margin-right:10px;
-  }
-}
-@media only screen and (max-width: 820px) {
-  .search_show {
-    display: block !important;
-  }
-  .search_hide {
-    display:none;
-  }
-  .searchBar .innerCol {
-    margin-left: 24px;
-    margin-right: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 12px -3px #eaeaf9; // was previously 0 10px 12px -4px #eaeaf9
-  }
-}
-@media (min-width: 601px) and (max-width: 820px) {
-  .top_title_text {
-    font-size: 2.8em;
-    line-height: 40px;
-    text-align:left;
-  }
-  .top_title_pos {
-    margin-left:10%;
-    width:80%;
-    bottom:0;
-    margin-bottom:50px;
-  }
-  .main-container {
-    margin-top:-36px;
-  }
-  .search_text_field {
-    width: auto;
-    float: none;
-  }
-  .search_select {
-    width: auto;
-    float: none;
-  }
-}
-@media only screen and (min-width: 601px) {
-  .search_find_near {
-    height: 72px;
-    line-height: 72px;
-    padding-top: 0;
-  }
-}
-@media (max-width: 600px) {
-  .searchBar .v-text-field.v-text-field--enclosed .v-input__slot {
-    padding-left: 16px !important; // instead of 24px
-    padding-right: 16px !important;
-    background: black !important;
-    display: none;
-  }
-  .v-input {
-    // display: none !important;
-  }
-  .top_container_style {
-    height: 320px; // because vh doesnt work well on mobile browsers that change height
-  }
-  .top_title_text {
-    font-size: 2.2em;
-    line-height: 40px;
-    text-align:left;
-  }
-  .top_title_pos {
-    width: auto;
-    margin-left: 24px;
-    margin-right: 24px;
-    bottom:0;
-    margin-bottom:20px;
-  }
-  .main-container {
-    margin-top:-28px;
-  }
-  .search_find_near {
-    margin-top: 4px;
-    padding-top: 0;
-    height: 48px;
-    line-height: 48px;
-    width: 20%;
-  }
-  // .search_assist {
-  //   margin-left: 4px;
-  // }
-  .search_text_field,
-  .search_select {
-    height: 56px;
-    width: auto;
-    float: none;
-    padding-top: 4px;
-  }
-  .loved_trusted_title {
-    padding-top: 3%;
-    padding-left:8%;
-    font-size: 34px;
-    text-align:left;
-  }
-  .loved_trusted_text {
-    padding-left: 8%;
-    padding-right: 8%;
-    font-size: 16px;
-    line-height: 26px;
+  .search_title{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    font-size: 50px;
+    line-height: 140%;
+    color: #ff6969;
     text-align: left;
-    margin-left: 0;
+    margin-bottom: 0px;
   }
-  .hire_kunvet_title {
-    padding-top:3%;
-    padding-left:8%;
-    font-size:34px;
-  }
-  .hire_kunvet_text {
-    padding-left: 8%;
-    padding-right: 8%;
+  .search_bar_container{
+    width: 400px;
+    height: 64px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
     font-size: 16px;
-    line-height: 26px;
-    margin-left: 0;
+    display: flex;
   }
-  .loved_trusted_container {
-    height: 310px;
-    width: 90%;
-    margin: auto;
-    transform: translate(0px, -80px);
+  .search_bar_head{
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.12em;
+    padding-left: 24px;
+    padding-top: 20px;
+    margin-bottom: 0px;
   }
-  .hire_kunvet_container {
-    height: 280px;
-    width: 90%;
-    margin:auto;
-    transform: translate(0px, -80px);
+  .search_bar_field{
+    width: 292px;
+    height: 100%;
+    background-color: none;
+  } 
+  .search_bar_icon{
+    font-size: 16px;
+    margin-right: 24px;
+    color: lightgrey;
   }
-  .postAJob {
-    margin-top:20px;
-    margin-left:8%;
+  .search_bar_icon_cross{
+    font-size: 16px;
+    margin-left: 24px;
+    color: #5a8cff; 
   }
-  .postAJob2{
-     margin-top:20px;
-     margin-left:8%;
+  .search_bar_current{
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    padding-left: 10px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    color: #5a8cff; 
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_btn{
+    margin-top: 20px;
+    width: 100%;
+    height: 64px !important;
+    line-height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 0.12em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+  .ykunvet_div{
+    max-width: 1008px;
+    padding: 0 0px 0px 24px;
+    margin: 0 auto;
+  }
+  .ykunvet_section{
+    display: flex;
+    margin-top: 120px;
+  }
+  .ykunvet_text_div{
+    width: 500px;
+    height: 340px;
+    margin-bottom: auto;
+    margin-top: auto;
+    margin-right: 100px;
+  }
+  .ykunvet_header{
+    font-size: 36px;
+    line-height: 120%;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.03em;
+    margin-bottom: 0px;
+  }
+  .ykunvet_text{
+    font-size: 24px;
+    line-height: 150%;
+    font-weight: 300;
+    letter-spacing: 0;
+    padding-top: 30px;
+    margin-bottom: 0px;
+    font-family: proxima-nova, sans-serif;
+    color: black;
+  }
+  .ykunvet_phone{
+    width: 400px;
+  }
+  .student_testimonials{
+    width: 100%;
+    margin-top: 120px;
+  }
+  .testimonials{
+    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+    box-shadow: none;
+  }
+  .test_slide{
+    width: 100%;
+    margin-left: 0px;
+  }
+  .slide_info{
+    max-width: 1008px;
+    padding: 0 24px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .test_title{
+    line-height: 120%;
+    width: 100%;
+    letter-spacing: 0;
+    max-width: 960px;
+    font-weight: 600;
+    padding-top: 80px;
+    margin-left: 24px;
+    font-family: proxima-nova, sans-serif; 
+    font-size: 40px;
+    margin-bottom: 0px;
+    color: white;
+  }
+  .test_text{
+    padding-top: 40px;
+    width: 614px;
+    font-family: proxima-nova, sans-serif; 
+    font-size: 24px;
+    color: white;
+    line-height: 150%;
+    margin-right: 130px;
+    margin-bottom: 0px;
+    font-weight: 300; 
+  }
+  .quote{
+    font-family: proxima-nova, sans-serif; 
+    color: white;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 6px;
+    font-size: 64px;
+  }
+  .bio{
+    width: 190px;
+    height: 200px;
+  }
+  .bio_img{
+    height: 66px;
+    width: 66px;
+    margin-top: 10px;
+    display: block;
+  }
+  .bio_header{
+    padding-top: 20px;
+    font-size: 16px;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    font-weight: 600;
+    line-height: 100%;
+    margin-bottom: 0px;
+  }
+  .bio_text{
+    font-size: 16px;
+    padding-top: 10px;
+    font-weight: 300;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    line-height: 100%;
+    margin-bottom: 0px;
+  }
+  .next_job_div{
+    max-width: 1008px;
+    padding: 0 24px;
+    margin: 120px auto 0;
+    text-align: center;
+  }
+  .next_job_pic{
+    width: 100%;
+  }
+  .next_job_title{
+    margin-top: 80px;
+    font-size: 40px;
+    line-height: 120%;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: #ff6969;
+    font-family: proxima-nova, sans-serif; 
+    margin-bottom: 0px;
+  }
+  .next_job_text{
+    font-size: 24px;
+    line-height: 150%;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: black;
+    font-family: proxima-nova, sans-serif; 
+    padding-top: 30px;
+    margin-bottom: 0px;
+  }
+  .next_job_btn{
+    margin-top: 20px;
+    width: 290px;
+    height: 80px !important;
+    line-height: 80px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    background-color: #ff6969;
+  }
+  .next_job_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 22px; 
+    color: white;
+    letter-spacing: 0em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+  .looking_div{
+    margin-top: 120px;
+    width: 100%;
+    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+  }
+  .looking_text_div{
+    max-width: 1008px;
+    padding: 0 24px;
+    margin: 0 auto;
+  }
+  .looking_header{
+    padding-top: 60px;
+    font-size: 40px;
+    line-height: 120%;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    margin-bottom: 0px;
+  }
+  .looking_text{
+    font-size: 24px;
+    line-height: 120%;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    padding-top: 6px;
+    margin-bottom: 0px;
+  }
+  .looking_btn{
+    margin-top: 20px;
+    width: 200px;
+    height: 68px !important;
+    line-height: 68px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    background-color: white !important;
+  }
+  .looking_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 22px; 
+    color: #308afc;
+    letter-spacing: 0em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+  .looking_btn_undertext{
+    font-size: 14px;
+    line-height: 120%;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    padding-top: 8px;
+    padding-bottom: 60px;
+    margin-bottom: 0px;
   }
 }
+// medium desktop
+@media (min-width: 801px) and (max-width: 1024px) {
+  .desktop, .mobile, .small, .extra_small {
+    display: none !important;
+  }
+  .home_content{
+    width: 100%;
+    padding-top: 124px;
+  }
+  .index_top{
+    max-width: 1008px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+  .interview_woman{
+    height: 520px;
+    margin-right: 70px;
+  }
+  .search_area{
+    width: 356px;
+    height: 442px;
+    background-color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .search_title{
+    width: 356px;
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    font-size: 44px;
+    line-height: 140%;
+    color: #ff6969;
+    text-align: left;
+    margin-bottom: 0px;
+  }
+  .search_bar_container{
+    width: 100%;
+    height: 64px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
+    font-size: 16px;
+    display: flex;
+  }
+  .search_bar_head{
+    width: 68px;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.12em;
+    padding-left: 24px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+  }
+  .search_bar_field{
+    width: 100%;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_bar_icon{
+    font-size: 16px;
+  }
+  .search_btn{
+    margin-top: 20px;
+    width: 100%;
+    height: 64px !important;
+    line-height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 0.12em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+  .ykunvet_div{
+    max-width: 1008px;
+    padding: 0 0px 0px 24px;
+    margin: 0 auto;
+  }
+  .ykunvet_section{
+    display: flex;
+    margin-top: 120px;
+  }
+  .ykunvet_text_div{
+    width: 50%;
+    height: 340px;
+    margin-bottom: auto;
+    margin-top: auto;
+    margin-right: 11%;
+  }
+  .ykunvet_header{
+    font-size: 32px;
+    line-height: 120%;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.03em;
+    margin-bottom: 0px;
+  }
+  .ykunvet_text{
+    font-size: 22px;
+    line-height: 150%;
+    font-weight: 300;
+    letter-spacing: 0;
+    padding-top: 24px;
+    margin-bottom: 0px;
+    font-family: proxima-nova, sans-serif;
+    color: black;
+  }
+  .ykunvet_phone{
+    width: 39%;
+  }
+  .student_testimonials{
+    width: 100%;
+    margin-top: 120px;
+  }
+  .testimonials{
+    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+    box-shadow: none;
+  }
+  .test_slide{
+    width: 100%;
+    margin-left: 0px;
+  }
+  .slide_info{
+    max-width: 1008px;
+    padding: 0 24px 40px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .test_title{
+    line-height: 120%;
+    width: 100%;
+    letter-spacing: 0;
+    max-width: 960px;
+    font-weight: 600;
+    padding-top: 100px;
+    margin-left: 24px;
+    font-family: proxima-nova, sans-serif; 
+    font-size: 36px;
+    margin-bottom: 0px;
+    color: white;
+  }
+  .test_text{
+    padding-top: 40px;
+    width: 438px;
+    font-family: proxima-nova, sans-serif; 
+    font-size: 22px;
+    color: white;
+    line-height: 150%;
+    margin-right: 100px;
+    margin-bottom: 0px;
+    font-weight: 300; 
+  }
+  .quote{
+    font-family: proxima-nova, sans-serif; 
+    color: white;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 6px;
+    font-size: 64px;
+  }
+  .bio{
+    width: 190px;
+    height: 160px;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+  .bio_img{
+    height: 66px;
+    width: 66px;
+    margin-top: 10px;
+    display: block;
+  }
+  .bio_header{
+    padding-top: 16px;
+    font-size: 16px;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    font-weight: 600;
+    line-height: 100%;
+    margin-bottom: 0px;
+  }
+  .bio_text{
+    font-size: 16px;
+    padding-top: 8px;
+    font-weight: 300;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    line-height: 100%;
+    margin-bottom: 0px;
+  }
+  .next_job_div{
+    max-width: 1008px;
+    padding: 0 24px;
+    margin: 120px auto 0;
+    text-align: center;
+  }
+  .next_job_pic{
+    width: 100%;
+  }
+  .next_job_title{
+    margin-top: 80px;
+    font-size: 36px;
+    line-height: 120%;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: #ff6969;
+    font-family: proxima-nova, sans-serif; 
+    margin-bottom: 0px;
+  }
+  .next_job_text{
+    font-size: 22px;
+    line-height: 150%;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: black;
+    font-family: proxima-nova, sans-serif; 
+    padding-top: 30px;
+    margin-bottom: 0px;
+  }
+  .next_job_btn{
+    margin-top: 40px;
+    width: 270px;
+    height: 76px !important;
+    line-height: 76px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    background-color: #ff6969;
+  }
+  .next_job_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 20px; 
+    color: white;
+    letter-spacing: 0em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+  .looking_div{
+    margin-top: 120px;
+    width: 100%;
+    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+  }
+  .looking_text_div{
+    max-width: 1008px;
+    padding: 0 24px;
+    margin: 0 auto;
+  }
+  .looking_header{
+    padding-top: 60px;
+    font-size: 40px;
+    line-height: 120%;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    margin-bottom: 0px;
+  }
+  .looking_text{
+    font-size: 24px;
+    line-height: 120%;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    padding-top: 6px;
+    margin-bottom: 0px;
+  }
+  .looking_btn{
+    margin-top: 20px;
+    width: 200px;
+    height: 68px !important;
+    line-height: 68px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    background-color: white !important;
+  }
+  .looking_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 22px; 
+    color: #308afc;
+    letter-spacing: 0em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+  .looking_btn_undertext{
+    font-size: 14px;
+    line-height: 120%;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: white;
+    font-family: proxima-nova, sans-serif; 
+    padding-top: 8px;
+    padding-bottom: 60px;
+    margin-bottom: 0px;
+  }
+}
+// mobile
+@media (min-width: 601px) and (max-width: 800px) {
+  .desktop, .medium, .small, .extra_small {
+    display: none !important;
+  }
+  .home_content{
+    width: 100%;
+  }
+  .index_top{
+    width: 100%;
+    background-color: #ff6969;
+  }
+  .index_area{
+    width: 552px;
+    margin: -32px auto 0;
+  }
+  .search_title{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
+    font-size: 42px;
+    line-height: 140%;
+    color: #ffffff;
+    text-align: left;
+    padding-top: 240px;
+    padding-bottom: 56px;
+    width: 552px;
+    margin: 0 auto;
+  }
+  .search_bar_container{
+    width: 100%;
+    height: 64px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
+    font-size: 16px;
+    display: flex;
+  }
+  .search_bar_head{
+    width: 68px;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.12em;
+    margin-left: 24px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+  }
+  .search_bar_field{
+    width: 100%;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_bar_icon{
+    font-size: 16px;
+    padding-right: 24px;
+    padding-left: 10px;
+    color: lightgrey;
+  }
+  .search_btn{
+    margin-top: 20px;
+    width: 100%;
+    height: 64px !important;
+    line-height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 0.12em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+
+}
+// small
+@media (min-width: 451px) and (max-width: 600px) {
+  .desktop, .medium, .mobile, .extra_small {
+    display: none !important;
+  }
+  .home_content{
+    width: 100%;
+  }
+  .index_top{
+    width: 100%;
+    background-color: #ff6969;
+  }
+  .index_area{
+    width: calc(100% - 48px);
+    margin: -32px auto 0;
+  }
+  .search_title{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 140%;
+    color: #ffffff;
+    text-align: left;
+    padding-top: 200px;
+    padding-bottom: 56px;
+    width: calc(100% - 48px);
+    margin: 0 auto;
+  }
+ .search_bar_container{
+    width: 100%;
+    height: 64px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
+    font-size: 16px;
+    display: flex;
+  }
+  .search_bar_head{
+    width: 68px;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.12em;
+    padding-left: 24px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+  }
+  .search_bar_field{
+    width: 100%;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_bar_icon{
+    font-size: 16px;
+    padding-right: 24px;
+    padding-left: 10px;
+    color: lightgrey;
+  }
+  .search_btn{
+    margin-top: 20px;
+    width: 100%;
+    height: 64px !important;
+    line-height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 0.12em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+}
+@media (min-width: 521px) and (max-width: 600px) {
+  .search_title{
+    font-size: 38px;
+  }
+}
+@media (min-width: 451px) and (max-width: 520px) {
+  .search_title{
+    font-size: 32px;
+  }
+}
+// extra small
+@media (max-width: 450px) {
+  .desktop, .medium, .mobile, .small {
+    display: none !important;
+  }
+  .home_content{
+    width: 100%;
+  }
+  .index_top{
+    width: 100%;
+    background-color: #ff6969;
+  }
+  .index_area{
+    width: calc(100% - 48px);
+    margin: -32px auto 0;
+  }
+  .search_title{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 140%;
+    color: #ffffff;
+    text-align: left;
+    font-size: 28px;
+    padding-top: 140px;
+    padding-bottom: 52px;
+    width: calc(100% - 48px);
+    margin: 0 auto;
+  }
+ .search_bar_container{
+    width: 100%;
+    height: 64px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
+    font-size: 16px;
+    display: flex;
+  }
+  .search_bar_head{
+    width: 68px;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.12em;
+    padding-left: 20px;
+    padding-top: 20px;
+    margin-bottom: 0px;
+  }
+  .search_bar_field{
+    width: 100%;
+    height: 100%;
+    background-color: none;
+  }
+  .search_bar_text_field{
+    height: 52px;
+  }
+  .search_bar_icon{
+    font-size: 16px;
+    padding-right: 20px;
+    padding-left: 10px;
+    color: lightgrey;
+  }
+  .search_btn{
+    margin-top: 20px;
+    width: 100%;
+    height: 64px !important;
+    line-height: 64px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+  .search_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px; 
+    letter-spacing: 0.12em; 
+    line-height: 120%;
+    font-weight: 600;
+  }
+}
+
 </style>
 
 <template>
-  <v-container fluid class="pa-0 index-page">
-  <div class="top_container_style">
-    <div class="top_title_pos">
-     <h1 class="top_title_text">Latest Job Opportunities Near You.</h1>
-    </div>
-  </div>
+  <div class="home_page">
+    <!-- desktop size -->
+    <div class="home_content desktop">
+      <div class="index_top">
+          <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
+          <div class="search_area">
+            <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
+            <div class="search_bar_container" style="margin-top: 36px;">
+              <div class="search_bar_head">FIND</div>
+              <div class="search_bar_field">
+                <v-text-field
+                  solo flat hide-details clearable
+                  label="Part time web developer"
+                  v-model="query"
+                  class="search_bar_text_field"
+                ></v-text-field>
 
-<div class="main-container">
-  <div class="searchBar">
-    <div class="innerCol">
-      <div class="search_find_near">
-        <strong class="search_assist">Find</strong>
+              </div>
+              <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+            </div>
+            <div class="search_bar_container" style="margin-top: 10px;">
+              <div class="search_bar_head">NEAR</div>
+              <div class="search_bar_field">
+                <v-text-field
+                  v-model="job.address"
+                  ref="addressField"
+                  class="search_bar_text_field"
+                  label="Address"
+                  required
+                  @change="setLatLongs"
+                  :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+                ></v-text-field>
+              </div>
+              <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+            </div>
+            <div class="search_bar_container" style="margin-top: 10px;">
+              <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
+              <p class="search_bar_current">Use Current Location</p>
+            </div>
+            <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+          </div>
       </div>
-      <div class="search_text_field">
-        <v-text-field
-          solo
-          flat
-          hide-details
-          label="All jobs"
-          clearable
-          v-model="query"
-        ></v-text-field>
+
+      <!-- <div class="ykunvet_div">
+        <div class="ykunvet_section">
+          <div class="ykunvet_text_div">
+            <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
+            <p class="ykunvet_text">
+              You applied to a job, and weeks or even months later, 
+              the company finally replied that the job you applied to no longer
+              exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
+              anymore! We only show you the latest jobs near your location.</p>
+          </div>
+          <img class="ykunvet_phone" :src="pngs.phone1" alt="Newest Jobs Near Me">
+        </div>
+        <div class="ykunvet_section">
+          <div class="ykunvet_text_div">
+            <h2 class="ykunvet_header">Still being kept in the dark?</h2>
+            <p class="ykunvet_text">
+              Seriously? You still do not know what happens to your resume until someone
+              replies? Then you should start using Kunvet now. No kidding. We inform all of our users
+              about a change in their application status immediately. Whether their resume was
+              received or viewed, they will know it right away.</p>
+          </div>
+          <img class="ykunvet_phone" :src="pngs.phone2" alt="Being kept in the dark?">
+        </div>
+        <div class="ykunvet_section">
+          <div class="ykunvet_text_div">
+            <h2 class="ykunvet_header">One Resume Is Not Enough.</h2>
+            <p class="ykunvet_text">
+              Many of you have more than one resume—because you are very “versatile”. On
+              Kunvet, you can upload as many resumes as you want for the different kind of jobs you
+              apply to, and we will keep them safe and sound for whenever you need them.</p>
+          </div>
+          <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
+        </div>
+      </div>
+      <div class="student_testimonials">
+        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet Really Helps.</h2>
+              <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
+                job searching. I definitetly recommend using this service, especially for people like me who wants 
+                to work closer to home.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.profilePic"/>
+                <p class="bio_header">Sandra C.</p>
+                <p class="bio_text">Warehouse Associate</p>
+                <p class="bio_text">at Amazon</p>
+              </div>
+            </div>
+            <div style="height: 104px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet Really Helps.</h2>
+              <p class="quote">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely
+                recommend this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.profilePic"/>
+                <p class="bio_header">Anthony P.</p>
+                <p class="bio_text">Intern</p>
+                <p class="bio_text">at The H Law Group</p>
+              </div>
+            </div>
+            <div style="height: 104px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet Really Helps.</h2>
+              <p class="quote">“</p><p class="test_text">I love how the interface is clean and modern. I find the
+                jobs on your website to be unique and I always come back to it from time to time to see what jobs are out there.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.profilePic"/>
+                <p class="bio_header">Kamilah D.</p>
+                <p class="bio_text">Sales Associate</p>
+                <p class="bio_text">at Closet Twenty One</p>
+              </div>
+            </div>
+            <div style="height: 104px;"/>
+          </v-carousel-item>
+        </v-carousel>
+      </div> 
+      <div class="next_job_div">
+        <img class="next_job_pic" :src="pngs.nextJob" alt="Job applicants at an Interview">
+        <h2 class="next_job_title">Your Next Job is Waiting for You.</h2>
+        <p class="next_job_text">With an account, you have access to all the newest jobs near you. To apply to any job, a
+            click of a button is all you need to do. Get your free account now.</p>
+        <router-link :to="searchDestination"><k-btn class="next_job_btn"><span class="next_job_btn_text">Get a Free Account</span></k-btn></router-link>
+      </div>
+      <div class="looking_div">
+        <div class="looking_text_div">
+          <h2 class="looking_header">Looking to hire? You are at the right place!</h2>
+          <p class="looking_text">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</p>
+          <router-link :to="searchDestination"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
+          <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
+        </div>
+      </div>-->
+    </div>
+    <div class="home_content medium">
+      <div class="index_top">
+          <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
+          <div class="search_area">
+            <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
+            <div class="search_bar_container" style="margin-top: 30px;">
+              <div class="search_bar_head">FIND</div>
+              <div class="search_bar_field">
+                <v-text-field
+                  solo flat hide-details clearable
+                  label="Part time web developer"
+                  v-model="query"
+                  class="search_bar_text_field"
+                ></v-text-field>
+              </div>
+            </div>
+            <div class="search_bar_container" style="margin-top: 10px;">
+              <div class="search_bar_head">NEAR</div>
+              <div class="search_bar_field">
+                <v-select
+                  label="School or City"
+                  item-text="name"
+                  item-value="name"
+                  v-bind:items="availableCities"
+                  v-model="selectedCity"
+                  solo flat hide-details autocomplete
+                  class="search_bar_text_field"
+                >
+                </v-select>
+              </div>
+            </div>
+            <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+          </div>
+      </div>
+      <div class="ykunvet_div">
+        <div class="ykunvet_section">
+          <div class="ykunvet_text_div">
+            <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
+            <p class="ykunvet_text">
+              You applied to a job, and weeks or even months later, 
+              the company finally replied that the job you applied to no longer
+              exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
+              anymore! We only show you the latest jobs near your location.</p>
+          </div>
+          <img class="ykunvet_phone" :src="pngs.phone1" alt="Newest Jobs Near Me">
+        </div>
+        <div class="ykunvet_section">
+          <div class="ykunvet_text_div">
+            <h2 class="ykunvet_header">Still being kept in the dark?</h2>
+            <p class="ykunvet_text">
+              Seriously? You still do not know what happens to your resume until someone
+              replies? Then you should start using Kunvet now. No kidding. We inform all of our users
+              about a change in their application status immediately. Whether their resume was
+              received or viewed, they will know it right away.</p>
+          </div>
+          <img class="ykunvet_phone" :src="pngs.phone2" alt="Being kept in the dark?">
+        </div>
+        <div class="ykunvet_section">
+          <div class="ykunvet_text_div">
+            <h2 class="ykunvet_header">One Resume Is Not Enough.</h2>
+            <p class="ykunvet_text">
+              Many of you have more than one resume—because you are very “versatile”. On
+              Kunvet, you can upload as many resumes as you want for the different kind of jobs you
+              apply to, and we will keep them safe and sound for whenever you need them.</p>
+          </div>
+          <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
+        </div>
+      </div>
+      <div class="student_testimonials">
+        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet Really Helps.</h2>
+              <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
+                job searching. I definitetly recommend using this service, especially for people like me who wants 
+                to work closer to home.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.profilePic"/>
+                <p class="bio_header">Sandra C.</p>
+                <p class="bio_text">Warehouse Associate</p>
+                <p class="bio_text">at Amazon</p>
+              </div>
+            </div>
+            <div style="height: 122px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet Really Helps.</h2>
+              <p class="quote">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely
+                recommend this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.profilePic"/>
+                <p class="bio_header">Anthony P.</p>
+                <p class="bio_text">Intern</p>
+                <p class="bio_text">at The H Law Group</p>
+              </div>
+            </div>
+            <div style="height: 108px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <h2 class="test_title">Kunvet Really Helps.</h2>
+              <p class="quote">“</p><p class="test_text">I love how the interface is clean and modern. I find the
+                jobs on your website to be unique and I always come back to it from time to time to see what jobs are out there.</p>
+              <div class="bio">
+                <img class="bio_img" :src="pngs.profilePic"/>
+                <p class="bio_header">Kamilah D.</p>
+                <p class="bio_text">Sales Associate</p>
+                <p class="bio_text">at Closet Twenty One</p>
+              </div>
+            </div>
+            <div style="height: 108px;"/>
+          </v-carousel-item>
+        </v-carousel>
+      </div>
+      <div class="next_job_div">
+        <img class="next_job_pic" :src="pngs.nextJob" alt="Job applicants at an Interview">
+        <h2 class="next_job_title">Your Next Job is Waiting for You.</h2>
+        <p class="next_job_text">With an account, you have access to all the newest jobs near you. To apply to any job, a
+            click of a button is all you need to do. Get your free account now.</p>
+        <router-link :to="searchDestination"><k-btn class="next_job_btn"><span class="next_job_btn_text">Get a Free Account</span></k-btn></router-link>
+      </div>
+      <div class="looking_div">
+        <div class="looking_text_div">
+          <h2 class="looking_header">Looking to hire? You are at the right place!</h2>
+          <p class="looking_text">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</p>
+          <router-link :to="searchDestination"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
+          <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
+        </div>
       </div>
     </div>
-    <div class="innerCol">
-      <div class="search_find_near">
-        <strong class="search_assist">Near</strong>
+    <div class="home_content mobile">
+      <div class="index_top">
+        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
       </div>
-      <!-- v-bind:class="{ 'active': openSelectField === 'city' }" -->
-      <div class="search_select">
-          <v-select
-            label="School or City"
-            item-text="name"
-            item-value="name"
-            v-bind:items="availableCities"
-            v-model="selectedCity"
-            solo
-            flat
-            hide-details
-            content-class="fsSelect-menu"
-            autocomplete
+      <div class="index_area">
+        <div class="search_bar_container">
+          <div class="search_bar_head">FIND</div>
+          <div class="search_bar_field">
+            <v-text-field
+              solo flat hide-details clearable
+              label="Part time web developer"
+              v-model="query"
+              class="search_bar_text_field"
+            ></v-text-field>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <div class="search_bar_container" style="margin-top: 10px;">
+          <div class="search_bar_head">NEAR</div>
+          <div class="search_bar_field">
+            <v-select
+              label="School or City"
+              item-text="name"
+              item-value="name"
+              v-bind:items="availableCities"
+              v-model="selectedCity"
+              solo flat hide-details autocomplete
+              class="search_bar_text_field"
             >
-          </v-select>
+            </v-select>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
       </div>
     </div>
-  </div>
-
-  <!-- <div class="search_mobile search_hide search_show">
-        <div class="search_find_near">
-          <strong class="search_assist">Find</strong>
+    <div class="home_content small">
+      <div class="index_top">
+        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
+      </div>
+      <div class="index_area">
+        <div class="search_bar_container">
+          <div class="search_bar_head">FIND</div>
+          <div class="search_bar_field">
+            <v-text-field
+              solo flat hide-details clearable
+              label="Part time web developer"
+              v-model="query"
+              class="search_bar_text_field"
+            ></v-text-field>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
         </div>
-        <div class="search_text_field">
-          <v-text-field
-            solo
-            flat
-            hide-details
-            label="All jobs"
-            clearable
-          ></v-text-field>
-        </div>
-  </div> -->
-
-  <!-- <div class="search_mobile search_show">
-        <div class="search_find_near">
-          <strong class="search_assist">Near</strong>
-        </div>
-        <div class="search_select" v-bind:class="{ 'active': openSelectField === 'city' }">
-          <v-select
-            label="School or City"
-            item-text="name"
-            item-value="name"
-            v-bind:items="availableCities"
-            solo
-            flat
-            hide-details
-            content-class="fsSelect-menu"
-            autocomplete
+        <div class="search_bar_container" style="margin-top: 10px;">
+          <div class="search_bar_head">NEAR</div>
+          <div class="search_bar_field">
+            <v-select
+              label="School or City"
+              item-text="name"
+              item-value="name"
+              v-bind:items="availableCities"
+              v-model="selectedCity"
+              solo flat hide-details autocomplete
+              class="search_bar_text_field"
             >
-          </v-select>
+            </v-select>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
         </div>
-    </div> -->
-
-    <router-link :to="searchDestination">
-      <button v-ripple class="search_hide kunvet-search-icon-btn med">
-        <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
-      </button>
-    </router-link>
-    <div class="search-btn-cont-mobile">
-      <router-link :to="searchDestination">
-        <k-btn v-ripple class="search_show kunvet-search-btn" block>
-          <span class="search_button_text">
-            Search
-          </span>
-        </k-btn>
-      </router-link>
+        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+      </div>
+    </div>
+    <div class="home_content extra_small">
+      <div class="index_top">
+        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
+      </div>
+      <div class="index_area">
+        <div class="search_bar_container">
+          <div class="search_bar_head">FIND</div>
+          <div class="search_bar_field">
+            <v-text-field
+              solo flat hide-details clearable
+              label="Part time web developer"
+              v-model="query"
+              class="search_bar_text_field"
+            ></v-text-field>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <div class="search_bar_container" style="margin-top: 10px;">
+          <div class="search_bar_head">NEAR</div>
+          <div class="search_bar_field">
+            <v-select
+              label="School or City"
+              item-text="name"
+              item-value="name"
+              v-bind:items="availableCities"
+              v-model="selectedCity"
+              solo flat hide-details autocomplete
+              class="search_bar_text_field"
+            >
+            </v-select>
+          </div>
+          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+        </div>
+        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+      </div>
     </div>
   </div>
-
-    <div style="width:100%; height:120px;"></div>
-    <div style="width:100%; height:30px;" class="mobile-hide"></div>
-
-    <div class="mobile-show">
-      <div class="artboard1_img_mobile">
-        <img src="@/assets/artboard1.png" width="96%" style="margin-top: 15%; margin-left: 2%;"/>
-      </div>
-
-      <div class="hire_kunvet_container">
-        <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
-        <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free!</div>
-        <router-link to="/createjob">
-          <button v-ripple class="postAJob">Post a Job</button>
-        </router-link>
-      </div>
-
-      <div style="height: 350px; width: 100%; background-color: #dbefff;">
-        <img src="@/assets/artboard2.png" width="86%" style="margin-top: 15%; margin-left: 7%;"/>
-      </div>
-
-      <div class="loved_trusted_container">
-        <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
-        <div class="loved_trusted_text">Kunvet is used by hundreds of students and local businesses. Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
-        <router-link to="/createjob">
-          <button v-ripple class="postAJob2">Post a Job</button>
-        </router-link>
-      </div>
-    </div>
-
-    <div class="main-cont-large promo-block mobile-hide" style="max-width: 100%; background: white">
-        <v-layout row wrap>
-          <v-flex xs12 sm6>
-            <div class="container-left artboard1_img">
-              <img src="@/assets/artboard1.png" width="100%" class="artboard1_img_style" />
-            </div>
-          </v-flex>
-
-          <v-flex xs12 sm6>
-            <div class="container-right hire_kunvet_container">
-                <div class="hire_kunvet_title"><strong>Hire on Kunvet</strong></div>
-                <div class="hire_kunvet_text">Reach out to talented students near you with just a few clicks. Post your first job for free. No credit card required.</div>
-                <router-link to="/createjob">
-                  <button v-ripple class="postAJob">Post a Job</button>
-                </router-link>
-            </div>
-          </v-flex>
-        </v-layout>
-
-        <!-- Some padding -->
-        <div style="width:100%; height:150px;"></div>
-
-        <v-layout row wrap>
-          <v-flex xs12 sm6 style="z-index:5;">
-            <div class="container-left loved_trusted_container">
-              <div class="loved_trusted_title"><strong>Loved & Trusted</strong></div>
-              <div class="loved_trusted_text">Our content is curated to ensure we are free of spam and ads, just organic jobs and relevant applicants.</div>
-              <router-link to="/createjob">
-                <button v-ripple class="postAJob2">Post a Job</button>
-              </router-link>
-            </div>
-          </v-flex>
-          <v-flex xs12 sm6>
-            <div class="container-right artboard2_img">
-              <img src="@/assets/artboard2.png" width="100%" class="artboard2_img_style"/>
-            </div>
-          </v-flex>
-        </v-layout>
-
-        <!-- Some padding -->
-        <div style="width:100%; height:150px;"></div>
-    </div>
-
-
-  </v-container>
 </template>
 <script>
+import woman from '@/assets/index/female-job-applicant-wearing-red-suit-waiting-for-interview.jpg';
+import phone1 from '@/assets/index/newest-jobs-near-me-kunvet.png';
+import phone2 from '@/assets/index/job-applications-kunvet.png';
+import phone3 from '@/assets/index/resumes-kunvet.png';
+import profilePic from '@/assets/index/profile-icon.png';
+import nextJob from '@/assets/index/job-applicants-in-interview.png';
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import InformationSvg from '@/assets/job_posts/information.svg';
-import LocationMarkerSvg from '@/assets/job_posts/location_marker.svg';
-import Asset70 from '@/assets/icons/Asset(70).svg';
-import vc from '@/assets/vc.svg';
-import mag from '@/assets/magnifier.svg';
-
 import PromoTextContainer from '@/components/PromoTextContainer';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
+import * as VueGoogleMaps from 'vue2-google-maps';
+
 
 Vue.use(VueApollo);
 
@@ -786,6 +1269,25 @@ export default {
   },
   data() {
     return {
+      svgs: {
+      },
+      pngs: {
+        phone1: phone1,
+        phone2: phone2,
+        phone3: phone3,
+        profilePic: profilePic,
+        woman: woman,
+        nextJob: nextJob,
+      },
+      job: {
+        address: '',
+        address2: null,
+        latitude: null,
+        longitude: null,
+      },
+      geocoder: null,
+      addressValid: true,
+      prevAutocompleteAddress: null,
       first_city_guess: 'UC Irvine',
       uid: null,
       findJobs: [],
@@ -817,13 +1319,6 @@ export default {
       selectedPositions: this.$store.selectedPositions || [],
       selectedLat: Coordinates.uci.latitude,
       selectedLong: Coordinates.uci.longitude,
-      svgs: {
-        information: InformationSvg,
-        locationMarker: LocationMarkerSvg,
-        kunvetDude: Asset70,
-        citySvg: vc,
-        mag: mag,
-      },
       selectedPositionsInital: 'All / Any',
       loadingJobs: false,
       inUsePositions: [],
@@ -950,8 +1445,63 @@ export default {
         }
       });
     },
+    setPlace(place) {
+      if (!place.geometry) {
+        this.job.addressValid = false;
+        return;
+      }
+      this.job.addressValid = true;
+      this.job.address = place.formatted_address;
+      this.job.latitude = place.geometry.location.lat();
+      this.job.longitude = place.geometry.location.lng();
+    },
+    setLatLongs() {
+      setTimeout(() => {
+        if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
+          this.geocoder.geocode({ 'address': this.job.address }, (results, status) => {
+            if (status === 'OK' && results.length === 1) {
+              this.job.latitude = results[0].geometry.location.lat();
+              this.job.longitude = results[0].geometry.location.lng();
+              this.job.addressValid = true;
+              this.$refs.addressField.validate();
+            } else {
+              this.job.latitude = null;
+              this.job.longitude = null;
+              this.job.addressValid = false;
+              this.$refs.addressField.validate();
+            }
+          });
+        }
+      }, 500);
+    },
+    initGoogleMaps() {
+      if (!this.autocomplete || !this.geocoder) {
+        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
+        input.setAttribute('placeholder', '');
+        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        this.geocoder = new window.google.maps.Geocoder();
+        this.autocomplete.setComponentRestrictions({
+          country: ['us'],
+        });
+        this.autocomplete.addListener('place_changed', () => {
+          this.prevAutocompleteAddress = this.job.address;
+          if (this.autocomplete === null) {
+            this.initGoogleMaps();
+            return;
+          }
+          this.setPlace(this.autocomplete.getPlace());
+        });
+      }
+      if (this.job.address) {
+        this.setLatLongs();
+      }
+    },
   },
   activated() {
+    // Initialize Google maps
+    VueGoogleMaps.loaded.then(() => {
+      this.initGoogleMaps();
+    });
   },
 };
 

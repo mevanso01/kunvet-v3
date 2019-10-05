@@ -93,25 +93,26 @@ router.post('/reset', async (ctx) => {
   }
 
   // ADD MAILER STUFF HERE - VIVEK
-    /* const mailer = new Mailer();
-  try {
-    await mailer.sendTemplate(
-      req.email,
-      'password-changeds',
-      {
-        email: req.email,
-        code: validationCode,
-      },
-    );
-  } catch (err) {
-    const response = {
-      success: false,
-      message: 'Email could not be sent',
-    };
-    ctx.status = 500;
-    ctx.body = JSON.stringify(response);
-    return;
-  }*/
+  /* const mailer = new Mailer();
+      try {
+        await mailer.sendTemplate(
+          req.email,
+          'password-changeds',
+          {
+            email: req.email,
+            code: validationCode,
+          },
+        );
+      } catch (err) {
+        const response = {
+          success: false,
+          message: 'Email could not be sent',
+        };
+        ctx.status = 500;
+        ctx.body = JSON.stringify(response);
+        return;
+  }
+  */
   const response = {
     success: true,
     message: 'Password reset!',

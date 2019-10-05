@@ -24,7 +24,7 @@ import store from '@/store';
 
 import Config from 'config';
 
-import gtagjs from 'vue-gtagjs';
+// import gtagjs from 'vue-gtagjs';
 
 Vue.use(Title);
 Vue.use(Logger);
@@ -87,8 +87,16 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/job/:id/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
+    },
+    {
       path: '/validate',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/Validate'),
+    },
+    {
+      path: '/validate/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Validate'),
     },
     {
       path: '/validate-email/:code',
@@ -121,6 +129,10 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "account" */ '@/pages/Account'),
     },
     {
+      path: '/account/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Account'),
+    },
+    {
       path: '/settings',
       component: () => import(/* webpackChunkName: "settings" */ '@/pages/Settings'),
     },
@@ -142,8 +154,22 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
     },
     {
+      path: '/createjob/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
+    },
+    {
       path: '/createjob/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
+      props: { id: null },
+    },
+    {
+      path: '/createjob/:id/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
+      props: { id: null },
+    },
+    {
+      path: '/createjob/signup=true:id',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
       props: { id: null },
     },
     {
@@ -164,6 +190,10 @@ const router = new VueRouter({
     {
       path: '/myorg',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/MyOrg'),
+    },
+    {
+      path: '/myorg/signup=true',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/MyOrg'),
     },
     {
       path: '/applicants',
@@ -192,6 +222,10 @@ const router = new VueRouter({
     {
       path: '/hire',
       component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Hire'),
+    },
+    {
+      path: '/choose',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Choose'),
     },
     // Debug pages
     {
@@ -238,8 +272,26 @@ if (process.env.NODE_ENV === 'development') {
 // Always disabled for non-production NODE_ENVs
 // FIXME: Move all tracking IDs to config
 if (process.env.NODE_ENV === 'production' && Config.get('analytics')) {
-  if (Config.get('analytics.googleAnalytics')) {
+  /* if (Config.get('analytics.googleAnalytics')) {
     gtagjs(router, 'UA-93340207-1');
+  } */
+
+  if (Config.get('analytics.googleTagManager')) {
+    // eslint-disable-next-line
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var f = d.getElementsByTagName(s)[0];
+      var j = d.createElement(s);
+      var temp = l;
+      temp += '&l=';
+      var dl = l !== 'dataLayer' ? (temp) : '';
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=';
+      j.src += i;
+      j.src += dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KMXJH5V');
   }
 
   if (Config.get('analytics.hotjar')) {

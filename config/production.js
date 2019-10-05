@@ -49,7 +49,9 @@ module.exports = {
     dsn: Credentials.sentryClientDsn,
   },
   analytics: {
-    googleAnalytics: true,
+    //googleAnalytics: true,
+    googleTagManager: true,
+    //googleAdSense: true,
     hotjar: true,
   },
   algolia: {

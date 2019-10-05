@@ -644,7 +644,7 @@
                   color="white">
             <div class="login-card">
               <LoginComponent @toSignup="handleSignup"
-                              @loggedIn="handleResume"></LoginComponent>
+                              @loggedIn="handleResume()"></LoginComponent>
               <div style="width: 50px; background-color: blue"></div>
             </div>
             <button class="mobile-show"
@@ -656,7 +656,7 @@
           </v-card>
 
           <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
-            <SignupComponent @account="getColor" @success="handleResume"
+            <SignupComponent @account="getColor" @success="handleResume(true)"
                              style="padding: 30px"></SignupComponent>
             <!--<k-btn @click="loginState='login'" :color="accountColor"-->
             <!--style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">-->
@@ -709,12 +709,11 @@
               </div>
               <ResumeUploader :small="resumeExists" @uploaded="resumeUploaded"
                               style="width: 100%;" type="Job"></ResumeUploader>
-              <k-btn v-if="resumeExists" @click="createApplication"
-                     :disabled="!selectedResumes.length"
-                     :working="loading"
-                     color="#FF6969"
-                     style="margin: 20px auto; color:white">Apply
-              </k-btn>
+                <ApplyBtn v-if="resumeExists && selectedResumes.length" @click="createApplication"
+                      :working="loading"
+                      color="#FF6969"
+                      style="margin: 20px auto; color:white">Apply
+                </ApplyBtn>
               <button class="mobile-show"
                       style="position: relative; bottom: 0; left: 50%; transform: translateX(-50%)"
                       @click="applyDialog=false">
@@ -724,8 +723,7 @@
             </div>
           </v-card>
 
-          <v-card flat style="height: 500px;" class="dialog-card"
-                  v-else-if="loginState === 'success'">
+          <v-card flat style="height: 500px;" class="dialog-card" v-else-if="loginState === 'success'">
             <v-card-title class="kunvet-red apply-text">
               Thank you! Your application has been submitted.
             </v-card-title>
@@ -797,8 +795,7 @@
   import SignupComponent from '@/components/SignupComponent';
   import ResumeUploader from '@/components/ResumeUploader';
   import CodeVerification from '@/components/CodeVerification';
-  import StringHelper from '@/utils/StringHelper';
-  import axios from 'axios';
+  import ApplyBtn from '@/components/general/ApplyBtn';
 
   export default {
     filters: {
@@ -815,8 +812,9 @@
       SignupComponent,
       ResumeUploader,
       CodeVerification,
+      ApplyBtn,
     },
-    props: ['id'],
+    props: ['id', 'isapplied'],
     data() {
       return {
         jsonld: {},
@@ -906,21 +904,9 @@
       },
     },
     methods: {
-      async getApplication() {
-        const { data: { findMyApplications: applications } } = await this.$apollo.query({
-          query: (gql`query {
-            findMyApplications (filter: {}) {
-              _id
-              job_id
-              status
-              date
-              expiry_date
-            }
-          }`),
-        });
-        const jobPromises = Promise.all(applications.map(this.getPairForEachApplication));
-        this.jobsAndApplications = (await jobPromises).filter(({ job }) => job);
-        console.log(this.jobsAndApplications);
+      urlChange() {
+        this.isapplied = true;
+        // this.$router.push(`/job/${this.id}/applied=${this.isapplied}`);
       },
       getColor(info) {
         this.accountColor = info.color;
@@ -977,9 +963,16 @@
       handleSignup() {
         this.loginState = 'signup';
       },
-      handleResume() {
+      handleResume(verif) {
+        var verifSuccess = false;
+        if (verif) {
+          verifSuccess = verif;
+        }
         // called after signup or login, and from openApplyDialog()
         this.loginState = 'resume';
+        if (verifSuccess === true) {
+          this.$router.push(`/job/${this.id}/signup=true`);
+        }
         this._getUserData();
       },
       handleVerified() {
