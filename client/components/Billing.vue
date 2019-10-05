@@ -33,16 +33,10 @@ import Axios from 'axios';
 const dropin = require('braintree-web-drop-in');
 
 export default {
-  props: {
-    jobId: {
-      type: String,
-    },
-    title: {
-      type: String,
-    },
-  },
   data() {
     return {
+      jobId: '',
+      title: '',
       buttonText: '',
       completed: true,
       instance: null,
@@ -71,6 +65,7 @@ export default {
   },
   methods: {
     async show(jobId, buttonText = '', title = '') {
+      console.log('show me the money');
       this.jobId = jobId;
       this.buttonText = buttonText;
       this.title = title;
@@ -94,7 +89,6 @@ export default {
         // console.log('this.$refs.dropin ', this.$refs.dropin);
         // console.log('AAAAAAAAAH');
         this.$refs.dropin.innerHTML = '';
-        this.init();
       }
       this.completed = false;
     },

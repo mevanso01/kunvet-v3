@@ -80,6 +80,14 @@
   .search_bar_text_field{
     height: 52px;
   }
+  .search_results_div{
+    width: 400px;
+    background-color: #f4f4f4;
+    box-shadow: 0;
+    font-size: 16px;
+    position: absolute;
+    z-index: 10;
+  }
   .search_btn{
     margin-top: 20px;
     width: 100%;
@@ -887,12 +895,15 @@
               <div class="search_bar_head">NEAR</div>
               <div class="search_bar_field">
                 <v-text-field
+                  solo flat hide-details clearable
                   v-model="job.address"
                   ref="addressField"
                   class="search_bar_text_field"
                   label="Address"
                   required
                   @change="setLatLongs"
+                  @focus="searchFocus=true"
+                  @blur="searchFocus=false"
                   :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
                 ></v-text-field>
               </div>
@@ -901,6 +912,15 @@
             <div class="search_bar_container" style="margin-top: 10px;">
               <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
               <p class="search_bar_current">Use Current Location</p>
+            </div>
+            <div v-if="searchFocus===true" class="search_results_div" style="margin-top: 10px;">
+              <div style="display: flex; height: 64px;">
+              <v-list>
+                  <v-list-tile v-for="(item, i) in job" :key="i">
+                    {{item.address}}
+                  </v-list-tile>
+              </v-list>
+              </div>
             </div>
             <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
           </div>
@@ -1285,6 +1305,7 @@ export default {
         latitude: null,
         longitude: null,
       },
+      searchFocus: false,
       geocoder: null,
       addressValid: true,
       prevAutocompleteAddress: null,
