@@ -558,6 +558,11 @@ if (algoliaConfig.appId) {
 Vue.use(VueApollo);
 
 export default {
+  metaInfo: {
+    meta: [
+      { name: 'hello' },
+    ],
+  },
   components: {
     MainJobCard,
     NewsletterForm,

@@ -9,11 +9,13 @@ import ErrorCode from '#/ErrorCode';
 import ApiResponse from '@/utils/ApiResponse';
 import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
+import Config from 'config';
 
 const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
 const router = new KoaRouter();
+const appId = Config.get('algolia.appId');
 
 app.use(bodyParser());
 
@@ -47,7 +49,9 @@ const ACTIONS = {
       job.expiry_date = DateHelper.getExpiryDate(job.date, 30);
       job.expired = false;
       await job.save();
-      await Algolia.uploadJob(job);
+      if (appId.length > 0) {
+        await Algolia.uploadJob(job);
+      }
 
       const mailer = new Mailer();
       const locals = {

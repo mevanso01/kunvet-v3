@@ -443,6 +443,8 @@
       },
       openRepostDialog(job) {
         this.$refs.billing.refreshDropIn();
+        console.log(job._id);
+        this.$refs.billing.show(job._id);
         this.dialogs.errorOccured = false;
         this.dialogs.success = false;
         this.dialogs.currentJobId = job._id;
