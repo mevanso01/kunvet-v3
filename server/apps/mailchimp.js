@@ -2,13 +2,9 @@
 // Koa
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
-// import BraintreeGateway from '@/BraintreeGateway';
-// import Mailer from '@/utils/Mailer';
-// import Algolia from '@/utils/Algolia';
-// import ErrorCode from '#/ErrorCode';
-// import ApiResponse from '@/utils/ApiResponse';
-// import DateHelper from '@/../client/utils/DateHelper';
-// import util from 'util';
+import Config from 'config';
+
+const mcConfig = Config.get('mailchimp');
 
 const bodyParser = require('koa-bodyparser');
 
@@ -20,9 +16,9 @@ const Mailchimp = require('mailchimp-api-v3');
 
 app.use(bodyParser());
 
-const mcListId = '82b364d072';
+const mcListId = mcConfig.mcListId;
 // My Mailchimp API Key
-const mailchimp = new Mailchimp('93cdf81520d8a2d25b60a78ad0dbcdda-us3');
+const mailchimp = new Mailchimp(mcConfig.mcAPIKey);
 
 
 router.post('/addMember', async (ctx) => {
@@ -31,9 +27,6 @@ router.post('/addMember', async (ctx) => {
     message: 'Failed posting on MailChimp',
   });
   const info = ctx.request.body;
-  console.log(mailchimp);
-  console.log(mcListId);
-  console.log(info);
 
   mailchimp.post(`lists/${mcListId}`, {
     members: [{
@@ -104,6 +97,8 @@ router.post('/deleteTags', async (ctx) => {
           }
         }).catch(err => {
           console.warn('Failed reading from mailchimp', err);
+        }).then(() => {
+          console.log('no preference successfully deleted.');
         });
       }
     }
@@ -115,6 +110,32 @@ router.post('/deleteTags', async (ctx) => {
   ctx.body = JSON.stringify({
     success: true,
     message: 'Posted on MailChimp',
+  });
+});
+
+router.post('/updatePreference', async (ctx) => {
+  console.log("inside updatePreference");
+  ctx.body = JSON.stringify({
+    success: false,
+    message: 'Failed updating preference on MailChimp',
+  });
+  const info = ctx.request.body;
+  console.log(info);
+  mailchimp.patch(`lists/${mcListId}/members/${md5(info.email_address)}`, {
+    "status": info.status
+  }).then(m => {
+    if (m.errors) {
+      console.log('Error adding updating subscriber preference to MC', m.errors);
+    }
+    console.log(m);
+    return m;
+  }).catch(err => {
+    console.warn('Failed posting on mailchimp', err);
+  });
+  console.log('done updating');
+  ctx.body = JSON.stringify({
+    success: true,
+    message: 'updated on MailChimp',
   });
 });
 
@@ -143,7 +164,7 @@ router.post('/addTags', async (ctx) => {
             'email_address': info.email,
           }).then(mes => {
             if (mes.errors) {
-              console.log('Error Deleting Tags', mes.errors);
+              console.log('Error adding the Tags', mes.errors);
             }
           }).catch(err => {
             console.warn('Failed reading from mailchimp', err);

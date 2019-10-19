@@ -64,6 +64,10 @@ module.exports = {
     privateKey: '',
     publicKey: '',
   },
+  mailchimp: {
+    mcListId: '',
+    mcAPIKey: '',
+  },
 
   // Sentry
   sentryClientDsn: '',

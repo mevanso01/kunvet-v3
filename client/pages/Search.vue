@@ -475,7 +475,7 @@ section.search {
         </div>
       </v-layout>
 
-      <div class="banner-desktop">
+      <div v-if="newsLetterSignedUp===false" class="banner-desktop">
         <div class="main-cont-large">
           <v-layout row wrap style="padding: 50px 80px; border-top:5px solid red; background-color: #f6f6f8;">
             <v-flex xs12 sm4>
@@ -487,7 +487,7 @@ section.search {
           </v-layout>
         </div>
       </div>
-      <div class="banner-mobile">
+      <div v-if="newsLetterSignedUp===false" class="banner-mobile">
           <v-layout row wrap style="padding: 0px; border-top:5px solid red;">
             <v-flex xs12 md4 style="padding: 0px">
               <img src="@/assets/woman with phone gradiant.png" style="width: 100%;"/>
@@ -499,10 +499,10 @@ section.search {
       </div>
     </div>
 
-    <v-dialog v-model="dialogs.showJobAlertForm" max-width="500px">
+    <v-dialog v-if="newsLetterSignedUp===false" v-model="dialogs.showJobAlertForm" max-width="500px">
       <v-card>
         <v-card-text style="margin: 0px; padding: 0px;">
-          <NewsletterForm @notNow="onClickChild"/>
+          <NewsletterForm @close="onClickChild"/>
         </v-card-text>
         <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">
           Some kind of error occured. Please try again later.
@@ -634,6 +634,7 @@ export default {
       page: 0,
       displayedJobs: [[], [], []],
       searchPlaceholder: '',
+      newsLetterSignedUp: false,
     };
   },
   apollo: {
@@ -1212,6 +1213,7 @@ export default {
     userDataProvider.getUserData().then(udata => {
       const data = this.$store.state;
       if (data) {
+        console.log(data);
         if (data.firstSearch) {
           this.firstSearch = data.firstSearch;
         }
@@ -1229,6 +1231,11 @@ export default {
         }
         if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
           this.selectedPositions = data.selectedPositions;
+        }
+        if (data.userdata.preferences.getNewsletters === true) {
+          this.newsLetterSignedUp = true;
+        } else {
+          this.newsLetterSignedUp = false;
         }
       }
       if (udata.uid && udata.acct !== 0) {

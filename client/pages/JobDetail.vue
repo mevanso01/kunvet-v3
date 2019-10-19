@@ -796,6 +796,8 @@
   import ResumeUploader from '@/components/ResumeUploader';
   import CodeVerification from '@/components/CodeVerification';
   import ApplyBtn from '@/components/general/ApplyBtn';
+  import axios from 'axios';
+  import StringHelper from '@/utils/StringHelper';
 
   export default {
     filters: {
@@ -1374,6 +1376,8 @@
           console.log('delete Tags');
         }, (error) => {
           this.$error(error);
+        }).then(() => {
+          console.log('tag successfully deleted');
         });
       },
       addTags() {
@@ -1381,10 +1385,14 @@
           email: this.userdata.email,
           tags: this.findJob.position_tags,
         };
+        console.log('tags in add Tags');
+        console.log(this.findJob.position_tags);
         axios.post('/mailchimp/addTags', data).then(() => {
           console.log('add Tags');
         }, (error) => {
           this.$error(error);
+        }).then(() => {
+          console.log('tag successfully added');
         });
       },
       updateAccount() {
@@ -1392,7 +1400,6 @@
         const _resumes = this.resumes.map(({
           name, filename, resumeid,
         }) => ({ name, filename, resumeid }));
-
         this.$apollo.mutate({
           mutation: (gql`
           mutation ($uid: MongoID, $record: UpdateOneAccountInput!)

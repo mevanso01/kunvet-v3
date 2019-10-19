@@ -77,6 +77,23 @@
   } */
 }
 
+.elementToFadeInAndOut {
+    -webkit-animation: fadeinout 3s linear forwards;
+    animation: fadeinout 3s linear forwards;
+    opacity: 0;
+}
+
+.preferenceChange {
+    opacity: 0;
+}
+
+@-webkit-keyframes fadeinout {
+  50% { opacity: 1; }
+}
+
+@keyframes fadeinout {
+  50% { opacity: 1; }
+}
 
 </style>
 
@@ -89,6 +106,7 @@
     </div>
 
     <div class="main-cont-large">
+
       <section style="padding: 0; margin: 15px; width: auto;">
         <br>
 
@@ -121,9 +139,12 @@
           <!-- <div class="email_preferences">Recieve emails about new applicants</div>
           <v-switch color="red" class="switch_settings"></v-switch> -->
           <br>
+          <div class="email_preferences">Subscribe to Job Alert</div>
+          <v-switch @change="saveJobAlertOption()" v-model="getNewsletter_bool" color="red" class="switch_settings"></v-switch>
+
           <div class="email_preferences">Recieve emails about application status</div>
           <v-switch @change="savePreferences()" v-model="application_bool" color="red" class="switch_settings"></v-switch>
-          
+
           <div v-if="orgname" class="email_preferences">Recieve emails about job expiration</div>
           <v-switch v-if="orgname" @change="savePreferences()" v-model="jobExpired_bool" color="red" class="switch_settings"></v-switch>
           <!--
@@ -144,6 +165,13 @@
         </div>
         <br>
       </section>
+
+      <p
+        v-if="preferenceChanged"
+        :class="[preferenceChanged ? 'elementToFadeInAndOut' : 'preferenceChange',]"
+        style="background-color: #eaf6ea; color: green; padding:8px 15px; font-weight: bold; margin:30 0px;">
+        Preference changed successfully!
+      </p>
 
       <v-dialog v-model="deleteOrgDialog">
         <v-card>
@@ -186,6 +214,7 @@
         application_bool: true,
         getNewsletter_bool: false,
         jobExpired_bool: false,
+        preferenceChanged: false,
       };
     },
     components: {
@@ -439,19 +468,44 @@
       loginToRegularAccount() {
         EventBus.$emit('individual');
       },
+      async saveJobAlertOption() {
+        console.log(this.getNewsletter_bool);
+        var currentStatus = this.getNewsletter_bool ? 'subscribed' : 'unsubscribed';
+        var postData = {
+          email_address: this.account_email,
+          status: currentStatus,
+        };
+        console.log(postData);
+
+        Axios.post('/mailchimp/updatePreference', postData).then(() => {
+          console.log('updated on mailchimp');
+          this.savePreferences();
+        }, (error) => {
+          this.$error(error);
+        });
+      },
       savePreferences() {
         if (!this.preferences) return;
 
         this.preferences.getNewsletters = this.getNewsletter_bool;
         this.preferences.applicationStatusEmails = (this.application_bool) ? 'All' : 'Off';
         this.preferences.jobExpiredEmails = (this.jobExpired_bool) ? 'All' : 'Off';
-
+        console.log('preferences:');
+        console.log(this.preferences.getNewsletters);
         userDataProvider.setUserData({
           preferences: {
             getNewsletters: this.preferences.getNewsletters,
             jobExpiredEmails: this.preferences.jobExpiredEmails,
             applicationStatusEmails: this.preferences.applicationStatusEmails,
           },
+        }).then(value => {
+          if (value instanceof Error) {
+            console.log('error');
+          } else {
+            console.log(value);
+            this.preferenceChanged = true;
+            setTimeout(() => { this.preferenceChanged = false; }, 3000);
+          }
         });
       },
     },
