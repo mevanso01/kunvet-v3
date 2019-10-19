@@ -16,9 +16,9 @@ const Mailchimp = require('mailchimp-api-v3');
 
 app.use(bodyParser());
 
-const mcListId = mcConfig.mcListId;
+const mcListId = '82b364d072';
 // My Mailchimp API Key
-const mailchimp = new Mailchimp(mcConfig.mcAPIKey);
+const mailchimp = new Mailchimp('93cdf81520d8a2d25b60a78ad0dbcdda-us3');
 
 
 router.post('/addMember', async (ctx) => {
