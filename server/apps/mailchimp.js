@@ -2,10 +2,13 @@
 // Koa
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
+
+// After setting up the API Keys in Config/credentials, uncomment these lines.
+/*
 import Config from 'config';
-
-const mcConfig = Config.get('mailchimp');
-
+const mcListId = Config.get('mailchimp.mcListId');
+const mcAPIKey = Config.get('mailchimp.mcAPIKey');
+*/
 const bodyParser = require('koa-bodyparser');
 
 const md5 = require('js-md5');
@@ -18,7 +21,8 @@ app.use(bodyParser());
 
 const mcListId = '82b364d072';
 // My Mailchimp API Key
-const mailchimp = new Mailchimp('93cdf81520d8a2d25b60a78ad0dbcdda-us3');
+const mcAPIKey = '93cdf81520d8a2d25b60a78ad0dbcdda-us3';
+const mailchimp = new Mailchimp(mcAPIKey);
 
 
 router.post('/addMember', async (ctx) => {

@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   padding: 0px;
+  vertical-align: middle;
 }
 .container {
   /* margin: 50px auto; */
@@ -25,61 +26,82 @@
 }
 .newsletter-buttons {
   text-align: right;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 h1 {
   text-align: left;
-  margin: 0 0 14px 0;
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 32px;
+  font-family: proxima nova;
+  font-weight: 600;
+  color: #3c3c3c;
+  line-height: 120%;
+  letter-spacing: 0;
+  padding-bottom: 10px;
 }
 p {
-  text-align: left;
-  font-size: 16px;
-  margin: 0 0 30px 0;
-}
+   font-size: 20px;
+   font-family: proxima nova;
+   font-weight: 300;
+   color: #3c3c3c;
+   line-height: 150%;
+   letter-spacing: 0;
+   text-align: left;
+   margin-bottom: 20px;
+ }
+
+ .signup-button {
+   width: 500px;
+   height: 64px;
+   font-size: 16px;
+   font-family: proxima nova;
+   font-weight: 600;
+   font-color: #ffffff;
+   line-height: 120%;
+   letter-spacing: 0;
+   background-color: #ff6969;
+   box-shadow: 0;
+   border-radius: 0;
+ }
 
 </style>
 
 <template>
   <div :class="[ifUseBanner?'signup-card-banner' : 'signup-card']">
-    <div v-show="state == 'initial'" class="container">
+    <div v-if="!success" class="container">
       <h1>Never again miss the ideal job.</h1>
-      <p><!--<span v-if="email != null && fname != null">Hi, {{fname}}! </span>-->The ideal job of your choice will reach out to <b>you first</b> — before it is found by others!</p>
+      <p>The ideal job of your choice will reach out to <span style='font-weight: 600'>you first</span> — before it is found by others!</p>
 
     <k-dropdown
-      title="What interests you?"
+      style="margin-bottom: 4px"
+      title="Job Preference"
       :tag_list="availablePositions"
       v-on:list-changed="position_tags = $event">
     </k-dropdown>
+
       <v-form ref="form">
         <div v-if="!loggedIn">
           <k-text-field label="FIRST NAME"
             v-model="fname" :rules="requiredRules"
             required
             class="input-box"
+            style="margin-bottom: 0px; margin-top: 0px"
+            placeholder="FIRST NAME"
           ></k-text-field>
 
-          <k-text-field v-model="email" label="EMAIL" :rules="emailRules" required class="input-box" style="margin-top: 20px"></k-text-field>
+          <k-text-field v-model="email" label="EMAIL" :rules="emailRules" required class="input-box" style="margin-top: 4px" placeholder="EMAIL"></k-text-field>
         </div>
 
         <div class="newsletter-buttons" >
           <k-btn v-if="!ifUseBanner" @click="onClickLater()" style="background-color: white; color: #ff6969; border: 1px solid; border-color: #ff6969; font-weight: bold;">Not Now</k-btn>
-          <k-btn @click="addMemberToMailChimp" style="margin-left: 20px; font-weight: bold;">Active for Free</k-btn>
+          <k-btn v-if="!ifUseBanner" @click="addMemberToMailChimp" style="margin-left: 20px; font-weight: bold;">Active for Free</k-btn>
+          <k-btn v-if="ifUseBanner" @click="addMemberToMailChimp" class="signup-button">Active for Free</k-btn>
         </div>
 
-        <v-alert
-            dense
-            text
-            type="success"
-            :value="preferenceChanged"
-            transition="slide-x-transition">
-          {{message}}
-        </v-alert>
       </v-form>
     </div>
-    <div v-show="state == 'success'" class="container">
-      Successful!
+    <div v-else>
+      <h1>{{title}}</h1>
+      <p>{{message}}</p>
     </div>
 
   </div>
@@ -106,7 +128,9 @@ export default {
       loggedIn: true,
       userdata: null,
       useBanner: false,
-      message: 'Successfully posted on Mailchimp!',
+      success: false,
+      title: 'You Are Subscribed',
+      message: 'We will notify you when there are new jobs that match your preferences! Cancel anytime.',
       preferenceChanged: false,
       requiredRules: [
         v => !!v || 'Required',
@@ -152,22 +176,28 @@ export default {
 
       axios.post('/mailchimp/addMember', postData).then(() => {
         console.log('posted on mailchimp');
-        this.message =  'Successfully posted on Mailchimp!';
+        this.title = 'You Are Subscribed';
+        this.message = 'We will notify you when there are new jobs that match your preferences! Cancel anytime.';
         this.preferenceChanged = true;
+        this.success = true;
         setTimeout(() => {
           this.preferenceChanged = false;
+          this.success = false;
           console.log('emitting close');
-          this.$emit('close', 'later');
+          this.$emit('post', 'finished');
         },
         1500);
       }, (error) => {
         this.$error(error);
+        this.title = 'An Error Occured';
         this.message = 'An error occured, please try again or contact us for help!';
         this.preferenceChanged = true;
+        this.success = true;
         setTimeout(() => {
           this.preferenceChanged = false;
+          this.success = false;
           console.log('emitting close');
-          this.$emit('close', 'later');
+          this.$emit('error', 'later');
         },
         1500);
       });

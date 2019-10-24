@@ -94,7 +94,7 @@ p {
 }
 </style>
 <template>
-  <div style="margin-bottom: 20px;"
+  <div
   class="k-dropdown">
   <v-layout style="background-color: #efefef; min-height:60px; text-align: center;">
     <v-flex xs10 sm11>

@@ -328,6 +328,11 @@ section.search {
   position: fixed;
   z-index: 1;
 }
+
+.job-alert-banner-columns{
+  max-width: 1000px;
+}
+
 </style>
 
 <template>
@@ -452,18 +457,6 @@ section.search {
                   :fromCoordinates="selectedCoordinates"
                 />
               </div>
-              <!-- <div v-if="displayedJobs[2].length % 2 === 1" class="jp-card small-thats-it">
-                <div style="width: 215px; margin: 32px auto;">
-                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
-                </div>
-                <p class="center">That's all.</p>
-              </div>
-              <div v-if="displayedJobs[2].length % 2 === 0" class="jp-card large-thats-it">
-                <div style="width: 215px; margin: 32px auto;">
-                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
-                </div>
-                <p class="center">That's all.</p>
-              </div> -->
             </div>
           </div>
         </v-flex>
@@ -475,49 +468,35 @@ section.search {
         </div>
       </v-layout>
 
-      <div v-if="newsLetterSignedUp===false" class="banner-desktop">
+      <div v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" class="banner-desktop">
         <div class="main-cont-large">
-          <v-layout row wrap style="padding: 50px 80px; border-top:5px solid red; background-color: #f6f6f8;">
-            <v-flex xs12 sm4>
-              <img src="@/assets/woman with phone.png" style="width:100%;"/>
-            </v-flex>
-            <v-flex xs12 sm8 style="padding-left: 50px;">
-              <NewsletterForm banner/>
-            </v-flex>
-          </v-layout>
+          <div class="job-alert-banner-columns" style="padding: 60px 80px; border-top:5px solid red; background-color: #f6f6f8;">
+            <div style="vertical-align: middle; column-width: 300px;  display: table-cell;">
+              <img src="@/assets/woman with phone.png" style="width:300px; height: 396px; padding-right: 60px;"/>
+            </div>
+            <div style="width: 500px; display: table-cell; vertical-align: middle;">
+              <NewsletterForm banner @post="onPost"/>
+            </div>
+          </div>
         </div>
       </div>
-      <div v-if="newsLetterSignedUp===false" class="banner-mobile">
+      <div v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" class="banner-mobile">
           <v-layout row wrap style="padding: 0px; border-top:5px solid red;">
             <v-flex xs12 md4 style="padding: 0px">
               <img src="@/assets/woman with phone gradiant.png" style="width: 100%;"/>
             </v-flex>
             <v-flex xs12 md8 style="padding:0px 50px 50px 50px; background-color: linear-gradient(to bottom, #ffffff, #f8f8f8));">
-              <NewsletterForm banner/>
+              <NewsletterForm banner @post="onPost"/>
             </v-flex>
           </v-layout>
       </div>
     </div>
 
-    <v-dialog v-if="newsLetterSignedUp===false" v-model="dialogs.showJobAlertForm" max-width="500px">
+    <v-dialog v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" v-model="dialogs.showJobAlertForm" max-width="500px">
       <v-card>
         <v-card-text style="margin: 0px; padding: 0px;">
-          <NewsletterForm @close="onClickChild"/>
+          <NewsletterForm @close="onClickChild" @post="onPost"/>
         </v-card-text>
-        <v-card-text v-if="dialogs.errorOccured" class="pt-0" style="color: red;">
-          Some kind of error occured. Please try again later.
-        </v-card-text>
-        <v-card-text v-else-if="dialogs.success" class="pt-0" style="color: green;">
-          Successfully reposted!
-        </v-card-text>
-        <v-card-actions v-else>
-          <!--<v-btn flat="flat" @click.native="repostJob(dialogs.currentJobId)">
-            Repost
-          </v-btn>
-          <v-btn flat="flat" @click.native="dialogs.showRepost = false" style="padding-top:0px;">
-            Cancel
-          </v-btn>-->
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-container>
@@ -635,6 +614,7 @@ export default {
       displayedJobs: [[], [], []],
       searchPlaceholder: '',
       newsLetterSignedUp: false,
+      newsLetterProcessFinished: false,
     };
   },
   apollo: {
@@ -717,6 +697,11 @@ export default {
       console.log('onClickChild is clicked');
       console.log(value); // someValue
       window.setTimeout(() => { this.dialogs.showJobAlertForm = false; }, 200);
+    },
+    onPost (value) {
+      console.log('onPost is clicked');
+      console.log(value); // someValue
+      window.setTimeout(() => { this.newsLetterProcessFinished = true; });
     },
     // Randomly pick search search placeholder text
     getSearchPlaceholderText() {
