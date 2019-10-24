@@ -19,11 +19,10 @@ const Mailchimp = require('mailchimp-api-v3');
 
 app.use(bodyParser());
 
-const mcListId = '82b364d072';
+const mcListId = 'a96ea02853';
 // My Mailchimp API Key
-const mcAPIKey = '93cdf81520d8a2d25b60a78ad0dbcdda-us3';
+const mcAPIKey = 'c5be2bf312c2d1f9c59a0af7edf4dc19-us18';
 const mailchimp = new Mailchimp(mcAPIKey);
-
 
 router.post('/addMember', async (ctx) => {
   ctx.body = JSON.stringify({
