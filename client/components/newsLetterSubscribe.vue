@@ -117,6 +117,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    unsubscribed: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -129,6 +133,9 @@ export default {
       userdata: null,
       useBanner: false,
       success: false,
+      application_bool: false,
+      jobExpired_bool: false,
+      preferences: null,
       title: 'You Are Subscribed',
       message: 'We will notify you when there are new jobs that match your preferences! Cancel anytime.',
       preferenceChanged: false,
@@ -150,6 +157,9 @@ export default {
         this.uid = data.uid;
         this.email = data.userdata.email;
         this.fname = data.userdata.firstname;
+        this.preferences = data.userdata.preferences;
+        this.application_bool = (this.preferences.applicationStatusEmails === 'All');
+        this.jobExpired_bool = (this.preferences.jobExpiredEmails === 'All');
         console.log(this.email);
         console.log(this.fname);
       }
@@ -173,34 +183,63 @@ export default {
         status: 'subscribed',
       };
       console.log(postData);
+      if (!this.loggedIn) {
+        axios.post('/mailchimp/addMember', postData).then(() => {
+          console.log('posted on mailchimp');
+          this.title = 'You Are Subscribed';
+          this.message = 'We will notify you when there are new jobs that match your preferences! Cancel anytime.';
+          this.preferenceChanged = true;
+          this.success = true;
+          setTimeout(() => {
+            this.preferenceChanged = false;
+            this.success = false;
+            console.log('emitting close');
+            this.$emit('post', 'finished');
+          },
+          1500);
+        }, (error) => {
+          this.$error(error);
+          this.title = 'An Error Occured';
+          this.message = 'An error occured, please try again or contact us for help!';
+          this.preferenceChanged = true;
+          this.success = true;
+          setTimeout(() => {
+            this.preferenceChanged = false;
+            this.success = false;
+            console.log('emitting close');
+            this.$emit('error', 'later');
+          },
+          1500);
+        });
+      } else {
+        var currentStatus = 'subscribed';
+        var postDt = {
+          email_address: this.email,
+          status: currentStatus,
+        };
+        console.log(postDt);
 
-      axios.post('/mailchimp/addMember', postData).then(() => {
-        console.log('posted on mailchimp');
-        this.title = 'You Are Subscribed';
-        this.message = 'We will notify you when there are new jobs that match your preferences! Cancel anytime.';
-        this.preferenceChanged = true;
-        this.success = true;
+        axios.post('/mailchimp/updatePreference', postDt).then(() => {
+          console.log('updated on mailchimp');
+        }, (error) => {
+          this.$error(error);
+        });
+        this.preferences.getNewsletters = true;
+        this.preferences.applicationStatusEmails = (this.application_bool) ? 'All' : 'Off';
+        this.preferences.jobExpiredEmails = (this.jobExpired_bool) ? 'All' : 'Off';
+        console.log('preferences:');
+        console.log(this.preferences.getNewsletters);
+        userDataProvider.setUserData({
+          preferences: {
+            getNewsletters: this.preferences.getNewsletters,
+            jobExpiredEmails: this.preferences.jobExpiredEmails,
+            applicationStatusEmails: this.preferences.applicationStatusEmails,
+          },
+        });
         setTimeout(() => {
-          this.preferenceChanged = false;
-          this.success = false;
-          console.log('emitting close');
           this.$emit('post', 'finished');
-        },
-        1500);
-      }, (error) => {
-        this.$error(error);
-        this.title = 'An Error Occured';
-        this.message = 'An error occured, please try again or contact us for help!';
-        this.preferenceChanged = true;
-        this.success = true;
-        setTimeout(() => {
-          this.preferenceChanged = false;
-          this.success = false;
-          console.log('emitting close');
-          this.$emit('error', 'later');
-        },
-        1500);
-      });
+        });
+      }
     },
   },
   computed: {
