@@ -1,873 +1,921 @@
 <style lang="scss" scoped>
-// big desktop
-@media (min-width: 1025px){
-  .medium, .mobile, .small, .extra_small {
-    display: none !important;
-  }
-  .home_content{
-    width: 100%;
-    padding-top: 164px;
-  }
-  .index_top{
-    max-width: 1008px;
-    padding: 0 24px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-  }
-  .interview_woman{
-    height: 550px;
-    margin-right: 90px;
-  }
-  .search_area{
-    width: 400px;
-    height: 540px;
-    background-color: white;
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-  .search_title{
-    font-family: proxima-nova, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    font-size: 50px;
-    line-height: 140%;
-    color: #ff6969;
-    text-align: left;
-    margin-bottom: 0px;
-  }
-  .search_bar_container{
-    width: 400px;
-    height: 64px;
-    background-color: #f4f4f4;
-    box-shadow: 0;
-    font-size: 16px;
-    display: flex;
-  }
-  .search_bar_head{
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    letter-spacing: 0.12em;
-    padding-left: 24px;
-    padding-top: 20px;
-    margin-bottom: 0px;
-  }
-  .search_bar_field{
-    width: 292px;
-    height: 100%;
-    background-color: none;
-  } 
-  .search_bar_icon{
-    font-size: 16px;
-    margin-right: 24px;
-    color: lightgrey;
-  }
-  .search_bar_icon_cross{
-    font-size: 16px;
-    margin-left: 24px;
-    color: #5a8cff; 
-  }
-  .search_bar_current{
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    padding-left: 10px;
-    padding-top: 20px;
-    margin-bottom: 0px;
-    font-size: 16px;
-    color: #5a8cff; 
-  }
-  .search_bar_text_field{
-    height: 52px;
-  }
-  .search_results_div{
-    width: 400px;
-    background-color: #f4f4f4;
-    box-shadow: 0;
-    font-size: 16px;
-    position: absolute;
-    z-index: 10;
-  }
-  .search_btn{
-    margin-top: 20px;
-    width: 100%;
-    height: 64px !important;
-    line-height: 64px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-  }
-  .search_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
-    line-height: 120%;
-    font-weight: 600;
-  }
-  .ykunvet_div{
-    max-width: 1008px;
-    padding: 0 0px 0px 24px;
-    margin: 0 auto;
-  }
-  .ykunvet_section{
-    display: flex;
-    margin-top: 120px;
-  }
-  .ykunvet_text_div{
-    width: 500px;
-    height: 340px;
-    margin-bottom: auto;
-    margin-top: auto;
-    margin-right: 100px;
-  }
-  .ykunvet_header{
-    font-size: 36px;
-    line-height: 120%;
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    letter-spacing: 0.03em;
-    margin-bottom: 0px;
-  }
-  .ykunvet_text{
-    font-size: 24px;
-    line-height: 150%;
-    font-weight: 300;
-    letter-spacing: 0;
-    padding-top: 30px;
-    margin-bottom: 0px;
-    font-family: proxima-nova, sans-serif;
-    color: black;
-  }
-  .ykunvet_phone{
-    width: 400px;
-  }
-  .student_testimonials{
-    width: 100%;
-    margin-top: 120px;
-  }
-  .testimonials{
-    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
-    box-shadow: none;
-  }
-  .test_slide{
-    width: 100%;
-    margin-left: 0px;
-  }
-  .slide_info{
-    max-width: 1008px;
-    padding: 0 24px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .test_title{
-    line-height: 120%;
-    width: 100%;
-    letter-spacing: 0;
-    max-width: 960px;
-    font-weight: 600;
-    padding-top: 80px;
-    margin-left: 24px;
-    font-family: proxima-nova, sans-serif; 
-    font-size: 40px;
-    margin-bottom: 0px;
-    color: white;
-  }
-  .test_text{
-    padding-top: 40px;
-    width: 614px;
-    font-family: proxima-nova, sans-serif; 
-    font-size: 24px;
-    color: white;
-    line-height: 150%;
-    margin-right: 130px;
-    margin-bottom: 0px;
-    font-weight: 300; 
-  }
-  .quote{
-    font-family: proxima-nova, sans-serif; 
-    color: white;
-    margin-left: 0px;
-    margin-bottom: 0px;
-    margin-top: 6px;
-    font-size: 64px;
-  }
-  .bio{
-    width: 190px;
-    height: 200px;
-  }
-  .bio_img{
-    height: 66px;
-    width: 66px;
-    margin-top: 10px;
-    display: block;
-  }
-  .bio_header{
-    padding-top: 20px;
-    font-size: 16px;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    font-weight: 600;
-    line-height: 100%;
-    margin-bottom: 0px;
-  }
-  .bio_text{
-    font-size: 16px;
-    padding-top: 10px;
-    font-weight: 300;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    line-height: 100%;
-    margin-bottom: 0px;
-  }
-  .next_job_div{
-    max-width: 1008px;
-    padding: 0 24px;
-    margin: 120px auto 0;
-    text-align: center;
-  }
-  .next_job_pic{
-    width: 100%;
-  }
-  .next_job_title{
-    margin-top: 80px;
-    font-size: 40px;
-    line-height: 120%;
-    font-weight: 600;
-    letter-spacing: 0;
-    color: #ff6969;
-    font-family: proxima-nova, sans-serif; 
-    margin-bottom: 0px;
-  }
-  .next_job_text{
-    font-size: 24px;
-    line-height: 150%;
-    font-weight: 300;
-    letter-spacing: 0;
-    color: black;
-    font-family: proxima-nova, sans-serif; 
-    padding-top: 30px;
-    margin-bottom: 0px;
-  }
-  .next_job_btn{
-    margin-top: 20px;
-    width: 290px;
-    height: 80px !important;
-    line-height: 80px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-    background-color: #ff6969;
-  }
-  .next_job_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 22px; 
-    color: white;
-    letter-spacing: 0em; 
-    line-height: 120%;
-    font-weight: 600;
-  }
-  .looking_div{
-    margin-top: 120px;
-    width: 100%;
-    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
-  }
-  .looking_text_div{
-    max-width: 1008px;
-    padding: 0 24px;
-    margin: 0 auto;
-  }
-  .looking_header{
-    padding-top: 60px;
-    font-size: 40px;
-    line-height: 120%;
-    font-weight: 600;
-    letter-spacing: 0;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    margin-bottom: 0px;
-  }
-  .looking_text{
-    font-size: 24px;
-    line-height: 120%;
-    font-weight: 300;
-    letter-spacing: 0;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    padding-top: 6px;
-    margin-bottom: 0px;
-  }
-  .looking_btn{
-    margin-top: 20px;
-    width: 200px;
-    height: 68px !important;
-    line-height: 68px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-    background-color: white !important;
-  }
-  .looking_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 22px; 
-    color: #308afc;
-    letter-spacing: 0em; 
-    line-height: 120%;
-    font-weight: 600;
-  }
-  .looking_btn_undertext{
-    font-size: 14px;
-    line-height: 120%;
-    font-weight: 300;
-    letter-spacing: 0;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    padding-top: 8px;
-    padding-bottom: 60px;
-    margin-bottom: 0px;
-  }
-}
-// medium desktop
-@media (min-width: 801px) and (max-width: 1024px) {
-  .desktop, .mobile, .small, .extra_small {
-    display: none !important;
-  }
-  .home_content{
-    width: 100%;
-    padding-top: 124px;
-  }
-  .index_top{
-    max-width: 1008px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-  }
-  .interview_woman{
-    height: 520px;
-    margin-right: 70px;
-  }
-  .search_area{
-    width: 356px;
-    height: 442px;
-    background-color: white;
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-  .search_title{
-    width: 356px;
-    font-family: proxima-nova, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    font-size: 44px;
-    line-height: 140%;
-    color: #ff6969;
-    text-align: left;
-    margin-bottom: 0px;
-  }
-  .search_bar_container{
-    width: 100%;
-    height: 64px;
-    background-color: #f4f4f4;
-    box-shadow: 0;
-    font-size: 16px;
-    display: flex;
-  }
-  .search_bar_head{
-    width: 68px;
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    letter-spacing: 0.12em;
-    padding-left: 24px;
-    padding-top: 20px;
-    margin-bottom: 0px;
-  }
-  .search_bar_field{
-    width: 100%;
-    height: 100%;
-    background-color: none;
-  }
-  .search_bar_text_field{
-    height: 52px;
-  }
-  .search_bar_icon{
-    font-size: 16px;
-  }
-  .search_btn{
-    margin-top: 20px;
-    width: 100%;
-    height: 64px !important;
-    line-height: 64px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-  }
-  .search_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
-    line-height: 120%;
-    font-weight: 600;
-  }
-  .ykunvet_div{
-    max-width: 1008px;
-    padding: 0 0px 0px 24px;
-    margin: 0 auto;
-  }
-  .ykunvet_section{
-    display: flex;
-    margin-top: 120px;
-  }
-  .ykunvet_text_div{
-    width: 50%;
-    height: 340px;
-    margin-bottom: auto;
-    margin-top: auto;
-    margin-right: 11%;
-  }
-  .ykunvet_header{
-    font-size: 32px;
-    line-height: 120%;
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    letter-spacing: 0.03em;
-    margin-bottom: 0px;
-  }
-  .ykunvet_text{
-    font-size: 22px;
-    line-height: 150%;
-    font-weight: 300;
-    letter-spacing: 0;
-    padding-top: 24px;
-    margin-bottom: 0px;
-    font-family: proxima-nova, sans-serif;
-    color: black;
-  }
-  .ykunvet_phone{
-    width: 39%;
-  }
-  .student_testimonials{
-    width: 100%;
-    margin-top: 120px;
-  }
-  .testimonials{
-    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
-    box-shadow: none;
-  }
-  .test_slide{
-    width: 100%;
-    margin-left: 0px;
-  }
-  .slide_info{
-    max-width: 1008px;
-    padding: 0 24px 40px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .test_title{
-    line-height: 120%;
-    width: 100%;
-    letter-spacing: 0;
-    max-width: 960px;
-    font-weight: 600;
-    padding-top: 100px;
-    margin-left: 24px;
-    font-family: proxima-nova, sans-serif; 
-    font-size: 36px;
-    margin-bottom: 0px;
-    color: white;
-  }
-  .test_text{
-    padding-top: 40px;
-    width: 438px;
-    font-family: proxima-nova, sans-serif; 
-    font-size: 22px;
-    color: white;
-    line-height: 150%;
-    margin-right: 100px;
-    margin-bottom: 0px;
-    font-weight: 300; 
-  }
-  .quote{
-    font-family: proxima-nova, sans-serif; 
-    color: white;
-    margin-left: 0px;
-    margin-bottom: 0px;
-    margin-top: 6px;
-    font-size: 64px;
-  }
-  .bio{
-    width: 190px;
-    height: 160px;
-    margin-bottom: auto;
-    margin-top: auto;
-  }
-  .bio_img{
-    height: 66px;
-    width: 66px;
-    margin-top: 10px;
-    display: block;
-  }
-  .bio_header{
-    padding-top: 16px;
-    font-size: 16px;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    font-weight: 600;
-    line-height: 100%;
-    margin-bottom: 0px;
-  }
-  .bio_text{
-    font-size: 16px;
-    padding-top: 8px;
-    font-weight: 300;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    line-height: 100%;
-    margin-bottom: 0px;
-  }
-  .next_job_div{
-    max-width: 1008px;
-    padding: 0 24px;
-    margin: 120px auto 0;
-    text-align: center;
-  }
-  .next_job_pic{
-    width: 100%;
-  }
-  .next_job_title{
-    margin-top: 80px;
-    font-size: 36px;
-    line-height: 120%;
-    font-weight: 600;
-    letter-spacing: 0;
-    color: #ff6969;
-    font-family: proxima-nova, sans-serif; 
-    margin-bottom: 0px;
-  }
-  .next_job_text{
-    font-size: 22px;
-    line-height: 150%;
-    font-weight: 300;
-    letter-spacing: 0;
-    color: black;
-    font-family: proxima-nova, sans-serif; 
-    padding-top: 30px;
-    margin-bottom: 0px;
-  }
-  .next_job_btn{
-    margin-top: 40px;
-    width: 270px;
-    height: 76px !important;
-    line-height: 76px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-    background-color: #ff6969;
-  }
-  .next_job_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 20px; 
-    color: white;
-    letter-spacing: 0em; 
-    line-height: 120%;
-    font-weight: 600;
-  }
-  .looking_div{
-    margin-top: 120px;
-    width: 100%;
-    background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
-  }
-  .looking_text_div{
-    max-width: 1008px;
-    padding: 0 24px;
-    margin: 0 auto;
-  }
-  .looking_header{
-    padding-top: 60px;
-    font-size: 40px;
-    line-height: 120%;
-    font-weight: 600;
-    letter-spacing: 0;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    margin-bottom: 0px;
-  }
-  .looking_text{
-    font-size: 24px;
-    line-height: 120%;
-    font-weight: 300;
-    letter-spacing: 0;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    padding-top: 6px;
-    margin-bottom: 0px;
-  }
-  .looking_btn{
-    margin-top: 20px;
-    width: 200px;
-    height: 68px !important;
-    line-height: 68px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-    background-color: white !important;
-  }
-  .looking_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 22px; 
-    color: #308afc;
-    letter-spacing: 0em; 
-    line-height: 120%;
-    font-weight: 600;
-  }
-  .looking_btn_undertext{
-    font-size: 14px;
-    line-height: 120%;
-    font-weight: 300;
-    letter-spacing: 0;
-    color: white;
-    font-family: proxima-nova, sans-serif; 
-    padding-top: 8px;
-    padding-bottom: 60px;
-    margin-bottom: 0px;
-  }
-}
-// mobile
-@media (min-width: 601px) and (max-width: 800px) {
-  .desktop, .medium, .small, .extra_small {
-    display: none !important;
-  }
-  .home_content{
-    width: 100%;
-  }
-  .index_top{
-    width: 100%;
-    background-color: #ff6969;
-  }
-  .index_area{
-    width: 552px;
-    margin: -32px auto 0;
-  }
-  .search_title{
-    font-family: proxima-nova, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0;
-    font-size: 42px;
-    line-height: 140%;
-    color: #ffffff;
-    text-align: left;
-    padding-top: 240px;
-    padding-bottom: 56px;
-    width: 552px;
-    margin: 0 auto;
-  }
-  .search_bar_container{
-    width: 100%;
-    height: 64px;
-    background-color: #f4f4f4;
-    box-shadow: 0;
-    font-size: 16px;
-    display: flex;
-  }
-  .search_bar_head{
-    width: 68px;
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    letter-spacing: 0.12em;
-    margin-left: 24px;
-    padding-top: 20px;
-    margin-bottom: 0px;
-  }
-  .search_bar_field{
-    width: 100%;
-    height: 100%;
-    background-color: none;
-  }
-  .search_bar_text_field{
-    height: 52px;
-  }
-  .search_bar_icon{
-    font-size: 16px;
-    padding-right: 24px;
-    padding-left: 10px;
-    color: lightgrey;
-  }
-  .search_btn{
-    margin-top: 20px;
-    width: 100%;
-    height: 64px !important;
-    line-height: 64px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-  }
-  .search_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
-    line-height: 120%;
-    font-weight: 600;
-  }
+  // big desktop
+  @media (min-width: 1025px){
+    .medium, .mobile, .small, .extra_small {
+      display: none !important;
+    }
+    .home_content{
+      width: 100%;
+      padding-top: 164px;
+    }
+    .index_top{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+    }
+    .interview_woman{
+      height: 550px;
+      margin-right: 90px;
+    }
+    .search_area{
+      width: 400px;
+      height: 540px;
+      background-color: white;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+    .search_title{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      font-size: 50px;
+      line-height: 140%;
+      color: #ff6969;
+      text-align: left;
+      margin-bottom: 0px;
+    }
+    .search_bar_container{
+      width: 400px;
+      height: 64px;
+      background-color: #f4f4f4;
+      box-shadow: 0;
+      font-size: 16px;
+      display: flex;
+    }
+    .search_bar_head{
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0.12em;
+      padding-left: 24px;
+      padding-top: 20px;
+      margin-bottom: 0px;
+    }
+    .search_bar_field{
+      width: 292px;
+      height: 100%;
+      background-color: none;
+    } 
+    .search_bar_icon{
+      font-size: 16px;
+      margin-right: 24px;
+      color: lightgrey;
+    }
+    .search_bar_icon_cross{
+      font-size: 16px;
+      margin-left: 24px;
+      color: #5a8cff; 
+    }
+    .search_bar_current{
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      padding-left: 10px;
+      padding-top: 20px;
+      margin-bottom: 0px;
+      font-size: 16px;
+      color: #5a8cff; 
+    }
+    .search_bar_text_field{
+      height: 52px;
+    }
+    .search_results_div{
+      width: 400px;
+      background-color: #f4f4f4;
+      box-shadow: 0;
+      font-size: 16px;
+      position: absolute;
+      z-index: 10;
+    }
+    .search_btn{
+      margin-top: 20px;
+      width: 100%;
+      height: 64px !important;
+      line-height: 64px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+    }
+    .search_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 16px; 
+      letter-spacing: 0.12em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
 
-}
-// small
-@media (min-width: 451px) and (max-width: 600px) {
-  .desktop, .medium, .mobile, .extra_small {
-    display: none !important;
+    /*
+    .ykunvet_div{
+      max-width: 1008px;
+      padding: 0 0px 0px 24px;
+      margin: 0 auto;
+    }
+    .ykunvet_section{
+      display: flex;
+      margin-top: 300px;
+    }
+    .ykunvet_text_div{
+      width: 46%;
+      height: 340px;
+      margin-bottom: auto;
+      margin-top: auto;
+      margin-right: 10%;
+    }
+    .ykunvet_header{
+      font-size: 38px;
+      line-height: 120%;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0.03em;
+      margin-bottom: 0px;
+    }
+    .ykunvet_text{
+      font-size: 22px;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      padding-top: 30px;
+      margin-bottom: 0px;
+      font-family: proxima-nova, sans-serif;
+      color: #3c3c3c;
+    }
+    .ykunvet_phone{
+      width: 44%;
+    }
+    */
+
+  .ykunvet{
+      max-width: 1008px;
+      padding: 0 0px 0px 24px;
+      margin: 300px auto 300px;
   }
-  .home_content{
-    width: 100%;
-  }
-  .index_top{
-    width: 100%;
-    background-color: #ff6969;
-  }
-  .index_area{
-    width: calc(100% - 48px);
-    margin: -32px auto 0;
-  }
-  .search_title{
-    font-family: proxima-nova, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: 140%;
-    color: #ffffff;
-    text-align: left;
-    padding-top: 200px;
-    padding-bottom: 56px;
-    width: calc(100% - 48px);
-    margin: 0 auto;
-  }
- .search_bar_container{
-    width: 100%;
-    height: 64px;
-    background-color: #f4f4f4;
-    box-shadow: 0;
-    font-size: 16px;
-    display: flex;
-  }
-  .search_bar_head{
-    width: 68px;
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    letter-spacing: 0.12em;
-    padding-left: 24px;
-    padding-top: 20px;
-    margin-bottom: 0px;
-  }
-  .search_bar_field{
-    width: 100%;
-    height: 100%;
-    background-color: none;
-  }
-  .search_bar_text_field{
-    height: 52px;
-  }
-  .search_bar_icon{
-    font-size: 16px;
-    padding-right: 24px;
-    padding-left: 10px;
-    color: lightgrey;
-  }
-  .search_btn{
-    margin-top: 20px;
-    width: 100%;
-    height: 64px !important;
-    line-height: 64px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-  }
-  .search_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
-    line-height: 120%;
-    font-weight: 600;
-  }
-}
-@media (min-width: 521px) and (max-width: 600px) {
-  .search_title{
+  .ykunvet_header{
     font-size: 38px;
-  }
-}
-@media (min-width: 451px) and (max-width: 520px) {
-  .search_title{
-    font-size: 32px;
-  }
-}
-// extra small
-@media (max-width: 450px) {
-  .desktop, .medium, .mobile, .small {
-    display: none !important;
-  }
-  .home_content{
-    width: 100%;
-  }
-  .index_top{
-    width: 100%;
-    background-color: #ff6969;
-  }
-  .index_area{
-    width: calc(100% - 48px);
-    margin: -32px auto 0;
-  }
-  .search_title{
-    font-family: proxima-nova, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: 140%;
-    color: #ffffff;
-    text-align: left;
-    font-size: 28px;
-    padding-top: 140px;
-    padding-bottom: 52px;
-    width: calc(100% - 48px);
-    margin: 0 auto;
-  }
- .search_bar_container{
-    width: 100%;
-    height: 64px;
-    background-color: #f4f4f4;
-    box-shadow: 0;
-    font-size: 16px;
-    display: flex;
-  }
-  .search_bar_head{
-    width: 68px;
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    letter-spacing: 0.12em;
-    padding-left: 20px;
-    padding-top: 20px;
-    margin-bottom: 0px;
-  }
-  .search_bar_field{
-    width: 100%;
-    height: 100%;
-    background-color: none;
-  }
-  .search_bar_text_field{
-    height: 52px;
-  }
-  .search_bar_icon{
-    font-size: 16px;
-    padding-right: 20px;
-    padding-left: 10px;
-    color: lightgrey;
-  }
-  .search_btn{
-    margin-top: 20px;
-    width: 100%;
-    height: 64px !important;
-    line-height: 64px !important;
-    box-shadow: none !important;
-    border-radius: 0px !important;
-  }
-  .search_btn_text{
-    font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
     line-height: 120%;
     font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    letter-spacing: 0.03em;
+    margin-bottom: 0px;
   }
-}
+  .ykunvet_text{
+    font-size: 22px;
+    line-height: 150%;
+    font-weight: 300;
+    letter-spacing: 0;
+    padding-top: 30px;
+    margin-bottom: 0px;
+    font-family: proxima-nova, sans-serif;
+    color: #3c3c3c;
+  }
+  .ykunvet_text_div{
+    height: 320px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .ykunvet_phone{
+    width: 432.96px;
+    margin-left: 98.4px;
+  }
+  .graphic {
+    //background-color: #DDD;
+    margin: 0;
+    display: flex;
+  }
 
+    .student_testimonials{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+      display: flex;
+      margin-top: 300px;
+    }
+
+    .student_testimonials_section{
+      background: white;
+      display: flex;
+      box-shadow: none;
+    }
+    .test_slide{
+      width: 100%;
+      margin-left: 0px;
+    }
+    .slide_info{
+      max-width: 540px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      border: 1px solid black;
+    }
+    .quote{
+      font-family: proxima-nova, sans-serif; 
+      color: #86a8e7;
+      margin-left: 0px;
+      letter-spacing: 0px;
+      margin-bottom: 0px;
+      margin-top: 0px;
+      font-size: 80px;
+      line-height: 120%;
+    }
+    .test_text{
+      padding-top: 0px;
+      margin-top: -20px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 22px;
+      color: #3c3c3c;
+      line-height: 150%;
+      margin-bottom: 0px;
+      font-weight: 300; 
+    }
+    .bio{
+      width: 260px;
+    }
+    .bio_img{
+      height: 380px;
+      margin-right: 60px;
+    }
+    .bio_header{
+      padding-top: 60px;
+      font-size: 16px;
+      color: #3c3c3c;
+      font-family: proxima-nova, sans-serif; 
+      font-weight: 600;
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .bio_text{
+      font-size: 16px;
+      padding-top: 10px;
+      font-weight: 300;
+      color: #3c3c3c;
+      font-family: proxima-nova, sans-serif; 
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .next_job_div{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 120px auto 0;
+      text-align: center;
+    }
+    .next_job_pic{
+      width: 100%;
+    }
+    .next_job_title{
+      margin-top: 80px;
+      font-size: 40px;
+      line-height: 120%;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: #ff6969;
+      font-family: proxima-nova, sans-serif; 
+      margin-bottom: 0px;
+    }
+    .next_job_text{
+      font-size: 24px;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      color: black;
+      font-family: proxima-nova, sans-serif; 
+      padding-top: 30px;
+      margin-bottom: 0px;
+    }
+    .next_job_btn{
+      margin-top: 20px;
+      width: 290px;
+      height: 80px !important;
+      line-height: 80px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: #ff6969;
+    }
+    .next_job_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 22px; 
+      color: white;
+      letter-spacing: 0em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
+    .looking_div{
+      margin-top: 120px;
+      width: 100%;
+      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+    }
+    .looking_text_div{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+    }
+    .looking_header{
+      padding-top: 60px;
+      font-size: 40px;
+      line-height: 120%;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      margin-bottom: 0px;
+    }
+    .looking_text{
+      font-size: 24px;
+      line-height: 120%;
+      font-weight: 300;
+      letter-spacing: 0;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      padding-top: 6px;
+      margin-bottom: 0px;
+    }
+    .looking_btn{
+      margin-top: 20px;
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+    }
+    .looking_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 22px; 
+      color: #308afc;
+      letter-spacing: 0em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
+    .looking_btn_undertext{
+      font-size: 14px;
+      line-height: 120%;
+      font-weight: 300;
+      letter-spacing: 0;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      padding-top: 8px;
+      padding-bottom: 60px;
+      margin-bottom: 0px;
+    }
+  }
+  // medium desktop
+  @media (min-width: 801px) and (max-width: 1024px) {
+    .desktop, .mobile, .small, .extra_small {
+      display: none !important;
+    }
+    .home_content{
+      width: 100%;
+      padding-top: 124px;
+    }
+    .index_top{
+      max-width: 1008px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+    }
+    .interview_woman{
+      height: 520px;
+      margin-right: 70px;
+    }
+    .search_area{
+      width: 356px;
+      height: 442px;
+      background-color: white;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+    .search_title{
+      width: 356px;
+      font-family: proxima-nova, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      font-size: 44px;
+      line-height: 140%;
+      color: #ff6969;
+      text-align: left;
+      margin-bottom: 0px;
+    }
+    .search_bar_container{
+      width: 100%;
+      height: 64px;
+      background-color: #f4f4f4;
+      box-shadow: 0;
+      font-size: 16px;
+      display: flex;
+    }
+    .search_bar_head{
+      width: 68px;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0.12em;
+      padding-left: 24px;
+      padding-top: 20px;
+      margin-bottom: 0px;
+    }
+    .search_bar_field{
+      width: 100%;
+      height: 100%;
+      background-color: none;
+    }
+    .search_bar_text_field{
+      height: 52px;
+    }
+    .search_bar_icon{
+      font-size: 16px;
+    }
+    .search_btn{
+      margin-top: 20px;
+      width: 100%;
+      height: 64px !important;
+      line-height: 64px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+    }
+    .search_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 16px; 
+      letter-spacing: 0.12em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
+    .ykunvet_div{
+      max-width: 1008px;
+      padding: 0 0px 0px 24px;
+      margin: 0 auto;
+    }
+    .ykunvet_section{
+      display: flex;
+      margin-top: 120px;
+    }
+    .ykunvet_text_div{
+      width: 50%;
+      height: 340px;
+      margin-bottom: auto;
+      margin-top: auto;
+      margin-right: 11%;
+    }
+    .ykunvet_header{
+      font-size: 32px;
+      line-height: 120%;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0.03em;
+      margin-bottom: 0px;
+    }
+    .ykunvet_text{
+      font-size: 22px;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      padding-top: 24px;
+      margin-bottom: 0px;
+      font-family: proxima-nova, sans-serif;
+      color: black;
+    }
+    .ykunvet_phone{
+      width: 39%;
+    }
+    .student_testimonials{
+      width: 100%;
+      margin-top: 120px;
+    }
+    .testimonials{
+      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+      box-shadow: none;
+    }
+    .test_slide{
+      width: 100%;
+      margin-left: 0px;
+    }
+    .slide_info{
+      max-width: 1008px;
+      padding: 0 24px 40px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .test_title{
+      line-height: 120%;
+      width: 100%;
+      letter-spacing: 0;
+      max-width: 960px;
+      font-weight: 600;
+      padding-top: 100px;
+      margin-left: 24px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 36px;
+      margin-bottom: 0px;
+      color: white;
+    }
+    .test_text{
+      padding-top: 40px;
+      width: 438px;
+      font-family: proxima-nova, sans-serif; 
+      font-size: 22px;
+      color: white;
+      line-height: 150%;
+      margin-right: 100px;
+      margin-bottom: 0px;
+      font-weight: 300; 
+    }
+    .quote{
+      font-family: proxima-nova, sans-serif; 
+      color: white;
+      margin-left: 0px;
+      margin-bottom: 0px;
+      margin-top: 6px;
+      font-size: 64px;
+    }
+    .bio{
+      width: 190px;
+      height: 160px;
+      margin-bottom: auto;
+      margin-top: auto;
+    }
+    .bio_img{
+      height: 66px;
+      width: 66px;
+      margin-top: 10px;
+      display: block;
+    }
+    .bio_header{
+      padding-top: 16px;
+      font-size: 16px;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      font-weight: 600;
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .bio_text{
+      font-size: 16px;
+      padding-top: 8px;
+      font-weight: 300;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      line-height: 100%;
+      margin-bottom: 0px;
+    }
+    .next_job_div{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 120px auto 0;
+      text-align: center;
+    }
+    .next_job_pic{
+      width: 100%;
+    }
+    .next_job_title{
+      margin-top: 80px;
+      font-size: 36px;
+      line-height: 120%;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: #ff6969;
+      font-family: proxima-nova, sans-serif; 
+      margin-bottom: 0px;
+    }
+    .next_job_text{
+      font-size: 22px;
+      line-height: 150%;
+      font-weight: 300;
+      letter-spacing: 0;
+      color: black;
+      font-family: proxima-nova, sans-serif; 
+      padding-top: 30px;
+      margin-bottom: 0px;
+    }
+    .next_job_btn{
+      margin-top: 40px;
+      width: 270px;
+      height: 76px !important;
+      line-height: 76px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: #ff6969;
+    }
+    .next_job_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 20px; 
+      color: white;
+      letter-spacing: 0em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
+    .looking_div{
+      margin-top: 120px;
+      width: 100%;
+      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+    }
+    .looking_text_div{
+      max-width: 1008px;
+      padding: 0 24px;
+      margin: 0 auto;
+    }
+    .looking_header{
+      padding-top: 60px;
+      font-size: 40px;
+      line-height: 120%;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      margin-bottom: 0px;
+    }
+    .looking_text{
+      font-size: 24px;
+      line-height: 120%;
+      font-weight: 300;
+      letter-spacing: 0;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      padding-top: 6px;
+      margin-bottom: 0px;
+    }
+    .looking_btn{
+      margin-top: 20px;
+      width: 200px;
+      height: 68px !important;
+      line-height: 68px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+      background-color: white !important;
+    }
+    .looking_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 22px; 
+      color: #308afc;
+      letter-spacing: 0em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
+    .looking_btn_undertext{
+      font-size: 14px;
+      line-height: 120%;
+      font-weight: 300;
+      letter-spacing: 0;
+      color: white;
+      font-family: proxima-nova, sans-serif; 
+      padding-top: 8px;
+      padding-bottom: 60px;
+      margin-bottom: 0px;
+    }
+  }
+  // mobile
+  @media (min-width: 601px) and (max-width: 800px) {
+    .desktop, .medium, .small, .extra_small {
+      display: none !important;
+    }
+    .home_content{
+      width: 100%;
+    }
+    .index_top{
+      width: 100%;
+      background-color: #ff6969;
+    }
+    .index_area{
+      width: 552px;
+      margin: -32px auto 0;
+    }
+    .search_title{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      font-size: 42px;
+      line-height: 140%;
+      color: #ffffff;
+      text-align: left;
+      padding-top: 240px;
+      padding-bottom: 56px;
+      width: 552px;
+      margin: 0 auto;
+    }
+    .search_bar_container{
+      width: 100%;
+      height: 64px;
+      background-color: #f4f4f4;
+      box-shadow: 0;
+      font-size: 16px;
+      display: flex;
+    }
+    .search_bar_head{
+      width: 68px;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0.12em;
+      margin-left: 24px;
+      padding-top: 20px;
+      margin-bottom: 0px;
+    }
+    .search_bar_field{
+      width: 100%;
+      height: 100%;
+      background-color: none;
+    }
+    .search_bar_text_field{
+      height: 52px;
+    }
+    .search_bar_icon{
+      font-size: 16px;
+      padding-right: 24px;
+      padding-left: 10px;
+      color: lightgrey;
+    }
+    .search_btn{
+      margin-top: 20px;
+      width: 100%;
+      height: 64px !important;
+      line-height: 64px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+    }
+    .search_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 16px; 
+      letter-spacing: 0.12em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
+
+  }
+  // small
+  @media (min-width: 451px) and (max-width: 600px) {
+    .desktop, .medium, .mobile, .extra_small {
+      display: none !important;
+    }
+    .home_content{
+      width: 100%;
+    }
+    .index_top{
+      width: 100%;
+      background-color: #ff6969;
+    }
+    .index_area{
+      width: calc(100% - 48px);
+      margin: -32px auto 0;
+    }
+    .search_title{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      line-height: 140%;
+      color: #ffffff;
+      text-align: left;
+      padding-top: 200px;
+      padding-bottom: 56px;
+      width: calc(100% - 48px);
+      margin: 0 auto;
+    }
+  .search_bar_container{
+      width: 100%;
+      height: 64px;
+      background-color: #f4f4f4;
+      box-shadow: 0;
+      font-size: 16px;
+      display: flex;
+    }
+    .search_bar_head{
+      width: 68px;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0.12em;
+      padding-left: 24px;
+      padding-top: 20px;
+      margin-bottom: 0px;
+    }
+    .search_bar_field{
+      width: 100%;
+      height: 100%;
+      background-color: none;
+    }
+    .search_bar_text_field{
+      height: 52px;
+    }
+    .search_bar_icon{
+      font-size: 16px;
+      padding-right: 24px;
+      padding-left: 10px;
+      color: lightgrey;
+    }
+    .search_btn{
+      margin-top: 20px;
+      width: 100%;
+      height: 64px !important;
+      line-height: 64px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+    }
+    .search_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 16px; 
+      letter-spacing: 0.12em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
+  }
+  @media (min-width: 521px) and (max-width: 600px) {
+    .search_title{
+      font-size: 38px;
+    }
+  }
+  @media (min-width: 451px) and (max-width: 520px) {
+    .search_title{
+      font-size: 32px;
+    }
+  }
+  // extra small
+  @media (max-width: 450px) {
+    .desktop, .medium, .mobile, .small {
+      display: none !important;
+    }
+    .home_content{
+      width: 100%;
+    }
+    .index_top{
+      width: 100%;
+      background-color: #ff6969;
+    }
+    .index_area{
+      width: calc(100% - 48px);
+      margin: -32px auto 0;
+    }
+    .search_title{
+      font-family: proxima-nova, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      line-height: 140%;
+      color: #ffffff;
+      text-align: left;
+      font-size: 28px;
+      padding-top: 140px;
+      padding-bottom: 52px;
+      width: calc(100% - 48px);
+      margin: 0 auto;
+    }
+  .search_bar_container{
+      width: 100%;
+      height: 64px;
+      background-color: #f4f4f4;
+      box-shadow: 0;
+      font-size: 16px;
+      display: flex;
+    }
+    .search_bar_head{
+      width: 68px;
+      font-weight: 600;
+      font-family: proxima-nova, sans-serif;
+      letter-spacing: 0.12em;
+      padding-left: 20px;
+      padding-top: 20px;
+      margin-bottom: 0px;
+    }
+    .search_bar_field{
+      width: 100%;
+      height: 100%;
+      background-color: none;
+    }
+    .search_bar_text_field{
+      height: 52px;
+    }
+    .search_bar_icon{
+      font-size: 16px;
+      padding-right: 20px;
+      padding-left: 10px;
+      color: lightgrey;
+    }
+    .search_btn{
+      margin-top: 20px;
+      width: 100%;
+      height: 64px !important;
+      line-height: 64px !important;
+      box-shadow: none !important;
+      border-radius: 0px !important;
+    }
+    .search_btn_text{
+      font-family: proxima-nova, sans-serif;
+      font-size: 16px; 
+      letter-spacing: 0.12em; 
+      line-height: 120%;
+      font-weight: 600;
+    }
+  }
+
+</style>
+
+<style lang="scss">
+// overrides here
+.step {
+  padding: 200px 0;
+  margin: 0 0 150px;
+  background-color: white 0;
+  justify-content: center;
+}
+.graphic {
+  height: 85vh;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+}
 </style>
 
 <template>
@@ -915,9 +963,10 @@
             </div>
             <div v-if="searchFocus===true" class="search_results_div" style="margin-top: 10px;">
               <div style="display: flex; height: 64px;">
+                {{job.addressList}}
               <v-list>
-                  <v-list-tile v-for="(item, i) in job" :key="i">
-                    {{item.address}}
+                  <v-list-tile v-for="(item, i) in job.addressList" :key="i">
+                    {{item}}
                   </v-list-tile>
               </v-list>
               </div>
@@ -959,37 +1008,71 @@
           </div>
           <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
         </div>
-      </div>
+      </div> -->
+    <!-- Scrollama starts here -->
+    <div class="ykunvet">
+      <Scrollama :offset="$store.offset" @step-enter="stepEnterHandler" @step-exit="stepExitHandler">
+        <div slot="graphic" class="graphic">
+          <div v-if="currStepId === 1" style="display: flex;">
+            <div class="ykunvet_text_div">
+              <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
+              <p class="ykunvet_text">
+                You applied to a job, and weeks or even months later, 
+                the company finally replied that the job you applied to no longer
+                exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
+                anymore! We only show you the latest jobs near your location.</p>
+            </div>
+            <img class="ykunvet_phone" :src="pngs.phone1" alt="Newest Jobs Near Me">
+          </div>
+          <div v-if="currStepId === 2" style="display: flex;">
+            <div class="ykunvet_text_div">
+              <h2 class="ykunvet_header">Still being kept in the dark?</h2>
+              <p class="ykunvet_text">
+                Seriously? You still do not know what happens to your resume until someone
+                replies? Then you should start using Kunvet now. No kidding. We inform all of our users
+                about a change in their application status immediately. Whether their resume was
+                received or viewed, they will know it right away.</p>
+            </div>
+            <img class="ykunvet_phone" :src="pngs.phone2" alt="Being kept in the dark?">
+          </div>
+          <div v-if="currStepId === 3" style="display: flex;">
+            <div class="ykunvet_text_div">
+              <h2 class="ykunvet_header">One Resume Is Not Enough.</h2>
+              <p class="ykunvet_text">
+                Many of you have more than one resume—because you are very “versatile”. On
+                Kunvet, you can upload as many resumes as you want for the different kind of jobs you
+                apply to, and we will keep them safe and sound for whenever you need them.</p>
+            </div>
+            <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
+          </div>
+        </div>
+        <div v-for="step in steps" :key="step.no" :data-step-id="step.id" class="step"/>
+      </Scrollama>
+  </div>
+
       <div class="student_testimonials">
-        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
+        <v-carousel class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
           <v-carousel-item class="testing_slide_transition">
+            <img class="bio_img" :src="pngs.person1" alt="Female Job Applicant">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet Really Helps.</h2>
               <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
                 job searching. I definitetly recommend using this service, especially for people like me who wants 
                 to work closer to home.</p>
               <div class="bio">
-                <img class="bio_img" :src="pngs.profilePic"/>
                 <p class="bio_header">Sandra C.</p>
-                <p class="bio_text">Warehouse Associate</p>
-                <p class="bio_text">at Amazon</p>
+                <p class="bio_text">Warehouse Associate at Amazon</p>
               </div>
             </div>
-            <div style="height: 104px;"/>
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet Really Helps.</h2>
               <p class="quote">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely
                 recommend this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
               <div class="bio">
-                <img class="bio_img" :src="pngs.profilePic"/>
                 <p class="bio_header">Anthony P.</p>
-                <p class="bio_text">Intern</p>
-                <p class="bio_text">at The H Law Group</p>
+                <p class="bio_text">Intern at The H Law Group</p>
               </div>
             </div>
-            <div style="height: 104px;"/>
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
@@ -997,16 +1080,13 @@
               <p class="quote">“</p><p class="test_text">I love how the interface is clean and modern. I find the
                 jobs on your website to be unique and I always come back to it from time to time to see what jobs are out there.</p>
               <div class="bio">
-                <img class="bio_img" :src="pngs.profilePic"/>
                 <p class="bio_header">Kamilah D.</p>
-                <p class="bio_text">Sales Associate</p>
-                <p class="bio_text">at Closet Twenty One</p>
+                <p class="bio_text">Sales Associate at Closet Twenty One</p>
               </div>
             </div>
-            <div style="height: 104px;"/>
           </v-carousel-item>
         </v-carousel>
-      </div> 
+      </div> <!--
       <div class="next_job_div">
         <img class="next_job_pic" :src="pngs.nextJob" alt="Job applicants at an Interview">
         <h2 class="next_job_title">Your Next Job is Waiting for You.</h2>
@@ -1266,9 +1346,10 @@
 </template>
 <script>
 import woman from '@/assets/index/female-job-applicant-wearing-red-suit-waiting-for-interview.jpg';
-import phone1 from '@/assets/index/newest-jobs-near-me-kunvet.png';
-import phone2 from '@/assets/index/job-applications-kunvet.png';
-import phone3 from '@/assets/index/resumes-kunvet.png';
+import phone1 from '@/assets/index/new-fresh-latest-job-employment.png';
+import phone2 from '@/assets/index/instant-job-application-status.png';
+import phone3 from '@/assets/index/upload-unlimited-resumes.png';
+import person1 from '@/assets/index/young-job-applicant-in-green-sweater.png';
 import profilePic from '@/assets/index/profile-icon.png';
 import nextJob from '@/assets/index/job-applicants-in-interview.png';
 import gql from 'graphql-tag';
@@ -1279,22 +1360,34 @@ import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
 import * as VueGoogleMaps from 'vue2-google-maps';
+import 'intersection-observer';
+import Scrollama from 'vue-scrollama';
 
 
 Vue.use(VueApollo);
 
 export default {
   components: {
+    Scrollama,
     PromoTextContainer,
   },
   data() {
     return {
+      // For Scrollama
+      currStepId: 1,
+      // For Scrollama
+      steps: [
+        { id: '1', title: 'Out-dated Jobs — Ugh!', content: 'You applied to a job, and weeks or even months later, the company finally replied that the job you applied to no longer exists—Does this sound familiar? Well, now that you are here with us, don’t you worry anymore! We only show you the latest jobs near your location.' },
+        { id: '2', title: 'Still being kept in the dark?', content: 'Seriously? You still do not know what happens to your resume until someone replies? Then you should start using Kunvet now. No kidding. We inform all of our users about a change in their application status immediately. Whether their resume was received or viewed, they will know it right away.' },
+        { id: '3', title: 'One Resume Is Not Enough.', content: 'Many of you have more than one resume—because you are very “versatile”. On Kunvet, you can upload as many resumes as you want for the different kind of jobs you apply to, and we will keep them safe and sound for whenever you need them.' },
+      ],
       svgs: {
       },
       pngs: {
         phone1: phone1,
         phone2: phone2,
         phone3: phone3,
+        person1: person1,
         profilePic: profilePic,
         woman: woman,
         nextJob: nextJob,
@@ -1431,6 +1524,16 @@ export default {
     },
   },
   methods: {
+    // For Scrollama
+    stepEnterHandler({ element, direction, index }) {
+      console.log({ element, direction, index });
+      this.currStepId = index + 1;
+    },
+    // For Scrollama
+    stepExitHandler({ element, direction, index }) {
+      console.log({ element, direction, index });
+      this.currStepId = index + 1;
+    },
     openSelect(name) {
       this.filterPositions = null;
       if (this.openSelectField === name) {
@@ -1478,6 +1581,19 @@ export default {
       this.job.address = place.formatted_address;
       this.job.latitude = place.geometry.location.lat();
       this.job.longitude = place.geometry.location.lng();
+    },
+    setPlaces(places) {
+      places.forEach(function(place) {
+        if (!place.geometry) {
+          this.job.addressValid = false;
+          return;
+        }
+        this.job.addressValid = true;
+        this.job.addressList.push(place.formatted_address);
+        this.job.latList.push(place.geometry.location.lat());
+        this.job.longList.push(place.geometry.location.lng());
+      });
+      console.log(this.job.addressList);
     },
     setLatLongs() {
       setTimeout(() => {
