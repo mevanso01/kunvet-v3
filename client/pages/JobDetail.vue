@@ -764,8 +764,8 @@
         </v-dialog>
       </div>
     </div>
+    <script v-html="jsonld" type="application/ld+json"></script>
   </v-container>
-
 </template>
 <script>
   import gql from 'graphql-tag';
@@ -796,6 +796,8 @@
   import ResumeUploader from '@/components/ResumeUploader';
   import CodeVerification from '@/components/CodeVerification';
   import ApplyBtn from '@/components/general/ApplyBtn';
+  import axios from 'axios';
+  import StringHelper from '@/utils/StringHelper';
 
   export default {
     filters: {
@@ -817,6 +819,7 @@
     props: ['id', 'isapplied'],
     data() {
       return {
+        jsonld: {},
         job_dest_url: '',
         selected: [],
         findJob: {},
@@ -827,6 +830,7 @@
         loginState: 'start',
         profilePic: null,
         salary: null,
+        jobsAndApplications: [],
         svgs: {
           Book: BookSvg,
           Pushpin: PushpinSvg,
@@ -873,6 +877,9 @@
       };
     },
     computed: {
+      getAppliedJobsString() {
+        return StringHelper.pluralize('Job', this.jobsAndApplications.length);
+      },
       sanitizedDescription() {
         return sanitizeHtml(this.findJob.description);
       },
@@ -905,6 +912,37 @@
       },
       getColor(info) {
         this.accountColor = info.color;
+      },
+      async getPairForEachApplication({ job_id: jobId, ...application }) {
+        let { data: { findJob: job } } = await this.$apollo.query({
+          query: (gql`query ($jobId: MongoID) {
+            findJob (filter: { _id: $jobId, active: true }){
+              ${queries.FindJobRecordForJobCard}
+            }
+          }`),
+          variables: {
+            jobId,
+          },
+        });
+        if (!job) {
+          return {
+            job: null,
+            application: { _id: jobId, ...application },
+          };
+        }
+        // TODO:
+        if (job.is_deleted) {
+          job = Object.assign({}, job);
+          return {
+            job: job,
+            application: { _id: jobId, ...application },
+          };
+        }
+        job = Object.assign({}, job);
+        return {
+          job: job,
+          application: { _id: jobId, ...application },
+        };
       },
       resumeUploaded(_filename, _resumename) {
         const newResume = {
@@ -1012,6 +1050,42 @@
           } else {
             this.salary = this.findJob.pay_type;
           }
+          var parsed = this.parseAddress(this.findJob.address);
+          this.jsonld = {
+            '@context': 'https://schema.org',
+            '@type': 'JobPosting',
+            'baseSalary': {
+              '@type': 'MonetaryAmount',
+              'currency': 'USD',
+              'value': this.salary,
+            },
+            'experienceRequirements': this.findJob.experience,
+            'datePosted': this.findJob.date,
+            'description': this.findJob.description.replace(/<\/?[^>]+>/ig, ''),
+            'responsibilities': this.findJob.responsibilities,
+            'hiringOrganization': this.findJob.posted_by,
+            'educationRequirements': this.findJob.education,
+            'employmentType': this.findJob.type,
+            'title': this.findJob.title,
+            'jobLocation': {
+              '@type': 'Place',
+              'geo': {
+                '@type': 'GeoCoordinates',
+                'latitude': this.findJob.latitude,
+                'longitude': this.findJob.longitude,
+              },
+              'address': {
+                '@type': 'PostalAddress',
+                'addressCountry': 'USA',
+                'addressLocality': parsed.city,
+                'addressRegion': parsed.state,
+                'postalCode': parsed.zip,
+                'streetAddress': parsed.street,
+              },
+            },
+            'validThrough': this.findJob.expiry_date,
+          };
+          console.log(this.findJob);
           this.fetchProfilePic();
         });
       },
@@ -1165,6 +1239,16 @@
           this.showCodeValidation();
           return;
         }
+
+        // testing
+        console.log(this.findJob.position_tags);
+        console.log(this.jobsAndApplications.length);
+
+        /* const i = 6;
+        if (i < 10) {
+          return;
+        } */
+
         // validate
         if (this.uid && this.userdata && !this.loading && !this.applied) {
           console.log('creating application');
@@ -1258,6 +1342,10 @@
             if (data) {
               this.loginState = 'success';
               this.applied = true;
+              if (this.jobsAndApplications.length < 5) {
+                this.deleteTags();
+              }
+              this.addTags();
             } else {
               this.$debug('no data returned when creating application');
               this.loginState = 'success';
@@ -1280,12 +1368,38 @@
           this.uploadResume();
         }
       },
+      deleteTags() {
+        const data = {
+          email: this.userdata.email,
+        };
+        axios.post('/mailchimp/deleteTags', data).then(() => {
+          console.log('delete Tags');
+        }, (error) => {
+          this.$error(error);
+        }).then(() => {
+          console.log('tag successfully deleted');
+        });
+      },
+      addTags() {
+        const data = {
+          email: this.userdata.email,
+          tags: this.findJob.position_tags,
+        };
+        console.log('tags in add Tags');
+        console.log(this.findJob.position_tags);
+        axios.post('/mailchimp/addTags', data).then(() => {
+          console.log('add Tags');
+        }, (error) => {
+          this.$error(error);
+        }).then(() => {
+          console.log('tag successfully added');
+        });
+      },
       updateAccount() {
         // this is weird. Not sure why it adds the property '__typename' if I dont do this
         const _resumes = this.resumes.map(({
           name, filename, resumeid,
         }) => ({ name, filename, resumeid }));
-
         this.$apollo.mutate({
           mutation: (gql`
           mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
@@ -1341,10 +1455,32 @@
       resetData() {
         Object.assign(this.$data, this.$options.data.call(this));
       },
+      parseAddress(add) {
+        // Make sure the address is a string.
+        if (typeof add !== 'string') return 1;
+        // Trim the address.
+        var address = add.slice(0, add.length - 5);
+        console.log(address);
+        address = address.trim();
+        var returned = {};
+        var comma = address.indexOf(',');
+        returned.street = address.slice(0, comma);
+        console.log(returned.street);
+        var after = address.substring(comma + 2);
+        var comma2 = after.indexOf(',');
+        returned.city = after.slice(0, comma2);
+        var state = after.substring(comma2 + 2);
+        var space = state.lastIndexOf(' ');
+        returned.state = state.slice(0, space);
+        returned.zip = state.substring(space + 1);
+        console.log(returned);
+        return returned;
+      },
     },
     activated() {
       this.resetData();
       this.getData();
+      this.getApplication();
       this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {
         this.stickToBottom = true;

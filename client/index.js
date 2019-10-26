@@ -13,6 +13,7 @@ import Client from '@/apollo/client';
 import SearchHighlight from '@/components/SearchHighlight';
 import KButton from '@/components/general/KButton';
 import KTextField from '@/components/general/KTextField';
+import KDropdownList from '@/components/general/KDropdownList';
 
 import '@/options/axios';
 import '@/options/googleMaps';
@@ -45,6 +46,7 @@ Vue.use(InstantSearch);
 Vue.component('highlight', SearchHighlight);
 Vue.component('k-btn', KButton);
 Vue.component('k-text-field', KTextField);
+Vue.component('k-dropdown', KDropdownList);
 
 const apolloProvider = new VueApollo({
   defaultClient: Client,

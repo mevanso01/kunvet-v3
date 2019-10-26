@@ -2,64 +2,106 @@
 .signup-card {
   display: flex;
   flex-direction: column;
-  /* height: 500px; */
-  width: 100%;
+  padding: 50px 50px 40px 50px;
+}
+.signup-card-banner {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  vertical-align: middle;
 }
 .container {
   /* margin: 50px auto; */
   padding: 0;
   text-align: center;
+
   /* width: 80%; */
 }
+.input-box {
+  background-color: #efefef;
+  color: #898b8e;
+  box-shadow: 0 0 0;
+  border-radius: 0px;
+  height: 60px;
+}
+.newsletter-buttons {
+  text-align: right;
+  margin-top: 10px;
+}
 h1 {
-  height: 24px;
-  text-align: center;
-  margin: 5px 0 25px 0;
-  font-size: 24px;
-  font-weight: bold;
+  text-align: left;
+  font-size: 32px;
+  font-family: proxima nova;
+  font-weight: 600;
+  color: #3c3c3c;
+  line-height: 120%;
+  letter-spacing: 0;
+  padding-bottom: 10px;
 }
-.back_button_style{
-  width: 102.5px;
-}
+p {
+   font-size: 20px;
+   font-family: proxima nova;
+   font-weight: 300;
+   color: #3c3c3c;
+   line-height: 150%;
+   letter-spacing: 0;
+   text-align: left;
+   margin-bottom: 20px;
+ }
+
+ .signup-button {
+   width: 500px;
+   height: 64px;
+   font-size: 16px;
+   font-family: proxima nova;
+   font-weight: 600;
+   font-color: #ffffff;
+   line-height: 120%;
+   letter-spacing: 0;
+   background-color: #ff6969;
+   box-shadow: 0;
+   border-radius: 0;
+ }
 
 </style>
 
 <template>
-  <div class="signup-card">
-    <div v-show="state == 'initial'" class="container">
-      <h1><span v-if="email != null && fname != null">Hi, {{fname}}! </span>Sign Up to Our Newsletter!</h1>
+  <div :class="[ifUseBanner?'signup-card-banner' : 'signup-card']">
+    <div v-if="!success" class="container">
+      <h1>Never again miss the ideal job.</h1>
+      <p>The ideal job of your choice will reach out to <span style='font-weight: 600'>you first</span> — before it is found by others!</p>
+
+    <k-dropdown
+      style="margin-bottom: 4px"
+      title="Job Preference"
+      :tag_list="availablePositions"
+      v-on:list-changed="position_tags = $event">
+    </k-dropdown>
 
       <v-form ref="form">
-        <!-- requireFullName -->
-        <div v-if="email == null || fname == null">
-          <k-text-field label="First Name"
+        <div v-if="!loggedIn">
+          <k-text-field label="FIRST NAME"
             v-model="fname" :rules="requiredRules"
             required
+            class="input-box"
+            style="margin-bottom: 0px; margin-top: 0px"
+            placeholder="FIRST NAME"
           ></k-text-field>
 
-          <k-text-field v-model="email" label="Email Address" :rules="emailRules" required></k-text-field>
+          <k-text-field v-model="email" label="EMAIL" :rules="emailRules" required class="input-box" style="margin-top: 4px" placeholder="EMAIL"></k-text-field>
         </div>
-        <h4 class="cust-subheader mb-1">Position tags</h4>
-        <p>Please select at least one category that is relevant to this job</p>
-        <v-layout row wrap>
-          <v-flex xs12 sm9 md6 class="no-padding">
-            <v-autocomplete class="mt-0"
-              :items="availablePositions"
-              v-model="position_tags"
-              multiple
-              attach
-              required
-              placeholder="Select one or more..."
-              :rules="[(v) => (v && v.length > 0) || 'required']"
-              >
-            </v-autocomplete>
-          </v-flex>
-        </v-layout>
-        <k-btn @click="addMemberToMailChimp">Sign Up</k-btn>
+
+        <div class="newsletter-buttons" >
+          <k-btn v-if="!ifUseBanner" @click="onClickLater()" style="background-color: white; color: #ff6969; border: 1px solid; border-color: #ff6969; font-weight: bold;">Not Now</k-btn>
+          <k-btn v-if="!ifUseBanner" @click="addMemberToMailChimp" style="margin-left: 20px; font-weight: bold;">Active for Free</k-btn>
+          <k-btn v-if="ifUseBanner" @click="addMemberToMailChimp" class="signup-button">Active for Free</k-btn>
+        </div>
+
       </v-form>
     </div>
-    <div v-show="state == 'success'" class="container">
-      Successful!
+    <div v-else>
+      <h1>{{title}}</h1>
+      <p>{{message}}</p>
     </div>
 
   </div>
@@ -70,6 +112,16 @@ import positions from '@/constants/positions';
 import userDataProvider from '@/userDataProvider';
 
 export default {
+  props: {
+    banner: {
+      type: Boolean,
+      default: false,
+    },
+    unsubscribed: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       fname: '',
@@ -79,6 +131,14 @@ export default {
       availablePositions: positions,
       loggedIn: true,
       userdata: null,
+      useBanner: false,
+      success: false,
+      application_bool: false,
+      jobExpired_bool: false,
+      preferences: null,
+      title: 'You Are Subscribed',
+      message: 'We will notify you when there are new jobs that match your preferences! Cancel anytime.',
+      preferenceChanged: false,
       requiredRules: [
         v => !!v || 'Required',
       ],
@@ -92,10 +152,14 @@ export default {
     userDataProvider.getUserData().then(data => {
       if (data.acct === 0) {
         console.log('not logged in');
+        this.loggedIn = false;
       } else {
         this.uid = data.uid;
         this.email = data.userdata.email;
         this.fname = data.userdata.firstname;
+        this.preferences = data.userdata.preferences;
+        this.application_bool = (this.preferences.applicationStatusEmails === 'All');
+        this.jobExpired_bool = (this.preferences.jobExpiredEmails === 'All');
         console.log(this.email);
         console.log(this.fname);
       }
@@ -103,8 +167,11 @@ export default {
     console.log('I am activated');
   },
   methods: {
+    onClickLater () {
+      console.log('onClickLater');
+      this.$emit('close', 'later');
+    },
     addMemberToMailChimp() {
-      // console.log(postData);
       if (!this.$refs.form.validate()) {
         this.$debug('Failed validation');
         return;
@@ -116,12 +183,68 @@ export default {
         status: 'subscribed',
       };
       console.log(postData);
+      if (!this.loggedIn) {
+        axios.post('/mailchimp/addMember', postData).then(() => {
+          console.log('posted on mailchimp');
+          this.title = 'You Are Subscribed';
+          this.message = 'We will notify you when there are new jobs that match your preferences! Cancel anytime.';
+          this.preferenceChanged = true;
+          this.success = true;
+          setTimeout(() => {
+            this.preferenceChanged = false;
+            this.success = false;
+            console.log('emitting close');
+            this.$emit('post', 'finished');
+          },
+          1500);
+        }, (error) => {
+          this.$error(error);
+          this.title = 'An Error Occured';
+          this.message = 'An error occured, please try again or contact us for help!';
+          this.preferenceChanged = true;
+          this.success = true;
+          setTimeout(() => {
+            this.preferenceChanged = false;
+            this.success = false;
+            console.log('emitting close');
+            this.$emit('error', 'later');
+          },
+          1500);
+        });
+      } else {
+        var currentStatus = 'subscribed';
+        var postDt = {
+          email_address: this.email,
+          status: currentStatus,
+        };
+        console.log(postDt);
 
-      axios.post('/mailchimp/addMember', postData).then(() => {
-        console.log('posted on mailchimp');
-      }, (error) => {
-        this.$error(error);
-      });
+        axios.post('/mailchimp/updatePreference', postDt).then(() => {
+          console.log('updated on mailchimp');
+        }, (error) => {
+          this.$error(error);
+        });
+        this.preferences.getNewsletters = true;
+        this.preferences.applicationStatusEmails = (this.application_bool) ? 'All' : 'Off';
+        this.preferences.jobExpiredEmails = (this.jobExpired_bool) ? 'All' : 'Off';
+        console.log('preferences:');
+        console.log(this.preferences.getNewsletters);
+        userDataProvider.setUserData({
+          preferences: {
+            getNewsletters: this.preferences.getNewsletters,
+            jobExpiredEmails: this.preferences.jobExpiredEmails,
+            applicationStatusEmails: this.preferences.applicationStatusEmails,
+          },
+        });
+        setTimeout(() => {
+          this.$emit('post', 'finished');
+        });
+      }
+    },
+  },
+  computed: {
+    ifUseBanner() {
+      return this.banner;
     },
   },
 };

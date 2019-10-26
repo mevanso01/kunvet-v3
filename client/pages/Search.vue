@@ -231,6 +231,9 @@ section.search {
   .bottom-img {
     width: calc(100% - 128px);
   }
+  .banner-mobile {
+    display: none;
+  }
 }
 @media (max-width: 600px) {
   section.search {
@@ -247,6 +250,9 @@ section.search {
     padding-left: 26px;
     padding-right: 26px;
     height: calc(100vh - 56px);
+  }
+  .banner-desktop {
+    display: none;
   }
   #banner {
     display: none;
@@ -322,6 +328,11 @@ section.search {
   position: fixed;
   z-index: 1;
 }
+
+.job-alert-banner-columns{
+  max-width: 1000px;
+}
+
 </style>
 
 <template>
@@ -446,18 +457,6 @@ section.search {
                   :fromCoordinates="selectedCoordinates"
                 />
               </div>
-              <!-- <div v-if="displayedJobs[2].length % 2 === 1" class="jp-card small-thats-it">
-                <div style="width: 215px; margin: 32px auto;">
-                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
-                </div>
-                <p class="center">That's all.</p>
-              </div>
-              <div v-if="displayedJobs[2].length % 2 === 0" class="jp-card large-thats-it">
-                <div style="width: 215px; margin: 32px auto;">
-                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
-                </div>
-                <p class="center">That's all.</p>
-              </div> -->
             </div>
           </div>
         </v-flex>
@@ -468,7 +467,38 @@ section.search {
           <ais-powered-by ></ais-powered-by>
         </div>
       </v-layout>
+
+      <div v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" class="banner-desktop">
+        <div class="main-cont-large">
+          <div class="job-alert-banner-columns" style="padding: 60px 80px; border-top:5px solid red; background-color: #f6f6f8;">
+            <div style="vertical-align: middle; column-width: 300px;  display: table-cell;">
+              <img src="@/assets/woman with phone.png" style="width:300px; height: 396px; padding-right: 60px;"/>
+            </div>
+            <div style="width: 500px; display: table-cell; vertical-align: middle;">
+              <NewsletterForm banner @post="onPost"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" class="banner-mobile">
+          <v-layout row wrap style="padding: 0px; border-top:5px solid red;">
+            <v-flex xs12 md4 style="padding: 0px">
+              <img src="@/assets/woman with phone gradiant.png" style="width: 100%;"/>
+            </v-flex>
+            <v-flex xs12 md8 style="padding:0px 50px 50px 50px; background-color: linear-gradient(to bottom, #ffffff, #f8f8f8));">
+              <NewsletterForm banner @post="onPost"/>
+            </v-flex>
+          </v-layout>
+      </div>
     </div>
+
+    <v-dialog v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" v-model="dialogs.showJobAlertForm" max-width="500px">
+      <v-card>
+        <v-card-text style="margin: 0px; padding: 0px;">
+          <NewsletterForm @close="onClickChild" @post="onPost"/>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -482,6 +512,7 @@ import vc from '@/assets/vc.svg';
 import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import DistanceHelper from '@/utils/DistanceHelper';
+import NewsletterForm from '@/components/newsLetterSubscribe';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
@@ -513,6 +544,7 @@ export default {
   },
   components: {
     MainJobCard,
+    NewsletterForm,
   },
   mounted() {
     const el = document.querySelector('#dropdown-header .v-input__slot');
@@ -522,6 +554,7 @@ export default {
     window.onresize = () => {
       this.setSearchWidth();
     };
+    window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
   },
   data() {
     return {
@@ -562,6 +595,9 @@ export default {
       selectedShifts: this.$store.state.selectedShifts || [],
       selectedLat: Coordinates.uci.latitude,
       selectedLong: Coordinates.uci.longitude,
+      dialogs: {
+        showJobAlertForm: false,
+      },
       svgs: {
         information: InformationSvg,
         locationMarker: LocationMarkerSvg,
@@ -577,6 +613,8 @@ export default {
       page: 0,
       displayedJobs: [[], [], []],
       searchPlaceholder: '',
+      newsLetterSignedUp: false,
+      newsLetterProcessFinished: false,
     };
   },
   apollo: {
@@ -654,6 +692,16 @@ export default {
       if (document.querySelector('.suggestions-card')) {
         document.querySelector('.suggestions-card').style.width = width;
       }
+    },
+    onClickChild (value) {
+      console.log('onClickChild is clicked');
+      console.log(value); // someValue
+      window.setTimeout(() => { this.dialogs.showJobAlertForm = false; }, 200);
+    },
+    onPost (value) {
+      console.log('onPost is clicked');
+      console.log(value); // someValue
+      window.setTimeout(() => { this.newsLetterProcessFinished = true; });
     },
     // Randomly pick search search placeholder text
     getSearchPlaceholderText() {
@@ -1150,6 +1198,7 @@ export default {
     userDataProvider.getUserData().then(udata => {
       const data = this.$store.state;
       if (data) {
+        console.log(data);
         if (data.firstSearch) {
           this.firstSearch = data.firstSearch;
         }
@@ -1167,6 +1216,11 @@ export default {
         }
         if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
           this.selectedPositions = data.selectedPositions;
+        }
+        if (data.userdata.preferences.getNewsletters === true) {
+          this.newsLetterSignedUp = true;
+        } else {
+          this.newsLetterSignedUp = false;
         }
       }
       if (udata.uid && udata.acct !== 0) {

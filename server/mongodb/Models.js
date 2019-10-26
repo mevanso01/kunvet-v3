@@ -482,7 +482,7 @@ const AccountSchema = Mongoose.Schema({
   preferences: {
     getNewsletters: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     jobExpiredEmails: {
       type: String,

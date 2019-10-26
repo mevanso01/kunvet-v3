@@ -247,7 +247,7 @@
     <v-dialog v-model="dialogs.showDelete" width="380">
       <v-card>
         <v-card-title class="headline">
-          Delete this job? 
+          Delete this job?
           <span style="font-size: 16px; color: #333333">This action cannot be undone.</span>
         </v-card-title>
         <v-card-actions>
