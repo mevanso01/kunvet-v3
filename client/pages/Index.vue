@@ -294,7 +294,7 @@
     .next_job_pic{
       width: 440px;
       height: 800px;
-      margin-left: 80px;
+      margin-right: 80px;
     }
     .next_job_title{
       margin-top: 80px;
