@@ -89,7 +89,7 @@
       z-index: 10;
     }
     .search_btn{
-      margin-top: 20px;
+      margin-top: 0px;
       width: 100%;
       height: 64px !important;
       line-height: 64px !important;
@@ -192,7 +192,6 @@
 
     .student_testimonials_section{
       background: white;
-      display: flex;
       box-shadow: none;
     }
     .test_slide{
@@ -200,14 +199,17 @@
       margin-left: 0px;
     }
     .slide_info{
-      max-width: 540px;
-      margin: 0 auto;
+      max-width: 960px;
       display: flex;
-      flex-wrap: wrap;
-      border: 1px solid black;
+    }
+    .slide_stuff{
+      height: 380px;
+      width: 520px;
+      margin: auto 0;
     }
     .quote{
       font-family: proxima-nova, sans-serif; 
+      font-weight: 600;
       color: #86a8e7;
       margin-left: 0px;
       letter-spacing: 0px;
@@ -227,11 +229,37 @@
       font-weight: 300; 
     }
     .bio{
-      width: 260px;
+      //width: 260px;
+    }
+    .bio_img_background{
+      height: 440px;
+      width: 360px;
+      background-color: red;
+      margin-right: 60px;
+      text-align: center;
     }
     .bio_img{
+      margin-top: 60px;
       height: 380px;
-      margin-right: 60px;
+    }
+    .student_controls{
+      margin-top: 44px;
+      height: 12px;
+      width: 84px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .student_controls_dot{
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+    }
+    .student_controls_dot_active{
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      background-color: #c8c8c8;
     }
     .bio_header{
       padding-top: 60px;
@@ -251,14 +279,22 @@
       line-height: 100%;
       margin-bottom: 0px;
     }
+    .next_job{
+      width: 100%;
+      background-color:#f4f4f4;
+      height: 800px;
+    }
     .next_job_div{
       max-width: 1008px;
       padding: 0 24px;
-      margin: 120px auto 0;
+      margin: 300px auto 0;
       text-align: center;
+      display: flex;
     }
     .next_job_pic{
-      width: 100%;
+      width: 440px;
+      height: 800px;
+      margin-left: 80px;
     }
     .next_job_title{
       margin-top: 80px;
@@ -271,13 +307,14 @@
       margin-bottom: 0px;
     }
     .next_job_text{
-      font-size: 24px;
+      font-size: 22px;
       line-height: 150%;
       font-weight: 300;
       letter-spacing: 0;
       color: black;
       font-family: proxima-nova, sans-serif; 
       padding-top: 30px;
+      padding-bottom: 40px;
       margin-bottom: 0px;
     }
     .next_job_btn{
@@ -298,37 +335,37 @@
       font-weight: 600;
     }
     .looking_div{
-      margin-top: 120px;
+      margin-top: 0px;
       width: 100%;
-      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+      background: linear-gradient(to bottom right, #38ef7d, #11998e);
     }
     .looking_text_div{
       max-width: 1008px;
-      padding: 0 24px;
+      padding: 150px 24px 0;
       margin: 0 auto;
+      text-align: center;
     }
     .looking_header{
-      padding-top: 60px;
-      font-size: 40px;
-      line-height: 120%;
+      font-size: 46px;
       font-weight: 600;
+      color: #ffffff;
+      line-height: 120%;
       letter-spacing: 0;
-      color: white;
-      font-family: proxima-nova, sans-serif; 
-      margin-bottom: 0px;
+      font-family: proxima-nova, sans-serif;
+      margin-bottom: 0;
     }
     .looking_text{
-      font-size: 24px;
-      line-height: 120%;
+      font-size: 22px;
       font-weight: 300;
+      color: #ffffff;
+      line-height: 150%;
       letter-spacing: 0;
-      color: white;
       font-family: proxima-nova, sans-serif; 
-      padding-top: 6px;
-      margin-bottom: 0px;
+      margin-bottom: 0;
+      padding-top: 20px;
     }
     .looking_btn{
-      margin-top: 20px;
+      margin-top: 80px;
       width: 200px;
       height: 68px !important;
       line-height: 68px !important;
@@ -339,12 +376,13 @@
     .looking_btn_text{
       font-family: proxima-nova, sans-serif;
       font-size: 22px; 
-      color: #308afc;
+      color: #11998e;
       letter-spacing: 0em; 
       line-height: 120%;
       font-weight: 600;
     }
     .looking_btn_undertext{
+      margin-top: -6px;
       font-size: 14px;
       line-height: 120%;
       font-weight: 300;
@@ -352,7 +390,7 @@
       color: white;
       font-family: proxima-nova, sans-serif; 
       padding-top: 8px;
-      padding-bottom: 60px;
+      padding-bottom: 150px;
       margin-bottom: 0px;
     }
   }
@@ -531,6 +569,11 @@
       height: 160px;
       margin-bottom: auto;
       margin-top: auto;
+    }
+    .bio_img_background{
+      width: 440px;
+      height: 380px;
+      margin-right:60px;
     }
     .bio_img{
       height: 66px;
@@ -766,7 +809,7 @@
       width: calc(100% - 48px);
       margin: 0 auto;
     }
-  .search_bar_container{
+    .search_bar_container{
       width: 100%;
       height: 64px;
       background-color: #f4f4f4;
@@ -852,7 +895,7 @@
       width: calc(100% - 48px);
       margin: 0 auto;
     }
-  .search_bar_container{
+    .search_bar_container{
       width: 100%;
       height: 64px;
       background-color: #f4f4f4;
@@ -935,7 +978,6 @@
                   v-model="query"
                   class="search_bar_text_field"
                 ></v-text-field>
-
               </div>
               <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
             </div>
@@ -974,7 +1016,6 @@
             <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
           </div>
       </div>
-
       <!-- <div class="ykunvet_div">
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
@@ -1010,98 +1051,107 @@
         </div>
       </div> -->
     <!-- Scrollama starts here -->
-    <div class="ykunvet">
-      <Scrollama :offset="$store.offset" @step-enter="stepEnterHandler" @step-exit="stepExitHandler">
-        <div slot="graphic" class="graphic">
-          <div v-if="currStepId === 1" style="display: flex;">
-            <div class="ykunvet_text_div">
-              <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
-              <p class="ykunvet_text">
-                You applied to a job, and weeks or even months later, 
-                the company finally replied that the job you applied to no longer
-                exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
-                anymore! We only show you the latest jobs near your location.</p>
-            </div>
-            <img class="ykunvet_phone" :src="pngs.phone1" alt="Newest Jobs Near Me">
-          </div>
-          <div v-if="currStepId === 2" style="display: flex;">
-            <div class="ykunvet_text_div">
-              <h2 class="ykunvet_header">Still being kept in the dark?</h2>
-              <p class="ykunvet_text">
-                Seriously? You still do not know what happens to your resume until someone
-                replies? Then you should start using Kunvet now. No kidding. We inform all of our users
-                about a change in their application status immediately. Whether their resume was
-                received or viewed, they will know it right away.</p>
-            </div>
-            <img class="ykunvet_phone" :src="pngs.phone2" alt="Being kept in the dark?">
-          </div>
-          <div v-if="currStepId === 3" style="display: flex;">
-            <div class="ykunvet_text_div">
-              <h2 class="ykunvet_header">One Resume Is Not Enough.</h2>
-              <p class="ykunvet_text">
-                Many of you have more than one resume—because you are very “versatile”. On
-                Kunvet, you can upload as many resumes as you want for the different kind of jobs you
-                apply to, and we will keep them safe and sound for whenever you need them.</p>
-            </div>
-            <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
-          </div>
-        </div>
-        <div v-for="step in steps" :key="step.no" :data-step-id="step.id" class="step"/>
-      </Scrollama>
-  </div>
-
       <div class="student_testimonials">
-        <v-carousel class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
-          <v-carousel-item class="testing_slide_transition">
-            <img class="bio_img" :src="pngs.person1" alt="Female Job Applicant">
+        <v-carousel v-model="model" class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
+          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
             <div class="slide_info">
-              <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
-                job searching. I definitetly recommend using this service, especially for people like me who wants 
-                to work closer to home.</p>
-              <div class="bio">
-                <p class="bio_header">Sandra C.</p>
-                <p class="bio_text">Warehouse Associate at Amazon</p>
+              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #8ab4ff, #86a8e7, #7f7fd5);">
+                <img class="bio_img" :src="pngs.person1"/>
+              </div>
+              <div class="slide_stuff">
+                <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
+                  job searching. I definitetly recommend using this service, especially for people like me who wants 
+                  to work closer to home.</p>
+                <div class="bio">
+                  <p class="bio_header">Sandra C.</p>
+                  <p class="bio_text">Warehouse Associate at Amazon</p>
+                  <div class="student_controls">
+                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                  </div>
+                </div>
               </div>
             </div>
           </v-carousel-item>
-          <v-carousel-item class="testing_slide_transition">
+          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
             <div class="slide_info">
-              <p class="quote">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely
-                recommend this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
-              <div class="bio">
-                <p class="bio_header">Anthony P.</p>
-                <p class="bio_text">Intern at The H Law Group</p>
+              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #fbc2eb, #a6c1ee);">
+                <img class="bio_img" :src="pngs.person2"/>
+              </div>
+              <div class="slide_stuff">
+                <p class="quote" style="color: #fbc2eb">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely recommend
+                   this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
+                <div class="bio">
+                  <p class="bio_header">Anthony P.</p>
+                  <p class="bio_text">Intern at The H Law Group</p>
+                  <div class="student_controls">
+                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                  </div>
+                </div>
               </div>
             </div>
           </v-carousel-item>
-          <v-carousel-item class="testing_slide_transition">
+          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet Really Helps.</h2>
-              <p class="quote">“</p><p class="test_text">I love how the interface is clean and modern. I find the
-                jobs on your website to be unique and I always come back to it from time to time to see what jobs are out there.</p>
-              <div class="bio">
-                <p class="bio_header">Kamilah D.</p>
-                <p class="bio_text">Sales Associate at Closet Twenty One</p>
+              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #ffb88c, #ed4264);">
+                <img class="bio_img" :src="pngs.person3"/>
+              </div>
+              <div class="slide_stuff">
+                <p class="quote" style="color: #ed4264">“</p><p class="test_text">I love how the interface is clean and modern! I find the jobs on 
+                  your website to be unique and I always comeback to it from time to time to see what jobs are out there.</p>
+                <div class="bio">
+                  <p class="bio_header">Kamilah D.</p>
+                  <p class="bio_text">Sales Associate at Closet Twenty One</p>
+                  <div class="student_controls">
+                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                  </div>
+                </div>
               </div>
             </div>
           </v-carousel-item>
         </v-carousel>
-      </div> <!--
-      <div class="next_job_div">
-        <img class="next_job_pic" :src="pngs.nextJob" alt="Job applicants at an Interview">
-        <h2 class="next_job_title">Your Next Job is Waiting for You.</h2>
-        <p class="next_job_text">With an account, you have access to all the newest jobs near you. To apply to any job, a
-            click of a button is all you need to do. Get your free account now.</p>
-        <router-link :to="searchDestination"><k-btn class="next_job_btn"><span class="next_job_btn_text">Get a Free Account</span></k-btn></router-link>
+      </div> 
+      <div class="next_job">
+        <div class="next_job_div">
+          <img class="next_job_pic" :src="pngs.nextJob" alt="Home page form image">
+          <div class="next_job_text_div">
+            <h2 class="next_job_title">Your Next Job is Waiting</h2>
+            <p class="next_job_text">With a free account, you have access to all the newest jobs near you. Get yours now.</p>
+            <div class="next_job_field">
+              <v-form>
+                <k-text-field label="First Name" class="next_job_text_field"
+                  v-model="fname"
+                  :rules="requiredRules"
+                  required
+                ></k-text-field>
+                <k-text-field label="Last Name" class="next_job_text_field"
+                  v-model="lname"
+                  :rules="requiredRules"
+                  required
+                ></k-text-field>
+                <k-text-field v-model="email" label="Email Address" :rules="emailRules" required class="next_job_text_field"></k-text-field>
+                <k-text-field v-model="password" toggleVisibility label="Password" :rules="passwordRules" required class="next_job_text_field"></k-text-field>
+
+                <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">
+                  Create Free Applicant Account</span></k-btn></router-link>
+              </v-form>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="looking_div">
         <div class="looking_text_div">
-          <h2 class="looking_header">Looking to hire? You are at the right place!</h2>
+          <h2 class="looking_header">Looking to Hire?<br>You are at the Right Place!</h2>
           <p class="looking_text">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</p>
           <router-link :to="searchDestination"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>
-      </div>-->
+      </div>
     </div>
     <div class="home_content medium">
       <div class="index_top">
@@ -1350,8 +1400,10 @@ import phone1 from '@/assets/index/new-fresh-latest-job-employment.png';
 import phone2 from '@/assets/index/instant-job-application-status.png';
 import phone3 from '@/assets/index/upload-unlimited-resumes.png';
 import person1 from '@/assets/index/young-job-applicant-in-green-sweater.png';
+import person2 from '@/assets/index/young-job-applicant-in-purple-checker-shirt.png';
+import person3 from '@/assets/index/young-job-applicant-in-pink-hoodie.png';
 import profilePic from '@/assets/index/profile-icon.png';
-import nextJob from '@/assets/index/job-applicants-in-interview.png';
+import nextJob from '@/assets/index/home-page-form-image.png';
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
@@ -1381,6 +1433,7 @@ export default {
         { id: '2', title: 'Still being kept in the dark?', content: 'Seriously? You still do not know what happens to your resume until someone replies? Then you should start using Kunvet now. No kidding. We inform all of our users about a change in their application status immediately. Whether their resume was received or viewed, they will know it right away.' },
         { id: '3', title: 'One Resume Is Not Enough.', content: 'Many of you have more than one resume—because you are very “versatile”. On Kunvet, you can upload as many resumes as you want for the different kind of jobs you apply to, and we will keep them safe and sound for whenever you need them.' },
       ],
+      model: 0,
       svgs: {
       },
       pngs: {
@@ -1388,6 +1441,8 @@ export default {
         phone2: phone2,
         phone3: phone3,
         person1: person1,
+        person2: person2,
+        person3: person3,
         profilePic: profilePic,
         woman: woman,
         nextJob: nextJob,
