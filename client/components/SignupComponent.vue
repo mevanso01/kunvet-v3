@@ -91,14 +91,26 @@ export default {
       type: Boolean,
       default: false,
     },
+    fname: {
+      type: String,
+      default: '',
+    },
+    lname: {
+      type: String,
+      default: '',
+    },
+    email: {
+      type: String,
+      default: '',
+    },
+    password: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
-      fname: '',
-      lname: '',
       business_name: '',
-      email: '',
-      password: '',
       loading: false,
       state: 'initial',
       error: '',

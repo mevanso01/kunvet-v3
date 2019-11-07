@@ -137,7 +137,7 @@
       </section>
 
       <section v-if="chosenForm === 'signup'">
-        <SignupComponent :type="signupType" @success="onSuccess" style="max-width: 420px; margin: auto;"></SignupComponent>
+        <SignupComponent :type="signupType" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess" style="max-width: 420px; margin: auto;"></SignupComponent>
         <!-- <a style="text-align: center; margin: auto; display: block;" @click="chosenForm = ''">Choose a different kind of account</a> -->
       </section>
 
@@ -175,7 +175,28 @@ import userDataProvider from '@/userDataProvider';
 import SignupComponent from '@/components/SignupComponent';
 
 export default {
-  props: ['stage'],
+  props: {
+    stage: {
+      type: String,
+      default: '',
+    },
+    fname: {
+      type: String,
+      default: '',
+    },
+    lname: {
+      type: String,
+      default: '',
+    },
+    email: {
+      type: String,
+      default: '',
+    },
+    password: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       e1: true,

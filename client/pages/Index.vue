@@ -104,7 +104,7 @@
       font-weight: 600;
     }
 
-    /*
+
     .ykunvet_div{
       max-width: 1008px;
       padding: 0 0px 0px 24px;
@@ -112,14 +112,14 @@
     }
     .ykunvet_section{
       display: flex;
-      margin-top: 300px;
+      margin-top: 200px;
     }
     .ykunvet_text_div{
-      width: 46%;
+      width: 442px;
       height: 340px;
       margin-bottom: auto;
       margin-top: auto;
-      margin-right: 10%;
+      margin-right: 96px;
     }
     .ykunvet_header{
       font-size: 38px;
@@ -140,47 +140,9 @@
       color: #3c3c3c;
     }
     .ykunvet_phone{
-      width: 44%;
+      width: 442px;
     }
-    */
 
-  .ykunvet{
-      max-width: 1008px;
-      padding: 0 0px 0px 24px;
-      margin: 300px auto 300px;
-  }
-  .ykunvet_header{
-    font-size: 38px;
-    line-height: 120%;
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    letter-spacing: 0.03em;
-    margin-bottom: 0px;
-  }
-  .ykunvet_text{
-    font-size: 22px;
-    line-height: 150%;
-    font-weight: 300;
-    letter-spacing: 0;
-    padding-top: 30px;
-    margin-bottom: 0px;
-    font-family: proxima-nova, sans-serif;
-    color: #3c3c3c;
-  }
-  .ykunvet_text_div{
-    height: 320px;
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-  .ykunvet_phone{
-    width: 432.96px;
-    margin-left: 98.4px;
-  }
-  .graphic {
-    //background-color: #DDD;
-    margin: 0;
-    display: flex;
-  }
 
     .student_testimonials{
       max-width: 1008px;
@@ -317,22 +279,46 @@
       padding-bottom: 40px;
       margin-bottom: 0px;
     }
+    .next_job_text_div{
+      width: 440px;
+    }
     .next_job_btn{
-      margin-top: 20px;
-      width: 290px;
-      height: 80px !important;
-      line-height: 80px !important;
+      margin-top: 24px;
+      width: 440px;
+      height: 64px !important;
+      line-height: 64px !important;
       box-shadow: none !important;
       border-radius: 0px !important;
       background-color: #ff6969;
     }
     .next_job_btn_text{
       font-family: proxima-nova, sans-serif;
-      font-size: 22px; 
+      font-size: 16px; 
       color: white;
       letter-spacing: 0em; 
       line-height: 120%;
       font-weight: 600;
+    }
+    .next_job_btn_undertext{
+      margin-top: -6px;
+      font-size: 14px;
+      line-height: 120%;
+      font-weight: 300;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif; 
+      padding-top: 8px;
+      padding-bottom: 150px;
+      margin-bottom: 0px;
+    }
+    .next_job_btn_undertext_terms{
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .next_job_btn_undertext_terms:hover{
+      text-decoration: underline;
+    }
+    .next_job_text_field{
+      margin-bottom: 8px;
     }
     .looking_div{
       margin-top: 0px;
@@ -1016,7 +1002,7 @@
             <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
           </div>
       </div>
-      <!-- <div class="ykunvet_div">
+      <div class="ykunvet_div">
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
             <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
@@ -1049,7 +1035,7 @@
           </div>
           <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
         </div>
-      </div> -->
+      </div>
     <!-- Scrollama starts here -->
       <div class="student_testimonials">
         <v-carousel v-model="model" class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
@@ -1123,22 +1109,15 @@
             <h2 class="next_job_title">Your Next Job is Waiting</h2>
             <p class="next_job_text">With a free account, you have access to all the newest jobs near you. Get yours now.</p>
             <div class="next_job_field">
-              <v-form>
-                <k-text-field label="First Name" class="next_job_text_field"
-                  v-model="fname"
-                  :rules="requiredRules"
-                  required
-                ></k-text-field>
-                <k-text-field label="Last Name" class="next_job_text_field"
-                  v-model="lname"
-                  :rules="requiredRules"
-                  required
-                ></k-text-field>
-                <k-text-field v-model="email" label="Email Address" :rules="emailRules" required class="next_job_text_field"></k-text-field>
-                <k-text-field v-model="password" toggleVisibility label="Password" :rules="passwordRules" required class="next_job_text_field"></k-text-field>
+              <v-form ref="form">
+                <home-text-field required v-model="fname" :rules="requiredRules" label="First Name" class="next_job_text_field"></home-text-field>
+                <home-text-field required v-model="lname" :rules="requiredRules" label="Last Name" class="next_job_text_field"></home-text-field>
+                <home-text-field required v-model="email" :rules="emailRules" label="Email" class="next_job_text_field"></home-text-field>
+                <home-text-field required v-model="password" toggleVisibility :rules="passwordRules" label="Password" class="next_job_text_field" style="margin-bottom: 0px;"></home-text-field>
 
-                <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">
-                  Create Free Applicant Account</span></k-btn></router-link>
+                <k-btn @click="send_to_student_signup" class="next_job_btn"><span class="next_job_btn_text">
+                  Create Free Applicant Account</span></k-btn>
+                <p class="next_job_btn_undertext">I have read and agreed to the <span class="next_job_btn_undertext_terms"><router-link to="terms" target="_blank">Terms and Conditions</router-link></span>.</p>
               </v-form>
             </div>
           </div>
@@ -1148,7 +1127,7 @@
         <div class="looking_text_div">
           <h2 class="looking_header">Looking to Hire?<br>You are at the Right Place!</h2>
           <p class="looking_text">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</p>
-          <router-link :to="searchDestination"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
+          <router-link to="/choose"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>
       </div>
@@ -1425,6 +1404,21 @@ export default {
   },
   data() {
     return {
+      fname: '',
+      lname: '',
+      email: '',
+      password: '',
+      requiredRules: [
+        v => !!v || 'Required',
+      ],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w+)+$/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules: [
+        v => !!v || 'Password is Required',
+        v => (v && v.length >= 8) || 'Password must be at least 8 characters',
+      ],
       // For Scrollama
       currStepId: 1,
       // For Scrollama
@@ -1579,6 +1573,13 @@ export default {
     },
   },
   methods: {
+    send_to_student_signup() {
+      if (this.fname !== '' && this.lname !== '' && this.email !== '' && this.password !== '') {
+        this.$router.push(`/signup/student/${this.fname}/${this.lname}/${this.email}/${this.password}`);
+      } else {
+        this.$router.push('/signup/student');
+      }
+    },
     // For Scrollama
     stepEnterHandler({ element, direction, index }) {
       console.log({ element, direction, index });
