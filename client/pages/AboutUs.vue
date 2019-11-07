@@ -27,3 +27,10 @@
         </div>
     </v-container>
 </template>
+<script>
+  export default {
+    metaInfo: {
+      title: 'About Us | Kunvet',
+    },
+  };
+</script>

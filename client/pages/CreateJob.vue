@@ -497,7 +497,7 @@
 
               <v-layout row wrap>
                 <v-flex xs12 class="no-padding">
-                  <v-btn class="ml-0 kunvet-red-bg" dark :href="`/job/${jobId}`">View your job</v-btn>
+                  <v-btn class="ml-0 kunvet-red-bg" dark :href="`/jobs/detail/${jobId}`">View your job</v-btn>
                   <v-btn v-show="postingAs === 'business' && !bdata.profile_pic" class="kunvet-red-bg" dark href="/myorg">Go to your account</v-btn>
                 </v-flex>
               </v-layout>
@@ -701,6 +701,12 @@ const findJobsQuery = gql`
 `;
 
 export default {
+  metaInfo: {
+    title: 'Post a Job | Kunvet',
+    meta: [
+      { name: 'description', content: 'noindex' },
+    ],
+  },
   components: {
     PicUploader,
     QuillEditor,
@@ -1148,7 +1154,7 @@ export default {
       }
     },
     moveToBilling() {
-      this.$router.push('/createjob');
+      this.$router.push('/jobs/create');
       this.$refs.billing.show(this.jobId);
       this.tab = 'billing';
     },
@@ -1396,7 +1402,7 @@ export default {
       await this.getJobData(_id);
       if (this.job.active && this.jobId && (!this.$store.state.currentJobProgress || !this.$store.state.currentJobProgress.postOnOpen)) {
         if (this.$route.params.id) {
-          this.$router.push(`/editjob/${this.jobId}`);
+          this.$router.push(`/jobs/edit/${this.jobId}`);
         } else {
           this.resetData();
         }
@@ -1547,7 +1553,7 @@ export default {
     },
     codeValidated() {
       this.email_verified = true;
-      this.$router.push('/createjob/signup=true');
+      this.$router.push('/jobs/create/signup=true');
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;
         udata.email_verified = true;

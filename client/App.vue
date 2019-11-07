@@ -5,7 +5,7 @@
     </div>
     <!--desktop version position: absolute; top: 0;  :class="{ 'white-bg': navHasBg }"     -->
     <v-toolbar flat fixed class="main-navbar mobile-hide white-bg" style="z-index: 200; background-color: inherit;">
-      <router-link to="/search">
+      <router-link to="/jobs/search">
         <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
         <img v-else src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
       </router-link>
@@ -17,11 +17,11 @@
             {{ item.title }}
           </v-btn>
         </template>
-        <!-- <v-btn flat @click="goTo('/search');">Search</v-btn> -->
-        <!-- <v-btn flat @click="goTo('/myjobs');" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn> -->
+        <!-- <v-btn flat @click="goTo('/jobs/search');">Search</v-btn> -->
+        <!-- <v-btn flat @click="goTo('/jobs/posted');" style="background-color: inherit;" class="text-capitalize white--text">My Jobs</v-btn> -->
         <!--TODO: notification mark-->
-        <!-- <v-btn flat @click="goTo('/notifications');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn> -->
-        <!-- <v-btn flat @click="goTo('/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn> -->
+        <!-- <v-btn flat @click="goTo('/account/notification');" style="background-color: inherit;" class="text-capitalize white--text">Notifications</v-btn> -->
+        <!-- <v-btn flat @click="goTo('/account/settings');" style="background-color: inherit;" class="text-capitalize white--text">Settings</v-btn> -->
         <v-menu fixed offset-y left :close-on-content-click="false" dark>
           <v-btn flat style="min-width: 64px; text-transform: capitalize;" slot="activator" class="white--text nav-notifications-btn">
               Notifications
@@ -37,7 +37,7 @@
             <v-list-tile @click="goToAccount()">
               <p>View Account</p>
             </v-list-tile>
-            <v-list-tile @click="goTo('/settings')">
+            <v-list-tile @click="goTo('/account/settings')">
               <p>Settings</p>
             </v-list-tile>
             <v-list-tile @click="logout()">
@@ -55,7 +55,7 @@
           {{ item.title }}
         </v-btn>
         <div style="padding-top: 18px; padding-left: 16px;">
-          <router-link to="/createjob">
+          <router-link to="/jobs/create">
             <v-btn class="post-a-job-button" outline>Post a Job</v-btn>
           </router-link>
         </div>
@@ -66,7 +66,7 @@
     <div class="mobile-show mobile-navbar">
       <div class="header-icon-container" :class="{ 'white-bg': navHasBg }" style="z-index: 100;">
         <div style="padding: 12px 0 0 21px;">
-          <router-link to="/search">
+          <router-link to="/jobs/search">
             <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
             <img v-else src="./assets/logo/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
           </router-link>
@@ -125,7 +125,7 @@
             <router-link to="/about"><p style="color: #b3b3b3">About Us</p></router-link>
           </v-flex>
           <v-flex>
-            <router-link to="/join"><p style="color: #b3b3b3">Join Us</p></router-link>
+            <router-link to="/career"><p style="color: #b3b3b3">Join Us</p></router-link>
           </v-flex>
           <v-flex>
             <router-link to="/contact"><p style="color: #b3b3b3">Contact Us</p></router-link>
@@ -199,21 +199,21 @@ export default {
       dmenuItems: [
         [
           { title: 'Login', href: '/login' },
-          { title: 'Sign up', href: '/signup' },
-          { title: 'Post a Job', href: '/createjob' },
+          { title: 'Sign up', href: '/sign-up' },
+          { title: 'Post a Job', href: '/jobs/create' },
         ],
         [
-          { title: 'Search', href: '/search' },
+          { title: 'Search', href: '/jobs/search' },
           {
             title: 'My Jobs',
             subItems: [
-              { title: 'Saved Jobs', href: '/savedjobs' },
-              { title: 'Applied Jobs', href: '/appliedjobs' },
+              { title: 'Saved Jobs', href: '/jobs/saved' },
+              { title: 'Applied Jobs', href: '/jobs/applied' },
             ],
           },
           { title: 'Notifications', href: '/account' },
           {
-            title: 'Settings', href: '/settings',
+            title: 'Settings', href: '/account/settings',
             // subItems: [ // WILL IMPLEMENT LATER
             //   { title: 'Email & Password' },
             //   { title: 'Email Preferences' },
@@ -221,32 +221,32 @@ export default {
             //   { title: 'Delete Account' },
             // ],
           },
-          { title: 'Log Out', href: '/settings?o=logout' },
+          { title: 'Log Out', href: '/account/settings?o=logout' },
         ],
         [
-          { title: 'Post New Job',  href: '/createjob' },
-          { title: 'My Posted Jobs', href: '/myjobs' },
-          { title: 'My Applicants', href: '/applicants' },
-          { title: 'Notifications', href: '/notifications' },
+          { title: 'Post New Job',  href: '/jobs/create' },
+          { title: 'My Posted Jobs', href: '/jobs/posted' },
+          { title: 'My Applicants', href: '/jobs/applicants' },
+          { title: 'Notifications', href: '/account/notification' },
           { title: 'Account', href: '/myorg' },
-          { title: 'Settings', href: '/settings' },
+          { title: 'Settings', href: '/account/settings' },
         ],
       ],
       newMenuItems: [
         [
           { title: 'Login', href: '/login' },
-          { title: 'Sign up', href: '/signup' },
+          { title: 'Sign up', href: '/sign-up' },
         ],
         [
-          { title: 'Search', href: '/search' },
-          { title: 'Applied Jobs', href: '/appliedjobs' },
-          { title: 'Saved Jobs', href: '/savedjobs' },
+          { title: 'Search', href: '/jobs/search' },
+          { title: 'Applied Jobs', href: '/jobs/applied' },
+          { title: 'Saved Jobs', href: '/jobs/saved' },
         ],
         [
-          { title: 'Search', href: '/search' },
-          { title: 'Post New Job', href: '/createjob' },
-          { title: 'My Jobs', href: '/myjobs' },
-          { title: 'Applicants', href: '/applicants' },
+          { title: 'Search', href: '/jobs/search' },
+          { title: 'Post New Job', href: '/jobs/create' },
+          { title: 'My Jobs', href: '/jobs/posted' },
+          { title: 'Applicants', href: '/jobs/applicants' },
         ],
       ],
       svgs: { kunvetLogoNav: logoNav, kunvetLogoFooter: logoFooter },
@@ -276,16 +276,16 @@ export default {
       return process.env.NODE_ENV !== 'production';
     },
     isJobPostRoute() {
-      const jobPostRoutes = ['/myjobs', '/applicants', '/savedjobs', '/appliedjobs', '/search', '/'];
+      const jobPostRoutes = ['/jobs/posted', '/jobs/applicants', '/jobs/saved', '/jobs/applied', '/jobs/search', '/'];
       return jobPostRoutes.indexOf(this.$route.path) !== -1;
       // it is found
     },
     navHasBg() {
       // change this to set to white bg based on scroll position as well
-      // console.log(this.$route.path, this.$route.path.indexOf('/job/'));
+      // console.log(this.$route.path, this.$route.path.indexOf('/jobs/detail/'));
       // console.log(this.$route.path);
-      const isTransparentPage = (this.$route.path !== '/' && this.$route.path.indexOf('/job/') !== -1) ||
-        ['/', '/appliedjobs', '/settings', '/myjobs', '/savedjobs'].indexOf(this.$route.path) !== -1;
+      const isTransparentPage = (this.$route.path !== '/' && this.$route.path.indexOf('/jobs/detail/') !== -1) ||
+        ['/', '/jobs/applied', '/account/settings', '/jobs/posted', '/jobs/saved'].indexOf(this.$route.path) !== -1;
       return !this.isAtTop || !isTransparentPage;
     },
     currentMenuItems() {

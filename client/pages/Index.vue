@@ -57,7 +57,7 @@
     width: 292px;
     height: 100%;
     background-color: none;
-  } 
+  }
   .search_bar_icon{
     font-size: 16px;
     margin-right: 24px;
@@ -66,7 +66,7 @@
   .search_bar_icon_cross{
     font-size: 16px;
     margin-left: 24px;
-    color: #5a8cff; 
+    color: #5a8cff;
   }
   .search_bar_current{
     font-weight: 600;
@@ -75,7 +75,7 @@
     padding-top: 20px;
     margin-bottom: 0px;
     font-size: 16px;
-    color: #5a8cff; 
+    color: #5a8cff;
   }
   .search_bar_text_field{
     height: 52px;
@@ -98,8 +98,8 @@
   }
   .search_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
+    font-size: 16px;
+    letter-spacing: 0.12em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -167,7 +167,7 @@
     font-weight: 600;
     padding-top: 80px;
     margin-left: 24px;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     font-size: 40px;
     margin-bottom: 0px;
     color: white;
@@ -175,16 +175,16 @@
   .test_text{
     padding-top: 40px;
     width: 614px;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     font-size: 24px;
     color: white;
     line-height: 150%;
     margin-right: 130px;
     margin-bottom: 0px;
-    font-weight: 300; 
+    font-weight: 300;
   }
   .quote{
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     color: white;
     margin-left: 0px;
     margin-bottom: 0px;
@@ -205,7 +205,7 @@
     padding-top: 20px;
     font-size: 16px;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     font-weight: 600;
     line-height: 100%;
     margin-bottom: 0px;
@@ -215,7 +215,7 @@
     padding-top: 10px;
     font-weight: 300;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     line-height: 100%;
     margin-bottom: 0px;
   }
@@ -235,7 +235,7 @@
     font-weight: 600;
     letter-spacing: 0;
     color: #ff6969;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     margin-bottom: 0px;
   }
   .next_job_text{
@@ -244,7 +244,7 @@
     font-weight: 300;
     letter-spacing: 0;
     color: black;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     padding-top: 30px;
     margin-bottom: 0px;
   }
@@ -259,9 +259,9 @@
   }
   .next_job_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 22px; 
+    font-size: 22px;
     color: white;
-    letter-spacing: 0em; 
+    letter-spacing: 0em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -282,7 +282,7 @@
     font-weight: 600;
     letter-spacing: 0;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     margin-bottom: 0px;
   }
   .looking_text{
@@ -291,7 +291,7 @@
     font-weight: 300;
     letter-spacing: 0;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     padding-top: 6px;
     margin-bottom: 0px;
   }
@@ -306,9 +306,9 @@
   }
   .looking_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 22px; 
+    font-size: 22px;
     color: #308afc;
-    letter-spacing: 0em; 
+    letter-spacing: 0em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -318,7 +318,7 @@
     font-weight: 300;
     letter-spacing: 0;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     padding-top: 8px;
     padding-bottom: 60px;
     margin-bottom: 0px;
@@ -401,8 +401,8 @@
   }
   .search_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
+    font-size: 16px;
+    letter-spacing: 0.12em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -470,7 +470,7 @@
     font-weight: 600;
     padding-top: 100px;
     margin-left: 24px;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     font-size: 36px;
     margin-bottom: 0px;
     color: white;
@@ -478,16 +478,16 @@
   .test_text{
     padding-top: 40px;
     width: 438px;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     font-size: 22px;
     color: white;
     line-height: 150%;
     margin-right: 100px;
     margin-bottom: 0px;
-    font-weight: 300; 
+    font-weight: 300;
   }
   .quote{
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     color: white;
     margin-left: 0px;
     margin-bottom: 0px;
@@ -510,7 +510,7 @@
     padding-top: 16px;
     font-size: 16px;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     font-weight: 600;
     line-height: 100%;
     margin-bottom: 0px;
@@ -520,7 +520,7 @@
     padding-top: 8px;
     font-weight: 300;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     line-height: 100%;
     margin-bottom: 0px;
   }
@@ -540,7 +540,7 @@
     font-weight: 600;
     letter-spacing: 0;
     color: #ff6969;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     margin-bottom: 0px;
   }
   .next_job_text{
@@ -549,7 +549,7 @@
     font-weight: 300;
     letter-spacing: 0;
     color: black;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     padding-top: 30px;
     margin-bottom: 0px;
   }
@@ -564,9 +564,9 @@
   }
   .next_job_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 20px; 
+    font-size: 20px;
     color: white;
-    letter-spacing: 0em; 
+    letter-spacing: 0em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -587,7 +587,7 @@
     font-weight: 600;
     letter-spacing: 0;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     margin-bottom: 0px;
   }
   .looking_text{
@@ -596,7 +596,7 @@
     font-weight: 300;
     letter-spacing: 0;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     padding-top: 6px;
     margin-bottom: 0px;
   }
@@ -611,9 +611,9 @@
   }
   .looking_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 22px; 
+    font-size: 22px;
     color: #308afc;
-    letter-spacing: 0em; 
+    letter-spacing: 0em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -623,7 +623,7 @@
     font-weight: 300;
     letter-spacing: 0;
     color: white;
-    font-family: proxima-nova, sans-serif; 
+    font-family: proxima-nova, sans-serif;
     padding-top: 8px;
     padding-bottom: 60px;
     margin-bottom: 0px;
@@ -699,8 +699,8 @@
   }
   .search_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
+    font-size: 16px;
+    letter-spacing: 0.12em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -775,8 +775,8 @@
   }
   .search_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
+    font-size: 16px;
+    letter-spacing: 0.12em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -861,8 +861,8 @@
   }
   .search_btn_text{
     font-family: proxima-nova, sans-serif;
-    font-size: 16px; 
-    letter-spacing: 0.12em; 
+    font-size: 16px;
+    letter-spacing: 0.12em;
     line-height: 120%;
     font-weight: 600;
   }
@@ -931,7 +931,7 @@
           <div class="ykunvet_text_div">
             <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
             <p class="ykunvet_text">
-              You applied to a job, and weeks or even months later, 
+              You applied to a job, and weeks or even months later,
               the company finally replied that the job you applied to no longer
               exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
               anymore! We only show you the latest jobs near your location.</p>
@@ -966,7 +966,7 @@
             <div class="slide_info">
               <h2 class="test_title">Kunvet Really Helps.</h2>
               <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
-                job searching. I definitetly recommend using this service, especially for people like me who wants 
+                job searching. I definitetly recommend using this service, especially for people like me who wants
                 to work closer to home.</p>
               <div class="bio">
                 <img class="bio_img" :src="pngs.profilePic"/>
@@ -1006,7 +1006,7 @@
             <div style="height: 104px;"/>
           </v-carousel-item>
         </v-carousel>
-      </div> 
+      </div>
       <div class="next_job_div">
         <img class="next_job_pic" :src="pngs.nextJob" alt="Job applicants at an Interview">
         <h2 class="next_job_title">Your Next Job is Waiting for You.</h2>
@@ -1062,7 +1062,7 @@
           <div class="ykunvet_text_div">
             <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
             <p class="ykunvet_text">
-              You applied to a job, and weeks or even months later, 
+              You applied to a job, and weeks or even months later,
               the company finally replied that the job you applied to no longer
               exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
               anymore! We only show you the latest jobs near your location.</p>
@@ -1097,7 +1097,7 @@
             <div class="slide_info">
               <h2 class="test_title">Kunvet Really Helps.</h2>
               <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
-                job searching. I definitetly recommend using this service, especially for people like me who wants 
+                job searching. I definitetly recommend using this service, especially for people like me who wants
                 to work closer to home.</p>
               <div class="bio">
                 <img class="bio_img" :src="pngs.profilePic"/>
@@ -1284,6 +1284,12 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 Vue.use(VueApollo);
 
 export default {
+  metaInfo: {
+    title: 'Kunvet: All the New Jobs Hiring Near Me',
+    meta: [
+      { name: 'description', content: 'Say goodbye to stale, unrelated or fake jobs! Say hello to fresh and relevant jobs hiring near you—from real employers who are looking to hire immediately.' },
+    ],
+  },
   components: {
     PromoTextContainer,
   },
@@ -1359,14 +1365,14 @@ export default {
     searchDestination() {
       if (this.query) {
         return {
-          path: '/search',
+          path: '/jobs/search',
           query: {
             q: this.query,
           },
         };
       }
       return {
-        path: '/search',
+        path: '/jobs/search',
       };
     },
     filteredAvailablePositionsObj() {

@@ -1,9 +1,9 @@
 <style lang="scss" scoped>
 .notif-header{
-  height: 60px; 
+  height: 60px;
   background-image: linear-gradient(to right, #FFC06E , #FF5F6D);
-  font-size: 14px;  
-  display: flex; 
+  font-size: 14px;
+  display: flex;
   justify-content: space-between;
 }
 .notif-header-text{
@@ -13,10 +13,10 @@
 }
 
 .notif-header-dismiss{
-  padding-right: 16px; 
-  padding-top: 22px; 
-  cursor: pointer; 
-  font-size: 12px; 
+  padding-right: 16px;
+  padding-top: 22px;
+  cursor: pointer;
+  font-size: 12px;
   color: white;
 }
 .notif-list{
@@ -56,7 +56,7 @@
             <v-icon>delete</v-icon>
           </v-btn>
         </v-list-tile-action>
-      </v-list-tile>  
+      </v-list-tile>
     </v-list>
     <div v-show="notifications.length === 0" style="height: 58px; background-color: #fff;">
       <p class="center" style="line-height: 48px; margin-bottom: 0; padding: 0 10px; color: rgb(167, 167, 167);">No new notifications</p>
@@ -212,7 +212,7 @@ export default {
             }
             notifications.push({
               text: txt,
-              route: '/applicants',
+              route: '/jobs/applicants',
               notification_type: 'application',
               date: dateList[tempList[x]],
             });

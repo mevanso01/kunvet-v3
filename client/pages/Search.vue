@@ -538,8 +538,9 @@ Vue.use(VueApollo);
 
 export default {
   metaInfo: {
+    title: 'Search for Jobs | Kunvet',
     meta: [
-      { name: 'hello' },
+      { name: 'description', content: 'Find all the new jobs hiring near you—from real employers who are looking to hire immediately.' },
     ],
   },
   components: {
@@ -1104,15 +1105,15 @@ export default {
       this.loadingJobs = true;
       if (this.query) {
         this.$router.push({
-          path: '/search',
+          path: '/jobs/search',
           query: {
             q: this.query,
           },
         });
-        this.$setTitle(`${this.query} - Kunvet`);
+        this.$setTitle(`${this.query} | Kunvet`);
       } else {
         this.$router.push({
-          path: '/search',
+          path: '/jobs/search',
         });
         this.$setTitle('Kunvet');
       }
@@ -1178,7 +1179,7 @@ export default {
       this.query = this.$route.query.q;
     } else if (this.query && this.$route.query.q !== this.query) {
       this.$router.push({
-        path: '/search',
+        path: '/jobs/search',
         query: {
           q: this.query,
         },

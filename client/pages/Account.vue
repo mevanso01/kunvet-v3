@@ -370,7 +370,7 @@
             <jobs-and-applications-counters v-else
                                             :counters="getJobsAndApplicationsCount"/>
             <div>
-              <k-btn to="/createjob" autoSpin>
+              <k-btn to="/jobs/create" autoSpin>
                 Post Personal Jobs
               </k-btn>
             </div>
@@ -429,7 +429,7 @@
             <jobs-and-applications-counters v-else
                                             :counters="getJobsAndApplicationsCount"/>
             <div>
-              <k-btn to="/createjob" autoSpin>
+              <k-btn to="/jobs/create" autoSpin>
                 Post Personal Jobs
               </k-btn>
             </div>
@@ -682,6 +682,12 @@
 
 
   export default {
+    metaInfo: {
+      title: 'Profile Page | Kunvet',
+      meta: [
+        { name: 'description', content: 'noindex' },
+      ],
+    },
     data() {
       return {
         resumes: [],
@@ -789,7 +795,7 @@
     methods: {
       goToCreateJob() {
         // Used for reopening unfinished job
-        this.$router.push(`/createjob/${this.jobToPost}`);
+        this.$router.push(`/jobs/create/${this.jobToPost}`);
       },
       isJobExpired(job) {
         if (!job.date) {
