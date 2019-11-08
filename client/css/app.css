@@ -1333,14 +1333,6 @@ To see the bug, simply comment out the next 3 styles.*/
   padding: 0 0 0 10px;
 }
 
-.next_job_text_field.v-text-field.v-text-field--solo > .v-input__control{
-  min-height: 48px;
-}
-
-.next_job_text_field.v-text-field.v-text-field--enclosed > .v-input__control > .v-input__slot{
-  margin-bottom: 0px;
-}
-
 /*.search_bar_text_field .application--light .input-group:not(.input-group--error):not(.input-group--disabled) .input-group--selection-controls label, .input-group--text-field:not(.input-group--error):not(.input-group--disabled) label, .radio-group:not(.input-group--error):not(.input-group--disabled) label, .radio-group:not(.input-group--error):not(.input-group--disabled) i, .v-input:not(.input-group--error):not(.v-input--is-disabled) label, .v-input:not(.input-group--error):not(.v-input--is-disabled) i{
   display: none;
 }*/

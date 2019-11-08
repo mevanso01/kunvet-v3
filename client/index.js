@@ -14,6 +14,7 @@ import SearchHighlight from '@/components/SearchHighlight';
 import KButton from '@/components/general/KButton';
 import KTextField from '@/components/general/KTextField';
 import KDropdownList from '@/components/general/KDropdownList';
+import homePageTextField from '@/components/general/homePageTextField';
 
 import '@/options/axios';
 import '@/options/googleMaps';
@@ -46,6 +47,7 @@ Vue.use(InstantSearch);
 Vue.component('highlight', SearchHighlight);
 Vue.component('k-btn', KButton);
 Vue.component('k-text-field', KTextField);
+Vue.component('home-text-field', homePageTextField);
 Vue.component('k-dropdown', KDropdownList);
 
 const apolloProvider = new VueApollo({
@@ -84,6 +86,11 @@ const router = new VueRouter({
     },
     {
       path: '/sign-up/:stage',
+      component: () => import(/* webpackChunkName: "auth" */ '@/pages/SignUp'),
+      props: true,
+    },
+    {
+      path: '/signup/:stage/:fname/:lname/:email/:password',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/SignUp'),
       props: true,
     },
