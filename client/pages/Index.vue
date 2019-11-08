@@ -1386,6 +1386,7 @@ import locations from '@/constants/locations';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import 'intersection-observer';
 import Scrollama from 'vue-scrollama';
+
 Vue.use(VueApollo);
 export default {
   components: {
