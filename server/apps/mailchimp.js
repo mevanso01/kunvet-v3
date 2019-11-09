@@ -39,7 +39,7 @@ router.post('/addMember', async (ctx) => {
     message: 'Failed posting on MailChimp',
   });
   const info = ctx.request.body;
-
+  console.log(info);
   mailchimp.post(`lists/${mcListId}`, {
     members: [{
       email_address: info.email_address,

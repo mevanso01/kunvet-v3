@@ -1,5 +1,5 @@
 const categoryPositionMap = [
-  { 'category': 'no preference',
+  { 'category': 'No preference',
     'positions': ['no preference'] },
   { 'category': 'Business, Finance, Management, HR',
     'positions': ['business planner', 'co-founder', 'entrepreneur', 'event coordinator', 'financial services provider', 'general manager', 'human resources manager', 'human resources specialists', 'investment banker', 'leadership', 'manager', 'mortgage banker', 'project manager', 'real estate agent', 'recruiter', 'shift leader', 'supervisor', 'quality controller'] },
