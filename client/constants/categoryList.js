@@ -1,4 +1,5 @@
 const category = [
+  'No preference',
   'Business, Finance, Management, HR',
   'Marketing, Sales',
   'Services, Food, Hospitality, Lifeguard',
@@ -15,7 +16,6 @@ const category = [
   'Tutor, Teacher, Education',
   'Photography, Film, Video Editing',
   'Volunteer',
-  'Undetermined',
 ];
 
 export default category;

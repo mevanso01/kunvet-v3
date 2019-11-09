@@ -102,7 +102,6 @@ p {
           <k-btn v-if="!ifUseBanner" @click="onClickLater()" style="background-color: white; color: #ff6969; border: 1px solid; border-color: #ff6969; font-weight: bold;">Not Now</k-btn>
           <k-btn v-if="!ifUseBanner" @click="addMemberToMailChimp" style="margin-left: 20px; font-weight: bold;">Active for Free</k-btn>
           <k-btn v-if="ifUseBanner" @click="addMemberToMailChimp" class="signup-button">Active for Free</k-btn>
-          <k-btn @click="addGroupToMailChimp" class="signup-button">Add to mailchimp</k-btn>
         </div>
 
       </v-form>
@@ -261,6 +260,7 @@ export default {
         });
       }
     },
+    /*
     addGroupToMailChimp() {
       var k = 0;
       for (var i = 0; i < this.userData1.length; i++) {
@@ -275,20 +275,22 @@ export default {
           email: this.userData1[i].email,
           tags: tagsToAdd,
         };
-        console.log(postData);
-        axios.post('/mailchimp/addTags', postData).then(() => {
-          console.log('posted on mailchimp');
-          console.log(postData.email_address);
-        }, (error) => {
-          this.$error(error);
-          console.log('An error Occured');
-        });
+        this.addEachTag(postData);
         for (var j = 0; j < 700000000; j++) {
           k += 1;
         }
       }
       console.log(k);
     },
+    addEachTag(postData) {
+      axios.post('/mailchimp/addTags', postData).then(() => {
+        console.log('posted on mailchimp');
+        console.log(postData.email_address);
+      }, (error) => {
+        this.$error(error);
+        console.log('An error Occured');
+      });
+    }, */
     categoryToTags() {
       console.log(category);
       var tempList = [];

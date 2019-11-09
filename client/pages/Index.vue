@@ -1492,14 +1492,14 @@ export default {
     searchDestination() {
       if (this.query) {
         return {
-          path: '/search',
+          path: '/jobs/search',
           query: {
             q: this.query,
           },
         };
       }
       return {
-        path: '/search',
+        path: '/jobs/search',
       };
     },
     filteredAvailablePositionsObj() {

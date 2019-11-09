@@ -1,4 +1,6 @@
 const categoryPositionMap = [
+  { 'category': 'no preference',
+    'positions': ['no preference'] },
   { 'category': 'Business, Finance, Management, HR',
     'positions': ['business planner', 'co-founder', 'entrepreneur', 'event coordinator', 'financial services provider', 'general manager', 'human resources manager', 'human resources specialists', 'investment banker', 'leadership', 'manager', 'mortgage banker', 'project manager', 'real estate agent', 'recruiter', 'shift leader', 'supervisor', 'quality controller'] },
   { 'category': 'Marketing, Sales',
@@ -31,14 +33,6 @@ const categoryPositionMap = [
     'positions': ['film editor', 'video editing', 'photographer'] },
   { 'category': 'Volunteer',
     'positions': ['volunteer'] },
-  { 'category': 'Undetermined',
-    'positions': ['musician', 'researcher'] },
-  { 'category': 'test1',
-    'positions': ['apple', 'banana'] },
-  { 'category': 'test2',
-    'positions': ['apple', 'orange'] },
-  { 'category': 'test3',
-    'positions': ['pear', 'juice'] },
 ];
 
 export default categoryPositionMap;
