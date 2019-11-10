@@ -7,8 +7,8 @@ import KoaRouter from 'koa-router';
 
 import Config from 'config';
 
-const mcListId = Config.get('mailchimp.mcListId');
-const mcAPIKey = Config.get('mailchimp.mcAPIKey');
+// const mcListId = Config.get('mailchimp.mcListId');
+// const mcAPIKey = Config.get('mailchimp.mcAPIKey');
 
 const bodyParser = require('koa-bodyparser');
 
