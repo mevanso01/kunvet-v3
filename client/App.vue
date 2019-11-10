@@ -125,7 +125,7 @@
             <router-link to="/about"><p style="color: #b3b3b3">About Us</p></router-link>
           </v-flex>
           <v-flex>
-            <router-link to="/career"><p style="color: #b3b3b3">Join Us</p></router-link>
+            <router-link to="/careers"><p style="color: #b3b3b3">Join Us</p></router-link>
           </v-flex>
           <v-flex>
             <router-link to="/contact"><p style="color: #b3b3b3">Contact Us</p></router-link>

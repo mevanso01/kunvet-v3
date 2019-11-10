@@ -1389,6 +1389,12 @@ import Scrollama from 'vue-scrollama';
 
 Vue.use(VueApollo);
 export default {
+  metaInfo: {
+    title: 'Kunvet: All the New Jobs Hiring Near Me',
+    meta: [
+      { name: 'description', content: 'Say goodbye to stale, unrelated or fake jobs! Say hello to fresh and relevant jobs hiring near you-from real employers who are looking to hire immediately.' },
+    ],
+  },
   components: {
     Scrollama,
     PromoTextContainer,

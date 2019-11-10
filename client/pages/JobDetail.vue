@@ -915,11 +915,15 @@
       var date = new Date(Date.now() - 50000); // some mock date
       var milliseconds = date.getTime();
       str += timeAgo.format(milliseconds);
-      str += '. ';
-      str += this.findJob.title;
-      str += ': ';
-      var temp = this.findJob.description.replace(/<\/?[^>]+>/ig, '');
-      str += temp.match(/^(\w+\s?){1,12}/ig);
+      if (this.findJob.description) {
+        str += '. ';
+        str += this.findJob.title;
+        str += ': ';
+      }
+      if (this.findJob.description) {
+        var temp = this.findJob.description.replace(/<\/?[^>]+>/ig, '');
+        str += temp.match(/^(\w+\s?){1,12}/ig);
+      }
       str += '… See this and similar jobs on Kunvet.';
       console.log(str);
       return {
@@ -1073,7 +1077,7 @@
           } else {
             this.salary = this.findJob.pay_type;
           }
-          var parsed = this.parseAddress(this.findJob.address);
+          // var parsed = this.parseAddress(this.findJob.address);
           this.jsonld = {
             '@context': 'https://schema.org',
             '@type': 'JobPosting',
@@ -1097,12 +1101,8 @@
                 'longitude': this.findJob.longitude,
               },
               'address': {
-                '@type': 'PostalAddress',
-                'addressCountry': 'USA',
-                'addressLocality': parsed.city,
-                'addressRegion': parsed.state,
-                'postalCode': parsed.zip,
-                'streetAddress': parsed.street,
+                '@type': 'text',
+                'address': this.findJob.address,
               },
             },
             'validThrough': this.findJob.expiry_date,

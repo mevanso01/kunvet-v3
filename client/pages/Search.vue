@@ -492,13 +492,13 @@ section.search {
       </div>
     </div>
 
-    <v-dialog v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" v-model="dialogs.showJobAlertForm" max-width="500px">
+    <!-- <v-dialog v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" v-model="dialogs.showJobAlertForm" max-width="500px">
       <v-card>
         <v-card-text style="margin: 0px; padding: 0px;">
           <NewsletterForm @close="onClickChild" @post="onPost"/>
         </v-card-text>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-container>
 </template>
 <script>
