@@ -7,7 +7,8 @@ import KoaRouter from 'koa-router';
 
 import Config from 'config';
 
-// const mcListId = Config.get('mailchimp.mcListId');
+const mcListId = Config.get('mailchimp.mailchimp.mcListId');
+const mailchimp = Config.get('mailchimp.mailchimp');
 // const mcAPIKey = Config.get('mailchimp.mcAPIKey');
 
 const bodyParser = require('koa-bodyparser');
@@ -41,7 +42,9 @@ router.post('/addMember', async (ctx) => {
   });
   const info = ctx.request.body;
   console.log(info);
-  mailchimp.post(`lists/${mcListId}`, {
+  console.log(mcListId);
+  console.log(mailchimp);
+  /* mailchimp.post(`lists/${mcListId}`, {
     members: [{
       email_address: info.email_address,
       status: 'subscribed',
@@ -82,7 +85,7 @@ router.post('/addMember', async (ctx) => {
   ctx.body = JSON.stringify({
     success: true,
     message: 'Posted on MailChimp',
-  });
+  }); */
 });
 
 router.post('/deleteTags', async (ctx) => {

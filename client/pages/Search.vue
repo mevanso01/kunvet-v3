@@ -555,7 +555,7 @@ export default {
     window.onresize = () => {
       this.setSearchWidth();
     };
-    window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
+    // window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
   },
   data() {
     return {
