@@ -64,7 +64,8 @@ module.exports = {
     merchantId: Credentials.braintree.merchantId,
   },
   mailchimp: {
-    mailchimp: Credentials.mailchimp,
+    mcListId: Credentials.mailchimp,
+    mcAPIKey: Credentials.mailchimp.mcAPIKey,
   },
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
