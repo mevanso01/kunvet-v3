@@ -44,7 +44,7 @@ router.post('/addMember', async (ctx) => {
   console.log(info);
   console.log(mcListId);
   console.log(mc);
-  /* mailchimp.post(`lists/${mcListId}`, {
+  mailchimp.post(`lists/${mcListId}`, {
     members: [{
       email_address: info.email_address,
       status: 'subscribed',
@@ -85,7 +85,7 @@ router.post('/addMember', async (ctx) => {
   ctx.body = JSON.stringify({
     success: true,
     message: 'Posted on MailChimp',
-  }); */
+  });
 });
 
 router.post('/deleteTags', async (ctx) => {
