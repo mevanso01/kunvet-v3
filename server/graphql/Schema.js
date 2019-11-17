@@ -123,7 +123,7 @@ async function sendNewApplicationNotification(req, next) {
       text: job._id, // Important: change code in applicants.vue before removing
       job_title: job.title,
       count: 0,
-      route: '/applicants',
+      route: '/jobs/applicants',
       notification_type: 'application',
       date: Date.now(),
     });

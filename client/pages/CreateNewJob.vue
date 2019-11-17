@@ -178,7 +178,7 @@
             Every time an applicant applies, their information and resume will be sent to your account's email.
           </p>
           <p>
-            You can also view your applicants through Kunvet itself. Your applicants will be organized under the <router-link to="/applicants">Applicants</router-link> page.
+            You can also view your applicants through Kunvet itself. Your applicants will be organized under the <router-link to="/jobs/applicants">Applicants</router-link> page.
           </p>
           <p>
             If you prefer recieving your applicants through Google Forms, scroll down to "Application options" and check the Google Forms checkbox.
@@ -551,7 +551,7 @@
 
         <v-alert type="success" dismissible v-model="successAlert" style="position: fixed; bottom: 0; z-index: 5;">
           <p style="color: #fff; margin-bottom: 0; min-width: 250px;">
-            Saved! <router-link :to="`/job/${id}`">View job</router-link>
+            Saved! <router-link :to="`/jobs/detail/${id}`">View job</router-link>
           </p>
         </v-alert>
 
@@ -630,6 +630,12 @@ const findJobsQuery = gql`
 `;
 
 export default {
+  metaInfo: {
+    title: 'Post a Job | Kunvet',
+    meta: [
+      { name: 'description', content: 'noindex' },
+    ],
+  },
   components: {
     VueEditor,
     PicUploader,
@@ -920,7 +926,7 @@ export default {
           this.loading = false;
           const recordId = res.data.updateJob.recordId;
           if (viewJob) {
-            this.$router.push(`/job/${recordId}`);
+            this.$router.push(`/jobs/detail/${recordId}`);
           } else {
             this.id = recordId;
             this.successAlert = true;
@@ -995,11 +1001,11 @@ export default {
           this.loading = false;
           const recordId = res.data.createJob.recordId;
           if (!viewJob) {
-            this.$router.push({ path: `/createnewjob/${recordId}` });
+            this.$router.push({ path: `/jobs/createnew/${recordId}` });
             this.id = recordId;
             this.successAlert = true;
           } else {
-            this.$router.push(`/job/${recordId}`);
+            this.$router.push(`/jobs/detail/${recordId}`);
           }
         }).catch((err) => {
           this.loading = false;

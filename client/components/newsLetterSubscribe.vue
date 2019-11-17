@@ -63,6 +63,13 @@ p {
    border-radius: 0;
  }
 
+.reminder-dropdown {
+  font-size:10px;
+  color: red;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
 </style>
 
 <template>
@@ -74,10 +81,10 @@ p {
     <k-dropdown
       style="margin-bottom: 4px"
       title="Job Preference"
-      :tag_list="availablePositions"
-      v-on:list-changed="position_tags = $event">
+      :tag_list="category"
+      v-on:list-changed="dropdownListChange">
     </k-dropdown>
-
+    <p v-if="!ifSelectedCategory" class = "reminder-dropdown">Please select at least one field</p>
       <v-form ref="form">
         <div v-if="!loggedIn">
           <k-text-field label="FIRST NAME"
@@ -109,7 +116,11 @@ p {
 <script>
 import axios from 'axios';
 import positions from '@/constants/positions';
+import categoryPositionMap from '@/constants/categoryPositionMap';
+import category from '@/constants/categoryList';
 import userDataProvider from '@/userDataProvider';
+import userdata from '@/constants/userdata';
+import userdata1 from '@/constants/userdata1';
 
 export default {
   props: {
@@ -127,12 +138,18 @@ export default {
       fname: '',
       email: '',
       state: 'initial',
+      category_tags: [],
       position_tags: [],
       availablePositions: positions,
+      category: category,
+      categoryPositionMap: categoryPositionMap,
+      userData: userdata,
+      userData1: userdata1,
       loggedIn: true,
       userdata: null,
       useBanner: false,
       success: false,
+      ifSelectedCategory: true,
       application_bool: false,
       jobExpired_bool: false,
       preferences: null,
@@ -172,14 +189,16 @@ export default {
       this.$emit('close', 'later');
     },
     addMemberToMailChimp() {
-      if (!this.$refs.form.validate()) {
+      if (!this.$refs.form.validate() || this.category_tags.length < 1) {
+        if (this.category_tags.length < 1) { this.ifSelectedCategory = false; }
         this.$debug('Failed validation');
         return;
       }
+
       var postData = {
         email_address: this.email,
         fname: this.fname,
-        tags: this.position_tags,
+        tags: this.categoryToTags(),
         status: 'subscribed',
       };
       console.log(postData);
@@ -239,6 +258,60 @@ export default {
         setTimeout(() => {
           this.$emit('post', 'finished');
         });
+      }
+    },
+    /*
+    addGroupToMailChimp() {
+      var k = 0;
+      for (var i = 0; i < this.userData1.length; i++) {
+        var tagsToAdd;
+        console.log(this.userData1[i].email);
+        if (this.userData1[i].tags.length === 0) {
+          tagsToAdd = ['no preference'];
+        } else {
+          tagsToAdd = this.userData1[i].tags;
+        }
+        var postData = {
+          email: this.userData1[i].email,
+          tags: tagsToAdd,
+        };
+        this.addEachTag(postData);
+        for (var j = 0; j < 700000000; j++) {
+          k += 1;
+        }
+      }
+      console.log(k);
+    },
+    addEachTag(postData) {
+      axios.post('/mailchimp/addTags', postData).then(() => {
+        console.log('posted on mailchimp');
+        console.log(postData.email_address);
+      }, (error) => {
+        this.$error(error);
+        console.log('An error Occured');
+      });
+    }, */
+    categoryToTags() {
+      console.log(category);
+      var tempList = [];
+      for (var i = 0; i < this.category_tags.length; i++) {
+        for (var j = 0; j < this.categoryPositionMap.length; j++) {
+          if (this.category_tags[i] === this.categoryPositionMap[j].category) {
+            tempList = tempList.concat(this.categoryPositionMap[j].positions);
+            console.log(tempList);
+          }
+        }
+      }
+      var toSet = new Set(tempList);
+      var retArray = Array.from(toSet);
+      console.log(retArray);
+      return retArray;
+    },
+    dropdownListChange(value) {
+      console.log('called');
+      this.category_tags = value;
+      if (this.category_tags.length > 0) {
+        this.ifSelectedCategory = true;
       }
     },
   },

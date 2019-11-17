@@ -28,7 +28,7 @@
         </v-flex>
       </v-layout>
 
-    <router-link :to="'/job/'+jobId">
+    <router-link :to="'/jobs/detail/'+jobId">
       <v-layout>
         <v-flex xs12 style="padding-top: 0px;">
           <div><h3 class="post-title">

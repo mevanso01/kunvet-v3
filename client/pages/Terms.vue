@@ -77,3 +77,10 @@
         </div>
     </v-container>
 </template>
+<script>
+  export default {
+    metaInfo: {
+      title: 'Terms of Use | Kunvet',
+    },
+  };
+</script>

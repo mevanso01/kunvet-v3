@@ -175,9 +175,9 @@ const wpconf = {
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
-      meta: {
+      /* meta: {
         description: 'Find the latest local jobs for students like you on Kunvet!',
-      },
+      }, */
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
     }),

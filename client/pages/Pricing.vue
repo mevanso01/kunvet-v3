@@ -92,7 +92,7 @@
   padding-top: 44px;
   font-weight: bold;
   padding-left: 46px;
-  font-family: proxima-nova, sans-serif; 
+  font-family: proxima-nova, sans-serif;
   font-size: 24px;
 }
 
@@ -106,9 +106,9 @@
 }
 
 .card_title_img{
-  height:36px; 
-  margin-top: -18px; 
-  margin-right:44px; 
+  height:36px;
+  margin-top: -18px;
+  margin-right:44px;
   float: right;
 }
 
@@ -127,8 +127,8 @@
 }
 
 .card_list_icon{
-  padding-right: 14px; 
-  line-height: 22px; 
+  padding-right: 14px;
+  line-height: 22px;
   font-weight: bolder;
 }
 
@@ -227,7 +227,7 @@
       <h2 class="card_title">Personal</h2>
       <p class="card_title_btm"> Perfect for personal hiring. </p>
       <img class="card_title_img" :src="svgs.personal">
-      <router-link to="/signup/individual"><k-btn class="card_get_account">Get Personal Account</k-btn></router-link>
+      <router-link to="/sign-up/individual"><k-btn class="card_get_account">Get Personal Account</k-btn></router-link>
       <p class="card_list" style="padding-top: 48px;"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>$5 per job posting</p>
       <p class="card_list"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>Posting stays active for 60 days</p>
       <p class="card_list"><v-icon color="black" size="28px" class="card_list_icon">info_outline</v-icon>Basic Job Posting</p>
@@ -239,7 +239,7 @@
       <h2 class="card_title">Business</h2>
       <p class="card_title_btm"> Perfect for startup & small organization. </p>
       <img class="card_title_img" :src="svgs.business">
-      <router-link to="/signup/business"><k-btn class="card_get_account">Get Business Account</k-btn></router-link>
+      <router-link to="/sign-up/business"><k-btn class="card_get_account">Get Business Account</k-btn></router-link>
       <strike style="color:red;"><p class="card_list" style="padding-top: 24px; color: black; padding-left: 86px;">$15</p></strike>
       <p class="card_list" style="padding-top: 0px;"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>$10 per job posting<span style="font-weight: bold; color: #FF6766;"> - Early Bird Price!</span></p>
       <p class="card_list"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>Posting stays active for 60 days</p>
@@ -257,7 +257,7 @@
       <h2 class="card_title">Standard</h2>
       <p class="card_title_btm"> A simple account for job applicants. </p>
       <img class="card_title_img" :src="svgs.standard">
-      <router-link to="/signup/student"><k-btn class="card_get_account">Get Standard Account</k-btn></router-link>
+      <router-link to="/sign-up/student"><k-btn class="card_get_account">Get Standard Account</k-btn></router-link>
       <p class="card_list" style="padding-top: 48px;"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>Free</p>
       <p class="card_list"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>Access to All Jobs</p>
       <p class="card_list"><v-icon color="black" size="28px" class="card_list_icon">done</v-icon>Receive Notification of Application Status</p>
