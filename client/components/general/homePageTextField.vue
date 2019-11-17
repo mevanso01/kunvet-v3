@@ -31,6 +31,7 @@
   .v-label{
     font-size: 16px;
     color: #808080 !important;
+    font-family: proxima-nova, sans-serif; 
     font-weight: 300;
     line-height: 120%;
     letter-spacing: 0.12em;
@@ -49,6 +50,7 @@
     margin-bottom: 6px;
     padding: 0;
     caret-color: #3c3c3c;
+    font-family: proxima-nova, sans-serif; 
   }
 }
 .home-text-field.has-label {
@@ -62,6 +64,7 @@
   .v-messages.error--text{
     color: #ff6969 !important;
     letter-spacing: 0.12em;
+    font-family: proxima-nova, sans-serif; 
   }
 }
 .home-text-field.v-text-field.v-text-field--enclosed.error--text {
@@ -69,6 +72,7 @@
   background-color: #ffe2e2;
   color: #808080 !important;
   caret-color: #3c3c3c !important;
+  font-family: proxima-nova, sans-serif; 
 }
 
 </style>
