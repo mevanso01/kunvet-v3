@@ -81,7 +81,7 @@ export default {
           const res = data.data.findApplicant;
           // const isEmployer = await this.isEmployer(res.job_id);
           // Only employers that made this job should be able to view the applicant.
-          // if (!isEmployer) this.$router.push('/applicants');
+          // if (!isEmployer) this.$router.push('/jobs/applicants');
           this.rawResumes = res.resumes;
           this.loadProfilePic(res.user_id);
           if (res.status === 'submitted') {

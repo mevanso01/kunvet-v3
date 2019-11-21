@@ -45,7 +45,7 @@
               color="green darken-1" type="success"
               v-model="successAlert"
               transition="slide-x-transition">
-                Password reset successfully. <router-link style="text-decoration: underline" to="/login?redirect=/search">Login</router-link>
+                Password reset successfully. <router-link style="text-decoration: underline" to="/login?redirect=/jobs/search">Login</router-link>
             </v-alert>
           </v-form>
         </v-card>
@@ -66,6 +66,12 @@ import axios from 'axios';
 
 
 export default {
+  metaInfo: {
+    title: 'Forgot Password | Kunvet',
+    meta: [
+      { name: 'description', content: 'Let us help you recover your password for your Kunvet account. Begin by providing the email address associated with your account.' },
+    ],
+  },
   props: ['code'],
   data() {
     return {

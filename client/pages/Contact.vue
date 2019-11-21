@@ -9,3 +9,13 @@
         </div>
     </v-container>
 </template>
+<script>
+  export default {
+    metaInfo: {
+      title: 'Contact Us | Kunvet',
+      meta: [
+        { name: 'description', content: 'Get real help from real people through email. Get a response from us within a few hours. Find the correct email address for the issue you are having.' },
+      ],
+    },
+  };
+</script>

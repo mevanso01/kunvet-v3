@@ -200,6 +200,12 @@
   import userDataProvider from '@/userDataProvider';
 
   export default {
+    metaInfo: {
+      title: 'Account Settings | Kunvet',
+      meta: [
+        { name: 'description', content: 'noindex' },
+      ],
+    },
     props: ['command'],
     data() {
       return {
