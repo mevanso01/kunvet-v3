@@ -175,12 +175,6 @@ import userDataProvider from '@/userDataProvider';
 import SignupComponent from '@/components/SignupComponent';
 
 export default {
-  metaInfo: {
-    title: 'Get an Account | Kunvet',
-    meta: [
-      { name: 'description', content: 'Get an account and start exploring all the new jobs or talents near you.' },
-    ],
-  },
   props: {
     stage: {
       type: String,
@@ -219,7 +213,7 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.path === '/sign-up') {
+      if (to.path === '/signup') {
         this.chosenForm = '';
         this.signupType = '';
       }
@@ -229,8 +223,8 @@ export default {
     chooseSignup(type) {
       this.signupType = type;
       this.chosenForm = 'signup';
-      // this.$router.push(`/sign-up?type=${type}`);
-      this.$router.push(`/sign-up/${type}`);
+      // this.$router.push(`/signup?type=${type}`);
+      this.$router.push(`/signup/${type}`);
     },
     onSuccess() {
       if (this.signupType === 'business') {

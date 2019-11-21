@@ -492,13 +492,13 @@ section.search {
       </div>
     </div>
 
-    <!-- <v-dialog v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" v-model="dialogs.showJobAlertForm" max-width="500px">
+    <v-dialog v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" v-model="dialogs.showJobAlertForm" max-width="500px">
       <v-card>
         <v-card-text style="margin: 0px; padding: 0px;">
           <NewsletterForm @close="onClickChild" @post="onPost"/>
         </v-card-text>
       </v-card>
-    </v-dialog> -->
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -538,9 +538,8 @@ Vue.use(VueApollo);
 
 export default {
   metaInfo: {
-    title: 'Search for Jobs | Kunvet',
     meta: [
-      { name: 'description', content: 'Find all the new jobs hiring near you—from real employers who are looking to hire immediately.' },
+      { name: 'hello' },
     ],
   },
   components: {
@@ -555,7 +554,7 @@ export default {
     window.onresize = () => {
       this.setSearchWidth();
     };
-    // window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
+    window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
   },
   data() {
     return {
@@ -1105,15 +1104,15 @@ export default {
       this.loadingJobs = true;
       if (this.query) {
         this.$router.push({
-          path: '/jobs/search',
+          path: '/search',
           query: {
             q: this.query,
           },
         });
-        this.$setTitle(`${this.query} | Kunvet`);
+        this.$setTitle(`${this.query} - Kunvet`);
       } else {
         this.$router.push({
-          path: '/jobs/search',
+          path: '/search',
         });
         this.$setTitle('Kunvet');
       }
@@ -1179,7 +1178,7 @@ export default {
       this.query = this.$route.query.q;
     } else if (this.query && this.$route.query.q !== this.query) {
       this.$router.push({
-        path: '/jobs/search',
+        path: '/search',
         query: {
           q: this.query,
         },

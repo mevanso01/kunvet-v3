@@ -173,6 +173,11 @@ export default {
       console.log(this.selected_list);
       this.$emit('list-changed', this.selected_list);
     },
+
+  },
+  computed: {
+    buttonStyle() {
+    },
   },
 };
 </script>

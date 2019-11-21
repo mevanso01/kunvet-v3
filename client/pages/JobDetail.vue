@@ -729,7 +729,7 @@
             </v-card-title>
             <div
               style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
-              <k-btn to="/jobs/search">Back to Search</k-btn>
+              <k-btn to="/search">Back to Search</k-btn>
             </div>
             <button class="mobile-show"
                     style="position: relative; left: 50%; transform: translateX(-50%)"
@@ -751,7 +751,7 @@
             </v-card-text>
             <div
               style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
-              <k-btn to="/jobs/search">Back to Search</k-btn>
+              <k-btn to="/search">Back to Search</k-btn>
             </div>
             <button class="mobile-show"
                     style="position: relative; left: 50%; transform: translateX(-50%)"
@@ -798,8 +798,6 @@
   import ApplyBtn from '@/components/general/ApplyBtn';
   import axios from 'axios';
   import StringHelper from '@/utils/StringHelper';
-  import TimeAgo from 'javascript-time-ago';
-  import en from 'javascript-time-ago/locale/en';
 
   export default {
     filters: {
@@ -907,35 +905,10 @@
         return selected;
       },
     },
-    metaInfo () {
-      TimeAgo.addLocale(en);
-      var timeAgo = new TimeAgo('en-US');
-      // `Posted ${timeAgo.format(Date.now() - this.findjob.date)} ${this.findJob.description.substring(0, 30)} ...`
-      var str = 'Posted ';
-      var date = new Date(Date.now() - 50000); // some mock date
-      var milliseconds = date.getTime();
-      str += timeAgo.format(milliseconds);
-      if (this.findJob.description) {
-        str += '. ';
-        str += this.findJob.title;
-        str += ': ';
-      }
-      if (this.findJob.description) {
-        var temp = this.findJob.description.replace(/<\/?[^>]+>/ig, '');
-        str += temp.match(/^(\w+\s?){1,12}/ig);
-      }
-      str += '… See this and similar jobs on Kunvet.';
-      console.log(str);
-      return {
-        meta: [
-          { name: 'description', content: str },
-        ],
-      };
-    },
     methods: {
       urlChange() {
         this.isapplied = true;
-        // this.$router.push(`/jobs/detail/${this.id}/applied=${this.isapplied}`);
+        // this.$router.push(`/job/${this.id}/applied=${this.isapplied}`);
       },
       getColor(info) {
         this.accountColor = info.color;
@@ -1000,7 +973,7 @@
         // called after signup or login, and from openApplyDialog()
         this.loginState = 'resume';
         if (verifSuccess === true) {
-          this.$router.push(`/jobs/detail/${this.id}/signup=true`);
+          this.$router.push(`/job/${this.id}/signup=true`);
         }
         this._getUserData();
       },
@@ -1077,7 +1050,7 @@
           } else {
             this.salary = this.findJob.pay_type;
           }
-          // var parsed = this.parseAddress(this.findJob.address);
+          var parsed = this.parseAddress(this.findJob.address);
           this.jsonld = {
             '@context': 'https://schema.org',
             '@type': 'JobPosting',
@@ -1090,6 +1063,7 @@
             'datePosted': this.findJob.date,
             'description': this.findJob.description.replace(/<\/?[^>]+>/ig, ''),
             'responsibilities': this.findJob.responsibilities,
+            'hiringOrganization': this.findJob.posted_by,
             'educationRequirements': this.findJob.education,
             'employmentType': this.findJob.type,
             'title': this.findJob.title,
@@ -1101,15 +1075,16 @@
                 'longitude': this.findJob.longitude,
               },
               'address': {
-                '@type': 'text',
-                'address': this.findJob.address,
+                '@type': 'PostalAddress',
+                'addressCountry': 'USA',
+                'addressLocality': parsed.city,
+                'addressRegion': parsed.state,
+                'postalCode': parsed.zip,
+                'streetAddress': parsed.street,
               },
             },
             'validThrough': this.findJob.expiry_date,
           };
-          if (this.findJob.business_id != null) {
-            this.jsonld.hiringOrganization = this.findJob.posted_by;
-          }
           console.log(this.findJob);
           this.fetchProfilePic();
         });
@@ -1505,7 +1480,7 @@
     activated() {
       this.resetData();
       this.getData();
-      // this.getApplication();
+      this.getApplication();
       this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {
         this.stickToBottom = true;

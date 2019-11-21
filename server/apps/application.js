@@ -113,7 +113,7 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
       user.notifications.push({
         text: `Your application was ${ctx.params.status}`,
         job_title: 'N/A',
-        route: '/jobs/applied',
+        route: '/appliedjobs',
         count: 0,
         notification_type: 'application',
         date: Date.now(),

@@ -155,7 +155,7 @@
         <div v-else class="main-cont-large">
           <p style="text-align: center;">
             <strong>You have no active jobs.</strong><br><br>
-            <router-link to="/jobs/create" style="font-weight: bold;">Click here</router-link> create a new job, or go to the <router-link to="/jobs/posted" style="font-weight: bold;">jobs page</router-link> to re-post a past job.
+            <router-link to="/createjob" style="font-weight: bold;">Click here</router-link> create a new job, or go to the <router-link to="/myjobs" style="font-weight: bold;">jobs page</router-link> to re-post a past job.
           </p>
         </div>
       </v-flex>
@@ -179,9 +179,9 @@
           </div>
 
           <div v-if="applicants.length > 0" v-for="item in getApplicantsFromJobs(job._id)" class="app_cards">
-
+            
             <appCard :item="item" @openSideResume="openSideResume(item)"></appCard>
-
+                        
           </div>
         </div>
       </template>
@@ -341,14 +341,8 @@
   import velip from '@/assets/elipses.svg';
   import resume from '@/assets/resume.svg';
   import applicationCard from '@/components/ApplicationCard';
-
+  
   export default {
-    metaInfo: {
-      title: 'Applicants | Kunvet',
-      meta: [
-        { name: 'description', content: 'noindex' },
-      ],
-    },
     created() {
       if (this.$store.state.acct === 0) {
         this.$router.push('/login');

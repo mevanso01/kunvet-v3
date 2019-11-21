@@ -61,12 +61,12 @@
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
                 <p>Posted <timeago :since="job.date"/></p>
-                <router-link :to="`/jobs/detail/${job._id}`">
+                <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
                 <v-layout>
                   <v-flex xs12 sm12 md4>
-                    <router-link :to="`/jobs/create/${job._id}`" style="margin-right: 10px;">
+                    <router-link :to="`/createjob/${job._id}`" style="margin-right: 10px;">
                       <k-btn color="#808080" small>
                         Edit
                       </k-btn>
@@ -89,7 +89,7 @@
                   <v-flex xs6 style="padding: 0px">
                     <p>Job Status</p>
                     <h2 style="color: orange; padding-bottom: 10px;">Unposted</h2>
-                    <router-link :to="`/jobs/create/${job._id}`">
+                    <router-link :to="`/createjob/${job._id}`">
                       <k-btn color="orange" small>
                         Post Job
                       </k-btn>
@@ -118,12 +118,12 @@
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
                 <p>Posted <timeago :since="job.date"/></p>
-                <router-link :to="`/jobs/detail/${job._id}`">
+                <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
                 <v-layout>
                 <v-flex xs12 sm12 md4>
-                  <router-link :to="`/jobs/edit/${job._id}`" style="margin-right: 10px;">
+                  <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
                     <k-btn color="grey" small>
                       Edit
                     </k-btn>
@@ -140,7 +140,7 @@
                   <v-flex xs6  style="padding: 0px">
                     <p>Applicants</p>
                     <h2 style="padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
-                    <router-link :to="`/jobs/applicants`">
+                    <router-link :to="`/applicants`">
                       <k-btn v-if="getApplicantsFromJobs(job._id) > 0" small>
                         View Applicants
                       </k-btn>
@@ -181,12 +181,12 @@
             <v-layout row wrap class="new-applicant-card">
               <v-flex xs12 sm6 md7>
                 <p>Posted <timeago :since="job.date"/></p>
-                <router-link :to="`/jobs/detail/${job._id}`">
+                <router-link :to="`/job/${job._id}`">
                   <h2 class="list-post-title">{{ job.title }}</h2>
                 </router-link>
                 <v-layout>
                   <v-flex xs12 sm12 md4>
-                    <router-link :to="`/jobs/edit/${job._id}`" style="margin-right: 10px;">
+                    <router-link :to="`/editjob/${job._id}`" style="margin-right: 10px;">
                       <k-btn color="grey" small>
                         Edit
                       </k-btn>
@@ -202,7 +202,7 @@
                   <v-flex xs6 style="padding: 0px">
                     <p>Applicants</p>
                     <h2 style="padding-bottom: 10px;">{{getApplicantsFromJobs(job._id)}}</h2>
-                    <router-link :to="`/jobs/applicants`">
+                    <router-link :to="`/applicants`">
                       <k-btn color="grey" v-if="getApplicantsFromJobs(job._id) >
                        0" small>
                         View Applicants
@@ -236,7 +236,7 @@
       <div v-else>
         <div class="main-cont-large" style="text-align: center;">
           <p>You have not posted any jobs yet,
-          <router-link :to="`/jobs/create`" style="font-weight: bold;">
+          <router-link :to="`/createjob`" style="font-weight: bold;">
             click here
           </router-link> to post one.</p>
         </div>
@@ -313,12 +313,6 @@
     }`;
 
   export default {
-    metaInfo: {
-      title: 'Posted Jobs | Kunvet',
-      meta: [
-        { name: 'description', content: 'noindex' },
-      ],
-    },
     activated() {
       if (this.$store.state.acct === 0) {
         this.$router.push('/login');

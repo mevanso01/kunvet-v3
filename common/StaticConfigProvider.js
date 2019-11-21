@@ -9,7 +9,6 @@ if (typeof process !== 'undefined') {
   // Server
   if (process.env.KUNVET_CONFIG) {
     config = JSON.parse(process.env.KUNVET_CONFIG);
-    console.log(config);
     console.log('Config overridden by environment variable');
   }
 }

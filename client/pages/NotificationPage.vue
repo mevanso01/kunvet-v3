@@ -9,12 +9,6 @@
 import Notifications from '@/components/Notifications';
 
 export default {
-  metaInfo: {
-    title: 'Notifications | Kunvet',
-    meta: [
-      { name: 'description', content: 'noindex' },
-    ],
-  },
   data() {
     return {
     };

@@ -4,13 +4,11 @@ import Koa from 'koa';
 import KoaRouter from 'koa-router';
 
 // After setting up the API Keys in Config/credentials, uncomment these lines.
-
+/*
 import Config from 'config';
-
-const mcListId = Config.get('mailchimp.mailchimp.mcListId');
-const mc = Config.get('mailchimp.mailchimp');
-// const mcAPIKey = Config.get('mailchimp.mcAPIKey');
-
+const mcListId = Config.get('mailchimp.mcListId');
+const mcAPIKey = Config.get('mailchimp.mcAPIKey');
+*/
 const bodyParser = require('koa-bodyparser');
 
 const md5 = require('js-md5');
@@ -21,18 +19,9 @@ const Mailchimp = require('mailchimp-api-v3');
 
 app.use(bodyParser());
 
-// below is Bill's testing ListID
-// const mcListId = 'a96ea02853';
-// below is Bill's current ListID
-//const mcListId = 'a2730eab51';
-// below is Jenny's testing ListID
-// const mcListId = '82b364d072';
-// below is temporary ListID to add users to MailChimp
-// const mcListId = '46e582ba53';
-// Below is Bill's Mailchimp API Key
-//const mcAPIKey = 'c5be2bf312c2d1f9c59a0af7edf4dc19-us18';
-// Below is Jenny's Mailchimp API Key
-const mcAPIKey = '93cdf81520d8a2d25b60a78ad0dbcdda-us3';
+const mcListId = 'a96ea02853';
+// My Mailchimp API Key
+const mcAPIKey = 'c5be2bf312c2d1f9c59a0af7edf4dc19-us18';
 const mailchimp = new Mailchimp(mcAPIKey);
 
 router.post('/addMember', async (ctx) => {
@@ -41,9 +30,7 @@ router.post('/addMember', async (ctx) => {
     message: 'Failed posting on MailChimp',
   });
   const info = ctx.request.body;
-  console.log(info);
-  console.log(mcListId);
-  console.log(mc);
+
   mailchimp.post(`lists/${mcListId}`, {
     members: [{
       email_address: info.email_address,
@@ -172,7 +159,6 @@ router.post('/addTags', async (ctx) => {
       console.log('Error adding new subscriber to MC', m.errors);
     }
     segments = m.segments;
-    console.log(m.total_items);
     for (var i = 0; i < m.total_items; i++) {
       for (var j = 0; j < templist.length; j++) {
         if (templist[j] === segments[i].name) {
@@ -182,8 +168,6 @@ router.post('/addTags', async (ctx) => {
           }).then(mes => {
             if (mes.errors) {
               console.log('Error adding the Tags', mes.errors);
-            } else {
-              console.log('Successfully added', segments[i]);
             }
           }).catch(err => {
             console.warn('Failed reading from mailchimp', err);

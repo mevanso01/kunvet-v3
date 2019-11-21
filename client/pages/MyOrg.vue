@@ -240,7 +240,7 @@
                 />
                 <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/jobs/create">
+                  <router-link to="/createjob">
                     <k-btn>
                       Post a Job
                     </k-btn>
@@ -391,7 +391,7 @@
     methods: {
       goToCreateJob() {
         // Used for reopening unfinished job
-        this.$router.push(`/jobs/create/${this.jobToPost}`);
+        this.$router.push(`/createjob/${this.jobToPost}`);
       },
       logout() {
         App.methods.logout();

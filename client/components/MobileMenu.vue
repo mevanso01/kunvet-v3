@@ -34,12 +34,12 @@
         openSubitem: '',
         dmenuItems: [
           { title: 'User\'s Name', href: '/account', isTop: true },
-          { title: 'Search', href: '/jobs/search' },
+          { title: 'Search', href: '/search' },
           {
             title: 'My Jobs',
             subItems: [
-              { title: 'Saved Jobs', href: '/jobs/saved' },
-              { title: 'Applied Jobs', href: '/jobs/applied' },
+              { title: 'Saved Jobs', href: '/savedjobs' },
+              { title: 'Applied Jobs', href: '/appliedjobs' },
             ],
           },
           { title: 'Notifications', href: '/account' },
