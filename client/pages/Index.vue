@@ -942,6 +942,7 @@
   align-items: center;
   justify-content: center;
 }
+
 </style>
 
 <template>
@@ -1033,10 +1034,10 @@
           <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
         </div>
       </div>
-    <!-- Scrollama starts here -->
+      <!-- Scrollama starts here -->
       <div class="student_testimonials">
         <v-carousel v-model="model" class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
-          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <div class="bio_img_background" style="background: linear-gradient(to bottom right, #8ab4ff, #86a8e7, #7f7fd5);">
                 <img class="bio_img" :src="pngs.person1"/>
@@ -1057,7 +1058,7 @@
               </div>
             </div>
           </v-carousel-item>
-          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <div class="bio_img_background" style="background: linear-gradient(to bottom right, #fbc2eb, #a6c1ee);">
                 <img class="bio_img" :src="pngs.person2"/>
@@ -1077,7 +1078,7 @@
               </div>
             </div>
           </v-carousel-item>
-          <v-carousel-item reverse-transition="fade-transition" transition="fade-transition">
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
               <div class="bio_img_background" style="background: linear-gradient(to bottom right, #ffb88c, #ed4264);">
                 <img class="bio_img" :src="pngs.person3"/>
@@ -1116,13 +1117,13 @@
                   <router-link to="terms" target="_blank">Terms and Conditions</router-link></span>.</p>
               </div> -->
               <img class="next_job_pic" :src="pngs.nextJob" alt="Home page form image">
-              <SignupComponent type="student" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess"/>
+              <SignupComponent style="width: 440px;" type="student" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess"/>
         </div>
       </div>
       <div class="looking_div">
         <div class="looking_text_div">
           <h2 class="looking_header">Looking to Hire?<br>You are at the Right Place!</h2>
-          <p class="looking_text">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</p>
+          <div class="looking_text" style="margin: 0 auto;">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</div>
           <router-link to="/choose"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>
@@ -1198,7 +1199,7 @@
       </div>
       <div class="student_testimonials">
         <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
-          <v-carousel-item class="testing_slide_transition">
+          <v-carousel-item class=" ">
             <div class="slide_info">
               <h2 class="test_title">Kunvet Really Helps.</h2>
               <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
@@ -1213,7 +1214,7 @@
             </div>
             <div style="height: 122px;"/>
           </v-carousel-item>
-          <v-carousel-item class="testing_slide_transition">
+          <v-carousel-item class="testing_slide_transition" >
             <div class="slide_info">
               <h2 class="test_title">Kunvet Really Helps.</h2>
               <p class="quote">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely

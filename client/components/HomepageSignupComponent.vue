@@ -84,7 +84,16 @@ h1 {
   margin-bottom: 8px;
   font-family: proxima-nova, sans-serif; 
 }
-
+.error_text{
+  margin-top: 75%;
+  font-size: 22px;
+  font-weight: 300;
+  color: #3c3c3c;
+  line-height: 150%;
+  letter-spacing: 0;
+  margin-bottom: 40px;
+  font-family: proxima-nova, sans-serif;
+}
 </style>
 
 <template>
@@ -101,17 +110,21 @@ h1 {
             <home-text-field required v-model="email" :rules="emailRules" label="Email" class="next_job_text_field"/>
             <home-text-field required v-model="password" toggleVisibility :rules="passwordRules" label="Password" class="next_job_text_field" style="margin-bottom: 0px;"/>
         </v-form>
-        <k-btn @click="signup" class="next_job_btn"><span class="next_job_btn_text">
+        <div v-if="loading" class="next_job_btn" style="cursor: disabled !important;">
+          <v-progress-circular style="margin-top: 0px;" indeterminate :size="26" :width="3" color="white darken-1"/>
+        </div>
+        <k-btn v-else @click="signup" class="next_job_btn"><span class="next_job_btn_text">
             Create Free Applicant Account</span></k-btn>
+
         <p class="next_job_btn_undertext">I have read and agreed to the <span class="next_job_btn_undertext_terms">
             <router-link to="terms" target="_blank">Terms and Conditions</router-link></span>.</p>
         </div>
     </div>
     <div v-show="state == 'error'" class="container">
-      Error!
+      <div class="error_text">Oops! Looks like there was an error!<br> Please try again at a later time.</div>
     </div>
     <div v-show="state == 'verify'" class="container">
-      <CodeVerification ref="codever" @verified="codeValidated" />
+      <CodeVerification ref="codever" @verified="codeValidated"/>
     </div>
   </div>
 </template>
@@ -202,7 +215,6 @@ export default {
         status: 'subscribed',
       };
       console.log(postData);
-
       Axios.post('/mailchimp/addMember', postData).then(() => {
         console.log('posted on mailchimp');
       }, (error) => {
@@ -221,16 +233,13 @@ export default {
         pwd: this.password,
         account_type: this.type,
       };
-
       if (this.accountTypeInfo.requireFullName) {
         data.fname = this.fname;
         data.lname = this.lname;
       }
-
       if (this.accountTypeInfo.requireBusinessName) {
         data.business_name = this.business_name;
       }
-
       Axios.post('/auth/register', data, headers).then((res) => {
         if (res.data.success) {
           console.log('after success');
@@ -292,7 +301,6 @@ export default {
         const udata = response.data.user;
         this.commitUserdata(udata);
         this.commitID(udata._id);
-
         if (udata.default_org) {
           this.commitBusinessID(udata.default_org);
         }

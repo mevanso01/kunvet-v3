@@ -19,24 +19,27 @@
       //padding: 20px;
       margin-top: 50%;
     }
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
     .input-container {
       background-color: #e6e6e6;
       width: 100%;
-      height: 60px;
+      height: 80px;
       display: flex;
       input {
-        font-size: 40px;
+        font-size: 32px;
         font-weight: 800;
         color: #3c3c3c;
         line-height: 120%;
         letter-spacing: 0.6em;
-
         width: 100%;
-        height: 60px;
+        height: 80px;
         margin-left: 32px;
         margin-right: 0px;
-        font-size: 20px;
         text-align: left;
+        font-family: proxima-nova, sans-serif;
       }
       input:focus {
         outline: none;
@@ -57,6 +60,11 @@
       margin-top: 10px;
       margin-right: 10px;
       display: inline-block;
+      width: 180px;
+      height: 28px;
+      text-align: center;
+      font-family: proxima-nova, sans-serif;
+      cursor: pointer !important;
     }
     .send-verif{
       background-color: #e6e6e6;
@@ -64,26 +72,32 @@
       margin-top: 10px;
       display: inline-block; 
       margin-right: 10px;
-    }
-    .verif-btn-active{
-      width: 140px;
-      background-color: #ff6969;
+      width: 132px;
+      height: 28px;
       text-align: center;
-      cursor: pointer !important;
+      font-family: proxima-nova, sans-serif;
+      cursor: pointer !important; 
     }
-    .verif-btn-grey{
+    .verif-btn-red{
       width: 140px;
       background-color: #ff6969;
       // background-color: #b4b4b4;
       text-align: center;
       cursor: pointer !important;
     }
+    .verif-btn-loading{
+      width: 140px;
+      background-color: #ff6969;
+      // background-color: #b4b4b4;
+      text-align: center;
+      cursor: disabled !important;
+    }
     .verif-btn-text{
       width: 140px;
       font-size: 16px;
       font-weight: 600;
       color: #ffffff;
-      line-height: 60px;
+      line-height: 80px;
       letter-spacing: 0.12em;
       font-family: proxima-nova, sans-serif;
       text-transform: uppercase;
@@ -108,7 +122,7 @@
     }
     .search_jobs_btn{
       width:210px;
-      height:80px;
+      height:64px;
       background-color: #ff6969;
       text-align: center;
       border: none;
@@ -116,7 +130,7 @@
       font-size: 22px;
       font-weight: 600;
       color: white;
-      line-height: 80px;
+      line-height: 64px;
       letter-spacing: 0;
       font-family: proxima-nova, sans-serif;
       margin-right: 20px;
@@ -124,7 +138,7 @@
     }
     .view_profile_btn {
       width:210px;
-      height:80px;
+      height:64px;
       text-align: center;
       font-family: proxima-nova, sans-serif;
       background-color: none;
@@ -133,7 +147,7 @@
       font-size: 22px;
       font-weight: 600;
       color: #ff6969;
-      line-height: 80px;
+      line-height: 64px;
       letter-spacing: 0;
       cursor: pointer !important;
     }
@@ -191,8 +205,6 @@
       margin-bottom: 0;
     }
   }
-
-
 </style>
 <template>
   <div class="codeverbox" v-on:keyup.enter="verifyCode">
@@ -208,24 +220,34 @@
     <div v-show="!isVerified && !changingEmail">
       <div class="inner">
         <h2 class="verify_email_header">Verify your email</h2>
-        <div style="width: 100%; padding: 10px 0;" v-if="!email">
+        <div style="width: 100%; padding: 10px 0;" v-if="!email"  >
           <!-- in case initial request takes a long time to load -->
           <div v-if="loading">
             <v-progress-circular indeterminate :size="32" :width="3" color="red darken-1"></v-progress-circular>
           </div>
         </div>
-        <div v-show="email">
+        <div>
           <p class="valid_email_text" style="margin-bottom: 40px;">We sent a code to <span style="font-weight: 600;">{{ email }}
             </span> to make sure it is valid. Please enter the code below.</p>
+          <div style="height: 100px; width: 80px; background-color: green;" @click="invalidCode = true" />
           <p v-show="loading" class="green_warning">We sent you a new code.</p>
           <p v-show="invalidCode && !loading" class="red_warning">Invalid code. Please try again.</p>
-          <div class="input-container" v-on:keydown.enter="verifyCode">
-            <input v-model="code" ref="code" maxlength="4" @input="inputEntered"/>
-            <div class="verif-btn-grey" @click="verifyCode"><div class="verif-btn-text">verify</div></div>
+          <div class="input-container" v-on:keydown.enter="verifyCode" v-on:keydown.backspace="invalidCode = false">
+            <input type="number" v-model="code" ref="code" @input="inputEntered" max="9999" min="0"
+                onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;"
+            />
+            <div v-if="loading" class="verif-btn-loading">
+              <v-progress-circular style="margin-top: 24px;" indeterminate :size="26" :width="3" color="white darken-1"/>
+            </div>
+            <div v-else class="verif-btn-red" @click="verifyCode"><div class="verif-btn-text">verify</div></div>
           </div>
-          <a @click="openChangeEmail" class="change-email">Change My Email Address </a>
-          <a @click="sendVerificationCode" class="send-verif">Send a new code</a>
-          
+          <div @click="openChangeEmail" class="change-email">
+            <p style="margin-top: 5px;">Change My Email Address</p>
+          </div>
+          <div @click="sendVerificationCode" class="send-verif">
+            <p style="margin-top: 5px;">Send a new code</p>
+          </div>
+
         </div>
       </div>
     </div>
