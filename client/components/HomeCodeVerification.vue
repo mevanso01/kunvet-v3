@@ -353,7 +353,6 @@
           }
         }).catch((err) => {
           this.loading = false;
-          this.sendCode = false;
           this.$error(err);
         });
       },
