@@ -1124,7 +1124,7 @@
         <div class="looking_text_div">
           <h2 class="looking_header">Looking to Hire?<br>You are at the Right Place!</h2>
           <div class="looking_text" style="margin: 0 auto;">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</div>
-          <router-link to="/choose"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
+          <router-link to="/hire"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>
       </div>

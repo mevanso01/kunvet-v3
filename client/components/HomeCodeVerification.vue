@@ -227,10 +227,9 @@
           </div>
         </div>
         <div>
-          <p class="valid_email_text" style="margin-bottom: 40px;">We sent a code to <span style="font-weight: 600;">{{ email }}
+          <p v-if="!loading" class="valid_email_text" style="margin-bottom: 40px;">We sent a code to <span style="font-weight: 600;">{{ email }}
             </span> to make sure it is valid. Please enter the code below.</p>
-          <div style="height: 100px; width: 80px; background-color: green;" @click="invalidCode = true" />
-          <p v-show="loading" class="green_warning">We sent you a new code.</p>
+          <p v-show="sendCode && loading" class="green_warning">We sent you a new code.</p>
           <p v-show="invalidCode && !loading" class="red_warning">Invalid code. Please try again.</p>
           <div class="input-container" v-on:keydown.enter="verifyCode" v-on:keydown.backspace="invalidCode = false">
             <input type="number" v-model="code" ref="code" @input="inputEntered" max="9999" min="0"
@@ -287,6 +286,7 @@
     data() {
       return {
         code: '',
+        sendCode: false,
         isVerified: false,
         invalidCode: false,
         loading: false,
@@ -341,6 +341,7 @@
       },
       /** sends a new verification code regardless of status */
       sendVerificationCode() {
+        this.sendCode = true;
         this.loading = true;
         axios.post('/auth/sendVerificationCode').then((res) => {
           this.loading = false;
@@ -354,10 +355,12 @@
           }
         }).catch((err) => {
           this.loading = false;
+          this.sendCode = false;
           this.$error(err);
         });
       },
       verifyCode() {
+        this.sendCode = false;
         const code = this.code; // should be a 4-character string
         if (code.length !== 4) {
           return;
@@ -392,6 +395,7 @@
         this.changeEmailError = '';
         this.changingEmail = true;
         this.invalidCode = false;
+        this.sendCode = false;
       },
       changeEmail() {
         if (this.loading) {
