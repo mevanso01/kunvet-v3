@@ -222,14 +222,11 @@
         <h2 class="verify_email_header">Verify your email</h2>
         <div style="width: 100%; padding: 10px 0;" v-if="!email"  >
           <!-- in case initial request takes a long time to load -->
-          <div v-if="loading">
-            <v-progress-circular indeterminate :size="32" :width="3" color="red darken-1"></v-progress-circular>
-          </div>
         </div>
         <div>
           <p v-if="!loading" class="valid_email_text" style="margin-bottom: 40px;">We sent a code to <span style="font-weight: 600;">{{ email }}
             </span> to make sure it is valid. Please enter the code below.</p>
-          <p v-show="sendCode && loading" class="green_warning">We sent you a new code.</p>
+          <p v-show="sendCode" class="green_warning">We sent you a new code.</p>
           <p v-show="invalidCode && !loading" class="red_warning">Invalid code. Please try again.</p>
           <div class="input-container" v-on:keydown.enter="verifyCode" v-on:keydown.backspace="invalidCode = false">
             <input type="number" v-model="code" ref="code" @input="inputEntered" max="9999" min="0"
@@ -256,6 +253,7 @@
         <h2 class="verify_email_header">Change Email Address</h2>
         <p class="valid_email_text">Please enter your new email below.
           Once changed, a new code will be sent to the following email address.</p>
+        <p class="red_warning">{{ changeEmailError }}</p>
         <div style="width: 100%;">
           <home-text-field required v-model="newEmail" label="Email" class="next_job_text_field" type="email"
           :rules="[
@@ -263,15 +261,13 @@
               v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w+)+$/.test(v) || 'Invalid email format'
             ]"/>
         </div>
-        <p v-if="loading">
-          <span style="padding: 0 4px;">
-            <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
-          </span>Loading...
-        </p>
-        <p style="color: red;" class="mb-0">{{ changeEmailError }}</p>
       </div>
       <div style="display: flex; margin-bottom: 70px; margin-top: 20px;">
-        <div class="change-btn" @click="changeEmail">Change</div>
+        <div v-if="loading" class="change-btn" style="cursor: disabled !important;">
+          <v-progress-circular style="margin-top: 24px;" indeterminate :size="26" :width="3" color="white darken-1"/>
+        </div>
+        <div v-else class="change-btn" @click="changeEmail">Change</div>
+
         <div class="cancel-btn"  @click="changingEmail = false;">Cancel</div>
       </div>
     </div>

@@ -102,7 +102,7 @@ h1 {
         <h2 class="next_job_title">Your Next Job is Waiting</h2>
         <p v-if="!loading" class="next_job_text">With a free account, you have access to all the newest jobs near you. Get yours now.</p>
         <div class="next_job_field">
-        <v-form ref="form" v-if="!loading">
+        <v-form ref="form">
             <home-text-field required v-model="fname" v-if="accountTypeInfo.requireFullName"
             :rules="requiredRules" label="First Name" class="next_job_text_field"/>
             <home-text-field required v-model="lname" v-if="accountTypeInfo.requireFullName"
