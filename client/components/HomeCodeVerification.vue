@@ -86,10 +86,11 @@
       cursor: pointer !important;
     }
     .verif-btn-loading{
-      width: 140px;
+      width: 140px !important;
       background-color: #ff6969;
       // background-color: #b4b4b4;
       text-align: center;
+      line-height: 80px;
       cursor: disabled !important;
     }
     .verif-btn-text{
@@ -224,7 +225,7 @@
           <!-- in case initial request takes a long time to load -->
         </div>
         <div>
-          <p v-if="!loading" class="valid_email_text" style="margin-bottom: 40px;">We sent a code to <span style="font-weight: 600;">{{ email }}
+          <p class="valid_email_text" style="margin-bottom: 40px;">We sent a code to <span style="font-weight: 600;">{{ email }}
             </span> to make sure it is valid. Please enter the code below.</p>
           <p v-show="sendCode" class="green_warning">We sent you a new code.</p>
           <p v-show="invalidCode && !loading" class="red_warning">Invalid code. Please try again.</p>
@@ -233,7 +234,9 @@
                 onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;"
             />
             <div v-if="loading" class="verif-btn-loading">
-              <v-progress-circular style="margin-top: 24px;" indeterminate :size="26" :width="3" color="white darken-1"/>
+              <div style="width: 140px;">
+              <v-progress-circular indeterminate :size="26" :width="3" color="white darken-1"/>
+              </div>
             </div>
             <div v-else class="verif-btn-red" @click="verifyCode"><div class="verif-btn-text">verify</div></div>
           </div>
@@ -264,10 +267,9 @@
       </div>
       <div style="display: flex; margin-bottom: 70px; margin-top: 20px;">
         <div v-if="loading" class="change-btn" style="cursor: disabled !important;">
-          <v-progress-circular style="margin-top: 24px;" indeterminate :size="26" :width="3" color="white darken-1"/>
+          <v-progress-circular indeterminate :size="26" :width="3" color="white darken-1"/>
         </div>
         <div v-else class="change-btn" @click="changeEmail">Change</div>
-
         <div class="cancel-btn"  @click="changingEmail = false;">Cancel</div>
       </div>
     </div>

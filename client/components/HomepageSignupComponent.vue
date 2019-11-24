@@ -160,7 +160,7 @@ export default {
       password: '',
       business_name: '',
       loading: false,
-      state: 'initial',
+      state: 'verify',
       error: '',
       // Account types
       accountTypes: {
