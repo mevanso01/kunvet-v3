@@ -47,7 +47,7 @@
               </v-flex>
               <v-flex xs12 sm11 md9 class="no-padding">
                 <v-list>
-                  <v-list-tile v-if="!userdata.school"
+                  <v-list-tile v-if="!userdata.school && false"
                                class="cust-tile-2 grey-color">
                     <v-list-tile class="cust-tile-1">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -219,7 +219,7 @@
                     </v-list-tile-content>
                   </v-list-tile>
 
-                  <v-list-tile v-if="!userdata.wechat_id"
+                  <v-list-tile v-if="!userdata.wechat_id && false"
                                class="cust-tile-2 grey-color">
                     <v-list-tile class="cust-tile-1">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -262,7 +262,7 @@
                       </v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <div style="padding-left: 41px">
+                  <!-- <div style="padding-left: 41px">
                     <v-textarea
                       box
                       name="input-7-4"
@@ -284,7 +284,7 @@
                       </k-btn>
                       <k-btn small @click="openSummary=false">Cancel</k-btn>
                     </div>
-                  </div>
+                  </div> -->
                 </v-list>
               </v-flex>
             </v-layout>
@@ -375,7 +375,7 @@
               </k-btn>
             </div>
           </v-flex>
-          <v-flex v-show="!(userdata && userdata.account_type === 'student')"
+          <v-flex v-show="!(userdata && userdata.account_type === 'student')" v-if="false"
                   xs12 sm6 md5 offset-md2
                   class="right-account-column padding-sm-left">
             <account-header
