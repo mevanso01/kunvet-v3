@@ -1716,7 +1716,7 @@ export default {
         this.email_verified = false;
         this.furthest_tab = 1;
         if (this.tab === '0') {
-          this.dialogs.welcome = true;
+          // this.dialogs.welcome = true;
         } else {
           this.tab = '0';
         }

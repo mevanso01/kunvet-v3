@@ -4797,7 +4797,7 @@ export default {
     routeGen() {
       userDataProvider.getUserData().then(data => {
         if (data.acct === 0) {
-          this.$router.push('/choose');
+          this.$router.push('/jobs/create');
         } else if (data.acct === 2) {
           this.$router.push('/jobs/create');
         } else {

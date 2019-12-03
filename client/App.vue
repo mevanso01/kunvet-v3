@@ -55,7 +55,7 @@
           {{ item.title }}
         </v-btn>
         <div style="padding-top: 18px; padding-left: 16px;">
-          <router-link to="/jobs/create">
+          <router-link to="/hire">
             <v-btn class="post-a-job-button" outline>Post a Job</v-btn>
           </router-link>
         </div>
