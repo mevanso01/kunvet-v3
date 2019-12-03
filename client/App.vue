@@ -200,7 +200,7 @@ export default {
         [
           { title: 'Login', href: '/login' },
           { title: 'Sign up', href: '/sign-up' },
-          { title: 'Post a Job', href: '/jobs/create' },
+          { title: 'Post a Job', href: '/hire' },
         ],
         [
           { title: 'Search', href: '/jobs/search' },
