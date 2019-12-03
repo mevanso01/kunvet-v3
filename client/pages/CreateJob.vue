@@ -18,11 +18,11 @@
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
         <template v-if="tab !== 'success-tab'">
-          <v-tab v-for="(item, i) in tabItems" :href="`#${i}`" :key="`${i}`"
-                 :disabled="i > furthest_tab" >
+          <v-tab v-for="(item, i) in tabItems" :href="`#${item.tabId}`" :key="`${i}`"
+                 :disabled="i > furthest_tab" v-show="i < 3" >
             <div class="tab-text-container" style="width: 100%; height: 100%;"
               :class="{ 'tab-no-error': isTabValid(i), 'tab-error': isTabInvalid(i) }">
-              <span style="line-height: 36px;">{{ item }}</span>
+              <span style="line-height: 36px;">{{ item.tabTitle }}</span>
             </div>
           </v-tab>
         </template>
@@ -841,7 +841,19 @@ export default {
   },
   computed: {
     tabItems() {
-      return ['About you', 'Job details', 'Review and post'];
+      return [{
+        'tabId': 0,
+        'tabTitle': 'About you',
+      }, {
+        'tabId': 1,
+        'tabTitle': 'Job details',
+      }, {
+        'tabId': 2,
+        'tabTitle': 'Review and post',
+      }, {
+        'tabId': 'billing',
+        'tabTitle': 'Billing',
+      }];
     },
     filteredAvailablePositions() {
       var str = this.filterPositions;
