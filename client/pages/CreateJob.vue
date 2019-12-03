@@ -17,7 +17,7 @@
         fixed-tabs
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
-        <template v-if="tab !== 'success-tab'">
+        <template v-if="true || tab !== 'success-tab'">
           <v-tab v-for="(item, i) in tabItems" :href="`#${item.tabId}`" :key="`${i}`"
                  :disabled="i > furthest_tab" v-show="i < 3" >
             <div class="tab-text-container" style="width: 100%; height: 100%;"
@@ -853,6 +853,9 @@ export default {
       }, {
         'tabId': 'billing',
         'tabTitle': 'Billing',
+      }, {
+        'tabId': 'success-tab',
+        'tabTitle': 'Success',
       }];
     },
     filteredAvailablePositions() {
