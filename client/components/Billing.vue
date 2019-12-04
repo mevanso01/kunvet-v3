@@ -134,7 +134,11 @@ export default {
           this.errMsg = res.data.message;
           console.log('error');
         }
-      }));
+      })).catch(error => {
+        const errbody = error.response.data;
+        this.showError = true;
+        this.errMsg = errbody.message;
+      });
     },
   },
 };
