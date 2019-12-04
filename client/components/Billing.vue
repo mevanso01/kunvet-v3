@@ -22,6 +22,7 @@
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
     <div ref="dropin" class="dropin-container"></div>
+    <div class="mt-5 mb-2"><span v-if="showError" style="font-size: 20px; color: red;">{{ errMsg }}</span></div>
     <k-btn class="mt-3" :disabled="instance == null" @click="confirmPayment" :working="loading">Confirm</k-btn>
   </div>
 </template>
@@ -44,6 +45,8 @@ export default {
       postJobPrice: 0.40,
       nonceUsed: false,
       loading: false,
+      showError: false,
+      errMsg: '',
     };
   },
   mounted() {
@@ -98,6 +101,7 @@ export default {
         name: 'activateJob',
         jobId: this.jobId,
       }];
+      this.showError = false;
       this.loading = true;
       this.$debug(this.instance);
       this.instance.requestPaymentMethod((err, payload) => {
@@ -120,11 +124,14 @@ export default {
       Axios.post('/billing/createTransaction', paymentData).then((res => {
         this.loading = false;
         if (res.data.success) {
+          this.showError = false;
           this.$emit('success');
           // show them thanks for creating a job/promoting
           this.nonceUsed = true;
           console.log('true');
         } else {
+          this.showError = true;
+          this.errMsg = res.data.message;
           console.log('error');
         }
       }));
