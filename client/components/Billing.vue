@@ -22,7 +22,7 @@
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
     </div>
     <div ref="dropin" class="dropin-container"></div>
-    <k-btn class="mt-3" @click="confirmPayment" :working="loading">Confirm</k-btn>
+    <k-btn class="mt-3" :disabled="instance == null" @click="confirmPayment" :working="loading">Confirm</k-btn>
   </div>
 </template>
 <script>
