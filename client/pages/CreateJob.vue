@@ -34,12 +34,76 @@
               <div class="cust-spacer"></div>
 
               <v-form v-model="form1Valid" ref="form1">
-                <template v-if="!uid">
+                <template v-if="!uid || true">
                   <p class="mb-0">
                     First, we need some basic information about who's posting.<br>
                     You will receive your applicants' information through email, unless you opt out of this feature at the end of this form.<br>
                   </p>
                   <v-layout row wrap>
+                    <v-flex xs12 sm9 md6 class="no-padding">
+                      <v-text-field
+                        label="First name"
+                        v-model="fname"
+                        :rules="requiredRules"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Last name"
+                        v-model="lname"
+                        :rules="requiredRules"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Email" :class="{ 'hide-error-messages': emailExists }"
+                        v-model="email" ref="emailField"
+                        :rules="[
+                          v => !!v || 'Email is required',
+                          v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w+)+$/.test(v) || 'Invalid email format',
+                          () => !emailExists || 'An account with this email already exists',
+                        ]"
+                        type="email"
+                        @blur="checkIfEmailExists()"
+                        required
+                      ></v-text-field>
+                      <div v-show="emailExists" class="v-text-field__details">
+                        <div class="v-messages error--text">
+                          <div class="v-messages__wrapper">
+                            <div class="v-messages__message">An account with this email already exists <router-link to="/login" style="text-decoration: underline;">Login</router-link></div>
+                          </div>
+                        </div>
+                      </div>
+                      <v-text-field v-if="!uid"
+                        label="Create password"
+                        v-model="password"
+                        :rules="passwordRules"
+                        min="8"
+                        :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                        @click:append="() => (e1 = !e1)"
+                        :type="e1 ? 'password' : 'text'"
+                        required
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+
+                  <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
+                  <v-radio-group v-model="postingAs" column required class="pt-0 mb-0" required
+                    :rules="[(v) => !submit1Pressed || !!(v) || 'Required']">
+                      <v-radio label="No, I'm posting as an individual" value="individual"></v-radio>
+                      <v-radio label="Yes, I'm posting as a business or organization" value="business"></v-radio>
+                  </v-radio-group>
+                  <v-layout row wrap v-if="postingAs === 'business'">
+                    <v-flex xs12 sm9 md6 class="no-padding">
+                      <v-text-field
+                        placeholder="Please enter the name of your business / organization"
+                        label="Name of business / organization"
+                        v-model="business_name"
+                        :rules="requiredRules"
+                        required
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+
+                  <v-layout row wrap v-if="false">
                     <div v-if="!chosenAccountType">
                       <AccountTypeSelection
                         :forbiddenTypes="['student']"
@@ -61,49 +125,8 @@
                   <p class="mb-2">Welcome back {{ userdata.firstname }} {{ userdata.lastname }}</p>
                   <h3 class="mt-0 mb-4">Posting as: {{ job.posted_by }}</h3>
                 </template>
-              </v-form>
 
-              <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
-                <v-flex xs12 style="text-align: center;" v-show="uid">
-                  <v-btn class="kunvet-red-bg" :disabled="loading" @click="next(1)">Continue</v-btn>
-                  <p v-if="loading">
-                    <span style="padding: 0 4px;">
-                      <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
-                    </span>
-                    Loading.
-                  </p>
-                </v-flex>
-                <v-flex v-if="form1Error" xs12>
-                  <v-alert
-                   :value="true"
-                   color="error"
-                   icon="warning"
-                   outline
-                 >
-                   <span v-if="form1Error==='UserExists'">
-                     Error: A user with this email already exists. Would you like to <router-link class="underline" to="/login">login</router-link>?
-                   </span>
-                   <span v-else-if="form1Error==='LoginFailure'">
-                     Error: Your account has been registered, but somehow we could not log you in. This could be due to network issues.
-                     Please try to <router-link class="underline" to="/login">login</router-link> again.
-                   </span>
-                   <span v-else>
-                     An error occured: {{ form1Error }}
-                   </span>
-                 </v-alert>
-                </v-flex>
-              </v-layout>
-              <!-- <p class="mb-1">This is here only for testing</p>
-              <a @click="tab = 'verify-email'">Test verify</a>
-              <a @click="tab = 'success-tab'">Test success</a> -->
-            </div>
-          </v-tab-item>
-          <v-tab-item id="1">
-            <!-- SECTION 2 -->
-            <div class="main-cont-large">
-              <div class="cust-spacer"></div>
-              <v-form v-model="form2Valid" ref="form2">
-                <h4 class="cust-subheader">Basic info</h4>
+                <p class="mb-0 mt-2">Basic info about your job:</p>
                 <v-layout row wrap>
                   <v-flex xs12 sm9 md6 class="no-padding">
                     <v-text-field
@@ -144,6 +167,89 @@
                     </div>
                   </v-flex>
                 </v-layout>
+              </v-form>
+
+              <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
+                <v-flex xs12 style="text-align: center;" v-show="uid || true">
+                  <v-btn class="kunvet-red-bg" :disabled="loading" @click="next(1)">Save and Continue</v-btn>
+                  <p v-if="loading">
+                    <span style="padding: 0 4px;">
+                      <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
+                    </span>
+                    Loading...
+                  </p>
+                </v-flex>
+                <v-flex v-if="form1Error" xs12>
+                  <v-alert
+                   :value="true"
+                   color="error"
+                   icon="warning"
+                   outline
+                 >
+                   <span v-if="form1Error==='UserExists'">
+                     Error: A user with this email already exists. Would you like to <router-link class="underline" to="/login">login</router-link>?
+                   </span>
+                   <span v-else-if="form1Error==='LoginFailure'">
+                     Error: Your account has been registered, but somehow we could not log you in. This could be due to network issues.
+                     Please try to <router-link class="underline" to="/login">login</router-link> again.
+                   </span>
+                   <span v-else>
+                     An error occured: {{ form1Error }}
+                   </span>
+                 </v-alert>
+                </v-flex>
+              </v-layout>
+              <!-- <p class="mb-1">This is here only for testing</p>
+              <a @click="tab = 'verify-email'">Test verify</a>
+              <a @click="tab = 'success-tab'">Test success</a> -->
+            </div>
+          </v-tab-item>
+          <v-tab-item id="1">
+            <!-- SECTION 2 -->
+            <div class="main-cont-large">
+              <div class="cust-spacer"></div>
+              <v-form v-model="form2Valid" ref="form2">
+                <!-- <h4 class="cust-subheader">Basic info</h4>
+                <v-layout row wrap>
+                  <v-flex xs12 sm9 md6 class="no-padding">
+                    <v-text-field
+                      v-model="job.title"
+                      label="Job Title"
+                      :rules="[(title) => !!(title) || 'Required']"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="job.address"
+                      ref="addressField"
+                      label="Address"
+                      required
+                      @change="setLatLongs"
+                      :rules="[() => !!(job.address) || 'Required',
+                               () => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+                    ></v-text-field>
+                    <v-text-field
+                      class="optional"
+                      v-model="job.address2"
+                      ref="addressField2"
+                      label="Address Line 2"
+                      placeholder="Apt, Suite, Bldg."
+                      hide-details
+                    ></v-text-field>
+                    <div v-if="job.address">
+                      <v-checkbox class="optional" style="margin-top: 16px;"
+                        label="Is this job on a school campus?"
+                        v-model="isUniversity"
+                        hide-details
+                      ></v-checkbox>
+                      <v-autocomplete
+                        v-if="isUniversity"
+                        label="Which one?"
+                        v-model="job.university"
+                        v-bind:items="availableSchools"
+                      ></v-autocomplete>
+                    </div>
+                  </v-flex>
+                </v-layout> -->
 
                 <!-- Categories -->
                 <h4 class="cust-subheader">Categories</h4>
@@ -964,9 +1070,26 @@ export default {
       }
       if (this[`form${n}Valid`] && valid) {
         // Form is valid
-        if (n === 1 && !this.uid) {
-          this.form1Error = 'You must be logged in to continue';
+        if (n === 1 && !this.email_verified) {
+          this.loading = true;
+          this.createAccount().then(res => {
+            this.loading = false;
+            if (res.registered && res.loggedIn) {
+              this._moveToNextTab();
+            } else if (res.registered && !res.loggedIn) {
+              // Error: registered but not logged in
+              if (res.error === 'UserExists') {
+                this.form1Error = 'UserExists';
+              } else {
+                this.form1Error = 'LoginFailure';
+              }
+            } else {
+              // Error: some kind of error registering
+              this.form1Error = res.error ? res.error : 'Unknown error';
+            }
+          });
         } else {
+          this.saveJob();
           this._moveToNextTab();
         }
       } else {
