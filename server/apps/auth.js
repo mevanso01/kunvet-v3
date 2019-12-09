@@ -753,6 +753,7 @@ router.post('/register2', async (ctx) => {
         email: email,
         firstname: req.fname,
         lastname: req.lname,
+        account_type: req.account_type,
       },
       req.pwd,
     );
