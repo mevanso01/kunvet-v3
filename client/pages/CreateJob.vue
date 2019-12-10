@@ -72,6 +72,21 @@
                           </div>
                         </div>
                       </div>
+                      <v-text-field
+                        label="Confirm Email" :class="{ 'hide-error-messages': email != emailConfirm }"
+                        v-model="emailConfirm"
+                        :rules="[
+                          () => email == emailConfirm || 'An account with this email already exists',
+                        ]"
+                        required
+                      ></v-text-field>
+                      <div v-show="email != emailConfirm" class="v-text-field__details">
+                        <div class="v-messages error--text">
+                          <div class="v-messages__wrapper">
+                            <div class="v-messages__message">Email Confirmation doesn't match</div>
+                          </div>
+                        </div>
+                      </div>
                       <v-text-field v-if="!uid"
                         label="Create password"
                         v-model="password"
@@ -551,7 +566,7 @@
             <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;">
               <Billing
                 ref="billing"
-                @success="tab = 'success-tab'"
+                @success="onBillingSuccess"
               />
             </div>
           </v-tab-item>
@@ -843,6 +858,7 @@ export default {
       fname: null,
       lname: null,
       email: null,
+      emailConfirm: null,
       password: null,
       e1: true,
       emailExists: false,
@@ -1835,6 +1851,15 @@ export default {
       }
       if (this.job.address) {
         this.setLatLongs();
+      }
+    },
+    onBillingSuccess() {
+      this.tab = 'success-tab';
+      this.email_verified = true;
+      if (this.$store.state.userID && this.$store.state.userdata) {
+        const udata = this.$store.state.userdata;
+        udata.email_verified = true;
+        this.$store.commit({ type: 'keepUserdata', userdata: udata });
       }
     },
   },

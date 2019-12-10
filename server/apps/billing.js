@@ -168,7 +168,8 @@ router.get('/getAuthorization', async (ctx) => {
 });
 
 router.post('/createTransaction', async (ctx) => {
-  if (!ctx.isAuthenticated() || !ctx.state.user) {
+  const user = ctx.state.user;
+  if (!ctx.isAuthenticated() || !user) {
     ctx.status = 401;
     ctx.body = JSON.stringify({
       success: false,
@@ -176,7 +177,13 @@ router.post('/createTransaction', async (ctx) => {
     });
     return;
   }
-
+  if (!user.email_verified) {
+    const userAcct = await Models.Account.findOne({
+      email: user.email,
+    });
+    userAcct.email_verified = true;
+    await userAcct.save();
+  }
   const req = ctx.request.body;
 
   // Validation

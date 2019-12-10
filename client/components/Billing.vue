@@ -137,6 +137,7 @@ export default {
       })).catch(error => {
         const errbody = error.response.data;
         this.showError = true;
+        this.loading = false;
         this.errMsg = errbody.message;
       });
     },
