@@ -1871,7 +1871,15 @@ export default {
     if (this.$store.state && this.$store.state.userdata) {
       this.email_verified = Boolean(this.$store.state.userdata.email_verified);
     }
+    // Retrieve user data
     userDataProvider.getUserData().then(async res => {
+      // See if job progress needs to be restored
+      if (this.$route.params.id) {
+        await this.reopenExistingJob(this.$route.params.id);
+      } else if (this.$store.state && this.$store.state.currentJobProgress.jobId
+        && this.$store.state.currentJobProgress.part1Complete && !this.job.title) {
+        await this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
+      }
       this.pageloading = false;
       this.uid = res.uid;
       if (res.acct === 0) {
@@ -1919,13 +1927,6 @@ export default {
           }
           this.orgId = orgId; // make sure orgId is correctly set before loading unposted jobs
           this.fetchAndSetBusinessData(orgId);
-        }
-        // See if job progress needs to be restored
-        if (this.$route.params.id) {
-          this.reopenExistingJob(this.$route.params.id);
-        } else if (this.$store.state && this.$store.state.currentJobProgress.jobId
-          && this.$store.state.currentJobProgress.part1Complete && !this.job.title) {
-          this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
         }
         // Load unposted jobs
         this.checkForUnpostedJobs();
