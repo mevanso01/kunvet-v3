@@ -1000,7 +1000,7 @@
         // called after signup or login, and from openApplyDialog()
         this.loginState = 'resume';
         if (verifSuccess === true) {
-          this.$router.push(`/jobs/detail/${this.id}/signup=true`);
+          this.$router.push(`/jobs/detail/${this.id}`);
         }
         this._getUserData();
       },

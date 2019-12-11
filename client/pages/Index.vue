@@ -1597,9 +1597,9 @@ export default {
   methods: {
     onSuccess() {
       if (this.signupType === 'business') {
-        this.$router.push('/myorg/signup=true');
+        this.$router.push('/myorg');
       } else {
-        this.$router.push('/account/signup=true');
+        this.$router.push('/account');
       }
     },
     // For Scrollama

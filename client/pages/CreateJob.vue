@@ -1707,7 +1707,7 @@ export default {
     },
     codeValidated() {
       this.email_verified = true;
-      this.$router.push('/jobs/create/signup=true');
+      this.$router.push('/jobs/create');
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;
         udata.email_verified = true;

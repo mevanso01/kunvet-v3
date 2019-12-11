@@ -74,7 +74,7 @@ export default {
         this.$store.commit({ type: 'keepUserdata', userdata: udata });
       }
       this.validated = true;
-      this.$router.push('/validate/signup=true');
+      this.$router.push('/validate');
     },
     goTo(_route) {
       var route = '/';

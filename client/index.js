@@ -100,16 +100,8 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: '/jobs/detail/:id/signup=true',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
-    },
-    {
       path: '/validate',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/Validate'),
-    },
-    {
-      path: '/validate/signup=true',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Validate'),
     },
     {
       path: '/validate-email/:code',
@@ -142,10 +134,6 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "account" */ '@/pages/Account'),
     },
     {
-      path: '/account/signup=true',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Account'),
-    },
-    {
       path: '/account/settings',
       component: () => import(/* webpackChunkName: "settings" */ '@/pages/Settings'),
     },
@@ -167,22 +155,8 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
     },
     {
-      path: '/jobs/create/signup=true',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
-    },
-    {
       path: '/jobs/create/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
-      props: { id: null },
-    },
-    {
-      path: '/jobs/create/:id/signup=true',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
-      props: { id: null },
-    },
-    {
-      path: '/jobs/create/signup=true:id',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/CreateJob'),
       props: { id: null },
     },
     {
@@ -203,10 +177,6 @@ const router = new VueRouter({
     {
       path: '/myorg',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/MyOrg'),
-    },
-    {
-      path: '/myorg/signup=true',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/MyOrg'),
     },
     {
       path: '/jobs/applicants',
@@ -290,23 +260,23 @@ if (process.env.NODE_ENV === 'production' && Config.get('analytics')) {
     gtagjs(router, 'UA-93340207-1');
   } */
 
-  if (Config.get('analytics.googleTagManager')) {
-    // eslint-disable-next-line
-    (function(w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-      var f = d.getElementsByTagName(s)[0];
-      var j = d.createElement(s);
-      var temp = l;
-      temp += '&l=';
-      var dl = l !== 'dataLayer' ? (temp) : '';
-      j.async = true;
-      j.src = 'https://www.googletagmanager.com/gtm.js?id=';
-      j.src += i;
-      j.src += dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-KMXJH5V');
-  }
+  // if (Config.get('analytics.googleTagManager')) {
+  //   // eslint-disable-next-line
+  //   (function(w, d, s, l, i) {
+  //     w[l] = w[l] || [];
+  //     w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+  //     var f = d.getElementsByTagName(s)[0];
+  //     var j = d.createElement(s);
+  //     var temp = l;
+  //     temp += '&l=';
+  //     var dl = l !== 'dataLayer' ? (temp) : '';
+  //     j.async = true;
+  //     j.src = 'https://www.googletagmanager.com/gtm.js?id=';
+  //     j.src += i;
+  //     j.src += dl;
+  //     f.parentNode.insertBefore(j, f);
+  //   })(window, document, 'script', 'dataLayer', 'GTM-KMXJH5V');
+  // }
 
   if (Config.get('analytics.hotjar')) {
     const hotjar = document.createElement('script');

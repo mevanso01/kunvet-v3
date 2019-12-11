@@ -50,7 +50,7 @@ module.exports = {
   },
   analytics: {
     //googleAnalytics: true,
-    googleTagManager: true,
+    // googleTagManager: true,
     //googleAdSense: true,
     hotjar: true,
   },
