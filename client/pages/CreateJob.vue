@@ -1554,9 +1554,13 @@ export default {
     async reopenExistingJob(_id) {
       this.dialogs.reopeningJob = true;
       await this.getJobData(_id);
-      if (this.job.active && this.jobId && (!this.$store.state.currentJobProgress || !this.$store.state.currentJobProgress.postOnOpen)) {
-        if (this.$route.params.id) {
-          this.$router.push(`/jobs/edit/${this.jobId}`);
+      if (this.job.active && this.jobId) {
+        if (!this.$store.state.currentJobProgress || !this.$store.state.currentJobProgress.postOnOpen) {
+          if (this.$route.params.id) {
+            this.$router.push(`/jobs/edit/${this.jobId}`);
+          } else {
+            this.resetData();
+          }
         } else {
           this.resetData();
         }
@@ -1879,6 +1883,8 @@ export default {
       } else if (this.$store.state && this.$store.state.currentJobProgress.jobId
         && this.$store.state.currentJobProgress.part1Complete && !this.job.title) {
         await this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
+      } else {
+        this.resetData();
       }
       this.pageloading = false;
       this.uid = res.uid;
