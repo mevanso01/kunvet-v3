@@ -1299,7 +1299,7 @@ export default {
       if (!this.loading) {
         if (!this.email_verified) {
           this.setJobProgress(true); // set postOnOpen to true
-          this.$refs.codever.init();
+          // this.$refs.codever.init();
           this.tab = 'verify-email';
         } else {
           this.loading = true;
