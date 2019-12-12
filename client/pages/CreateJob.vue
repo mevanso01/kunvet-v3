@@ -1316,6 +1316,7 @@ export default {
       for (var i = 2; i >= 0; i--) {
         const valid = this.$refs[`form${i + 1}`].validate();
         if (!valid) {
+          this[`form${i + 1}Valid`] = false;
           if (i === 2) {
             let target = 0;
             for (var item of this.$refs.form3.$children) {
@@ -1326,6 +1327,7 @@ export default {
           }
           return [false, `Section ${i + 1} is not valid. Please correct errors and try again.`];
         }
+        this[`form${i + 1}Valid`] = true;
       }
       if (this.job.longitude == null || this.job.latitude == null) {
         return [false, 'Job latitude and longitude not set. Please try to re-enter address and try again.'];
