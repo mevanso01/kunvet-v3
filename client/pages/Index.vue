@@ -2,6 +2,7 @@
   @media (min-width: 1025px) {
     .search_results_div .v-list__tile--link:hover {
       background-color: transparent !important;
+      cursor: default;
     }
   }
 </style>
@@ -48,7 +49,6 @@
       width: 400px;
       height: 64px;
       background-color: #f4f4f4;
-      box-shadow: 0;
       font-size: 16px;
       display: flex;
     }
@@ -87,44 +87,44 @@
     .search_bar_text_field{
       height: 52px;
     }
-    .search_results_div{
+    .search_results_div {
       width: 400px;
       background-color: #f4f4f4;
       box-shadow: 0px 0px 5px #b0b0b0;
       font-size: 16px;
       position: absolute;
       z-index: 1000;
-    }
-    .search_results_div span.search_result_item_main{
-      white-space: nowrap;
-    }
-    .search_results_div span.search_result_item_secondary{
-      white-space: nowrap;
-      color: grey;
-    }
-    .search_results_div .search_result_item{
-      white-space: nowrap;
-      display: inline-block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      user-select: none;
-    }
-    .search_results_div ._v-list__tile{
-      padding: 0 8px;
-      width: 400px;
-      background-color: #f4f4f4;
-      font-size: 12px;
-      font-weight: 300;
-      line-height: 100%;
-      letter-spacing: 0;
-      font-family: proxima-nova, sans-serif;
-      color: #000000;
-    }
-    .search_results_div ._v-list__tile:hover{
-      background-color: #e4e4e4;
-    }
-    .search_results_div ._v-list__tile:hover *{
-      background-color: transparent !important;
+      span.search_result_item_main{
+        white-space: nowrap;
+      }
+      span.search_result_item_secondary{
+        white-space: nowrap;
+        color: grey;
+      }
+      .search_result_item{
+        white-space: nowrap;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        user-select: none;
+      }
+      ._v-list__tile{
+        padding: 0 8px;
+        width: 400px;
+        background-color: #f4f4f4;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 100%;
+        letter-spacing: 0;
+        font-family: proxima-nova, sans-serif;
+        color: #000000;
+      }
+      ._use_current_location {
+        user-select: none;
+      }
+      ._v-list__tile:hover, ._use_current_location:hover{
+        background-color: #e4e4e4;
+      }
     }
     ._dropdown-overlay {
       position: absolute;
@@ -1030,11 +1030,11 @@
               </div>
               <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
             </div>
-            <div class="search_bar_container" style="margin-top: 10px;">
-              <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
-              <p class="search_bar_current">Use Current Location</p>
-            </div>
             <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div" style="margin-top: 10px;">
+              <div class="search_bar_container _use_current_location" style="margin-bottom: 10px;">
+                <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
+                <p class="search_bar_current">Use Current Location</p>
+              </div>
               <v-list class="py-0">
                   <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
                     <div class="search_result_item">
