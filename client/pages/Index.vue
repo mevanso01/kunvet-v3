@@ -1,3 +1,10 @@
+<style lang="scss">
+  @media (min-width: 1025px) {
+    .search_results_div .v-list__tile--link:hover {
+      background-color: transparent !important;
+    }
+  }
+</style>
 <style lang="scss" scoped>
   // big desktop
   @media (min-width: 1025px){
@@ -83,10 +90,50 @@
     .search_results_div{
       width: 400px;
       background-color: #f4f4f4;
-      box-shadow: 0;
+      box-shadow: 0px 0px 5px #b0b0b0;
       font-size: 16px;
       position: absolute;
-      z-index: 10;
+      z-index: 1000;
+    }
+    .search_results_div span.search_result_item_main{
+      white-space: nowrap;
+    }
+    .search_results_div span.search_result_item_secondary{
+      white-space: nowrap;
+      color: grey;
+    }
+    .search_results_div .search_result_item{
+      white-space: nowrap;
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+    }
+    .search_results_div ._v-list__tile{
+      padding: 0 8px;
+      width: 400px;
+      background-color: #f4f4f4;
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 100%;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      color: #000000;
+    }
+    .search_results_div ._v-list__tile:hover{
+      background-color: #e4e4e4;
+    }
+    .search_results_div ._v-list__tile:hover *{
+      background-color: transparent !important;
+    }
+    ._dropdown-overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: transparent;
+      z-index: 999;
     }
     .search_btn{
       margin-top: 0px;
@@ -975,9 +1022,9 @@
                   class="search_bar_text_field"
                   label="Address"
                   required
-                  @change="setLatLongs"
+                  @input="addressInstantChange"
                   @focus="searchFocus=true"
-                  @blur="searchFocus=false"
+                  @click:clear="onClearSearchInput"
                   :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
                 ></v-text-field>
               </div>
@@ -987,16 +1034,17 @@
               <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
               <p class="search_bar_current">Use Current Location</p>
             </div>
-            <div v-if="searchFocus===true" class="search_results_div" style="margin-top: 10px;">
-              <div style="display: flex; height: 64px;">
-                {{job.addressList}}
-              <v-list>
-                  <v-list-tile v-for="(item, i) in job.addressList" :key="i">
-                    {{item}}
+            <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div" style="margin-top: 10px;">
+              <v-list class="py-0">
+                  <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
+                    <div class="search_result_item">
+                      <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
+                      <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
+                    </div>
                   </v-list-tile>
               </v-list>
-              </div>
             </div>
+            <div v-show="searchFocus===true && job.addressList && job.addressList.length > 0" class="_dropdown-overlay" @click="searchFocus=false"></div>
             <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
           </div>
       </div>
@@ -1474,6 +1522,8 @@ export default {
       addressList: [],
       searchFocus: false,
       geocoder: null,
+      autoCompleteService: null,
+      mouseInDropdown: false,
       addressValid: true,
       prevAutocompleteAddress: null,
       first_city_guess: 'UC Irvine',
@@ -1671,49 +1721,57 @@ export default {
         this.job.latList.push(place.geometry.location.lat());
         this.job.longList.push(place.geometry.location.lng());
       });
-      console.log(this.job.addressList);
-    },
-    setLatLongs() {
-      setTimeout(() => {
-        if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
-          this.geocoder.geocode({ 'address': this.job.address }, (results, status) => {
-            if (status === 'OK' && results.length === 1) {
-              this.job.latitude = results[0].geometry.location.lat();
-              this.job.longitude = results[0].geometry.location.lng();
-              this.job.addressValid = true;
-              this.$refs.addressField.validate();
-            } else {
-              this.job.latitude = null;
-              this.job.longitude = null;
-              this.job.addressValid = false;
-              this.$refs.addressField.validate();
-            }
-          });
-        }
-      }, 500);
     },
     initGoogleMaps() {
       if (!this.autocomplete || !this.geocoder) {
         const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
         input.setAttribute('placeholder', '');
-        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        this.autoCompleteService = new window.google.maps.places.AutocompleteService();
         this.geocoder = new window.google.maps.Geocoder();
-        this.autocomplete.setComponentRestrictions({
-          country: ['us'],
-        });
-        this.autocomplete.addListener('place_changed', () => {
-          this.prevAutocompleteAddress = this.job.address;
-          if (this.autocomplete === null) {
-            this.initGoogleMaps();
-            return;
-          }
-          this.setPlace(this.autocomplete.getPlace());
-          this.setPlaces(this.autocomplete.getPlaces());
-        });
       }
       if (this.job.address) {
         this.setLatLongs();
       }
+    },
+    addressInstantChange(value) {
+      if (this.autoCompleteService) {
+        this.autoCompleteService.getPlacePredictions({ input: value }, (results, status) => {
+          if (status === 'OK') {
+            this.job.addressList = results;
+          } else {
+            this.job.addressList = [];
+          }
+          console.log(results);
+          console.log(status);
+        });
+      }
+    },
+    onClickAddressDropdownItem(index) {
+      const addressItem = this.job.addressList[index];
+      if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
+        this.searchFocus = false;
+        this.job.address = addressItem.structured_formatting.secondary_text;
+        this.geocoder.geocode({ 'placeId': addressItem.place_id }, (results, status) => {
+          if (status === 'OK' && results.length === 1) {
+            this.job.latitude = results[0].geometry.location.lat();
+            this.job.longitude = results[0].geometry.location.lng();
+            this.job.addressValid = true;
+            this.prevAutocompleteAddress = this.job.address;
+            this.$refs.addressField.validate();
+          } else {
+            this.job.latitude = null;
+            this.job.longitude = null;
+            this.job.addressValid = false;
+            this.$refs.addressField.validate();
+          }
+        });
+      }
+    },
+    onClearSearchInput() {
+      this.job.latitude = null;
+      this.job.longitude = null;
+      this.job.addressValid = false;
+      this.$refs.addressField.validate();
     },
   },
   activated() {
