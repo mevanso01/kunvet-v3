@@ -1022,9 +1022,9 @@
                   class="search_bar_text_field"
                   label="Address"
                   required
-                  @input="addressInstantChange"
+                  @input="onChangeAddressSearchInput"
                   @focus="searchFocus=true"
-                  @click:clear="onClearSearchInput"
+                  @click:clear="onClearAddressSearchInput"
                   :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
                 ></v-text-field>
               </div>
@@ -1523,7 +1523,6 @@ export default {
       searchFocus: false,
       geocoder: null,
       autoCompleteService: null,
-      mouseInDropdown: false,
       addressValid: true,
       prevAutocompleteAddress: null,
       first_city_guess: 'UC Irvine',
@@ -1733,7 +1732,7 @@ export default {
         this.setLatLongs();
       }
     },
-    addressInstantChange(value) {
+    onChangeAddressSearchInput(value) {
       if (this.autoCompleteService) {
         this.autoCompleteService.getPlacePredictions({ input: value }, (results, status) => {
           if (status === 'OK') {
@@ -1741,8 +1740,6 @@ export default {
           } else {
             this.job.addressList = [];
           }
-          console.log(results);
-          console.log(status);
         });
       }
     },
@@ -1767,7 +1764,7 @@ export default {
         });
       }
     },
-    onClearSearchInput() {
+    onClearAddressSearchInput() {
       this.job.latitude = null;
       this.job.longitude = null;
       this.job.addressValid = false;
