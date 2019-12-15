@@ -1,11 +1,3 @@
-<style lang="scss">
-  .search_results_div {
-    .v-list__tile--link:hover {
-      background-color: transparent !important;
-      cursor: default;
-    }
-  }
-</style>
 <style lang="scss" scoped>
   // overall
   .index_area {
@@ -83,6 +75,7 @@
     font-size: 16px;
     margin-right: 24px;
     color: lightgrey;
+    z-index: 1000;
   }
   .search_bar_icon:hover{
     color: grey;
@@ -91,6 +84,10 @@
     font-size: 14px;
     margin-left: 24px;
     color: #5a8cff;
+  }
+  .search_bar_text_field{
+    height: 52px;
+    caret-color: #3c3c3c !important;
   }
   // big desktop
   @media (min-width: 1025px){
@@ -151,15 +148,9 @@
       background-color: none;
     }
     .search_results_div {
-      ._use_current_location {
-        margin-bottom: 10px;
-      }
       ._v-list__tile:nth-child(4), ._v-list__tile:nth-child(5) {
         display: block !important;
       }
-    }
-    .search_bar_text_field{
-      height: 52px;
     }
     .search_results_div {
       width: 400px;
@@ -525,9 +516,6 @@
       height: 100%;
       background-color: none;
     }
-    .search_bar_text_field{
-      height: 52px;
-    }
     .search_btn{
       width: 100%;
       height: 64px !important;
@@ -821,9 +809,6 @@
       height: 100%;
       background-color: none;
     }
-    .search_bar_text_field{
-      height: 52px;
-    }
     .search_btn{
       width: 100%;
       height: 64px !important;
@@ -888,9 +873,6 @@
       width: 100%;
       height: 100%;
       background-color: none;
-    }
-    .search_bar_text_field{
-      height: 52px;
     }
     .search_btn{
       width: 100%;
@@ -968,9 +950,6 @@
       height: 100%;
       background-color: none;
     }
-    .search_bar_text_field{
-      height: 52px;
-    }
     .search_btn{
       width: 100%;
       height: 64px !important;
@@ -1002,7 +981,12 @@
   align-items: center;
   justify-content: center;
 }
-
+.search_results_div {
+  .v-list__tile--link:hover {
+    background-color: transparent !important;
+    cursor: default;
+  }
+}
 </style>
 
 <template>
@@ -1017,13 +1001,13 @@
               <div class="search_bar_head">FIND</div>
               <div class="search_bar_field">
                 <v-text-field
-                  solo flat hide-details clearable
+                  solo flat hide-details
                   label="Part time web developer"
                   v-model="query"
                   class="search_bar_text_field"
                 ></v-text-field>
               </div>
-              <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+              <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
             </div>
             <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
               <div class="search_bar_head">NEAR</div>
@@ -1034,10 +1018,8 @@
                   ref="addressField"
                   class="search_bar_text_field"
                   label="Address"
-                  required
                   @input="onChangeAddressSearchInput"
                   @focus="searchFocus=true"
-                  :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
                 ></v-text-field>
               </div>
               <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
@@ -1197,13 +1179,13 @@
               <div class="search_bar_head">FIND</div>
               <div class="search_bar_field">
                 <v-text-field
-                  solo flat hide-details clearable
+                  solo flat hide-details
                   label="Part time web developer"
                   v-model="query"
                   class="search_bar_text_field"
                 ></v-text-field>
               </div>
-              <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+              <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
             </div>
             <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
               <div class="search_bar_head">NEAR</div>
@@ -1214,10 +1196,8 @@
                   ref="addressField"
                   class="search_bar_text_field"
                   label="Address"
-                  required
                   @input="onChangeAddressSearchInput"
                   @focus="searchFocus=true"
-                  :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
                 ></v-text-field>
               </div>
               <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
@@ -1345,13 +1325,13 @@
           <div class="search_bar_head">FIND</div>
           <div class="search_bar_field">
             <v-text-field
-              solo flat hide-details clearable
+              solo flat hide-details
               label="Part time web developer"
               v-model="query"
               class="search_bar_text_field"
             ></v-text-field>
           </div>
-          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+          <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
         </div>
         <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
           <div class="search_bar_head">NEAR</div>
@@ -1362,10 +1342,8 @@
               ref="addressField"
               class="search_bar_text_field"
               label="Address"
-              required
               @input="onChangeAddressSearchInput"
               @focus="searchFocus=true"
-              :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
             ></v-text-field>
           </div>
           <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
@@ -1396,13 +1374,13 @@
           <div class="search_bar_head">FIND</div>
           <div class="search_bar_field">
             <v-text-field
-              solo flat hide-details clearable
+              solo flat hide-details
               label="Part time web developer"
               v-model="query"
               class="search_bar_text_field"
             ></v-text-field>
           </div>
-          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+          <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
         </div>
         <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
           <div class="search_bar_head">NEAR</div>
@@ -1413,10 +1391,8 @@
               ref="addressField"
               class="search_bar_text_field"
               label="Address"
-              required
               @input="onChangeAddressSearchInput"
               @focus="searchFocus=true"
-              :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
             ></v-text-field>
           </div>
           <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
@@ -1447,13 +1423,13 @@
           <div class="search_bar_head">FIND</div>
           <div class="search_bar_field">
             <v-text-field
-              solo flat hide-details clearable
+              solo flat hide-details
               label="Part time web developer"
               v-model="query"
               class="search_bar_text_field"
             ></v-text-field>
           </div>
-          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+          <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
         </div>
         <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
           <div class="search_bar_head">NEAR</div>
@@ -1464,10 +1440,8 @@
               ref="addressField"
               class="search_bar_text_field"
               label="Address"
-              required
               @input="onChangeAddressSearchInput"
               @focus="searchFocus=true"
-              :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
             ></v-text-field>
           </div>
           <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
@@ -1844,6 +1818,11 @@ export default {
       this.job.longitude = null;
       this.job.addressValid = false;
       this.$refs.addressField.validate();
+      this.searchFocus = false;
+    },
+    onClearQueryInput() {
+      this.query = '';
+      this.searchFocus = false;
     },
   },
   activated() {
