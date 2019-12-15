@@ -1,12 +1,97 @@
 <style lang="scss">
-  @media (min-width: 1025px) {
-    .search_results_div .v-list__tile--link:hover {
+  .search_results_div {
+    .v-list__tile--link:hover {
       background-color: transparent !important;
       cursor: default;
     }
   }
 </style>
 <style lang="scss" scoped>
+  // overall
+  .index_area {
+    position: relative;
+  }
+  .search_area {
+    position: relative;
+  }
+  .search_bar_current{
+    font-weight: 300;
+    font-family: proxima-nova, sans-serif;
+    padding-left: 8px;
+    padding-top: 22px;
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: #5a8cff;
+  }
+  .search_results_div {
+    background-color: #f4f4f4;
+    font-size: 16px;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    ._use_current_location {
+      margin-bottom: 0;
+      user-select: none;
+    }
+    span.search_result_item_main{
+      white-space: nowrap;
+    }
+    span.search_result_item_secondary{
+      white-space: nowrap;
+      color: grey;
+    }
+    .search_result_item{
+      white-space: nowrap;
+      display: inline-block;
+      text-overflow: ellipsis;
+      user-select: none;
+      overflow-x: hidden;
+      overflow-y: visible;
+      height: 100%;
+      padding-top: 16px;
+    }
+    ._v-list__tile{
+      padding: 0 8px;
+      width: 100%;
+      background-color: #f4f4f4;
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 100%;
+      letter-spacing: 0;
+      font-family: proxima-nova, sans-serif;
+      color: #000000;
+    }
+    ._v-list__tile:hover, ._use_current_location:hover{
+      background-color: #e4e4e4;
+    }
+    ._v-list__tile:nth-child(4), ._v-list__tile:nth-child(5) {
+      display: none;
+    }
+  }
+  ._dropdown-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    z-index: 999;
+  }
+  .search_bar_icon{
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 16px;
+    margin-right: 24px;
+    color: lightgrey;
+  }
+  .search_bar_icon:hover{
+    color: grey;
+  }
+  .search_bar_icon_cross{
+    font-size: 14px;
+    margin-left: 24px;
+    color: #5a8cff;
+  }
   // big desktop
   @media (min-width: 1025px){
     .medium, .mobile, .small, .extra_small {
@@ -65,75 +150,28 @@
       height: 100%;
       background-color: none;
     }
-    .search_bar_icon{
-      font-size: 16px;
-      margin-right: 24px;
-      color: lightgrey;
-    }
-    .search_bar_icon_cross{
-      font-size: 16px;
-      margin-left: 24px;
-      color: #5a8cff;
-    }
-    .search_bar_current{
-      font-weight: 600;
-      font-family: proxima-nova, sans-serif;
-      padding-left: 10px;
-      padding-top: 20px;
-      margin-bottom: 0px;
-      font-size: 16px;
-      color: #5a8cff;
+    .search_results_div {
+      ._use_current_location {
+        margin-bottom: 10px;
+      }
+      ._v-list__tile:nth-child(4), ._v-list__tile:nth-child(5) {
+        display: block !important;
+      }
     }
     .search_bar_text_field{
       height: 52px;
     }
     .search_results_div {
       width: 400px;
-      background-color: #f4f4f4;
-      box-shadow: 0px 0px 5px #b0b0b0;
-      font-size: 16px;
-      position: absolute;
-      z-index: 1000;
-      span.search_result_item_main{
-        white-space: nowrap;
-      }
-      span.search_result_item_secondary{
-        white-space: nowrap;
-        color: grey;
-      }
-      .search_result_item{
-        white-space: nowrap;
-        display: inline-block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        user-select: none;
-      }
-      ._v-list__tile{
-        padding: 0 8px;
-        width: 400px;
-        background-color: #f4f4f4;
-        font-size: 12px;
-        font-weight: 300;
-        line-height: 100%;
-        letter-spacing: 0;
-        font-family: proxima-nova, sans-serif;
-        color: #000000;
-      }
-      ._use_current_location {
-        user-select: none;
-      }
-      ._v-list__tile:hover, ._use_current_location:hover{
-        background-color: #e4e4e4;
-      }
     }
-    ._dropdown-overlay {
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      background-color: transparent;
-      z-index: 999;
+    .search_bar_current{
+      font-weight: 600;
+      font-size: 16px;
+      padding-top: 20px;
+      padding-left: 10px;
+    }
+    .search_bar_icon_cross{
+      font-size: 16px;
     }
     .search_btn{
       margin-top: 0px;
@@ -483,18 +521,14 @@
       margin-bottom: 0px;
     }
     .search_bar_field{
-      width: 100%;
+      width: 248px;
       height: 100%;
       background-color: none;
     }
     .search_bar_text_field{
       height: 52px;
     }
-    .search_bar_icon{
-      font-size: 16px;
-    }
     .search_btn{
-      margin-top: 20px;
       width: 100%;
       height: 64px !important;
       line-height: 64px !important;
@@ -783,21 +817,14 @@
       margin-bottom: 0px;
     }
     .search_bar_field{
-      width: 100%;
+      width: 444px;
       height: 100%;
       background-color: none;
     }
     .search_bar_text_field{
       height: 52px;
     }
-    .search_bar_icon{
-      font-size: 16px;
-      padding-right: 24px;
-      padding-left: 10px;
-      color: lightgrey;
-    }
     .search_btn{
-      margin-top: 20px;
       width: 100%;
       height: 64px !important;
       line-height: 64px !important;
@@ -865,14 +892,7 @@
     .search_bar_text_field{
       height: 52px;
     }
-    .search_bar_icon{
-      font-size: 16px;
-      padding-right: 24px;
-      padding-left: 10px;
-      color: lightgrey;
-    }
     .search_btn{
-      margin-top: 20px;
       width: 100%;
       height: 64px !important;
       line-height: 64px !important;
@@ -951,14 +971,7 @@
     .search_bar_text_field{
       height: 52px;
     }
-    .search_bar_icon{
-      font-size: 16px;
-      padding-right: 20px;
-      padding-left: 10px;
-      color: lightgrey;
-    }
     .search_btn{
-      margin-top: 20px;
       width: 100%;
       height: 64px !important;
       line-height: 64px !important;
@@ -1012,11 +1025,11 @@
               </div>
               <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
             </div>
-            <div class="search_bar_container" style="margin-top: 10px;">
+            <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
               <div class="search_bar_head">NEAR</div>
               <div class="search_bar_field">
                 <v-text-field
-                  solo flat hide-details clearable
+                  solo flat hide-details
                   v-model="job.address"
                   ref="addressField"
                   class="search_bar_text_field"
@@ -1024,14 +1037,13 @@
                   required
                   @input="onChangeAddressSearchInput"
                   @focus="searchFocus=true"
-                  @click:clear="onClearAddressSearchInput"
                   :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
                 ></v-text-field>
               </div>
-              <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+              <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
             </div>
-            <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div" style="margin-top: 10px;">
-              <div class="search_bar_container _use_current_location" style="margin-bottom: 10px;">
+            <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
+              <div class="search_bar_container _use_current_location">
                 <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
                 <p class="search_bar_current">Use Current Location</p>
               </div>
@@ -1044,7 +1056,6 @@
                   </v-list-tile>
               </v-list>
             </div>
-            <div v-show="searchFocus===true && job.addressList && job.addressList.length > 0" class="_dropdown-overlay" @click="searchFocus=false"></div>
             <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
           </div>
       </div>
@@ -1192,21 +1203,38 @@
                   class="search_bar_text_field"
                 ></v-text-field>
               </div>
+              <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
             </div>
-            <div class="search_bar_container" style="margin-top: 10px;">
+            <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
               <div class="search_bar_head">NEAR</div>
               <div class="search_bar_field">
-                <v-select
-                  label="School or City"
-                  item-text="name"
-                  item-value="name"
-                  v-bind:items="availableCities"
-                  v-model="selectedCity"
-                  solo flat hide-details autocomplete
+                <v-text-field
+                  solo flat hide-details
+                  v-model="job.address"
+                  ref="addressField"
                   class="search_bar_text_field"
-                >
-                </v-select>
+                  label="Address"
+                  required
+                  @input="onChangeAddressSearchInput"
+                  @focus="searchFocus=true"
+                  :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+                ></v-text-field>
               </div>
+              <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
+            </div>
+            <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
+              <div class="search_bar_container _use_current_location">
+                <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
+                <p class="search_bar_current">Use Current Location</p>
+              </div>
+              <v-list class="py-0">
+                  <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
+                    <div class="search_result_item">
+                      <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
+                      <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
+                    </div>
+                  </v-list-tile>
+              </v-list>
             </div>
             <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
           </div>
@@ -1325,21 +1353,36 @@
           </div>
           <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
         </div>
-        <div class="search_bar_container" style="margin-top: 10px;">
+        <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
           <div class="search_bar_head">NEAR</div>
           <div class="search_bar_field">
-            <v-select
-              label="School or City"
-              item-text="name"
-              item-value="name"
-              v-bind:items="availableCities"
-              v-model="selectedCity"
-              solo flat hide-details autocomplete
+            <v-text-field
+              solo flat hide-details
+              v-model="job.address"
+              ref="addressField"
               class="search_bar_text_field"
-            >
-            </v-select>
+              label="Address"
+              required
+              @input="onChangeAddressSearchInput"
+              @focus="searchFocus=true"
+              :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+            ></v-text-field>
           </div>
-          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+          <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
+        </div>
+        <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
+          <div class="search_bar_container _use_current_location">
+            <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
+            <p class="search_bar_current">Use Current Location</p>
+          </div>
+          <v-list class="py-0">
+              <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
+                <div class="search_result_item">
+                  <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
+                  <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
+                </div>
+              </v-list-tile>
+          </v-list>
         </div>
         <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
       </div>
@@ -1361,21 +1404,36 @@
           </div>
           <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
         </div>
-        <div class="search_bar_container" style="margin-top: 10px;">
+        <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
           <div class="search_bar_head">NEAR</div>
           <div class="search_bar_field">
-            <v-select
-              label="School or City"
-              item-text="name"
-              item-value="name"
-              v-bind:items="availableCities"
-              v-model="selectedCity"
-              solo flat hide-details autocomplete
+            <v-text-field
+              solo flat hide-details
+              v-model="job.address"
+              ref="addressField"
               class="search_bar_text_field"
-            >
-            </v-select>
+              label="Address"
+              required
+              @input="onChangeAddressSearchInput"
+              @focus="searchFocus=true"
+              :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+            ></v-text-field>
           </div>
-          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+          <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
+        </div>
+        <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
+          <div class="search_bar_container _use_current_location">
+            <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
+            <p class="search_bar_current">Use Current Location</p>
+          </div>
+          <v-list class="py-0">
+              <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
+                <div class="search_result_item">
+                  <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
+                  <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
+                </div>
+              </v-list-tile>
+          </v-list>
         </div>
         <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
       </div>
@@ -1397,25 +1455,41 @@
           </div>
           <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
         </div>
-        <div class="search_bar_container" style="margin-top: 10px;">
+        <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
           <div class="search_bar_head">NEAR</div>
           <div class="search_bar_field">
-            <v-select
-              label="School or City"
-              item-text="name"
-              item-value="name"
-              v-bind:items="availableCities"
-              v-model="selectedCity"
-              solo flat hide-details autocomplete
+            <v-text-field
+              solo flat hide-details
+              v-model="job.address"
+              ref="addressField"
               class="search_bar_text_field"
-            >
-            </v-select>
+              label="Address"
+              required
+              @input="onChangeAddressSearchInput"
+              @focus="searchFocus=true"
+              :rules="[() => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+            ></v-text-field>
           </div>
-          <v-icon class="search_bar_icon">fas fa-times-circle</v-icon>
+          <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
+        </div>
+        <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
+          <div class="search_bar_container _use_current_location">
+            <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
+            <p class="search_bar_current">Use Current Location</p>
+          </div>
+          <v-list class="py-0">
+              <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
+                <div class="search_result_item">
+                  <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
+                  <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
+                </div>
+              </v-list-tile>
+          </v-list>
         </div>
         <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
       </div>
     </div>
+    <div v-show="searchFocus===true && job.addressList && job.addressList.length > 0" class="_dropdown-overlay" @click="searchFocus=false"></div>
   </div>
 </template>
 <script>
@@ -1728,9 +1802,9 @@ export default {
         this.autoCompleteService = new window.google.maps.places.AutocompleteService();
         this.geocoder = new window.google.maps.Geocoder();
       }
-      if (this.job.address) {
-        this.setLatLongs();
-      }
+      // if (this.job.address) {
+      //   this.setLatLongs();
+      // }
     },
     onChangeAddressSearchInput(value) {
       if (this.autoCompleteService) {
@@ -1745,9 +1819,9 @@ export default {
     },
     onClickAddressDropdownItem(index) {
       const addressItem = this.job.addressList[index];
-      if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
+      if (this.geocoder) {
         this.searchFocus = false;
-        this.job.address = addressItem.structured_formatting.secondary_text;
+        this.job.address = `${addressItem.structured_formatting.main_text} ${addressItem.structured_formatting.secondary_text}`;
         this.geocoder.geocode({ 'placeId': addressItem.place_id }, (results, status) => {
           if (status === 'OK' && results.length === 1) {
             this.job.latitude = results[0].geometry.location.lat();
@@ -1765,6 +1839,7 @@ export default {
       }
     },
     onClearAddressSearchInput() {
+      this.job.address = '';
       this.job.latitude = null;
       this.job.longitude = null;
       this.job.addressValid = false;
