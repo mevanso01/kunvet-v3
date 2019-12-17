@@ -7,7 +7,7 @@
     position: relative;
   }
   .search_bar_current{
-    font-weight: 300;
+    font-weight: 600;
     font-family: proxima-nova, sans-serif;
     padding-left: 8px;
     padding-top: 22px;
@@ -74,6 +74,7 @@
     margin-bottom: auto;
     font-size: 16px;
     margin-right: 24px;
+    margin-left: 10px;
     color: lightgrey;
     z-index: 1000;
   }
@@ -1019,7 +1020,6 @@
                   class="search_bar_text_field"
                   label="Address"
                   @input="onChangeAddressSearchInput"
-                  @focus="searchFocus=true"
                 ></v-text-field>
               </div>
               <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
@@ -1781,9 +1781,14 @@ export default {
       // }
     },
     onChangeAddressSearchInput(value) {
+      if (value === '') {
+        this.searchFocus = false;
+        return;
+      }
       if (this.autoCompleteService) {
         this.autoCompleteService.getPlacePredictions({ input: value }, (results, status) => {
           if (status === 'OK') {
+            this.searchFocus = true;
             this.job.addressList = results;
           } else {
             this.job.addressList = [];
