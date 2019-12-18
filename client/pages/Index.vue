@@ -6,90 +6,6 @@
   .search_area {
     position: relative;
   }
-  .search_bar_current{
-    font-weight: 600;
-    font-family: proxima-nova, sans-serif;
-    padding-left: 8px;
-    padding-top: 22px;
-    margin-bottom: 0px;
-    font-size: 14px;
-    color: #5a8cff;
-  }
-  .search_results_div {
-    background-color: #f4f4f4;
-    font-size: 16px;
-    position: absolute;
-    z-index: 1000;
-    width: 100%;
-    ._use_current_location {
-      margin-bottom: 0;
-      user-select: none;
-    }
-    span.search_result_item_main{
-      white-space: nowrap;
-    }
-    span.search_result_item_secondary{
-      white-space: nowrap;
-      color: grey;
-    }
-    .search_result_item{
-      white-space: nowrap;
-      display: inline-block;
-      text-overflow: ellipsis;
-      user-select: none;
-      overflow-x: hidden;
-      overflow-y: visible;
-      height: 100%;
-      padding-top: 16px;
-    }
-    ._v-list__tile{
-      padding: 0 8px;
-      width: 100%;
-      background-color: #f4f4f4;
-      font-size: 12px;
-      font-weight: 300;
-      line-height: 100%;
-      letter-spacing: 0;
-      font-family: proxima-nova, sans-serif;
-      color: #000000;
-    }
-    ._v-list__tile:hover, ._use_current_location:hover{
-      background-color: #e4e4e4;
-    }
-    ._v-list__tile:nth-child(4), ._v-list__tile:nth-child(5) {
-      display: none;
-    }
-  }
-  ._dropdown-overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background-color: transparent;
-    z-index: 999;
-  }
-  .search_bar_icon{
-    margin-top: auto;
-    margin-bottom: auto;
-    font-size: 16px;
-    margin-right: 24px;
-    margin-left: 10px;
-    color: lightgrey;
-    z-index: 1000;
-  }
-  .search_bar_icon:hover{
-    color: grey;
-  }
-  .search_bar_icon_cross{
-    font-size: 14px;
-    margin-left: 24px;
-    color: #5a8cff;
-  }
-  .search_bar_text_field{
-    height: 52px;
-    caret-color: #3c3c3c !important;
-  }
   // big desktop
   @media (min-width: 1025px){
     .medium, .mobile, .small, .extra_small {
@@ -127,58 +43,6 @@
       color: #ff6969;
       text-align: left;
       margin-bottom: 0px;
-    }
-    .search_bar_container{
-      width: 400px;
-      height: 64px;
-      background-color: #f4f4f4;
-      font-size: 16px;
-      display: flex;
-    }
-    .search_bar_head{
-      font-weight: 600;
-      font-family: proxima-nova, sans-serif;
-      letter-spacing: 0.12em;
-      padding-left: 24px;
-      padding-top: 20px;
-      margin-bottom: 0px;
-    }
-    .search_bar_field{
-      width: 292px;
-      height: 100%;
-      background-color: none;
-    }
-    .search_results_div {
-      ._v-list__tile:nth-child(4), ._v-list__tile:nth-child(5) {
-        display: block !important;
-      }
-    }
-    .search_results_div {
-      width: 400px;
-    }
-    .search_bar_current{
-      font-weight: 600;
-      font-size: 16px;
-      padding-top: 20px;
-      padding-left: 10px;
-    }
-    .search_bar_icon_cross{
-      font-size: 16px;
-    }
-    .search_btn{
-      margin-top: 0px;
-      width: 100%;
-      height: 64px !important;
-      line-height: 64px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-    }
-    .search_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 16px;
-      letter-spacing: 0.12em;
-      line-height: 120%;
-      font-weight: 600;
     }
     .ykunvet_div{
       max-width: 1008px;
@@ -455,6 +319,9 @@
       padding-bottom: 150px;
       margin-bottom: 0px;
     }
+    .job-search {
+      margin-top: 36px;
+    }
   }
   // medium desktop
   @media (min-width: 801px) and (max-width: 1024px) {
@@ -494,42 +361,6 @@
       color: #ff6969;
       text-align: left;
       margin-bottom: 0px;
-    }
-    .search_bar_container{
-      width: 100%;
-      height: 64px;
-      background-color: #f4f4f4;
-      box-shadow: 0;
-      font-size: 16px;
-      display: flex;
-    }
-    .search_bar_head{
-      width: 68px;
-      font-weight: 600;
-      font-family: proxima-nova, sans-serif;
-      letter-spacing: 0.12em;
-      padding-left: 24px;
-      padding-top: 20px;
-      margin-bottom: 0px;
-    }
-    .search_bar_field{
-      width: 248px;
-      height: 100%;
-      background-color: none;
-    }
-    .search_btn{
-      width: 100%;
-      height: 64px !important;
-      line-height: 64px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-    }
-    .search_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 16px;
-      letter-spacing: 0.12em;
-      line-height: 120%;
-      font-weight: 600;
     }
     .ykunvet_div{
       max-width: 1008px;
@@ -758,6 +589,9 @@
       padding-bottom: 60px;
       margin-bottom: 0px;
     }
+    .job-search {
+      margin-top: 36px;
+    }
   }
   // mobile
   @media (min-width: 601px) and (max-width: 800px) {
@@ -788,42 +622,6 @@
       width: 552px;
       margin: 0 auto;
     }
-    .search_bar_container{
-      width: 100%;
-      height: 64px;
-      background-color: #f4f4f4;
-      box-shadow: 0;
-      font-size: 16px;
-      display: flex;
-    }
-    .search_bar_head{
-      width: 68px;
-      font-weight: 600;
-      font-family: proxima-nova, sans-serif;
-      letter-spacing: 0.12em;
-      margin-left: 24px;
-      padding-top: 20px;
-      margin-bottom: 0px;
-    }
-    .search_bar_field{
-      width: 444px;
-      height: 100%;
-      background-color: none;
-    }
-    .search_btn{
-      width: 100%;
-      height: 64px !important;
-      line-height: 64px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-    }
-    .search_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 16px;
-      letter-spacing: 0.12em;
-      line-height: 120%;
-      font-weight: 600;
-    }
   }
   // small
   @media (min-width: 451px) and (max-width: 600px) {
@@ -852,42 +650,6 @@
       padding-bottom: 56px;
       width: calc(100% - 48px);
       margin: 0 auto;
-    }
-    .search_bar_container{
-      width: 100%;
-      height: 64px;
-      background-color: #f4f4f4;
-      box-shadow: 0;
-      font-size: 16px;
-      display: flex;
-    }
-    .search_bar_head{
-      width: 68px;
-      font-weight: 600;
-      font-family: proxima-nova, sans-serif;
-      letter-spacing: 0.12em;
-      padding-left: 24px;
-      padding-top: 20px;
-      margin-bottom: 0px;
-    }
-    .search_bar_field{
-      width: 100%;
-      height: 100%;
-      background-color: none;
-    }
-    .search_btn{
-      width: 100%;
-      height: 64px !important;
-      line-height: 64px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-    }
-    .search_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 16px;
-      letter-spacing: 0.12em;
-      line-height: 120%;
-      font-weight: 600;
     }
   }
   @media (min-width: 521px) and (max-width: 600px) {
@@ -929,42 +691,6 @@
       width: calc(100% - 48px);
       margin: 0 auto;
     }
-    .search_bar_container{
-      width: 100%;
-      height: 64px;
-      background-color: #f4f4f4;
-      box-shadow: 0;
-      font-size: 16px;
-      display: flex;
-    }
-    .search_bar_head{
-      width: 68px;
-      font-weight: 600;
-      font-family: proxima-nova, sans-serif;
-      letter-spacing: 0.12em;
-      padding-left: 20px;
-      padding-top: 20px;
-      margin-bottom: 0px;
-    }
-    .search_bar_field{
-      width: 100%;
-      height: 100%;
-      background-color: none;
-    }
-    .search_btn{
-      width: 100%;
-      height: 64px !important;
-      line-height: 64px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-    }
-    .search_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 16px;
-      letter-spacing: 0.12em;
-      line-height: 120%;
-      font-weight: 600;
-    }
   }
 </style>
 
@@ -982,10 +708,16 @@
   align-items: center;
   justify-content: center;
 }
-.search_results_div {
-  .v-list__tile--link:hover {
-    background-color: transparent !important;
-    cursor: default;
+// big desktop
+@media (min-width: 1025px){
+  .job-search {
+    margin-top: 36px;
+  }
+}
+// mobile
+@media (min-width: 801px) and (max-width: 1024px) {
+  .job-search {
+    margin-top: 36px;
   }
 }
 </style>
@@ -998,47 +730,7 @@
           <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
           <div class="search_area">
             <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
-            <div class="search_bar_container" style="margin-top: 36px;">
-              <div class="search_bar_head">FIND</div>
-              <div class="search_bar_field">
-                <v-text-field
-                  solo flat hide-details
-                  label="Part time web developer"
-                  v-model="query"
-                  class="search_bar_text_field"
-                ></v-text-field>
-              </div>
-              <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
-            </div>
-            <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
-              <div class="search_bar_head">NEAR</div>
-              <div class="search_bar_field">
-                <v-text-field
-                  solo flat hide-details
-                  v-model="job.address"
-                  ref="addressField"
-                  class="search_bar_text_field"
-                  label="Address"
-                  @input="onChangeAddressSearchInput"
-                ></v-text-field>
-              </div>
-              <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
-            </div>
-            <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
-              <div class="search_bar_container _use_current_location" @click="onClickCurrentLocation">
-                <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
-                <p class="search_bar_current">Use Current Location</p>
-              </div>
-              <v-list class="py-0">
-                  <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
-                    <div class="search_result_item">
-                      <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
-                      <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
-                    </div>
-                  </v-list-tile>
-              </v-list>
-            </div>
-            <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+            <JobSearch :to="searchDestination" class="job-search" />
           </div>
       </div>
       <div class="ykunvet_div">
@@ -1161,48 +853,7 @@
           <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
           <div class="search_area">
             <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
-            <div class="search_bar_container" style="margin-top: 30px;">
-              <div class="search_bar_head">FIND</div>
-              <div class="search_bar_field">
-                <v-text-field
-                  solo flat hide-details
-                  label="Part time web developer"
-                  v-model="query"
-                  class="search_bar_text_field"
-                ></v-text-field>
-              </div>
-              <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
-            </div>
-            <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
-              <div class="search_bar_head">NEAR</div>
-              <div class="search_bar_field">
-                <v-text-field
-                  solo flat hide-details
-                  v-model="job.address"
-                  ref="addressField"
-                  class="search_bar_text_field"
-                  label="Address"
-                  @input="onChangeAddressSearchInput"
-                  @focus="searchFocus=true"
-                ></v-text-field>
-              </div>
-              <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
-            </div>
-            <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
-              <div class="search_bar_container _use_current_location">
-                <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
-                <p class="search_bar_current">Use Current Location</p>
-              </div>
-              <v-list class="py-0">
-                  <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
-                    <div class="search_result_item">
-                      <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
-                      <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
-                    </div>
-                  </v-list-tile>
-              </v-list>
-            </div>
-            <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+            <JobSearch :to="searchDestination" class="job-search" />
           </div>
       </div>
       <div class="ykunvet_div">
@@ -1307,48 +958,7 @@
         <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
       </div>
       <div class="index_area">
-        <div class="search_bar_container">
-          <div class="search_bar_head">FIND</div>
-          <div class="search_bar_field">
-            <v-text-field
-              solo flat hide-details
-              label="Part time web developer"
-              v-model="query"
-              class="search_bar_text_field"
-            ></v-text-field>
-          </div>
-          <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
-        </div>
-        <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
-          <div class="search_bar_head">NEAR</div>
-          <div class="search_bar_field">
-            <v-text-field
-              solo flat hide-details
-              v-model="job.address"
-              ref="addressField"
-              class="search_bar_text_field"
-              label="Address"
-              @input="onChangeAddressSearchInput"
-              @focus="searchFocus=true"
-            ></v-text-field>
-          </div>
-          <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
-        </div>
-        <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
-          <div class="search_bar_container _use_current_location">
-            <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
-            <p class="search_bar_current">Use Current Location</p>
-          </div>
-          <v-list class="py-0">
-              <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
-                <div class="search_result_item">
-                  <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
-                  <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
-                </div>
-              </v-list-tile>
-          </v-list>
-        </div>
-        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+        <JobSearch :to="searchDestination" class="job-search" />
       </div>
     </div>
     <div class="home_content small">
@@ -1356,48 +966,7 @@
         <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
       </div>
       <div class="index_area">
-        <div class="search_bar_container">
-          <div class="search_bar_head">FIND</div>
-          <div class="search_bar_field">
-            <v-text-field
-              solo flat hide-details
-              label="Part time web developer"
-              v-model="query"
-              class="search_bar_text_field"
-            ></v-text-field>
-          </div>
-          <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
-        </div>
-        <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
-          <div class="search_bar_head">NEAR</div>
-          <div class="search_bar_field">
-            <v-text-field
-              solo flat hide-details
-              v-model="job.address"
-              ref="addressField"
-              class="search_bar_text_field"
-              label="Address"
-              @input="onChangeAddressSearchInput"
-              @focus="searchFocus=true"
-            ></v-text-field>
-          </div>
-          <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
-        </div>
-        <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
-          <div class="search_bar_container _use_current_location">
-            <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
-            <p class="search_bar_current">Use Current Location</p>
-          </div>
-          <v-list class="py-0">
-              <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
-                <div class="search_result_item">
-                  <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
-                  <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
-                </div>
-              </v-list-tile>
-          </v-list>
-        </div>
-        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+        <JobSearch :to="searchDestination" class="job-search" />
       </div>
     </div>
     <div class="home_content extra_small">
@@ -1405,51 +974,9 @@
         <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
       </div>
       <div class="index_area">
-        <div class="search_bar_container">
-          <div class="search_bar_head">FIND</div>
-          <div class="search_bar_field">
-            <v-text-field
-              solo flat hide-details
-              label="Part time web developer"
-              v-model="query"
-              class="search_bar_text_field"
-            ></v-text-field>
-          </div>
-          <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
-        </div>
-        <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
-          <div class="search_bar_head">NEAR</div>
-          <div class="search_bar_field">
-            <v-text-field
-              solo flat hide-details
-              v-model="job.address"
-              ref="addressField"
-              class="search_bar_text_field"
-              label="Address"
-              @input="onChangeAddressSearchInput"
-              @focus="searchFocus=true"
-            ></v-text-field>
-          </div>
-          <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
-        </div>
-        <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
-          <div class="search_bar_container _use_current_location">
-            <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
-            <p class="search_bar_current">Use Current Location</p>
-          </div>
-          <v-list class="py-0">
-              <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
-                <div class="search_result_item">
-                  <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
-                  <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
-                </div>
-              </v-list-tile>
-          </v-list>
-        </div>
-        <router-link :to="searchDestination"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+        <JobSearch :to="searchDestination" class="job-search" />
       </div>
     </div>
-    <div v-show="searchFocus===true && job.addressList && job.addressList.length > 0" class="_dropdown-overlay" @click="searchFocus=false"></div>
   </div>
 </template>
 <script>
@@ -1465,14 +992,14 @@ import nextJob from '@/assets/index/home-page-form-image.png';
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import PromoTextContainer from '@/components/PromoTextContainer';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
-import * as VueGoogleMaps from 'vue2-google-maps';
 import 'intersection-observer';
 import Scrollama from 'vue-scrollama';
+import PromoTextContainer from '@/components/PromoTextContainer';
 import SignupComponent from '@/components/HomepageSignupComponent';
+import JobSearch from '@/components/JobSearch';
 
 Vue.use(VueApollo);
 export default {
@@ -1486,6 +1013,7 @@ export default {
     SignupComponent,
     Scrollama,
     PromoTextContainer,
+    JobSearch,
   },
   props: {
     stage: {
@@ -1545,20 +1073,6 @@ export default {
         woman: woman,
         nextJob: nextJob,
       },
-      job: {
-        address: '',
-        addressList: [],
-        latList: [],
-        longList: [],
-        latitude: null,
-        longitude: null,
-      },
-      addressList: [],
-      searchFocus: false,
-      geocoder: null,
-      autoCompleteService: null,
-      addressValid: true,
-      prevAutocompleteAddress: null,
       first_city_guess: 'UC Irvine',
       uid: null,
       findJobs: [],
@@ -1733,120 +1247,8 @@ export default {
         }
       });
     },
-    setPlace(place) {
-      if (!place.geometry) {
-        this.job.addressValid = false;
-        return;
-      }
-      this.job.addressValid = true;
-      this.job.address = place.formatted_address;
-      this.job.latitude = place.geometry.location.lat();
-      this.job.longitude = place.geometry.location.lng();
-    },
-    setPlaces(places) {
-      places.forEach(function(place) {
-        if (!place.geometry) {
-          this.job.addressValid = false;
-          return;
-        }
-        this.job.addressValid = true;
-        this.job.addressList.push(place.formatted_address);
-        this.job.latList.push(place.geometry.location.lat());
-        this.job.longList.push(place.geometry.location.lng());
-      });
-    },
-    initGoogleMaps() {
-      if (!this.autocomplete || !this.geocoder) {
-        const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
-        input.setAttribute('placeholder', '');
-        this.autoCompleteService = new window.google.maps.places.AutocompleteService();
-        this.geocoder = new window.google.maps.Geocoder();
-      }
-      // if (this.job.address) {
-      //   this.setLatLongs();
-      // }
-    },
-    onChangeAddressSearchInput(value) {
-      if (value === '') {
-        this.searchFocus = false;
-        return;
-      }
-      if (this.autoCompleteService) {
-        this.autoCompleteService.getPlacePredictions({ input: value }, (results, status) => {
-          if (status === 'OK') {
-            this.searchFocus = true;
-            this.job.addressList = results;
-          } else {
-            this.job.addressList = [];
-          }
-        });
-      }
-    },
-    onClickAddressDropdownItem(index) {
-      const addressItem = this.job.addressList[index];
-      if (this.geocoder) {
-        this.searchFocus = false;
-        this.job.address = `${addressItem.structured_formatting.main_text} ${addressItem.structured_formatting.secondary_text}`;
-        this.geocoder.geocode({ 'placeId': addressItem.place_id }, (results, status) => {
-          if (status === 'OK' && results.length === 1) {
-            this.job.latitude = results[0].geometry.location.lat();
-            this.job.longitude = results[0].geometry.location.lng();
-            this.job.addressValid = true;
-            this.prevAutocompleteAddress = this.job.address;
-            this.$refs.addressField.validate();
-          } else {
-            this.job.latitude = null;
-            this.job.longitude = null;
-            this.job.addressValid = false;
-            this.$refs.addressField.validate();
-          }
-        });
-      }
-    },
-    onClearAddressSearchInput() {
-      this.job.address = '';
-      this.job.latitude = null;
-      this.job.longitude = null;
-      this.job.addressValid = false;
-      this.$refs.addressField.validate();
-      this.searchFocus = false;
-    },
-    onClearQueryInput() {
-      this.query = '';
-      this.searchFocus = false;
-    },
-    onClickCurrentLocation() {
-      if (!navigator.geolocation) {
-        return;
-      }
-      navigator.geolocation.getCurrentPosition(pos => {
-        console.log(pos);
-        var latlng = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        this.geocoder.geocode({ 'location': latlng }, (results, status) => {
-          if (status === 'OK') {
-            if (results[0]) {
-              this.job.latitude = results[0].geometry.location.lat();
-              this.job.longitude = results[0].geometry.location.lng();
-              this.job.address = results[0].formatted_address;
-              this.job.addressValid = true;
-              this.prevAutocompleteAddress = '';
-              this.$refs.addressField.validate();
-              this.searchFocus = false;
-            } else {
-              console.log('No results found');
-            }
-          } else {
-            console.log(`Geocoder failed due to: ${status}`);
-          }
-        });
-      });
-    },
   },
   activated() {
-    // Initialize Google maps
-    VueGoogleMaps.loaded.then(() => {
-      this.initGoogleMaps();
-    });
   },
 };
 // Define a new component called button-counter
