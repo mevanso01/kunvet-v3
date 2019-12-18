@@ -1025,7 +1025,7 @@
               <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
             </div>
             <div v-if="false || (searchFocus===true && job.addressList && job.addressList.length > 0)" class="search_results_div">
-              <div class="search_bar_container _use_current_location">
+              <div class="search_bar_container _use_current_location" @click="onClickCurrentLocation">
                 <v-icon class="search_bar_icon_cross">fas fa-crosshairs</v-icon>
                 <p class="search_bar_current">Use Current Location</p>
               </div>
@@ -1828,6 +1828,32 @@ export default {
     onClearQueryInput() {
       this.query = '';
       this.searchFocus = false;
+    },
+    onClickCurrentLocation() {
+      if (!navigator.geolocation) {
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(pos => {
+        console.log(pos);
+        var latlng = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        this.geocoder.geocode({ 'location': latlng }, (results, status) => {
+          if (status === 'OK') {
+            if (results[0]) {
+              this.job.latitude = results[0].geometry.location.lat();
+              this.job.longitude = results[0].geometry.location.lng();
+              this.job.address = results[0].formatted_address;
+              this.job.addressValid = true;
+              this.prevAutocompleteAddress = '';
+              this.$refs.addressField.validate();
+              this.searchFocus = false;
+            } else {
+              console.log('No results found');
+            }
+          } else {
+            console.log(`Geocoder failed due to: ${status}`);
+          }
+        });
+      });
     },
   },
   activated() {
