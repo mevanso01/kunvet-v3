@@ -23,7 +23,7 @@ h1 {
 }
 .next_job_title{
   margin-top: 80px;
-  font-size: 40px;
+  font-size: 38px;
   line-height: 120%;
   font-weight: 600;
   letter-spacing: 0;
@@ -38,15 +38,15 @@ h1 {
   letter-spacing: 0;
   color: black;
   font-family: proxima-nova, sans-serif; 
-  padding-top: 20px;
-  padding-bottom: 40px;
+  padding-top: 10px;
+  padding-bottom: 24px;
   margin-bottom: 0px;
 }
 .next_job_text_div{
   width: 440px;
 }
 .next_job_btn{
-  margin-top: 24px;
+  margin-top: 8px;
   width: 440px;
   height: 64px !important;
   line-height: 64px !important;

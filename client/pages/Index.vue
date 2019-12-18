@@ -665,7 +665,7 @@
     }
     .next_job_title{
       margin-top: 80px;
-      font-size: 36px;
+      font-size: 38px;
       line-height: 120%;
       font-weight: 600;
       letter-spacing: 0;
@@ -1143,22 +1143,8 @@
       </div> 
       <div class="next_job" v-show="state == 'initial'">
         <div class="next_job_div">
-              <!-- <h2 class="next_job_title">Your Next Job is Waiting</h2>
-              <p class="next_job_text">With a free account, you have access to all the newest jobs near you. Get yours now.</p>
-              <div class="next_job_field">
-                <v-form ref="form">
-                  <home-text-field required v-model="fname" :rules="requiredRules" label="First Name" class="next_job_text_field"/>
-                  <home-text-field required v-model="lname" :rules="requiredRules" label="Last Name" class="next_job_text_field"/>
-                  <home-text-field required v-model="email" :rules="emailRules" label="Email" class="next_job_text_field"/>
-                  <home-text-field required v-model="password" toggleVisibility :rules="passwordRules" label="Password" class="next_job_text_field" style="margin-bottom: 0px;"/>
-                </v-form>
-                <k-btn @click="send_to_student_signup" class="next_job_btn"><span class="next_job_btn_text">
-                    Create Free Applicant Account</span></k-btn>
-                <p class="next_job_btn_undertext">I have read and agreed to the <span class="next_job_btn_undertext_terms">
-                  <router-link to="terms" target="_blank">Terms and Conditions</router-link></span>.</p>
-              </div> -->
-              <img class="next_job_pic" :src="pngs.nextJob" alt="Home page form image">
-              <SignupComponent style="width: 440px;" type="student" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess"/>
+          <img class="next_job_pic" :src="pngs.nextJob" alt="Home page form image">
+          <SignupComponent style="width: 440px;" type="student" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess"/>
         </div>
       </div>
       <div class="looking_div">
