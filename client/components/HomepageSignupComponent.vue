@@ -70,7 +70,7 @@ h1 {
   letter-spacing: 0;
   font-family: proxima-nova, sans-serif; 
   padding-top: 8px;
-  padding-bottom: 150px;
+  padding-bottom: 0px;
   margin-bottom: 0px;
 }
 .next_job_btn_undertext_terms{

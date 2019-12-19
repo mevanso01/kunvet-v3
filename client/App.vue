@@ -4,7 +4,7 @@
       Development mode
     </div>
     <!--desktop version position: absolute; top: 0;  :class="{ 'white-bg': navHasBg }"     -->
-    <v-toolbar flat fixed class="main-navbar mobile-hide white-bg" style="z-index: 200; background-color: inherit;">
+    <v-toolbar flat fixed class="main-navbar mobile-hide white-bg" style="z-index: 1010; background-color: inherit;">
       <router-link to="/jobs/search">
         <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
         <img v-else src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">

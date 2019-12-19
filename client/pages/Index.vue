@@ -6,9 +6,170 @@
   .search_area {
     position: relative;
   }
+  .looking_div{
+    margin-top: 0px;
+    width: 100%;
+    background: linear-gradient(to bottom right, #38ef7d, #11998e);
+  }
+  .looking_text_div{
+    max-width: 1008px;
+    padding: 150px 24px 0;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .looking_header{
+    font-size: 46px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 120%;
+    letter-spacing: 0;
+    font-family: proxima-nova, sans-serif;
+    margin-bottom: 0;
+  }
+  .looking_text{
+    font-size: 22px;
+    font-weight: 300;
+    color: #ffffff;
+    line-height: 150%;
+    letter-spacing: 0;
+    max-width: 560px;
+    font-family: proxima-nova, sans-serif; 
+    margin-bottom: 0;
+    padding-top: 20px;
+  }
+  .looking_btn{
+    margin-top: 80px;
+    width: 200px;
+    height: 68px !important;
+    line-height: 68px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    background-color: white !important;
+  }
+  .looking_btn_text{
+    font-family: proxima-nova, sans-serif;
+    font-size: 22px;
+    color: #11998e;
+    letter-spacing: 0em;
+    line-height: 120%;
+    font-weight: 600;
+  }
+  .looking_btn_undertext{
+    margin-top: -6px;
+    font-size: 14px;
+    line-height: 120%;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: white;
+    font-family: proxima-nova, sans-serif;
+    padding-top: 8px;
+    padding-bottom: 150px;
+    margin-bottom: 0px;
+  }
+  .student_testimonials{
+    max-width: 1008px;
+    padding: 0 24px;
+    margin: 0 auto;
+    display: flex;
+    margin-top: 300px;
+  }
+  .student_testimonials_section{
+    background: white;
+    box-shadow: none;
+    .v-carousel__controls{
+      display: none;
+    }
+  }
+  .test_slide{
+    width: 100%;
+    margin-left: 0px;
+  }
+  .slide_info{
+    max-width: 960px;
+    display: flex;
+  }
+  .slide_stuff{
+    height: 380px;
+    width: 520px;
+    margin: auto 0;
+  }
+  .quote{
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    color: #86a8e7;
+    margin-left: 0px;
+    letter-spacing: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 80px;
+    line-height: 120%;
+  }
+  .test_text{
+    padding-top: 0px;
+    margin-top: -20px;
+    font-family: proxima-nova, sans-serif;
+    font-size: 22px;
+    color: #3c3c3c;
+    line-height: 150%;
+    margin-bottom: 0px;
+    font-weight: 300;
+  }
+  .bio{
+    //width: 260px;
+  }
+  .bio_img_background{
+    height: 440px;
+    width: 360px;
+    background-color: red;
+    margin-right: 60px;
+    text-align: center;
+  }
+  .bio_img{
+    margin-top: 60px;
+    height: 380px;
+  }
+  .student_controls{
+    margin-top: 44px;
+    height: 12px;
+    width: 84px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .student_controls_dot{
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  .student_controls_dot_active{
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: #c8c8c8;
+    cursor: pointer;
+  }
+  .bio_header{
+    padding-top: 60px;
+    font-size: 16px;
+    color: #3c3c3c;
+    font-family: proxima-nova, sans-serif;
+    font-weight: 600;
+    line-height: 100%;
+    margin-bottom: 0px;
+  }
+  .bio_text{
+    font-size: 16px;
+    padding-top: 10px;
+    font-weight: 300;
+    color: #3c3c3c;
+    font-family: proxima-nova, sans-serif;
+    line-height: 100%;
+    margin-bottom: 0px;
+  }
   // big desktop
   @media (min-width: 1025px){
-    .medium, .mobile, .small, .extra_small {
+    .medium:not(.desktop), .mobile:not(.desktop), .small:not(.desktop), .extra_small:not(.desktop) {
       display: none !important;
     }
     .home_content{
@@ -80,104 +241,6 @@
     }
     .ykunvet_phone{
       width: 442px;
-    }
-    .student_testimonials{
-      max-width: 1008px;
-      padding: 0 24px;
-      margin: 0 auto;
-      display: flex;
-      margin-top: 300px;
-    }
-    .student_testimonials_section{
-      background: white;
-      box-shadow: none;
-    }
-    .test_slide{
-      width: 100%;
-      margin-left: 0px;
-    }
-    .slide_info{
-      max-width: 960px;
-      display: flex;
-    }
-    .slide_stuff{
-      height: 380px;
-      width: 520px;
-      margin: auto 0;
-    }
-    .quote{
-      font-family: proxima-nova, sans-serif;
-      font-weight: 600;
-      color: #86a8e7;
-      margin-left: 0px;
-      letter-spacing: 0px;
-      margin-bottom: 0px;
-      margin-top: 0px;
-      font-size: 80px;
-      line-height: 120%;
-    }
-    .test_text{
-      padding-top: 0px;
-      margin-top: -20px;
-      font-family: proxima-nova, sans-serif;
-      font-size: 22px;
-      color: #3c3c3c;
-      line-height: 150%;
-      margin-bottom: 0px;
-      font-weight: 300;
-    }
-    .bio{
-      //width: 260px;
-    }
-    .bio_img_background{
-      height: 440px;
-      width: 360px;
-      background-color: red;
-      margin-right: 60px;
-      text-align: center;
-    }
-    .bio_img{
-      margin-top: 60px;
-      height: 380px;
-    }
-    .student_controls{
-      margin-top: 44px;
-      height: 12px;
-      width: 84px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .student_controls_dot{
-      height: 12px;
-      width: 12px;
-      border-radius: 50%;
-      background-color: #f0f0f0;
-      cursor: pointer;
-    }
-    .student_controls_dot_active{
-      height: 12px;
-      width: 12px;
-      border-radius: 50%;
-      background-color: #c8c8c8;
-      cursor: pointer;
-    }
-    .bio_header{
-      padding-top: 60px;
-      font-size: 16px;
-      color: #3c3c3c;
-      font-family: proxima-nova, sans-serif;
-      font-weight: 600;
-      line-height: 100%;
-      margin-bottom: 0px;
-    }
-    .bio_text{
-      font-size: 16px;
-      padding-top: 10px;
-      font-weight: 300;
-      color: #3c3c3c;
-      font-family: proxima-nova, sans-serif;
-      line-height: 100%;
-      margin-bottom: 0px;
     }
     .next_job{
       width: 100%;
@@ -259,73 +322,13 @@
       margin-bottom: 8px;
       font-family: proxima-nova, sans-serif; 
     }
-    .looking_div{
-      margin-top: 0px;
-      width: 100%;
-      background: linear-gradient(to bottom right, #38ef7d, #11998e);
-    }
-    .looking_text_div{
-      max-width: 1008px;
-      padding: 150px 24px 0;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .looking_header{
-      font-size: 46px;
-      font-weight: 600;
-      color: #ffffff;
-      line-height: 120%;
-      letter-spacing: 0;
-      font-family: proxima-nova, sans-serif;
-      margin-bottom: 0;
-    }
-    .looking_text{
-      font-size: 22px;
-      font-weight: 300;
-      color: #ffffff;
-      line-height: 150%;
-      letter-spacing: 0;
-      max-width: 560px;
-      font-family: proxima-nova, sans-serif; 
-      margin-bottom: 0;
-      padding-top: 20px;
-    }
-    .looking_btn{
-      margin-top: 80px;
-      width: 200px;
-      height: 68px !important;
-      line-height: 68px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-      background-color: white !important;
-    }
-    .looking_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 22px;
-      color: #11998e;
-      letter-spacing: 0em;
-      line-height: 120%;
-      font-weight: 600;
-    }
-    .looking_btn_undertext{
-      margin-top: -6px;
-      font-size: 14px;
-      line-height: 120%;
-      font-weight: 300;
-      letter-spacing: 0;
-      color: white;
-      font-family: proxima-nova, sans-serif;
-      padding-top: 8px;
-      padding-bottom: 150px;
-      margin-bottom: 0px;
-    }
     .job-search {
       margin-top: 36px;
     }
   }
   // medium desktop
   @media (min-width: 801px) and (max-width: 1024px) {
-    .desktop, .mobile, .small, .extra_small {
+    .desktop:not(.medium), .mobile:not(.medium), .small:not(.medium), .extra_small:not(.medium) {
       display: none !important;
     }
     .home_content{
@@ -369,17 +372,17 @@
     }
     .ykunvet_section{
       display: flex;
-      margin-top: 120px;
+      margin-top: 200px;
     }
     .ykunvet_text_div{
-      width: 50%;
+      width: 346px;
       height: 340px;
       margin-bottom: auto;
       margin-top: auto;
-      margin-right: 11%;
+      margin-right: 75px;
     }
     .ykunvet_header{
-      font-size: 32px;
+      font-size: 34px;
       line-height: 120%;
       font-weight: 600;
       font-family: proxima-nova, sans-serif;
@@ -387,7 +390,7 @@
       margin-bottom: 0px;
     }
     .ykunvet_text{
-      font-size: 22px;
+      font-size: 20px;
       line-height: 150%;
       font-weight: 300;
       letter-spacing: 0;
@@ -397,98 +400,12 @@
       color: black;
     }
     .ykunvet_phone{
-      width: 39%;
-    }
-    .student_testimonials{
-      width: 100%;
-      margin-top: 120px;
-    }
-    .testimonials{
-      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
-      box-shadow: none;
-    }
-    .test_slide{
-      width: 100%;
-      margin-left: 0px;
-    }
-    .slide_info{
-      max-width: 1008px;
-      padding: 0 24px 40px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .test_title{
-      line-height: 120%;
-      width: 100%;
-      letter-spacing: 0;
-      max-width: 960px;
-      font-weight: 600;
-      padding-top: 100px;
-      margin-left: 24px;
-      font-family: proxima-nova, sans-serif;
-      font-size: 36px;
-      margin-bottom: 0px;
-      color: white;
-    }
-    .test_text{
-      padding-top: 40px;
-      width: 438px;
-      font-family: proxima-nova, sans-serif;
-      font-size: 22px;
-      color: white;
-      line-height: 150%;
-      margin-right: 100px;
-      margin-bottom: 0px;
-      font-weight: 300;
-    }
-    .quote{
-      font-family: proxima-nova, sans-serif;
-      color: white;
-      margin-left: 0px;
-      margin-bottom: 0px;
-      margin-top: 6px;
-      font-size: 64px;
-    }
-    .bio{
-      width: 190px;
-      height: 160px;
-      margin-bottom: auto;
-      margin-top: auto;
-    }
-    .bio_img_background{
-      width: 440px;
-      height: 380px;
-      margin-right:60px;
-    }
-    .bio_img{
-      height: 66px;
-      width: 66px;
-      margin-top: 10px;
-      display: block;
-    }
-    .bio_header{
-      padding-top: 16px;
-      font-size: 16px;
-      color: white;
-      font-family: proxima-nova, sans-serif;
-      font-weight: 600;
-      line-height: 100%;
-      margin-bottom: 0px;
-    }
-    .bio_text{
-      font-size: 16px;
-      padding-top: 8px;
-      font-weight: 300;
-      color: white;
-      font-family: proxima-nova, sans-serif;
-      line-height: 100%;
-      margin-bottom: 0px;
+      width: 332px;
     }
     .next_job_div{
-      max-width: 1008px;
-      padding: 0 24px;
-      margin: 120px auto 0;
+      max-width: 440px;
+      padding: 0;
+      margin: 200px auto 80px;
       text-align: center;
     }
     .next_job_pic{
@@ -531,71 +448,43 @@
       line-height: 120%;
       font-weight: 600;
     }
-    .looking_div{
-      margin-top: 120px;
-      width: 100%;
-      background: linear-gradient(to right, #FF5F6D 0%, #FFC371 170%);
+    .student_testimonials{
+      margin-top: 200px;
+      .bio_img_background{
+        margin-right: 56px;
+      }
+      .slide_stuff{
+        width: 337px;
+      }
+      .bio{
+        .bio_header{
+          padding-top: 50px;
+        }
+      }
     }
     .looking_text_div{
-      max-width: 1008px;
-      padding: 0 24px;
-      margin: 0 auto;
+      padding: 120px 0 0;
+      width: 500px;
     }
     .looking_header{
-      padding-top: 60px;
       font-size: 40px;
-      line-height: 120%;
-      font-weight: 600;
-      letter-spacing: 0;
-      color: white;
-      font-family: proxima-nova, sans-serif;
-      margin-bottom: 0px;
     }
     .looking_text{
-      font-size: 24px;
-      line-height: 120%;
-      font-weight: 300;
-      letter-spacing: 0;
-      color: white;
-      font-family: proxima-nova, sans-serif;
-      padding-top: 6px;
-      margin-bottom: 0px;
+      font-size: 20px;
     }
     .looking_btn{
-      margin-top: 20px;
-      width: 200px;
-      height: 68px !important;
-      line-height: 68px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-      background-color: white !important;
-    }
-    .looking_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 22px;
-      color: #308afc;
-      letter-spacing: 0em;
-      line-height: 120%;
-      font-weight: 600;
+      margin-top: 60px;
     }
     .looking_btn_undertext{
-      font-size: 14px;
-      line-height: 120%;
-      font-weight: 300;
-      letter-spacing: 0;
-      color: white;
-      font-family: proxima-nova, sans-serif;
-      padding-top: 8px;
-      padding-bottom: 60px;
-      margin-bottom: 0px;
+      padding-bottom: 120px;
     }
     .job-search {
-      margin-top: 36px;
+      margin-top: 30px;
     }
   }
   // mobile
   @media (min-width: 601px) and (max-width: 800px) {
-    .desktop, .medium, .small, .extra_small {
+    .desktop:not(.mobile), .medium:not(.mobile), .small:not(.mobile), .extra_small:not(.mobile) {
       display: none !important;
     }
     .home_content{
@@ -625,7 +514,7 @@
   }
   // small
   @media (min-width: 451px) and (max-width: 600px) {
-    .desktop, .medium, .mobile, .extra_small {
+    .desktop:not(.small), .medium:not(.small), .mobile:not(.small), .extra_small:not(.small) {
       display: none !important;
     }
     .home_content{
@@ -664,7 +553,7 @@
   }
   // extra small
   @media (max-width: 450px) {
-    .desktop, .medium, .mobile, .small {
+    .desktop:not(.extra_small), .medium:not(.extra_small), .mobile:not(.extra_small), .small:not(.extra_small) {
       display: none !important;
     }
     .home_content{
@@ -720,6 +609,11 @@
     margin-top: 36px;
   }
 }
+.student_testimonials_section{
+  .v-carousel__controls{
+    display: none;
+  }
+}
 </style>
 
 <template>
@@ -768,85 +662,6 @@
         </div>
       </div>
       <!-- Scrollama starts here -->
-      <div class="student_testimonials">
-        <v-carousel v-model="model" class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
-          <v-carousel-item class="testing_slide_transition">
-            <div class="slide_info">
-              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #8ab4ff, #86a8e7, #7f7fd5);">
-                <img class="bio_img" :src="pngs.person1"/>
-              </div>
-              <div class="slide_stuff">
-                <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
-                  job searching. I definitetly recommend using this service, especially for people like me who wants
-                  to work closer to home.</p>
-                <div class="bio">
-                  <p class="bio_header">Sandra C.</p>
-                  <p class="bio_text">Warehouse Associate at Amazon</p>
-                  <div class="student_controls">
-                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </v-carousel-item>
-          <v-carousel-item class="testing_slide_transition">
-            <div class="slide_info">
-              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #fbc2eb, #a6c1ee);">
-                <img class="bio_img" :src="pngs.person2"/>
-              </div>
-              <div class="slide_stuff">
-                <p class="quote" style="color: #fbc2eb">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely recommend
-                   this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
-                <div class="bio">
-                  <p class="bio_header">Anthony P.</p>
-                  <p class="bio_text">Intern at The H Law Group</p>
-                  <div class="student_controls">
-                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </v-carousel-item>
-          <v-carousel-item class="testing_slide_transition">
-            <div class="slide_info">
-              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #ffb88c, #ed4264);">
-                <img class="bio_img" :src="pngs.person3"/>
-              </div>
-              <div class="slide_stuff">
-                <p class="quote" style="color: #ed4264">“</p><p class="test_text">I love how the interface is clean and modern! I find the jobs on
-                  your website to be unique and I always comeback to it from time to time to see what jobs are out there.</p>
-                <div class="bio">
-                  <p class="bio_header">Kamilah D.</p>
-                  <p class="bio_text">Sales Associate at Closet Twenty One</p>
-                  <div class="student_controls">
-                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </v-carousel-item>
-        </v-carousel>
-      </div> 
-      <div class="next_job" v-show="state == 'initial'">
-        <div class="next_job_div">
-          <img class="next_job_pic" :src="pngs.nextJob" alt="Home page form image">
-          <SignupComponent style="width: 440px;" type="student" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess"/>
-        </div>
-      </div>
-      <div class="looking_div">
-        <div class="looking_text_div">
-          <h2 class="looking_header">Looking to Hire?<br>You are at the Right Place!</h2>
-          <div class="looking_text" style="margin: 0 auto;">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</div>
-          <router-link to="/hire"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
-          <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
-        </div>
-      </div>
     </div>
     <div class="home_content medium">
       <div class="index_top">
@@ -890,65 +705,84 @@
           <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
         </div>
       </div>
+    </div>
+    <div class="desktop medium">
       <div class="student_testimonials">
-        <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
-          <v-carousel-item class=" ">
+        <v-carousel v-model="model" class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
+          <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet Really Helps.</h2>
-              <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
-                job searching. I definitetly recommend using this service, especially for people like me who wants
-                to work closer to home.</p>
-              <div class="bio">
-                <img class="bio_img" :src="pngs.profilePic"/>
-                <p class="bio_header">Sandra C.</p>
-                <p class="bio_text">Warehouse Associate</p>
-                <p class="bio_text">at Amazon</p>
+              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #8ab4ff, #86a8e7, #7f7fd5);">
+                <img class="bio_img" :src="pngs.person1"/>
+              </div>
+              <div class="slide_stuff">
+                <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
+                  job searching. I definitetly recommend using this service, especially for people like me who wants
+                  to work closer to home.</p>
+                <div class="bio">
+                  <p class="bio_header">Sandra C.</p>
+                  <p class="bio_text">Warehouse Associate at Amazon</p>
+                  <div class="student_controls">
+                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                  </div>
+                </div>
               </div>
             </div>
-            <div style="height: 122px;"/>
-          </v-carousel-item>
-          <v-carousel-item class="testing_slide_transition" >
-            <div class="slide_info">
-              <h2 class="test_title">Kunvet Really Helps.</h2>
-              <p class="quote">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely
-                recommend this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
-              <div class="bio">
-                <img class="bio_img" :src="pngs.profilePic"/>
-                <p class="bio_header">Anthony P.</p>
-                <p class="bio_text">Intern</p>
-                <p class="bio_text">at The H Law Group</p>
-              </div>
-            </div>
-            <div style="height: 108px;"/>
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet Really Helps.</h2>
-              <p class="quote">“</p><p class="test_text">I love how the interface is clean and modern. I find the
-                jobs on your website to be unique and I always come back to it from time to time to see what jobs are out there.</p>
-              <div class="bio">
-                <img class="bio_img" :src="pngs.profilePic"/>
-                <p class="bio_header">Kamilah D.</p>
-                <p class="bio_text">Sales Associate</p>
-                <p class="bio_text">at Closet Twenty One</p>
+              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #fbc2eb, #a6c1ee);">
+                <img class="bio_img" :src="pngs.person2"/>
+              </div>
+              <div class="slide_stuff">
+                <p class="quote" style="color: #fbc2eb">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely recommend
+                    this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
+                <div class="bio">
+                  <p class="bio_header">Anthony P.</p>
+                  <p class="bio_text">Intern at The H Law Group</p>
+                  <div class="student_controls">
+                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                  </div>
+                </div>
               </div>
             </div>
-            <div style="height: 108px;"/>
+          </v-carousel-item>
+          <v-carousel-item class="testing_slide_transition">
+            <div class="slide_info">
+              <div class="bio_img_background" style="background: linear-gradient(to bottom right, #ffb88c, #ed4264);">
+                <img class="bio_img" :src="pngs.person3"/>
+              </div>
+              <div class="slide_stuff">
+                <p class="quote" style="color: #ed4264">“</p><p class="test_text">I love how the interface is clean and modern! I find the jobs on
+                  your website to be unique and I always comeback to it from time to time to see what jobs are out there.</p>
+                <div class="bio">
+                  <p class="bio_header">Kamilah D.</p>
+                  <p class="bio_text">Sales Associate at Closet Twenty One</p>
+                  <div class="student_controls">
+                    <div @click="model = 0" :class="[model === 0 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 1" :class="[model === 1 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                    <div @click="model = 2" :class="[model === 2 ? 'student_controls_dot_active' : 'student_controls_dot']"/>
+                  </div>
+                </div>
+              </div>
+            </div>
           </v-carousel-item>
         </v-carousel>
-      </div>
-      <div class="next_job_div">
-        <img class="next_job_pic" :src="pngs.nextJob" alt="Job applicants at an Interview">
-        <h2 class="next_job_title">Your Next Job is Waiting for You.</h2>
-        <p class="next_job_text">With an account, you have access to all the newest jobs near you. To apply to any job, a
-            click of a button is all you need to do. Get your free account now.</p>
-        <router-link :to="searchDestination"><k-btn class="next_job_btn"><span class="next_job_btn_text">Get a Free Account</span></k-btn></router-link>
+      </div> 
+      <div class="next_job" v-show="state == 'initial'">
+        <div class="next_job_div">
+          <img class="next_job_pic desktop" :src="pngs.nextJob" alt="Home page form image">
+          <SignupComponent style="width: 440px;" type="student" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess"/>
+        </div>
       </div>
       <div class="looking_div">
         <div class="looking_text_div">
-          <h2 class="looking_header">Looking to hire? You are at the right place!</h2>
-          <p class="looking_text">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</p>
-          <router-link :to="searchDestination"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
+          <h2 class="looking_header">Looking to Hire?<br>You are at the Right Place!</h2>
+          <div class="looking_text" style="margin: 0 auto;">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</div>
+          <router-link to="/hire"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>
       </div>
@@ -1060,6 +894,7 @@ export default {
         { id: '3', title: 'One Resume Is Not Enough.', content: 'Many of you have more than one resume—because you are very “versatile”. On Kunvet, you can upload as many resumes as you want for the different kind of jobs you apply to, and we will keep them safe and sound for whenever you need them.' },
       ],
       model: 0,
+      model1: 0,
       svgs: {
       },
       pngs: {
