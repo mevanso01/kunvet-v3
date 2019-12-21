@@ -206,7 +206,6 @@
     }
     .search_area{
       width: 400px;
-      height: 540px;
       background-color: white;
       margin-top: auto;
       margin-bottom: auto;
@@ -360,7 +359,6 @@
     }
     .search_area{
       width: 356px;
-      height: 442px;
       background-color: white;
       margin-top: auto;
       margin-bottom: auto;

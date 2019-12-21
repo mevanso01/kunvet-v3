@@ -193,7 +193,7 @@
           @click="onClickQuery"
         ></v-text-field>
       </div>
-      <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
+      <v-icon class="search_bar_icon" @click="onClearQueryInput" v-if="query && query.length > 0">fas fa-times-circle</v-icon>
     </div>
     <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
       <div class="search_bar_head">NEAR</div>
@@ -208,7 +208,7 @@
           @focus="searchFocus = true"
         ></v-text-field>
       </div>
-      <v-icon class="search_bar_icon" @click="onClearAddressSearchInput">fas fa-times-circle</v-icon>
+      <v-icon class="search_bar_icon" @click="onClearAddressSearchInput" v-if="job.address && job.address.length > 0">fas fa-times-circle</v-icon>
     </div>
     <div v-if="searchFocus===true" class="search_results_div">
       <div class="search_bar_container _use_current_location" @click="onClickCurrentLocation">

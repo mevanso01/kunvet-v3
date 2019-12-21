@@ -46,7 +46,6 @@ h1 {
   width: 440px;
 }
 .next_job_btn{
-  margin-top: 8px;
   width: 440px;
   height: 64px !important;
   line-height: 64px !important;
@@ -108,7 +107,7 @@ h1 {
             <home-text-field required v-model="lname" v-if="accountTypeInfo.requireFullName"
             :rules="requiredRules" label="Last Name" class="next_job_text_field"/>
             <home-text-field required v-model="email" :rules="emailRules" label="Email" class="next_job_text_field"/>
-            <home-text-field required v-model="password" toggleVisibility :rules="passwordRules" label="Password" class="next_job_text_field" style="margin-bottom: 0px;"/>
+            <home-text-field required v-model="password" toggleVisibility :rules="passwordRules" label="Password" class="next_job_text_field"/>
         </v-form>
         <div v-if="loading" class="next_job_btn" style="cursor: disabled !important;">
           <v-progress-circular style="margin-top: 0px;" indeterminate :size="26" :width="3" color="white darken-1"/>
