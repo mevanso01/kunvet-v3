@@ -87,6 +87,9 @@
   .slide_info{
     max-width: 960px;
     display: flex;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
   }
   .slide_stuff{
     height: 380px;
@@ -167,6 +170,16 @@
     line-height: 100%;
     margin-bottom: 0px;
   }
+  .ykunvet_section{
+    display: flex;
+    margin-top: 200px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ykunvet_phone{
+    height: 100%;
+  }
   // big desktop
   @media (min-width: 1025px){
     .medium:not(.desktop), .mobile:not(.desktop), .small:not(.desktop), .extra_small:not(.desktop) {
@@ -209,10 +222,6 @@
       max-width: 1008px;
       padding: 0 0px 0px 24px;
       margin: 0 auto;
-    }
-    .ykunvet_section{
-      display: flex;
-      margin-top: 200px;
     }
     .ykunvet_text_div{
       width: 442px;
@@ -370,10 +379,6 @@
       padding: 0 0px 0px 24px;
       margin: 0 auto;
     }
-    .ykunvet_section{
-      display: flex;
-      margin-top: 200px;
-    }
     .ykunvet_text_div{
       width: 346px;
       height: 340px;
@@ -462,24 +467,27 @@
         }
       }
     }
-    .looking_text_div{
-      padding: 120px 0 0;
-      width: 500px;
-    }
-    .looking_header{
-      font-size: 40px;
-    }
-    .looking_text{
-      font-size: 20px;
-    }
-    .looking_btn{
-      margin-top: 60px;
-    }
-    .looking_btn_undertext{
-      padding-bottom: 120px;
-    }
+    // .looking_text_div{
+    //   padding: 120px 0 0;
+    //   width: 500px;
+    // }
+    // .looking_header{
+    //   font-size: 40px;
+    // }
+    // .looking_text{
+    //   font-size: 20px;
+    // }
+    // .looking_btn{
+    //   margin-top: 60px;
+    // }
+    // .looking_btn_undertext{
+    //   padding-bottom: 120px;
+    // }
     .job-search {
       margin-top: 30px;
+    }
+    .test_text{
+      font-size: 20px
     }
   }
   // mobile
@@ -894,7 +902,6 @@ export default {
         { id: '3', title: 'One Resume Is Not Enough.', content: 'Many of you have more than one resume—because you are very “versatile”. On Kunvet, you can upload as many resumes as you want for the different kind of jobs you apply to, and we will keep them safe and sound for whenever you need them.' },
       ],
       model: 0,
-      model1: 0,
       svgs: {
       },
       pngs: {
