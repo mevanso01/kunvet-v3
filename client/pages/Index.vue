@@ -180,6 +180,9 @@
   .ykunvet_phone{
     height: 100%;
   }
+  .next_job{
+    background-color:#f4f4f4;
+  }
   // big desktop
   @media (min-width: 1025px){
     .medium:not(.desktop), .mobile:not(.desktop), .small:not(.desktop), .extra_small:not(.desktop) {
@@ -253,7 +256,6 @@
     }
     .next_job{
       width: 100%;
-      background-color:#f4f4f4;
       height: 800px;
     }
     .next_job_div{
@@ -409,8 +411,8 @@
     }
     .next_job_div{
       max-width: 440px;
-      padding: 0;
-      margin: 200px auto 80px;
+      padding: 0 0 80px;
+      margin: 200px auto 0;
       text-align: center;
     }
     .next_job_pic{
@@ -467,22 +469,22 @@
         }
       }
     }
-    // .looking_text_div{
-    //   padding: 120px 0 0;
-    //   width: 500px;
-    // }
-    // .looking_header{
-    //   font-size: 40px;
-    // }
-    // .looking_text{
-    //   font-size: 20px;
-    // }
-    // .looking_btn{
-    //   margin-top: 60px;
-    // }
-    // .looking_btn_undertext{
-    //   padding-bottom: 120px;
-    // }
+    .looking_text_div{
+      padding: 120px 0 0;
+      width: 500px;
+    }
+    .looking_header{
+      font-size: 40px;
+    }
+    .looking_text{
+      font-size: 20px;
+    }
+    .looking_btn{
+      margin-top: 60px;
+    }
+    .looking_btn_undertext{
+      padding-bottom: 120px;
+    }
     .job-search {
       margin-top: 30px;
     }
