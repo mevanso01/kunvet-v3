@@ -12,6 +12,7 @@
     width: 100%;
     height: 100%;
     background-color: none;
+    z-index: 1000;
   }
   .search_bar_text_field{
     height: 52px;
@@ -189,6 +190,7 @@
           label="Part time web developer"
           v-model="query"
           class="search_bar_text_field"
+          @click="onClickQuery"
         ></v-text-field>
       </div>
       <v-icon class="search_bar_icon" @click="onClearQueryInput">fas fa-times-circle</v-icon>
@@ -279,7 +281,7 @@ export default {
     },
     onChangeAddressSearchInput(value) {
       if (value === '') {
-        this.searchFocus = false;
+        this.job.addressList = [];
         return;
       }
       if (this.autoCompleteService) {
@@ -326,6 +328,9 @@ export default {
     },
     onClearQueryInput() {
       this.query = '';
+      this.searchFocus = false;
+    },
+    onClickQuery() {
       this.searchFocus = false;
     },
     onClickCurrentLocation() {
