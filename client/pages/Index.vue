@@ -481,7 +481,7 @@
       }
     }
     .next_job_div{
-      padding-bottom: 80px;
+      padding-bottom: 60px;
     }
     .looking_text_div{
       padding: 120px 0 0;

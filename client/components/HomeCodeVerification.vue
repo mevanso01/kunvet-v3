@@ -1,134 +1,136 @@
 <style lang="scss" scoped>
-  .codeverbox {
-    max-width: 100%;
-    text-align: left;
-    //background-color: white;
-    margin: auto;
-    //border: 1px solid #eee;
-    .verify_email_header{
-      margin-top: 70px;
-      margin-bottom: 20px;
+.codeverbox {
+  max-width: 440px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  //background-color: white;
+  //border: 1px solid #eee;
+  .verify_email_header{
+    margin-bottom: 10px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ff6969;
+    line-height: 120%;
+    letter-spacing: 0;
+    font-family: proxima-nova, sans-serif; 
+  }
+  .inner {
+    //padding: 20px;
+    margin-top: 50%;
+  }
+  input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+  .input-container {
+    background-color: #e6e6e6;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    input {
       font-size: 32px;
-      font-weight: 600;
+      font-weight: 800;
       color: #3c3c3c;
       line-height: 120%;
-      letter-spacing: 0;
-      font-family: proxima-nova, sans-serif; 
-    }
-    .inner {
-      //padding: 20px;
-      margin-top: 50%;
-    }
-    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    .input-container {
-      background-color: #e6e6e6;
+      letter-spacing: 0.6em;
       width: 100%;
       height: 80px;
-      display: flex;
-      input {
-        font-size: 32px;
-        font-weight: 800;
-        color: #3c3c3c;
-        line-height: 120%;
-        letter-spacing: 0.6em;
-        width: 100%;
-        height: 80px;
-        margin-left: 32px;
-        margin-right: 0px;
-        text-align: left;
-        font-family: proxima-nova, sans-serif;
-      }
-      input:focus {
-        outline: none;
-        //box-shadow: 0 0 3pt 1pt #c8c8c8;
-        // border: 1px solid #ef5350;
-        // box-shadow: 0 0 3pt 1pt #ef5350;
-      }
-    }
-    i.material-icons {
-      font-size: 16px;
-      vertical-align: middle;
-      position: relative;
-      top: -1px;
-    }
-    .change-email{
-      background-color: #e6e6e6;
-      color: gray !important;
-      margin-top: 10px;
-      margin-right: 10px;
-      display: inline-block;
-      width: 180px;
-      height: 28px;
-      text-align: center;
-      font-family: proxima-nova, sans-serif;
-      cursor: pointer !important;
-    }
-    .send-verif{
-      background-color: #e6e6e6;
-      color: gray !important; 
-      margin-top: 10px;
-      display: inline-block; 
-      margin-right: 10px;
-      width: 132px;
-      height: 28px;
-      text-align: center;
-      font-family: proxima-nova, sans-serif;
-      cursor: pointer !important; 
-    }
-    .verif-btn-red{
-      width: 140px;
-      background-color: #ff6969;
-      // background-color: #b4b4b4;
-      text-align: center;
-      cursor: pointer !important;
-    }
-    .verif-btn-loading{
-      width: 140px !important;
-      background-color: #ff6969;
-      // background-color: #b4b4b4;
-      text-align: center;
-      line-height: 80px;
-      cursor: disabled !important;
-    }
-    .verif-btn-text{
-      width: 140px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #ffffff;
-      line-height: 80px;
-      letter-spacing: 0.12em;
-      font-family: proxima-nova, sans-serif;
-      text-transform: uppercase;
-    }
-    .verified_header{
-      font-size: 38px;
-      font-weight: 600;
-      color: #ff6969;
-      line-height: 120%;
-      letter-spacing: 0;
-      margin-bottom: 20px;
+      margin-left: 32px;
+      margin-right: 0px;
+      text-align: left;
       font-family: proxima-nova, sans-serif;
     }
-    .verified_text{
-      font-size: 22px;
-      font-weight: 300;
-      color: #3c3c3c;
-      line-height: 150%;
-      letter-spacing: 0;
-      margin-bottom: 40px;
-      font-family: proxima-nova, sans-serif;
+    input:focus {
+      outline: none;
+      //box-shadow: 0 0 3pt 1pt #c8c8c8;
+      // border: 1px solid #ef5350;
+      // box-shadow: 0 0 3pt 1pt #ef5350;
     }
+  }
+  i.material-icons {
+    font-size: 16px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+  .change-email{
+    background-color: #e6e6e6;
+    color: gray !important;
+    margin-top: 10px;
+    margin-right: 10px;
+    display: inline-block;
+    width: 180px;
+    height: 28px;
+    text-align: center;
+    font-family: proxima-nova, sans-serif;
+    cursor: pointer !important;
+  }
+  .send-verif{
+    background-color: #e6e6e6;
+    color: gray !important; 
+    margin-top: 10px;
+    display: inline-block;
+    width: 132px;
+    height: 28px;
+    text-align: center;
+    font-family: proxima-nova, sans-serif;
+    cursor: pointer !important; 
+  }
+  .verif-btn-red{
+    width: 140px;
+    background-color: #ff6969;
+    // background-color: #b4b4b4;
+    text-align: center;
+    cursor: pointer !important;
+  }
+  .verif-btn-loading{
+    width: 140px !important;
+    background-color: #ff6969;
+    // background-color: #b4b4b4;
+    text-align: center;
+    line-height: 80px;
+    cursor: disabled !important;
+  }
+  .verif-btn-text{
+    width: 140px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 80px;
+    letter-spacing: 0.12em;
+    font-family: proxima-nova, sans-serif;
+    text-transform: uppercase;
+  }
+  .verified_header{
+    font-size: 38px;
+    font-weight: 600;
+    color: #ff6969;
+    line-height: 120%;
+    letter-spacing: 0;
+    margin-bottom: 20px;
+    font-family: proxima-nova, sans-serif;
+  }
+  .verified_text{
+    font-size: 22px;
+    font-weight: 300;
+    color: #3c3c3c;
+    line-height: 150%;
+    letter-spacing: 0;
+    margin-bottom: 24px;
+    font-family: proxima-nova, sans-serif;
+  }
+  .congratulation-action-content{
+    display: flex;
     .search_jobs_btn{
-      width:210px;
-      height:64px;
+      width: 160px;
+      height: 64px;
       background-color: #ff6969;
       text-align: center;
       border: none;
       box-shadow: 0;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 600;
       color: white;
       line-height: 64px;
@@ -138,81 +140,207 @@
       cursor: pointer !important;
     }
     .view_profile_btn {
-      width:210px;
-      height:64px;
+      width: 160px;
+      height: 64px;
       text-align: center;
       font-family: proxima-nova, sans-serif;
       background-color: none;
       border: 2px solid #ff6969;
       box-shadow: 0;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 600;
       color: #ff6969;
       line-height: 64px;
       letter-spacing: 0;
       cursor: pointer !important;
-    }
-    .valid_email_text{
-      font-size: 22px;
-      font-weight: 300;
-      color: #3c3c3c;
-      line-height: 150%;
-      letter-spacing: 0;
-      margin-bottom: 0;
-      font-family: proxima-nova, sans-serif;
-    }
-    .change-btn{
-      width:120px;
-      height:64px;
-      background-color: #ff6969;
-      text-align: center;
-      border: none;
-      box-shadow: 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: white;
-      line-height: 64px;
-      letter-spacing: 0;
-      font-family: proxima-nova, sans-serif;
-      margin-right: 10px;
-      cursor: pointer !important;
-    }
-    .cancel-btn{
-      width:120px;
-      height:64px;
-      background-color: #f4f4f4;
-      text-align: center;
-      border: none;
-      box-shadow: 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: #808080;
-      line-height: 64px;
-      letter-spacing: 0;
-      font-family: proxima-nova, sans-serif;
-      margin-right: 10px;
-      cursor: pointer !important;
-    }
-    .green_warning{
-      color: #15cda8;
-      font-weight: 600;
-      font-family: proxima-nova, sans-serif;
-      margin-bottom: 0;
-    }
-    .red_warning{
-      color: #ff6969;
-      font-weight: 600;
-      font-family: proxima-nova, sans-serif;
-      margin-bottom: 0;
     }
   }
+  .valid_email_text{
+    font-size: 22px;
+    font-weight: 300;
+    color: #3c3c3c;
+    line-height: 150%;
+    letter-spacing: 0;
+    margin-bottom: 24px;
+    font-family: proxima-nova, sans-serif;
+  }
+  .change-btn{
+    width:120px;
+    height:64px;
+    background-color: #ff6969;
+    text-align: center;
+    border: none;
+    box-shadow: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    line-height: 64px;
+    letter-spacing: 0;
+    font-family: proxima-nova, sans-serif;
+    margin-right: 10px;
+    cursor: pointer !important;
+  }
+  .cancel-btn{
+    width:120px;
+    height:64px;
+    background-color: #f4f4f4;
+    text-align: center;
+    border: none;
+    box-shadow: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #808080;
+    line-height: 64px;
+    letter-spacing: 0;
+    font-family: proxima-nova, sans-serif;
+    margin-right: 10px;
+    cursor: pointer !important;
+  }
+  .green_warning{
+    color: #15cda8;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    margin-bottom: 0;
+  }
+  .red_warning{
+    color: #ff6969;
+    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    margin-bottom: 0;
+  }
+}
+.codeverbox {
+  .verify_email_header{
+    text-align: center;
+  }
+  .valid_email_text{
+    text-align: center;
+  }
+  .verify-action-content{
+    display: flex;
+    justify-content: center;
+  }
+  .verified_header{
+    text-align: center;
+  }
+  .verified_text{
+    text-align: center;
+  }
+  .congratulation-action-content{
+    justify-content: center;
+  }
+}
+@media (min-width: 1025px) {
+  .codeverbox {
+    .verify_email_header{
+      text-align: left;
+    }
+    .valid_email_text{
+      text-align: left;
+    }
+    .verify-action-content{
+      justify-content: start;
+    }
+    .verified_header{
+      text-align: left;
+    }
+    .verified_text{
+      text-align: left;
+    }
+    .congratulation-action-content{
+      justify-content: start;
+    }
+  }
+}
+@media (min-width: 801px) and (max-width: 1024px) {
+  .codeverbox {
+    .inner {
+      margin-top: 80px;
+    }
+  }
+}
+@media (min-width: 601px) and (max-width: 800px) {
+  .codeverbox {
+    .inner {
+      margin-top: 60px;
+    }
+  }
+}
+@media (min-width: 451px) and (max-width: 600px) {
+  .codeverbox {
+    .inner {
+      margin-top: 50px;
+      .verified_header, .verify_email_header{
+        font-size: 32px;
+      }
+      .valid_email_text, .verified_text{
+        font-size: 18px;
+      }
+      .input-container{
+        height: 64px;
+        > input {
+          height: 64px;
+        }
+        .verif-btn-text{
+          width: 140px;
+          line-height: 64px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 450px) {
+  .codeverbox {
+    .inner {
+      margin-top: 50px;
+      .verified_header, .verify_email_header{
+        font-size: 28px;
+      }
+      .valid_email_text, .verified_text{
+        font-size: 16px;
+      }
+      .input-container{
+        height: 64px;
+        > input {
+          height: 64px;
+        }
+        .verif-btn-text{
+          width: 110px;
+          line-height: 64px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 400px) {
+  .codeverbox {
+    .inner {
+      .verify-action-content{
+        flex-direction: column;
+        .change-email, .send-verif{
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 6px;
+        }
+      }
+      .congratulation-action-content{
+        flex-direction: column;
+        .search_jobs_btn, .view_profile_btn{
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 6px;
+        }
+      }
+    }
+  }
+}
 </style>
 <template>
   <div class="codeverbox" v-on:keyup.enter="verifyCode">
     <div class="inner" v-show="isVerified">
       <h2 class="verified_header">Congratulations!</h2>
       <p class="verified_text">You are now signed in. We are thrilled to have you here. Good luck on your job searching!</p>
-      <div style="display: flex">
+      <div class="congratulation-action-content">
         <div class="search_jobs_btn" @click="routetoSeach">Search for Jobs</div>
         <div class="view_profile_btn" @click="routetoProfile">View My Profile</div>
       </div>
@@ -225,8 +353,8 @@
           <!-- in case initial request takes a long time to load -->
         </div>
         <div>
-          <p class="valid_email_text" style="margin-bottom: 40px;">We sent a code to <span style="font-weight: 600;">{{ email }}
-            </span> to make sure it is valid. Please enter the code below.</p>
+          <p class="valid_email_text">We sent a code to <span style="font-weight: 600;">{{ email }}</span>.
+          <br/>Please enter the code below.</p>
           <p v-show="sendCode" class="green_warning">We sent you a new code.</p>
           <p v-show="invalidCode && !loading" class="red_warning">Invalid code. Please try again.</p>
           <div class="input-container" v-on:keydown.enter="verifyCode" v-on:keydown.backspace="invalidCode = false">
@@ -240,13 +368,14 @@
             </div>
             <div v-else class="verif-btn-red" @click="verifyCode"><div class="verif-btn-text">verify</div></div>
           </div>
-          <div @click="openChangeEmail" class="change-email">
-            <p style="margin-top: 5px;">Change My Email Address</p>
+          <div class="verify-action-content">
+            <div @click="openChangeEmail" class="change-email">
+              <p style="margin-top: 5px;">Change My Email Address</p>
+            </div>
+            <div @click="sendVerificationCode" class="send-verif">
+              <p style="margin-top: 5px;">Send a new code</p>
+            </div>
           </div>
-          <div @click="sendVerificationCode" class="send-verif">
-            <p style="margin-top: 5px;">Send a new code</p>
-          </div>
-
         </div>
       </div>
     </div>
