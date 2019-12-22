@@ -182,6 +182,11 @@
   }
   .next_job{
     background-color:#f4f4f4;
+    .next_job_div{
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+    }
   }
   // big desktop
   @media (min-width: 1025px){
@@ -268,58 +273,6 @@
       width: 440px;
       height: 800px;
       margin-right: 80px;
-    }
-    .next_job_title{
-      margin-top: 80px;
-      font-size: 40px;
-      line-height: 120%;
-      font-weight: 600;
-      letter-spacing: 0;
-      color: #ff6969;
-      font-family: proxima-nova, sans-serif;
-      margin-bottom: 0px;
-    }
-    .next_job_text{
-      font-size: 22px;
-      line-height: 150%;
-      font-weight: 300;
-      letter-spacing: 0;
-      color: black;
-      font-family: proxima-nova, sans-serif; 
-      padding-top: 20px;
-      padding-bottom: 40px;
-      margin-bottom: 0px;
-    }
-    .next_job_text_div{
-      width: 440px;
-    }
-    .next_job_btn{
-      margin-top: 24px;
-      width: 440px;
-      height: 64px !important;
-      line-height: 64px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-      background-color: #ff6969;
-    }
-    .next_job_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 16px;
-      color: white;
-      letter-spacing: 0em;
-      line-height: 120%;
-      font-weight: 600;
-    }
-    .next_job_btn_undertext{
-      margin-top: -6px;
-      font-size: 14px;
-      line-height: 120%;
-      font-weight: 300;
-      letter-spacing: 0;
-      font-family: proxima-nova, sans-serif;
-      padding-top: 8px;
-      padding-bottom: 150px;
-      margin-bottom: 0px;
     }
     .next_job_btn_undertext_terms{
       font-weight: 600;
@@ -416,43 +369,6 @@
     .next_job_pic{
       width: 100%;
     }
-    .next_job_title{
-      margin-top: 80px;
-      font-size: 38px;
-      line-height: 120%;
-      font-weight: 600;
-      letter-spacing: 0;
-      color: #ff6969;
-      font-family: proxima-nova, sans-serif;
-      margin-bottom: 0px;
-    }
-    .next_job_text{
-      font-size: 22px;
-      line-height: 150%;
-      font-weight: 300;
-      letter-spacing: 0;
-      color: black;
-      font-family: proxima-nova, sans-serif;
-      padding-top: 30px;
-      margin-bottom: 0px;
-    }
-    .next_job_btn{
-      margin-top: 40px;
-      width: 270px;
-      height: 76px !important;
-      line-height: 76px !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-      background-color: #ff6969;
-    }
-    .next_job_btn_text{
-      font-family: proxima-nova, sans-serif;
-      font-size: 20px;
-      color: white;
-      letter-spacing: 0em;
-      line-height: 120%;
-      font-weight: 600;
-    }
     .student_testimonials{
       margin-top: 200px;
       .bio_img_background{
@@ -470,18 +386,18 @@
     .looking_text_div{
       padding: 120px 0 0;
       width: 500px;
-    }
-    .looking_header{
-      font-size: 40px;
-    }
-    .looking_text{
-      font-size: 20px;
-    }
-    .looking_btn{
-      margin-top: 60px;
-    }
-    .looking_btn_undertext{
-      padding-bottom: 120px;
+      .looking_header{
+        font-size: 40px;
+      }
+      .looking_text{
+        font-size: 20px;
+      }
+      .looking_btn{
+        margin-top: 60px;
+      }
+      .looking_btn_undertext{
+        padding-bottom: 120px;
+      }
     }
     .job-search {
       margin-top: 30px;
@@ -519,6 +435,70 @@
       width: 552px;
       margin: 0 auto;
     }
+    .ykunvet_div{
+      margin-top: 250px;
+      .ykunvet_section{
+        margin-top: 0;
+        display: block;
+        width: 552px;
+        .ykunvet_phone{
+          width: 552px;
+          height: 700px;
+          margin-bottom: 4px;
+        }
+        .ykunvet_text_div{
+          height: 520px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 50px;
+          background-color: #f4f4f4;
+          .ykunvet_header{
+            font-weight: 600;
+            font-size: 36px;
+            color: #3c3c3c;
+            line-height: 120%;
+            letter-spacing: 0.03em;
+            margin-bottom: 24px;
+          }
+          .ykunvet_text{
+            font-weight: 300;
+            font-size: 20px;
+            margin-bottom: 0;
+            color: #3c3c3c;
+            line-height: 180%;
+            letter-spacing: 0;
+          }
+        }
+      }
+    }
+    .student_testimonials{
+      margin-top: 100px;
+      margin-bottom: 200px;
+      width: 552px;
+      .slide_info{
+        display: block;
+      }
+    }
+    .next_job_div{
+      padding-bottom: 80px;
+    }
+    .looking_text_div{
+      padding: 120px 0 0;
+      width: 500px;
+      .looking_header{
+        font-size: 40px;
+      }
+      .looking_text{
+        font-size: 20px;
+      }
+      .looking_btn{
+        margin-top: 60px;
+      }
+      .looking_btn_undertext{
+        padding-bottom: 120px;
+      }
+    }
   }
   // small
   @media (min-width: 451px) and (max-width: 600px) {
@@ -548,6 +528,81 @@
       width: calc(100% - 48px);
       margin: 0 auto;
     }
+    .ykunvet_div{
+      margin-top: 180px;
+      .ykunvet_section{
+        margin-top: 0;
+        display: block;
+        max-width: 100%;
+        padding-left: 24px;
+        padding-right: 24px;
+        .ykunvet_phone{
+          max-width: 552px;
+          width: 100%;
+          margin-bottom: 4px;
+        }
+        .ykunvet_text_div{
+          height: 520px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 50px;
+          background-color: #f4f4f4;
+          .ykunvet_header{
+            font-weight: 600;
+            font-size: 30px;
+            color: #3c3c3c;
+            line-height: 120%;
+            letter-spacing: 0.03em;
+            margin-bottom: 20px;
+          }
+          .ykunvet_text{
+            font-weight: 300;
+            font-size: 18px;
+            margin-bottom: 0;
+            color: #3c3c3c;
+            line-height: 180%;
+            letter-spacing: 0;
+          }
+        }
+      }
+    }
+    .student_testimonials{
+      margin-top: 100px;
+      margin-bottom: 180px;
+      padding-left: 24px;
+      padding-right: 24px;
+      width: 100%;
+      .slide_info{
+        display: block;
+      }
+    }
+    .next_job{
+      padding-left: 24px;
+      padding-right: 24px;
+      .next_job_div{
+        padding-bottom: 50px;
+        width: 100%;
+      }
+    }
+    .looking_text_div{
+      padding: 80px 0 0;
+      width: 400px;
+      .looking_header{
+        font-size: 32px;
+      }
+      .looking_text{
+        font-size: 18px;
+      }
+      .looking_btn{
+        margin-top: 60px;
+        width: 180px;
+        height: 64px !important;
+      }
+      .looking_btn_undertext{
+        padding-bottom: 80px;
+      }
+    }
   }
   @media (min-width: 521px) and (max-width: 600px) {
     .search_title{
@@ -572,8 +627,7 @@
       background-color: #ff6969;
     }
     .index_area{
-      width: calc(100% - 48px);
-      margin: -32px auto 0;
+      margin: -32px 24px 0;
     }
     .search_title{
       font-family: proxima-nova, sans-serif;
@@ -587,6 +641,80 @@
       padding-bottom: 52px;
       width: calc(100% - 48px);
       margin: 0 auto;
+    }
+    .ykunvet_div{
+      margin-top: 120px;
+      .ykunvet_section{
+        margin-top: 0;
+        display: block;
+        max-width: 100%;
+        .ykunvet_phone{
+          max-width: 552px;
+          width: 100%;
+          margin-bottom: 4px;
+        }
+        .ykunvet_text_div{
+          height: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 50px;
+          background-color: #f4f4f4;
+          .ykunvet_header{
+            font-weight: 600;
+            font-size: 26px;
+            color: #3c3c3c;
+            line-height: 120%;
+            letter-spacing: 0.03em;
+            margin-bottom: 20px;
+          }
+          .ykunvet_text{
+            font-weight: 300;
+            font-size: 16px;
+            margin-bottom: 0;
+            color: #3c3c3c;
+            line-height: 180%;
+            letter-spacing: 0;
+          }
+        }
+      }
+    }
+    .student_testimonials{
+      margin-top: 60px;
+      margin-bottom: 120px;
+      padding-left: 24px;
+      padding-right: 24px;
+      width: 100%;
+      .slide_info{
+        display: block;
+      }
+    }
+    .next_job{
+      padding-left: 24px;
+      padding-right: 24px;
+      .next_job_div{
+        padding-bottom: 50px;
+        width: 100%;
+      }
+    }
+    .looking_text_div{
+      padding: 60px 24px 0;
+      .looking_header{
+        font-size: 30px;
+      }
+      .looking_text{
+        font-size: 16px;
+        padding-top: 10px;
+      }
+      .looking_btn{
+        margin-top: 40px;
+        width: 165px;
+        height: 60px !important;
+        font-size: 18px;
+      }
+      .looking_btn_undertext{
+        padding-bottom: 60px;
+      }
     }
   }
 </style>
@@ -627,58 +755,25 @@
 <template>
   <div class="home_page">
     <!-- desktop size -->
-    <div class="home_content desktop">
+    <div class="home_content desktop medium">
       <div class="index_top">
           <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
           <div class="search_area">
             <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
             <JobSearch :to="searchDestination" class="job-search" />
           </div>
-      </div>
-      <div class="ykunvet_div">
-        <div class="ykunvet_section">
-          <div class="ykunvet_text_div">
-            <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
-            <p class="ykunvet_text">
-              You applied to a job, and weeks or even months later,
-              the company finally replied that the job you applied to no longer
-              exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
-              anymore! We only show you the latest jobs near your location.</p>
-          </div>
-          <img class="ykunvet_phone" :src="pngs.phone1" alt="Newest Jobs Near Me">
-        </div>
-        <div class="ykunvet_section">
-          <div class="ykunvet_text_div">
-            <h2 class="ykunvet_header">Still being kept in the dark?</h2>
-            <p class="ykunvet_text">
-              Seriously? You still do not know what happens to your resume until someone
-              replies? Then you should start using Kunvet now. No kidding. We inform all of our users
-              about a change in their application status immediately. Whether their resume was
-              received or viewed, they will know it right away.</p>
-          </div>
-          <img class="ykunvet_phone" :src="pngs.phone2" alt="Being kept in the dark?">
-        </div>
-        <div class="ykunvet_section">
-          <div class="ykunvet_text_div">
-            <h2 class="ykunvet_header">One Resume Is Not Enough.</h2>
-            <p class="ykunvet_text">
-              Many of you have more than one resume—because you are very “versatile”. On
-              Kunvet, you can upload as many resumes as you want for the different kind of jobs you
-              apply to, and we will keep them safe and sound for whenever you need them.</p>
-          </div>
-          <img class="ykunvet_phone" :src="pngs.phone3" alt="Multiple Resumes">
-        </div>
       </div>
       <!-- Scrollama starts here -->
     </div>
-    <div class="home_content medium">
+    <div class="home_content mobile small extra_small">
       <div class="index_top">
-          <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
-          <div class="search_area">
-            <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
-            <JobSearch :to="searchDestination" class="job-search" />
-          </div>
+        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
       </div>
+      <div class="index_area">
+        <JobSearch :to="searchDestination" class="job-search" />
+      </div>
+    </div>
+    <div class="desktop medium">
       <div class="ykunvet_div">
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
@@ -714,7 +809,22 @@
         </div>
       </div>
     </div>
-    <div class="desktop medium">
+    <div class="mobile small extra_small">
+      <div class="ykunvet_div">
+        <div class="ykunvet_section">
+          <img class="ykunvet_phone" :src="pngs.phone1" alt="Newest Jobs Near Me">
+          <div class="ykunvet_text_div">
+            <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
+            <p class="ykunvet_text">
+              You applied to a job, and weeks or even months later,
+              the company finally replied that the job you applied to no longer
+              exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
+              anymore! We only show you the latest jobs near your location.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="desktop medium mobile small extra_small">
       <div class="student_testimonials">
         <v-carousel v-model="model" class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
           <v-carousel-item class="testing_slide_transition">
@@ -779,11 +889,11 @@
             </div>
           </v-carousel-item>
         </v-carousel>
-      </div> 
+      </div>
       <div class="next_job" v-show="state == 'initial'">
         <div class="next_job_div">
           <img class="next_job_pic desktop" :src="pngs.nextJob" alt="Home page form image">
-          <SignupComponent style="width: 440px;" type="student" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess"/>
+          <SignupComponent type="student" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess"/>
         </div>
       </div>
       <div class="looking_div">
@@ -793,30 +903,6 @@
           <router-link to="/hire"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>
-      </div>
-    </div>
-    <div class="home_content mobile">
-      <div class="index_top">
-        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
-      </div>
-      <div class="index_area">
-        <JobSearch :to="searchDestination" class="job-search" />
-      </div>
-    </div>
-    <div class="home_content small">
-      <div class="index_top">
-        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
-      </div>
-      <div class="index_area">
-        <JobSearch :to="searchDestination" class="job-search" />
-      </div>
-    </div>
-    <div class="home_content extra_small">
-      <div class="index_top">
-        <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
-      </div>
-      <div class="index_area">
-        <JobSearch :to="searchDestination" class="job-search" />
       </div>
     </div>
   </div>

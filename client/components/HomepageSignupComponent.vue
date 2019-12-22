@@ -2,8 +2,10 @@
 .signup-card {
   display: flex;
   flex-direction: column;
-  /* height: 500px; */
+  max-width: 440px;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .container {
   /* margin: 50px auto; */
@@ -42,11 +44,8 @@ h1 {
   padding-bottom: 24px;
   margin-bottom: 0px;
 }
-.next_job_text_div{
-  width: 440px;
-}
 .next_job_btn{
-  width: 440px;
+  width: 100%;
   height: 64px !important;
   line-height: 64px !important;
   box-shadow: none !important;
@@ -92,6 +91,29 @@ h1 {
   letter-spacing: 0;
   margin-bottom: 40px;
   font-family: proxima-nova, sans-serif;
+}
+@media (min-width: 601px) and (max-width: 800px) {
+  .next_job_title{
+    margin-top: 60px;
+  }
+}
+@media (min-width: 451px) and (max-width: 600px) {
+  .next_job_title{
+    margin-top: 50px;
+    font-size: 32px;
+  }
+  .next_job_text{
+    font-size: 18px;
+  }
+}
+@media (max-width: 450px) {
+  .next_job_title{
+    margin-top: 50px;
+    font-size: 28px;
+  }
+  .next_job_text{
+    font-size: 16px;
+  }
 }
 </style>
 

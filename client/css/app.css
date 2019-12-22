@@ -1376,12 +1376,6 @@ To see the bug, simply comment out the next 3 styles.*/
   }
 }
 
-@media (min-width: 661px) and (max-width: 800px) {
-  .search_bar_text_field div.v-input__slot{
-    height: 58px;
-    background: none !important;
-  }
-}
 /* .theme--light.v-input:not(.v-input--is-disabled) label{
   color: #b4b4b4;
 } */
