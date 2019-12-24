@@ -26,7 +26,7 @@
   }
   .input-container {
     background-color: #e6e6e6;
-    width: 100%;
+    width: 440px;
     height: 80px;
     display: flex;
     input {
@@ -79,22 +79,25 @@
     cursor: pointer !important; 
   }
   .verif-btn-red{
-    width: 140px;
+    width: 118px;
     background-color: #ff6969;
     // background-color: #b4b4b4;
     text-align: center;
     cursor: pointer !important;
   }
   .verif-btn-loading{
-    width: 140px !important;
+    width: 118px !important;
     background-color: #ff6969;
     // background-color: #b4b4b4;
     text-align: center;
     line-height: 80px;
     cursor: disabled !important;
+    > div {
+      width: 118px;
+    }
   }
   .verif-btn-text{
-    width: 140px;
+    width: 118px;
     font-size: 16px;
     font-weight: 600;
     color: #ffffff;
@@ -109,7 +112,7 @@
     color: #ff6969;
     line-height: 120%;
     letter-spacing: 0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-family: proxima-nova, sans-serif;
   }
   .verified_text{
@@ -129,14 +132,14 @@
       background-color: #ff6969;
       text-align: center;
       border: none;
-      box-shadow: 0;
-      font-size: 18px;
+      box-shadow: none;
+      font-size: 16px;
       font-weight: 600;
       color: white;
       line-height: 64px;
       letter-spacing: 0;
       font-family: proxima-nova, sans-serif;
-      margin-right: 20px;
+      margin-right: 10px;
       cursor: pointer !important;
     }
     .view_profile_btn {
@@ -144,10 +147,10 @@
       height: 64px;
       text-align: center;
       font-family: proxima-nova, sans-serif;
-      background-color: none;
+      background-color: transparent;
       border: 2px solid #ff6969;
-      box-shadow: 0;
-      font-size: 18px;
+      box-shadow: none;
+      font-size: 16px;
       font-weight: 600;
       color: #ff6969;
       line-height: 64px;
@@ -229,8 +232,14 @@
   .congratulation-action-content{
     justify-content: center;
   }
+  .green_warning, .red_warning{
+    text-align: center;
+  }
 }
 @media (min-width: 1025px) {
+  .medium:not(.desktop), .mobile:not(.desktop), .small:not(.desktop), .extra_small:not(.desktop) {
+    display: none !important;
+  }
   .codeverbox {
     .verify_email_header{
       text-align: left;
@@ -250,9 +259,15 @@
     .congratulation-action-content{
       justify-content: start;
     }
+    .green_warning, .red_warning{
+      text-align: left;
+    }
   }
 }
 @media (min-width: 801px) and (max-width: 1024px) {
+  .desktop:not(.medium), .mobile:not(.medium), .small:not(.medium), .extra_small:not(.medium) {
+    display: none !important;
+  }
   .codeverbox {
     .inner {
       margin-top: 80px;
@@ -260,6 +275,9 @@
   }
 }
 @media (min-width: 601px) and (max-width: 800px) {
+  .desktop:not(.mobile), .medium:not(.mobile), .small:not(.mobile), .extra_small:not(.mobile) {
+    display: none !important;
+  }
   .codeverbox {
     .inner {
       margin-top: 60px;
@@ -267,6 +285,9 @@
   }
 }
 @media (min-width: 451px) and (max-width: 600px) {
+  .desktop:not(.small), .medium:not(.small), .mobile:not(.small), .extra_small:not(.small) {
+    display: none !important;
+  }
   .codeverbox {
     .inner {
       margin-top: 50px;
@@ -278,6 +299,8 @@
       }
       .input-container{
         height: 64px;
+        width: 100%;
+        max-width: 440px;
         > input {
           height: 64px;
         }
@@ -290,6 +313,9 @@
   }
 }
 @media (max-width: 450px) {
+  .desktop:not(.extra_small), .medium:not(.extra_small), .mobile:not(.extra_small), .small:not(.extra_small) {
+    display: none !important;
+  }
   .codeverbox {
     .inner {
       margin-top: 50px;
@@ -301,13 +327,28 @@
       }
       .input-container{
         height: 64px;
+        width: 100%;
+        max-width: 440px;
         > input {
           height: 64px;
+          margin-left: 24px;
         }
         .verif-btn-text{
           width: 110px;
           line-height: 64px;
         }
+      }
+      .verif-btn-red{
+        width: 100px;
+      }
+      .verif-btn-loading{
+        width: 100px !important;
+        > div {
+          width: 100px;
+        }
+      }
+      .verif-btn-text{
+        width: 100px;
       }
     }
   }
@@ -354,7 +395,7 @@
         </div>
         <div>
           <p class="valid_email_text">We sent a code to <span style="font-weight: 600;">{{ email }}</span>.
-          <br/>Please enter the code below.</p>
+          <br class="desktop medium mobile"/>Please enter the code below.</p>
           <p v-show="sendCode" class="green_warning">We sent you a new code.</p>
           <p v-show="invalidCode && !loading" class="red_warning">Invalid code. Please try again.</p>
           <div class="input-container" v-on:keydown.enter="verifyCode" v-on:keydown.backspace="invalidCode = false">
@@ -362,7 +403,7 @@
                 onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;"
             />
             <div v-if="loading" class="verif-btn-loading">
-              <div style="width: 140px;">
+              <div>
               <v-progress-circular indeterminate :size="26" :width="3" color="white darken-1"/>
               </div>
             </div>

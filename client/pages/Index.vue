@@ -683,6 +683,7 @@
       padding-right: 8%;
       .next_job_div{
         padding-bottom: 50px;
+        width: 100%;
       }
     }
     .looking_div{
@@ -710,16 +711,6 @@
           padding-bottom: 80px;
         }
       }
-    }
-  }
-  @media (min-width: 521px) and (max-width: 600px) {
-    .search_title{
-      font-size: 38px;
-    }
-  }
-  @media (min-width: 451px) and (max-width: 520px) {
-    .search_title{
-      font-size: 32px;
     }
   }
   // extra small
@@ -879,6 +870,31 @@
       }
     }
   }
+  @media (min-width: 570px) and (max-width: 800px) {
+    .search_title{
+      font-size: 44px;
+    }
+  }
+  @media (min-width: 518px) and (max-width: 569px) {
+    .search_title{
+      font-size: 40px;
+    }
+  }
+  @media (min-width: 466px) and (max-width: 517px) {
+    .search_title{
+      font-size: 36px;
+    }
+  }
+  @media (min-width: 375px) and (max-width: 465px) {
+    .search_title{
+      font-size: 32px;
+    }
+  }
+  @media (max-width: 374px) {
+    .search_title{
+      font-size: 30px;
+    }
+  }
 </style>
 
 <style lang="scss">
@@ -1003,7 +1019,7 @@
               </div>
               <div class="slide_stuff">
                 <p class="quote" style="color: #fbc2eb">“</p><p class="test_text">I found my second and third job on Kunvet, so I definitely recommend
-                    this website to anyone who is looking for jobs. I also find their customer service to be responsive.</p>
+                  this website to anyone who is looking for jobs. I also find their customer service to be very accessible.</p>
                 <div class="bio">
                   <p class="bio_header">Anthony P.</p>
                   <p class="bio_text">Intern at The H Law Group</p>
@@ -1023,7 +1039,7 @@
               </div>
               <div class="slide_stuff">
                 <p class="quote" style="color: #ed4264">“</p><p class="test_text">I love how the interface is clean and modern! I find the jobs on
-                  your website to be unique and I always comeback to it from time to time to see what jobs are out there.</p>
+                  your website to be unique and I always come back to it from time to time to see what jobs are out there.</p>
                 <div class="bio">
                   <p class="bio_header">Kamilah D.</p>
                   <p class="bio_text">Sales Associate at Closet Twenty One</p>
