@@ -605,7 +605,7 @@
         .ykunvet_phone{
           margin-bottom: 4px;
           width: 100%;
-          height: 450px;
+          height: auto;
         }
         .ykunvet_text_div{
           height: 450px;
@@ -691,7 +691,8 @@
       padding-right: 8%;
       .looking_text_div{
         padding: 80px 0 0;
-        width: 400px;
+        max-width: 400px;
+        width: 100%;
         .looking_header{
           font-size: 32px;
         }
@@ -761,7 +762,7 @@
         .ykunvet_phone{
           margin-bottom: 4px;
           width: 100%;
-          height: 450px;
+          height: auto;
         }
         .ykunvet_text_div{
           height: 450px;
