@@ -298,16 +298,8 @@
         font-size: 18px;
       }
       .input-container{
-        height: 64px;
         width: 100%;
         max-width: 440px;
-        > input {
-          height: 64px;
-        }
-        .verif-btn-text{
-          width: 140px;
-          line-height: 64px;
-        }
       }
     }
   }
