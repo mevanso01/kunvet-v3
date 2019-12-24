@@ -488,9 +488,43 @@
     .student_testimonials{
       margin-top: 100px;
       margin-bottom: 200px;
-      width: 552px;
+      padding: 0 8%;
       .slide_info{
+        width: 500px;
         display: block;
+        .bio_img_background{
+          width: 500px;
+          height: 290px;
+          position: relative;
+          display: flex;
+          justify-content: space-around;
+          margin: 0;
+          .bio_img{
+            bottom: 0;
+            height: 250px;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+        .slide_stuff{
+          width: 100%;
+          height: fit-content;
+          .quote{
+            margin-top: 30px;
+          }
+          .test_text{
+            margin-top: -30px;
+          }
+          .bio{
+            .bio_header{
+              padding-top: 30px;
+            }
+            .student_controls{
+              margin-top: 30px;
+            }
+          }
+        }
       }
     }
     .next_job{
@@ -603,9 +637,45 @@
     .student_testimonials{
       margin-top: 100px;
       margin-bottom: 180px;
-      width: 100%;
+      padding: 0 8%;
       .slide_info{
+        width: 100%;
         display: block;
+        .bio_img_background{
+          width: 100%;
+          height: 230px;
+          position: relative;
+          display: flex;
+          justify-content: space-around;
+          margin: 0;
+          .bio_img{
+            bottom: 0;
+            height: 200px;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+        .slide_stuff{
+          width: 100%;
+          height: fit-content;
+          .quote{
+            margin-top: 30px;
+            font-size: 60px;
+          }
+          .test_text{
+            margin-top: -30px;
+            font-size: 18px;
+          }
+          .bio{
+            .bio_header{
+              padding-top: 30px;
+            }
+            .student_controls{
+              margin-top: 30px;
+            }
+          }
+        }
       }
     }
     .next_job{
@@ -732,11 +802,45 @@
     .student_testimonials{
       margin-top: 60px;
       margin-bottom: 120px;
-      padding-left: 24px;
-      padding-right: 24px;
-      width: 100%;
+      padding: 0 8%;
       .slide_info{
+        width: 100%;
         display: block;
+        .bio_img_background{
+          width: 100%;
+          height: 180px;
+          position: relative;
+          display: flex;
+          justify-content: space-around;
+          margin: 0;
+          .bio_img{
+            bottom: 0;
+            height: 150px;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+        .slide_stuff{
+          width: 100%;
+          height: fit-content;
+          .quote{
+            margin-top: 30px;
+            font-size: 60px;
+          }
+          .test_text{
+            margin-top: -30px;
+            font-size: 16px;
+          }
+          .bio{
+            .bio_header{
+              padding-top: 30px;
+            }
+            .student_controls{
+              margin-top: 30px;
+            }
+          }
+        }
       }
     }
     .next_job{
@@ -868,21 +972,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="mobile small extra_small">
-      <div class="ykunvet_div">
-        <div class="ykunvet_section">
-          <img class="ykunvet_phone" :src="pngs.phone1" alt="Newest Jobs Near Me">
-          <div class="ykunvet_text_div">
-            <h2 class="ykunvet_header">Out-dated Jobs — Ugh!</h2>
-            <p class="ykunvet_text">
-              You applied to a job, and weeks or even months later,
-              the company finally replied that the job you applied to no longer
-              exists—Does this sound familiar? Well, now that you are here with us, don’t you worry
-              anymore! We only show you the latest jobs near your location.</p>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="desktop medium mobile small extra_small">
       <div class="student_testimonials">
         <v-carousel v-model="model" class="student_monials student_testimonials_section" cycle interval="100000000" :hide-controls="true" height="auto">
