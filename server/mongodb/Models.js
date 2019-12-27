@@ -159,6 +159,12 @@ const JobSchema = Mongoose.Schema({
     enum: ['paid', 'unpaid', 'negotiable', 'none'],
     default: 'none',
   },
+  salary_min: {
+    type: Number,
+  },
+  salary_max: {
+    type: Number,
+  },
   salary: {
     type: Number,
   },

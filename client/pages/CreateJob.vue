@@ -312,7 +312,7 @@
                       </v-radio-group>
                     </div>
                   </v-flex>
-                  <v-flex xs6 sm3 md2 v-if="salary_select === 'paid'">
+                  <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'paid'">
                     <v-text-field class="pa-0 ma-0"
                       v-model="job.salary"
                       :disabled = "salary_select !== 'paid'"
@@ -322,10 +322,40 @@
                       single-line
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs6 sm3 md2 style="padding-left: 15px !important;" v-if="salary_select === 'paid'">
+                  <v-flex xs6 sm3 md2 class="pl-2" v-if="salary_select === 'paid'">
                     <v-select class="pa-0 ma-0" style="max-width: 125px;"
                       v-model="job.pay_denomination"
                       :disabled = "salary_select != 'paid'"
+                      :items="[ 'per hour', 'per week', 'per month', 'per quarter', 'per year', 'per task' ]"
+                      >
+                    </v-select>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'negotiable'">
+                    <v-text-field class="pa-0 ma-0"
+                      v-model="job.salary_min"
+                      :disabled = "salary_select !== 'negotiable'"
+                      prefix="$"
+                      required
+                      :rules="[(salary_min) => _isNumber(salary_min) || salary_select !== 'negotiable' || 'Required, must be a number']"
+                      placeholder="min"
+                      single-line
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'negotiable'">
+                    <v-text-field class="pa-0 ma-0"
+                      v-model="job.salary_max"
+                      :disabled = "salary_select !== 'negotiable'"
+                      prefix="$"
+                      required
+                      :rules="[(salary_max) => _isNumber(salary_max) || salary_select !== 'negotiable' || 'Required, must be a number']"
+                      placeholder="max"
+                      single-line
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="pl-2" v-if="salary_select === 'negotiable'">
+                    <v-select class="pa-0 ma-0" style="max-width: 125px;"
+                      v-model="job.pay_denomination"
+                      :disabled = "salary_select != 'negotiable'"
                       :items="[ 'per hour', 'per week', 'per month', 'per quarter', 'per year', 'per task' ]"
                       >
                     </v-select>
@@ -451,6 +481,7 @@
                   <p class="small-p" v-if="job.shift && job.shift.length > 0">Shifts: {{ selectedShifts }}</p>
                   <p class="small-p">Salary:
                     <span v-if="salary_select === 'paid'">${{ job.salary }} {{ job.pay_denomination }}</span>
+                    <span v-else-if="salary_select === 'negotiable'">${{ job.salary_min }} ~ ${{ job.salary_max }} {{ job.pay_denomination }}</span>
                     <span v-else>{{ salary_select }}</span>
                   </p>
                   <p class="small-p" v-if="job.education">Education level: {{ job.education }}</p>
@@ -881,6 +912,8 @@ export default {
         studentfriendly: true,
         shift: [],
         salary: null,
+        salary_min: null,
+        salary_max: null,
         pay_denomination: 'per hour',
         education: null,
         major: null,
@@ -1512,8 +1545,10 @@ export default {
         shift: this.job.shift === [] ? null : this.job.shift,
         age: this.job.age ? parseInt(this.job.age, 10) : null,
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
+        salary_min: this.salary_select === 'negotiable' ? this._getNumber(this.job.salary_min) : null,
+        salary_max: this.salary_select === 'negotiable' ? this._getNumber(this.job.salary_max) : null,
         salary: this.salary_select === 'paid' ? this._getNumber(this.job.salary) : null,
-        pay_denomination: this.salary_select === 'paid' ? this.job.pay_denomination : null,
+        pay_denomination: this.salary_select !== 'unpaid' ? this.job.pay_denomination : null,
         education: this.job.education ? degreeReducedStringToDb(this.job.education) : 'None',
         preferred_major: this.job.major,
         language: this.job.language,
@@ -1638,6 +1673,8 @@ export default {
           if (job.pay_type && job.pay_type !== 'none') {
             this.salary_select = job.pay_type;
             this.job.salary = job.salary;
+            this.job.salary_min = job.salary_min;
+            this.job.salary_max = job.salary_max;
             this.job.pay_denomination = job.pay_denomination || 'per hour';
           }
           this.job.major = job.preferred_major;

@@ -22,6 +22,8 @@ const FindJobRecord = `
   age
   pay_type
   salary
+  salary_min
+  salary_max
   pay_denomination
   education
   preferred_major
@@ -58,6 +60,8 @@ const FindJobRecordForJobCard = `
   age
   pay_type
   salary
+  salary_min
+  salary_max
   pay_denomination
   date
   images {

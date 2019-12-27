@@ -1073,7 +1073,13 @@
             }
             this.salary = `${sal.toString()}${pdenom}`;
           } else if (this.findJob.pay_type === 'negotiable') {
-            this.salary = 'pay negotiable';
+            const salMin = this.findJob.salary_min.toFixed(2);
+            const salMax = this.findJob.salary_max.toFixed(2);
+            let pdenom = ` ${this.findJob.pay_denomination}`;
+            if (this.findJob.pay_denomination === 'per hour') {
+              pdenom = '/hr';
+            }
+            this.salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
           } else {
             this.salary = this.findJob.pay_type;
           }
