@@ -1053,13 +1053,16 @@
           this.$debug(this.job_dest_url);
           this.$debug(this.findJob.address);
           this.jobType = [];
+          const employmentType = [];
           for (const i in this.findJob.type) {
             if (typeof this.findJob.type[i] === 'string') {
               const type = this.findJob.type[i];
               if (type === 'fulltime') {
                 this.jobType.push('full time');
+                employmentType.push('FULL_TIME');
               } else if (type === 'parttime') {
                 this.jobType.push('part time');
+                employmentType.push('PART_TIME');
               } else {
                 this.jobType.push(type);
               }
@@ -1073,6 +1076,8 @@
             }
             this.salary = `${sal.toString()}${pdenom}`;
           } else if (this.findJob.pay_type === 'negotiable') {
+            this.findJob.salary_min = this.findJob.salary_min || 0;
+            this.findJob.salary_max = this.findJob.salary_max || 0;
             const salMin = this.findJob.salary_min.toFixed(2);
             const salMax = this.findJob.salary_max.toFixed(2);
             let pdenom = ` ${this.findJob.pay_denomination}`;
@@ -1083,6 +1088,35 @@
           } else {
             this.salary = this.findJob.pay_type;
           }
+          let baseSalaryUnitText = '';
+          let baseSalaryValue = 0;
+          let baseSalaryMinValue = 0;
+          let baseSalaryMaxValue = 0;
+          if (this.findJob.pay_type === 'paid') {
+            baseSalaryValue = this.findJob.salary.toFixed(2);
+          } else if (this.findJob.pay_type === 'negotiable') {
+            baseSalaryMinValue = this.findJob.salary_min.toFixed(2);
+            baseSalaryMaxValue = this.findJob.salary_max.toFixed(2);
+          }
+          if (this.findJob.pay_denomination === 'per hour') {
+            baseSalaryUnitText = 'HOUR';
+          } else if (this.findJob.pay_denomination === 'per week') {
+            baseSalaryUnitText = 'WEEK';
+          } else if (this.findJob.pay_denomination === 'per month') {
+            baseSalaryUnitText = 'MONTH';
+          } else if (this.findJob.pay_denomination === 'per quarter') {
+            baseSalaryUnitText = 'YEAR';
+            if (this.findJob.pay_type === 'paid') {
+              baseSalaryValue *= 4;
+            } else if (this.findJob.pay_type === 'negotiable') {
+              baseSalaryMinValue *= 4;
+              baseSalaryMaxValue *= 4;
+            }
+          } else if (this.findJob.pay_denomination === 'per year') {
+            baseSalaryUnitText = 'YEAR';
+          } else {
+            baseSalaryUnitText = '';
+          }
           // var parsed = this.parseAddress(this.findJob.address);
           this.jsonld = {
             '@context': 'https://schema.org',
@@ -1090,14 +1124,15 @@
             'baseSalary': {
               '@type': 'MonetaryAmount',
               'currency': 'USD',
-              'value': this.salary,
+              'value': {
+              },
             },
             'experienceRequirements': this.findJob.experience,
             'datePosted': this.findJob.date,
             'description': this.findJob.description.replace(/<\/?[^>]+>/ig, ''),
             'responsibilities': this.findJob.responsibilities,
             'educationRequirements': this.findJob.education,
-            'employmentType': this.findJob.type,
+            'employmentType': employmentType,
             'title': this.findJob.title,
             'jobLocation': {
               '@type': 'Place',
@@ -1115,6 +1150,22 @@
           };
           if (this.findJob.business_id != null) {
             this.jsonld.hiringOrganization = this.findJob.posted_by;
+          }
+          if (this.findJob.pay_type === 'paid') {
+            this.jsonld.baseSalary.value = {
+              '@type': 'QuantitativeValue',
+              'unitText': baseSalaryUnitText,
+              'value': baseSalaryValue,
+            };
+          } else if (this.findJob.pay_type === 'negotiable') {
+            this.jsonld.baseSalary.value = {
+              '@type': 'QuantitativeValue',
+              'minValue': baseSalaryMinValue,
+              'maxValue': baseSalaryMaxValue,
+              'unitText': baseSalaryUnitText,
+            };
+          } else {
+            delete this.jsonld.baseSalary;
           }
           console.log(this.findJob);
           this.fetchProfilePic();
