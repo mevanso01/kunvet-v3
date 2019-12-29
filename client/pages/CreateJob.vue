@@ -36,8 +36,7 @@
               <v-form v-model="form1Valid" ref="form1">
                 <template v-if="!uid">
                   <p class="mb-0">
-                    First, we need some basic information about who's posting.<br>
-                    You will receive your applicants' information through email, unless you opt out of this feature at the end of this form.<br>
+                    Let's begin with some basic information!
                   </p>
                   <v-layout row wrap>
                     <v-flex xs12 sm9 md6 class="no-padding">
@@ -103,7 +102,7 @@
                   <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
                   <v-radio-group v-model="postingAs" column required class="pt-0 mb-0" required
                     :rules="[(v) => !submit1Pressed || !!(v) || 'Required']">
-                      <v-radio label="No, I'm posting as an individual" value="individual"></v-radio>
+                      <v-radio label="No, I'm posting for myself" value="individual"></v-radio>
                       <v-radio label="Yes, I'm posting as a business or organization" value="business"></v-radio>
                   </v-radio-group>
                   <v-layout row wrap v-if="postingAs === 'business'">
@@ -467,7 +466,7 @@
             <!-- SECTION 3 -->
             <div class="main-cont-large no-padding">
               <div class="cust-spacer"></div>
-              <v-layout row wrap class="mb-3">
+              <!-- <v-layout row wrap class="mb-3">
                 <v-flex xs12 sm9 md6 style="background-color: #fafafa; padding: 10px 16px 16px 16px;">
                   <p class="mb-2">Here's what you've entered so far:</p>
 
@@ -495,7 +494,7 @@
                     Click here to review
                   </a>
                 </v-flex>
-              </v-layout>
+              </v-layout> -->
             </div>
             <div class="main-cont-large">
               <v-form v-model="form3Valid" ref="form3">
@@ -519,12 +518,11 @@
                 <br>
                 <h4 class="cust-subheader mb-1">Application options</h4>
                 <p class="mb-2">
-                  By default, the applicant's info and resume will be sent to your email when they apply.<br>
-                  <span style="color: #333; font-weight: 500;">Note:</span> You can also browse through all your applicants in the applicants page.
+                  By default, resumes are sent to your email.
                 </p>
                 <v-radio-group class="mt-0" v-model="useGForm" hide-details>
                   <v-radio label="Send resumes to my email" :value="false"></v-radio>
-                  <v-radio label="Use a form that doesn't require signup instead" :value="true" class="mb-0 use-a-form-option"></v-radio>
+                  <v-radio label="Use a form that doesn't require signup" :value="true" class="mb-0 use-a-form-option"></v-radio>
                 </v-radio-group>
                 <!-- <p class="mb-1">If you would like to use an online form that doesn't require sign-up instead, check the box below.</p>
                 <v-checkbox

@@ -1167,6 +1167,17 @@
           } else {
             delete this.jsonld.baseSalary;
           }
+          if (this.userdata.account_type === 'business') {
+            this.jsonld.hiringOrganization = {
+              '@type': 'Organization',
+              'name': this.findJob.posted_by,
+            };
+          } else if (this.userdata.account_type === 'individual') {
+            this.jsonld.hiringOrganization = {
+              '@type': 'Organization',
+              'name': 'Kunvet',
+            };
+          }
           console.log(this.findJob);
           this.fetchProfilePic();
         });
