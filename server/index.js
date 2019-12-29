@@ -40,6 +40,9 @@ import Db from '@/mongodb/Db';
 import Models from '@/mongodb/Models';
 import Algolia from '@/utils/Algolia';
 
+// Google Auth
+import GAuth from '@/utils/GoogleAuth';
+
 // ========
 // | Main |
 // ========
@@ -126,5 +129,8 @@ if (process.env.TARGET === 'lambda') {
   Logger.warn('Running on AWS Lambda, but this server is not built for Lambda');
 }
 /* eslint-enable */
+
+// Initialize google auth tokens
+GAuth.initTokens();
 
 export { gcf, lambda };

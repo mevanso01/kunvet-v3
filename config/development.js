@@ -8,7 +8,7 @@
 const base = Object.assign({}, require('./production.js'));
 
 base.serverUrl = 'http://localhost:3000';
-base.private.database = 'mongodb://localhost/kunvet-dev';
+base.private.database = 'mongodb://192.168.2.120/kunvet-dev';
 base.private.files.defaultStorage = 'local';
 base.private.files.s3.bucket = 'kunvet-dev';
 base.private.cors.allowedOrigins.push('http://localhost:8080');
