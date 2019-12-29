@@ -10,6 +10,9 @@ import ApiResponse from '@/utils/ApiResponse';
 import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
 import Config from 'config';
+import GAuth from '@/utils/GoogleAuth';
+
+const request = require('request');
 
 const bodyParser = require('koa-bodyparser');
 
@@ -196,6 +199,7 @@ router.post('/createTransaction', async (ctx) => {
     });
     return;
   }
+  let jobId = '';
   for (const action of req.actions) {
     if (!Object.prototype.hasOwnProperty.call(ACTIONS, action.name)) {
       // Invalid action
@@ -205,6 +209,9 @@ router.post('/createTransaction', async (ctx) => {
         message: `${action.name} is not a valid action`,
       });
       return;
+    }
+    if (action.name === 'activateJob' && action.jobId) {
+      jobId = action.jobId;
     }
     try {
       await ACTIONS[action.name].validate(ctx, action);
@@ -261,6 +268,39 @@ router.post('/createTransaction', async (ctx) => {
     success: true,
     message: 'Purchase completed successfully',
   });
+
+  if (process.env.NODE_ENV === 'production' && jobId) {
+    // Update Google indexing
+    GAuth.getAuthRequestHeaders()
+      .then(value => {
+        let accessToken = '';
+        if (value && value.Authorization) {
+          accessToken = value.Authorization.slice(7);
+        } else {
+          accessToken = GAuth.getAccessToken();
+        }
+        const options = {
+          url: 'https://indexing.googleapis.com/v3/urlNotifications:publish',
+          method: 'POST',
+          // Your options, which must include the Content-Type and auth headers
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          auth: { 'bearer': accessToken },
+          // Define contents here. The structure of the content is described in the next step.
+          json: {
+            'url': `https://kunvet.com/job/${jobId}`,
+            'type': 'URL_UPDATED',
+          },
+        };
+        request(options, (error, response, body) => {
+          console.log(body);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 });
 
 app.use(router.routes());

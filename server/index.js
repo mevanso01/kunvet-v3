@@ -131,6 +131,6 @@ if (process.env.TARGET === 'lambda') {
 /* eslint-enable */
 
 // Initialize google auth tokens
-GAuth.initTokens();
+GAuth.doAuth();
 
 export { gcf, lambda };
