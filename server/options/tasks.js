@@ -3,6 +3,9 @@ import Scheduler from '@/Scheduler';
 import Config from 'config';
 import Models from '@/mongodb/Models';
 import AlgoliaSearch from 'algoliasearch';
+import GAuth from '@/utils/GoogleAuth';
+
+const request = require('request');
 
 // Test task
 Scheduler.schedule(() => {
@@ -44,6 +47,38 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
           console.log(docs1);
         },
       );
+      if (process.env.NODE_ENV !== 'production') {
+        // Update Google indexing
+        GAuth.getAuthRequestHeaders()
+          .then(value => {
+            let accessToken = '';
+            if (value && value.Authorization) {
+              accessToken = value.Authorization.slice(7);
+            } else {
+              accessToken = GAuth.getAccessToken();
+            }
+            const options = {
+              url: 'https://indexing.googleapis.com/v3/urlNotifications:publish',
+              method: 'POST',
+              // Your options, which must include the Content-Type and auth headers
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              auth: { 'bearer': accessToken },
+              // Define contents here. The structure of the content is described in the next step.
+              json: {
+                'url': `https://kunvet.com/job/${expiredJobIds[i]}`,
+                'type': 'URL_DELETED',
+              },
+            };
+            request(options, (error, response, body) => {
+              console.log(body);
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
     const appId = Config.get('algolia.appId');
     const apiKey = Config.get('private.algolia.adminApiKey');

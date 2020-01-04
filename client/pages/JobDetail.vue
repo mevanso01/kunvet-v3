@@ -764,7 +764,7 @@
         </v-dialog>
       </div>
     </div>
-    <script v-html="jsonld" type="application/ld+json"></script>
+    <script v-if="!findJob.expired" v-html="jsonld" type="application/ld+json"></script>
   </v-container>
 </template>
 <script>
@@ -1178,8 +1178,13 @@
               'name': 'Kunvet',
             };
           }
+          if (this.findJob.expired) {
+            this.jsonld = null;
+          }
           console.log(this.findJob);
           this.fetchProfilePic();
+        }).catch((error) => {
+          console.log(error);
         });
       },
       changeLocation() {
