@@ -47,7 +47,7 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
           console.log(docs1);
         },
       );
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV === 'production') {
         // Update Google indexing
         GAuth.getAuthRequestHeaders()
           .then(value => {
