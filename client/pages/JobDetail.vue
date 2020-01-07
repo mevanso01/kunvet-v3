@@ -1119,9 +1119,6 @@
             baseSalaryUnitText = '';
           }
           // var parsed = this.parseAddress(this.findJob.address);
-          console.log(this.findJob);
-          console.log(this.findJob.recreate_date || this.findJob.create_date);
-          debugger;
           this.jsonld = {
             '@context': 'https://schema.org',
             '@type': 'JobPosting',
@@ -1150,7 +1147,7 @@
                 'address': this.findJob.address,
               },
             },
-            'validThrough': DateHelper.getExpiryDate(this.findJob.recreate_date || this.findJob.create_date, 30).toISOString(),
+            'validThrough': this.findJob.expiry_date || DateHelper.getExpiryDate(this.findJob.date, 30).toISOString(),
           };
           if (this.findJob.business_id != null) {
             this.jsonld.hiringOrganization = this.findJob.posted_by;
