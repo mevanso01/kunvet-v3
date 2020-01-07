@@ -101,7 +101,7 @@ const JobSchema = Mongoose.Schema({
   },
   /* Jobs should be ordered by create_date. */
   recreate_date: {
-    type: Date
+    type: Date,
   },
   create_date: {
     type: Date,
