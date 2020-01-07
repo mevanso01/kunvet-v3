@@ -800,6 +800,7 @@
   import StringHelper from '@/utils/StringHelper';
   import TimeAgo from 'javascript-time-ago';
   import en from 'javascript-time-ago/locale/en';
+  import DateHelper from '@/utils/DateHelper';
 
   export default {
     filters: {
@@ -1118,6 +1119,9 @@
             baseSalaryUnitText = '';
           }
           // var parsed = this.parseAddress(this.findJob.address);
+          console.log(this.findJob);
+          console.log(this.findJob.recreate_date || this.findJob.create_date);
+          debugger;
           this.jsonld = {
             '@context': 'https://schema.org',
             '@type': 'JobPosting',
@@ -1146,7 +1150,7 @@
                 'address': this.findJob.address,
               },
             },
-            'validThrough': this.findJob.expiry_date,
+            'validThrough': DateHelper.getExpiryDate(this.findJob.recreate_date || this.findJob.create_date, 30).toISOString(),
           };
           if (this.findJob.business_id != null) {
             this.jsonld.hiringOrganization = this.findJob.posted_by;

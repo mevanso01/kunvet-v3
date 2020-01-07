@@ -99,8 +99,11 @@ const JobSchema = Mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  /* Jobs should be ordered by recreate_date. */
+  /* Jobs should be ordered by create_date. */
   recreate_date: {
+    type: Date
+  },
+  create_date: {
     type: Date,
     default: Date.now,
   },

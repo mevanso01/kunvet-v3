@@ -38,6 +38,8 @@ const FindJobRecord = `
     cropped
   }
   position_tags
+  recreate_date
+  create_date
 `;
 const FindJobRecordForJobCard = `
   _id
