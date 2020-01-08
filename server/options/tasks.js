@@ -3,6 +3,7 @@ import Scheduler from '@/Scheduler';
 import Config from 'config';
 import Models from '@/mongodb/Models';
 import AlgoliaSearch from 'algoliasearch';
+import Mailer from '@/utils/Mailer';
 import GAuth from '@/utils/GoogleAuth';
 
 const request = require('request');
@@ -21,9 +22,10 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
   console.log('Scheduling expired job removal');
   console.log('Expire time is', Config.get('daysToExpire'));
   console.log('Delete from algolia time is', Config.get('daysToDeleteFromAlgolia'));
-  Models.Job.find({}, (err, jobsFound) => {
+  Models.Job.find({}, async (err, jobsFound) => {
     const today = new Date();
     const expiredJobIds = [];
+    const expiredJobs = [];
     const toDeleteJobIds = [];
     const daysToExpire = Config.get('daysToExpire') || daysToExpireFallback;
     const daysToDeleteFromAlgolia = Config.get('daysToDeleteFromAlgolia') || daysToDeleteFromAlgoliaFallback;
@@ -32,6 +34,7 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
       const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
       if (!job.expired && today.getTime() > expiredDate.getTime()) {
         expiredJobIds.push(job._id);
+        expiredJobs.push(job);
       }
       const toBeDeletedTime = new Date(Date.parse(job.date) + (daysToDeleteFromAlgolia * oneDay));
       if (today.getTime() > toBeDeletedTime.getTime()) {
@@ -43,10 +46,65 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
         { '_id': expiredJobIds[i] },
         { $set: { 'expired': true } },
         { new: true },
-        (err1, docs1) => {
-          console.log(docs1);
+        (/* err1, docs1 */) => {
         },
       );
+      Models.Account.find({ '_id': expiredJobs[i].user_id }, async (err2, jobPoster) => {
+        if (!jobPoster || jobPoster.length === 0) {
+          return;
+        }
+        try {
+          const jobType = [];
+          for (const j in expiredJobs[i].type) {
+            if (typeof expiredJobs[i].type[j] === 'string') {
+              const type = expiredJobs[i].type[j];
+              if (type === 'fulltime') {
+                jobType.push('FULL TIME');
+              } else if (type === 'parttime') {
+                jobType.push('PART TIME');
+              } else {
+                jobType.push(type);
+              }
+            }
+          }
+          let salary = '';
+          if (expiredJobs[i].pay_type === 'paid') {
+            const sal = expiredJobs[i].salary.toFixed(2);
+            let pdenom = ` ${expiredJobs[i].pay_denomination}`;
+            if (expiredJobs[i].pay_denomination === 'per hour') {
+              pdenom = '/hr';
+            }
+            salary = `${sal.toString()}${pdenom}`;
+          } else if (expiredJobs[i].pay_type === 'negotiable') {
+            expiredJobs[i].salary_min = expiredJobs[i].salary_min || 0;
+            expiredJobs[i].salary_max = expiredJobs[i].salary_max || 0;
+            const salMin = expiredJobs[i].salary_min.toFixed(2);
+            const salMax = expiredJobs[i].salary_max.toFixed(2);
+            let pdenom = ` ${expiredJobs[i].pay_denomination}`;
+            if (expiredJobs[i].pay_denomination === 'per hour') {
+              pdenom = '/hr';
+            }
+            salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
+          } else {
+            salary = expiredJobs[i].pay_type;
+          }
+          const mailer = new Mailer();
+          await mailer.sendTemplate(
+            jobPoster[0].email,
+            'job-expired',
+            {
+              fname: jobPoster[0].firstname,
+              jobname: expiredJobs[i].title,
+              daysToExpire,
+              fullAddress: `${expiredJobs[i].address} ${expiredJobs[i].address2 || ''}`,
+              jobtype: jobType.join(' / '),
+              salary,
+            },
+          );
+        } catch (err3) {
+          console.log('Error sending email in sendVerificationCode()', err3);
+        }
+      });
       if (process.env.NODE_ENV === 'production') {
         // Update Google indexing
         GAuth.getAuthRequestHeaders()
