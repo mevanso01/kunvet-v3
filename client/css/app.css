@@ -1326,7 +1326,7 @@ To see the bug, simply comment out the next 3 styles.*/
 
 /* Index Page */
 .search_bar_text_field div.v-input__slot{
-  height: 64px;
+  height: 64px !important;
   background: none !important;
 }
 .search_bar_text_field.v-text-field.v-text-field--enclosed > .v-input__control > .v-input__slot{

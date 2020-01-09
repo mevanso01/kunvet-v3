@@ -339,7 +339,7 @@ section.search {
   <v-container fluid class="home-page-cont pa-0">
     <section class="search" style="padding-top: 64px;" v-on:keyup.enter="search()">
       <div class="main-cont-large">
-        <div class="search-row">
+        <div class="search-row d-none">
           <div class="search-field-cont">
             <div class="custom-select-2-wrapper">
               <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'city' }">
@@ -396,6 +396,9 @@ section.search {
               Search
             </k-btn>
           </div>
+        </div>
+        <div class="search-row">
+          <JobSearch :to="searchDestination" :inline_mode="true" class="job-search" />
         </div>
       </div>
     </section>
@@ -526,6 +529,7 @@ import EventBus from '@/EventBus';
 import Config from 'config';
 import algoliasearch from 'algoliasearch';
 import userDataProvider from '@/userDataProvider';
+import JobSearch from '@/components/JobSearch';
 
 const algoliaConfig = Config.get('algolia');
 
@@ -546,6 +550,7 @@ export default {
   components: {
     MainJobCard,
     NewsletterForm,
+    JobSearch,
   },
   mounted() {
     const el = document.querySelector('#dropdown-header .v-input__slot');
@@ -632,6 +637,11 @@ export default {
     },
   },
   computed: {
+    searchDestination() {
+      return {
+        path: '/jobs/search',
+      };
+    },
     filteredAvailablePositionsObj() {
       let str = this.filterPositions;
       if (!str || str === '') {

@@ -1,4 +1,9 @@
 <style lang="scss" scoped>
+  .search-root {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
   .search_bar_head{
     width: 68px;
     font-weight: 600;
@@ -168,6 +173,28 @@
   // extra small
   @media (max-width: 450px) {
   }
+  // medium desktop
+  @media (min-width: 801px) {
+    .inline-mode {
+      display: flex;
+      width: 100%;
+      > .search_bar_container {
+        margin: 0 15px 0 0 !important;
+        width: calc(50% - 90px) !important;
+      }
+      .search_btn {
+        width: 150px !important;
+      }
+      .search_results_div {
+        margin-top: 74px;
+        left: calc(50% - 75px);
+        width: calc(50% - 90px);
+        .search_bar_container {
+          width: 100%;
+        }
+      }
+    }
+  }
 </style>
 
 <style lang="scss">
@@ -181,7 +208,7 @@
 </style>
 
 <template>
-  <div>
+  <div :class="['search-root', inline_mode ? 'inline-mode' : '']">
     <div class="search_bar_container">
       <div class="search_bar_head">FIND</div>
       <div class="search_bar_field">
@@ -237,6 +264,10 @@ export default {
     to: {
       type: Object,
       default: {},
+    },
+    inline_mode: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
