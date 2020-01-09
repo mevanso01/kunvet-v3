@@ -49,61 +49,76 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
         (/* err1, docs1 */) => {
         },
       );
-      Models.Account.find({ '_id': expiredJobs[i].user_id }, async (err2, jobPoster) => {
+      Models.Account.find({ '_id': expiredJobs[i].user_id }, (err2, jobPoster) => {
+        if (err2) {
+          console.log(err2);
+          return;
+        }
         if (!jobPoster || jobPoster.length === 0) {
           return;
         }
-        try {
-          const jobType = [];
-          for (const j in expiredJobs[i].type) {
-            if (typeof expiredJobs[i].type[j] === 'string') {
-              const type = expiredJobs[i].type[j];
-              if (type === 'fulltime') {
-                jobType.push('FULL TIME');
-              } else if (type === 'parttime') {
-                jobType.push('PART TIME');
-              } else {
-                jobType.push(type);
+        Models.Applicant.find({ 'job_id': expiredJobIds[i] }, async (err4, applicants) => {
+          if (err4) {
+            console.log(err4);
+            return;
+          }
+          if (!applicants) {
+            return;
+          }
+          try {
+            const appsReceived = applicants.length;
+            const jobType = [];
+            for (const j in expiredJobs[i].type) {
+              if (typeof expiredJobs[i].type[j] === 'string') {
+                const type = expiredJobs[i].type[j];
+                if (type === 'fulltime') {
+                  jobType.push('FULL TIME');
+                } else if (type === 'parttime') {
+                  jobType.push('PART TIME');
+                } else {
+                  jobType.push(type);
+                }
               }
             }
-          }
-          let salary = '';
-          if (expiredJobs[i].pay_type === 'paid') {
-            const sal = expiredJobs[i].salary.toFixed(2);
-            let pdenom = ` ${expiredJobs[i].pay_denomination}`;
-            if (expiredJobs[i].pay_denomination === 'per hour') {
-              pdenom = '/hr';
+            let salary = '';
+            if (expiredJobs[i].pay_type === 'paid') {
+              const sal = expiredJobs[i].salary.toFixed(2);
+              let pdenom = ` ${expiredJobs[i].pay_denomination}`;
+              if (expiredJobs[i].pay_denomination === 'per hour') {
+                pdenom = '/hr';
+              }
+              salary = `${sal.toString()}${pdenom}`;
+            } else if (expiredJobs[i].pay_type === 'negotiable') {
+              expiredJobs[i].salary_min = expiredJobs[i].salary_min || 0;
+              expiredJobs[i].salary_max = expiredJobs[i].salary_max || 0;
+              const salMin = expiredJobs[i].salary_min.toFixed(2);
+              const salMax = expiredJobs[i].salary_max.toFixed(2);
+              let pdenom = ` ${expiredJobs[i].pay_denomination}`;
+              if (expiredJobs[i].pay_denomination === 'per hour') {
+                pdenom = '/hr';
+              }
+              salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
+            } else {
+              salary = expiredJobs[i].pay_type;
             }
-            salary = `${sal.toString()}${pdenom}`;
-          } else if (expiredJobs[i].pay_type === 'negotiable') {
-            expiredJobs[i].salary_min = expiredJobs[i].salary_min || 0;
-            expiredJobs[i].salary_max = expiredJobs[i].salary_max || 0;
-            const salMin = expiredJobs[i].salary_min.toFixed(2);
-            const salMax = expiredJobs[i].salary_max.toFixed(2);
-            let pdenom = ` ${expiredJobs[i].pay_denomination}`;
-            if (expiredJobs[i].pay_denomination === 'per hour') {
-              pdenom = '/hr';
-            }
-            salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
-          } else {
-            salary = expiredJobs[i].pay_type;
+            const mailer = new Mailer();
+            await mailer.sendTemplate(
+              jobPoster[0].email,
+              'job-expired',
+              {
+                fname: jobPoster[0].firstname,
+                jobname: expiredJobs[i].title,
+                daysToExpire,
+                fullAddress: `${expiredJobs[i].address} ${expiredJobs[i].address2 || ''}`,
+                jobtype: jobType.join(' / '),
+                salary,
+                appsReceived: appsReceived === 0 ? 'no' : appsReceived,
+              },
+            );
+          } catch (err3) {
+            console.log('Error sending email in sendVerificationCode()', err3);
           }
-          const mailer = new Mailer();
-          await mailer.sendTemplate(
-            jobPoster[0].email,
-            'job-expired',
-            {
-              fname: jobPoster[0].firstname,
-              jobname: expiredJobs[i].title,
-              daysToExpire,
-              fullAddress: `${expiredJobs[i].address} ${expiredJobs[i].address2 || ''}`,
-              jobtype: jobType.join(' / '),
-              salary,
-            },
-          );
-        } catch (err3) {
-          console.log('Error sending email in sendVerificationCode()', err3);
-        }
+        });
       });
       if (process.env.NODE_ENV === 'production') {
         // Update Google indexing
