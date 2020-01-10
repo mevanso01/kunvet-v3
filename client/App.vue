@@ -64,7 +64,7 @@
 
     <!-- mobile menu icon -->
     <div class="mobile-show mobile-navbar">
-      <div class="header-icon-container" :class="{ 'white-bg': navHasBg }" style="z-index: 100;">
+      <div class="header-icon-container" :class="{ 'white-bg': navHasBg }" style="z-index: 1010;">
         <div style="padding: 12px 0 0 21px;">
           <router-link to="/jobs/search">
             <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">

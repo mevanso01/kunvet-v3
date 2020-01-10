@@ -398,7 +398,7 @@ section.search {
           </div>
         </div>
         <div class="search-row">
-          <JobSearch :to="searchDestination" :inline_mode="true" class="job-search" />
+          <JobSearch :inline_mode="true" :onClick="onClickJobSearch" ref="jobSearchForm" class="job-search" />
         </div>
       </div>
     </section>
@@ -471,7 +471,7 @@ section.search {
         </div>
       </v-layout>
 
-      <div v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" class="banner-desktop">
+      <!-- <div v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" class="banner-desktop">
         <div class="main-cont-large">
           <div class="job-alert-banner-columns" style="padding: 60px 80px; border-top:5px solid red; background-color: #f6f6f8;">
             <div style="vertical-align: middle; column-width: 300px;  display: table-cell;">
@@ -492,7 +492,7 @@ section.search {
               <NewsletterForm banner @post="onPost"/>
             </v-flex>
           </v-layout>
-      </div>
+      </div> -->
     </div>
 
     <!-- <v-dialog v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" v-model="dialogs.showJobAlertForm" max-width="500px">
@@ -560,6 +560,11 @@ export default {
     window.onresize = () => {
       this.setSearchWidth();
     };
+    this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
+    if (this.$route.query.query) {
+      // this.query = this.$route.query.query;
+      // this.rawSearch();
+    }
     // window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
   },
   data() {
@@ -637,11 +642,6 @@ export default {
     },
   },
   computed: {
-    searchDestination() {
-      return {
-        path: '/jobs/search',
-      };
-    },
     filteredAvailablePositionsObj() {
       let str = this.filterPositions;
       if (!str || str === '') {
@@ -1145,6 +1145,10 @@ export default {
         // No usable backend is available
         this.$error('No usable search backend');
       }
+    },
+    onClickJobSearch() {
+      // this.query = query;
+      // this.rawSearch();
     },
   },
   deactivated() {

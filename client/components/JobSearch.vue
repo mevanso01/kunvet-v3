@@ -251,7 +251,7 @@
         </v-list-tile>
       </v-list>
     </div>
-    <router-link :to="to"><k-btn class="search_btn"><span class="search_btn_text">SEARCH</span></k-btn></router-link>
+    <k-btn class="search_btn" @click="onClickSearch"><span class="search_btn_text">SEARCH</span></k-btn>
     <div v-show="searchFocus===true" class="_dropdown-overlay" @click="searchFocus=false"></div>
   </div>
 </template>
@@ -261,13 +261,13 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 
 export default {
   props: {
-    to: {
-      type: Object,
-      default: {},
-    },
     inline_mode: {
       type: Boolean,
       default: false,
+    },
+    onClick: {
+      type: Function,
+      default: null,
     },
   },
   data() {
@@ -286,6 +286,7 @@ export default {
       autoCompleteService: null,
       addressValid: true,
       prevAutocompleteAddress: null,
+      isDefaultLoad: false,
     };
   },
   computed: {
@@ -305,6 +306,10 @@ export default {
         input.setAttribute('placeholder', '');
         this.autoCompleteService = new window.google.maps.places.AutocompleteService();
         this.geocoder = new window.google.maps.Geocoder();
+        if (this.job.address) {
+          this.isDefaultLoad = true;
+          this.onChangeAddressSearchInput(this.job.address);
+        }
       }
       // if (this.job.address) {
       //   this.setLatLongs();
@@ -318,7 +323,8 @@ export default {
       if (this.autoCompleteService) {
         this.autoCompleteService.getPlacePredictions({ input: value }, (results, status) => {
           if (status === 'OK') {
-            this.searchFocus = true;
+            this.searchFocus = !this.isDefaultLoad || false;
+            this.isDefaultLoad = false;
             this.job.addressList = results;
           } else {
             this.job.addressList = [];
@@ -391,6 +397,25 @@ export default {
           }
         });
       });
+    },
+    onClickSearch() {
+      if (this.onClick) {
+        this.onClick(this.job, this.query);
+      }
+    },
+    setDefaultValues(values) {
+      if (values.query) {
+        this.query = values.query;
+      }
+      if (values.address) {
+        this.job.address = values.address;
+      }
+      if (values.latitude) {
+        this.job.latitude = values.latitude;
+      }
+      if (values.longitude) {
+        this.job.longitude = values.longitude;
+      }
     },
   },
   activated() {

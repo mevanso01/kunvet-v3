@@ -939,7 +939,7 @@
           <img class="interview_woman" :src="pngs.woman" alt="Female Job Applicant Waiting for Job Interview">
           <div class="search_area">
             <h2 class="search_title">Fresh Job<br>Opportunities<br>Near You.</h2>
-            <JobSearch :to="searchDestination" class="job-search" />
+            <JobSearch :onClick="onClickJobSearch" class="job-search" />
           </div>
       </div>
       <!-- Scrollama starts here -->
@@ -949,7 +949,7 @@
         <h2 class="search_title">Fresh Job Opportunities Near You.</h2>
       </div>
       <div class="index_area">
-        <JobSearch :to="searchDestination" class="job-search" />
+        <JobSearch :onClick="onClickJobSearch" class="job-search" />
       </div>
     </div>
     <div class="desktop medium mobile small extra_small">
@@ -1340,6 +1340,17 @@ export default {
           this.inUsePositions = data.data.findAvailableFilters.in_use_positions;
           this.inUseTypes = data.data.findAvailableFilters.in_use_types;
         }
+      });
+    },
+    onClickJobSearch(job, query) {
+      this.$router.push({
+        path: '/jobs/search',
+        query: {
+          address: job.address,
+          latitude: job.latitude,
+          longitude: job.longitude,
+          query,
+        },
       });
     },
   },
