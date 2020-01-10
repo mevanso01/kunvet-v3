@@ -134,10 +134,10 @@
             <router-link
               to="/terms"><p style="color: #b3b3b3">Terms and Conditions</p></router-link>
           </v-flex>
-          <v-flex>
+          <!-- <v-flex>
             <router-link
               to="/pricing"><p style="color: #b3b3b3">Pricing and Refunds</p></router-link>
-          </v-flex>
+          </v-flex> -->
         </v-layout>
       </div>
     </div>
@@ -284,8 +284,8 @@ export default {
       // change this to set to white bg based on scroll position as well
       // console.log(this.$route.path, this.$route.path.indexOf('/jobs/detail/'));
       // console.log(this.$route.path);
-      const isTransparentPage = (this.$route.path !== '/' && this.$route.path.indexOf('/jobs/detail/') !== -1) ||
-        ['/', '/jobs/applied', '/account/settings', '/jobs/posted', '/jobs/saved'].indexOf(this.$route.path) !== -1;
+      const isTransparentPage = (this.$route.path !== '/' && this.$route.path.indexOf('/jobs/detail/') !== -1);
+      //  || ['/', '/jobs/applied', '/account/settings', '/jobs/posted', '/jobs/saved'].indexOf(this.$route.path) !== -1;
       return !this.isAtTop || !isTransparentPage;
     },
     currentMenuItems() {

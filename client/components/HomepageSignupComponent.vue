@@ -1,4 +1,4 @@
-<style scoped>
+<style lang="scss" scoped>
 .signup-card {
   display: flex;
   flex-direction: column;
@@ -51,6 +51,10 @@ h1 {
   box-shadow: none !important;
   border-radius: 0px !important;
   background-color: #ff6969;
+  > div > .k-btn--text {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 .next_job_btn_text{
   font-family: proxima-nova, sans-serif;
@@ -113,6 +117,15 @@ h1 {
   }
   .next_job_text{
     font-size: 16px;
+  }
+}
+</style>
+
+<style lang="scss">
+.next_job_btn{
+  > div > .k-btn--text {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 </style>

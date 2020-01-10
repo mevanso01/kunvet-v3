@@ -765,11 +765,11 @@
           height: auto;
         }
         .ykunvet_text_div{
-          height: 450px;
+          height: fit-content;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: 0 8%;
+          padding: 50px 8%;
           background-color: #f4f4f4;
           font-family: proxima-nova;
           .ykunvet_header{
