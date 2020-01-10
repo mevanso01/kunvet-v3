@@ -1349,7 +1349,7 @@ export default {
           address: job.address,
           latitude: job.latitude,
           longitude: job.longitude,
-          query,
+          q: query,
         },
       });
     },

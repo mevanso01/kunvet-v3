@@ -100,6 +100,7 @@
     line-height: 64px !important;
     box-shadow: none !important;
     border-radius: 0px !important;
+    user-select: none;
   }
   .search_btn_text{
     font-family: proxima-nova, sans-serif;

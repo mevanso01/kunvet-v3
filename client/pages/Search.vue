@@ -561,10 +561,14 @@ export default {
       this.setSearchWidth();
     };
     this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
-    if (this.$route.query.query) {
-      // this.query = this.$route.query.query;
-      // this.rawSearch();
+    if (this.$route.query.q) {
+      this.query = this.$route.query.q;
     }
+    if (this.$route.query.latitude && this.$route.query.longitude) {
+      this.selectedLat = this.$route.query.latitude;
+      this.selectedLong = this.$route.query.longitude;
+    }
+    this.rawSearch();
     // window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
   },
   data() {
@@ -747,11 +751,11 @@ export default {
       }
       this.openSelect(null); // otherwise, close
     },
-    setSelectedLatlongs() {
-      const latlongs = this.getCityCoordinates();
-      this.selectedLat = latlongs.latitude;
-      this.selectedLong = latlongs.longitude;
-    },
+    // setSelectedLatlongs() {
+    //   const latlongs = this.getCityCoordinates();
+    //   this.selectedLat = latlongs.latitude;
+    //   this.selectedLong = latlongs.longitude;
+    // },
     getCityCoordinates() {
       const selected = locations.search_locations.find(el => el.name === this.selectedCity);
       if (!selected) {
@@ -882,10 +886,11 @@ export default {
       return `${this.computeDistance(lat, long)} miles away`;
     },
     computeDistance(lat, long) {
+      const coordinates = this.selectedCoordinates;
       return DistanceHelper.computeDistance(
         {
-          latitude: this.selectedLat,
-          longitude: this.selectedLong,
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
         },
         {
           latitude: lat,
@@ -1056,7 +1061,7 @@ export default {
       }
     },
     async algoliaSearch() {
-      const coordinates = this.getCityCoordinates();
+      const coordinates = this.selectedCoordinates;
       const query = this.query || '';
       this.$debug(coordinates);
       const requests = [{
@@ -1111,27 +1116,27 @@ export default {
       this.$debug(this.filteredJobs);
     },
     search() {
-      this.page = 0;
-      this.loadingJobs = true;
-      if (this.query) {
-        this.$router.push({
-          path: '/jobs/search',
-          query: {
-            q: this.query,
-          },
-        });
-        this.$setTitle(`${this.query} | Kunvet`);
-      } else {
-        this.$router.push({
-          path: '/jobs/search',
-        });
-        this.$setTitle('Kunvet');
-      }
-      this.rawSearch();
+      // this.page = 0;
+      // this.loadingJobs = true;
+      // if (this.query) {
+      //   this.$router.push({
+      //     path: '/jobs/search',
+      //     query: {
+      //       q: this.query,
+      //     },
+      //   });
+      //   this.$setTitle(`${this.query} | Kunvet`);
+      // } else {
+      //   this.$router.push({
+      //     path: '/jobs/search',
+      //   });
+      //   this.$setTitle('Kunvet');
+      // }
+      // this.rawSearch();
     },
     rawSearch() {
       this.$debug('Started rawSearch');
-      this.setSelectedLatlongs();
+      // this.setSelectedLatlongs();
       this.displayedJobs = [[], [], []];
       // if (process.env.NODE_ENV === 'development') {
       if (process.env.NODE_ENV === 'development') {
@@ -1146,9 +1151,21 @@ export default {
         this.$error('No usable search backend');
       }
     },
-    onClickJobSearch() {
-      // this.query = query;
-      // this.rawSearch();
+    onClickJobSearch(job, query) {
+      this.query = query;
+      if (job.latitude && job.longitude) {
+        this.selectedLat = job.latitude;
+        this.selectedLong = job.longitude;
+      } else {
+        this.selectedLong = Coordinates.uci.latitude;
+        this.selectedLong = Coordinates.uci.longitude;
+      }
+      this.page = 0;
+      this.loadingJobs = true;
+      if (this.query) {
+        this.$setTitle(`${this.query} | Kunvet`);
+      }
+      this.rawSearch();
     },
   },
   deactivated() {
@@ -1174,40 +1191,40 @@ export default {
     });
   },
   watch: {
-    '$route.query.q'() {
-      if (this.$route.query.q && this.$route.query.q !== this.query) {
-        this.query = this.$route.query.q;
-        this.rawSearch();
-      }
-    },
+    // '$route.query.q'() {
+    //   if (this.$route.query.q && this.$route.query.q !== this.query) {
+    //     this.query = this.$route.query.q;
+    //     this.rawSearch();
+    //   }
+    // },
   },
   activated() {
-    this.setSelectedLatlongs();
+    // this.setSelectedLatlongs();
     const hasJobsDisplayed = this.displayedJobs &&
       (this.displayedJobs[0].length > 0 || this.displayedJobs[1].length > 0 || this.displayedJobs[2].length > 0);
     if (!hasJobsDisplayed) {
       this.loadingJobs = true;
     }
-    const oldQuery = this.query;
-    if (this.$route.query.q) {
-      this.query = this.$route.query.q;
-    } else if (this.query && this.$route.query.q !== this.query) {
-      this.$router.push({
-        path: '/jobs/search',
-        query: {
-          q: this.query,
-        },
-      });
-    }
+    // const oldQuery = this.query;
+    // if (this.$route.query.q) {
+    //   this.query = this.$route.query.q;
+    // } else if (this.query && this.$route.query.q !== this.query) {
+    //   this.$router.push({
+    //     path: '/jobs/search',
+    //     query: {
+    //       q: this.query,
+    //     },
+    //   });
+    // }
     // else if (this.$store.state && this.$store.state.prevSearchQuery) {
     //   this.query = this.$store.state.prevSearchQuery;
     //   this.$store.commit('setPrevQuery', '');
     // } else {
     //   this.query = '';
     // }
-    if (!hasJobsDisplayed || oldQuery !== this.query) {
-      this.rawSearch();
-    }
+    // if (!hasJobsDisplayed || oldQuery !== this.query) {
+    //   this.rawSearch();
+    // }
     document.addEventListener('click', this.documentClick, { passive: true });
     this.searchPlaceholder = this.getSearchPlaceholderText();
     userDataProvider.getUserData().then(udata => {
