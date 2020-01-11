@@ -42,7 +42,7 @@ export default {
       completed: true,
       instance: null,
       actions: [],
-      postJobPrice: 0.40,
+      postJobPrice: 9.00,
       nonceUsed: false,
       loading: false,
       showError: false,
@@ -104,6 +104,11 @@ export default {
       this.showError = false;
       this.loading = true;
       this.$debug(this.instance);
+      // TODO: remove 'production' case when deploying to 'prod' branch
+      if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') {
+        this.chargeUser({});
+        return;
+      }
       this.instance.requestPaymentMethod((err, payload) => {
         // console.log(err, payload);
         if (err) { this.loading = false; }
