@@ -4737,6 +4737,7 @@ export default {
     title: 'Post a Job | Kunvet',
     meta: [
       { name: 'description', content: 'Save a ton of money on your hiring by using Kunvet now. Satisfaction guaranteed. Or money back.' },
+      { name: 'robots', content: 'noindex, nofollow' },
     ],
   },
   props: {
