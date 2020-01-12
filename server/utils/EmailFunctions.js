@@ -62,11 +62,12 @@ export default {
           replyTo: emailBody.employer.email,
           fname: emailBody.user.firstname,
           name: emailBody.application.name,
-          jobName: emailBody.job.title,
+          jobname: emailBody.job.title,
           address: emailBody.job.address,
           salary: emailBody.job.salary,
           posted_by: emailBody.job.posted_by,
           type: emailBody.job.type,
+          job_id: emailBody.job._id,
         },
       );
     } catch (e) {

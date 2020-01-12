@@ -96,10 +96,10 @@ async function setStatus(applicationId, status, ctx = null, token = null) {
   const emailBody = {
     status: status,
     employer: employer,
+    user: user,
     application: application,
     job: job,
   };
-
 
   // Send notification to applicant //working on this function
   if (['opened', 'accepted', 'rejected'].includes(status)) {

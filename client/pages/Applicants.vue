@@ -422,6 +422,7 @@
         this.$debug('Sample text lol');
       },
       async openSideResume(item) {
+        console.log('================================');
         this.updateApplicantStatus('opened', item._id);
         this.showSideResume = true;
         this.currentApplicant = item;
