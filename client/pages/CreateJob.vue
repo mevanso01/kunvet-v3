@@ -418,7 +418,7 @@
                   placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
                 <!-- Pictures -->
-                <br>
+                <!-- <br>
                 <h4 class="cust-subheader" :class="{ 'mb-1': job.images.length === 0 }">Pictures <span class="optional-color">(Optional)</span></h4>
                 <p v-show="job.images.length === 0">
                   Although not required, adding relevant pictures to your job builds trust and can attract more attention from potential applicants
@@ -450,7 +450,7 @@
                       <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image" width="100%">
                     </v-flex>
                   </v-layout>
-                </v-container>
+                </v-container> -->
               </v-form>
 
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">

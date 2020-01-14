@@ -405,8 +405,8 @@ export default {
       }
     },
     setDefaultValues(values) {
-      if (values.query) {
-        this.query = values.query;
+      if (values.q) {
+        this.query = values.q;
       }
       if (values.address) {
         this.job.address = values.address;

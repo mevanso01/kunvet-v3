@@ -11,6 +11,9 @@ export default class Local extends Storage {
   constructor() {
     super();
     this.path = path.resolve(process.cwd(), 'uploads/');
+    if (!fs.existsSync(this.path)) {
+      fs.mkdirSync(this.path);
+    }
   }
 
   localUpload(file, lpath) {

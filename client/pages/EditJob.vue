@@ -241,7 +241,7 @@
         <QuillEditor v-model="job.responsibilities" title="Responsibilities" id="editor3" required
           placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
-        <div style="display: flex">
+        <!-- <div style="display: flex">
         <h3 class="optional" style="margin: 7px 10px 6px 0;">Pictures</h3>
         <v-btn v-if="job.images.length === 0"
           @click="picUploaderDialog = true"
@@ -250,7 +250,7 @@
         <v-btn v-else
           @click="picUploaderDialog = true"
           flat small outline class="optional">Upload Another</v-btn>
-        </div>
+        </div> -->
 
         <v-dialog v-model="picUploaderDialog">
           <PicUploader @uploaded="picUploaded" @cancel="picUploaderDialog = false"/>
