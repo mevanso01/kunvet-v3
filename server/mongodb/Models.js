@@ -103,10 +103,6 @@ const JobSchema = Mongoose.Schema({
   recreate_date: {
     type: Date,
   },
-  create_date: {
-    type: Date,
-    default: Date.now,
-  },
   expiry_date: {
     type: Date,
     default: () => new Date(+new Date() + (1000 * 60 * 60 * 24 * 30)),
@@ -209,6 +205,11 @@ const JobSchema = Mongoose.Schema({
   },
   gform_link: {
     type: String,
+  },
+}, {
+  timestamps: {
+    updatedAt: 'last_edited',
+    createdAt: 'create_date',
   },
 });
 const ApplicantSchema = Mongoose.Schema({
