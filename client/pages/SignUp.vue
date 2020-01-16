@@ -96,11 +96,11 @@
               <v-card>
                 <v-card-text>
                   <div style="margin-bottom: 84px;">
-                    <h2 class="student-signup-color">Students</h2>
+                    <h2 class="student-signup-color">Applicants</h2>
                     <p>Are you looking to apply for jobs? Sign up here!</p>
                   </div>
                   <div class="text-xs-center pos-bottom">
-                    <k-btn color="#3488fc" block @click="chooseSignup('student')">Student Sign Up</k-btn>
+                    <k-btn color="#3488fc" block @click="chooseSignup('student')">Applicant Sign Up</k-btn>
                   </div>
                 </v-card-text>
               </v-card>

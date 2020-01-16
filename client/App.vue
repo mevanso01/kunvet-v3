@@ -119,7 +119,7 @@
       <div id="bottom-content">
         <v-layout row wrap>
           <v-flex class="footer-big-text">
-            <p class="kunvet-red">Kunvet 2019 &copy; All rights reserved.</p>
+            <p class="kunvet-red">Kunvet 2020 &copy; All rights reserved.</p>
           </v-flex>
           <v-flex>
             <router-link to="/about"><p style="color: #b3b3b3">About Us</p></router-link>

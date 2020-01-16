@@ -956,33 +956,27 @@
       <div class="ykunvet_div">
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
-            <h2 class="ykunvet_header">Out-Dated Jobs–Ugh!</h2>
+            <h2 class="ykunvet_header">Out-dated jobs are so yesterday.</h2>
             <p class="ykunvet_text">
-              You applied for a job, and weeks or even months later,
-              the company finally replied that the job you applied to no longer
-              exists—does this sound familiar? Well, now that you are here with us, don’t you worry
-              anymore! We only show you the latest jobs near your location.</p>
+              So you just applied for your dream job! Feels great, right? Then you get that dreaded email: “We’re sorry, this job no longer exists.” The worst. Luckily, Kunvet has your back—we’ll show you only the latest, greatest jobs right in your area.</p>
           </div>
           <img class="ykunvet_phone desktop medium" :src="pngs.phone1" alt="Newest Jobs Near Me">
           <img class="ykunvet_phone mobile small extra_small" :src="pngs.phoneplaceholder" alt="Phone Placeholder">
         </div>
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
-            <h2 class="ykunvet_header">Still Being Kept in the Dark?</h2>
+            <h2 class="ykunvet_header">We’ll light the way.</h2>
             <p class="ykunvet_text">
-              We inform all our users about a change in their application status immediately.
-              Whether their resumes were received or viewed, they will know it right away.</p>
+              Dying to know if your application is getting noticed? Kunvet lets you know right away when there’s a change in your application status. We’ll let you know ASAP when your dream company is checking out your resume. We’re your eyes and ears.</p>
           </div>
           <img class="ykunvet_phone desktop medium" :src="pngs.phone2" alt="Being kept in the dark?">
           <img class="ykunvet_phone mobile small extra_small" :src="pngs.phoneplaceholder" alt="Phone Placeholder">
         </div>
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
-            <h2 class="ykunvet_header">One Resume Is Not Enough.</h2>
+            <h2 class="ykunvet_header">Only one resume? Please.</h2>
             <p class="ykunvet_text">
-              Many of you have more than one resume—because you are very “versatile”. On
-              Kunvet, you can upload as many resumes as you want for the different kinds of jobs you
-              apply to, and we will keep them safe and sound for whenever you need them.</p>
+              You know how it is. You’re applying for jobs and you have about six different versions of your resume. You’re versatile, we get it. That’s why we let you upload as many resumes for as many hats you wear, making applying for a wide array of jobs a breeze.</p>
           </div>
           <img class="ykunvet_phone desktop medium" :src="pngs.phone3" alt="Multiple Resumes">
           <img class="ykunvet_phone mobile small extra_small" :src="pngs.phoneplaceholder" alt="Phone Placeholder">
@@ -998,9 +992,7 @@
                 <img class="bio_img" :src="pngs.person1"/>
               </div>
               <div class="slide_stuff">
-                <p class="quote">“</p><p class="test_text">Though a fairly new website, Kunvet helped me a lot with
-                  job searching. I definitetly recommend using this service, especially for people like me who wants
-                  to work closer to home.</p>
+                <p class="quote">“</p><p class="test_text">Kunvet has helped me so much with my job search! I can’t believe what a great resource it is, especially since it’s a pretty new website. I definitely recommend using Kunvet, especially if you’re like me and want to work closer to home!</p>
                 <div class="bio">
                   <p class="bio_header">Sandra C.</p>
                   <p class="bio_text">Warehouse Associate at Amazon</p>
@@ -1063,8 +1055,8 @@
       </div>
       <div class="looking_div">
         <div class="looking_text_div">
-          <h2 class="looking_header">Looking to Hire?<br>You are at the Right Place!</h2>
-          <div class="looking_text" style="margin: 0 auto;">Posting starts at 80¢ per day. Save yourself time and money by using Kunvet.</div>
+          <h2 class="looking_header">Looking to hire?<br>You’re in the right place!</h2>
+          <div class="looking_text" style="margin: 0 auto;">Posting starts at just $9 per month. Try Kunvet, and save yourself time and money!</div>
           <router-link to="/hire"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>

@@ -117,7 +117,7 @@ export default {
       // Account types
       accountTypes: {
         student: {
-          header: 'Student Sign Up',
+          header: 'Applicant Sign Up',
           color: '#3488fc',
           requireFullName: true,
           requireBusinessName: false,
@@ -129,7 +129,7 @@ export default {
           requireBusinessName: true,
         },
         individual: {
-          header: 'Individual Sign Up',
+          header: 'Personal Hiring Sign Up',
           color: '#e391ff',
           requireFullName: true,
           requireBusinessName: false,

@@ -130,14 +130,14 @@
 
         <br><br><br>
 
-        <h2>Email Preferences</h2>
+        <!-- <h2>Email Preferences</h2>
         <v-divider></v-divider>
-        <!-- Leo: there still is no function to save these preferences? What you need is something
+        Leo: there still is no function to save these preferences? What you need is something
           like <v-switch @change="saveFunctionHere()" v-model="preferences_bool"></v-switch>
-          or a save button -->
+          or a save button
         <div v-if="preferences">
-          <!-- <div class="email_preferences">Recieve emails about new applicants</div>
-          <v-switch color="red" class="switch_settings"></v-switch> -->
+          <div class="email_preferences">Recieve emails about new applicants</div>
+          <v-switch color="red" class="switch_settings"></v-switch>
           <br>
           <div class="email_preferences">Subscribe to Job Alert</div>
           <v-switch @change="saveJobAlertOption()" v-model="getNewsletter_bool" color="red" class="switch_settings"></v-switch>
@@ -147,11 +147,11 @@
 
           <div v-if="orgname" class="email_preferences">Recieve emails about job expiration</div>
           <v-switch v-if="orgname" @change="savePreferences()" v-model="jobExpired_bool" color="red" class="switch_settings"></v-switch>
-          <!--
+          
           <div class="email_preferences">Recieve emails about newsletters</div>
           <v-switch @change="savePreferences()" v-model="getNewsletter_bool" color="red" class="switch_settings"></v-switch>
-          -->
-        </div>
+         
+        </div> -->
 
         <br><br><br>
 
