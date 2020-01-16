@@ -1129,8 +1129,7 @@
               },
             },
             'datePosted': this.findJob.date,
-            'description': `<p>${this.findJob.description.replace(/<\/?[^>]+>/ig, '')}</p><br>${this.findJob.experience}<br>${this.findJob.responsibilities}`,
-            'educationRequirements': this.findJob.education,
+            'description': `<p>Job Overview:<br><br>${this.findJob.description.replace(/<\/?[^>]+>/ig, '')}<br><br>Experience Requirements:<br><br>${this.findJob.experience.replace(/<\/?[^>]+>/ig, '')}<br><br>Responsibilities:<br><br>${this.findJob.responsibilities.replace(/<\/?[^>]+>/ig, '')}</p>`,
             'employmentType': employmentType,
             'title': this.findJob.title,
             'jobLocation': {
