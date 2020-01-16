@@ -1128,10 +1128,8 @@
               'value': {
               },
             },
-            'experienceRequirements': this.findJob.experience,
             'datePosted': this.findJob.date,
-            'description': this.findJob.description.replace(/<\/?[^>]+>/ig, ''),
-            'responsibilities': this.findJob.responsibilities,
+            'description': `<p>${this.findJob.description.replace(/<\/?[^>]+>/ig, '')}</p><br>${this.findJob.experience}<br>${this.findJob.responsibilities}`,
             'educationRequirements': this.findJob.education,
             'employmentType': employmentType,
             'title': this.findJob.title,
