@@ -495,7 +495,6 @@ export default {
       openSelectField: null,
       availablePositions: positions,
       filterPositions: null,
-      selectedPositions: [],
       picUploaderDialog: false,
       successAlert: false,
       showInvalidMessage: false,
@@ -536,6 +535,9 @@ export default {
       }
       str = str.toLowerCase();
       return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+    },
+    selectedPositions() {
+      return this.job.position_tags.concat();
     },
     applyMethod() {
       if (this.useGForm) {
@@ -927,9 +929,9 @@ export default {
           for (const image of job.images) {
             this.job.images.push({ original: null, cropped: image.cropped });
           }
-          if (job.position_tags) {
-            this.selectedPositions = job.position_tags.concat();
-          }
+          // if (job.position_tags) {
+          //   this.selectedPositions = job.position_tags.concat();
+          // }
           this.notes = job.notes;
           this.$setTitle(`Currently editing: ${this.job.title}`);
         }
