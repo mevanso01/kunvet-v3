@@ -14,7 +14,7 @@
                     <p>
                         At Kunvet, you’re our priority. Our customers always come first, no matter what.<br>
                         If you’re looking for employment, Kunvet works to provide you with the most recent, timely and relevant job opportunities in your area. As soon as you apply for a job, we’ll keep you posted during the entire application process, including when your potential employers review your resume. Pretty cool, huh?<br>
-                        And if you’re an employer looking to hire, we’ve got you covered. We’ll connect you with the most qualified help in your area, starting at $9 per month. That's less than you spend every day on lunch!
+                        And if you’re an employer looking to hire, we’ve got you covered. We’ll connect you with the most qualified help in your area, starting at $9 only. That's less than you spend every day on lunch!
                     </p>
                 </div>
 

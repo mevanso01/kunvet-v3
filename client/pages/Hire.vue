@@ -18,7 +18,7 @@
     .summary_title{
       font-weight: 600;
       font-family: proxima-nova, sans-serif;
-      font-size: 44px;
+      font-size: 46px;
       line-height: 120%;
       letter-spacing: 0;
       color: #FF6969;
@@ -3302,21 +3302,14 @@
       <div class="waste">
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
-        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
-        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
-           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
-            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day.
-            If you are not completely satisfied, we will issue a full refund.</p>
-        <p class="warning_text" style="font-weight: 600; padding-top: 70px; line-height: 100%;">Is Kunvet Right for Me?</p>
-        <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
-           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
-            try Kunvet now. Stop wasting your time and money on hiring.</p>
+        <h2 class="warning_title">Hire better, save money.</h2>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 70px; line-height: 100%;">Why should I choose Kunvet?</p>
+        <p class="warning_text">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
       <div class="refund">
-        <h2 class="refund_title">Full Refund. No Question Asked.</h2>
-        <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
-          the service you have received, get a <span style="font-weight:bold;">full refund</span> immediately on your inquiry.
-          No question will be asked. Click on the button below, and start hiring now.</p>
+        <h2 class="refund_title">Not 100% happy? We’ll give you a full refund!</h2>
+        <p class="refund_text">Your experience means the world to us. If you are not completely satisfied with our service, let us know and we’ll be happy to give you a full refund as soon as humanly possible. No questions asked.</p>
         <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
         <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
       </div>
@@ -3408,9 +3401,8 @@
     <div class="emp_page_content medium_show mobile_hide small_hide xs_hide">
       <div class="summary">
         <div class="summary_text_div">
-          <h2 class="summary_title">How to find the right person with almost no cost?</h2>
-          <p class="summary_text">Finding the right person can be painless and costless—only if you choose the right tool.
-            Designed for local hiring, Kunvet can save you time and money on your next hire.</p>
+          <h2 class="summary_title">Hire up, spend less.</h2>
+          <p class="summary_text">Hiring the perfect candidate should be easy, right? And it shouldn’t break the bank. Designed especially for local hiring, Kunvet helps you find the best candidates in your area, saving you both time and money on your next hire.</p>
           <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
           <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -3419,10 +3411,8 @@
       <div class="effective">
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
-        <h2 class="effective_title">How Effective is Kunvet?</h2>
-        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet.
-          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
-           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title">Does Kunvet really work?</h2>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 60px; font-size: 24px;">Some of Our Returning Employers</h2>
         <div class="logo_first_row">
         <img class="logo_style" :src="pngs.coderschool">
@@ -3441,7 +3431,7 @@
         <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <h2 class="test_title">See what local organizations are saying!</h2>
               <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
                 helped us find many talented and enthusiastic candidates
                 from Orange County to serve as our Code Coaches. The
@@ -3463,7 +3453,7 @@
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <h2 class="test_title">See what local organizations are saying!</h2>
               <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :)
                 My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
                  We've also spent plenty of money on other websites already but didn’t find who we are looking for.
@@ -3482,83 +3472,62 @@
       <div class="faq">
         <img class="faq_img" :src="svgs.faq">
         <div class="faq_img_btm"/>
-        <h2 class="faq_title">What is Kunvet?</h2>
-        <p class="faq_text">Simply put, Kunvet is a professional job website made for local hiring.
-           Unlike other job websites, we want to help you find the right person efficiently in your local area.</p>
+        <h2 class="faq_title">So...what exactly is Kunvet?</h2>
+        <p class="faq_text">Kunvet is a job website designed to help you find the best local talent out there. Our mission is simple: to help you hire that perfect candidate while saving you a whole lot of time and money.</p>
         <h2 class="faq_title" style="padding-top: 44px; font-size: 24px;">Frequently Asked Questions</h2>
         <div class="faq_box">
           <div class="faq_questions">
             <div v-bind:class="{ 'faq_question_div_sel': question_num === 1, 'faq_question_div': question_num != 1}" @click="question_num = 1" style="margin-top: 0px;">Is Kunvet right for me?</div>
             <div v-bind:class="{ 'faq_question_div_sel': question_num === 2, 'faq_question_div': question_num != 2}" @click="question_num = 2">Is Kunvet a recruiting agency?</div>
-            <div v-bind:class="{ 'faq_question_div_sel': question_num === 3, 'faq_question_div': question_num != 3}" @click="question_num = 3">How much does it cost to use Kunvet?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 3, 'faq_question_div': question_num != 3}" @click="question_num = 3">How much does Kunvet cost?</div>
             <div v-bind:class="{ 'faq_question_div_sel': question_num === 4, 'faq_question_div': question_num != 4}" @click="question_num = 4">What is the refund policy?</div>
             <div v-bind:class="{ 'faq_question_div_sel': question_num === 5, 'faq_question_div': question_num != 5}" @click="question_num = 5">How does Kunvet work?</div>
-            <div v-bind:class="{ 'faq_question_div_sel': question_num === 6, 'faq_question_div': question_num != 6}" @click="question_num = 6">How is Kunvet different from others?</div>
+            <div v-bind:class="{ 'faq_question_div_sel': question_num === 6, 'faq_question_div': question_num != 6}" @click="question_num = 6">What sets Kunvet apart from other sites?</div>
           </div>
           <div class="faq_answers">
             <div class="faq_answers_div" v-if="question_num === 1">
               <div style="">
               <h2 class="faq_answers_title">Is Kunvet right for me?</h2>
-              <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
-                to hire locally.</p>
-              <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
-                process.</p>
-              <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
-                volunteering opportunity are especially popular
-                on Kunvet</p>
+              <p class="faq_answers_text">Kunvet is a job platform designed to connect employers with candidates in their local community in a streamlined, efficient, economical hiring process.</p>
+              <p class="faq_answers_text">If you’re a small business, startup, nonprofit or individual looking to hire from your local community, then yes, Kunvet is your spot! Kunvet is designed to help people find the best local talent out there.</p>
+              <p class="faq_answers_text">Looking for an entry-level, part-time, temporary, internship or volunteer position? Kunvet is the place for you!</p>
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 2">
               <div style="">
               <h2 class="faq_answers_title">Is Kunvet a recruiting agency?</h2>
-              <p class="faq_answers_text">No. We are not a recruiting agency.</p>
-              <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
-                come to our website, see your job posting, and apply to it directly</p>
-              <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+              <p class="faq_answers_text">Nope! We’re just your friendly online local job board.</p>
+              <p class="faq_answers_text">We are an online job platform that connects candidates with exciting, recent, relevant job opportunities in their local area. Employers post jobs on our site, and applicants check out those job postings and apply—simple as that. No meddling here!</p>
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 3">
               <div style="">
-              <h2 class="faq_answers_title">How much does it cost to use Kunvet?</h2>
-              <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
-              <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
-                of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
-                different features.</p>
-              <p class="faq_answers_text">To learn more about what each type of the accounts can do,
-                please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing" target="_blank"> pricing page</router-link></span>.</p>
+              <h2 class="faq_answers_title">How much does Kunvet cost?</h2>
+              <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 4">
               <div style="">
               <h2 class="faq_answers_title">What is the refund policy?</h2>
-              <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
-                If you are not completely satisfied with the service you received, we are glad to issue you a full
-                  refund on your inquiry.</p>
-              <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
-                startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
-                internship, and volunteering</p>
+              <p class="faq_answers_text">We offer the best refund policy out of most of our competitors in the market. If you are not completely satisfied with the service you received, let us know and we will gladly issue you a full refund immediately—no questions asked!</p>
+              <p class="faq_answers_text">A friendly FYI: Our website is especially designed for small businesses, startups, nonprofits and individuals to find and hire local candidates. Looking to hire for entry-level, part-time, temporary, internship and volunteering opportunities? This is the place for you!</p>
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 5">
               <div style="">
               <h2 class="faq_answers_title">How does Kunvet work?</h2>
-              <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
-              <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
-                6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
-                  depend on the type of opportunity you offer.</p>
-              <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email.
-                You can also find and manage all resumes you have received in your account.</p>
+              <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+              <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
+              <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 6">
               <div style="">
-              <h2 class="faq_answers_title">How is Kunvet different from others?</h2>
-              <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
-                local area.</p>
-              <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
-                effective at the same time</p>
-              <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
-                policy that most competitors cannot match.</p>
+              <h2 class="faq_answers_title">What sets Kunvet apart from other sites?</h2>
+              <p class="faq_answers_text">Glad you asked! We know how hard it is to hire locally—we’ve been there.
+                We designed a game-changing website just for you: locally focused, affordable, simple and effective. Easy as that.
+              </p>
+              <p class="faq_answers_text">It’s simple: We want to help you find the perfect candidate for the job. This is why we offer a pretty outstanding refund policy that we dare competitors to match.</p>
               </div>
             </div>
           </div>
@@ -3566,22 +3535,20 @@
       </div>
       <div class="how_works">
         <div class="coffee_money">
-          <h2 class="coffee_title">How Does Kunvet Work?</h2>
+          <h2 class="coffee_title">How does Kunvet work?</h2>
           <div style="text-align: center;"> <img class="one_two_three_line" :src="svgs.stepsMed"> </div>
           <div class="hands">
             <div class="hand_one" style="margin-left: 0px;">
               <h2 class="hand_header_1">Post a Job</h2>
-              <p class="hand_text_1">It takes only about 5 min to post a job. Each job posting starts at <span style="font-weight:bold;">only 80¢ per day</span>! Cancel anytime.</p>
+              <p class="hand_text_1">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
             </div>
             <div class="hand_two" style="margin: 0 54.5px;">
               <h2 class="hand_header_2">Review Resumes</h2>
-              <p class="hand_text_2">Applicant’s resume is sent to your email and to your Kunvet account.
-                If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+              <p class="hand_text_2">We send applicant resumes to your email and Kunvet account. If they’re not the stellar candidates you’re looking for, we’ll give you your money back!</p>
             </div>
             <div class="hand_three" style="margin-right: 0px;">
               <h2 class="hand_header_3">Hire</h2>
-              <p class="hand_text_3">Voila! Starting at <span style="font-weight:bold;">only 80¢ per day</span>, you can explore all the talents near
-                you and pick your ideal hire.</p>
+              <p class="hand_text_3">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
             </div>
           </div>
           <img class="hands_img" :src="pngs.handsMed">
@@ -3590,22 +3557,15 @@
       <div class="waste">
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
-        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
-        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
-           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
-            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day.
-            If you are not completely satisfied, we will issue a full refund.</p>
-        <p class="warning_text" style="font-weight: 600; padding-top: 60px; line-height: 100%;">Is Kunvet Right for Me?</p>
-        <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
-           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
-            try Kunvet now. Stop wasting your time and money on hiring.</p>
+        <h2 class="warning_title">Hire better, save money.</h2>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 60px; line-height: 100%;">Why should I choose Kunvet?</p>
+        <p class="warning_text">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
       <div class="refund">
         <div class="refund_main_div">
-          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
-          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
-            the service you have received, get a full refund immediately on your inquiry.
-            No question will be asked. Click on the button below, and start hiring now.</p>
+          <h2 class="refund_title">Not 100% happy? We’ll give you a full refund!</h2>
+          <p class="refund_text">Your experience means the world to us. If you are not completely satisfied with our service, let us know and we’ll be happy to give you a full refund as soon as humanly possible. No questions asked.</p>
           <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
           <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -3614,22 +3574,19 @@
         <img class="versus_img" :src="svgs.versus">
         <div class="versus_img_btm"/>
 
-        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
-        <p class="versus_text">See it for yourself why you should be using Kunvet now,
-          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>
+        <h2 class="versus_title">Kunvet vs. the competition</h2>
+        <p class="versus_text">It’s no lie: We’re the little guy—kind of like David vs. Goliath. We like it that way. Check out how Kunvet stacks up to its big, corporate competitors.</p>
         <div class="compare_div">
           <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Most job websites in the market are heavily used by large
-              enterprises for nationwide hiring. These websites are pretty
-              effective for this purpose.
+              Most job websites out there are mostly used by big corporate enterprises for nationwide hiring. That’s their thing, not ours.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+            <p class="compare_text white--text">Kunvet is designed for local employers and businesses.</p>
           </div>
         </div>
         <div class="compare_div">
@@ -3637,16 +3594,13 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Your job will most likely be pushed aside by jobs from large
-              companies, which have hundreds of openings every day.
+              Your job easily gets pushed aside by jobs from large companies, which have hundreds of openings every day.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
             <p class="compare_text white--text">
-              Our website is completely designed for local businesses
-              that are hiring locally. Every local employer’s voice will be
-              heard equally.
+              Kunvet is specifically designed for local businesses hiring locally. We make sure every local employer’s voice is heard equally.
             </p>
           </div>
         </div>
@@ -3655,14 +3609,14 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Plenty of companies only offer imited support. Some
-              companies do not offer any real support.
+              Most companies only offer limited support, and some don’t even do that.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
-              are nice, polite people.</p>
+            <p class="compare_text white--text">
+              Kunvet offers real support! Our kind, helpful customer service reps are ready to help you at every turn.
+            </p>
           </div>
         </div>
         <div class="compare_div">
@@ -3670,14 +3624,12 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Some offer unintuitive pricing model such as “click bids”.
-              Some offer “job slots” that charges you every month,
-              regardless whether you are hiring or not.
+              Some job sites offer “click bid” pricing models, while others offer “job slots,” charging you even if you’re not hiring. Kunvet is different—we won’t waste your time or money.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+            <p class="compare_text white--text">We keep it simple: Pay as you go, with no hidden costs. Easy, right?</p>
           </div>
         </div>
         <div class="compare_div">
@@ -3685,22 +3637,20 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Refunds that take 3 - 5 business days to process. Get ready
-              to be bombard with questions before you can see a penny.
+              A refund can take almost a week—3 to 5 business days—to process. Not to mention the hoops you have to jump through to get it!
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+            <p class="compare_text white--text">Not happy? We’ll give you a full refund immediately, no questions!</p>
           </div>
         </div>
 
       </div>
       <div class="limited">
         <div class="limited_main_div">
-          <h2 class="limited_title">Limited Offer for Local Businesses</h2>
-          <p class="limited_text">If you create a business account today, you can access all the employer features
-             on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+          <h2 class="limited_title">Psst—Happy New Year!</h2>
+          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
           <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -3710,20 +3660,16 @@
     <div class="emp_page_content medium_hide mobile_show small_hide xs_hide">
       <div class="summary">
           <img class="summary_collage_students" :src="pngs.studentsMobile">
-          <h2 class="summary_title">How to hire the right person? With almost no cost or effort?</h2>
-          <p class="summary_text">Finding the right person can be painless and costless—only if
-            you choose the right tool. Designed for local hiring, Kunvet can
-            save you time and money on your next hire.</p>
+          <h2 class="summary_title">Hire up, spend less.</h2>
+          <p class="summary_text">Hiring the perfect candidate should be easy, right? And it shouldn’t break the bank. Designed especially for local hiring, Kunvet helps you find the best candidates in your area, saving you both time and money on your next hire.</p>
           <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
           <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
       </div>
       <div class="effective">
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
-        <h2 class="effective_title">How Effective is Kunvet?</h2>
-        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet.
-          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
-           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title">Does Kunvet really work?</h2>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 50px; font-size: 22px;">Some of Our Returning Employers</h2>
         <div class="logo_first_row">
         <img class="logo_style" :src="pngs.coderschool">
@@ -3742,7 +3688,7 @@
         <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <h2 class="test_title">See what local organizations are saying!</h2>
               <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
                 helped us find many talented and enthusiastic candidates
                 from Orange County to serve as our Code Coaches. The
@@ -3766,7 +3712,7 @@
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <h2 class="test_title">See what local organizations are saying!</h2>
               <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :)
                 My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
                  We've also spent plenty of money on other websites already but didn’t find who we are looking for.
@@ -3786,9 +3732,8 @@
       <div class="faq">
         <img class="faq_img" :src="svgs.faq">
         <div class="faq_img_btm"/>
-        <h2 class="faq_title">What is “Kunvet” [con-vit]?</h2>
-        <p class="faq_text">To put simply, Kunvet is a professional job website made for local hiring. Unlike other
-          job websites, we want to help you find the right person effciently in your local area.</p>
+        <h2 class="faq_title">So...what exactly is Kunvet?</h2>
+        <p class="faq_text">Kunvet is a job website designed to help you find the best local talent out there. Our mission is simple: to help you hire that perfect candidate while saving you a whole lot of time and money.</p>
         <h2 class="faq_title" style="padding-top: 50px; font-size: 22px;">Frequently Asked Questions</h2>
         <div style="margin-top: 20px;"
           v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 1, 'faq_question_div': question_num_mobile != 1}"
@@ -3796,13 +3741,9 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 1, 'faq_answer_title': question_num_mobile != 1}">
             Is Kunvet right for me?</h2><img v-if="question_num_mobile !== 1" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 1">
-            <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
-              to hire locally.</p>
-            <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
-              process.</p>
-            <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
-              volunteering opportunity are especially popular
-              on Kunvet</p>
+            <p class="faq_answers_text">Kunvet is a job platform designed to connect employers with candidates in their local community in a streamlined, efficient, economical hiring process.</p>
+            <p class="faq_answers_text">If you’re a small business, startup, nonprofit or individual looking to hire from your local community, then yes, Kunvet is your spot! Kunvet is designed to help people find the best local talent out there.</p>
+            <p class="faq_answers_text">Looking for an entry-level, part-time, temporary, internship or volunteer position? Kunvet is the place for you!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 2, 'faq_question_div': question_num_mobile != 2}"
@@ -3810,24 +3751,16 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 2, 'faq_answer_title': question_num_mobile != 2}">
             Is Kunvet a recruiting agency?</h2><img v-if="question_num_mobile !== 2" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 2">
-            <p class="faq_answers_text">No. We are not a recruiting agency.</p>
-            <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
-              come to our website, see your job posting, and apply to it directly</p>
-            <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+            <p class="faq_answers_text">Nope! We’re just your friendly online local job board.</p>
+            <p class="faq_answers_text">We are an online job platform that connects candidates with exciting, recent, relevant job opportunities in their local area. Employers post jobs on our site, and applicants check out those job postings and apply—simple as that. No meddling here!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 3, 'faq_question_div': question_num_mobile != 3}"
           @click="question_num_mobile = 3">
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
-            How much does it cost to use Kunvet?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
+            How much does Kunvet cost?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 3">
-            <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
-            <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
-              of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
-              different features.</p>
-            <p class="faq_answers_text">To learn more about what each type of the accounts can do,
-              please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing"
-              target="_blank"> pricing page</router-link></span>.</p>
+            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}"
@@ -3835,12 +3768,8 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 4, 'faq_answer_title': question_num_mobile != 4}">
             What is the refund policy?</h2><img v-if="question_num_mobile !== 4" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 4">
-            <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
-              If you are not completely satisfied with the service you received, we are glad to issue you a full
-                refund on your inquiry.</p>
-            <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
-              startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
-              internship, and volunteering</p>
+            <p class="faq_answers_text">We offer the best refund policy out of most of our competitors in the market. If you are not completely satisfied with the service you received, let us know and we will gladly issue you a full refund immediately—no questions asked!</p>
+            <p class="faq_answers_text">A friendly FYI: Our website is especially designed for small businesses, startups, nonprofits and individuals to find and hire local candidates. Looking to hire for entry-level, part-time, temporary, internship and volunteering opportunities? This is the place for you!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 5, 'faq_question_div': question_num_mobile != 5}"
@@ -3848,30 +3777,25 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
             How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 5">
-            <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
-            <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
-              6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
-                depend on the type of opportunity you offer.</p>
-            <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email.
-              You can also find and manage all resumes you have received in your account.</p>
+            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+            <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
+            <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 6, 'faq_question_div': question_num_mobile != 6}"
           @click="question_num_mobile = 6">
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 6, 'faq_answer_title': question_num_mobile != 6}">
-            How is Kunvet different from others?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
+            What sets Kunvet apart from other sites?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 6">
-            <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
-              local area.</p>
-            <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
-              effective at the same time</p>
-            <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
-              policy that most competitors cannot match.</p>
+            <p class="faq_answers_text">Glad you asked! We know how hard it is to hire locally—we’ve been there.
+              We designed a game-changing website just for you: locally focused, affordable, simple and effective. Easy as that.
+            </p>
+            <p class="faq_answers_text">It’s simple: We want to help you find the perfect candidate for the job. This is why we offer a pretty outstanding refund policy that we dare competitors to match.</p>
           </div>
         </div>
       </div>
       <div class="hands">
-        <h2 class="coffee_title">How Does Kunvet Work?</h2>
+        <h2 class="coffee_title">How does Kunvet work?</h2>
         <v-window style="height: 778px;">
           <v-window-item style="text-align:center;">
             <div class="num_bar_container">
@@ -3879,8 +3803,7 @@
               <div class="blackbar_p1"/>
             </div>
             <h2 class="hand_header">Post a Job</h2>
-            <p class="hand_text">It takes only about 5 min to post a job. Your job stays
-              active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
+            <p class="hand_text">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
             <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -3889,8 +3812,7 @@
               <div class="blackbar_p2"/>
             </div>
             <h2 class="hand_header">Review Resumes</h2>
-            <p class="hand_text">Applicant’s resume is sent to your email and your Kunvet account.
-              If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            <p class="hand_text">We send applicant resumes to your email and Kunvet account. If they’re not the stellar candidates you’re looking for, we’ll give you your money back!</p>
             <img class="single_hand" style="margin-left: 60px;" :src="pngs.hand2">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -3899,8 +3821,7 @@
               <div class="blackbar_p3"/>
             </div>
             <h2 class="hand_header">Hire</h2>
-            <p class="hand_text">Ta-Da! Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
-              you and pick your next hire.</p>
+            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
             <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
           </v-window-item>
         </v-window>
@@ -3908,22 +3829,15 @@
       <div class="waste">
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
-        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
-        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
-           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
-            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day.
-            If you are not completely satisfied, we will issue a full refund.</p>
-        <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Is Kunvet Right for Me?</p>
-        <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
-           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
-            try Kunvet now. Stop wasting your time and money on hiring.</p>
+        <h2 class="warning_title">Hire better, save money.</h2>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Why should I choose Kunvet?</p>
+        <p class="warning_text">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
       <div class="refund">
         <div class="refund_main_div">
-          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
-          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
-            the service you have received, get a full refund immediately on your inquiry.
-            No question will be asked. Click on the button below, and start hiring now.</p>
+          <h2 class="refund_title">Not 100% happy? We’ll give you a full refund!</h2>
+          <p class="refund_text">Your experience means the world to us. If you are not completely satisfied with our service, let us know and we’ll be happy to give you a full refund as soon as humanly possible. No questions asked. </p>
           <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
           <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -3932,22 +3846,19 @@
         <img class="versus_img" :src="svgs.versus">
         <div class="versus_img_btm"/>
 
-        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
-        <p class="versus_text">See it for yourself why you should be using Kunvet now,
-          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>
+        <h2 class="versus_title">Kunvet vs. the competition</h2>
+        <p class="versus_text">It’s no lie: We’re the little guy—kind of like David vs. Goliath. We like it that way. Check out how Kunvet stacks up to its big, corporate competitors.</p>
         <div class="compare_div">
           <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Most job websites in the market are heavily used by large
-              enterprises for nationwide hiring. These websites are pretty
-              effective for this purpose.
+              Most job websites out there are mostly used by big corporate enterprises for nationwide hiring. That’s their thing, not ours.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+            <p class="compare_text white--text">Kunvet is designed for local employers and businesses.</p>
           </div>
         </div>
         <div class="compare_div">
@@ -3955,16 +3866,13 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Your job will most likely be pushed aside by jobs from large
-              companies, which have hundreds of openings every day.
+              Your job easily gets pushed aside by jobs from large companies, which have hundreds of openings every day.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
             <p class="compare_text white--text">
-              Our website is completely designed for local businesses
-              that are hiring locally. Every local employer’s voice will be
-              heard equally.
+              Kunvet is specifically designed for local businesses hiring locally. We make sure every local employer’s voice is heard equally.
             </p>
           </div>
         </div>
@@ -3973,14 +3881,14 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Plenty of companies only offer imited support. Some
-              companies do not offer any real support.
+              Most companies only offer limited support, and some don’t even do that.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
-              are nice, polite people.</p>
+            <p class="compare_text white--text">
+              Kunvet offers real support! Our kind, helpful customer service reps are ready to help you at every turn.
+            </p>
           </div>
         </div>
         <div class="compare_div">
@@ -3988,14 +3896,12 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Some offer unintuitive pricing model such as “click bids”.
-              Some offer “job slots” that charges you every month,
-              regardless whether you are hiring or not.
+              Some job sites offer “click bid” pricing models, while others offer “job slots,” charging you even if you’re not hiring. Kunvet is different—we won’t waste your time or money.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+            <p class="compare_text white--text">We keep it simple: Pay as you go, with no hidden costs. Easy, right?</p>
           </div>
         </div>
         <div class="compare_div">
@@ -4003,22 +3909,20 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Refunds that take 3 - 5 business days to process. Get ready
-              to be bombard with questions before you can see a penny.
+              A refund can take almost a week—3 to 5 business days—to process. Not to mention the hoops you have to jump through to get it!
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+            <p class="compare_text white--text">Not happy? We’ll give you a full refund immediately, no questions!</p>
           </div>
         </div>
 
       </div>
       <div class="limited">
         <div class="limited_main_div">
-          <h2 class="limited_title">Limited Offer for Businesses.</h2>
-          <p class="limited_text">If you create a business account today, you can access all the employer features
-             on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+          <h2 class="limited_title">Psst—Happy New Year!</h2>
+          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
           <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -4028,20 +3932,16 @@
     <div class="emp_page_content medium_hide mobile_hide small_show xs_hide">
       <div class="summary">
           <img class="summary_collage_students" :src="pngs.studentsMobile">
-          <h2 class="summary_title">How to hire the right person? With almost no cost or effort?</h2>
-          <p class="summary_text">Finding the right person can be painless and costless—only if
-            you choose the right tool. Designed for local hiring, Kunvet can
-            save you time and money on your next hire.</p>
+          <h2 class="summary_title">Hire up, spend less.</h2>
+          <p class="summary_text">Hiring the perfect candidate should be easy, right? And it shouldn’t break the bank. Designed especially for local hiring, Kunvet helps you find the best candidates in your area, saving you both time and money on your next hire.</p>
           <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
           <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
       </div>
       <div class="effective">
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
-        <h2 class="effective_title">How Effective is Kunvet?</h2>
-        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet.
-          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
-           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title">Does Kunvet really work?</h2>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 50px; font-size: 20px;">Some of Our Returning Employers</h2>
         <div class="logos_row">
           <img class="logo_style" style="margin-top: 0px;" :src="pngs.coderschool">
@@ -4058,7 +3958,7 @@
         <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <h2 class="test_title">See what local organizations are saying!</h2>
               <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
                 helped us find many talented and enthusiastic candidates
                 from Orange County to serve as our Code Coaches. The
@@ -4082,7 +3982,7 @@
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <h2 class="test_title">See what local organizations are saying!</h2>
               <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :)
                 My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
                  We've also spent plenty of money on other websites already but didn’t find who we are looking for.
@@ -4102,9 +4002,8 @@
       <div class="faq">
         <img class="faq_img" :src="svgs.faq">
         <div class="faq_img_btm"/>
-        <h2 class="faq_title">What is “Kunvet” [con-vit]?</h2>
-        <p class="faq_text">To put simply, Kunvet is a professional job website made for local hiring. Unlike other
-          job websites, we want to help you find the right person effciently in your local area.</p>
+        <h2 class="faq_title">So...what exactly is Kunvet?</h2>
+        <p class="faq_text">Kunvet is a job website designed to help you find the best local talent out there. Our mission is simple: to help you hire that perfect candidate while saving you a whole lot of time and money.</p>
         <h2 class="faq_title" style="padding-top: 50px; font-size: 20px;">Frequently Asked Questions</h2>
         <div style="margin-top: 20px;"
           v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 1, 'faq_question_div': question_num_mobile != 1}"
@@ -4112,13 +4011,9 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 1, 'faq_answer_title': question_num_mobile != 1}">
             Is Kunvet right for me?</h2><img v-if="question_num_mobile !== 1" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 1">
-            <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
-              to hire locally.</p>
-            <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
-              process.</p>
-            <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
-              volunteering opportunity are especially popular
-              on Kunvet</p>
+            <p class="faq_answers_text">Kunvet is a job platform designed to connect employers with candidates in their local community in a streamlined, efficient, economical hiring process.</p>
+            <p class="faq_answers_text">If you’re a small business, startup, nonprofit or individual looking to hire from your local community, then yes, Kunvet is your spot! Kunvet is designed to help people find the best local talent out there.</p>
+            <p class="faq_answers_text">Looking for an entry-level, part-time, temporary, internship or volunteer position? Kunvet is the place for you!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 2, 'faq_question_div': question_num_mobile != 2}"
@@ -4126,24 +4021,16 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 2, 'faq_answer_title': question_num_mobile != 2}">
             Is Kunvet a recruiting agency?</h2><img v-if="question_num_mobile !== 2" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 2">
-            <p class="faq_answers_text">No. We are not a recruiting agency.</p>
-            <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
-              come to our website, see your job posting, and apply to it directly</p>
-            <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+            <p class="faq_answers_text">Nope! We’re just your friendly online local job board.</p>
+            <p class="faq_answers_text">We are an online job platform that connects candidates with exciting, recent, relevant job opportunities in their local area. Employers post jobs on our site, and applicants check out those job postings and apply—simple as that. No meddling here!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 3, 'faq_question_div': question_num_mobile != 3}"
           @click="question_num_mobile = 3">
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
-            How much does it cost to use Kunvet?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
+            How much does Kunvet cost?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 3">
-            <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
-            <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
-              of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
-              different features.</p>
-            <p class="faq_answers_text">To learn more about what each type of the accounts can do,
-              please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing"
-              target="_blank"> pricing page</router-link></span>.</p>
+            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}"
@@ -4151,12 +4038,8 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 4, 'faq_answer_title': question_num_mobile != 4}">
             What is the refund policy?</h2><img v-if="question_num_mobile !== 4" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 4">
-            <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
-              If you are not completely satisfied with the service you received, we are glad to issue you a full
-                refund on your inquiry.</p>
-            <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
-              startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
-              internship, and volunteering</p>
+            <p class="faq_answers_text">We offer the best refund policy out of most of our competitors in the market. If you are not completely satisfied with the service you received, let us know and we will gladly issue you a full refund immediately—no questions asked!</p>
+            <p class="faq_answers_text">A friendly FYI: Our website is especially designed for small businesses, startups, nonprofits and individuals to find and hire local candidates. Looking to hire for entry-level, part-time, temporary, internship and volunteering opportunities? This is the place for you!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 5, 'faq_question_div': question_num_mobile != 5}"
@@ -4164,30 +4047,25 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
             How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 5">
-            <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
-            <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
-              6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
-                depend on the type of opportunity you offer.</p>
-            <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email.
-              You can also find and manage all resumes you have received in your account.</p>
+            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+            <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
+            <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 6, 'faq_question_div': question_num_mobile != 6}"
           @click="question_num_mobile = 6">
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 6, 'faq_answer_title': question_num_mobile != 6}">
-            How is Kunvet different from others?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
+            What sets Kunvet apart from other sites?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 6">
-            <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
-              local area.</p>
-            <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
-              effective at the same time</p>
-            <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
-              policy that most competitors cannot match.</p>
+            <p class="faq_answers_text">Glad you asked! We know how hard it is to hire locally—we’ve been there.
+              We designed a game-changing website just for you: locally focused, affordable, simple and effective. Easy as that.
+            </p>
+            <p class="faq_answers_text">It’s simple: We want to help you find the perfect candidate for the job. This is why we offer a pretty outstanding refund policy that we dare competitors to match.</p>
           </div>
         </div>
       </div>
       <div class="hands">
-        <h2 class="coffee_title">How Does Kunvet Work?</h2>
+        <h2 class="coffee_title">How does Kunvet work?</h2>
         <v-window style="height: 778px;">
           <v-window-item style="text-align:center;">
             <div class="num_bar_container">
@@ -4195,8 +4073,7 @@
               <div class="blackbar_p1"/>
             </div>
             <h2 class="hand_header">Post a Job</h2>
-            <p class="hand_text">It takes only about 5 min to post a job. Your job stays
-              active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
+            <p class="hand_text">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
             <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -4205,8 +4082,7 @@
               <div class="blackbar_p2"/>
             </div>
             <h2 class="hand_header">Review Resumes</h2>
-            <p class="hand_text">Applicant’s resume is sent to your email and your Kunvet account.
-              If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            <p class="hand_text">We send applicant resumes to your email and Kunvet account. If they’re not the stellar candidates you’re looking for, we’ll give you your money back!</p>
             <img class="single_hand" style="margin-left: 60px;" :src="pngs.hand2">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -4215,8 +4091,7 @@
               <div class="blackbar_p3"/>
             </div>
             <h2 class="hand_header">Hire</h2>
-            <p class="hand_text">Ta-Da! Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
-              you and pick your next hire.</p>
+            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
             <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
           </v-window-item>
         </v-window>
@@ -4224,22 +4099,15 @@
       <div class="waste">
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
-        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
-        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
-           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
-            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day.
-            If you are not completely satisfied, we will issue a full refund.</p>
-        <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Is Kunvet Right for Me?</p>
-        <p class="warning_text">Kunvet is effective for people or businesses that hire locally and offer entry-level,
-           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
-            try Kunvet now. Stop wasting your time and money on hiring.</p>
+        <h2 class="warning_title">Hire better, save money.</h2>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Why should I choose Kunvet?</p>
+        <p class="warning_text">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
       <div class="refund">
         <div class="refund_main_div">
-          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
-          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
-            the service you have received, get a full refund immediately on your inquiry.
-            No question will be asked. Click on the button below, and start hiring now.</p>
+          <h2 class="refund_title">Not 100% happy? We’ll give you a full refund!</h2>
+          <p class="refund_text">Your experience means the world to us. If you are not completely satisfied with our service, let us know and we’ll be happy to give you a full refund as soon as humanly possible. No questions asked.</p>
           <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
           <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -4248,22 +4116,19 @@
         <img class="versus_img" :src="svgs.versus">
         <div class="versus_img_btm"/>
 
-        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
-        <p class="versus_text">See it for yourself why you should be using Kunvet now,
-          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>
+        <h2 class="versus_title">Kunvet vs. the competition</h2>
+        <p class="versus_text">It’s no lie: We’re the little guy—kind of like David vs. Goliath. We like it that way. Check out how Kunvet stacks up to its big, corporate competitors.</p>
         <div class="compare_div">
           <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Most job websites in the market are heavily used by large
-              enterprises for nationwide hiring. These websites are pretty
-              effective for this purpose.
+              Most job websites out there are mostly used by big corporate enterprises for nationwide hiring. That’s their thing, not ours.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+            <p class="compare_text white--text">Kunvet is designed for local employers and businesses.</p>
           </div>
         </div>
         <div class="compare_div">
@@ -4271,16 +4136,13 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Your job will most likely be pushed aside by jobs from large
-              companies, which have hundreds of openings every day.
+              Your job easily gets pushed aside by jobs from large companies, which have hundreds of openings every day.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
             <p class="compare_text white--text">
-              Our website is completely designed for local businesses
-              that are hiring locally. Every local employer’s voice will be
-              heard equally.
+              Kunvet is specifically designed for local businesses hiring locally. We make sure every local employer’s voice is heard equally.
             </p>
           </div>
         </div>
@@ -4289,14 +4151,14 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Plenty of companies only offer imited support. Some
-              companies do not offer any real support.
+              Most companies only offer limited support, and some don’t even do that.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
-              are nice, polite people.</p>
+            <p class="compare_text white--text">
+              Kunvet offers real support! Our kind, helpful customer service reps are ready to help you at every turn.
+            </p>
           </div>
         </div>
         <div class="compare_div">
@@ -4304,14 +4166,12 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Some offer unintuitive pricing model such as “click bids”.
-              Some offer “job slots” that charges you every month,
-              regardless whether you are hiring or not.
+              Some job sites offer “click bid” pricing models, while others offer “job slots,” charging you even if you’re not hiring. Kunvet is different—we won’t waste your time or money.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+            <p class="compare_text white--text">We keep it simple: Pay as you go, with no hidden costs. Easy, right?</p>
           </div>
         </div>
         <div class="compare_div">
@@ -4319,22 +4179,20 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Refunds that take 3 - 5 business days to process. Get ready
-              to be bombard with questions before you can see a penny.
+              A refund can take almost a week—3 to 5 business days—to process. Not to mention the hoops you have to jump through to get it!
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+            <p class="compare_text white--text">Not happy? We’ll give you a full refund immediately, no questions!</p>
           </div>
         </div>
 
       </div>
       <div class="limited">
         <div class="limited_main_div">
-            <h2 class="limited_title">Limited Offer for Businesses.</h2>
-            <p class="limited_text">If you create a business account today, you can access all the employer features
-              on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+            <h2 class="limited_title">Psst—Happy New Year!</h2>
+            <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
             <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
             <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
           </div>
@@ -4344,20 +4202,16 @@
     <div class="emp_page_content medium_hide mobile_hide small_hide xs_show">
       <div class="summary">
           <img class="summary_collage_students" :src="pngs.studentsMobile">
-          <h2 class="summary_title">How to hire the right person? With almost no cost or effort?</h2>
-          <p class="summary_text">Finding the right person can be painless and costless—only if
-            you choose the right tool. Designed for local hiring, Kunvet can
-            save you time and money on your next hire.</p>
+          <h2 class="summary_title">Hire up, spend less.</h2>
+          <p class="summary_text">Hiring the perfect candidate should be easy, right? And it shouldn’t break the bank. Designed especially for local hiring, Kunvet helps you find the best candidates in your area, saving you both time and money on your next hire.</p>
           <k-btn @click="routeGen()" class="summary_btn"><span style="font-size: 22px !important; font-weight: bold;">Post a Job</span></k-btn>
           <p class="summary_btn_undertext">Satisfaction guarateed. Or money back.</p>
       </div>
       <div class="effective">
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
-        <h2 class="effective_title">How Effective is Kunvet?</h2>
-        <p class="effective_text">Every 1 in 3 employers found the right candidate in the 14 days on Kunvet.
-          Overall, every 6.5 out of 10 employers found a hire through Kunvet. Best of all, each job posting starts at
-           only 80¢ per day. Satisfaction guaranteed. Or money back.</p>
+        <h2 class="effective_title">Does Kunvet really work?</h2>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 50px; font-size: 18px;">Some of Our Returning Employers</h2>
         <div class="logos_row">
           <img class="logo_style" style="margin-top: 0px;" :src="pngs.coderschool">
@@ -4374,7 +4228,7 @@
         <v-carousel class="hire_monials testimonials" cycle interval="100000000" :hide-controls="true" height="auto">
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <h2 class="test_title">See what local organizations are saying!</h2>
               <p class="quote">“</p><p class="test_text">Wow... I recommend Kunvet to every small business. It has
                 helped us find many talented and enthusiastic candidates
                 from Orange County to serve as our Code Coaches. The
@@ -4398,7 +4252,7 @@
           </v-carousel-item>
           <v-carousel-item class="testing_slide_transition">
             <div class="slide_info">
-              <h2 class="test_title">Kunvet is great for every local organization.</h2>
+              <h2 class="test_title">See what local organizations are saying!</h2>
               <p class="quote">“</p><p class="test_text">This is Ally, from Irvine Agape Christian Church, again :)
                 My Pastor Chen wants to say Thank You. We've been searching for a caring and passionate teacher for a long time.
                  We've also spent plenty of money on other websites already but didn’t find who we are looking for.
@@ -4418,9 +4272,8 @@
       <div class="faq">
         <img class="faq_img" :src="svgs.faq">
         <div class="faq_img_btm"/>
-        <h2 class="faq_title">What is “Kunvet” [con-vit]?</h2>
-        <p class="faq_text">To put simply, Kunvet is a professional job website made for local hiring. Unlike other
-          job websites, we want to help you find the right person effciently in your local area.</p>
+        <h2 class="faq_title">So...what exactly is Kunvet?</h2>
+        <p class="faq_text">Kunvet is a job website designed to help you find the best local talent out there. Our mission is simple: to help you hire that perfect candidate while saving you a whole lot of time and money.</p>
         <h2 class="faq_title" style="padding-top: 44px; font-size: 18px; line-height: 120%;">Frequently Asked Questions</h2>
         <div style="margin-top: 20px;"
           v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 1, 'faq_question_div': question_num_mobile != 1}"
@@ -4428,13 +4281,9 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 1, 'faq_answer_title': question_num_mobile != 1}">
             Is Kunvet right for me?</h2><img v-if="question_num_mobile !== 1" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 1">
-            <p class="faq_answers_text">Kunvet is for small business, startup, non-profit, and individual who are looking
-              to hire locally.</p>
-            <p class="faq_answers_text">Kunvet is a job platform made for the local community for a costless and effcient hiring
-              process.</p>
-            <p class="faq_answers_text">Entry-level, part-time, temporary job, internship,
-              volunteering opportunity are especially popular
-              on Kunvet</p>
+            <p class="faq_answers_text">Kunvet is a job platform designed to connect employers with candidates in their local community in a streamlined, efficient, economical hiring process.</p>
+            <p class="faq_answers_text">If you’re a small business, startup, nonprofit or individual looking to hire from your local community, then yes, Kunvet is your spot! Kunvet is designed to help people find the best local talent out there.</p>
+            <p class="faq_answers_text">Looking for an entry-level, part-time, temporary, internship or volunteer position? Kunvet is the place for you!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 2, 'faq_question_div': question_num_mobile != 2}"
@@ -4442,24 +4291,16 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 2, 'faq_answer_title': question_num_mobile != 2}">
             Is Kunvet a recruiting agency?</h2><img v-if="question_num_mobile !== 2" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 2">
-            <p class="faq_answers_text">No. We are not a recruiting agency.</p>
-            <p class="faq_answers_text">Instead, we are an online job platform where local people find new opportunities. They
-              come to our website, see your job posting, and apply to it directly</p>
-            <p class="faq_answers_text">We do not interfere with your hiring process. We only show your posting to them.</p>
+            <p class="faq_answers_text">Nope! We’re just your friendly online local job board.</p>
+            <p class="faq_answers_text">We are an online job platform that connects candidates with exciting, recent, relevant job opportunities in their local area. Employers post jobs on our site, and applicants check out those job postings and apply—simple as that. No meddling here!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 3, 'faq_question_div': question_num_mobile != 3}"
           @click="question_num_mobile = 3">
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
-            How much does it cost to use Kunvet?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
+            How much does Kunvet cost?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 3">
-            <p class="faq_answers_text">It is free to get an account, but we charge for each job that you post.</p>
-            <p class="faq_answers_text">The cost of each job postings is from 80¢ to $1 per day, depending on the type
-              of account you choose. We offer two types of account—Personal and Business—and each type of the accounts has
-              different features.</p>
-            <p class="faq_answers_text">To learn more about what each type of the accounts can do,
-              please visit our <span style="font-weight: bold; color: #FF6766 !important;"> <router-link to="/pricing"
-              target="_blank"> pricing page</router-link></span>.</p>
+            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}"
@@ -4467,12 +4308,8 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 4, 'faq_answer_title': question_num_mobile != 4}">
             What is the refund policy?</h2><img v-if="question_num_mobile !== 4" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 4">
-            <p class="faq_answers_text">We have the strongest refund policy among most of the competitors in the market.
-              If you are not completely satisfied with the service you received, we are glad to issue you a full
-                refund on your inquiry.</p>
-            <p class="faq_answers_text">We want to remind you that our website is designed for local hiring for small business,
-              startup, non-profit, and individual. The popular opportunities on Kunvet are entry-level, part-time, temporary job,
-              internship, and volunteering</p>
+            <p class="faq_answers_text">We offer the best refund policy out of most of our competitors in the market. If you are not completely satisfied with the service you received, let us know and we will gladly issue you a full refund immediately—no questions asked!</p>
+            <p class="faq_answers_text">A friendly FYI: Our website is especially designed for small businesses, startups, nonprofits and individuals to find and hire local candidates. Looking to hire for entry-level, part-time, temporary, internship and volunteering opportunities? This is the place for you!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 5, 'faq_question_div': question_num_mobile != 5}"
@@ -4480,30 +4317,25 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
             How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 5">
-            <p class="faq_answers_text">1. Post a job. Each job postings starts at $5 and stays active for 60 days.</p>
-            <p class="faq_answers_text">2. Wait for people to apply to your job. If you offer a paid job, you can expect about
-              6-16 applications. If you offer an internship or unpaid job, you can expect about 5-10 applications. All
-                depend on the type of opportunity you offer.</p>
-            <p class="faq_answers_text">3. Resumes (and CV if you requested for one) are sent to your email.
-              You can also find and manage all resumes you have received in your account.</p>
+            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+            <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
+            <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 6, 'faq_question_div': question_num_mobile != 6}"
           @click="question_num_mobile = 6">
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 6, 'faq_answer_title': question_num_mobile != 6}">
-            How is Kunvet different from others?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
+            What sets Kunvet apart from other sites?</h2><img v-if="question_num_mobile !== 6" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 6">
-            <p class="faq_answers_text">Great question. We know the struggles you face when trying to hire somebody from your
-              local area.</p>
-            <p class="faq_answers_text">So, we created a website that is entirely designed for your needs: simple, cheap, but
-              effective at the same time</p>
-            <p class="faq_answers_text">We truly want to help you find the right person, which is why we have a strong refund
-              policy that most competitors cannot match.</p>
+            <p class="faq_answers_text">Glad you asked! We know how hard it is to hire locally—we’ve been there.
+              We designed a game-changing website just for you: locally focused, affordable, simple and effective. Easy as that.
+            </p>
+            <p class="faq_answers_text">It’s simple: We want to help you find the perfect candidate for the job. This is why we offer a pretty outstanding refund policy that we dare competitors to match.</p>
           </div>
         </div>
       </div>
       <div class="hands">
-        <h2 class="coffee_title">How Does Kunvet Work?</h2>
+        <h2 class="coffee_title">How does Kunvet work?</h2>
         <v-window style="height: 778px;">
           <v-window-item style="text-align:center;">
             <div class="num_bar_container">
@@ -4511,8 +4343,7 @@
               <div class="blackbar_p1"/>
             </div>
             <h2 class="hand_header">Post a Job</h2>
-            <p class="hand_text">It takes only about 5 min to post a job. Your job stays
-              active for 60 days. Each job post starts at <span style="font-weight:bold;">only $5</span>!</p>
+            <p class="hand_text">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
             <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -4521,8 +4352,7 @@
               <div class="blackbar_p2"/>
             </div>
             <h2 class="hand_header">Review Resumes</h2>
-            <p class="hand_text">Applicant’s resume is sent to your email and your Kunvet account.
-              If you are not happy with the resumes you received, we will issue a <span style="font-weight:bold;">full refund</span>.</p>
+            <p class="hand_text">We send applicant resumes to your email and Kunvet account. If they’re not the stellar candidates you’re looking for, we’ll give you your money back!</p>
             <img class="single_hand" style="margin-left: 60px;" :src="pngs.hand2">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -4531,8 +4361,7 @@
               <div class="blackbar_p3"/>
             </div>
             <h2 class="hand_header">Hire</h2>
-            <p class="hand_text">Ta-Da! Starting at <span style="font-weight:bold;">only $5</span>, you can explore all the talents near
-              you and pick your next hire.</p>
+            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
             <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
           </v-window-item>
         </v-window>
@@ -4540,22 +4369,15 @@
       <div class="waste">
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
-        <h2 class="warning_title">Stop Wasting Your Time or Money!</h2>
-        <p class="warning_text">Trying to hire someone without a job website can consume a lot of your energy and time,
-           but posting jobs on websites can be really expensive. However, on Kunvet, you can get the best of both worlds!
-            Find the right person quickly and inexpensively at the same time! Each job posting starts at only 80¢ per day.
-            If you are not completely satisfied, we will issue a full refund.</p>
-        <p class="warning_text" style="font-weight: 600; padding-top: 44px; line-height: 120%;">Is Kunvet Right for Me?</p>
-        <p class="warning_text" style="padding-top: 20px;">Kunvet is effective for people or businesses that hire locally and offer entry-level,
-           part-time, temporary job, internship, or volunteering. If that describes you or your business, you have to
-            try Kunvet now. Stop wasting your time and money on hiring.</p>
+        <h2 class="warning_title">Hire better, save money.</h2>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text" style="font-weight: 600; padding-top: 44px; line-height: 120%;">Why should I choose Kunvet?</p>
+        <p class="warning_text" style="padding-top: 20px;">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
       <div class="refund">
         <div class="refund_main_div">
-          <h2 class="refund_title">Full Refund. No Question Asked.</h2>
-          <p class="refund_text">Your experience means everything to us. If you are not completely satisfied with
-            the service you have received, get a full refund immediately on your inquiry.
-            No question will be asked. Click on the button below, and start hiring now.</p>
+          <h2 class="refund_title">Not 100% happy? We’ll give you a full refund!</h2>
+          <p class="refund_text">Your experience means the world to us. If you are not completely satisfied with our service, let us know and we’ll be happy to give you a full refund as soon as humanly possible. No questions asked.</p>
           <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
           <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -4564,22 +4386,19 @@
         <img class="versus_img" :src="svgs.versus">
         <div class="versus_img_btm"/>
 
-        <h2 class="versus_title">Kunvet.com vs. Competitors</h2>
-        <p class="versus_text">See it for yourself why you should be using Kunvet now,
-          especially if you hire locally. Below is a side-by-side comparison between Kunvet and its competitors.</p>
+        <h2 class="versus_title">Kunvet vs. the competition</h2>
+        <p class="versus_text">It’s no lie: We’re the little guy—kind of like David vs. Goliath. We like it that way. Check out how Kunvet stacks up to its big, corporate competitors.</p>
         <div class="compare_div">
           <h2 class="versus_subtitle">Nationwide Hiring for Large Companies</h2>
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Most job websites in the market are heavily used by large
-              enterprises for nationwide hiring. These websites are pretty
-              effective for this purpose.
+              Most job websites out there are mostly used by big corporate enterprises for nationwide hiring. That’s their thing, not ours.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">That is not what and whom Kunvet is made for.</p>
+            <p class="compare_text white--text">Kunvet is designed for local employers and businesses.</p>
           </div>
         </div>
         <div class="compare_div">
@@ -4587,16 +4406,13 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Your job will most likely be pushed aside by jobs from large
-              companies, which have hundreds of openings every day.
+              Your job easily gets pushed aside by jobs from large companies, which have hundreds of openings every day.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
             <p class="compare_text white--text">
-              Our website is completely designed for local businesses
-              that are hiring locally. Every local employer’s voice will be
-              heard equally.
+              Kunvet is specifically designed for local businesses hiring locally. We make sure every local employer’s voice is heard equally.
             </p>
           </div>
         </div>
@@ -4605,14 +4421,12 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Plenty of companies only offer imited support. Some
-              companies do not offer any real support.
+              Most companies only offer limited support, and some don’t even do that.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Of course! We offer real support. Our customer service reps
-              are nice, polite people.</p>
+            <p class="compare_text white--text">Kunvet offers real support! Our kind, helpful customer service reps are ready to help you at every turn.</p>
           </div>
         </div>
         <div class="compare_div">
@@ -4620,14 +4434,12 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Some offer unintuitive pricing model such as “click bids”.
-              Some offer “job slots” that charges you every month,
-              regardless whether you are hiring or not.
+              Some job sites offer “click bid” pricing models, while others offer “job slots,” charging you even if you’re not hiring. Kunvet is different—we won’t waste your time or money.
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Simple. Pay as you go. No hidden costs.</p>
+            <p class="compare_text white--text">We keep it simple: Pay as you go, with no hidden costs. Easy, right?</p>
           </div>
         </div>
         <div class="compare_div">
@@ -4635,22 +4447,20 @@
           <div class="competitor_div">
             <p class="compare_header">Competitors:</p>
             <p class="compare_text">
-              Refunds that take 3 - 5 business days to process. Get ready
-              to be bombard with questions before you can see a penny.
+              A refund can take almost a week—3 to 5 business days—to process. Not to mention the hoops you have to jump through to get it!
             </p>
           </div>
           <div class="kunvet_div">
             <p class="compare_header white--text">Kunvet:</p>
-            <p class="compare_text white--text">Not Happy? Full refund immediately. No Question Asked.</p>
+            <p class="compare_text white--text">Not happy? We’ll give you a full refund immediately, no questions!</p>
           </div>
         </div>
 
       </div>
       <div class="limited">
         <div class="limited_main_div">
-          <h2 class="limited_title">Limited Offer for Businesses.</h2>
-          <p class="limited_text">If you create a business account today, you can access all the employer features
-            on Kunvet and enjoy 50% off for all your job postings—discount available for a limited time only.</p>
+          <h2 class="limited_title">Psst—Happy New Year!</h2>
+          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
           <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>

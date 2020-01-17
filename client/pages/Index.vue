@@ -1056,7 +1056,7 @@
       <div class="looking_div">
         <div class="looking_text_div">
           <h2 class="looking_header">Looking to hire?<br>You’re in the right place!</h2>
-          <div class="looking_text" style="margin: 0 auto;">Posting starts at just $9 per month. Try Kunvet, and save yourself time and money!</div>
+          <div class="looking_text" style="margin: 0 auto;">Posting starts at just $9. Try Kunvet, and save yourself time and money!</div>
           <router-link to="/hire"><k-btn class="looking_btn"><span class="looking_btn_text">Post a Job</span></k-btn></router-link>
           <p class="looking_btn_undertext">Satisfication guaranteed. Or money back.</p>
         </div>
