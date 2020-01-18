@@ -41,8 +41,8 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  daysToExpire: 30,
-  daysToDeleteFromAlgolia: 180, // remove from algolia after expiration for > 90 days
+  daysToExpire: 5,
+  daysToDeleteFromAlgolia: 180 * 60 * 24, // remove from algolia after expiration for > 90 days
   serverUrl: Credentials.serverUrl,
   googleMapsKey: Credentials.googleMapsKey,
   sentry: {

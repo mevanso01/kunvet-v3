@@ -16,7 +16,8 @@ Scheduler.schedule(() => {
 const daysToExpireFallback = 60;
 const daysToDeleteFromAlgoliaFallback = 90;
 
-const oneDay = 24 * 60 * 60 * 1000;
+// const oneDay = 24 * 60 * 60 * 1000;
+const oneDay = 60 * 1000;
 
 Scheduler.schedule(() => { // filter all expired jobs and update attribute
   console.log('Scheduling expired job removal');
