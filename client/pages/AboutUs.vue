@@ -6,7 +6,7 @@
 
                 <div class="section">
                     <h2>So, what is Kunvet?</h2>
-                    <p>Kunvet is a professional, local-centric job platform that connects employers looking to hire qualified individuals looking for jobs in their local communities. From connecting professionals with top-notch candidates to connecting students with that A+ tutor, Kunvet helps people get the help they need efficiently while taking the hassle out of the equation.</p>
+                    <p>Kunvet is a professional, local-centric job platform that connects employers looking to hire with qualified individuals looking for jobs in their local communities. From connecting professionals with top-notch candidates to connecting students with that A+ tutor, Kunvet helps people get the help they need efficiently while taking the hassle out of the equation.</p>
                 </div>
 
                 <div class="section">
