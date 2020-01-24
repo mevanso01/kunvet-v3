@@ -16,7 +16,7 @@
     </div> -->
     <div class="bi-cont mb-2">
       <h2 class="mb-1">{{computeTitleText}}</h2>
-      <p>Your job will be displayed for 60 days before expiring</p>
+      <p>Your job will be displayed for {{daysToExpire}} days before expiring</p>
     </div>
     <div class="bi-cont mb-3">
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
@@ -27,7 +27,9 @@
   </div>
 </template>
 <script>
+
 import Axios from 'axios';
+import Config from 'config';
 
 // Drop-in documentation
 // https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html#~cardPaymentMethodPayload
@@ -64,6 +66,9 @@ export default {
     },
     computeTitleText() {
       return this.title || 'Post your job';
+    },
+    daysToExpire() {
+      return Config.get('daysToExpire') || 30;
     },
   },
   methods: {

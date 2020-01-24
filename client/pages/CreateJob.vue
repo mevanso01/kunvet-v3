@@ -19,7 +19,7 @@
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
         <template v-if="true || tab !== 'success-tab'">
           <v-tab v-for="(item, i) in tabItems" :href="`#${item.tabId}`" :key="`${i}`"
-                 :disabled="i > furthest_tab" v-show="i < 3" >
+                 :disabled="i > furthest_tab || shouldDisableTab(i)" v-show="i < 3" >
             <div class="tab-text-container" style="width: 100%; height: 100%;"
               :class="{ 'tab-no-error': isTabValid(i), 'tab-error': isTabInvalid(i) }">
               <span style="line-height: 36px;">{{ item.tabTitle }}</span>
@@ -1175,6 +1175,15 @@ export default {
     isTabInvalid(n) {
       return this[`submit${(n + 1)}Pressed`] && !this[`form${(n + 1)}Valid`];
     },
+    shouldDisableTab(n) {
+      for (let i = 0; i < n; i++) {
+        if (!this[`form${(i + 1)}Valid`]) {
+          return true;
+        }
+      }
+
+      return false;
+    },
     clearErrors() {
       this.form1Error = ''; this.form2Error = ''; this.form3Error = '';
     },
@@ -1332,6 +1341,8 @@ export default {
           this.setJobProgress(true); // set postOnOpen to true
           // this.$refs.codever.init();
           this.tab = 'verify-email';
+          this.loading = true;
+          this.saveJob();
         } else {
           this.loading = true;
           this.saveJob();
@@ -1366,6 +1377,7 @@ export default {
       return [true, ''];
     },
     submitLastForm() {
+      debugger;
       this.submit3Pressed = true;
       this.clearErrors();
       const validation = this.validateFullJob();
