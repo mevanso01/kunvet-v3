@@ -3157,7 +3157,7 @@
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
         <h2 class="effective_title">Does Kunvet really work?</h2>
-        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts only at $9. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 70px; font-size: 24px;">Some of Our Returning Employers</h2>
         <div class="logo_first_row">
         <img class="logo_style" :src="pngs.coderschool">
@@ -3248,7 +3248,7 @@
             <div class="faq_answers_div" v-else-if="question_num === 3">
               <div style="">
               <h2 class="faq_answers_title">How much does Kunvet cost?</h2>
-              <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
+              <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per job. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 4">
@@ -3261,7 +3261,7 @@
             <div class="faq_answers_div" v-else-if="question_num === 5">
               <div style="">
               <h2 class="faq_answers_title">How does Kunvet work?</h2>
-              <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+              <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9 and it stays active for 30 days.</p>
               <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
               <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
               </div>
@@ -3280,12 +3280,12 @@
       </div>
       <div class="how_works">
         <div class="coffee_money">
-          <h2 class="coffee_title">How does Kunvet Work?</h2>
+          <h2 class="coffee_title">How does Kunvet work?</h2>
           <div style="text-align: center;"> <img class="one_two_three_line" :src="svgs.stepsDesk"> </div>
           <div class="hands">
             <div class="hand_one" style="margin-left: 0px;">
               <h2 class="hand_header_1">Post a Job</h2>
-              <p class="hand_text_1">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
+              <p class="hand_text_1">Job posting starts at just $9, stays active for 30 days, and literally takes minutes! Cancel any time.</p>
             </div>
             <div class="hand_two" style="margin: 0 120px;">
               <h2 class="hand_header_2">Review Resumes</h2>
@@ -3293,7 +3293,7 @@
             </div>
             <div class="hand_three" style="margin-right: 0px;">
               <h2 class="hand_header_3">Hire</h2>
-              <p class="hand_text_3">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
+              <p class="hand_text_3">Want to find that perfect hire? Explore talent in your area at just $9. Isn’t that just amazing?</p>
             </div>
           </div>
           <img class="hands_img" :src="pngs.handsDesk">
@@ -3303,7 +3303,7 @@
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
         <h2 class="warning_title">Hire better, save money.</h2>
-        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At merely $9, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
         <p class="warning_text" style="font-weight: 600; padding-top: 70px; line-height: 100%;">Why should I choose Kunvet?</p>
         <p class="warning_text">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
@@ -3391,7 +3391,7 @@
       <div class="limited">
         <div class="limited_main_div">
           <h2 class="limited_title">Psst—Happy New Year!</h2>
-          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
+          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9. Act now—offer available for a limited time only!</p>
           <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 18px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -3412,7 +3412,7 @@
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
         <h2 class="effective_title">Does Kunvet really work?</h2>
-        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts only at $9. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 60px; font-size: 24px;">Some of Our Returning Employers</h2>
         <div class="logo_first_row">
         <img class="logo_style" :src="pngs.coderschool">
@@ -3503,7 +3503,7 @@
             <div class="faq_answers_div" v-else-if="question_num === 3">
               <div style="">
               <h2 class="faq_answers_title">How much does Kunvet cost?</h2>
-              <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
+              <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per job. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
               </div>
             </div>
             <div class="faq_answers_div" v-else-if="question_num === 4">
@@ -3516,7 +3516,7 @@
             <div class="faq_answers_div" v-else-if="question_num === 5">
               <div style="">
               <h2 class="faq_answers_title">How does Kunvet work?</h2>
-              <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+              <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9 and it stays active for 30 days.</p>
               <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
               <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
               </div>
@@ -3540,7 +3540,7 @@
           <div class="hands">
             <div class="hand_one" style="margin-left: 0px;">
               <h2 class="hand_header_1">Post a Job</h2>
-              <p class="hand_text_1">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
+              <p class="hand_text_1">Job posting starts at just $9, stays active for 30 days, and literally takes minutes! Cancel any time.</p>
             </div>
             <div class="hand_two" style="margin: 0 54.5px;">
               <h2 class="hand_header_2">Review Resumes</h2>
@@ -3548,7 +3548,7 @@
             </div>
             <div class="hand_three" style="margin-right: 0px;">
               <h2 class="hand_header_3">Hire</h2>
-              <p class="hand_text_3">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
+              <p class="hand_text_3">Want to find that perfect hire? Explore talent in your area at just $9. Isn’t that just amazing?</p>
             </div>
           </div>
           <img class="hands_img" :src="pngs.handsMed">
@@ -3558,7 +3558,7 @@
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
         <h2 class="warning_title">Hire better, save money.</h2>
-        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At merely $9, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
         <p class="warning_text" style="font-weight: 600; padding-top: 60px; line-height: 100%;">Why should I choose Kunvet?</p>
         <p class="warning_text">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
@@ -3650,7 +3650,7 @@
       <div class="limited">
         <div class="limited_main_div">
           <h2 class="limited_title">Psst—Happy New Year!</h2>
-          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
+          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9. Act now—offer available for a limited time only!</p>
           <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 22px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -3669,7 +3669,7 @@
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
         <h2 class="effective_title">Does Kunvet really work?</h2>
-        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts only at $9. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 50px; font-size: 22px;">Some of Our Returning Employers</h2>
         <div class="logo_first_row">
         <img class="logo_style" :src="pngs.coderschool">
@@ -3760,7 +3760,7 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
             How much does Kunvet cost?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 3">
-            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
+            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per job. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}"
@@ -3777,7 +3777,7 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
             How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 5">
-            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9 and it stays active for 30 days.</p>
             <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
             <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
           </div>
@@ -3803,7 +3803,7 @@
               <div class="blackbar_p1"/>
             </div>
             <h2 class="hand_header">Post a Job</h2>
-            <p class="hand_text">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
+            <p class="hand_text">Job posting starts at just $9, stays active for 30 days, and literally takes minutes! Cancel any time.</p>
             <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -3821,7 +3821,7 @@
               <div class="blackbar_p3"/>
             </div>
             <h2 class="hand_header">Hire</h2>
-            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
+            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9. Isn’t that just amazing?</p>
             <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
           </v-window-item>
         </v-window>
@@ -3830,14 +3830,14 @@
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
         <h2 class="warning_title">Hire better, save money.</h2>
-        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At merely $9, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
         <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Why should I choose Kunvet?</p>
         <p class="warning_text">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
       <div class="refund">
         <div class="refund_main_div">
           <h2 class="refund_title">Not 100% happy? We’ll give you a full refund!</h2>
-          <p class="refund_text">Your experience means the world to us. If you are not completely satisfied with our service, let us know and we’ll be happy to give you a full refund as soon as humanly possible. No questions asked. </p>
+          <p class="refund_text">Your experience means the world to us. If you are not completely satisfied with our service, let us know and we’ll be happy to give you a full refund as soon as humanly possible. No questions asked.</p>
           <k-btn @click="routeGen()" class="refund_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
           <p class="refund_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -3922,7 +3922,7 @@
       <div class="limited">
         <div class="limited_main_div">
           <h2 class="limited_title">Psst—Happy New Year!</h2>
-          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
+          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9. Act now—offer available for a limited time only!</p>
           <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
@@ -3941,7 +3941,7 @@
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
         <h2 class="effective_title">Does Kunvet really work?</h2>
-        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts only at $9. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 50px; font-size: 20px;">Some of Our Returning Employers</h2>
         <div class="logos_row">
           <img class="logo_style" style="margin-top: 0px;" :src="pngs.coderschool">
@@ -4030,7 +4030,7 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
             How much does Kunvet cost?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 3">
-            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
+            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per job. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}"
@@ -4047,7 +4047,7 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
             How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 5">
-            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9 and it stays active for 30 days.</p>
             <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
             <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
           </div>
@@ -4073,7 +4073,7 @@
               <div class="blackbar_p1"/>
             </div>
             <h2 class="hand_header">Post a Job</h2>
-            <p class="hand_text">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
+            <p class="hand_text">Job posting starts at just $9, stays active for 30 days, and literally takes minutes! Cancel any time.</p>
             <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -4091,7 +4091,7 @@
               <div class="blackbar_p3"/>
             </div>
             <h2 class="hand_header">Hire</h2>
-            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
+            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9. Isn’t that just amazing?</p>
             <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
           </v-window-item>
         </v-window>
@@ -4100,7 +4100,7 @@
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
         <h2 class="warning_title">Hire better, save money.</h2>
-        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At merely $9, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
         <p class="warning_text" style="font-weight: 600; padding-top: 50px; line-height: 100%;">Why should I choose Kunvet?</p>
         <p class="warning_text">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
@@ -4192,7 +4192,7 @@
       <div class="limited">
         <div class="limited_main_div">
             <h2 class="limited_title">Psst—Happy New Year!</h2>
-            <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
+            <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9. Act now—offer available for a limited time only!</p>
             <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
             <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
           </div>
@@ -4211,7 +4211,7 @@
         <img class="effective_img" :src="svgs.gas">
         <div class="effective_img_btm"></div>
         <h2 class="effective_title">Does Kunvet really work?</h2>
-        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts at $9 per month. Not 100% happy? We’ll give you your money back, no questions asked!</p>
+        <p class="effective_text">The stats say it all: 7 in 10 employers hire a candidate on Kunvet, and 1 in 3 employers land the perfect candidate within 14 days. The best part? Each job posting starts only at $9. Not 100% happy? We’ll give you your money back, no questions asked!</p>
         <h2 class="effective_title" style="padding-top: 50px; font-size: 18px;">Some of Our Returning Employers</h2>
         <div class="logos_row">
           <img class="logo_style" style="margin-top: 0px;" :src="pngs.coderschool">
@@ -4300,7 +4300,7 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 3, 'faq_answer_title': question_num_mobile != 3}">
             How much does Kunvet cost?</h2><img v-if="question_num_mobile !== 3" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 3">
-            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per month. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
+            <p class="faq_answers_text">Your Kunvet account is free! After that, it’s $9 per job. We offer both Personal and Business accounts—both with unique, helpful features perfect for your needs.</p>
           </div>
         </div>
         <div v-bind:class="{ 'faq_question_div_sel': question_num_mobile === 4, 'faq_question_div': question_num_mobile != 4}"
@@ -4317,7 +4317,7 @@
           <h2 v-bind:class="{ 'faq_answer_title_sel': question_num_mobile === 5, 'faq_answer_title': question_num_mobile != 5}">
             How does Kunvet work?</h2><img v-if="question_num_mobile !== 5" class="faq_plus" :src="svgs.plusSign">
           <div v-if="question_num_mobile === 5">
-            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9/month and it stays active for 60 days.</p>
+            <p class="faq_answers_text">1. <strong>Post a job</strong>: Post your job for just $9 and it stays active for 30 days.</p>
             <p class="faq_answers_text">2. <strong>Wait for applications to come rolling in</strong>: If it’s a paid job, expect about 6–16 applications. If it’s an internship or unpaid job, expect about 5–10 applications.</p>
             <p class="faq_answers_text">3. <strong>Get hiring</strong>: Applicants apply, and we send their resumes (and CV if requested) to your email address and Kunvet account. You review the resumes and get going on finding your perfect candidate. That’s it—happy hiring!</p>
           </div>
@@ -4343,7 +4343,7 @@
               <div class="blackbar_p1"/>
             </div>
             <h2 class="hand_header">Post a Job</h2>
-            <p class="hand_text">Job posting starts at just $9 per month, and literally takes minutes! Cancel any time.</p>
+            <p class="hand_text">Job posting starts at just $9, stays active for 30 days, and literally takes minutes! Cancel any time.</p>
             <img class="single_hand" style="margin-left: 40px;" :src="pngs.hand1">
           </v-window-item>
           <v-window-item style="text-align:center;">
@@ -4361,7 +4361,7 @@
               <div class="blackbar_p3"/>
             </div>
             <h2 class="hand_header">Hire</h2>
-            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9 per month.</p>
+            <p class="hand_text">Want to find that perfect hire? Explore talent in your area at just $9. Isn’t that just amazing?</p>
             <img class="single_hand" style="margin-left: 80px;" :src="pngs.hand3">
           </v-window-item>
         </v-window>
@@ -4370,7 +4370,7 @@
         <img class="warning_img" :src="svgs.warning">
         <div class="warning_img_btm"/>
         <h2 class="warning_title">Hire better, save money.</h2>
-        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At $9 per month, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
+        <p class="warning_text">From exhausting interviews to spendy websites, hiring can be a drag. Kunvet cuts through all that, helping you hire the perfect candidate in no time. At merely $9, you can post a job and watch the applications flow in. Satisfaction guaranteed or your money back!</p>
         <p class="warning_text" style="font-weight: 600; padding-top: 44px; line-height: 120%;">Why should I choose Kunvet?</p>
         <p class="warning_text" style="padding-top: 20px;">Looking to hire locally? Have some entry-level, part-time, temporary job, internship or volunteering work that needs a stellar employee? Whether you’re a business or an individual, Kunvet is the place to be. Stop wasting time and money, and start hiring!</p>
       </div>
@@ -4460,7 +4460,7 @@
       <div class="limited">
         <div class="limited_main_div">
           <h2 class="limited_title">Psst—Happy New Year!</h2>
-          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9 per month. Act now—offer available for a limited time only!</p>
+          <p class="limited_text">Create an account today and celebrate 2020 with us! Enjoy job postings for just $9. Act now—offer available for a limited time only!</p>
           <k-btn @click="routeGen()" class="limited_btn"><span style="font-family: proxima-nova, sans-serif; font-size: 20px;">Post a Job</span></k-btn>
           <p class="limited_undertext">Satisfaction guarateed. Or money back.</p>
         </div>
