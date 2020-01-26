@@ -764,7 +764,7 @@
         </v-dialog>
       </div>
     </div>
-    <script v-if="!findJob.expired" v-html="jsonld" type="application/ld+json"></script>
+    <script v-if="true || !findJob.expired" v-html="jsonld" type="application/ld+json"></script>
   </v-container>
 </template>
 <script>
@@ -1119,6 +1119,18 @@
             baseSalaryUnitText = '';
           }
           // var parsed = this.parseAddress(this.findJob.address);
+          let description1 = this.findJob.description.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
+          let experience1 = this.findJob.experience.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
+          let responsibilities1 = this.findJob.responsibilities.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
+          if (!description1.endsWith('<br>')) {
+            description1 += '<br>';
+          }
+          if (!experience1.endsWith('<br>')) {
+            experience1 += '<br>';
+          }
+          if (!responsibilities1.endsWith('<br>')) {
+            responsibilities1 += '<br>';
+          }
           this.jsonld = {
             '@context': 'https://schema.org',
             '@type': 'JobPosting',
@@ -1129,7 +1141,7 @@
               },
             },
             'datePosted': this.findJob.date,
-            'description': `Job Overview:<br>${this.findJob.description.replace(/<\/?p>/ig, '<br>').replace(/<\/?span>/ig, '')}<br><br>Experience Requirements:<br>${this.findJob.experience.replace(/<\/?p>/ig, '<br>').replace(/<\/?span>/ig, '')}<br><br>Responsibilities:<br>${this.findJob.responsibilities.replace(/<\/?p>/ig, '<br>').replace(/<\/?span>/ig, '')}`,
+            'description': `Job Overview:<br>${description1}<br>Experience Requirements:<br>${experience1}<br>Responsibilities:<br>${responsibilities1}`,
             'employmentType': employmentType,
             'title': this.findJob.title,
             'jobLocation': {
@@ -1176,9 +1188,9 @@
               'name': 'Kunvet',
             };
           }
-          if (this.findJob.expired) {
-            this.jsonld = null;
-          }
+          // if (this.findJob.expired) {
+          //   this.jsonld = null;
+          // }
           console.log(this.findJob);
           this.fetchProfilePic();
         }).catch((error) => {
