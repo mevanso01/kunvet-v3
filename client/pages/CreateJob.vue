@@ -1377,7 +1377,6 @@ export default {
       return [true, ''];
     },
     submitLastForm() {
-      debugger;
       this.submit3Pressed = true;
       this.clearErrors();
       const validation = this.validateFullJob();
