@@ -14,7 +14,6 @@ Scheduler.schedule(() => {
 });
 
 const daysToExpireFallback = 60;
-const daysToDeleteFromAlgoliaFallback = 90;
 
 // const oneDay = 24 * 60 * 60 * 1000;
 const oneDay = 60 * 1000;
@@ -22,14 +21,12 @@ const oneDay = 60 * 1000;
 Scheduler.schedule(() => { // filter all expired jobs and update attribute
   console.log('Scheduling expired job removal');
   console.log('Expire time is', Config.get('daysToExpire'));
-  console.log('Delete from algolia time is', Config.get('daysToDeleteFromAlgolia'));
   Models.Job.find({}, async (err, jobsFound) => {
     const today = new Date();
     const expiredJobIds = [];
     const expiredJobs = [];
     const toDeleteJobIds = [];
     const daysToExpire = Config.get('daysToExpire') || daysToExpireFallback;
-    const daysToDeleteFromAlgolia = Config.get('daysToDeleteFromAlgolia') || daysToDeleteFromAlgoliaFallback;
 
     jobsFound.forEach((job) => {
       const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
@@ -37,7 +34,7 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
         expiredJobIds.push(job._id);
         expiredJobs.push(job);
       }
-      const toBeDeletedTime = new Date(Date.parse(job.date) + (daysToDeleteFromAlgolia * oneDay));
+      const toBeDeletedTime = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
       if (today.getTime() > toBeDeletedTime.getTime()) {
         toDeleteJobIds.push(job._id);
       }
