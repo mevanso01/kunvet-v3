@@ -10,6 +10,7 @@ export default class Db {
     Logger.info(`Using database ${db}`);
     return Mongoose.connect(db, {
       useNewUrlParser: true,
+      useFindAndModify: false,
       // useMongoClient: true,
     });
   }
