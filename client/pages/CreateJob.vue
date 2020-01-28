@@ -928,6 +928,7 @@ export default {
       isUniversity: false,
       acct: 0,
       uid: null,
+      newLoggedIn: false,
       jobId: null,
       orgId: null,
       autocomplete: null,
@@ -1177,7 +1178,7 @@ export default {
     },
     shouldDisableTab(n) {
       for (let i = 0; i < n; i++) {
-        if (!this[`form${(i + 1)}Valid`]) {
+        if (!this.isTabValid(i)) {
           return true;
         }
       }
@@ -1279,6 +1280,7 @@ export default {
             if (res.data.success) {
               // Logged in successfully
               this.uid = userId;
+              this.newLoggedIn = true;
               this.orgId = orgId;
               this.$store.commit({ type: 'setAcctID', id: userId });
               if (isBusiness) {
@@ -1287,6 +1289,9 @@ export default {
                 EventBus.$emit('login', 'individual');
               }
               ret.loggedIn = true;
+              if (this.$ga) {
+                this.$ga.event('account', 'create', 'employer', 1);
+              }
             } else {
               ret.error = res.data ? res.data : res;
               this.$error(res);
@@ -1908,6 +1913,9 @@ export default {
     onBillingSuccess() {
       this.tab = 'success-tab';
       this.email_verified = true;
+      if (this.$ga && this.newLoggedIn) {
+        this.$ga.event('product', 'paid', 'job posting', 9);
+      }
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;
         udata.email_verified = true;

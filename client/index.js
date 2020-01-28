@@ -8,6 +8,7 @@ import Vuex from 'vuex';
 import VueTimeago from 'vue-timeago';
 import TimeagoLocale from 'vue-timeago/locales/en-US.json';
 import InstantSearch from 'vue-instantsearch';
+import VueAnalytics from 'vue-analytics';
 
 import Client from '@/apollo/client';
 import SearchHighlight from '@/components/SearchHighlight';
@@ -44,6 +45,11 @@ Vue.use(VueTimeago, {
   },
 });
 Vue.use(InstantSearch);
+if (process.env.NODE_ENV === 'production') {
+  Vue.use(VueAnalytics, {
+    id: Config.get('analytics.trackingId') || 'UA-XXX-X',
+  });
+}
 Vue.component('highlight', SearchHighlight);
 Vue.component('k-btn', KButton);
 Vue.component('k-text-field', KTextField);

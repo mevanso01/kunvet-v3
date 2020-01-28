@@ -52,6 +52,7 @@ module.exports = {
     googleTagManager: true,
     //googleAdSense: true,
     hotjar: true,
+    trackingId: 'UA-93340207-1',
   },
   algolia: {
     appId: Credentials.algolia.appId,
