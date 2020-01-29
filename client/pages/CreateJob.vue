@@ -1291,6 +1291,7 @@ export default {
               ret.loggedIn = true;
               if (this.$ga) {
                 this.$ga.event('account', 'create', 'employer', 1);
+                console.log('ga: account/create/employer/1');
               }
             } else {
               ret.error = res.data ? res.data : res;
@@ -1915,6 +1916,7 @@ export default {
       this.email_verified = true;
       if (this.$ga && this.newLoggedIn) {
         this.$ga.event('product', 'paid', 'job posting', 9);
+        console.log('ga: product/paid/job posting/9');
       }
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;

@@ -356,7 +356,7 @@ export default {
       });
     },
     codeValidated() {
-      this.state = 'success';
+      // this.state = 'success';
       this.$emit('success');
     },
     commitUserdata(udata) {

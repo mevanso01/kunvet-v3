@@ -233,6 +233,10 @@ export default {
       this.$router.push(`/sign-up/${type}`);
     },
     onSuccess() {
+      if (this.$ga) {
+        this.$ga.event('account', 'create', 'applicant', 1);
+        console.log('ga: account/create/applicant/1');
+      }
       if (this.signupType === 'business') {
         this.$router.push('/myorg');
       } else {

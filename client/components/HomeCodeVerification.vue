@@ -530,10 +530,10 @@
           this.loading = false;
           if (res.data.success) {
             this.isVerified = true;
-            // this.$emit('verified');
+            this.$emit('verified');
           } else if (res.data.message && res.data.message === 'Already verified') {
             this.isVerified = true;
-            // this.$emit('verified');
+            this.$emit('verified');
           } else if (res.data.message && res.data.message === 'Invalid code') {
             this.invalidCode = true;
           }

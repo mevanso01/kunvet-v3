@@ -996,6 +996,10 @@
       handleResume(verif) {
         var verifSuccess = false;
         if (verif) {
+          if (this.$ga) {
+            this.$ga.event('account', 'create', 'applicant', 1);
+            console.log('ga: account/create/applicant/1');
+          }
           verifSuccess = verif;
         }
         // called after signup or login, and from openApplyDialog()
@@ -1446,6 +1450,10 @@
               },
             ],
           }).then((data) => {
+            if (this.$ga) {
+              this.$ga.event('job', 'apply', 'jobs', 1);
+              console.log('ga: job/apply/jobs/1');
+            }
             this.loading = false;
             if (data) {
               this.loginState = 'success';
