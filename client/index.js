@@ -45,11 +45,11 @@ Vue.use(VueTimeago, {
   },
 });
 Vue.use(InstantSearch);
-// if (process.env.NODE_ENV === 'production') {
-Vue.use(VueAnalytics, {
-  id: Config.get('analytics.trackingId') || 'UA-XXX-X',
-});
-// }
+if (process.env.NODE_ENV === 'production') {
+  Vue.use(VueAnalytics, {
+    id: Config.get('analytics.trackingId') || 'UA-XXX-X',
+  });
+}
 Vue.component('highlight', SearchHighlight);
 Vue.component('k-btn', KButton);
 Vue.component('k-text-field', KTextField);
