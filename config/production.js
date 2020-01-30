@@ -41,7 +41,7 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  daysToExpire: 5,
+  daysToExpire: 30,
   serverUrl: Credentials.serverUrl,
   googleMapsKey: Credentials.googleMapsKey,
   sentry: {

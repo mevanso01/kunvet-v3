@@ -15,8 +15,8 @@ Scheduler.schedule(() => {
 
 const daysToExpireFallback = 60;
 
-// const oneDay = 24 * 60 * 60 * 1000;
-const oneDay = 60 * 1000;
+const oneDay = 24 * 60 * 60 * 1000;
+// const oneDay = 60 * 1000;
 
 Scheduler.schedule(() => { // filter all expired jobs and update attribute
   console.log('Scheduling expired job removal');
@@ -30,7 +30,7 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
 
     jobsFound.forEach((job) => {
       const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
-      if (!job.expired && today.getTime() > expiredDate.getTime()) {
+      if (!job.expired && job.active && today.getTime() > expiredDate.getTime()) {
         expiredJobIds.push(job._id);
         expiredJobs.push(job);
       }
