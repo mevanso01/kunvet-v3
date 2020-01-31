@@ -277,10 +277,6 @@ export default {
       Axios.post('/auth/register', data, headers).then((res) => {
         if (res.data.success) {
           console.log('after success');
-          console.log(this.type);
-          if (this.type === 'student') {
-            this.addTagToMailChimp();
-          }
           this.logIntoAcct(this.email, this.password); // go to step 2
         } else {
           this.loading = false;
@@ -357,6 +353,10 @@ export default {
     },
     codeValidated() {
       // this.state = 'success';
+      console.log(this.type);
+      if (this.type === 'student') {
+        this.addTagToMailChimp();
+      }
       this.$emit('success');
     },
     commitUserdata(udata) {

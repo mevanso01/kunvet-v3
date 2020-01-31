@@ -7,8 +7,9 @@ import KoaRouter from 'koa-router';
 
 import Config from 'config';
 
-const mcListId = Config.get('mailchimp.mailchimp.mcListId');
-const mc = Config.get('mailchimp.mailchimp');
+const mcListId = Config.get('mailchimp.mcListId');
+const mc = Config.get('mailchimp');
+
 // const mcAPIKey = Config.get('mailchimp.mcAPIKey');
 
 const bodyParser = require('koa-bodyparser');
@@ -32,7 +33,8 @@ app.use(bodyParser());
 // Below is Bill's Mailchimp API Key
 //const mcAPIKey = 'c5be2bf312c2d1f9c59a0af7edf4dc19-us18';
 // Below is Jenny's Mailchimp API Key
-const mcAPIKey = '93cdf81520d8a2d25b60a78ad0dbcdda-us3';
+// const mcAPIKey = '93cdf81520d8a2d25b60a78ad0dbcdda-us3';
+const mcAPIKey = Config.get('mailchimp.mcAPIKey');
 const mailchimp = new Mailchimp(mcAPIKey);
 
 router.post('/addMember', async (ctx) => {
@@ -43,7 +45,6 @@ router.post('/addMember', async (ctx) => {
   const info = ctx.request.body;
   console.log(info);
   console.log(mcListId);
-  console.log(mc);
   mailchimp.post(`lists/${mcListId}`, {
     members: [{
       email_address: info.email_address,
