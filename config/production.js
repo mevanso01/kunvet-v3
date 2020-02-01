@@ -26,6 +26,9 @@ if (!fs.existsSync(credPath)) {
 
 const Credentials = require('./credentials.js');
 
+console.log('================== Credentials ==================');
+console.log(Credentials);
+
 if (Credentials.REMOVEMEPLS) {
   console.error(colors.red.bold(`
 ***** 🤔 *****
@@ -52,7 +55,7 @@ module.exports = {
     googleTagManager: true,
     //googleAdSense: true,
     hotjar: true,
-    trackingId: 'UA-93340207-1',
+    trackingId: Credentials.analytics.trackingId,
   },
   algolia: {
     appId: Credentials.algolia.appId,
