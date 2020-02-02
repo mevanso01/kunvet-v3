@@ -141,7 +141,6 @@
                         <tr>
                           <td style="padding: 0 30px; font-size: 16px; line-height: 150%;">
                             {{ fname }} just applied to your job, {{ jobname }}!{{#if attachments }} {{ fname }}'s resume and/or cover letter is attached in this email.{{else}} {{ fname }} did not attach a resume when applying for this job.{{/if}}
-                            <img valign="baseline" style="display: none;" alt="tracking-token" data-inline-ignore src="https://s.kunvet.com/application/{{ appId }}/tracking/{{ trackingToken }}">
                           </td>
                         </tr>
                         <!--Main Text End-->
@@ -222,5 +221,9 @@
       </tr>
     </table>
     <!--Main Wrapper End-->
+
+    <!--Tracking Image Begin-->
+    <img style="display: none; width: 1px; height: 1px;" alt="tracking-token" data-inline-ignore src="https://s.kunvet.com/application/{{ appId }}/tracking/{{ trackingToken }}">
+    <!--Tracking Image End-->
   </body>
 </html>
