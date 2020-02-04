@@ -13,56 +13,52 @@ Scheduler.schedule(() => {
   Logger.debug('The scheduler works!');
 });
 
-// const daysToExpireFallback = 60;
+const daysToExpireFallback = 60;
 
 // const oneDay = 24 * 60 * 60 * 1000;
 const oneDay = 60 * 1000;
 
-Scheduler.schedule(() => { // filter all expired jobs and update attribute
+Scheduler.schedule(async () => { // filter all expired jobs and update attribute
   console.log('Scheduling expired job removal');
   console.log('Expire time is', Config.get('daysToExpire'));
-  Models.Job.find({}, async (err, jobsFound) => {
-    const today = new Date();
-    const expiredJobIds = [];
-    const expiredJobs = [];
-    const toDeleteJobIds = [];
-    const daysToExpire = 5; // Config.get('daysToExpire') || daysToExpireFallback;
+  let jobsFound = null;
+  try {
+    jobsFound = await Models.Job.find({ 'expired': false });
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+  const today = new Date();
+  const expiredJobIds = [];
+  const expiredJobs = [];
+  const toDeleteJobIds = [];
+  let daysToExpire = Config.get('daysToExpire') || daysToExpireFallback;
+  daysToExpire = 5;
 
-    jobsFound.forEach((job) => {
-      const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
-      if (!job.expired && job.active && today.getTime() > expiredDate.getTime()) {
-        expiredJobIds.push(job._id);
-        expiredJobs.push(job);
-      }
-      const toBeDeletedTime = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
-      if (today.getTime() > toBeDeletedTime.getTime()) {
-        toDeleteJobIds.push(job._id);
-      }
-    });
-    for (let i = 0; i < expiredJobIds.length; ++i) {
-      Models.Job.findOneAndUpdate(
+  jobsFound.forEach((job) => {
+    const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
+    if (!job.expired && today.getTime() > expiredDate.getTime()) {
+      expiredJobIds.push(job._id);
+      expiredJobs.push(job);
+    }
+    const toBeDeletedTime = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
+    if (today.getTime() > toBeDeletedTime.getTime()) {
+      toDeleteJobIds.push(job._id);
+    }
+  });
+  for (let i = 0; i < expiredJobIds.length; ++i) {
+    try {
+      await Models.Job.findOneAndUpdate(
         { '_id': expiredJobIds[i] },
         { $set: { 'expired': true } },
         { new: true },
-        (/* err1, docs1 */) => {
-        },
       );
-      Models.Account.find({ '_id': expiredJobs[i].user_id }, (err2, jobPoster) => {
-        if (err2) {
-          console.log(err2);
-          return;
-        }
-        if (!jobPoster || jobPoster.length === 0) {
-          return;
-        }
-        Models.Applicant.find({ 'job_id': expiredJobIds[i] }, async (err4, applicants) => {
-          if (err4) {
-            console.log(err4);
-            return;
-          }
-          if (!applicants) {
-            return;
-          }
+      const jobPoster = await Models.Account.find({ '_id': expiredJobs[i].user_id });
+      if (jobPoster && jobPoster.length > 0) {
+        console.log('------------------------------');
+        const applicants = await Models.Applicant.find({ 'job_id': expiredJobIds[i] });
+        if (applicants) {
+          console.log('------------------------------');
           const appsReceived = applicants.length;
           const jobType = [];
           for (const j in expiredJobs[i].type) {
@@ -99,71 +95,70 @@ Scheduler.schedule(() => { // filter all expired jobs and update attribute
             salary = expiredJobs[i].pay_type;
           }
           const mailer = new Mailer();
-          mailer.sendTemplate(
+          const mailOptions = {
+            fname: jobPoster[0].firstname,
+            jobname: expiredJobs[i].title,
+            daysToExpire,
+            fullAddress: `${expiredJobs[i].address} ${expiredJobs[i].address2 || ''}`,
+            jobtype: jobType.join(' / '),
+            salary,
+            appsReceived: appsReceived === 0 ? 'no' : appsReceived,
+          };
+          console.log(mailOptions);
+          await mailer.sendTemplate(
             jobPoster[0].email,
             'job-expired',
-            {
-              fname: jobPoster[0].firstname,
-              jobname: expiredJobs[i].title,
-              daysToExpire,
-              fullAddress: `${expiredJobs[i].address} ${expiredJobs[i].address2 || ''}`,
-              jobtype: jobType.join(' / '),
-              salary,
-              appsReceived: appsReceived === 0 ? 'no' : appsReceived,
-            },
-          ).then(res => {
-            console.log('------------ expiry mail success ------------', res.originalMessage);
-          }).catch(err3 => {
-            console.log('------------ expiry mail failure ------------', err3);
-          });
-        });
-      });
+            mailOptions,
+          );
+          console.log('--------------- expire mail success ---------------');
+        }
+      }
       if (process.env.NODE_ENV === 'production') {
         // Update Google indexing
-        GAuth.getAuthRequestHeaders()
-          .then(value => {
-            let accessToken = '';
-            if (value && value.Authorization) {
-              accessToken = value.Authorization.slice(7);
-            } else {
-              accessToken = GAuth.getAccessToken();
-            }
-            const options = {
-              url: 'https://indexing.googleapis.com/v3/urlNotifications:publish',
-              method: 'POST',
-              // Your options, which must include the Content-Type and auth headers
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              auth: { 'bearer': accessToken },
-              // Define contents here. The structure of the content is described in the next step.
-              json: {
-                'url': `https://kunvet.com/job/${expiredJobIds[i]}`,
-                'type': 'URL_DELETED',
-              },
-            };
-            request(options, (error, response, body) => {
-              console.log(body);
-            });
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        try {
+          const value = await GAuth.getAuthRequestHeaders();
+          let accessToken = '';
+          if (value && value.Authorization) {
+            accessToken = value.Authorization.slice(7);
+          } else {
+            accessToken = GAuth.getAccessToken();
+          }
+          const options = {
+            url: 'https://indexing.googleapis.com/v3/urlNotifications:publish',
+            method: 'POST',
+            // Your options, which must include the Content-Type and auth headers
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            auth: { 'bearer': accessToken },
+            // Define contents here. The structure of the content is described in the next step.
+            json: {
+              'url': `https://kunvet.com/job/${expiredJobIds[i]}`,
+              'type': 'URL_DELETED',
+            },
+          };
+          await request(options);
+          console.log('--------------- google indexing success ---------------');
+        } catch (err) {
+          console.log('--------------- google indexing failure ---------------', err);
+        }
       }
+    } catch (err3) {
+      console.log('--------------- expire mail failure ---------------', err3);
     }
-    const appId = Config.get('algolia.appId');
-    const apiKey = Config.get('private.algolia.adminApiKey');
-    if (toDeleteJobIds.length > 0 && appId && apiKey) {
-      const client = AlgoliaSearch(appId, apiKey);
-      const index = client.initIndex('jobs');
-      for (let i = 0; i < toDeleteJobIds.length; ++i) {
-        const id = toDeleteJobIds[i];
-        // Delete from algolia
-        index.deleteObjects([id]);
-        Logger.info(`Automatically deleting ${id} from Algolia`);
-      }
+  }
+  const appId = Config.get('algolia.appId');
+  const apiKey = Config.get('private.algolia.adminApiKey');
+  if (toDeleteJobIds.length > 0 && appId && apiKey) {
+    const client = AlgoliaSearch(appId, apiKey);
+    const index = client.initIndex('jobs');
+    for (let i = 0; i < toDeleteJobIds.length; ++i) {
+      const id = toDeleteJobIds[i];
+      // Delete from algolia
+      index.deleteObjects([id]);
+      Logger.info(`Automatically deleting ${id} from Algolia`);
     }
-  });
+  }
 });
 
 Scheduler.install();
