@@ -5,6 +5,10 @@
                 <h1>Contact us</h1>
                 <p>If you have any questions or concerns, please don't hesitate to contact us at <a href="mailto:info@kunvet.com">info@kunvet.com</a>.
                 We will respond within a few hours after receiving your email.</p>
+                
+                <p>We'd love to hear from you! Send your lovely feedback to our lovely customer service, Rose, at <a href="mailto:rose.lander@kunvet.com">rose.lander@kunvet.com</a>.</p>
+                
+                <p>Not completely satisfied with the service you received? Let us know via <a href="mailto:refund@kunvet.com">refund@kunvet.com</a>, and we'll gladly issue you a full refund immediately.</p>
             </div>
         </div>
     </v-container>
