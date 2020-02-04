@@ -6,7 +6,7 @@
                 
                 <div class="section">
                   <h2>General Inquiry</h2>
-                  <p>If you have any questions or concerns, please don't hesitate to contact us at <a href="mailto:info@kunvet.com">info@kunvet.com</a>.We will respond within a few hours after receiving your email.</p>
+                  <p>If you have any questions or concerns, please don't hesitate to contact us at <a href="mailto:info@kunvet.com">info@kunvet.com</a>. We will respond within a few hours after receiving your email.</p>
                 </div>
                 
                 <div class="section">
