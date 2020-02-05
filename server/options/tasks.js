@@ -23,7 +23,7 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
   console.log('Expire time is', Config.get('daysToExpire'));
   let jobsFound = null;
   try {
-    jobsFound = await Models.Job.find({ 'expired': false });
+    jobsFound = await Models.Job.find({ 'expired': false, 'active': true, 'is_deleted': false });
   } catch (err) {
     console.log(err);
     return;

@@ -306,7 +306,7 @@
 
   const findJobsQuery = gql`
     query($userId: MongoID, $businessId: MongoID) {
-      findJobs(filter: { user_id: $userId, business_id: $businessId }) {
+      findJobs(filter: { user_id: $userId, business_id: $businessId, is_deleted: false }) {
         ${queries.FindJobRecordForJobCard}
         expiry_date
       }

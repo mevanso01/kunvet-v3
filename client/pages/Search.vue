@@ -1066,7 +1066,7 @@ export default {
       this.$debug(coordinates);
       const requests = [{
         params: {
-          query: query,
+          query: `${query} AND expired = false`,
           page: this.page,
           aroundLatLng: `${coordinates.latitude}, ${coordinates.longitude}`,
         },
