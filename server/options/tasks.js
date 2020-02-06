@@ -13,7 +13,7 @@ Scheduler.schedule(() => {
   Logger.debug('The scheduler works!');
 });
 
-const daysToExpireFallback = 60;
+const daysToExpireFallback = 30;
 
 // const oneDay = 24 * 60 * 60 * 1000;
 const oneDay = 60 * 1000;

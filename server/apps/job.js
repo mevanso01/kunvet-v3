@@ -30,7 +30,7 @@ router.post('/repost/:id', async (ctx) => {
   const jobId = ctx.params.id;
   let job = null;
   const currDate = Date.now();
-  const expiryDate = currDate + (30 * days);
+  const expiryDate = currDate + ((Config.get('daysToExpire') || 30) * days);
 
   try {
     job = await Models.Job.findOne({

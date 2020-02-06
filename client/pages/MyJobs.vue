@@ -302,6 +302,7 @@
   import EventBus from '@/EventBus';
   import axios from 'axios';
   import Billing from '@/components/Billing';
+  import Config from 'config';
   // import findIndex from 'lodash/findIndex';
 
   const findJobsQuery = gql`
@@ -438,7 +439,7 @@
         return `${daysDiff} ${StringHelper.pluralize('day', daysDiff)}`;
       },
       getExpiredDaysDiff(date) {
-        const expiryDate = DateHelper.getExpiryDate(date, 30); // this is what determines if job is expired atm
+        const expiryDate = DateHelper.getExpiryDate(date, Config.get('daysToExpire')); // this is what determines if job is expired atm
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return daysDiff;
       },

@@ -50,7 +50,7 @@ const ACTIONS = {
 
       job.active = true;
       job.date = new Date(Date.now());
-      job.expiry_date = DateHelper.getExpiryDate(job.date, 30);
+      job.expiry_date = DateHelper.getExpiryDate(job.date, Config.get('daysToExpire'));
       job.expired = false;
       await job.save();
       if (appId && apiKey) {

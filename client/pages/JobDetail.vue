@@ -1160,7 +1160,7 @@
                 'address': this.findJob.address,
               },
             },
-            'validThrough': this.findJob.expiry_date || DateHelper.getExpiryDate(this.findJob.date, 30).toISOString(),
+            'validThrough': this.findJob.expiry_date || DateHelper.getExpiryDate(this.findJob.date, Config.get('daysToExpire')).toISOString(),
           };
           if (this.findJob.business_id != null) {
             this.jsonld.hiringOrganization = this.findJob.posted_by;
