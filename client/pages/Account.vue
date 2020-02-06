@@ -364,8 +364,6 @@
             />
             <p v-if="doesNotHaveJobs">
               Personal jobs are jobs that you offer as an individual.
-              If you are posting on behalf of a business,
-              please create an organization.
             </p>
             <jobs-and-applications-counters v-else
                                             :counters="getJobsAndApplicationsCount"/>
@@ -423,8 +421,6 @@
             />
             <p v-if="doesNotHaveJobs">
               Personal jobs are jobs that you offer as an individual.
-              If you are posting on behalf of a business,
-              please create an organization.
             </p>
             <jobs-and-applications-counters v-else
                                             :counters="getJobsAndApplicationsCount"/>
