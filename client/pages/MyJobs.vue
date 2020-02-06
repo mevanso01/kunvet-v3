@@ -426,6 +426,7 @@
         });
         const { recordId } = res.data.updateJob;
         EventBus.$emit('deletedJob', recordId);
+        await axios.post(`job/delete/${jobId}`);
         this.jobs = this.jobs.filter(({ _id }) => _id !== recordId);
         this.resetDialogState();
       },

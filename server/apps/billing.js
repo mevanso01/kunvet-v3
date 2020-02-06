@@ -19,6 +19,7 @@ const bodyParser = require('koa-bodyparser');
 const app = new Koa();
 const router = new KoaRouter();
 const appId = Config.get('algolia.appId');
+const apiKey = Config.get('private.algolia.adminApiKey');
 
 app.use(bodyParser());
 
@@ -52,7 +53,8 @@ const ACTIONS = {
       job.expiry_date = DateHelper.getExpiryDate(job.date, 30);
       job.expired = false;
       await job.save();
-      if (appId.length > 0) {
+      if (appId && apiKey) {
+        console.log('-------------- job algolia added --------------');
         await Algolia.uploadJob(job);
       }
 

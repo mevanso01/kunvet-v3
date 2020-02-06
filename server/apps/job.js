@@ -95,6 +95,32 @@ router.post('/repost/:id', async (ctx) => {
   ctx.body = JSON.stringify(response);
 });
 
+router.post('/delete/:id', async (ctx) => {
+  if (!ctx.isAuthenticated()) {
+    // Unauthenticated
+    const response = {
+      success: false,
+      message: 'Authentication required',
+    };
+    ctx.status = 401;
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+  const jobId = ctx.params.id;
+  const appId = Config.get('algolia.appId');
+  const apiKey = Config.get('private.algolia.adminApiKey');
+  if (appId && apiKey) {
+    const client = AlgoliaSearch(appId, apiKey);
+    const index = client.initIndex('jobs');
+    index.deleteObjects([jobId]);
+    console.log('-------------- job algolia deleted --------------');
+  }
+  const response = {
+    success: true,
+  };
+  ctx.body = JSON.stringify(response);
+});
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 

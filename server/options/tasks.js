@@ -23,7 +23,7 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
   console.log('Expire time is', Config.get('daysToExpire'));
   let jobsFound = null;
   try {
-    jobsFound = await Models.Job.find({ 'expired': false, 'active': true, 'is_deleted': false });
+    jobsFound = await Models.Job.find({ 'expired': false, 'active': true });
   } catch (err) {
     console.log(err);
     return;
@@ -37,12 +37,11 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
 
   jobsFound.forEach((job) => {
     const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
-    if (!job.expired && today.getTime() > expiredDate.getTime()) {
+    if (!job.is_deleted && today.getTime() > expiredDate.getTime()) {
       expiredJobIds.push(job._id);
       expiredJobs.push(job);
     }
-    const toBeDeletedTime = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
-    if (today.getTime() > toBeDeletedTime.getTime()) {
+    if (job.is_deleted || today.getTime() > expiredDate.getTime()) {
       toDeleteJobIds.push(job._id);
     }
   });
