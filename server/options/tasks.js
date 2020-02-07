@@ -23,7 +23,7 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
   console.log('Expire time is', Config.get('daysToExpire'));
   let jobsFound = null;
   try {
-    jobsFound = await Models.Job.find({ 'expired': false, 'active': true });
+    jobsFound = await Models.Job.find({ 'active': true });
   } catch (err) {
     console.log(err);
     return;
@@ -33,11 +33,11 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
   const expiredJobs = [];
   const toDeleteJobIds = [];
   let daysToExpire = Config.get('daysToExpire') || daysToExpireFallback;
-  daysToExpire = 5;
+  daysToExpire = 0;
 
   jobsFound.forEach((job) => {
     const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
-    if (!job.is_deleted && today.getTime() > expiredDate.getTime()) {
+    if (!job.is_deleted && !job.expired && today.getTime() > expiredDate.getTime()) {
       expiredJobIds.push(job._id);
       expiredJobs.push(job);
     }
@@ -151,11 +151,15 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
   if (toDeleteJobIds.length > 0 && appId && apiKey) {
     const client = AlgoliaSearch(appId, apiKey);
     const index = client.initIndex('jobs');
-    for (let i = 0; i < toDeleteJobIds.length; ++i) {
-      const id = toDeleteJobIds[i];
-      // Delete from algolia
-      index.deleteObjects([id]);
-      Logger.info(`Automatically deleting ${id} from Algolia`);
+    try {
+      // for (let i = 0; i < toDeleteJobIds.length; ++i) {
+      //   const id = toDeleteJobIds[i];
+      //   // Delete from algolia
+      // }
+      await index.deleteObjects(toDeleteJobIds);
+      Logger.info(`Automatically deleting ${toDeleteJobIds.join(', ')} from Algolia`);
+    } catch (err) {
+      console.log('--------------- Algolia delete failure ---------------', err);
     }
   }
 });
