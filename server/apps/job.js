@@ -9,6 +9,7 @@ import AlgoliaSearch from 'algoliasearch';
 // import ApiResponse from '@/utils/ApiResponse';
 import Config from 'config';
 import Models from '@/mongodb/Models';
+import Logger from '@/Logger';
 // import Mailer from '@/utils/Mailer';
 // import Data from '@/utils/Data';
 
@@ -112,8 +113,12 @@ router.post('/delete/:id', async (ctx) => {
   if (appId && apiKey) {
     const client = AlgoliaSearch(appId, apiKey);
     const index = client.initIndex('jobs');
-    index.deleteObjects([jobId]);
-    console.log('-------------- job algolia deleted --------------');
+    try {
+      await index.deleteObjects([jobId]);
+      Logger.info(`Deleting ${jobId} from Algolia`);
+    } catch (err) {
+      console.log('--------------- Algolia delete failure ---------------', err);
+    }
   }
   const response = {
     success: true,
