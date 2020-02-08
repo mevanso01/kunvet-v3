@@ -1280,9 +1280,13 @@ export default {
   },
   methods: {
     onSuccess() {
-      if (this.$ga) {
-        this.$ga.event('account', 'create', 'applicant', 1);
-        console.log('ga: account/create/applicant/1');
+      // if (this.$ga) {
+      //   this.$ga.event('account', 'create', 'applicant', 1);
+      //   console.log('ga: account/create/applicant/1');
+      // }
+      if (window.dataLayer) {
+        window.dataLayer.push({ 'event': 'create-applicant-account' });
+        console.log('gtm: create-applicant-account');
       }
       // if (this.signupType === 'business') {
       //   this.$router.push('/myorg');

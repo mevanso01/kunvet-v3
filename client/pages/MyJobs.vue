@@ -460,6 +460,10 @@
       },
 
       afterRepost() {
+        if (window.dataLayer) {
+          window.dataLayer.push({ 'event': 'renew-job' });
+          console.log('gtm: renew-job');
+        }
         this.dialogs.success = true;
         this.getData(true); // fetches using networkOnly
         window.setTimeout(() => { this.dialogs.showRepost = false; }, 400);

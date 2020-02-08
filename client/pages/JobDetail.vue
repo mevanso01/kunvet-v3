@@ -996,9 +996,13 @@
       handleResume(verif) {
         var verifSuccess = false;
         if (verif) {
-          if (this.$ga) {
-            this.$ga.event('account', 'create', 'applicant', 1);
-            console.log('ga: account/create/applicant/1');
+          // if (this.$ga) {
+          //   this.$ga.event('account', 'create', 'applicant', 1);
+          //   console.log('ga: account/create/applicant/1');
+          // }
+          if (window.dataLayer) {
+            window.dataLayer.push({ 'event': 'create-applicant-account' });
+            console.log('gtm: create-applicant-account');
           }
           verifSuccess = verif;
         }
@@ -1450,9 +1454,13 @@
               },
             ],
           }).then((data) => {
-            if (this.$ga) {
-              this.$ga.event('job', 'apply', 'jobs', 1);
-              console.log('ga: job/apply/jobs/1');
+            // if (this.$ga) {
+            //   this.$ga.event('job', 'apply', 'jobs', 1);
+            //   console.log('ga: job/apply/jobs/1');
+            // }
+            if (window.dataLayer) {
+              window.dataLayer.push({ 'event': 'apply-for-job' });
+              console.log('gtm: apply-for-job');
             }
             this.loading = false;
             if (data) {

@@ -1289,9 +1289,13 @@ export default {
                 EventBus.$emit('login', 'individual');
               }
               ret.loggedIn = true;
-              if (this.$ga) {
-                this.$ga.event('account', 'create', 'employer', 1);
-                console.log('ga: account/create/employer/1');
+              // if (this.$ga) {
+              //   this.$ga.event('account', 'create', 'employer', 1);
+              //   console.log('ga: account/create/employer/1');
+              // }
+              if (window.dataLayer) {
+                window.dataLayer.push({ 'event': 'create-employer-account' });
+                console.log('gtm: create-employer-account');
               }
             } else {
               ret.error = res.data ? res.data : res;
@@ -1914,9 +1918,13 @@ export default {
     onBillingSuccess() {
       this.tab = 'success-tab';
       this.email_verified = true;
-      if (this.$ga && this.newLoggedIn) {
-        this.$ga.event('product', 'paid', 'job posting', 9);
-        console.log('ga: product/paid/job posting/9');
+      // if (this.$ga && this.newLoggedIn) {
+      //   this.$ga.event('product', 'paid', 'job posting', 9);
+      //   console.log('ga: product/paid/job posting/9');
+      // }
+      if (window.dataLayer) {
+        window.dataLayer.push({ 'event': 'pay-for-new-job' });
+        console.log('gtm: pay-for-new-job');
       }
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;

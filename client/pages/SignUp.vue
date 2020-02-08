@@ -233,10 +233,21 @@ export default {
       this.$router.push(`/sign-up/${type}`);
     },
     onSuccess() {
-      if (this.$ga) {
-        this.$ga.event('account', 'create', 'applicant', 1);
-        console.log('ga: account/create/applicant/1');
+      // if (this.$ga) {
+      //   this.$ga.event('account', 'create', 'applicant', 1);
+      //   console.log('ga: account/create/applicant/1');
+      // }
+      if (window.dataLayer) {
+        if (this.signupType === 'student') {
+          window.dataLayer.push({ 'event': 'create-applicant-account' });
+          console.log('gtm: create-applicant-account');
+        } else {
+          window.dataLayer.push({ 'event': 'create-employer-account' });
+          console.log('gtm: create-employer-account');
+        }
       }
+      console.log('----------------------');
+      console.log(this.signupType);
       if (this.signupType === 'business') {
         this.$router.push('/myorg');
       } else {
