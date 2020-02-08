@@ -160,9 +160,9 @@ const wpconf = {
       {
         from: './client/assets/favicon.png',
       },
-      // {
-      //   from: './client/googleecb5d76c39b57652.html',
-      // },
+      {
+        from: './client/google90271f0211931bfa.html',
+      },
     ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',

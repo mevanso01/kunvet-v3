@@ -105,7 +105,6 @@ const JobSchema = Mongoose.Schema({
   },
   expiry_date: {
     type: Date,
-    // default: () => new Date(+new Date() + (1000 * 60 * 5)),
     default: () => new Date(+new Date() + (1000 * 60 * 60 * 24 * 30)),
   },
   description: {

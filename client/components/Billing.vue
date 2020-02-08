@@ -16,7 +16,7 @@
     </div> -->
     <div class="bi-cont mb-2">
       <h2 class="mb-1">{{computeTitleText}}</h2>
-      <p>Your job will be displayed for {{daysToExpire}} days before expiring</p>
+      <p>Your job will be displayed for {{daysToExpire}} days before expiring. The payment is powered by PayPal services and we do not store sensitive payment information on our servers.</p>
     </div>
     <div class="bi-cont mb-3">
       <h2 class="mt-3 mb-3">Due today: {{ totalPriceString }}</h2>
@@ -110,7 +110,7 @@ export default {
       this.loading = true;
       this.$debug(this.instance);
       // TODO: remove 'production' case when deploying to 'prod' branch
-      if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development') {
         this.chargeUser({});
         return;
       }

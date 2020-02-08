@@ -2,8 +2,6 @@ class DateHelper {
   static getExpiryDate(date, num = 30) {
     const expiryDate = new Date(date);
     expiryDate.setDate(expiryDate.getDate() + num);
-    // console.log(num);
-    // expiryDate.setMinutes(expiryDate.getMinutes() + 5);
     return expiryDate;
   }
 

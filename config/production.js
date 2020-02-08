@@ -98,7 +98,7 @@ module.exports = {
       ],
     },
     mail: {
-      from: 'Kunvet Notifications <notifications@kunvet.com>',
+      from: 'Kunvet <notifications@kunvet.com>',
       transport: Credentials.mailTransport,
     },
     algolia: {
