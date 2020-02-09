@@ -961,7 +961,7 @@
               So you just applied for your dream job! Feels great, right? Then you get that dreaded email: “We’re sorry, this job no longer exists.” The worst. Luckily, Kunvet has your back—we’ll show you only the latest, greatest jobs right in your area.</p>
           </div>
           <img class="ykunvet_phone desktop medium" :src="pngs.phone1" alt="Newest Jobs Near Me">
-          <img class="ykunvet_phone mobile small extra_small" :src="pngs.phoneplaceholder" alt="Phone Placeholder">
+          <img class="ykunvet_phone mobile small extra_small" :src="pngs.phone1mobile" alt="Phone Placeholder">
         </div>
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
@@ -970,7 +970,7 @@
               Dying to know if your application is getting noticed? Kunvet lets you know right away when there’s a change in your application status. We’ll let you know ASAP when your dream company is checking out your resume. We’re your eyes and ears.</p>
           </div>
           <img class="ykunvet_phone desktop medium" :src="pngs.phone2" alt="Being kept in the dark?">
-          <img class="ykunvet_phone mobile small extra_small" :src="pngs.phoneplaceholder" alt="Phone Placeholder">
+          <img class="ykunvet_phone mobile small extra_small" :src="pngs.phone2mobile" alt="Phone Placeholder">
         </div>
         <div class="ykunvet_section">
           <div class="ykunvet_text_div">
@@ -979,7 +979,7 @@
               You know how it is. You’re applying for jobs and you have about six different versions of your resume. You’re versatile, we get it. That’s why we let you upload as many resumes for as many hats you wear, making applying for a wide array of jobs a breeze.</p>
           </div>
           <img class="ykunvet_phone desktop medium" :src="pngs.phone3" alt="Multiple Resumes">
-          <img class="ykunvet_phone mobile small extra_small" :src="pngs.phoneplaceholder" alt="Phone Placeholder">
+          <img class="ykunvet_phone mobile small extra_small" :src="pngs.phone3mobile" alt="Phone Placeholder">
         </div>
       </div>
     </div>
@@ -1069,6 +1069,9 @@ import woman from '@/assets/index/female-job-applicant-wearing-red-suit-waiting-
 import phone1 from '@/assets/index/new-fresh-latest-job-employment.png';
 import phone2 from '@/assets/index/instant-job-application-status.png';
 import phone3 from '@/assets/index/upload-unlimited-resumes.png';
+import phone1mobile from '@/assets/index/new-fresh-latest-job-employment-mobile.png';
+import phone2mobile from '@/assets/index/instant-job-application-status-mobile.png';
+import phone3mobile from '@/assets/index/upload-unlimited-resumes-mobile.png';
 import phoneplaceholder from '@/assets/index/phone-placeholder.png';
 import person1 from '@/assets/index/young-job-applicant-in-green-sweater.png';
 import person2 from '@/assets/index/young-job-applicant-in-purple-checker-shirt.png';
@@ -1152,6 +1155,9 @@ export default {
         phone1: phone1,
         phone2: phone2,
         phone3: phone3,
+        phone1mobile: phone1mobile,
+        phone2mobile: phone2mobile,
+        phone3mobile: phone3mobile,
         person1: person1,
         person2: person2,
         person3: person3,
