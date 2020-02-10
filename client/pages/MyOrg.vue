@@ -240,7 +240,7 @@
                 />
                 <jobs-and-applications-counters v-if="jobs.length > 0" :counters="getJobsAndApplicationsCount" />
                 <div>
-                  <router-link to="/createjob">
+                  <router-link to="/jobs/create">
                     <k-btn>
                       Post a Job
                     </k-btn>
@@ -391,7 +391,7 @@
     methods: {
       goToCreateJob() {
         // Used for reopening unfinished job
-        this.$router.push(`/createjob/${this.jobToPost}`);
+        this.$router.push(`/jobs/create/${this.jobToPost}`);
       },
       logout() {
         App.methods.logout();
@@ -539,7 +539,7 @@
         if (!job.date) {
           return false;
         }
-        const expiryDate = job.expiry_date ? new Date(job.expiry_date) : DateHelper.getExpiryDate(job.date, 30);
+        const expiryDate = job.expiry_date ? new Date(job.expiry_date) : DateHelper.getExpiryDate(job.date, Config.get('daysToExpire'));
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return daysDiff <= 0;
       },

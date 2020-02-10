@@ -25,6 +25,13 @@ if (!fs.existsSync(credPath)) {
 }
 
 const Credentials = require('./credentials.js');
+const ProdCredentials = require('./prod-credentials.js');
+
+console.log('================== Credentials ==================');
+console.log(Credentials);
+
+console.log('================== PROD Credentials ==================');
+console.log(ProdCredentials);
 
 if (Credentials.REMOVEMEPLS) {
   console.error(colors.red.bold(`
@@ -41,8 +48,7 @@ if (Credentials.REMOVEMEPLS) {
 }
 
 module.exports = {
-  daysToExpire: 60,
-  daysToDeleteFromAlgolia: 90, // remove from algolia after expiration for > 90 days
+  daysToExpire: 30,
   serverUrl: Credentials.serverUrl,
   googleMapsKey: Credentials.googleMapsKey,
   sentry: {
@@ -53,6 +59,7 @@ module.exports = {
     googleTagManager: true,
     //googleAdSense: true,
     hotjar: true,
+    trackingId: Credentials.analytics.trackingId,
   },
   algolia: {
     appId: Credentials.algolia.appId,
@@ -62,6 +69,11 @@ module.exports = {
     sandbox: Credentials.braintree.sandbox,
     publicKey: Credentials.braintree.publicKey,
     merchantId: Credentials.braintree.merchantId,
+  },
+  mailchimp: {
+    mcListId: Credentials.mailchimp.mcListId,
+    mcEmployerListId: Credentials.mailchimp.mcEmployerListId,
+    mcAPIKey: Credentials.mailchimp.mcAPIKey,
   },
   private: {
     FIXCONFIG: '!!!This is not supposed to appear in client!!!',
@@ -91,7 +103,7 @@ module.exports = {
       ],
     },
     mail: {
-      from: 'Kunvet Notifications <notifications@kunvet.com>',
+      from: 'Kunvet <notifications@kunvet.com>',
       transport: Credentials.mailTransport,
     },
     algolia: {

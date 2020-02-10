@@ -240,3 +240,6 @@ $RECYCLE.BIN/
 /config.json
 /uploads
 /config/credentials.js
+/config/prod-credentials.js
+package-lock.json
+package.json

@@ -83,7 +83,7 @@
             <v-toolbar height="64px" card style="z-index: 1; border-bottom: 1px solid black; padding: 0 12px;">
               <v-toolbar-items style="width: 100%; display: block;">
                 <div class="view-applicant-left-elements">
-                  <router-link :to="'/applicants'">
+                  <router-link :to="'/jobs/applicants'">
                     <v-btn class="kunvet-black-large-btn">
                       Back
                     </v-btn>
@@ -432,13 +432,13 @@ export default {
           const res = data.data.findApplicant;
           // const isEmployer = await this.isEmployer(res.job_id);
           // Only employers that made this job should be able to view the applicant.
-          // if (!isEmployer) this.$router.push('/applicants');
+          // if (!isEmployer) this.$router.push('/jobs/applicants');
           this.data.name = res.name;
           this.data.school = res.school;
           this.data.email = res.email;
           this.data.wechat = res.wechat_id;
           this.data.notes = res.notes;
-          this.data.status = res.status;
+          this.data.status = status;
           this.data.degree = degreeDbToString(res.degree);
           this.data.major = res.major;
           this.rawResumes = res.resumes;

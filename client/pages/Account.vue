@@ -1,20 +1,23 @@
 <style scoped>
-.acct-page-container__add-major {
-  margin-left: 40px !important;
-}
-.acct-page-container__select-degree .input-group__details::before {
-  background-color: transparent !important;
-}
+  .acct-page-container__add-major {
+    margin-left: 40px !important;
+  }
+
+  .acct-page-container__select-degree .input-group__details::before {
+    background-color: transparent !important;
+  }
 
 </style>
 <template>
   <v-container fluid class="acct-page-container white-bg  page-height">
     <div v-if="!userdata" style="margin-top: 48px;">
-      <v-progress-circular indeterminate class="ma-3" size="30" color="red darken-1"
-      style="display: block; margin: auto !important;"></v-progress-circular>
+      <v-progress-circular indeterminate class="ma-3" size="30"
+                           color="red darken-1"
+                           style="display: block; margin: auto !important;"></v-progress-circular>
     </div>
     <div class="main-cont-large" v-if="userdata">
-      <div v-if="!email_verified" style="width: 100%; height: 40px; background-color: #ef5350; margin-bottom: 10px;">
+      <div v-if="!email_verified"
+           style="width: 100%; height: 40px; background-color: #ef5350; margin-bottom: 10px;">
         <p style="text-align: center; line-height: 40px; color: #fff;">
           You have not verified your email yet!
           <router-link to="/validate">Verify your email</router-link>
@@ -33,7 +36,8 @@
           <v-flex xs12 sm8>
             <v-layout row wrap>
               <v-flex xs12 class="acct-name-header-container">
-                <h1 class="acct-name-header-container__name" style="margin-bottom: 0;">
+                <h1 class="acct-name-header-container__name"
+                    style="margin-bottom: 0;">
                   {{ userdata.firstname }} {{ userdata.lastname }}
                   <i
                     class="fa fa-edit acct-name-header-container__edit-icon"
@@ -43,7 +47,8 @@
               </v-flex>
               <v-flex xs12 sm11 md9 class="no-padding">
                 <v-list>
-                  <v-list-tile v-if="!userdata.school" class="cust-tile-2 grey-color">
+                  <v-list-tile v-if="!userdata.school && false"
+                               class="cust-tile-2 grey-color">
                     <v-list-tile class="cust-tile-1">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </v-list-tile>
@@ -60,7 +65,8 @@
                           />
                         </v-flex>
                         <v-flex xs3 v-show="updateSchool" class="no-padding">
-                          <v-btn small center class="cust-btn-1" @click="saveSchool">
+                          <v-btn small center class="cust-btn-1"
+                                 @click="saveSchool">
                             Save
                           </v-btn>
                         </v-flex>
@@ -95,29 +101,35 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">
-                       <div v-bind:style="getSelectMaxWidth">
-                         <v-select
-                           :items="degreeSelectItems"
-                           class="acct-page-container__select-degree"
-                           v-model="updateDegree"
-                           label="Select Degree"
-                           single-line
-                           style="padding: 0;"
-                           hide-details
-                         />
-                       </div>
-                       <v-flex xs5 v-if="updateDegree === 'High school' || updateDegree === 'None'" v-show="updateDegree" class="no-padding">
-                         <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
-                           Save
-                         </v-btn>
-                       </v-flex>
-                       <v-flex xs3 v-else style="padding-left: 5px; padding-top: 5px; color: black;">
-                         in
-                       </v-flex>
+                        <div v-bind:style="getSelectMaxWidth">
+                          <v-select
+                            :items="degreeSelectItems"
+                            class="acct-page-container__select-degree"
+                            v-model="updateDegree"
+                            label="Select Degree"
+                            single-line
+                            style="padding: 0;"
+                            hide-details
+                          />
+                        </div>
+                        <v-flex xs5
+                                v-if="updateDegree === 'High school' || updateDegree === 'None'"
+                                v-show="updateDegree" class="no-padding">
+                          <v-btn small center class="cust-btn-1"
+                                 @click="saveDegreeMajorInfo">
+                            Save
+                          </v-btn>
+                        </v-flex>
+                        <v-flex xs3 v-else
+                                style="padding-left: 5px; padding-top: 5px; color: black;">
+                          in
+                        </v-flex>
                       </v-layout>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-if="userdata.school && userdata.degree && userdata.degree !== 'None'" class="cust-tile-3">
+                  <v-list-tile
+                    v-if="userdata.school && userdata.degree && userdata.degree !== 'None'"
+                    class="cust-tile-3">
                     <v-list-tile class="cust-tile-1">
                       <img
                         :src="svgs.accountDegree"
@@ -126,7 +138,8 @@
                     </v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title>
-                        {{ userdata.degree }} <span v-if="userdata.degree !== 'High school'">in {{ userdata.major }}</span>
+                        {{ userdata.degree }} <span
+                        v-if="userdata.degree !== 'High school'">in {{ userdata.major }}</span>
                         <i
                           class="fa fa-edit acct-page-container__edit-icon"
                           @click="createEditDegreeMajorInfo.show = true"
@@ -153,10 +166,12 @@
                           />
                         </v-flex>
                         <v-flex xs3
-                          v-if="updateDegree && updateMajor"
-                          v-show="updateMajor" class="no-padding" style="margin-left: 40px;"
+                                v-if="updateDegree && updateMajor"
+                                v-show="updateMajor" class="no-padding"
+                                style="margin-left: 40px;"
                         >
-                          <v-btn small center class="cust-btn-1" @click="saveDegreeMajorInfo">
+                          <v-btn small center class="cust-btn-1"
+                                 @click="saveDegreeMajorInfo">
                             Save
                           </v-btn>
                         </v-flex>
@@ -164,10 +179,11 @@
                     </v-list-tile-content>
                   </v-list-tile>
 
-                    <v-list-tile v-if="!userdata.email" class="cust-tile-2 grey-color">
-                      <v-list-tile class="cust-tile-1">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                      </v-list-tile>
+                  <v-list-tile v-if="!userdata.email"
+                               class="cust-tile-2 grey-color">
+                    <v-list-tile class="cust-tile-1">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </v-list-tile>
                     <v-list-tile-content>
                       <v-layout class="acct-page-container__input-field-layout">
                         <v-flex xs9 class="no-padding">
@@ -181,7 +197,8 @@
                           />
                         </v-flex>
                         <v-flex xs2 v-show="updateEmail" class="no-padding">
-                          <v-btn small  center class="cust-btn-1" @click="saveEmail">
+                          <v-btn small center class="cust-btn-1"
+                                 @click="saveEmail">
                             Save
                           </v-btn>
                         </v-flex>
@@ -202,30 +219,32 @@
                     </v-list-tile-content>
                   </v-list-tile>
 
-                  <v-list-tile v-if="!userdata.wechat_id" class="cust-tile-2 grey-color">
+                  <v-list-tile v-if="!userdata.wechat_id && false"
+                               class="cust-tile-2 grey-color">
                     <v-list-tile class="cust-tile-1">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </v-list-tile>
-                  <v-list-tile-content>
-                    <v-layout class="acct-page-container__input-field-layout">
-                      <v-flex xs9 class="no-padding">
-                        <v-text-field
-                          v-model="updateWechatId"
-                          class="no-padding no-underline"
-                          name="input-3"
-                          label="Add WeChat id"
-                          single-line
-                          @keyup.enter="saveWechatId"
-                        />
-                      </v-flex>
-                      <v-flex xs2 v-show="updateWechatId" class="no-padding">
-                        <v-btn small  center class="cust-btn-1" @click="saveWechatId">
-                          Save
-                        </v-btn>
-                      </v-flex>
-                    </v-layout>
-                  </v-list-tile-content>
-                </v-list-tile>
+                    <v-list-tile-content>
+                      <v-layout class="acct-page-container__input-field-layout">
+                        <v-flex xs9 class="no-padding">
+                          <v-text-field
+                            v-model="updateWechatId"
+                            class="no-padding no-underline"
+                            name="input-3"
+                            label="Add WeChat id"
+                            single-line
+                            @keyup.enter="saveWechatId"
+                          />
+                        </v-flex>
+                        <v-flex xs2 v-show="updateWechatId" class="no-padding">
+                          <v-btn small center class="cust-btn-1"
+                                 @click="saveWechatId">
+                            Save
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-list-tile-content>
+                  </v-list-tile>
                   <v-list-tile v-if="userdata.wechat_id" class="cust-tile-2">
                     <v-list-tile class="cust-tile-1">
                       <img
@@ -243,6 +262,29 @@
                       </v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
+                  <!-- <div style="padding-left: 41px">
+                    <v-textarea
+                      box
+                      name="input-7-4"
+                      label="Career Summary"
+                      :value="updateSummary"
+                      v-if="!userdata.summary || openSummary"
+                      v-model="updateSummary"
+                    ></v-textarea>
+                    <div v-else>
+                      {{userdata.summary}}
+                      <i
+                        class="fa fa-edit acct-page-container__edit-icon"
+                        @click="editSummary"
+                      />
+                    </div>
+                    <div v-show="!userdata.summary || openSummary">
+                      <k-btn small @click="saveSummary">
+                        Save
+                      </k-btn>
+                      <k-btn small @click="openSummary=false">Cancel</k-btn>
+                    </div>
+                  </div> -->
                 </v-list>
               </v-flex>
             </v-layout>
@@ -251,9 +293,13 @@
 
           <v-flex sm4 class="hidden-xs-only">
             <div class="profile-pic-cont hidden-xs-only">
-              <img v-if="userdata.profile_pic" style="width: 100%; height: 100%;" :src="`${serverUrl}/file/get/${userdata.profile_pic}`"></img>
-              <img v-else style="width: 100%; height: 100%;" :src="default_pic"></img>
-              <v-btn style="position: relative; top: -42px; left: -5px; background-color: rgba(0,0,0,0.15);"
+              <img v-if="userdata.profile_pic"
+                   style="width: 100%; height: 100%;"
+                   :src="`${serverUrl}/file/get/${userdata.profile_pic}`"></img>
+              <img v-else style="width: 100%; height: 100%;"
+                   :src="default_pic"></img>
+              <v-btn
+                style="position: relative; top: -42px; left: -5px; background-color: rgba(0,0,0,0.15);"
                 icon small @click="showPicUploaderDialog = true;">
                 <v-icon style="color: #fff;">photo_camera</v-icon>
               </v-btn>
@@ -261,307 +307,339 @@
           </v-flex>
         </v-layout>
 
-            <v-divider class="acct-divider" />
+        <v-divider class="acct-divider"/>
 
-            <v-layout row wrap>
-              <v-flex v-if="showResumeSection" xs12 sm6 md5 class="padding-sm-right">
-                <account-header
-                  :svg="svgs.resume"
-                  :text="'My Files'"
-                />
+        <v-layout row wrap>
+          <v-flex v-if="showResumeSection" xs12 sm6 md5
+                  class="padding-sm-right">
+            <account-header
+              :svg="svgs.resume"
+              :text="'My Files'"
+            />
 
-                <p v-if="!userdata.resumes || userdata.resumes.length === 0">
-                  Upload your resume or cover letter. Use it to apply for any jobs on Kunvet.
-                </p>
-                <div v-else>
-                  <p>Manage your resumes and cover letters here.</p>
-                  <v-list two-line class="acct-list">
+            <p v-if="!userdata.resumes || userdata.resumes.length === 0">
+              Upload your resume or cover letter. Use it to apply for any jobs
+              on Kunvet.
+            </p>
+            <div v-else>
+              <p>Manage your resumes and cover letters here.</p>
+              <v-list two-line class="acct-list">
 
-                    <div v-for="(resume, index) in userdata.resumes" :key="index">
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
-                        </v-list-tile-content>
-                          <v-list-tile-action @click="createEditResumeModal(userdata.resumes[index].name, index)">
-                            <v-btn icon rippl >
-                              <v-icon color="grey lighten-1">edit</v-icon>
-                            </v-btn>
-                          </v-list-tile-action>
-                          <v-list-tile-action @click="
+                <div v-for="(resume, index) in userdata.resumes" :key="index">
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>{{ resume.name }}</v-list-tile-title>
+                    </v-list-tile-content>
+                    <v-list-tile-action
+                      @click="createEditResumeModal(userdata.resumes[index].name, index)">
+                      <v-btn icon rippl>
+                        <v-icon color="grey lighten-1">edit</v-icon>
+                      </v-btn>
+                    </v-list-tile-action>
+                    <v-list-tile-action @click="
                             deleteResumeIndex=index;
                             deleteResumeName=resume.name;
                             showDeleteResumeDialog=true"
-                          >
-                            <v-btn icon ripple>
-                              <v-icon color="grey lighten-1">delete</v-icon>
-                            </v-btn>
-                          </v-list-tile-action>
-                      </v-list-tile>
-                      <v-divider v-if="index + 1 < userdata.resumes.length"></v-divider>
-                    </div>
-                  </v-list>
+                    >
+                      <v-btn icon ripple>
+                        <v-icon color="grey lighten-1">delete</v-icon>
+                      </v-btn>
+                    </v-list-tile-action>
+                  </v-list-tile>
+                  <v-divider
+                    v-if="index + 1 < userdata.resumes.length"></v-divider>
                 </div>
-                <k-btn @click="showFileModal = true">
-                  Add File
-                </k-btn>
-              </v-flex>
-              <v-flex v-else xs12 sm6 md5 class="padding-sm-left">
-                <account-header
-                  :svg="svgs.suitcase"
-                  :text="'Personal Jobs & Applicants'"
+              </v-list>
+            </div>
+
+            <k-btn @click="showFileModal = true">
+              Add File
+            </k-btn>
+
+          </v-flex>
+          <v-flex v-else xs12 sm6 md5 class="padding-sm-left">
+            <account-header
+              :svg="svgs.suitcase"
+              :text="'Personal Jobs & Applicants'"
+            />
+            <p v-if="doesNotHaveJobs">
+              Personal jobs are jobs that you offer as an individual.
+            </p>
+            <jobs-and-applications-counters v-else
+                                            :counters="getJobsAndApplicationsCount"/>
+            <div>
+              <k-btn to="/jobs/create" autoSpin>
+                Post Personal Jobs
+              </k-btn>
+            </div>
+          </v-flex>
+          <v-flex v-show="!(userdata && userdata.account_type === 'student')" v-if="false"
+                  xs12 sm6 md5 offset-md2
+                  class="right-account-column padding-sm-left">
+            <account-header
+              :svg="svgs.building"
+              :text="'My Organizations'"
+            />
+            <p v-if="orgList && orgList.length === 0">
+              If you own a business, school club, or other type of organization,
+              then post your job here.
+            </p>
+            <v-list two-line class="acct-list" v-else-if="orgList">
+              <template v-for="({ _id, name }, index) in orgList">
+                <v-list-tile :key="_id" ripple @click="switchToOrg(_id)">
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      {{ name }}
+                    </v-list-tile-title>
+                  </v-list-tile-content>
+                  <v-list-tile-action>
+                    <v-btn icon>
+                      <v-icon color="grey lighten-1">keyboard_arrow_right
+                      </v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+                <v-divider v-if="index + 1 < orgList.length" :key="index"/>
+              </template>
+            </v-list>
+            <div>
+              <k-btn
+                @click="createOrganizationModal.show = true"
+              >
+                Create an Organization
+              </k-btn>
+            </div>
+          </v-flex>
+        </v-layout>
+        <v-layout v-show="!(userdata && userdata.account_type === 'student')"
+                  row wrap v-if="showResumeSection">
+          <v-flex xs12 sm6 offset-sm6 md5 offset-md7
+                  class="right-account-column padding-sm-left">
+            <account-header
+              :svg="svgs.suitcase"
+              :text="'Personal Jobs & Applicants'"
+            />
+            <p v-if="doesNotHaveJobs">
+              Personal jobs are jobs that you offer as an individual.
+            </p>
+            <jobs-and-applications-counters v-else
+                                            :counters="getJobsAndApplicationsCount"/>
+            <div>
+              <k-btn to="/jobs/create" autoSpin>
+                Post Personal Jobs
+              </k-btn>
+            </div>
+          </v-flex>
+        </v-layout>
+
+        <v-dialog v-model="showFileModal" max-width="500"
+                  :fullscreen="$vuetify.breakpoint.xsOnly">
+          <ResumeUploader
+            title="Upload new resume or cover letter"
+            @uploaded="resumeUploaded"
+            @cancel="closeFileModal"
+            style="padding-right: 20px; padding-left: 20px;"
+          />
+        </v-dialog>
+
+        <v-dialog v-model="showPicUploaderDialog" content-class="auto-dialog">
+          <PicUploader
+            @uploaded="profilePicUploaded"
+            @cancel="showPicUploaderDialog = false"
+            :croppedId="userdata.profile_pic"
+            title="Change Profile Picture"
+          />
+        </v-dialog>
+
+        <v-dialog v-model="showDeleteResumeDialog">
+          <v-card style="height: 100%">
+            <v-card-title>
+              <h2>Delete {{ deleteResumeName }}?</h2>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn flat="flat" @click="showDeleteResumeDialog=false;">Cancel
+              </v-btn>
+              <v-btn color="red darken-1" flat="flat"
+                     @click="deleteResume(deleteResumeIndex)">Delete
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="editModal.show">
+          <v-card>
+            <v-card-title>
+              <div class="headline">Edit {{ editModal.title }}</div>
+              <div class="edit-modal-input-cont">
+                <v-text-field
+                  v-model="editModal.text"
+                  v-if="editModal.type === 'text'"
+                  style="padding: 0 2px;"
+                  name="edit-modal-input"
+                  hide-details
+                  single-line
+                ></v-text-field>
+                <v-select
+                  v-model="editModal.text"
+                  v-if="editModal.type === 'select'"
+                  :items="editModal.items"
+                  single-line
                 />
-                <p v-if="doesNotHaveJobs">
-                  Personal jobs are jobs that you offer as an individual.
-                  If you are posting on behalf of a business,
-                  please create an organization.
-                </p>
-                <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
-                <div>
-                  <k-btn to="/createjob" autoSpin>
-                    Post Personal Jobs
-                  </k-btn>
-                </div>
-              </v-flex>
-              <v-flex v-show="!(userdata && userdata.account_type === 'student')" xs12 sm6 md5 offset-md2 class="right-account-column padding-sm-left">
-                <account-header
-                  :svg="svgs.building"
-                  :text="'My Organizations'"
+              </div>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
+              <v-btn flat="flat" @click.native="saveFromEditModal">Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="editResumeModal.show">
+          <v-card>
+            <v-card-title>
+              <div class="headline">Edit {{ editResumeModal.title }}</div>
+              <div class="edit-modal-input-cont">
+                <v-text-field
+                  v-model="editResumeModal.text"
+                  style="padding: 0 2px;"
+                  name="edit-modal-input"
+                  hide-details
+                  single-line
+                ></v-text-field>
+              </div>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn flat="flat" @click.native="destroyEditResumeModal">Cancel
+              </v-btn>
+              <v-btn flat="flat" @click.native="saveFromEditResumeModal">Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="createEditDegreeMajorInfo.show">
+          <v-card>
+            <v-card-title>
+              <div class="headline">Edit Degree and Major Information</div>
+              <div class="edit-modal-input-cont">
+                <v-select
+                  v-model="createEditDegreeMajorInfo.degree"
+                  :items="degreeSelectItems"
+                  label="Degree"
+                  placeholder="Select degree"
                 />
-                <p v-if="orgList && orgList.length === 0">
-                  If you own a business, school club, or other type of organization, then post your job here.
-                </p>
-                <v-list two-line class="acct-list" v-else-if="orgList">
-                  <template v-for="({ _id, name }, index) in orgList">
-                    <v-list-tile :key="_id" ripple @click="switchToOrg(_id)">
-                      <v-list-tile-content>
-                        <v-list-tile-title>
-                          {{ name }}
-                        </v-list-tile-title>
-                      </v-list-tile-content>
-                      <v-list-tile-action>
-                        <v-btn icon>
-                          <v-icon color="grey lighten-1">keyboard_arrow_right</v-icon>
-                        </v-btn>
-                      </v-list-tile-action>
-                    </v-list-tile>
-                    <v-divider v-if="index + 1 < orgList.length" :key="index" />
-                  </template>
-                </v-list>
-                <div>
-                  <k-btn
-                    @click="createOrganizationModal.show = true"
-                  >
-                    Create an Organization
-                  </k-btn>
-                </div>
-              </v-flex>
-            </v-layout>
-            <v-layout v-show="!(userdata && userdata.account_type === 'student')" row wrap v-if="showResumeSection">
-              <v-flex xs12 sm6 offset-sm6 md5 offset-md7 class="right-account-column padding-sm-left">
-                <account-header
-                  :svg="svgs.suitcase"
-                  :text="'Personal Jobs & Applicants'"
+                <v-text-field
+                  v-model="createEditDegreeMajorInfo.major"
+                  v-if="createEditDegreeMajorInfo.degree !== 'None' && createEditDegreeMajorInfo.degree !== 'High school'"
+                  name="edit-modal-input"
+                  style="margin-top: 12px;"
+                  label="In:"
+                  hide-details
+                  placeholder="Type in major"
                 />
-                <p v-if="doesNotHaveJobs">
-                  Personal jobs are jobs that you offer as an individual.
-                  If you are posting on behalf of a business,
-                  please create an organization.
-                </p>
-                <jobs-and-applications-counters v-else :counters="getJobsAndApplicationsCount" />
-                <div>
-                  <k-btn to="/createjob" autoSpin>
-                    Post Personal Jobs
-                  </k-btn>
-                </div>
-              </v-flex>
-            </v-layout>
-
-            <v-dialog v-model="showFileModal" max-width="500" :fullscreen="$vuetify.breakpoint.xsOnly">
-              <ResumeUploader
-                title="Upload new resume or cover letter"
-                @uploaded="resumeUploaded"
-                @cancel="closeFileModal"
-                style="padding-right: 20px; padding-left: 20px;"
-              />
-            </v-dialog>
-
-            <v-dialog v-model="showPicUploaderDialog" content-class="auto-dialog">
-              <PicUploader
-                @uploaded="profilePicUploaded"
-                @cancel="showPicUploaderDialog = false"
-                :croppedId="userdata.profile_pic"
-                title="Change Profile Picture"
-              />
-            </v-dialog>
-
-            <v-dialog v-model="showDeleteResumeDialog">
-              <v-card style="height: 100%">
-                <v-card-title>
-                  <h2>Delete {{ deleteResumeName }}?</h2>
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn flat="flat" @click="showDeleteResumeDialog=false;">Cancel</v-btn>
-                  <v-btn color="red darken-1" flat="flat" @click="deleteResume(deleteResumeIndex)">Delete</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-            <v-dialog v-model="editModal.show">
-              <v-card>
-                <v-card-title>
-                  <div class="headline">Edit {{ editModal.title }}</div>
-                  <div class="edit-modal-input-cont">
-                    <v-text-field
-                      v-model="editModal.text"
-                      v-if="editModal.type === 'text'"
-                      style="padding: 0 2px;"
-                      name="edit-modal-input"
-                      hide-details
-                      single-line
-                    ></v-text-field>
-                    <v-select
-                      v-model="editModal.text"
-                      v-if="editModal.type === 'select'"
-                      :items="editModal.items"
-                      single-line
-                    />
-                  </div>
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn flat="flat" @click.native="destroyEditModal">Cancel</v-btn>
-                  <v-btn flat="flat" @click.native="saveFromEditModal">Save</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-            <v-dialog v-model="editResumeModal.show">
-              <v-card>
-                <v-card-title>
-                  <div class="headline">Edit {{ editResumeModal.title }}</div>
-                  <div class="edit-modal-input-cont">
-                    <v-text-field
-                      v-model="editResumeModal.text"
-                      style="padding: 0 2px;"
-                      name="edit-modal-input"
-                      hide-details
-                      single-line
-                    ></v-text-field>
-                  </div>
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn flat="flat" @click.native="destroyEditResumeModal">Cancel</v-btn>
-                  <v-btn flat="flat" @click.native="saveFromEditResumeModal">Save</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-            <v-dialog v-model="createEditDegreeMajorInfo.show">
-              <v-card>
-                <v-card-title>
-                  <div class="headline">Edit Degree and Major Information</div>
-                  <div class="edit-modal-input-cont">
-                    <v-select
-                      v-model="createEditDegreeMajorInfo.degree"
-                      :items="degreeSelectItems"
-                      label="Degree"
-                      placeholder="Select degree"
-                    />
-                    <v-text-field
-                      v-model="createEditDegreeMajorInfo.major"
-                      v-if="createEditDegreeMajorInfo.degree !== 'None' && createEditDegreeMajorInfo.degree !== 'High school'"
-                      name="edit-modal-input"
-                      style="margin-top: 12px;"
-                      label="In:"
-                      hide-details
-                      placeholder="Type in major"
-                    />
-                  </div>
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn flat="flat" @click.native="destroyDegreeMajorModal">Cancel</v-btn>
-                  <v-btn
-                    :disabled="
+              </div>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn flat="flat" @click.native="destroyDegreeMajorModal">
+                Cancel
+              </v-btn>
+              <v-btn
+                :disabled="
                     (createEditDegreeMajorInfo.degree !== 'None' && createEditDegreeMajorInfo.degree !== 'High school' && !createEditDegreeMajorInfo.major)
                     || !createEditDegreeMajorInfo.degree
                     "
-                    flat="flat" @click.native="saveFromDegreeMajorModal"
-                  >
-                    Save
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+                flat="flat" @click.native="saveFromDegreeMajorModal"
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
 
-                <v-dialog v-model="createOrganizationModal.show">
-                  <v-card>
-                    <v-card-title class="headline">
-                      Create business / organization profile
-                    </v-card-title>
-                    <v-card-text>
-                      <v-text-field v-show="!loading"
-                        v-model="createOrganizationModal.organizationName"
-                        style="padding: 0 2px;"
-                        name="edit-modal-input"
-                        hide-details
-                        single-line
-                        placeholder="Name of business or organization"
-                      />
-                      <template v-if="loading">
-                        <v-progress-circular indeterminate :size="30" color="primary" class="pa-3" style="display: block; margin: auto;"></v-progress-circular>
-                      </template>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-btn flat="flat" :disabled="!createOrganizationModal.organizationName || loading" @click.native="createOrganization">Continue</v-btn>
-                      <v-btn flat="flat" style="text-align: right;" :disabled="loading" @click.native="createOrganizationModal.show = false">Cancel</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+        <v-dialog v-model="createOrganizationModal.show">
+          <v-card>
+            <v-card-title class="headline">
+              Create business / organization profile
+            </v-card-title>
+            <v-card-text>
+              <v-text-field v-show="!loading"
+                            v-model="createOrganizationModal.organizationName"
+                            style="padding: 0 2px;"
+                            name="edit-modal-input"
+                            hide-details
+                            single-line
+                            placeholder="Name of business or organization"
+              />
+              <template v-if="loading">
+                <v-progress-circular indeterminate :size="30" color="primary"
+                                     class="pa-3"
+                                     style="display: block; margin: auto;"></v-progress-circular>
+              </template>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn flat="flat"
+                     :disabled="!createOrganizationModal.organizationName || loading"
+                     @click.native="createOrganization">Continue
+              </v-btn>
+              <v-btn flat="flat" style="text-align: right;" :disabled="loading"
+                     @click.native="createOrganizationModal.show = false">Cancel
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
-            <v-dialog v-model="editNameModal.show">
-              <v-card>
-                <v-card-title>
-                  <div class="headline">Edit Name</div>
-                  <div class="edit-modal-input-cont">
-                    <v-text-field
-                      v-model="editNameModal.firstName"
-                      style="padding: 0 2px;"
-                      name="edit-modal-input"
-                      hide-details
-                      single-line
-                    />
-                  </div>
-                  <div class="edit-modal-input-cont">
-                    <v-text-field
-                      v-model="editNameModal.lastName"
-                      style="padding: 0 2px;"
-                      name="edit-modal-input"
-                      hide-details
-                      single-line
-                    />
-                  </div>
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn flat="flat" @click.native="editNameModal.show = false">Cancel</v-btn>
-                  <v-btn flat="flat" @click.native="saveFromEditNameModal">Save</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+        <v-dialog v-model="editNameModal.show">
+          <v-card>
+            <v-card-title>
+              <div class="headline">Edit Name</div>
+              <div class="edit-modal-input-cont">
+                <v-text-field
+                  v-model="editNameModal.firstName"
+                  style="padding: 0 2px;"
+                  name="edit-modal-input"
+                  hide-details
+                  single-line
+                />
+              </div>
+              <div class="edit-modal-input-cont">
+                <v-text-field
+                  v-model="editNameModal.lastName"
+                  style="padding: 0 2px;"
+                  name="edit-modal-input"
+                  hide-details
+                  single-line
+                />
+              </div>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn flat="flat" @click.native="editNameModal.show = false">
+                Cancel
+              </v-btn>
+              <v-btn flat="flat" @click.native="saveFromEditNameModal">Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
-            <v-dialog v-model="showJobToPostDialog">
-              <v-card>
-                <v-card-title>
-                  <div class="headline">You have an unfinished job! Would you like to continue posting it?</div>
-                </v-card-title>
-                <a @click="showJobToPostDialog = false" class="center" style="display: block; color: #616161 !important; margin-bottom: 12px;">continue later</a>
-                <div class="general-submit" @click="goToCreateJob">
-                  <div class="general-submit-default">
-                    <span>Continue Editing My Job</span>
-                  </div>
-                </div>
-              </v-card>
-            </v-dialog>
-          </section>
+        <v-dialog v-model="showJobToPostDialog">
+          <v-card>
+            <v-card-title>
+              <div class="headline">You have an unfinished job! Would you like
+                to continue posting it?
+              </div>
+            </v-card-title>
+            <a @click="showJobToPostDialog = false" class="center"
+               style="display: block; color: #616161 !important; margin-bottom: 12px;">continue
+              later</a>
+            <div class="general-submit" @click="goToCreateJob">
+              <div class="general-submit-default">
+                <span>Continue Editing My Job</span>
+              </div>
+            </div>
+          </v-card>
+        </v-dialog>
+      </section>
     </div>
   </v-container>
 </template>
@@ -575,9 +653,11 @@
   import userDataProvider from '@/userDataProvider';
   import DateHelper from '@/utils/DateHelper';
   import AccountHeader from '@/components/AccountHeader';
-  import JobsAndApplicationsCounters from '@/components/JobsAndApplicationsCounters';
+  import JobsAndApplicationsCounters
+    from '@/components/JobsAndApplicationsCounters';
   import ResumeUploader from '@/components/ResumeUploader';
   import PicUploader from '@/components/PicUploader';
+  import NewsLetter from '@/components/newsLetterSubscribe';
 
   import AccountDegreeSvg from '@/assets/account/degree.svg';
   import AccountMajorSvg from '@/assets/account/account_major.svg';
@@ -588,12 +668,22 @@
   import BuildingSvg from '@/assets/account/org_building_full_black.svg';
   import Asset31 from '@/assets/icons/Asset(31).svg';
   import Asset76 from '@/assets/icons/Asset(76).svg';
-
-  import getCountersFromJobsAndApplications from '@/utils/getCountersFromJobsAndApplications';
-  import DegreeConstants, { degreeDbToString, degreeSelectMaxWidths, degreeStringToDb } from '@/constants/degrees';
+  import getCountersFromJobsAndApplications
+    from '@/utils/getCountersFromJobsAndApplications';
+  import DegreeConstants, {
+    degreeDbToString,
+    degreeSelectMaxWidths,
+    degreeStringToDb,
+  } from '@/constants/degrees';
 
 
   export default {
+    metaInfo: {
+      title: 'Profile Page | Kunvet',
+      meta: [
+        { name: 'description', content: 'noindex' },
+      ],
+    },
     data() {
       return {
         resumes: [],
@@ -606,6 +696,8 @@
         updateDegree: '',
         updateMajor: '',
         updateWechatId: '',
+        updateSummary: '',
+        openSummary: false,
         editModal: {
           title: null,
           text: null,
@@ -670,6 +762,7 @@
       JobsAndApplicationsCounters,
       ResumeUploader,
       PicUploader,
+      NewsLetter,
     },
     computed: {
       doesNotHaveJobs() {
@@ -698,13 +791,13 @@
     methods: {
       goToCreateJob() {
         // Used for reopening unfinished job
-        this.$router.push(`/createjob/${this.jobToPost}`);
+        this.$router.push(`/jobs/create/${this.jobToPost}`);
       },
       isJobExpired(job) {
         if (!job.date) {
           return false;
         }
-        const expiryDate = job.expiry_date ? new Date(job.expiry_date) : DateHelper.getExpiryDate(job.date, 30);
+        const expiryDate = job.expiry_date ? new Date(job.expiry_date) : DateHelper.getExpiryDate(job.date, Config.get('daysToExpire'));
         const daysDiff = DateHelper.getDifferenceInDays(Date.now(), expiryDate);
         return daysDiff <= 0;
       },
@@ -734,7 +827,8 @@
           this.showJobToPostDialog = false;
         }
         this.applications = (await Promise.all(this.jobs.map(this.getApplicationsFromJobs)))
-          .reduce((total, curr) => total.concat(curr), []); /* flatten the array */
+          .reduce((total, curr) => total.concat(curr), []);
+        /* flatten the array */
       },
       /* Returns applicants as an array from a specified job id. Trying to avoid side-effects here. */
       async getApplicationsFromJobs({ _id: jobId }) {
@@ -821,6 +915,12 @@
         this.updateSchool = '';
         this.saveUserdata();
       },
+      saveSummary() {
+        this.openSummary = false;
+        this.userdata.summary = this.updateSummary;
+        this.updateSummary = '';
+        this.saveUserdata();
+      },
       saveEmail() {
         /* this.userdata.display_email = this.updateEmail;
         this.userdata.email = this.updateEmail;
@@ -831,6 +931,10 @@
         this.userdata.wechat_id = this.updateWechatId;
         this.updateWechatId = '';
         this.saveUserdata();
+      },
+      editSummary() {
+        this.openSummary = !this.openSummary;
+        this.updateSummary = this.userdata.summary;
       },
       createEditModal(title, text, property, type = 'text', items = []) {
         this.editModal.title = title;
@@ -890,7 +994,10 @@
       },
       saveFromEditNameModal() {
         const { firstName, lastName } = this.editNameModal;
-        EventBus.$emit('changed_name', { oldname: `${this.userdata.firstname} ${this.userdata.lastname}`, newname: `${firstName} ${lastName}` });
+        EventBus.$emit('changed_name', {
+          oldname: `${this.userdata.firstname} ${this.userdata.lastname}`,
+          newname: `${firstName} ${lastName}`,
+        });
         this.userdata.firstname = firstName;
         this.userdata.lastname = lastName;
         this.saveUserdata();
@@ -923,7 +1030,11 @@
         // this is weird. Not sure why it adds the property '__typename' if I dont do this
         const _resumes = this.userdata.resumes.map(({
           name, filename, resumeid,
-        }) => ({ name, filename, resumeid }));
+        }) => ({
+          name,
+          filename,
+          resumeid,
+        }));
 
         this.$apollo.mutate({
           mutation: (gql`
@@ -950,6 +1061,7 @@
               resumes: _resumes,
               default_org: this.userdata.default_org,
               account_type: this.userdata.account_type,
+              summary: this.userdata.summary,
             },
           },
           refetchQueries: [{

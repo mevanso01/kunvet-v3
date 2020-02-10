@@ -8,7 +8,7 @@ function getTitle(title = '') {
   if (!title) {
     return 'Kunvet';
   }
-  return `${title} - Kunvet`;
+  return `${title} | Kunvet`;
 }
 
 export default {

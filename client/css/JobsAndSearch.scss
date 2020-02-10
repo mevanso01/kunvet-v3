@@ -1,19 +1,24 @@
 /* styles for job post cards - used in search, saved jobs, and applied jobs */
 /* jp stands for job post */
 .jp-card {
+  margin-top: 20px;
   height: 375px;
   float: left;
   overflow: hidden;
   width: 100%; // set to 50% on desktop
+  padding-left: 32px;
+  padding-right: 32px;
   .jp-head {
-    padding: 14px 24px 0 24px;
+    //padding: 14px 24px 0 24px;
+    padding-top:22px;
   }
   .jp-body {
     display: block;
-    padding: 4px 24px 24px 24px;
+    //padding: 4px 24px 24px 24px;
   }
   .jp-divider {
-    margin-left: 24px;
+    //margin-left: 24px;
+    //margin-right: 24px;
   }
   .jp-title {
     margin-top: 8px;
@@ -69,6 +74,9 @@
     top: 2px;
   }
 }
+.jp-card:hover{
+  background-color: #f6f6f8;
+}
 
 @media only screen and (min-width: 601px) {
   .jp-card {
@@ -76,9 +84,9 @@
   }
 }
 @media only screen and (max-width: 600px) {
-  .jp-card .jp-divider {
-    margin-right: 24px;
-  }
+    .jp-card {
+      margin-right: 24px;
+    }
 }
 
 .ais-search-box__form {

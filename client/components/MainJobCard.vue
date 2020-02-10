@@ -27,7 +27,7 @@
       </v-flex>
     </v-layout>
     <v-divider class="jp-divider"></v-divider>
-    <router-link :to="'/job/'+job._id" class="jp-body">
+    <router-link :to="'/jobs/detail/'+job._id" class="jp-body">
       <v-layout>
         <v-flex xs12 style="padding-top: 0px;">
           <div><h3 class="jp-title">
@@ -35,7 +35,7 @@
           </h3></div>
           <div class="carditem" style="color: #A7A7A7">
             <!-- <timeago :datetime="job.date" /> -->
-            <timeago :since="computedJobDate" />
+            <timeago :since="job.date" />
           </div>
           <div class="carditem">
             <div class="post-address-container">
@@ -119,12 +119,6 @@ export default {
     },
     isIndividualJob() {
       return !this.job.business_id;
-    },
-    computedJobDate() {
-      if (typeof this.job.date === 'number') {
-        return new Date(this.job.date * 1000);
-      }
-      return this.job.date;
     },
   },
   methods: {

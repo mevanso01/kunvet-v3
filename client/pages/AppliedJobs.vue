@@ -93,7 +93,7 @@
       <div v-for="({ job, application }, idx) in jobsAndApplications" class="mb-3">
         <v-layout row wrap class="list-post">
           <v-flex xs12 sm8>
-            <router-link :to="`/job/${job._id}`">
+            <router-link :to="`/jobs/detail/${job._id}`">
             <p class="list-title">{{ job.posted_by }}</p>
             <h2 class="list-post-title">{{ job.title }}</h2>
             </router-link>
@@ -134,6 +134,12 @@
   import MainJobCard from '@/components/MainJobCard';
 
   export default {
+    metaInfo: {
+      title: 'Applied Jobs | Kunvet',
+      meta: [
+        { name: 'description', content: 'noindex' },
+      ],
+    },
     data() {
       return {
         settingsoption1: '',

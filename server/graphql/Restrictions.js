@@ -1,6 +1,6 @@
 import Config from 'config';
 import AlgoliaSearch from 'algoliasearch';
-import Logger from 'winston';
+import Logger from '@/Logger';
 import Models from '@/mongodb/Models';
 import set from 'lodash/set';
 import get from 'lodash/get';

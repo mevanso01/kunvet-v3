@@ -17,12 +17,12 @@
         fixed-tabs
       >
         <!-- <v-tabs-slider color="grey"></v-tabs-slider> -->
-        <template v-if="tab !== 'success-tab'">
-          <v-tab v-for="(item, i) in tabItems" :href="`#${i}`" :key="`${i}`"
-                 :disabled="i > furthest_tab" >
+        <template v-if="true || tab !== 'success-tab'">
+          <v-tab v-for="(item, i) in tabItems" :href="`#${item.tabId}`" :key="`${i}`"
+                 :disabled="i > furthest_tab || shouldDisableTab(i)" v-show="i < 3" >
             <div class="tab-text-container" style="width: 100%; height: 100%;"
               :class="{ 'tab-no-error': isTabValid(i), 'tab-error': isTabInvalid(i) }">
-              <span style="line-height: 36px;">{{ item }}</span>
+              <span style="line-height: 36px;">{{ item.tabTitle }}</span>
             </div>
           </v-tab>
         </template>
@@ -34,11 +34,9 @@
               <div class="cust-spacer"></div>
 
               <v-form v-model="form1Valid" ref="form1">
-                <template v-if="!email_verified">
-                  <!-- Email not verified -->
+                <template v-if="!uid">
                   <p class="mb-0">
-                    First, we need some basic information about who's posting.<br>
-                    You will receive your applicants' information through email, unless you opt out of this feature at the end of this form.<br>
+                    Let's begin with some basic information!
                   </p>
                   <v-layout row wrap>
                     <v-flex xs12 sm9 md6 class="no-padding">
@@ -73,6 +71,21 @@
                           </div>
                         </div>
                       </div>
+                      <v-text-field
+                        label="Confirm Email" :class="{ 'hide-error-messages': email != emailConfirm }"
+                        v-model="emailConfirm"
+                        :rules="[
+                          () => email == emailConfirm || 'An account with this email already exists',
+                        ]"
+                        required
+                      ></v-text-field>
+                      <div v-show="email != emailConfirm" class="v-text-field__details">
+                        <div class="v-messages error--text">
+                          <div class="v-messages__wrapper">
+                            <div class="v-messages__message">Email Confirmation doesn't match</div>
+                          </div>
+                        </div>
+                      </div>
                       <v-text-field v-if="!uid"
                         label="Create password"
                         v-model="password"
@@ -86,11 +99,10 @@
                     </v-flex>
                   </v-layout>
 
-
                   <p class="mt-2">Are you posting on behalf of a business, organization, or club?</p>
                   <v-radio-group v-model="postingAs" column required class="pt-0 mb-0" required
                     :rules="[(v) => !submit1Pressed || !!(v) || 'Required']">
-                      <v-radio label="No, I'm posting as an individual" value="individual"></v-radio>
+                      <v-radio label="No, I'm posting for myself" value="individual"></v-radio>
                       <v-radio label="Yes, I'm posting as a business or organization" value="business"></v-radio>
                   </v-radio-group>
                   <v-layout row wrap v-if="postingAs === 'business'">
@@ -105,7 +117,24 @@
                     </v-flex>
                   </v-layout>
 
+                  <v-layout row wrap v-if="false">
+                    <div v-if="!chosenAccountType">
+                      <AccountTypeSelection
+                        :forbiddenTypes="['student']"
+                        @select="selectAccountType"
+                      />
+                    </div>
+                    <div v-else>
+                      <SignupComponent
+                        dontValidate
+                        :type="chosenAccountType"
+                        @success="onSignup"
+                        @select="selectAccountType"
+                      />
+                    </div>
+                  </v-layout>
                 </template>
+
                 <template v-else>
                   <p class="mb-2">Welcome back {{ userdata.firstname }} {{ userdata.lastname }}</p>
                   <h3 class="mt-0 mb-4">Posting as: {{ job.posted_by }}</h3>
@@ -155,7 +184,7 @@
               </v-form>
 
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
-                <v-flex xs12 style="text-align: center;">
+                <v-flex xs12 style="text-align: center;" v-show="uid || true">
                   <v-btn class="kunvet-red-bg" :disabled="loading" @click="next(1)">Save and Continue</v-btn>
                   <p v-if="loading">
                     <span style="padding: 0 4px;">
@@ -194,6 +223,47 @@
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <v-form v-model="form2Valid" ref="form2">
+                <!-- <h4 class="cust-subheader">Basic info</h4>
+                <v-layout row wrap>
+                  <v-flex xs12 sm9 md6 class="no-padding">
+                    <v-text-field
+                      v-model="job.title"
+                      label="Job Title"
+                      :rules="[(title) => !!(title) || 'Required']"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="job.address"
+                      ref="addressField"
+                      label="Address"
+                      required
+                      @change="setLatLongs"
+                      :rules="[() => !!(job.address) || 'Required',
+                               () => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+                    ></v-text-field>
+                    <v-text-field
+                      class="optional"
+                      v-model="job.address2"
+                      ref="addressField2"
+                      label="Address Line 2"
+                      placeholder="Apt, Suite, Bldg."
+                      hide-details
+                    ></v-text-field>
+                    <div v-if="job.address">
+                      <v-checkbox class="optional" style="margin-top: 16px;"
+                        label="Is this job on a school campus?"
+                        v-model="isUniversity"
+                        hide-details
+                      ></v-checkbox>
+                      <v-autocomplete
+                        v-if="isUniversity"
+                        label="Which one?"
+                        v-model="job.university"
+                        v-bind:items="availableSchools"
+                      ></v-autocomplete>
+                    </div>
+                  </v-flex>
+                </v-layout> -->
 
                 <!-- Categories -->
                 <h4 class="cust-subheader">Categories</h4>
@@ -241,7 +311,7 @@
                       </v-radio-group>
                     </div>
                   </v-flex>
-                  <v-flex xs6 sm3 md2 v-if="salary_select === 'paid'">
+                  <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'paid'">
                     <v-text-field class="pa-0 ma-0"
                       v-model="job.salary"
                       :disabled = "salary_select !== 'paid'"
@@ -251,10 +321,40 @@
                       single-line
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs6 sm3 md2 style="padding-left: 15px !important;" v-if="salary_select === 'paid'">
+                  <v-flex xs6 sm3 md2 class="pl-2" v-if="salary_select === 'paid'">
                     <v-select class="pa-0 ma-0" style="max-width: 125px;"
                       v-model="job.pay_denomination"
                       :disabled = "salary_select != 'paid'"
+                      :items="[ 'per hour', 'per week', 'per month', 'per quarter', 'per year', 'per task' ]"
+                      >
+                    </v-select>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'negotiable'">
+                    <v-text-field class="pa-0 ma-0"
+                      v-model="job.salary_min"
+                      :disabled = "salary_select !== 'negotiable'"
+                      prefix="$"
+                      required
+                      :rules="[(salary_min) => _isNumber(salary_min) || salary_select !== 'negotiable' || 'Required, must be a number']"
+                      placeholder="min"
+                      single-line
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'negotiable'">
+                    <v-text-field class="pa-0 ma-0"
+                      v-model="job.salary_max"
+                      :disabled = "salary_select !== 'negotiable'"
+                      prefix="$"
+                      required
+                      :rules="[(salary_max) => _isNumber(salary_max) || salary_select !== 'negotiable' || 'Required, must be a number']"
+                      placeholder="max"
+                      single-line
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="pl-2" v-if="salary_select === 'negotiable'">
+                    <v-select class="pa-0 ma-0" style="max-width: 125px;"
+                      v-model="job.pay_denomination"
+                      :disabled = "salary_select != 'negotiable'"
                       :items="[ 'per hour', 'per week', 'per month', 'per quarter', 'per year', 'per task' ]"
                       >
                     </v-select>
@@ -318,7 +418,7 @@
                   placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
                 <!-- Pictures -->
-                <br>
+                <!-- <br>
                 <h4 class="cust-subheader" :class="{ 'mb-1': job.images.length === 0 }">Pictures <span class="optional-color">(Optional)</span></h4>
                 <p v-show="job.images.length === 0">
                   Although not required, adding relevant pictures to your job builds trust and can attract more attention from potential applicants
@@ -350,7 +450,7 @@
                       <img class="image" :src="`${serverUrl}/file/get/${image.cropped}`" alt="loading image" width="100%">
                     </v-flex>
                   </v-layout>
-                </v-container>
+                </v-container> -->
               </v-form>
 
               <v-layout row wrap style="margin-top: 8px; margin-bottom: 16px;">
@@ -366,7 +466,7 @@
             <!-- SECTION 3 -->
             <div class="main-cont-large no-padding">
               <div class="cust-spacer"></div>
-              <v-layout row wrap class="mb-3">
+              <!-- <v-layout row wrap class="mb-3">
                 <v-flex xs12 sm9 md6 style="background-color: #fafafa; padding: 10px 16px 16px 16px;">
                   <p class="mb-2">Here's what you've entered so far:</p>
 
@@ -380,6 +480,7 @@
                   <p class="small-p" v-if="job.shift && job.shift.length > 0">Shifts: {{ selectedShifts }}</p>
                   <p class="small-p">Salary:
                     <span v-if="salary_select === 'paid'">${{ job.salary }} {{ job.pay_denomination }}</span>
+                    <span v-else-if="salary_select === 'negotiable'">${{ job.salary_min }} ~ ${{ job.salary_max }} {{ job.pay_denomination }}</span>
                     <span v-else>{{ salary_select }}</span>
                   </p>
                   <p class="small-p" v-if="job.education">Education level: {{ job.education }}</p>
@@ -393,7 +494,7 @@
                     Click here to review
                   </a>
                 </v-flex>
-              </v-layout>
+              </v-layout> -->
             </div>
             <div class="main-cont-large">
               <v-form v-model="form3Valid" ref="form3">
@@ -417,12 +518,11 @@
                 <br>
                 <h4 class="cust-subheader mb-1">Application options</h4>
                 <p class="mb-2">
-                  By default, the applicant's info and resume will be sent to your email when they apply.<br>
-                  <span style="color: #333; font-weight: 500;">Note:</span> You can also browse through all your applicants in the applicants page.
+                  By default, resumes are sent to your email.
                 </p>
                 <v-radio-group class="mt-0" v-model="useGForm" hide-details>
                   <v-radio label="Send resumes to my email" :value="false"></v-radio>
-                  <v-radio label="Use a form that doesn't require signup instead" :value="true" class="mb-0 use-a-form-option"></v-radio>
+                  <v-radio label="Use a form that doesn't require signup" :value="true" class="mb-0 use-a-form-option"></v-radio>
                 </v-radio-group>
                 <!-- <p class="mb-1">If you would like to use an online form that doesn't require sign-up instead, check the box below.</p>
                 <v-checkbox
@@ -492,10 +592,10 @@
           </v-tab-item>
 
           <v-tab-item id="billing">
-            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;" v-if="tab === 'billing'">
+            <div class="main-cont-large" style="margin-bottom: 16px; margin-top: 50px;">
               <Billing
-              :jobId="jobId"
-              @success="tab = 'success-tab'"
+                ref="billing"
+                @success="onBillingSuccess"
               />
             </div>
           </v-tab-item>
@@ -529,6 +629,9 @@
               <div class="cust-spacer"></div>
               <br>
               <CodeVerification ref="codever" @verified="codeValidated" />
+              <div style="text-align: center;">
+                <v-btn class="kunvet-red-bg" v-if="email_verified" @click="moveToBilling">Continue</v-btn>
+              </div>
             </div>
           </v-tab-item>
           <v-tab-item id="success-tab">
@@ -544,7 +647,7 @@
 
               <v-layout row wrap>
                 <v-flex xs12 class="no-padding">
-                  <v-btn class="ml-0 kunvet-red-bg" dark :href="`/job/${jobId}`">View your job</v-btn>
+                  <v-btn class="ml-0 kunvet-red-bg" dark :href="`/jobs/detail/${jobId}`">View your job</v-btn>
                   <v-btn v-show="postingAs === 'business' && !bdata.profile_pic" class="kunvet-red-bg" dark href="/myorg">Go to your account</v-btn>
                 </v-flex>
               </v-layout>
@@ -560,7 +663,9 @@
             Oh no, an error occured
           </v-card-title>
           <v-card-text>
-            Please try again later
+            Please refresh or try again later<br>
+            If you need any support, <a style="text-decoration: underline;" href="/contact" target="_blank">click here</a> for help!<br>
+            We are more than willing to assist you!
           </v-card-text>
           <v-card-actions>
             <v-btn flat="flat" @click.native="dialogs.errorOccured = false;">Close</v-btn>
@@ -597,9 +702,8 @@
                   <img :src="svgs.paperAirplane" alt=""/>
                 </td>
                 <td>
-                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your job for free!</p>
-                  <p style="font-size: 11px; color: #666; margin-bottom: 0;">(No payment info required)</p>
-                  <!-- <p style="font-size: 11px; color: #666; margin-bottom: 0;">The second job and onwards costs only $4.99 per job</p> -->
+                  <p style="font-size: 16px; color: #333; margin-bottom: 0;">Post your first job for free! (No payment required)</p>
+                  <p style="font-size: 11px; color: #666; margin-bottom: 0;">The second job and onwards costs only $4.99 per job</p>
                 </td>
               </tr>
             </table>
@@ -702,6 +806,8 @@ import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
 import Config from 'config';
 import CodeVerification from '@/components/CodeVerification';
+import AccountTypeSelection from '@/components/AccountTypeSelection';
+import SignupComponent from '@/components/SignupComponent';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Asset77 from '@/assets/icons/Asset77.svg';
 import Asset78 from '@/assets/icons/Asset78.svg';
@@ -745,16 +851,25 @@ const findJobsQuery = gql`
 `;
 
 export default {
+  metaInfo: {
+    title: 'Post a Job | Kunvet',
+    meta: [
+      { name: 'description', content: 'noindex' },
+    ],
+  },
   components: {
     PicUploader,
     QuillEditor,
     CodeVerification,
+    AccountTypeSelection,
+    SignupComponent,
     Billing,
   },
   data() {
     return {
       tab: '0',
       jobs: [],
+      chosenAccountType: '',
       furthest_tab: 0, // 0 - 2
       form1Valid: false,
       form2Valid: false,
@@ -772,6 +887,7 @@ export default {
       fname: null,
       lname: null,
       email: null,
+      emailConfirm: null,
       password: null,
       e1: true,
       emailExists: false,
@@ -794,6 +910,8 @@ export default {
         studentfriendly: true,
         shift: [],
         salary: null,
+        salary_min: null,
+        salary_max: null,
         pay_denomination: 'per hour',
         education: null,
         major: null,
@@ -810,6 +928,7 @@ export default {
       isUniversity: false,
       acct: 0,
       uid: null,
+      newLoggedIn: false,
       jobId: null,
       orgId: null,
       autocomplete: null,
@@ -876,10 +995,22 @@ export default {
   },
   computed: {
     tabItems() {
-      if (this.email_verified) {
-        return ['Job basics', 'Job details', 'Review and post'];
-      }
-      return ['About you', 'Job details', 'Review and post'];
+      return [{
+        'tabId': 0,
+        'tabTitle': 'About you',
+      }, {
+        'tabId': 1,
+        'tabTitle': 'Job details',
+      }, {
+        'tabId': 2,
+        'tabTitle': 'Review and post',
+      }, {
+        'tabId': 'billing',
+        'tabTitle': 'Billing',
+      }, {
+        'tabId': 'success-tab',
+        'tabTitle': 'Success',
+      }];
     },
     filteredAvailablePositions() {
       var str = this.filterPositions;
@@ -917,6 +1048,67 @@ export default {
     },
   },
   methods: {
+    selectAccountType(type) {
+      this.chosenAccountType = type;
+    },
+    addTagToMailChimp(type = 'student') {
+      var postData = {
+        email_address: this.email,
+        fname: this.fname,
+        tags: ['no preference'],
+        status: 'subscribed',
+        type,
+      };
+      console.log(postData);
+
+      axios.post('/mailchimp/addMember', postData).then(() => {
+        console.log('posted on mailchimp');
+      }, (error) => {
+        this.$error(error);
+      });
+    },
+    onSignup() {
+      userDataProvider.getUserData().then(async res => {
+        this.$debug('meow');
+        this.pageloading = false;
+        this.uid = res.uid;
+        if (res.acct === 0) {
+          // logged out
+          this.email_verified = false;
+        } else {
+          this.email_verified = res.userdata.email_verified;
+          this.email = res.userdata.email;
+          this.fname = res.userdata.firstname;
+          this.lname = res.userdata.lastname;
+          this.userdata = res.userdata;
+          if (res.acct === 1) {
+            // individual
+            this.orgId = null;
+            this.business_name = null;
+            this.orgId = null;
+            this.postingAs = 'individual';
+            this.job.posted_by = `${res.userdata.firstname} ${res.userdata.lastname}`;
+          } else if (res.acct === 2) {
+            // business
+            var orgId;
+            if (res.userdata.default_org) {
+              orgId = res.userdata.default_org;
+            } else if (res.userdata.org_list.length > 0) {
+              // fallback if default_org is not set for some reason
+              for (var i = 0; i < res.userdata.org_list.length; i++) {
+                if (res.userdata.org_list[i]) {
+                  orgId = res.userdata.org_list[i];
+                  break;
+                }
+              }
+            }
+            this.orgId = orgId; // make sure orgId is correctly set before loading unposted jobs
+            this.fetchAndSetBusinessData(orgId);
+          }
+        }
+        this.next(1);
+      });
+    },
     async getData(networkOnly = false) {
       const { data } = await this.$apollo.query({
         fetchPolicy: networkOnly ? 'network-only' : 'cache-first',
@@ -937,7 +1129,7 @@ export default {
       this.clearErrors();
       this[`submit${n}Pressed`] = true;
       const valid = this.$refs[`form${n}`].validate();
-      if (n === 1 && (!this.job.longitude || !this.job.latitude)) {
+      if (n === 2 && (!this.job.longitude || !this.job.latitude)) {
         this.job.addressValid = false;
       }
       if (this[`form${n}Valid`] && valid) {
@@ -999,6 +1191,15 @@ export default {
     },
     isTabInvalid(n) {
       return this[`submit${(n + 1)}Pressed`] && !this[`form${(n + 1)}Valid`];
+    },
+    shouldDisableTab(n) {
+      for (let i = 0; i < n; i++) {
+        if (!this.isTabValid(i)) {
+          return true;
+        }
+      }
+
+      return false;
     },
     clearErrors() {
       this.form1Error = ''; this.form2Error = ''; this.form3Error = '';
@@ -1095,6 +1296,7 @@ export default {
             if (res.data.success) {
               // Logged in successfully
               this.uid = userId;
+              this.newLoggedIn = true;
               this.orgId = orgId;
               this.$store.commit({ type: 'setAcctID', id: userId });
               if (isBusiness) {
@@ -1103,6 +1305,15 @@ export default {
                 EventBus.$emit('login', 'individual');
               }
               ret.loggedIn = true;
+              // if (this.$ga) {
+              //   this.$ga.event('account', 'create', 'employer', 1);
+              //   console.log('ga: account/create/employer/1');
+              // }
+              if (window.dataLayer) {
+                window.dataLayer.push({ 'event': 'create-employer-account' });
+                console.log('gtm: create-employer-account');
+              }
+              this.addTagToMailChimp(data.account_type);
             } else {
               ret.error = res.data ? res.data : res;
               this.$error(res);
@@ -1153,15 +1364,28 @@ export default {
     },
     postJob() {
       if (!this.loading) {
-        this.loading = true;
-        this.job.active = this.email_verified; // should be true
-        this.saveJob('viewJob'); // pass in true to view job
+        if (!this.email_verified) {
+          this.setJobProgress(true); // set postOnOpen to true
+          // this.$refs.codever.init();
+          this.tab = 'verify-email';
+          this.loading = true;
+          this.saveJob();
+        } else {
+          this.loading = true;
+          this.saveJob();
+        }
       }
+    },
+    moveToBilling() {
+      this.$router.push('/jobs/create');
+      this.$refs.billing.show(this.jobId);
+      this.tab = 'billing';
     },
     validateFullJob() {
       for (var i = 2; i >= 0; i--) {
         const valid = this.$refs[`form${i + 1}`].validate();
         if (!valid) {
+          this[`form${i + 1}Valid`] = false;
           if (i === 2) {
             let target = 0;
             for (var item of this.$refs.form3.$children) {
@@ -1172,6 +1396,7 @@ export default {
           }
           return [false, `Section ${i + 1} is not valid. Please correct errors and try again.`];
         }
+        this[`form${i + 1}Valid`] = true;
       }
       if (this.job.longitude == null || this.job.latitude == null) {
         return [false, 'Job latitude and longitude not set. Please try to re-enter address and try again.'];
@@ -1183,13 +1408,8 @@ export default {
       this.clearErrors();
       const validation = this.validateFullJob();
       if (validation[0]) {
-        this.postJob(); // post job for free
-        // if (this.isFirstJob) {
-        //   this.postJob(); // post job for free
-        // } else {
-        //   this.loading = true;
-        //   this.saveJob('goToBilling'); // save job and go to billing in
-        // }
+        this.postJob();
+        this.moveToBilling();
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }
@@ -1211,7 +1431,7 @@ export default {
         this.saveJob();
       }
     },
-    saveJob(option = null) {
+    saveJob() {
       if (this.jobId) {
         // SAVE EXISTING JOB
         const job = this.createJobArray();
@@ -1244,17 +1464,6 @@ export default {
             this.setJobProgress();
           } else {
             this.$store.commit('resetJobProgress');
-          }
-          if (option === 'viewJob') {
-            if (this.email_verified) {
-              this.tab = 'success-tab';
-            } else {
-              this.setJobProgress(true); // set postOnOpen to true
-              this.$refs.codever.init();
-              this.tab = 'verify-email';
-            }
-          } else if (option === 'goToBilling') {
-            this.tab = 'billing';
           }
         }).catch((err) => {
           this.loading = false;
@@ -1359,7 +1568,6 @@ export default {
         user_id: this.uid,
         business_id: this.orgId,
         posted_by: this.job.posted_by,
-        active: this.job.active,
         title: this.job.title,
         date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
@@ -1373,8 +1581,10 @@ export default {
         shift: this.job.shift === [] ? null : this.job.shift,
         age: this.job.age ? parseInt(this.job.age, 10) : null,
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
+        salary_min: this.salary_select === 'negotiable' ? this._getNumber(this.job.salary_min) : null,
+        salary_max: this.salary_select === 'negotiable' ? this._getNumber(this.job.salary_max) : null,
         salary: this.salary_select === 'paid' ? this._getNumber(this.job.salary) : null,
-        pay_denomination: this.salary_select === 'paid' ? this.job.pay_denomination : null,
+        pay_denomination: this.salary_select !== 'unpaid' ? this.job.pay_denomination : null,
         education: this.job.education ? degreeReducedStringToDb(this.job.education) : 'None',
         preferred_major: this.job.major,
         language: this.job.language,
@@ -1417,9 +1627,13 @@ export default {
     async reopenExistingJob(_id) {
       this.dialogs.reopeningJob = true;
       await this.getJobData(_id);
-      if (this.job.active && this.jobId && (!this.$store.state.currentJobProgress || !this.$store.state.currentJobProgress.postOnOpen)) {
-        if (this.$route.params.id) {
-          this.$router.push(`/editjob/${this.jobId}`);
+      if (this.job.active && this.jobId) {
+        if (!this.$store.state.currentJobProgress || !this.$store.state.currentJobProgress.postOnOpen) {
+          if (this.$route.params.id) {
+            this.$router.push(`/jobs/edit/${this.jobId}`);
+          } else {
+            this.resetData();
+          }
         } else {
           this.resetData();
         }
@@ -1495,6 +1709,8 @@ export default {
           if (job.pay_type && job.pay_type !== 'none') {
             this.salary_select = job.pay_type;
             this.job.salary = job.salary;
+            this.job.salary_min = job.salary_min;
+            this.job.salary_max = job.salary_max;
             this.job.pay_denomination = job.pay_denomination || 'per hour';
           }
           this.job.major = job.preferred_major;
@@ -1570,17 +1786,19 @@ export default {
     },
     codeValidated() {
       this.email_verified = true;
+      this.$router.push('/jobs/create');
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;
         udata.email_verified = true;
         this.$store.commit({ type: 'keepUserdata', userdata: udata });
       }
-      this.postJob(); // try to post job again
+      this.postJob();
     },
     resetData() {
       console.log('Resetting data');
       this.$store.commit('resetJobProgress');
       Object.assign(this.$data, this.$options.data.call(this), { autocomplete: this.autocomplete, geocoder: this.geocoder });
+      this.pageloading = false;
     },
     fetchAndSetBusinessData(id) {
       this.$apollo.query({
@@ -1714,6 +1932,23 @@ export default {
         this.setLatLongs();
       }
     },
+    onBillingSuccess() {
+      this.tab = 'success-tab';
+      this.email_verified = true;
+      // if (this.$ga && this.newLoggedIn) {
+      //   this.$ga.event('product', 'paid', 'job posting', 9);
+      //   console.log('ga: product/paid/job posting/9');
+      // }
+      if (window.dataLayer) {
+        window.dataLayer.push({ 'event': 'pay-for-new-job' });
+        console.log('gtm: pay-for-new-job');
+      }
+      if (this.$store.state.userID && this.$store.state.userdata) {
+        const udata = this.$store.state.userdata;
+        udata.email_verified = true;
+        this.$store.commit({ type: 'keepUserdata', userdata: udata });
+      }
+    },
   },
   activated() {
     if (this.tab === 'success-tab') {
@@ -1723,20 +1958,36 @@ export default {
     if (this.$store.state && this.$store.state.userdata) {
       this.email_verified = Boolean(this.$store.state.userdata.email_verified);
     }
+    // Retrieve user data
     userDataProvider.getUserData().then(async res => {
+      // See if job progress needs to be restored
+      if (this.$route.params.id) {
+        await this.reopenExistingJob(this.$route.params.id);
+      } else if (this.$store.state && this.$store.state.currentJobProgress.jobId
+        && this.$store.state.currentJobProgress.part1Complete && !this.job.title) {
+        await this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
+      } else {
+        this.resetData();
+      }
       this.pageloading = false;
       this.uid = res.uid;
       if (res.acct === 0) {
         // logged out
         this.email_verified = false;
+        this.furthest_tab = 1;
         if (this.tab === '0') {
-          this.dialogs.welcome = true;
+          // this.dialogs.welcome = true;
+        } else {
+          this.tab = '0';
         }
         // if (this.$store.state.newUser) {
         //   this.dialogs.welcome = true;
         //   this.$store.commit('notNewUser');
         // }
       } else {
+        if (this.tab === '0') {
+          this.next(1);
+        }
         this.email_verified = res.userdata.email_verified;
         this.email = res.userdata.email;
         this.fname = res.userdata.firstname;
@@ -1765,13 +2016,6 @@ export default {
           }
           this.orgId = orgId; // make sure orgId is correctly set before loading unposted jobs
           this.fetchAndSetBusinessData(orgId);
-        }
-        // See if job progress needs to be restored
-        if (this.$route.params.id) {
-          this.reopenExistingJob(this.$route.params.id);
-        } else if (this.$store.state && this.$store.state.currentJobProgress.jobId
-          && this.$store.state.currentJobProgress.part1Complete && !this.job.title) {
-          this.reopenExistingJob(this.$store.state.currentJobProgress.jobId);
         }
         // Load unposted jobs
         this.checkForUnpostedJobs();

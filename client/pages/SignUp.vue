@@ -96,11 +96,11 @@
               <v-card>
                 <v-card-text>
                   <div style="margin-bottom: 84px;">
-                    <h2 class="student-signup-color">Students</h2>
+                    <h2 class="student-signup-color">Applicants</h2>
                     <p>Are you looking to apply for jobs? Sign up here!</p>
                   </div>
                   <div class="text-xs-center pos-bottom">
-                    <k-btn color="#3488fc" block @click="chooseSignup('student')">Student Sign Up</k-btn>
+                    <k-btn color="#3488fc" block @click="chooseSignup('student')">Applicant Sign Up</k-btn>
                   </div>
                 </v-card-text>
               </v-card>
@@ -137,177 +137,12 @@
       </section>
 
       <section v-if="chosenForm === 'signup'">
-        <SignupComponent :type="signupType" @success="onSuccess" style="max-width: 420px; margin: auto;"></SignupComponent>
+        <SignupComponent :type="signupType" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess" style="max-width: 420px; margin: auto;"></SignupComponent>
         <!-- <a style="text-align: center; margin: auto; display: block;" @click="chosenForm = ''">Choose a different kind of account</a> -->
       </section>
 
-      <section style="padding-top: 0px" v-if="chosenForm === 'individual'">
-        <v-layout>
-          <v-flex xs12 sm8 offset-sm2>
-            <v-card>
-              <v-card-text>
-                <h2>Just enter your name and email to get started</h2>
-                <p v-if="error === 'UserExistsError'" style="color: #f00">
-                  An account with this email already exists. Would you like to <router-link to="/login" style="text-decoration: underline;">login?</router-link>
-                </p>
-                <v-form v-model="valid" ref="form">
-                  <v-text-field
-                    label="First name"
-                    v-model="fname"
-                    :rules="requiredRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Last name"
-                    v-model="lname"
-                    :rules="requiredRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="E-mail"
-                    v-model="email"
-                    :rules="emailRules"
-                    type="email"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Create password"
-                    v-model="password"
-                    :rules="passwordRules"
-                    min="8"
-                    :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                    :append-icon-cb="() => (e1 = !e1)"
-                    :type="e1 ? 'password' : 'text'"
-                    required
-                  ></v-text-field>
-                  <v-select class="optional"
-                    label="(Optional) How did you hear of Kunvet?"
-                    v-model="howDidYouHear"
-                    v-bind:items="howDidYouHearItems"
-                    hide-details
-                  ></v-select>
-                  <br>
-                  <div class="text-xs-center">
-                    <v-btn class="kunvet-red-bg" :disabled="loading" dark @click="submit">Sign up!</v-btn>
-                    <p v-show="loading" style="color: #999">Loading...</p>
-                  </div>
-                </v-form>
-              </v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </section>
-
-      <section style="padding-top: 0px" v-if="chosenForm === 'business'">
-        <v-layout>
-          <v-flex xs12 sm8 offset-sm2>
-            <v-card>
-              <v-card-text>
-                <h2>Let's get started</h2>
-                <v-form v-model="valid" ref="form">
-                  <v-text-field
-                    label="First name"
-                    v-model="fname"
-                    :rules="requiredRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Last name"
-                    v-model="lname"
-                    :rules="requiredRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Name of organization / business"
-                    v-model="business_name"
-                    :rules="requiredRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="E-mail"
-                    v-model="email"
-                    type="email"
-                    :rules="emailRules"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Create password"
-                    v-model="password"
-                    :rules="passwordRules"
-                    min="8"
-                    :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                    :append-icon-cb="() => (e1 = !e1)"
-                    :type="e1 ? 'password' : 'text'"
-                    required
-                  ></v-text-field>
-                  <v-select class="optional"
-                    label="(Optional) How did you hear of Kunvet?"
-                    v-model="howDidYouHear"
-                    v-bind:items="howDidYouHearItems"
-                    hide-details
-                  ></v-select>
-                  <br>
-                  <div class="text-xs-center">
-                    <v-btn class="kunvet-red-bg" :disabled="loading" dark @click="submit">Create business account</v-btn>
-                    <p v-show="loading" style="color: #999; margin-bottom: 0;">Loading...</p>
-                  </div>
-                </v-form>
-              </v-card-text>
-            </v-card>
-            <div class="bottom-text">
-              <a @click="back">Back</a>
-            </div>
-          </v-flex>
-        </v-layout>
-      </section>
-
-      <section v-if="chosenForm === 'error'">
-        <v-layout>
-          <v-flex xs12 sm8 offset-sm2>
-            <v-card>
-              <v-card-text>
-                <h2>Oh no, an error occured</h2>
-                <br>
-                <p>Please try again later</p>
-              </v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </section>
-
-      <section v-if="chosenForm === 'success'">
-        <v-layout>
-          <v-flex xs12 sm8 offset-sm2>
-            <v-card>
-              <v-card-text>
-                <h2>Thank you!</h2>
-                <br>
-                <p style="margin-bottom: 8px;">We've sent a verification email to {{ email }}</p>
-                <p style="margin-bottom: 8px;">Please click the link in your email to complete the sign up process</p>
-                <p>Routing you to your account page...</p>
-              </v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </section>
-
-      <!-- with code verification, this section should no longer be used -->
-      <section v-if="chosenForm === 'not verified'">
-        <v-layout>
-          <v-flex xs12 sm8 offset-sm2>
-            <v-card>
-              <v-card-text>
-                <p style="margin-bottom: 8px;">It looks like <strong>{{ email }}</strong> already exists, but is not verified.</p>
-                <p>Would you like us to send verification another email?</p>
-                <v-btn style="margin-left: 0;" flat @click="goToLogin" :disabled="loading">Send another email</v-btn>
-              </v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </section>
-
       <div class="bottom-text">
-        <router-link to="/login">
+        <router-link :to="loginPath">
           Already have an account? <span style="text-decoration: underline;">Log in</span>
         </router-link>
       </div>
@@ -335,41 +170,46 @@
 </template>
 <script>
 import axios from 'axios';
-import KunvetError from '#/KunvetError';
 import EventBus from '@/EventBus';
 import userDataProvider from '@/userDataProvider';
 import SignupComponent from '@/components/SignupComponent';
 
 export default {
-  props: ['stage'],
+  metaInfo: {
+    title: 'Get an Account | Kunvet',
+    meta: [
+      { name: 'description', content: 'Get an account and start exploring all the new jobs or talents near you.' },
+    ],
+  },
+  props: {
+    stage: {
+      type: String,
+      default: '',
+    },
+    fname: {
+      type: String,
+      default: '',
+    },
+    lname: {
+      type: String,
+      default: '',
+    },
+    email: {
+      type: String,
+      default: '',
+    },
+    password: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       e1: true,
       valid: false,
       chosenForm: '',
-      submitClicked: false,
-      email: '',
-      business_name: null,
-      fname: '',
-      lname: '',
-      requiredRules: [
-        v => !!v || 'Required',
-      ],
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /^\w+([-.]?\w+)*@\w+([-.]?\w+)*(\.\w+)+$/.test(v) || 'E-mail must be valid',
-      ],
-      password: '',
-      passwordRules: [
-        v => !!v || 'Required',
-        v => (v && v.length >= 8) || 'Password must be at least 8 characters',
-      ],
       loading: false,
       error: null,
-      howDidYouHear: null,
-      howDidYouHearItems: [
-        'Flyers & posters', 'Social media', 'Word of mouth', 'Email campaign', 'Other',
-      ],
       alreadyloggedin: false,
       signupType: '',
     };
@@ -379,193 +219,44 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.path === '/signup') {
+      if (to.path === '/sign-up') {
         this.chosenForm = '';
         this.signupType = '';
       }
     },
   },
   methods: {
-    submit() {
-      this.$refs.form.validate();
-      this.submitClicked = true;
-      if (this.valid) {
-        this.loading = true;
-        if (this.business_name && this.business_name !== '') {
-          this.createBusinessAcct();
-        } else {
-          this.createIndividualAcct();
-        }
-      }
-    },
-    checkStage() {
-      if (this.stage === 'personal') {
-        this.chooseFormI();
-      } else if (this.stage === 'organization') {
-        this.chooseFormB();
-      }
-    },
-    chooseFormI() {
-      this.chosenForm = 'individual';
-    },
-    chooseFormB() {
-      this.chosenForm = 'business';
-    },
     chooseSignup(type) {
       this.signupType = type;
       this.chosenForm = 'signup';
-      // this.$router.push(`/signup?type=${type}`);
-      this.$router.push(`/signup/${type}`);
-    },
-    back() {
-      this.chosenForm = '';
+      // this.$router.push(`/sign-up?type=${type}`);
+      this.$router.push(`/sign-up/${type}`);
     },
     onSuccess() {
+      // if (this.$ga) {
+      //   this.$ga.event('account', 'create', 'applicant', 1);
+      //   console.log('ga: account/create/applicant/1');
+      // }
+      if (window.dataLayer) {
+        if (this.signupType === 'student') {
+          window.dataLayer.push({ 'event': 'create-applicant-account' });
+          console.log('gtm: create-applicant-account');
+        } else {
+          window.dataLayer.push({ 'event': 'create-employer-account' });
+          console.log('gtm: create-employer-account');
+        }
+      }
+      console.log('----------------------');
+      console.log(this.signupType);
       if (this.signupType === 'business') {
         this.$router.push('/myorg');
       } else {
         this.$router.push('/account');
       }
     },
-    createIndividualAcct() {
-      const headers = { emulateJSON: true };
-      const data = {
-        email: this.email,
-        business_name: null,
-        hdyh: this.howDidYouHear,
-        fname: this.fname,
-        lname: this.lname,
-        pwd: this.password,
-        reqtype: 'validate',
-      };
-      axios.post('/auth/register', data, headers).then((res) => {
-        this.loading = false;
-        if (res.data.success) {
-          this.chosenForm = 'success';
-          this.logIntoAcct(this.email, this.password);
-        } else if (res.data.message === 'User already exists') {
-          this.error = 'UserExistsError';
-        } else if (res.data.message === 'Email exists but not verified') {
-          // this.error = 'Not Verified';
-          // this.chosenForm = 'not verified';
-          this.error = 'UserExistsError';
-        } else {
-          this.chosenForm = 'error';
-          this.$error(new KunvetError(res.data));
-        }
-      }, (error) => {
-        this.chosenForm = 'error';
-        this.$error(error);
-      });
-    },
-    createBusinessAcct() {
-      const headers = { emulateJSON: true };
-      const bdata = {
-        email: this.email,
-        business_name: this.business_name,
-        hdyh: this.howDidYouHear,
-        fname: this.fname,
-        lname: this.lname,
-        pwd: this.password,
-        reqtype: 'validate',
-      };
-      // step 1 of signing up
-      axios.post('/auth/register', bdata, headers).then((res) => {
-        this.$debug('RES', res);
-        if (res.data.success) {
-          this.chosenForm = 'success';
-          this.logIntoAcct(this.email, this.password);
-        } else {
-          this.loading = false;
-          if (res.data.message === 'User already exists') {
-            this.error = 'UserExistsError';
-          } else if (res.data.message === 'Email exists but not verified') {
-            this.error = 'Not Verified';
-            this.chosenForm = 'not verified';
-          } else {
-            this.chosenForm = 'error';
-            this.$error(new KunvetError(res.data));
-          }
-        }
-      }, (error) => {
-        this.chosenForm = 'error';
-        this.$error(error);
-      });
-    },
-    logIntoAcct(email, password) {
-      // step 2 of signing up
-      axios.post('/auth/login', {
-        email: email,
-        password: password,
-      }).then((response) => {
-        this.$debug('login response', response);
-        if (response.data.success) {
-          // logged in successfully
-          this.fetchAcctData();
-        } else {
-          this.loading = false;
-          this.$error(new KunvetError(response.data));
-        }
-      }).catch((err) => {
-        this.loading = false;
-        this.$error(err);
-      });
-    },
-    fetchAcctData() {
-      // step 3 of signing up (final step)
-      axios.get('/auth/status').then((response) => {
-        this.loading = false;
-        if (!response.data.success) {
-          // Unsuccessful
-          this.$error(new KunvetError(response.data));
-          return;
-        }
-        if (!response.data.status) {
-          // Logged out
-          this.$debug('Logged out', response.data);
-          return;
-        }
-        const udata = response.data.user;
-        this.commitUserdata(udata);
-        this.commitID(udata._id);
-
-        if (udata.default_org === '' || !udata.default_org) {
-          // login individual
-          EventBus.$emit('individual');
-          // this.$router.push('/account');
-        } else {
-          // login business
-          this.commitBusinessID(udata.default_org);
-          EventBus.$emit('business');
-          // this.$router.push('/myorg');
-        }
-        this.$router.push('/validate'); // make all users verify their email with code immediately
-      }).catch((error) => {
-        this.loading = false;
-        this.$error(error);
-      });
-    },
     goToLogin() {
       this.$router.push('/login');
     },
-    // resendEmail() {
-    //   const data = {
-    //     email: this.email,
-    //   };
-    //   this.loading = true;
-    //   axios.post('/auth/resendVerificationEmail', data).then((res) => {
-    //     this.loading = false;
-    //     if (res.data.success) {
-    //       this.chosenForm = 'success';
-    //     } else {
-    //       this.chosenForm = 'error';
-    //     }
-    //   }, (error) => {
-    //     this.chosenForm = 'error';
-    //     this.$error(error);
-    //     this.loading = false;
-    //   });
-    // },
     commitUserdata(udata) {
       this.$store.commit({
         type: 'keepUserdata',
@@ -604,11 +295,6 @@ export default {
   },
   activated() {
     this.resetData();
-    this.checkStage();
-    // document.addEventListener('backbutton', () => { console.log('TEST'); }, false);
-    // watch: {
-    // '$route' (to, from) {
-    // }
     console.log('Activated');
     if (this.$route.query.type) {
       this.signupType = this.$route.query.type;
@@ -626,6 +312,16 @@ export default {
         this.alreadyloggedin = false;
       }
     });
+  },
+  computed: {
+    loginPath() {
+      return {
+        path: '/login',
+        query: {
+          redirect: this.$route.query.redirect,
+        },
+      };
+    },
   },
 };
 </script>

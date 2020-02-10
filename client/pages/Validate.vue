@@ -74,11 +74,12 @@ export default {
         this.$store.commit({ type: 'keepUserdata', userdata: udata });
       }
       this.validated = true;
+      this.$router.push('/validate');
     },
     goTo(_route) {
       var route = '/';
-      if (_route === '/createjob' && this.jobId) {
-        route = `/createjob/${this.jobId}`;
+      if (_route === '/jobs/create' && this.jobId) {
+        route = `/jobs/create/${this.jobId}`;
       } else {
         route = _route;
       }

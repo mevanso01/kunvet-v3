@@ -99,10 +99,9 @@ const JobSchema = Mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  /* Jobs should be ordered by recreate_date. */
+  /* Jobs should be ordered by create_date. */
   recreate_date: {
     type: Date,
-    default: Date.now,
   },
   expiry_date: {
     type: Date,
@@ -159,6 +158,12 @@ const JobSchema = Mongoose.Schema({
     enum: ['paid', 'unpaid', 'negotiable', 'none'],
     default: 'none',
   },
+  salary_min: {
+    type: Number,
+  },
+  salary_max: {
+    type: Number,
+  },
   salary: {
     type: Number,
   },
@@ -200,6 +205,11 @@ const JobSchema = Mongoose.Schema({
   },
   gform_link: {
     type: String,
+  },
+}, {
+  timestamps: {
+    updatedAt: 'last_edited',
+    createdAt: 'create_date',
   },
 });
 const ApplicantSchema = Mongoose.Schema({
@@ -448,6 +458,7 @@ const AccountSchema = Mongoose.Schema({
     ],
   },
   major: String,
+  summary: String,
   display_email: {
     type: String,
   },
@@ -464,6 +475,8 @@ const AccountSchema = Mongoose.Schema({
   org_list: [],
   notifications: [{
     text: String,
+    job_title: String,
+    count: Number,
     route: String,
     notification_type: String,
     date: {
@@ -479,7 +492,7 @@ const AccountSchema = Mongoose.Schema({
   preferences: {
     getNewsletters: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     jobExpiredEmails: {
       type: String,

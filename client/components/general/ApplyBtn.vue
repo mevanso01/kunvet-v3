@@ -1,4 +1,5 @@
 <style lang="scss" scoped>
+//this is exactly the same as k-btn btw.
 .apply-btn {
   border-radius: 3px;
   cursor: pointer;

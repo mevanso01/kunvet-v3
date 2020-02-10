@@ -22,6 +22,8 @@ const FindJobRecord = `
   age
   pay_type
   salary
+  salary_min
+  salary_max
   pay_denomination
   education
   preferred_major
@@ -36,6 +38,8 @@ const FindJobRecord = `
     cropped
   }
   position_tags
+  recreate_date
+  create_date
 `;
 const FindJobRecordForJobCard = `
   _id
@@ -58,6 +62,8 @@ const FindJobRecordForJobCard = `
   age
   pay_type
   salary
+  salary_min
+  salary_max
   pay_denomination
   date
   images {

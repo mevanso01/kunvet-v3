@@ -55,7 +55,7 @@ button:focus {
   background-color: white;
   position: fixed;
   top: 0;
-  z-index: 195;
+  z-index: 1010;
 }
 #d-menu > .d-menu-inner {
   height: 100%;
@@ -217,7 +217,7 @@ button:focus {
   line-height: 16px;
   border-radius: 8px;
   top: -3px;
-  left: 17px;
+  left: 78px;
   background-color: #ef5350;
   color: #fff;
 }
@@ -916,6 +916,13 @@ body {
     box-sizing: border-box;
     margin: 0 0 8px 0;
 }
+
+.app_card-textarea textarea{
+  padding: 10px !important; 
+  line-height: 32px !important;
+  border: none;
+}
+
 .general-textarea textarea {
     position: relative;
     background-color: rgba(255, 255, 255, 0);
@@ -1250,4 +1257,129 @@ body {
     #bottom-content {
         padding: 0px 16px;
     }
+}
+
+.v-menu__content{
+  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+}
+
+
+/*The Dark theme is used from the v-menus in the navbar.
+The light theme is used for v-menus outside of the navbar.
+This is to prevent a certain bug from happening.
+To see the bug, simply comment out the next 3 styles.*/
+
+.v-menu__content.theme--dark{
+  background-color: white;
+  position: fixed;
+  top: 64px !important;
+}
+
+.navCustomList.v-list--dense.theme--dark{
+  padding-top: 10px !important;
+  padding-bottom: 12px !important;
+  background-color: white;
+}
+
+.navCustomTile.v-list__tile.theme--dark{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+@media (min-width: 1025px){
+  .hire_monials div.v-carousel__controls{
+    background: none;
+    padding-bottom: 88px;
+  }
+  .hire_monials .v-carousel{
+    height: initial;
+  }
+}
+
+/* Hire Page */
+@media (min-width: 801px) and (max-width: 1024px){
+  .hire_monials div.v-carousel__controls{
+    background: none;
+    padding-bottom: 108px;
+  }
+}
+
+@media (max-width: 800px) {
+  .hire_monials div.v-carousel__controls{
+    background: none;
+    padding-bottom: 68px;
+  }
+}
+
+.testing_slide_transition .v-window-fade-transition-leave-to{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-fade-transition-leave-active{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-fade-transition-enter-to{
+  transition: all 0.6s ease;
+}
+.testing_slide_transition .v-window-fade-transition-enter-active{
+  transition: all 0.6s ease;
+}
+
+/* Index Page */
+.search_bar_text_field div.v-input__slot{
+  height: 64px !important;
+  background: none !important;
+}
+.search_bar_text_field.v-text-field.v-text-field--enclosed > .v-input__control > .v-input__slot{
+  padding: 0 0 0 10px;
+}
+
+/*.search_bar_text_field .application--light .input-group:not(.input-group--error):not(.input-group--disabled) .input-group--selection-controls label, .input-group--text-field:not(.input-group--error):not(.input-group--disabled) label, .radio-group:not(.input-group--error):not(.input-group--disabled) label, .radio-group:not(.input-group--error):not(.input-group--disabled) i, .v-input:not(.input-group--error):not(.v-input--is-disabled) label, .v-input:not(.input-group--error):not(.v-input--is-disabled) i{
+  display: none;
+}*/
+.v-menu__content theme--light menuable__content__active v-autocomplete__content {
+  top: 100px;
+}
+.pac-container.pac-logo.hdpi{
+  width: 314px !important;
+  background-color: #f4f4f4;
+}
+.pac-container.pac-logo.hdpi::after{
+  filter: grayscale(100%);
+  display: none;
+}
+.pac-icon{
+  display: none;
+}
+.pac-item{
+  height: 44px;
+  font-size: 12px;
+  line-height: 44px;
+  padding-left: 24px;
+  font-family: proxima-nova, sans-serif;
+}
+.pac-item:hover{
+  background-color: #e4e4e4;
+}
+
+@media (min-width: 1025px){
+  .student_monials div.v-carousel__controls{
+    background: none;
+    padding-left: 260px;
+    padding-bottom: 0px;
+    background-color: green;
+    position: relative;
+    justify-content: left;
+    display: none;
+  }
+  .student_monials .v-carousel{
+    height: initial;
+  }
+}
+
+/* .theme--light.v-input:not(.v-input--is-disabled) label{
+  color: #b4b4b4;
+} */
+.material-icons .theme--light .v-icon .v-icon--link{
+  width: 50%;
+  height: 50%;
 }

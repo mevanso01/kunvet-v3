@@ -24,7 +24,7 @@
             <h3 class="headline mb-1 mt-0 center" style="color: #4d4d4d;">Thanks for verifying! You're all set!</h3>
           </div>
           <template v-if="isLoggedIn">
-            <div  v-if="wasEditingJob" class="general-submit" @click="goTo('/createjob')">
+            <div  v-if="wasEditingJob" class="general-submit" @click="goTo('/jobs/create')">
               <div class="general-submit-default">
                   <span v-if="readyToPost">FINISH POSTING MY JOB</span>
                   <span v-else>CONTINUE EDITING YOUR JOB</span>
@@ -102,8 +102,8 @@ export default {
     },
     goTo(_route) {
       var route = '/';
-      if (_route === '/createjob' && this.jobId) {
-        route = `/createjob/${this.jobId}`;
+      if (_route === '/jobs/create' && this.jobId) {
+        route = `/jobs/create/${this.jobId}`;
       } else {
         route = _route;
       }

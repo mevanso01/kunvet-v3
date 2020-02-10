@@ -13,7 +13,7 @@
             Every time an applicant applies, their information and resume will be sent to your account's email.
           </p>
           <p>
-            You can also view your applicants through Kunvet itself. Your applicants will be organized under the <router-link to="/applicants">Applicants</router-link> page.
+            You can also view your applicants through Kunvet itself. Your applicants will be organized under the <router-link to="/jobs/applicants">Applicants</router-link> page.
           </p>
           <p>
             If you prefer recieving your applicants through Google Forms, scroll down to "Application options" and check the Google Forms checkbox.
@@ -39,8 +39,8 @@
             </h2>
           </div>
           <div class="float-right">
-            <v-btn flat @click="saveForLater" v-if="!job.active">Save for later</v-btn>
-            <v-btn v-else style="margin-left: 0;" @click="updateActiveJob">Save</v-btn>
+            <k-btn flat @click="saveForLater" :working="loading" v-if="!job.active">Save for later</k-btn>
+            <k-btn v-else style="margin-left: 0;" @click="updateActiveJob" :working="loading">Save</k-btn>
           </div>
         </div>
         <v-divider></v-divider>
@@ -135,7 +135,7 @@
               </v-radio-group>
             </div>
           </v-flex>
-          <v-flex xs6 sm3 md2 v-if="salary_select === 'paid'">
+          <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'paid'">
             <v-text-field class="pa-0 ma-0"
               v-model="job.salary"
               :disabled = "salary_select !== 'paid'"
@@ -145,11 +145,41 @@
               single-line
             ></v-text-field>
           </v-flex>
-          <v-flex xs6 sm3 md2 style="padding-left: 15px !important;" v-if="salary_select === 'paid'">
+          <v-flex xs6 sm3 md2 class="pl-2" v-if="salary_select === 'paid'">
             <v-select class="pa-0 ma-0" style="max-width: 125px;"
               v-model="job.pay_denomination"
               :disabled = "salary_select != 'paid'"
               :items="[ 'per hour', 'per week', 'per month', 'per year', 'per task' ]"
+              >
+            </v-select>
+          </v-flex>
+          <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'negotiable'">
+            <v-text-field class="pa-0 ma-0"
+              v-model="job.salary_min"
+              :disabled = "salary_select !== 'negotiable'"
+              prefix="$"
+              required
+              :rules="[(salary_min) => _isNumber(salary_min) || salary_select !== 'negotiable' || 'Required, must be a number']"
+              placeholder="min"
+              single-line
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs6 sm3 md2 class="px-2" v-if="salary_select === 'negotiable'">
+            <v-text-field class="pa-0 ma-0"
+              v-model="job.salary_max"
+              :disabled = "salary_select !== 'negotiable'"
+              prefix="$"
+              required
+              :rules="[(salary_max) => _isNumber(salary_max) || salary_select !== 'negotiable' || 'Required, must be a number']"
+              placeholder="max"
+              single-line
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs6 sm3 md2 class="pl-2" v-if="salary_select === 'negotiable'">
+            <v-select class="pa-0 ma-0" style="max-width: 125px;"
+              v-model="job.pay_denomination"
+              :disabled = "salary_select != 'negotiable'"
+              :items="[ 'per hour', 'per week', 'per month', 'per quarter', 'per year', 'per task' ]"
               >
             </v-select>
           </v-flex>
@@ -211,7 +241,7 @@
         <QuillEditor v-model="job.responsibilities" title="Responsibilities" id="editor3" required
           placeholder="900 characters maximum" :charLimit="900"></QuillEditor>
 
-        <div style="display: flex">
+        <!-- <div style="display: flex">
         <h3 class="optional" style="margin: 7px 10px 6px 0;">Pictures</h3>
         <v-btn v-if="job.images.length === 0"
           @click="picUploaderDialog = true"
@@ -220,7 +250,7 @@
         <v-btn v-else
           @click="picUploaderDialog = true"
           flat small outline class="optional">Upload Another</v-btn>
-        </div>
+        </div> -->
 
         <v-dialog v-model="picUploaderDialog">
           <PicUploader @uploaded="picUploaded" @cancel="picUploaderDialog = false"/>
@@ -292,11 +322,11 @@
 
         <br>
         <v-layout v-if="!job.active">
-          <v-btn style="margin-left: 0;" @click="saveForLater">Save for later</v-btn>
-          <v-btn @click="validateBeforePosting(true)">Save and Post</v-btn>
+          <k-btn style="margin-left: 0;" @click="saveForLater">Save for later</k-btn>
+          <k-btn @click="validateBeforePosting(true)">Save and Post</k-btn>
         </v-layout>
         <v-layout v-else>
-          <v-btn style="margin-left: 0;" @click="updateActiveJob">Save</v-btn>
+          <k-btn style="margin-left: 0;" :working="loading" @click="updateActiveJob">Save</k-btn>
         </v-layout>
 
         <br>
@@ -351,7 +381,7 @@
 
         <v-alert type="success" dismissible v-model="successAlert" style="position: fixed; bottom: 0; z-index: 5;">
           <p style="color: #fff; margin-bottom: 0; min-width: 250px;">
-            Saved! <router-link :to="`/job/${jobId}`">View job</router-link>
+            Saved! <router-link :to="`/jobs/detail/${jobId}`">View job</router-link>
           </p>
         </v-alert>
 
@@ -436,6 +466,8 @@ export default {
         studentfriendly: true,
         shift: [],
         salary: null,
+        salary_min: null,
+        salary_max: null,
         pay_denomination: 'per hour',
         education: null,
         major: null,
@@ -463,7 +495,6 @@ export default {
       openSelectField: null,
       availablePositions: positions,
       filterPositions: null,
-      selectedPositions: [],
       picUploaderDialog: false,
       successAlert: false,
       showInvalidMessage: false,
@@ -504,6 +535,9 @@ export default {
       }
       str = str.toLowerCase();
       return this.availablePositions.filter(text => text.toLowerCase().indexOf(str) !== -1);
+    },
+    selectedPositions() {
+      return this.job.position_tags.concat();
     },
     applyMethod() {
       if (this.useGForm) {
@@ -664,7 +698,10 @@ export default {
       this.validateBeforePosting();
       if (this.valid && this.$route.params.id) {
         this.job.active = true;
-        this._save();
+        this.loading = true;
+        setTimeout(() => {
+          this._save();
+        }, 0);
       }
     },
     _save(viewJob = false) {
@@ -691,11 +728,15 @@ export default {
               variables: { userId: this.$store.state.userID, businessId: this.$store.state.businessID },
             },
           ],
-        }).then((res) => {
+        }).then((res) => new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(res);
+          }, 4000);
+        })).then((res) => {
           this.loading = false;
           const recordId = res.data.updateJob.recordId;
           if (viewJob) {
-            this.$router.push(`/job/${recordId}`);
+            this.$router.push(`/jobs/detail/${recordId}`);
           } else {
             this.jobId = recordId;
             this.successAlert = true;
@@ -770,11 +811,11 @@ export default {
           this.loading = false;
           const recordId = res.data.createJob.recordId;
           if (!viewJob) {
-            this.$router.push({ path: `/createnewjob/${recordId}` });
+            this.$router.push({ path: `/jobs/createnew/${recordId}` });
             this.jobId = recordId;
             this.successAlert = true;
           } else {
-            this.$router.push(`/job/${recordId}`);
+            this.$router.push(`/jobs/detail/${recordId}`);
           }
         }).catch((err) => {
           this.loading = false;
@@ -790,7 +831,6 @@ export default {
         user_id: this.uid,
         business_id: this.orgId,
         posted_by: this.job.posted_by,
-        active: this.job.active,
         title: this.job.title,
         date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
@@ -804,8 +844,10 @@ export default {
         shift: this.job.shift === [] ? null : this.job.shift,
         age: this.job.age ? parseInt(this.job.age, 10) : null,
         pay_type: this.salary_select === null ? 'none' : this.salary_select,
+        salary_min: this.salary_select === 'negotiable' ? this._getNumber(this.job.salary_min) : null,
+        salary_max: this.salary_select === 'negotiable' ? this._getNumber(this.job.salary_max) : null,
         salary: this.salary_select === 'paid' ? this._getNumber(this.job.salary) : null,
-        pay_denomination: this.salary_select === 'paid' ? this.job.pay_denomination : null,
+        pay_denomination: this.salary_select !== 'unpaid' ? this.job.pay_denomination : null,
         education: this.job.education ? degreeReducedStringToDb(this.job.education) : 'None',
         preferred_major: this.job.major,
         language: this.job.language,
@@ -866,6 +908,8 @@ export default {
           if (job.pay_type && job.pay_type !== 'none') {
             this.salary_select = job.pay_type;
             this.job.salary = job.salary;
+            this.job.salary_min = job.salary_min;
+            this.job.salary_max = job.salary_max;
             this.job.pay_denomination = job.pay_denomination || 'per hour';
           }
           this.job.major = job.preferred_major;
@@ -885,10 +929,11 @@ export default {
           for (const image of job.images) {
             this.job.images.push({ original: null, cropped: image.cropped });
           }
-          if (job.position_tags) {
-            this.selectedPositions = job.position_tags.concat();
-          }
+          // if (job.position_tags) {
+          //   this.selectedPositions = job.position_tags.concat();
+          // }
           this.notes = job.notes;
+          this.$setTitle(`Currently editing: ${this.job.title}`);
         }
       }).catch((error) => {
         this.$error(error);
@@ -959,7 +1004,7 @@ export default {
   activated() {
     this.resetData();
     if (!this.$route.params.id) {
-      this.$router.push('/createjob');
+      this.$router.push('/jobs/create');
       return;
     }
     this.jobId = this.$route.params.id;

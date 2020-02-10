@@ -14,14 +14,13 @@ import KoaPassport from 'koa-passport';
 
 import REPL from 'repl';
 
-import Logger from 'winston';
+import Logger from '@/Logger';
 
 // CORS
 import Cors from '@/Cors';
 
 // Options
 import '@/options/passport';
-import '@/options/logger';
 import '@/options/tasks';
 
 // Sub apps
@@ -34,10 +33,15 @@ import JobApp from '@/apps/job';
 import ProfilePicApp from '@/apps/profile_pic';
 import ResetPasswordApp from '@/apps/reset_password';
 import BillingApp from '@/apps/billing';
+import MailChimpApp from '@/apps/mailchimp';
 
 // Our stuff
 import Db from '@/mongodb/Db';
 import Models from '@/mongodb/Models';
+import Algolia from '@/utils/Algolia';
+
+// Google Auth
+import GAuth from '@/utils/GoogleAuth';
 
 // ========
 // | Main |
@@ -73,6 +77,7 @@ app.use(KoaMount('/job', JobApp));
 app.use(KoaMount('/profile-pic', ProfilePicApp));
 app.use(KoaMount('/reset-password', ResetPasswordApp));
 app.use(KoaMount('/billing', BillingApp));
+app.use(KoaMount('/mailchimp', MailChimpApp));
 
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
@@ -89,6 +94,7 @@ Db.connect()
       const r = REPL.start('kunvet> ');
       r.context.Models = Models;
       r.context.mongoose = Db.mongoose;
+      r.context.Algolia = Algolia;
     }
   })
   .catch((reason) => {
@@ -123,5 +129,8 @@ if (process.env.TARGET === 'lambda') {
   Logger.warn('Running on AWS Lambda, but this server is not built for Lambda');
 }
 /* eslint-enable */
+
+// Initialize google auth tokens
+GAuth.doAuth();
 
 export { gcf, lambda };

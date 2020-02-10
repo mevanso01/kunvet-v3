@@ -1,7 +1,7 @@
 import ErrorCode from '#/ErrorCode';
 import ApiResponse from '@/utils/ApiResponse';
 import Mailer from '@/utils/Mailer';
-import Logger from 'winston';
+import Logger from '@/Logger';
 
 
 /*
@@ -39,17 +39,16 @@ export default {
     The emailBody looks like this.
     user: account schema
     emailBody: {
-      replyTo: employer.email,
-      fname: user.firstname,
-      name: application.name,
-      jobname: job.title,
+      employer: employer,
+      application: application,
+      job: job,
     };
   */
   async sendApplicationStatus(user, emailBody) {
     console.log('sendApplicationStatus');
     if (user.preferences.applicationStatusEmails === 'Off') {
       console.log('User has application status emails turned off');
-      return ApiResponse();
+      return new ApiResponse();
     }
     console.log('User has application status emails turned on');
     checkEmailBody(emailBody); // verifies that the emailBody is sending all values
@@ -59,16 +58,23 @@ export default {
       await mailer.sendTemplate(
         user.email,
         `application-${emailBody.status}`,
-        { replyTo: emailBody.replyTo,
-          fname: emailBody.fname,
-          name: emailBody.name,
-          jobName: emailBody.jobName },
+        {
+          replyTo: emailBody.employer.email,
+          fname: emailBody.user.firstname,
+          name: emailBody.application.name,
+          jobname: emailBody.job.title,
+          address: emailBody.job.address,
+          salary: emailBody.job.salary,
+          posted_by: emailBody.job.posted_by,
+          type: emailBody.job.type,
+          job_id: emailBody.job._id,
+        },
       );
     } catch (e) {
       Logger.error(e);
-      return ApiResponse(ErrorCode.InternalError);
+      return new ApiResponse(ErrorCode.InternalError);
     }
-    return ApiResponse();
+    return new ApiResponse();
   },
   /*
     sendApplicantInfo: This function takes a templateObject and sends the email template.
@@ -105,5 +111,5 @@ export default {
   },
 };
 
-//    if(user.preferences.jobExpiredEmails === 'Off'){return ApiResponse();}
-//    if(user.preferences.getNewsLetters === false){return ApiResponse();}
+//    if(user.preferences.jobExpiredEmails === 'Off'){return new ApiResponse();}
+//    if(user.preferences.getNewsLetters === false){return new ApiResponse();}

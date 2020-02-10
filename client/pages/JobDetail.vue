@@ -1,4 +1,3 @@
-applyDialog
 <style lang="scss" scoped>
   .file-icon {
     width: 85px;
@@ -441,6 +440,10 @@ applyDialog
     right: 10%;
     transform: translateY(19px);
   }
+
+  .location_link {
+    text-decoration: underline;
+  }
 </style>
 <template>
   <v-container fluid style="padding: 0" id="job-detail-container"
@@ -481,7 +484,7 @@ applyDialog
               <img class="job-info-icon" style="transform: translateY(2px);"
                    :src="svgs.building"></img>
               <span style="padding-top: 2px;">
-                {{ findJob.address }}<template v-if="findJob.address2"> {{ findJob.address2 }}</template>
+                <a class="location_link" @click="changeLocation()" target="_blank">{{ findJob.address }}</a><template v-if="findJob.address2"> {{ findJob.address2 }}</template>
               </span>
             </p>
             <p v-if="findJob.university" style="margin-bottom: 0;">
@@ -573,10 +576,21 @@ applyDialog
           </v-layout>
         </v-container>
         <div class="bottom-button-container">
-          <k-btn style="padding: 0 32px;" @click="openApplyDialog"
-                 :disabled="applied">{{ applied ? 'Applied'
-            : 'Apply' }}
-          </k-btn>
+          <v-tooltip bottom :disabled="!findJob.expired">
+            <template slot="activator">
+              <k-btn style="padding: 0 32px;" @click="openApplyDialog"
+                     :disabled="applied || findJob.expired">{{ findJob.expired ?
+                'Expired': applied ?
+                'Applied'
+                : 'Apply' }}
+              </k-btn>
+            </template>
+            <span>This job is not taking new
+              applications
+              at the
+              moment</span>
+
+          </v-tooltip>
 
           <v-tooltip bottom v-if="this.$store.state.acct === 0">
             <template slot="activator">
@@ -606,7 +620,8 @@ applyDialog
           <v-card v-if="loginState === 'start'" flat class="dialog-card"
                   style="height: 500px; display: flex; flex-direction: column;">
             <div style="height: 40%">
-              <p class="kunvet-red apply-text">Welcome to Kunvet!</p>
+              <p class="kunvet-red apply-text" style="text-align: center;">Welcome to Kunvet!</p>
+              <p class="apply-text" style="font-size: 16px; text-align: center;"> Please sign up or login to continue the process.</p>
             </div>
 
             <div style="height: 60%; text-align: center">
@@ -629,7 +644,7 @@ applyDialog
                   color="white">
             <div class="login-card">
               <LoginComponent @toSignup="handleSignup"
-                              @loggedIn="handleResume"></LoginComponent>
+                              @loggedIn="handleResume()"></LoginComponent>
               <div style="width: 50px; background-color: blue"></div>
             </div>
             <button class="mobile-show"
@@ -641,7 +656,7 @@ applyDialog
           </v-card>
 
           <v-card flat class="dialog-card" v-else-if="loginState === 'signup'">
-            <SignupComponent @account="getColor" @success="handleResume"
+            <SignupComponent @account="getColor" @success="handleResume(true)"
                              style="padding: 30px"></SignupComponent>
             <!--<k-btn @click="loginState='login'" :color="accountColor"-->
             <!--style="display: inline-block; position: absolute; left: 30px; transform: translate(0, -30px); width: 40%;">-->
@@ -714,7 +729,7 @@ applyDialog
             </v-card-title>
             <div
               style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
-              <k-btn to="/search">Back to Search</k-btn>
+              <k-btn to="/jobs/search">Back to Search</k-btn>
             </div>
             <button class="mobile-show"
                     style="position: relative; left: 50%; transform: translateX(-50%)"
@@ -724,14 +739,19 @@ applyDialog
             </button>
           </v-card>
 
-          <v-card flat style="height: 500px;" class="dialog-card"
+          <v-card flat style="height: 300px;" class="dialog-card"
                   v-else-if="loginState === 'error'">
-            <v-card-title>
-              <h2>Oops, an error occured. Please try again later.</h2>
+            <v-card-title style="padding-left: 150px; padding-top: 50px;">
+              <h2>Oops, an error occured. </h2>
             </v-card-title>
+            <v-card-text style="padding-left: 150px;">
+              Please refresh or try again later<br>
+              If you need any support, <a style="text-decoration: underline;" href="/contact" target="_blank">click here</a> for help!<br>
+              We are more than willing to assist you!
+            </v-card-text>
             <div
               style="text-align: center; width: 100%; margin: 0 auto 24px auto;">
-              <k-btn to="/search">Back to Search</k-btn>
+              <k-btn to="/jobs/search">Back to Search</k-btn>
             </div>
             <button class="mobile-show"
                     style="position: relative; left: 50%; transform: translateX(-50%)"
@@ -744,8 +764,8 @@ applyDialog
         </v-dialog>
       </div>
     </div>
+    <script v-if="true || !findJob.expired" v-html="jsonld" type="application/ld+json"></script>
   </v-container>
-
 </template>
 <script>
   import gql from 'graphql-tag';
@@ -776,6 +796,11 @@ applyDialog
   import ResumeUploader from '@/components/ResumeUploader';
   import CodeVerification from '@/components/CodeVerification';
   import ApplyBtn from '@/components/general/ApplyBtn';
+  import axios from 'axios';
+  import StringHelper from '@/utils/StringHelper';
+  import TimeAgo from 'javascript-time-ago';
+  import en from 'javascript-time-ago/locale/en';
+  import DateHelper from '@/utils/DateHelper';
 
   export default {
     filters: {
@@ -797,6 +822,8 @@ applyDialog
     props: ['id', 'isapplied'],
     data() {
       return {
+        jsonld: {},
+        job_dest_url: '',
         selected: [],
         findJob: {},
         jobType: [],
@@ -806,6 +833,7 @@ applyDialog
         loginState: 'start',
         profilePic: null,
         salary: null,
+        jobsAndApplications: [],
         svgs: {
           Book: BookSvg,
           Pushpin: PushpinSvg,
@@ -852,6 +880,9 @@ applyDialog
       };
     },
     computed: {
+      getAppliedJobsString() {
+        return StringHelper.pluralize('Job', this.jobsAndApplications.length);
+      },
       sanitizedDescription() {
         return sanitizeHtml(this.findJob.description);
       },
@@ -877,13 +908,69 @@ applyDialog
         return selected;
       },
     },
+    metaInfo () {
+      TimeAgo.addLocale(en);
+      var timeAgo = new TimeAgo('en-US');
+      // `Posted ${timeAgo.format(Date.now() - this.findjob.date)} ${this.findJob.description.substring(0, 30)} ...`
+      var str = 'Posted ';
+      var date = new Date(Date.now() - 50000); // some mock date
+      var milliseconds = date.getTime();
+      str += timeAgo.format(milliseconds);
+      if (this.findJob.description) {
+        str += '. ';
+        str += this.findJob.title;
+        str += ': ';
+      }
+      if (this.findJob.description) {
+        var temp = this.findJob.description.replace(/<\/?[^>]+>/ig, '');
+        str += temp.match(/^(\w+\s?){1,12}/ig);
+      }
+      str += '… See this and similar jobs on Kunvet.';
+      console.log(str);
+      return {
+        meta: [
+          { name: 'description', content: str },
+        ],
+      };
+    },
     methods: {
       urlChange() {
         this.isapplied = true;
-        // this.$router.push(`/job/${this.id}/applied=${this.isapplied}`);
+        // this.$router.push(`/jobs/detail/${this.id}/applied=${this.isapplied}`);
       },
       getColor(info) {
         this.accountColor = info.color;
+      },
+      async getPairForEachApplication({ job_id: jobId, ...application }) {
+        let { data: { findJob: job } } = await this.$apollo.query({
+          query: (gql`query ($jobId: MongoID) {
+            findJob (filter: { _id: $jobId, active: true }){
+              ${queries.FindJobRecordForJobCard}
+            }
+          }`),
+          variables: {
+            jobId,
+          },
+        });
+        if (!job) {
+          return {
+            job: null,
+            application: { _id: jobId, ...application },
+          };
+        }
+        // TODO:
+        if (job.is_deleted) {
+          job = Object.assign({}, job);
+          return {
+            job: job,
+            application: { _id: jobId, ...application },
+          };
+        }
+        job = Object.assign({}, job);
+        return {
+          job: job,
+          application: { _id: jobId, ...application },
+        };
       },
       resumeUploaded(_filename, _resumename) {
         const newResume = {
@@ -906,9 +993,24 @@ applyDialog
       handleSignup() {
         this.loginState = 'signup';
       },
-      handleResume() {
+      handleResume(verif) {
+        var verifSuccess = false;
+        if (verif) {
+          // if (this.$ga) {
+          //   this.$ga.event('account', 'create', 'applicant', 1);
+          //   console.log('ga: account/create/applicant/1');
+          // }
+          if (window.dataLayer) {
+            window.dataLayer.push({ 'event': 'create-applicant-account' });
+            console.log('gtm: create-applicant-account');
+          }
+          verifSuccess = verif;
+        }
         // called after signup or login, and from openApplyDialog()
         this.loginState = 'resume';
+        if (verifSuccess === true) {
+          this.$router.push(`/jobs/detail/${this.id}`);
+        }
         this._getUserData();
       },
       handleVerified() {
@@ -955,15 +1057,21 @@ applyDialog
                             Node.js Developer at Kunvet in Irvine, CA
                           */
           this.$setTitle(this.findJob.title);
-
+          this.job_dest_url = 'https://maps.google.com/?q=';
+          this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
+          this.$debug(this.job_dest_url);
+          this.$debug(this.findJob.address);
           this.jobType = [];
+          const employmentType = [];
           for (const i in this.findJob.type) {
             if (typeof this.findJob.type[i] === 'string') {
               const type = this.findJob.type[i];
               if (type === 'fulltime') {
                 this.jobType.push('full time');
+                employmentType.push('FULL_TIME');
               } else if (type === 'parttime') {
                 this.jobType.push('part time');
+                employmentType.push('PART_TIME');
               } else {
                 this.jobType.push(type);
               }
@@ -977,12 +1085,128 @@ applyDialog
             }
             this.salary = `${sal.toString()}${pdenom}`;
           } else if (this.findJob.pay_type === 'negotiable') {
-            this.salary = 'pay negotiable';
+            this.findJob.salary_min = this.findJob.salary_min || 0;
+            this.findJob.salary_max = this.findJob.salary_max || 0;
+            const salMin = this.findJob.salary_min.toFixed(2);
+            const salMax = this.findJob.salary_max.toFixed(2);
+            let pdenom = ` ${this.findJob.pay_denomination}`;
+            if (this.findJob.pay_denomination === 'per hour') {
+              pdenom = '/hr';
+            }
+            this.salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
           } else {
             this.salary = this.findJob.pay_type;
           }
+          let baseSalaryUnitText = '';
+          let baseSalaryValue = 0;
+          let baseSalaryMinValue = 0;
+          let baseSalaryMaxValue = 0;
+          if (this.findJob.pay_type === 'paid') {
+            baseSalaryValue = this.findJob.salary.toFixed(2);
+          } else if (this.findJob.pay_type === 'negotiable') {
+            baseSalaryMinValue = this.findJob.salary_min.toFixed(2);
+            baseSalaryMaxValue = this.findJob.salary_max.toFixed(2);
+          }
+          if (this.findJob.pay_denomination === 'per hour') {
+            baseSalaryUnitText = 'HOUR';
+          } else if (this.findJob.pay_denomination === 'per week') {
+            baseSalaryUnitText = 'WEEK';
+          } else if (this.findJob.pay_denomination === 'per month') {
+            baseSalaryUnitText = 'MONTH';
+          } else if (this.findJob.pay_denomination === 'per quarter') {
+            baseSalaryUnitText = 'YEAR';
+            if (this.findJob.pay_type === 'paid') {
+              baseSalaryValue *= 4;
+            } else if (this.findJob.pay_type === 'negotiable') {
+              baseSalaryMinValue *= 4;
+              baseSalaryMaxValue *= 4;
+            }
+          } else if (this.findJob.pay_denomination === 'per year') {
+            baseSalaryUnitText = 'YEAR';
+          } else {
+            baseSalaryUnitText = '';
+          }
+          // var parsed = this.parseAddress(this.findJob.address);
+          let description1 = this.findJob.description.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
+          let experience1 = this.findJob.experience.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
+          let responsibilities1 = this.findJob.responsibilities.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
+          if (!description1.endsWith('<br>')) {
+            description1 += '<br>';
+          }
+          if (!experience1.endsWith('<br>')) {
+            experience1 += '<br>';
+          }
+          if (!responsibilities1.endsWith('<br>')) {
+            responsibilities1 += '<br>';
+          }
+          this.jsonld = {
+            '@context': 'https://schema.org',
+            '@type': 'JobPosting',
+            'baseSalary': {
+              '@type': 'MonetaryAmount',
+              'currency': 'USD',
+              'value': {
+              },
+            },
+            'datePosted': this.findJob.date,
+            'description': `Job Overview:<br>${description1}<br>Experience Requirements:<br>${experience1}<br>Responsibilities:<br>${responsibilities1}`,
+            'employmentType': employmentType,
+            'title': this.findJob.title,
+            'jobLocation': {
+              '@type': 'Place',
+              'geo': {
+                '@type': 'GeoCoordinates',
+                'latitude': this.findJob.latitude,
+                'longitude': this.findJob.longitude,
+              },
+              'address': {
+                '@type': 'text',
+                'address': this.findJob.address,
+              },
+            },
+            'validThrough': this.findJob.expiry_date || DateHelper.getExpiryDate(this.findJob.date, Config.get('daysToExpire')).toISOString(),
+          };
+          if (this.findJob.business_id != null) {
+            this.jsonld.hiringOrganization = this.findJob.posted_by;
+          }
+          if (this.findJob.pay_type === 'paid') {
+            this.jsonld.baseSalary.value = {
+              '@type': 'QuantitativeValue',
+              'unitText': baseSalaryUnitText,
+              'value': baseSalaryValue,
+            };
+          } else if (this.findJob.pay_type === 'negotiable') {
+            this.jsonld.baseSalary.value = {
+              '@type': 'QuantitativeValue',
+              'minValue': baseSalaryMinValue,
+              'maxValue': baseSalaryMaxValue,
+              'unitText': baseSalaryUnitText,
+            };
+          } else {
+            delete this.jsonld.baseSalary;
+          }
+          if (this.userdata.account_type === 'business') {
+            this.jsonld.hiringOrganization = {
+              '@type': 'Organization',
+              'name': this.findJob.posted_by,
+            };
+          } else if (this.userdata.account_type === 'individual') {
+            this.jsonld.hiringOrganization = {
+              '@type': 'Organization',
+              'name': 'Kunvet',
+            };
+          }
+          // if (this.findJob.expired) {
+          //   this.jsonld = null;
+          // }
+          console.log(this.findJob);
           this.fetchProfilePic();
+        }).catch((error) => {
+          console.log(error);
         });
+      },
+      changeLocation() {
+        window.open(this.job_dest_url, '__blank');
       },
       openApplyDialog() {
         this.applyDialog = true;
@@ -1131,6 +1355,16 @@ applyDialog
           this.showCodeValidation();
           return;
         }
+
+        // testing
+        console.log(this.findJob.position_tags);
+        console.log(this.jobsAndApplications.length);
+
+        /* const i = 6;
+        if (i < 10) {
+          return;
+        } */
+
         // validate
         if (this.uid && this.userdata && !this.loading && !this.applied) {
           console.log('creating application');
@@ -1220,10 +1454,22 @@ applyDialog
               },
             ],
           }).then((data) => {
+            // if (this.$ga) {
+            //   this.$ga.event('job', 'apply', 'jobs', 1);
+            //   console.log('ga: job/apply/jobs/1');
+            // }
+            if (window.dataLayer) {
+              window.dataLayer.push({ 'event': 'apply-for-job' });
+              console.log('gtm: apply-for-job');
+            }
             this.loading = false;
             if (data) {
               this.loginState = 'success';
               this.applied = true;
+              if (this.jobsAndApplications.length < 5) {
+                this.deleteTags();
+              }
+              this.addTags();
             } else {
               this.$debug('no data returned when creating application');
               this.loginState = 'success';
@@ -1246,12 +1492,38 @@ applyDialog
           this.uploadResume();
         }
       },
+      deleteTags() {
+        const data = {
+          email: this.userdata.email,
+        };
+        axios.post('/mailchimp/deleteTags', data).then(() => {
+          console.log('delete Tags');
+        }, (error) => {
+          this.$error(error);
+        }).then(() => {
+          console.log('tag successfully deleted');
+        });
+      },
+      addTags() {
+        const data = {
+          email: this.userdata.email,
+          tags: this.findJob.position_tags,
+        };
+        console.log('tags in add Tags');
+        console.log(this.findJob.position_tags);
+        axios.post('/mailchimp/addTags', data).then(() => {
+          console.log('add Tags');
+        }, (error) => {
+          this.$error(error);
+        }).then(() => {
+          console.log('tag successfully added');
+        });
+      },
       updateAccount() {
         // this is weird. Not sure why it adds the property '__typename' if I dont do this
         const _resumes = this.resumes.map(({
           name, filename, resumeid,
         }) => ({ name, filename, resumeid }));
-
         this.$apollo.mutate({
           mutation: (gql`
           mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
@@ -1307,10 +1579,32 @@ applyDialog
       resetData() {
         Object.assign(this.$data, this.$options.data.call(this));
       },
+      parseAddress(add) {
+        // Make sure the address is a string.
+        if (typeof add !== 'string') return 1;
+        // Trim the address.
+        var address = add.slice(0, add.length - 5);
+        console.log(address);
+        address = address.trim();
+        var returned = {};
+        var comma = address.indexOf(',');
+        returned.street = address.slice(0, comma);
+        console.log(returned.street);
+        var after = address.substring(comma + 2);
+        var comma2 = after.indexOf(',');
+        returned.city = after.slice(0, comma2);
+        var state = after.substring(comma2 + 2);
+        var space = state.lastIndexOf(' ');
+        returned.state = state.slice(0, space);
+        returned.zip = state.substring(space + 1);
+        console.log(returned);
+        return returned;
+      },
     },
     activated() {
       this.resetData();
       this.getData();
+      // this.getApplication();
       this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {
         this.stickToBottom = true;

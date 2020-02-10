@@ -11,4 +11,5 @@ if (!prodCredentials || !devCredentials || !branch) {
 } else {
   credentials = branch === 'prod' ? prodCredentials : devCredentials;
   fs.writeFileSync('config/credentials.js', credentials);
+  fs.writeFileSync('config/prod-credentials.js', prodCredentials);
 }

@@ -1,17 +1,21 @@
 import '@babel/polyfill';
 
 import Vue from 'vue';
+import VueMeta from 'vue-meta';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import Vuex from 'vuex';
 import VueTimeago from 'vue-timeago';
 import TimeagoLocale from 'vue-timeago/locales/en-US.json';
 import InstantSearch from 'vue-instantsearch';
+// import VueAnalytics from 'vue-analytics';
 
 import Client from '@/apollo/client';
 import SearchHighlight from '@/components/SearchHighlight';
 import KButton from '@/components/general/KButton';
 import KTextField from '@/components/general/KTextField';
+import KDropdownList from '@/components/general/KDropdownList';
+import homePageTextField from '@/components/general/homePageTextField';
 
 import '@/options/axios';
 import '@/options/googleMaps';
@@ -31,6 +35,9 @@ Vue.use(Logger);
 Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(Vuex);
+Vue.use(VueMeta, {
+  refreshOnceOnNavigation: true,
+});
 Vue.use(VueTimeago, {
   locale: 'en-US',
   locales: {
@@ -38,9 +45,16 @@ Vue.use(VueTimeago, {
   },
 });
 Vue.use(InstantSearch);
+// if (process.env.NODE_ENV === 'production') {
+//   Vue.use(VueAnalytics, {
+//     id: Config.get('analytics.trackingId') || 'UA-XXX-X',
+//   });
+// }
 Vue.component('highlight', SearchHighlight);
 Vue.component('k-btn', KButton);
 Vue.component('k-text-field', KTextField);
+Vue.component('home-text-field', homePageTextField);
+Vue.component('k-dropdown', KDropdownList);
 
 const apolloProvider = new VueApollo({
   defaultClient: Client,
@@ -62,7 +76,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/search',
+      path: '/jobs/search',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
       meta: {
         description: 'Bruh. U right.',
@@ -88,16 +102,21 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/Login'),
     },
     {
-      path: '/signup',
+      path: '/sign-up',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/SignUp'),
     },
     {
-      path: '/signup/:stage',
+      path: '/sign-up/:stage',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/SignUp'),
       props: true,
     },
     {
-      path: '/job/:id',
+      path: '/signup/:stage/:fname/:lname/:email/:password',
+      component: () => import(/* webpackChunkName: "auth" */ '@/pages/SignUp'),
+      props: true,
+    },
+    {
+      path: '/jobs/detail/:id',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
       props: true,
     },
@@ -116,24 +135,24 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: '/reset-password/:code',
+      path: '/forgot-password/:code',
       component: () => import(/* webpackChunkName: "auth" */ '@/pages/ResetPassword'),
       props: true,
     },
     {
-      path: '/myjobs',
+      path: '/jobs/posted',
       component: () => import(/* webpackChunkName: "poster" */ '@/pages/MyJobs'),
     },
     {
-      path: '/savedjobs',
+      path: '/jobs/saved',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/SavedJobs'),
     },
     {
-      path: '/appliedjobs',
+      path: '/jobs/applied',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/AppliedJobs'),
     },
     {
-      path: '/notifications',
+      path: '/account/notification',
       component: () => import(/* webpackChunkName: "notifications" */ '@/pages/NotificationPage'),
     },
     {
@@ -141,33 +160,33 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "account" */ '@/pages/Account'),
     },
     {
-      path: '/settings',
+      path: '/account/settings',
       component: () => import(/* webpackChunkName: "settings" */ '@/pages/Settings'),
     },
     {
-      path: '/settings/:command',
+      path: '/account/settings/:command',
       component: () => import(/* webpackChunkName: "settings" */ '@/pages/Settings'),
     },
     {
-      path: '/createnewjob/:id',
+      path: '/jobs/createnew/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateNewJob'),
       props: { id: null },
     },
     {
-      path: '/createnewjob',
+      path: '/jobs/createnew',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateNewJob'),
     },
     {
-      path: '/createjob',
+      path: '/jobs/create',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
     },
     {
-      path: '/createjob/:id',
+      path: '/jobs/create/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/CreateJob'),
       props: { id: null },
     },
     {
-      path: '/editjob/:id',
+      path: '/jobs/edit/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/EditJob'),
       props: { id: null },
     },
@@ -186,7 +205,7 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/MyOrg'),
     },
     {
-      path: '/applicants',
+      path: '/jobs/applicants',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/Applicants'),
     },
     {
@@ -202,12 +221,20 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "about" */ '@/pages/Terms'),
     },
     {
-      path: '/join',
+      path: '/pricing',
+      component: () => import(/* webpackChunkName: "about" */ '@/pages/Pricing'),
+    },
+    {
+      path: '/careers',
       component: () => import(/* webpackChunkName: "about" */ '@/pages/JoinUs'),
     },
     {
-      path: '/employers',
-      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Employers'),
+      path: '/hire',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Hire'),
+    },
+    {
+      path: '/choose',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Choose'),
     },
     // Debug pages
     {
@@ -218,8 +245,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authRoutes = ['/login', '/signup'];
-  if (authRoutes.includes(from.path) && !to.query.redirect) {
+  console.log(to.meta);
+  const authRoutes = ['/login', '/sign-up'];
+  if (authRoutes.includes(to.path) && !to.query.redirect) {
     next({
       path: to.path,
       query: {

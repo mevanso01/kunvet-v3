@@ -1,14 +1,19 @@
 <template>
   <div :id="prefix + '-pdfframe'" :style="frameStyle" class="frame">
-    <div v-for="n in pages">
-      <canvas :id="prefix + '-page-' + n" class="page">
-      </canvas>
+    <div v-if="iframe">
+      <iframe :src="href + '#view=FitH'" style="width: 100%; height: 1000px;"></iframe>
     </div>
-    <transition name="slide-y-transition">
-      <div class="more" v-if="clipped" @click="clipped = false">
-        <span>View More</span>
+    <div v-else>
+      <div v-for="n in pages">
+        <canvas :id="prefix + '-page-' + n" class="page">
+        </canvas>
       </div>
-    </transition>
+      <transition name="slide-y-transition">
+        <div class="more" v-if="clipped" @click="clipped = false">
+          <span>View More</span>
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 <script>
@@ -21,6 +26,7 @@ export default {
   props: ['href', 'clipResult'],
   data() {
     return {
+      iframe: true,
       prefix: 'pdf',
       pdf: null,
       pages: 0,
@@ -52,17 +58,23 @@ export default {
       this.initialLoad();
     },
     clipped() {
-      this.updateClipping();
+      if (!this.iframe) {
+        this.updateClipping();
+      }
     },
   },
   methods: {
     onResize() {
-      this.containerWidth = this.$el.clientWidth;
-      this.render();
+      if (!this.iframe) {
+        this.containerWidth = this.$el.clientWidth;
+        this.render();
+      }
     },
     async initialLoad() {
-      await this.load();
-      this.render();
+      if (!this.iframe) {
+        await this.load();
+        this.render();
+      }
     },
     async load() {
       const href = this.href;

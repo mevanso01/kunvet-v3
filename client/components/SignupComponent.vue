@@ -18,6 +18,9 @@ h1 {
   font-size: 24px;
   font-weight: bold;
 }
+.back_button_style{
+  width: 102.5px;
+}
 
 </style>
 
@@ -50,6 +53,7 @@ h1 {
         <k-text-field v-model="email" label="Email Address" :rules="emailRules" required></k-text-field>
         <k-text-field v-model="password" toggleVisibility label="Password" :rules="passwordRules" required></k-text-field>
 
+        <k-btn :working="loading" color="#c2c6cf" @click="chooseSignup('')" class="back_button_style">Back</k-btn>
         <k-btn @click="signup" :working="loading" :color="accountTypeInfo.color">Sign Up</k-btn>
       </v-form>
     </div>
@@ -87,21 +91,33 @@ export default {
       type: Boolean,
       default: false,
     },
+    fname: {
+      type: String,
+      default: '',
+    },
+    lname: {
+      type: String,
+      default: '',
+    },
+    email: {
+      type: String,
+      default: '',
+    },
+    password: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
-      fname: '',
-      lname: '',
       business_name: '',
-      email: '',
-      password: '',
       loading: false,
       state: 'initial',
       error: '',
       // Account types
       accountTypes: {
         student: {
-          header: 'Student Sign Up',
+          header: 'Applicant Sign Up',
           color: '#3488fc',
           requireFullName: true,
           requireBusinessName: false,
@@ -113,7 +129,7 @@ export default {
           requireBusinessName: true,
         },
         individual: {
-          header: 'Individual Sign Up',
+          header: 'Personal Hiring Sign Up',
           color: '#e391ff',
           requireFullName: true,
           requireBusinessName: false,
@@ -140,6 +156,25 @@ export default {
     this.$emit('account', this.accountTypes[this.type]);
   },
   methods: {
+    chooseSignup(type) {
+      this.$emit('select', type);
+    },
+    addTagToMailChimp(type = 'student') {
+      var postData = {
+        email_address: this.email,
+        fname: this.fname,
+        tags: ['no preference'],
+        status: 'subscribed',
+        type,
+      };
+      console.log(postData);
+
+      Axios.post('/mailchimp/addMember', postData).then(() => {
+        console.log('posted on mailchimp');
+      }, (error) => {
+        this.$error(error);
+      });
+    },
     signup() {
       if (!this.$refs.form.validate()) {
         this.$debug('Failed validation');
@@ -164,6 +199,7 @@ export default {
 
       Axios.post('/auth/register', data, headers).then((res) => {
         if (res.data.success) {
+          console.log('after success');
           this.logIntoAcct(this.email, this.password); // go to step 2
         } else {
           this.loading = false;
@@ -232,6 +268,10 @@ export default {
           this.$refs.codever.init();
         } else {
           // emit success and let the parent take the next action
+          console.log(this.type);
+          if (this.type === 'student' || this.type === 'business' || this.type === 'individual') {
+            this.addTagToMailChimp(this.type);
+          }
           this.$emit('success');
         }
       }).catch((error) => {
@@ -240,6 +280,10 @@ export default {
       });
     },
     codeValidated() {
+      console.log(this.type);
+      if (this.type === 'student' || this.type === 'business' || this.type === 'individual') {
+        this.addTagToMailChimp(this.type);
+      }
       this.state = 'success';
       this.$emit('success');
     },

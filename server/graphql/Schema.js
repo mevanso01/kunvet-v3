@@ -1,7 +1,7 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
 import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
-import Logger from 'winston';
+import Logger from '@/Logger';
 import Files from '@/utils/Files';
 import Mailer from '@/utils/Mailer';
 // import EmailFunctions from '@/utils/EmailFunctions';
@@ -120,10 +120,12 @@ async function sendNewApplicationNotification(req, next) {
   }
   try {
     employer.notifications.push({
-      text: `New applicant: ${user.firstname} ${user.lastname}`, // Important: change code in applicants.vue before removing
-      route: '/applicants',
+      text: job._id, // Important: change code in applicants.vue before removing
+      job_title: job.title,
+      count: 0,
+      route: '/jobs/applicants',
       notification_type: 'application',
-      date: Date.now,
+      date: Date.now(),
     });
     employer.save();
   } catch (e) {

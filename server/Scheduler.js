@@ -11,7 +11,7 @@
  * node-scheduler is not included in the final bundle.
  */
 import Config from 'config';
-import Logger from 'winston';
+import Logger from '@/Logger';
 
 const tasks = [];
 

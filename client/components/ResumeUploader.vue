@@ -80,9 +80,7 @@
                           type="file"
                           :disabled="state === 'UPLOADING'"
                           @change="updateFile($event.target.files)"
-                          accept="application/pdf, application/msword,
-        application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-        application/vnd.oasis.opendocument.text"
+                          accept="application/pdf"
                           class="input-file"
                         >
                         <div v-if="state === 'INITIAL'" >
@@ -92,6 +90,8 @@
                             </div>
                             <p class="uploader-text mobile-hide">Drag or click to upload resumes and cover letters.</p>
                             <p class="uploader-text mobile-show">Click to upload resumes and cover letters.</p>
+                            <div class="uploader-text" style="top: 300px; font-size: 14px; text-align: left;" v-if="this.type === 'Job' && !small"> Don't have the resume at the moment? Click the 
+                              <img style="height: 18px; padding-left: 4px; padding-right: 4px;" src="../assets/bookmarkIcon.svg" alt=""> button to save the job and come back later.</div>
                         </div>
                     </div>
                 </form>
@@ -120,6 +120,10 @@
         title: {
           type: String,
           default: 'Upload Resumes',
+        },
+        type: {
+          type: String,
+          default: 'None',
         },
       },
       data() {

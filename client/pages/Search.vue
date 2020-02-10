@@ -231,6 +231,9 @@ section.search {
   .bottom-img {
     width: calc(100% - 128px);
   }
+  .banner-mobile {
+    display: none;
+  }
 }
 @media (max-width: 600px) {
   section.search {
@@ -248,6 +251,9 @@ section.search {
     padding-right: 26px;
     height: calc(100vh - 56px);
   }
+  .banner-desktop {
+    display: none;
+  }
   #banner {
     display: none;
   }
@@ -258,6 +264,9 @@ section.search {
   .no-jobs-found-box {
     padding: 0 20px;
     height: 150px;
+  }
+  .suggestions-card {
+    display: none;
   }
 }
 @media (min-width: 961px) {
@@ -296,13 +305,41 @@ section.search {
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
+.chip-container {
+  display: inline-block;
+  margin: 8px 2px;
+}
+
+.search-chip:hover{
+  background-color: #ff6969;
+  color: white;
+  cursor: pointer;
+}
+
+.search-chip {
+  border: 1px solid #ff6969;
+  display: inline;
+  padding: 6px;
+  border-radius: 6px;
+  color: #ff6969;
+}
+
+.suggestions-card {
+  position: fixed;
+  z-index: 1;
+}
+
+.job-alert-banner-columns{
+  max-width: 1000px;
+}
+
 </style>
 
 <template>
   <v-container fluid class="home-page-cont pa-0">
     <section class="search" style="padding-top: 64px;" v-on:keyup.enter="search()">
       <div class="main-cont-large">
-        <div class="search-row">
+        <div class="search-row d-none">
           <div class="search-field-cont">
             <div class="custom-select-2-wrapper">
               <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'city' }">
@@ -319,8 +356,9 @@ section.search {
               </div>
             </div>
           </div>
-          <div class="search-field-cont">
+          <div class="search-field-cont" id="dropdown-header">
             <v-text-field
+
               class="search-params-field"
               solo
               flat
@@ -328,8 +366,28 @@ section.search {
               :placeholder="searchPlaceholder"
               clearable
               v-model="query"
+              @focus="searchFocus=true"
+              @blur="searchFocus=false"
             ></v-text-field>
+            <!--v-if="searchFocus && !query"-->
+            <v-card v-show="searchFocus && !query" class="suggestions-card">
+              <!--{{width}}-->
+              <v-card-title>Try searching for...</v-card-title>
+              <div style="padding: 0 0 20px 14px; max-width: 70%; position:
+              absolute;">
+                <div v-for="job in suggestedJobs"
+                class="chip-container"
+                @mousedown="query=job">
+                  <p class="search-chip">{{job}}</p>
+                </div>
+              </div>
+            </v-card>
+            <!--<p v-if="searchFocus && query">AUTOCOMPLETE</p>-->
+            <!--<p v-if="searchFocus && !query">SUGGESTIONS UI</p>-->
+
           </div>
+
+
           <div class="search-go-cont">
             <button @click="search()" v-ripple class="mobile-hide kunvet-search-icon-btn small">
               <img src="@/assets/magnifier.svg" height="24px" style="margin-top:5px"/>
@@ -338,6 +396,9 @@ section.search {
               Search
             </k-btn>
           </div>
+        </div>
+        <div class="search-row">
+          <JobSearch :inline_mode="true" :onClick="onClickJobSearch" ref="jobSearchForm" class="job-search" />
         </div>
       </div>
     </section>
@@ -399,18 +460,6 @@ section.search {
                   :fromCoordinates="selectedCoordinates"
                 />
               </div>
-              <!-- <div v-if="displayedJobs[2].length % 2 === 1" class="jp-card small-thats-it">
-                <div style="width: 215px; margin: 32px auto;">
-                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
-                </div>
-                <p class="center">That's all.</p>
-              </div>
-              <div v-if="displayedJobs[2].length % 2 === 0" class="jp-card large-thats-it">
-                <div style="width: 215px; margin: 32px auto;">
-                  <img :src="svgs.kunvetDude" style="width: 215px; padding-right: 30px;"/>
-                </div>
-                <p class="center">That's all.</p>
-              </div> -->
             </div>
           </div>
         </v-flex>
@@ -421,7 +470,38 @@ section.search {
           <ais-powered-by ></ais-powered-by>
         </div>
       </v-layout>
+
+      <!-- <div v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" class="banner-desktop">
+        <div class="main-cont-large">
+          <div class="job-alert-banner-columns" style="padding: 60px 80px; border-top:5px solid red; background-color: #f6f6f8;">
+            <div style="vertical-align: middle; column-width: 300px;  display: table-cell;">
+              <img src="@/assets/woman with phone.png" style="width:300px; height: 396px; padding-right: 60px;"/>
+            </div>
+            <div style="width: 500px; display: table-cell; vertical-align: middle;">
+              <NewsletterForm banner @post="onPost"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" class="banner-mobile">
+          <v-layout row wrap style="padding: 0px; border-top:5px solid red;">
+            <v-flex xs12 md4 style="padding: 0px">
+              <img src="@/assets/woman with phone gradiant.png" style="width: 100%;"/>
+            </v-flex>
+            <v-flex xs12 md8 style="padding:0px 50px 50px 50px; background-color: linear-gradient(to bottom, #ffffff, #f8f8f8));">
+              <NewsletterForm banner @post="onPost"/>
+            </v-flex>
+          </v-layout>
+      </div> -->
     </div>
+
+    <!-- <v-dialog v-if="newsLetterSignedUp===false && newsLetterProcessFinished === false" v-model="dialogs.showJobAlertForm" max-width="500px">
+      <v-card>
+        <v-card-text style="margin: 0px; padding: 0px;">
+          <NewsletterForm @close="onClickChild" @post="onPost"/>
+        </v-card-text>
+      </v-card>
+    </v-dialog> -->
   </v-container>
 </template>
 <script>
@@ -435,6 +515,7 @@ import vc from '@/assets/vc.svg';
 import MainJobCard from '@/components/MainJobCard';
 import DisplayTextHelper from '@/utils/DisplayTextHelper';
 import DistanceHelper from '@/utils/DistanceHelper';
+import NewsletterForm from '@/components/newsLetterSubscribe';
 import Coordinates from '@/constants/coordinates';
 import positions from '@/constants/positions';
 import locations from '@/constants/locations';
@@ -448,6 +529,7 @@ import EventBus from '@/EventBus';
 import Config from 'config';
 import algoliasearch from 'algoliasearch';
 import userDataProvider from '@/userDataProvider';
+import JobSearch from '@/components/JobSearch';
 
 const algoliaConfig = Config.get('algolia');
 
@@ -459,16 +541,48 @@ if (algoliaConfig.appId) {
 Vue.use(VueApollo);
 
 export default {
+  metaInfo: {
+    title: 'Search for Jobs | Kunvet',
+    meta: [
+      { name: 'description', content: 'Find all the new jobs hiring near you—from real employers who are looking to hire immediately.' },
+    ],
+  },
   components: {
     MainJobCard,
+    NewsletterForm,
+    JobSearch,
+  },
+  mounted() {
+    const el = document.querySelector('#dropdown-header .v-input__slot');
+    el.addEventListener('click', () => {
+      this.setSearchWidth();
+    });
+    window.onresize = () => {
+      this.setSearchWidth();
+    };
+    this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
+    if (this.$route.query.q) {
+      this.query = this.$route.query.q;
+    }
+    if (this.$route.query.latitude && this.$route.query.longitude) {
+      this.selectedLat = this.$route.query.latitude;
+      this.selectedLong = this.$route.query.longitude;
+    }
+    this.rawSearch();
+    // window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
   },
   data() {
     return {
+      width: 0,
+      searchFocus: false,
+      searchHasText: false,
+      searchWidth: 0,
       uid: null,
       // findJobs: [],
       saved_jobs: [],
       filteredJobs: [],
       openSelectField: null,
+      suggestedJobs: ['Developer', 'Marketing', 'Brand Ambassador', 'Caretaker', 'Tutor'],
       firstSearchTypes: [
         'Latest jobs',
       ],
@@ -496,6 +610,9 @@ export default {
       selectedShifts: this.$store.state.selectedShifts || [],
       selectedLat: Coordinates.uci.latitude,
       selectedLong: Coordinates.uci.longitude,
+      dialogs: {
+        showJobAlertForm: false,
+      },
       svgs: {
         information: InformationSvg,
         locationMarker: LocationMarkerSvg,
@@ -511,6 +628,8 @@ export default {
       page: 0,
       displayedJobs: [[], [], []],
       searchPlaceholder: '',
+      newsLetterSignedUp: false,
+      newsLetterProcessFinished: false,
     };
   },
   apollo: {
@@ -582,6 +701,23 @@ export default {
     },
   },
   methods: {
+    setSearchWidth() {
+      const el = document.querySelector('#dropdown-header .v-input__slot');
+      const width = window.getComputedStyle(el, null).width;
+      if (document.querySelector('.suggestions-card')) {
+        document.querySelector('.suggestions-card').style.width = width;
+      }
+    },
+    onClickChild (value) {
+      console.log('onClickChild is clicked');
+      console.log(value); // someValue
+      window.setTimeout(() => { this.dialogs.showJobAlertForm = false; }, 200);
+    },
+    onPost (value) {
+      console.log('onPost is clicked');
+      console.log(value); // someValue
+      window.setTimeout(() => { this.newsLetterProcessFinished = true; });
+    },
     // Randomly pick search search placeholder text
     getSearchPlaceholderText() {
       const textList = searchTexts.placeholderList;
@@ -607,13 +743,6 @@ export default {
         this.openSelectField = name;
       }
     },
-    searchAndFilter() {
-      this.openSelect(null);
-      this.setSelectedLatlongs();
-      this.page = 0;
-      this.findAndFilterJobs();
-      // this.loadInitialJobs();
-    },
     documentClick(e) {
       const selects = document.getElementsByClassName('custom-select-2-wrapper');
       const target = e.target;
@@ -622,16 +751,18 @@ export default {
       }
       this.openSelect(null); // otherwise, close
     },
-    setSelectedLatlongs() {
-      const latlongs = this.getCityCoordinates();
-      this.selectedLat = latlongs.latitude;
-      this.selectedLong = latlongs.longitude;
-    },
+    // setSelectedLatlongs() {
+    //   const latlongs = this.getCityCoordinates();
+    //   this.selectedLat = latlongs.latitude;
+    //   this.selectedLong = latlongs.longitude;
+    // },
     getCityCoordinates() {
       const selected = locations.search_locations.find(el => el.name === this.selectedCity);
       if (!selected) {
+        this.$debug('Location not found');
         return Coordinates.uci;
       }
+      this.$debug('Selected', selected);
       return { latitude: selected.latitude, longitude: selected.longitude };
     },
     findAndFilterJobs() {
@@ -755,10 +886,11 @@ export default {
       return `${this.computeDistance(lat, long)} miles away`;
     },
     computeDistance(lat, long) {
+      const coordinates = this.selectedCoordinates;
       return DistanceHelper.computeDistance(
         {
-          latitude: this.selectedLat,
-          longitude: this.selectedLong,
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
         },
         {
           latitude: lat,
@@ -929,11 +1061,12 @@ export default {
       }
     },
     async algoliaSearch() {
-      const coordinates = this.getCityCoordinates();
+      const coordinates = this.selectedCoordinates;
       const query = this.query || '';
+      this.$debug(coordinates);
       const requests = [{
         params: {
-          query: query,
+          query: `${query} AND expired = false`,
           page: this.page,
           aroundLatLng: `${coordinates.latitude}, ${coordinates.longitude}`,
         },
@@ -983,28 +1116,30 @@ export default {
       this.$debug(this.filteredJobs);
     },
     search() {
-      this.page = 0;
-      this.loadingJobs = true;
-      if (this.query) {
-        this.$router.push({
-          path: '/search',
-          query: {
-            q: this.query,
-          },
-        });
-        this.$setTitle(`${this.query} - Kunvet`);
-      } else {
-        this.$router.push({
-          path: '/search',
-        });
-        this.$setTitle('Kunvet');
-      }
-      this.rawSearch();
+      // this.page = 0;
+      // this.loadingJobs = true;
+      // if (this.query) {
+      //   this.$router.push({
+      //     path: '/jobs/search',
+      //     query: {
+      //       q: this.query,
+      //     },
+      //   });
+      //   this.$setTitle(`${this.query} | Kunvet`);
+      // } else {
+      //   this.$router.push({
+      //     path: '/jobs/search',
+      //   });
+      //   this.$setTitle('Kunvet');
+      // }
+      // this.rawSearch();
     },
     rawSearch() {
       this.$debug('Started rawSearch');
+      // this.setSelectedLatlongs();
       this.displayedJobs = [[], [], []];
-      if (!algoliaClient && process && process.env && process.env.NODE_ENV === 'development') {
+      // if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development') {
         // Local DB
         console.log('Loading jobs from local db'); // this is left as console.log on purpose
         this.findAndFilterJobs();
@@ -1015,6 +1150,22 @@ export default {
         // No usable backend is available
         this.$error('No usable search backend');
       }
+    },
+    onClickJobSearch(job, query) {
+      this.query = query;
+      if (job.latitude && job.longitude) {
+        this.selectedLat = job.latitude;
+        this.selectedLong = job.longitude;
+      } else {
+        this.selectedLong = Coordinates.uci.latitude;
+        this.selectedLong = Coordinates.uci.longitude;
+      }
+      this.page = 0;
+      this.loadingJobs = true;
+      if (this.query) {
+        this.$setTitle(`${this.query} | Kunvet`);
+      }
+      this.rawSearch();
     },
   },
   deactivated() {
@@ -1040,45 +1191,46 @@ export default {
     });
   },
   watch: {
-    '$route.query.q'() {
-      if (this.$route.query.q && this.$route.query.q !== this.query) {
-        this.query = this.$route.query.q;
-        this.rawSearch();
-      }
-    },
+    // '$route.query.q'() {
+    //   if (this.$route.query.q && this.$route.query.q !== this.query) {
+    //     this.query = this.$route.query.q;
+    //     this.rawSearch();
+    //   }
+    // },
   },
   activated() {
-    this.setSelectedLatlongs();
+    // this.setSelectedLatlongs();
     const hasJobsDisplayed = this.displayedJobs &&
       (this.displayedJobs[0].length > 0 || this.displayedJobs[1].length > 0 || this.displayedJobs[2].length > 0);
     if (!hasJobsDisplayed) {
       this.loadingJobs = true;
     }
-    const oldQuery = this.query;
-    if (this.$route.query.q) {
-      this.query = this.$route.query.q;
-    } else if (this.query && this.$route.query.q !== this.query) {
-      this.$router.push({
-        path: '/search',
-        query: {
-          q: this.query,
-        },
-      });
-    }
+    // const oldQuery = this.query;
+    // if (this.$route.query.q) {
+    //   this.query = this.$route.query.q;
+    // } else if (this.query && this.$route.query.q !== this.query) {
+    //   this.$router.push({
+    //     path: '/jobs/search',
+    //     query: {
+    //       q: this.query,
+    //     },
+    //   });
+    // }
     // else if (this.$store.state && this.$store.state.prevSearchQuery) {
     //   this.query = this.$store.state.prevSearchQuery;
     //   this.$store.commit('setPrevQuery', '');
     // } else {
     //   this.query = '';
     // }
-    if (!hasJobsDisplayed || oldQuery !== this.query) {
-      this.rawSearch();
-    }
+    // if (!hasJobsDisplayed || oldQuery !== this.query) {
+    //   this.rawSearch();
+    // }
     document.addEventListener('click', this.documentClick, { passive: true });
     this.searchPlaceholder = this.getSearchPlaceholderText();
     userDataProvider.getUserData().then(udata => {
       const data = this.$store.state;
       if (data) {
+        console.log(data);
         if (data.firstSearch) {
           this.firstSearch = data.firstSearch;
         }
@@ -1096,6 +1248,11 @@ export default {
         }
         if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
           this.selectedPositions = data.selectedPositions;
+        }
+        if (data.userdata.preferences.getNewsletters === true) {
+          this.newsLetterSignedUp = true;
+        } else {
+          this.newsLetterSignedUp = false;
         }
       }
       if (udata.uid && udata.acct !== 0) {

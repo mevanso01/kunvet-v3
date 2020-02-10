@@ -5,11 +5,13 @@ const result = ErrorCodeInternal.codes;
 const messages = ErrorCodeInternal.messages;
 
 result.getMessage = (code) => {
+  let message = messages[result.UnknownError];
+
   if (Object.prototype.hasOwnProperty.call(messages, code)) {
-    return messages[code];
+    message = messages[code];
   }
 
-  return messages[result.UnknownError];
+  return message;
 };
 
 export default result;
