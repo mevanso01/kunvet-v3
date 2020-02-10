@@ -92,7 +92,7 @@ module.exports = {
     files: {
       defaultStorage: 's3',
       s3: {
-        bucket: 'kunvet-dev-uploads',
+        bucket: 'kunvet-prod-uploads',
       },
       // image/* is hardcoded to be allowed
       allowedMimeTypes: [
