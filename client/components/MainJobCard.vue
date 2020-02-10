@@ -33,10 +33,10 @@
           <div><h3 class="jp-title">
             {{ job.title }}
           </h3></div>
-          <div class="carditem" style="color: #A7A7A7">
+          <!--<div class="carditem" style="color: #A7A7A7">-->
             <!-- <timeago :datetime="job.date" /> -->
-            <timeago :since="job.date" />
-          </div>
+            <!--<timeago :since="job.date" />-->
+          <!--</div>-->
           <div class="carditem">
             <div class="post-address-container">
               <p>
