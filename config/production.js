@@ -25,9 +25,13 @@ if (!fs.existsSync(credPath)) {
 }
 
 const Credentials = require('./credentials.js');
+const ProdCredentials = require('./prod-credentials.js');
 
 console.log('================== Credentials ==================');
 console.log(Credentials);
+
+console.log('================== PROD Credentials ==================');
+console.log(ProdCredentials);
 
 if (Credentials.REMOVEMEPLS) {
   console.error(colors.red.bold(`
