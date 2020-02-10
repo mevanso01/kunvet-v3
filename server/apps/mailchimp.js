@@ -8,6 +8,7 @@ import KoaRouter from 'koa-router';
 import Config from 'config';
 
 const mcListId = Config.get('mailchimp.mcListId');
+const mcEmployerListId = Config.get('mailchimp.mcEmployerListId');
 const mc = Config.get('mailchimp');
 
 // const mcAPIKey = Config.get('mailchimp.mcAPIKey');
@@ -43,9 +44,10 @@ router.post('/addMember', async (ctx) => {
     message: 'Failed posting on MailChimp',
   });
   const info = ctx.request.body;
+  const listId = info.type === 'student' ? mcListId : mcEmployerListId;
   console.log(info);
-  console.log(mcListId);
-  mailchimp.post(`lists/${mcListId}`, {
+  console.log(listId);
+  mailchimp.post(`lists/${listId}`, {
     members: [{
       email_address: info.email_address,
       status: 'subscribed',
@@ -58,7 +60,7 @@ router.post('/addMember', async (ctx) => {
     if (m.errors && m.errors.length > 0) {
       console.log('Error adding new subscriber to MC', m.errors);
       if (m.statusCode == 200){
-        mailchimp.post(`lists/${mcListId}`, {
+        mailchimp.post(`lists/${listId}`, {
           members: [{
             email_address: info.email_address,
             status: 'subscribed',

@@ -1051,6 +1051,22 @@ export default {
     selectAccountType(type) {
       this.chosenAccountType = type;
     },
+    addTagToMailChimp(type = 'student') {
+      var postData = {
+        email_address: this.email,
+        fname: this.fname,
+        tags: ['no preference'],
+        status: 'subscribed',
+        type,
+      };
+      console.log(postData);
+
+      axios.post('/mailchimp/addMember', postData).then(() => {
+        console.log('posted on mailchimp');
+      }, (error) => {
+        this.$error(error);
+      });
+    },
     onSignup() {
       userDataProvider.getUserData().then(async res => {
         this.$debug('meow');
@@ -1297,6 +1313,7 @@ export default {
                 window.dataLayer.push({ 'event': 'create-employer-account' });
                 console.log('gtm: create-employer-account');
               }
+              this.addTagToMailChimp(data.account_type);
             } else {
               ret.error = res.data ? res.data : res;
               this.$error(res);

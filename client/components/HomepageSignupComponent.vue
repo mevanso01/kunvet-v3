@@ -241,12 +241,13 @@ export default {
     chooseSignup(type) {
       this.$emit('select', type);
     },
-    addTagToMailChimp() {
+    addTagToMailChimp(type = 'student') {
       var postData = {
         email_address: this.email,
         fname: this.fname,
         tags: ['no preference'],
         status: 'subscribed',
+        type,
       };
       console.log(postData);
       Axios.post('/mailchimp/addMember', postData).then(() => {
@@ -354,8 +355,8 @@ export default {
     codeValidated() {
       // this.state = 'success';
       console.log(this.type);
-      if (this.type === 'student') {
-        this.addTagToMailChimp();
+      if (this.type === 'student' || this.type === 'business' || this.type === 'individual') {
+        this.addTagToMailChimp(this.type);
       }
       this.$emit('success');
     },

@@ -159,12 +159,13 @@ export default {
     chooseSignup(type) {
       this.$emit('select', type);
     },
-    addTagToMailChimp() {
+    addTagToMailChimp(type = 'student') {
       var postData = {
         email_address: this.email,
         fname: this.fname,
         tags: ['no preference'],
         status: 'subscribed',
+        type,
       };
       console.log(postData);
 
@@ -199,10 +200,6 @@ export default {
       Axios.post('/auth/register', data, headers).then((res) => {
         if (res.data.success) {
           console.log('after success');
-          console.log(this.type);
-          if (this.type === 'student') {
-            this.addTagToMailChimp();
-          }
           this.logIntoAcct(this.email, this.password); // go to step 2
         } else {
           this.loading = false;
@@ -271,6 +268,10 @@ export default {
           this.$refs.codever.init();
         } else {
           // emit success and let the parent take the next action
+          console.log(this.type);
+          if (this.type === 'student' || this.type === 'business' || this.type === 'individual') {
+            this.addTagToMailChimp(this.type);
+          }
           this.$emit('success');
         }
       }).catch((error) => {
@@ -279,6 +280,10 @@ export default {
       });
     },
     codeValidated() {
+      console.log(this.type);
+      if (this.type === 'student' || this.type === 'business' || this.type === 'individual') {
+        this.addTagToMailChimp(this.type);
+      }
       this.state = 'success';
       this.$emit('success');
     },

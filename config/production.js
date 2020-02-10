@@ -68,6 +68,7 @@ module.exports = {
   },
   mailchimp: {
     mcListId: Credentials.mailchimp.mcListId,
+    mcEmployerListId: Credentials.mailchimp.mcEmployerListId,
     mcAPIKey: Credentials.mailchimp.mcAPIKey,
   },
   private: {
