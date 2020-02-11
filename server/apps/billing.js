@@ -230,7 +230,7 @@ router.post('/createTransaction', async (ctx) => {
   }
   // Charge
   // TODO: remove 'production' case when deploying to 'prod' branch
-  if (!(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development')) {
+  if (!(process.env.NODE_ENV === 'development')) {
     try {
       const sale = util.promisify(BraintreeGateway.transaction.sale).bind(BraintreeGateway.transaction);
       const result = await sale({
