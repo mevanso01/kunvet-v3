@@ -39,6 +39,7 @@ import MailChimpApp from '@/apps/mailchimp';
 import Db from '@/mongodb/Db';
 import Models from '@/mongodb/Models';
 import Algolia from '@/utils/Algolia';
+import Config from 'config';
 
 // Google Auth
 import GAuth from '@/utils/GoogleAuth';
@@ -48,6 +49,9 @@ import GAuth from '@/utils/GoogleAuth';
 // ========
 
 Logger.info(`Kunvet Server ${process.env.COMMIT} (${process.env.NODE_ENV})`);
+
+console.log('================== Kunvet Server CONFIG ==================');
+console.log(Config.get('private'));
 
 // const path = require('path');
 
