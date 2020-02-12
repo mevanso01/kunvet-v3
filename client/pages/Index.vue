@@ -1356,6 +1356,7 @@ export default {
           latitude: job.latitude,
           longitude: job.longitude,
           q: query,
+          p: 0,
         },
       });
     },

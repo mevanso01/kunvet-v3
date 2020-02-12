@@ -405,18 +405,10 @@ export default {
       }
     },
     setDefaultValues(values) {
-      if (values.q) {
-        this.query = values.q;
-      }
-      if (values.address) {
-        this.job.address = values.address;
-      }
-      if (values.latitude) {
-        this.job.latitude = values.latitude;
-      }
-      if (values.longitude) {
-        this.job.longitude = values.longitude;
-      }
+      this.query = values.q || '';
+      this.job.address = values.address || '';
+      this.job.latitude = values.latitude || null;
+      this.job.longitude = values.longitude || null;
     },
   },
   activated() {
