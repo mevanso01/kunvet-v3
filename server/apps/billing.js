@@ -273,7 +273,7 @@ router.post('/createTransaction', async (ctx) => {
     message: 'Purchase completed successfully',
   });
 
-  if (process.env.NODE_ENV === 'production' && jobId) {
+  if (process.env.NODE_ENV === 'production' && Config.get('googleIndexing') && jobId) {
     // Update Google indexing
     GAuth.getAuthRequestHeaders()
       .then(value => {

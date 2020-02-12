@@ -51,13 +51,14 @@ module.exports = {
   daysToExpire: 30,
   serverUrl: Credentials.serverUrl,
   googleMapsKey: Credentials.googleMapsKey,
+  googleIndexing: Credentials.googleIndexing || false,
   sentry: {
     dsn: Credentials.sentryClientDsn,
   },
   analytics: {
-    //googleAnalytics: true,
-    googleTagManager: true,
-    //googleAdSense: true,
+    // googleAnalytics: true,
+    googleTagManager: false,
+    // googleAdSense: true,
     // hotjar: true,
     trackingId: Credentials.analytics.trackingId,
   },

@@ -273,15 +273,11 @@ if (process.env.NODE_ENV === 'production' && Config.get('analytics')) {
       w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
       var f = d.getElementsByTagName(s)[0];
       var j = d.createElement(s);
-      var temp = l;
-      temp += '&l=';
-      var dl = l !== 'dataLayer' ? (temp) : '';
+      var dl = l !== 'dataLayer' ? `&l=${l}` : '';
       j.async = true;
-      j.src = 'https://www.googletagmanager.com/gtm.js?id=';
-      j.src += i;
-      j.src += dl;
+      j.src = `https://www.googletagmanager.com/gtm.js?id=${i}${dl}`;
       f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-KMXJH5V');
+    })(window, document, 'script', 'dataLayer', 'GTM-P8RNK3S');
   }
 
   // if (Config.get('analytics.hotjar')) {
