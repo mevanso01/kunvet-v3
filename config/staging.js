@@ -26,6 +26,6 @@ if (process.env.NODE_ENV !== 'production') {
 const base = Object.assign({}, require('./production.js'));
 
 // Disable all forms of analytics
-base.analytics = false;
+// base.analytics = false;
 
 module.exports = base;
