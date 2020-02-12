@@ -560,15 +560,9 @@ export default {
     window.onresize = () => {
       this.setSearchWidth();
     };
-    this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
-    if (this.$route.query.q) {
-      this.query = this.$route.query.q;
+    if (this.$route.query.p == null) {
+      this.$route.query.p = 0;
     }
-    if (this.$route.query.latitude && this.$route.query.longitude) {
-      this.selectedLat = this.$route.query.latitude;
-      this.selectedLong = this.$route.query.longitude;
-    }
-    this.rawSearch();
     // window.setTimeout(() => { this.dialogs.showJobAlertForm = true; }, 3000);
   },
   data() {
@@ -807,6 +801,7 @@ export default {
           return fetchMoreResult;
         },
       }).then((res) => {
+        console.log(res);
         this.loadingJobs = false;
         const fetchedJobs = res.data.findJobs;
         this.page += 1;
@@ -1137,6 +1132,7 @@ export default {
     rawSearch() {
       this.$debug('Started rawSearch');
       // this.setSelectedLatlongs();
+      this.loadingJobs = true;
       this.displayedJobs = [[], [], []];
       // if (process.env.NODE_ENV === 'development') {
       if (process.env.NODE_ENV === 'development') {
@@ -1149,6 +1145,7 @@ export default {
       } else {
         // No usable backend is available
         this.$error('No usable search backend');
+        this.loadingJobs = false;
       }
     },
     onClickJobSearch(job, query) {
@@ -1161,10 +1158,7 @@ export default {
         this.selectedLong = Coordinates.uci.longitude;
       }
       this.page = 0;
-      this.loadingJobs = true;
-      if (this.query) {
-        this.$setTitle(`${this.query} | Kunvet`);
-      }
+      this.$setTitle(this.query || 'Search for Jobs');
       this.rawSearch();
     },
   },
@@ -1200,10 +1194,24 @@ export default {
   },
   activated() {
     // this.setSelectedLatlongs();
-    const hasJobsDisplayed = this.displayedJobs &&
-      (this.displayedJobs[0].length > 0 || this.displayedJobs[1].length > 0 || this.displayedJobs[2].length > 0);
-    if (!hasJobsDisplayed) {
-      this.loadingJobs = true;
+    if (this.$route.query.p != null) {
+      // Do SearchForm Init && Job Search
+      this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
+      this.query = this.$route.query.q || '';
+      this.selectedLat = this.$route.query.latitude || Coordinates.uci.latitude;
+      this.selectedLong = this.$route.query.longitude || Coordinates.uci.longitude;
+      this.page = 0;
+      this.rawSearch();
+      // Replace URL
+      this.$router.replace({
+        path: '/jobs/search',
+        query: {
+          address: this.$route.query.address || '',
+          latitude: this.$route.query.latitude || '',
+          longitude: this.$route.query.longitude || '',
+          q: this.$route.query.q || '',
+        },
+      });
     }
     // const oldQuery = this.query;
     // if (this.$route.query.q) {

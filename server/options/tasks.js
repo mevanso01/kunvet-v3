@@ -110,7 +110,7 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
           console.log('--------------- expire mail success ---------------');
         }
       }
-      if (process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV === 'production' && Config.get('googleIndexing')) {
         // Update Google indexing
         try {
           const value = await GAuth.getAuthRequestHeaders();
