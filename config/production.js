@@ -57,7 +57,7 @@ module.exports = {
   },
   analytics: {
     // googleAnalytics: true,
-    googleTagManager: false,
+    googleTagManager: Credentials.analytics.googleTagManager || false,
     // googleAdSense: true,
     // hotjar: true,
     trackingId: Credentials.analytics.trackingId,
