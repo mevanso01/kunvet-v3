@@ -1127,9 +1127,9 @@
             baseSalaryUnitText = '';
           }
           // var parsed = this.parseAddress(this.findJob.address);
-          let description1 = this.findJob.description.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
-          let experience1 = this.findJob.experience.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
-          let responsibilities1 = this.findJob.responsibilities.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '<br>').replace(/<p>/ig, '').replace(/<\/?span>/ig, '');
+          let description1 = this.findJob.description.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
+          let experience1 = this.findJob.experience.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
+          let responsibilities1 = this.findJob.responsibilities.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
           if (!description1.endsWith('<br>')) {
             description1 += '<br>';
           }
@@ -1183,22 +1183,26 @@
               'unitText': baseSalaryUnitText,
             };
           } else {
-            delete this.jsonld.baseSalary;
+            this.jsonld.baseSalary.value = {
+              '@type': 'QuantitativeValue',
+              'unitText': 'HOUR',
+              'value': 0,
+            };
           }
-          if (this.userdata.account_type === 'business') {
+          if (this.findJob.category === 'business') {
             this.jsonld.hiringOrganization = {
               '@type': 'Organization',
               'name': this.findJob.posted_by,
             };
-          } else if (this.userdata.account_type === 'individual') {
+          } else if (this.findJob.category === 'individual') {
             this.jsonld.hiringOrganization = {
               '@type': 'Organization',
               'name': 'Kunvet',
             };
           }
-          // if (this.findJob.expired) {
-          //   this.jsonld = null;
-          // }
+          if (this.findJob.expired) {
+            this.jsonld = null;
+          }
           console.log(this.findJob);
           this.fetchProfilePic();
         }).catch((error) => {
