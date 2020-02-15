@@ -236,6 +236,11 @@ router.post('/createTransaction', async (ctx) => {
       const result = await sale({
         amount: (credits / 100).toString(),
         paymentMethodNonce: req.paymentMethodNonce,
+        customer: {
+          firstName: user.firstname,
+          lastName: user.lastname,
+          email: user.email,
+        },
         options: {
           submitForSettlement: true,
         },
