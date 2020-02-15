@@ -2,6 +2,7 @@ const FindJobRecord = `
   _id
   user_id
   business_id
+  category
   posted_by
   active
   is_deleted
