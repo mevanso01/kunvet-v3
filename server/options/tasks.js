@@ -91,12 +91,25 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
           } else {
             salary = expiredJobs[i].pay_type;
           }
+          let address = '';
+          if (expiredJobs[i]) {
+            address = expiredJobs[i].address;
+            if (expiredJobs[i].address2) {
+              address = `${address} ${expiredJobs[i].address2}`;
+            }
+            if (expiredJobs[i].city) {
+              address = `${address}, ${expiredJobs[i].city}`;
+            }
+            if (expiredJobs[i].state) {
+              address = `${address}, ${expiredJobs[i].state}`;
+            }
+          }
           const mailer = new Mailer();
           const mailOptions = {
             fname: jobPoster[0].firstname,
             jobname: expiredJobs[i].title,
             daysToExpire,
-            fullAddress: `${expiredJobs[i].address} ${expiredJobs[i].address2 || ''}`,
+            fullAddress: address,
             jobtype: jobType.join(' / '),
             salary,
             appsReceived: appsReceived === 0 ? 'no' : appsReceived,

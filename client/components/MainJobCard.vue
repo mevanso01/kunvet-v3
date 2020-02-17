@@ -47,7 +47,7 @@
                   <Distance :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
                 </span>
                 <span v-else>
-                  {{ job.address }}
+                  {{ fullAddress }}
                 </span>
               </p>
               <p v-if="job.university" style="margin-left: 23px;">
@@ -119,6 +119,22 @@ export default {
     },
     isIndividualJob() {
       return !this.job.business_id;
+    },
+    fullAddress() {
+      let value = '';
+      if (this.job) {
+        value = this.job.address;
+        if (this.job.address2) {
+          value = `${value} ${this.job.address2}`;
+        }
+        if (this.job.city) {
+          value = `${value}, ${this.job.city}`;
+        }
+        if (this.job.state) {
+          value = `${value}, ${this.job.state}`;
+        }
+      }
+      return value;
     },
   },
   methods: {

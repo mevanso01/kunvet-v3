@@ -13,6 +13,9 @@ const FindJobRecord = `
   description
   address
   address2
+  city
+  state
+  zip
   university
   latitude
   longitude
@@ -53,6 +56,10 @@ const FindJobRecordForJobCard = `
   title
   description
   address
+  address2
+  city
+  state
+  zip
   university
   latitude
   longitude

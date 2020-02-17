@@ -149,12 +149,20 @@
                       :rules="[(title) => !!(title) || 'Required']"
                       required
                     ></v-text-field>
+                    <!-- <v-text-field
+                      v-model="job.address"
+                      ref="addressField"
+                      label="Street address"
+                      required
+                      @change="setLatLongs"
+                      :rules="[() => !!(job.address) || 'Required',
+                               () => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
+                    ></v-text-field> -->
                     <v-text-field
                       v-model="job.address"
                       ref="addressField"
-                      label="Address"
+                      label="Street address"
                       required
-                      @change="setLatLongs"
                       :rules="[() => !!(job.address) || 'Required',
                                () => (!!(job.latitude) && !!(job.longitude)) || 'Invalid address. Please select a complete address from the dropdown']"
                     ></v-text-field>
@@ -162,10 +170,46 @@
                       class="optional"
                       v-model="job.address2"
                       ref="addressField2"
-                      label="Address Line 2"
+                      label="Strees address 2"
                       placeholder="Apt, Suite, Bldg."
-                      hide-details
                     ></v-text-field>
+                    <v-layout class="additional-requirements" row wrap>
+                      <v-flex xs12 sm6 md5>
+                        <v-text-field
+                          class=""
+                          label="City"
+                          v-model="job.city"
+                          placeholder=""
+                          :rules="[
+                            () => !!(job.city) || 'Required',
+                          ]"
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm6 md3>
+                        <v-select
+                          class=""
+                          label="State"
+                          v-model="job.state"
+                          :items="states"
+                          :rules="[
+                            () => !!(job.state) || 'Required',
+                          ]"
+                          >
+                        </v-select>
+                      </v-flex>
+                      <v-flex xs12 sm6 md4>
+                        <v-text-field
+                          class=""
+                          v-model="job.zip"
+                          name="preferred-major"
+                          label="ZIP"
+                          :rules="[
+                            () => !!(job.zip) || 'Required',
+                            v => /^\d*$/.test(v) || 'Invalid format',
+                          ]"
+                        ></v-text-field>
+                      </v-flex>
+                    </v-layout>
                     <div v-if="job.address">
                       <v-checkbox class="optional" style="margin-top: 16px;"
                         label="Is this job on a school campus?"
@@ -798,6 +842,7 @@ import PicUploader from '@/components/PicUploader';
 import { degreesReduced, degreeReducedDbToString, degreeReducedStringToDb } from '@/constants/degrees';
 import positions from '@/constants/positions';
 import languages from '@/constants/languages';
+import states from '@/constants/states';
 import queries from '@/constants/queries';
 import difference from 'lodash/difference';
 import axios from 'axios';
@@ -901,6 +946,9 @@ export default {
         posted_by: null,
         address: '',
         address2: null,
+        city: '',
+        state: '',
+        zip: '',
         latitude: null,
         longitude: null,
         university: null,
@@ -1045,6 +1093,9 @@ export default {
     },
     isFirstJob() {
       return this.postedJobs.length < 1;
+    },
+    states() {
+      return Object.keys(states);
     },
   },
   methods: {
@@ -1248,6 +1299,9 @@ export default {
         address: this.job.address,
         jobInfo: {
           address2: this.job.address2,
+          city: this.job.city,
+          state: this.job.state,
+          zip: this.job.zip,
           title: this.job.title,
           university: this.job.university,
           lat: this.job.latitude,
@@ -1353,9 +1407,25 @@ export default {
         return;
       }
       this.job.addressValid = true;
-      this.job.address = place.formatted_address;
       this.job.latitude = place.geometry.location.lat();
       this.job.longitude = place.geometry.location.lng();
+      // this.job.address = place.formatted_address;
+      const address = [];
+      place.address_components.forEach((item) => {
+        if (item.types.indexOf('street_number') > -1 || item.types.indexOf('street_address') > -1 || item.types.indexOf('route') > -1) {
+          address.push(item.short_name);
+        }
+        if (item.types.indexOf('locality') > -1 || item.types.indexOf('administrative_area_level_3') > -1) {
+          this.job.city = item.short_name;
+        }
+        if (item.types.indexOf('administrative_area_level_1') > -1) {
+          this.job.state = item.short_name;
+        }
+        if (item.types.indexOf('postal_code') > -1) {
+          this.job.zip = item.short_name;
+        }
+      });
+      this.job.address = address.join(' ');
     },
     saveForLater() {
       this.loading = true;
@@ -1572,6 +1642,9 @@ export default {
         date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
         address2: this.job.address2,
+        city: this.job.city,
+        state: this.job.state,
+        zip: this.job.zip,
         university: this.isUniversity ? this.job.university : null,
         latitude: this.job.latitude,
         longitude: this.job.longitude,
@@ -1687,6 +1760,9 @@ export default {
           this.job.date = job.date;
           this.job.address = job.address;
           this.job.address2 = job.address2;
+          this.job.city = job.city;
+          this.job.state = job.state;
+          this.job.zip = job.zip;
           this.job.university = job.university;
           if (job.university) {
             this.isUniversity = true;
@@ -1896,6 +1972,22 @@ export default {
               this.job.longitude = results[0].geometry.location.lng();
               this.job.addressValid = true;
               this.$refs.addressField.validate();
+              const address = [];
+              results[0].address_components.forEach((item) => {
+                if (item.types.indexOf('street_number') > -1 || item.types.indexOf('street_address') > -1 || item.types.indexOf('route') > -1) {
+                  address.push(item.short_name);
+                }
+                if (item.types.indexOf('locality') > -1 || item.types.indexOf('administrative_area_level_3') > -1) {
+                  this.job.city = item.short_name;
+                }
+                if (item.types.indexOf('administrative_area_level_1') > -1) {
+                  this.job.state = item.short_name;
+                }
+                if (item.types.indexOf('postal_code') > -1) {
+                  this.job.zip = item.short_name;
+                }
+              });
+              this.job.address = address.join(' ');
             } else {
               this.job.latitude = null;
               this.job.longitude = null;
@@ -1914,11 +2006,12 @@ export default {
       if (!this.autocomplete || !this.geocoder) {
         const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
         input.setAttribute('placeholder', '');
-        this.autocomplete = new window.google.maps.places.Autocomplete(input);
+        const options = {
+          types: ['address'],
+          componentRestrictions: { country: 'us' },
+        };
+        this.autocomplete = new window.google.maps.places.Autocomplete(input, options);
         this.geocoder = new window.google.maps.Geocoder();
-        this.autocomplete.setComponentRestrictions({
-          country: ['us'],
-        });
         this.autocomplete.addListener('place_changed', () => {
           this.prevAutocompleteAddress = this.job.address;
           if (this.autocomplete === null) {

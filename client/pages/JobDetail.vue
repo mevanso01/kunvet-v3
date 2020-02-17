@@ -484,7 +484,9 @@
               <img class="job-info-icon" style="transform: translateY(2px);"
                    :src="svgs.building"></img>
               <span style="padding-top: 2px;">
-                <a class="location_link" @click="changeLocation()" target="_blank">{{ findJob.address }}</a><template v-if="findJob.address2"> {{ findJob.address2 }}</template>
+                <a class="location_link" @click="changeLocation()" target="_blank">
+                  {{ fullAddress }}
+                </a>
               </span>
             </p>
             <p v-if="findJob.university" style="margin-bottom: 0;">
@@ -907,6 +909,22 @@
         }
         return selected;
       },
+      fullAddress() {
+        let value = '';
+        if (this.findJob) {
+          value = this.findJob.address;
+          if (this.findJob.address2) {
+            value = `${value} ${this.findJob.address2}`;
+          }
+          if (this.findJob.city) {
+            value = `${value}, ${this.findJob.city}`;
+          }
+          if (this.findJob.state) {
+            value = `${value}, ${this.findJob.state}`;
+          }
+        }
+        return value;
+      },
     },
     metaInfo () {
       TimeAgo.addLocale(en);
@@ -1057,9 +1075,9 @@
                             Node.js Developer at Kunvet in Irvine, CA
                           */
           this.$setTitle(this.findJob.title);
-          this.job_dest_url = 'https://maps.google.com/?q=';
-          this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
-          this.$debug(this.job_dest_url);
+          // this.job_dest_url = 'https://maps.google.com/?q=';
+          // this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
+          // this.$debug(this.job_dest_url);
           this.$debug(this.findJob.address);
           this.jobType = [];
           const employmentType = [];
@@ -1160,8 +1178,12 @@
                 'longitude': this.findJob.longitude,
               },
               'address': {
-                '@type': 'text',
-                'address': this.findJob.address,
+                '@type': 'PostalAddress',
+                'streetAddress': this.findJob.address,
+                'addressLocality': this.findJob.city || '',
+                'addressRegion': this.findJob.state || '',
+                'postalCode': this.findJob.zip || '',
+                'addressCountry': 'US',
               },
             },
             'validThrough': this.findJob.expiry_date || DateHelper.getExpiryDate(this.findJob.date, Config.get('daysToExpire')).toISOString(),
@@ -1210,7 +1232,10 @@
         });
       },
       changeLocation() {
-        window.open(this.job_dest_url, '__blank');
+        let jobDestUrl = 'https://maps.google.com/?q=';
+        jobDestUrl += String(this.fullAddress).replace(/\s+/g, '+');
+        this.$debug(jobDestUrl);
+        window.open(jobDestUrl, '__blank');
       },
       openApplyDialog() {
         this.applyDialog = true;

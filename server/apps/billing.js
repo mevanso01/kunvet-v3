@@ -58,6 +58,19 @@ const ACTIONS = {
         await Algolia.uploadJob(job);
       }
 
+      let address = '';
+      if (job) {
+        address = job.address;
+        if (job.address2) {
+          address = `${address} ${job.address2}`;
+        }
+        if (job.city) {
+          address = `${address}, ${job.city}`;
+        }
+        if (job.state) {
+          address = `${address}, ${job.state}`;
+        }
+      }
       const mailer = new Mailer();
       const locals = {
         jobId: job._id,
@@ -65,7 +78,7 @@ const ACTIONS = {
         fname: ctx.state.user.firstname,
         lname: ctx.state.user.lastname,
         postedby: job.posted_by,
-        address: job.address,
+        address: address,
         type: job.type,
         salary: job.salary,
       };
