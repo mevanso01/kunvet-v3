@@ -616,6 +616,9 @@
             </k-btn>
           </div>
         </div>
+        <div>
+          <share :config="config"></share>
+        </div>
         <!--dialog for apply job flow-->
         <v-dialog class="other-dialog" v-model="applyDialog"
                   :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
@@ -804,7 +807,7 @@
   import en from 'javascript-time-ago/locale/en';
   import DateHelper from '@/utils/DateHelper';
   import JobHelper from '@/utils/JobHelper';
-
+  
   export default {
     filters: {
       plural(amount) {
@@ -880,6 +883,10 @@
         message: null,
         stickToBottom: true,
         accountColor: '#3488fc',
+        config: {
+          url: window.location.href,
+          sites: ['linkedin', 'facebook', 'twitter'],
+        },
       };
     },
     computed: {

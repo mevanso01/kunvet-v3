@@ -530,6 +530,7 @@ export default {
 // @import 'css/postsAndSearch.css';
 @import 'css/JobsAndSearch.scss';
 @import 'css/about.css';
+@import 'css/share.min.css';
 
 body, html {
   height: 100%;
