@@ -5,6 +5,7 @@ import Models from '@/mongodb/Models';
 import AlgoliaSearch from 'algoliasearch';
 import Mailer from '@/utils/Mailer';
 import GAuth from '@/utils/GoogleAuth';
+import JobHelper from '@/../client/utils/JobHelper';
 
 const request = require('request');
 
@@ -91,25 +92,12 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
           } else {
             salary = expiredJobs[i].pay_type;
           }
-          let address = '';
-          if (expiredJobs[i]) {
-            address = expiredJobs[i].address;
-            if (expiredJobs[i].address2) {
-              address = `${address} ${expiredJobs[i].address2}`;
-            }
-            if (expiredJobs[i].city) {
-              address = `${address}, ${expiredJobs[i].city}`;
-            }
-            if (expiredJobs[i].state) {
-              address = `${address}, ${expiredJobs[i].state}`;
-            }
-          }
           const mailer = new Mailer();
           const mailOptions = {
             fname: jobPoster[0].firstname,
             jobname: expiredJobs[i].title,
             daysToExpire,
-            fullAddress: address,
+            fullAddress: JobHelper.getFullAddress(expiredJobs[i]),
             jobtype: jobType.join(' / '),
             salary,
             appsReceived: appsReceived === 0 ? 'no' : appsReceived,

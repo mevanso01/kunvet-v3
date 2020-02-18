@@ -803,6 +803,7 @@
   import TimeAgo from 'javascript-time-ago';
   import en from 'javascript-time-ago/locale/en';
   import DateHelper from '@/utils/DateHelper';
+  import JobHelper from '@/utils/JobHelper';
 
   export default {
     filters: {
@@ -910,20 +911,7 @@
         return selected;
       },
       fullAddress() {
-        let value = '';
-        if (this.findJob) {
-          value = this.findJob.address;
-          if (this.findJob.address2) {
-            value = `${value} ${this.findJob.address2}`;
-          }
-          if (this.findJob.city) {
-            value = `${value}, ${this.findJob.city}`;
-          }
-          if (this.findJob.state) {
-            value = `${value}, ${this.findJob.state}`;
-          }
-        }
-        return value;
+        return JobHelper.getFullAddress(this.findJob);
       },
     },
     metaInfo () {

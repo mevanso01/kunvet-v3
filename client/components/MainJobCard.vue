@@ -86,6 +86,7 @@ import GrayBookmarkSvg from '@/assets/icons/Asset(36).svg';
 import YellowBookmarkSvg from '@/assets/icons/Asset(37).svg';
 import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
+import JobHelper from '@/utils/JobHelper';
 
 export default {
   props: ['job', 'saveJobFunc', 'isSaved', 'defaultFromUCI', 'fromCoordinates'],
@@ -121,20 +122,7 @@ export default {
       return !this.job.business_id;
     },
     fullAddress() {
-      let value = '';
-      if (this.job) {
-        value = this.job.address;
-        if (this.job.address2) {
-          value = `${value} ${this.job.address2}`;
-        }
-        if (this.job.city) {
-          value = `${value}, ${this.job.city}`;
-        }
-        if (this.job.state) {
-          value = `${value}, ${this.job.state}`;
-        }
-      }
-      return value;
+      return JobHelper.getFullAddress(this.job);
     },
   },
   methods: {

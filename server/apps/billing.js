@@ -11,6 +11,7 @@ import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
 import Config from 'config';
 import GAuth from '@/utils/GoogleAuth';
+import JobHelper from '@/../client/utils/JobHelper';
 
 const request = require('request');
 
@@ -58,19 +59,6 @@ const ACTIONS = {
         await Algolia.uploadJob(job);
       }
 
-      let address = '';
-      if (job) {
-        address = job.address;
-        if (job.address2) {
-          address = `${address} ${job.address2}`;
-        }
-        if (job.city) {
-          address = `${address}, ${job.city}`;
-        }
-        if (job.state) {
-          address = `${address}, ${job.state}`;
-        }
-      }
       const mailer = new Mailer();
       const locals = {
         jobId: job._id,
@@ -78,7 +66,7 @@ const ACTIONS = {
         fname: ctx.state.user.firstname,
         lname: ctx.state.user.lastname,
         postedby: job.posted_by,
-        address: address,
+        address: JobHelper.getFullAddress(job),
         type: job.type,
         salary: job.salary,
       };
