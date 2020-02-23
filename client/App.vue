@@ -284,7 +284,7 @@ export default {
       if (this.$route.path === '/' && this.$route.name === null) {
         return true;
       }
-      const jobBlogRoutes = ['/blog'];
+      const jobBlogRoutes = ['/blog', '/blog/detail'];
       return jobBlogRoutes.indexOf(this.$route.path) !== -1;
     },
     navHasBg() {

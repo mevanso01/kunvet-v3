@@ -3,10 +3,12 @@
   .content {
     max-width: 500px;
     margin: 0 auto;
-    > h1 {
-      margin-top: 46px;
-      margin-bottom: 46px;
-      text-align: center;
+    .logo {
+      margin: 46px auto;
+      width: fit-content;
+      > img {
+        height: 35px;
+      }
     }
   }
   .category {
@@ -158,7 +160,9 @@
   <v-container fluid>
     <div style="margin: -80px 8% -24px; 8%; padding-bottom: 40px;">
       <div class="content">
-        <h1>Kunvet Edu</h1>
+        <div class="logo">
+          <img class="" :src="pngs.logo" alt="">
+        </div>
 
         <div class="category">
           <img class="cover-img" :src="pngs.placeholder1" alt=""><br>
@@ -234,6 +238,7 @@
 </template>
 
 <script>
+import logo from '@/assets/blog/logo.svg';
 import placeholder1 from '@/assets/blog/placeholder1.png';
 import placeholder2 from '@/assets/blog/placeholder2.png';
 import nightOwl from '@/assets/blog/night_owl.svg';
@@ -245,6 +250,7 @@ export default {
   data() {
     return {
       pngs: {
+        logo: logo,
         placeholder1: placeholder1,
         placeholder2: placeholder2,
         nightOwl: nightOwl,
