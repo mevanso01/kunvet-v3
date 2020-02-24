@@ -1,8 +1,11 @@
 <style lang="scss" scoped>
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i,800,800i;);
+
   // overall
   .content {
     max-width: 700px;
     margin: 140px auto 0 auto;
+    font-family: 'Open Sans';
     a {
       color: #ff6969 !important;
       text-decoration: none;
@@ -34,7 +37,7 @@
     font-weight: 600;
     line-height: 150%;
     letter-spacing: 0;
-    margin: unset;
+    margin-bottom: 10px;
   }
   p {
     font-size: 22px;
@@ -77,10 +80,10 @@
       font-size: 20px;
       &:before {
         content: '“ ';
-        font-family: proxima-nova, sans-serif;
+        // font-family: proxima-nova, sans-serif;
         font-style: normal;
-        white-space: pre;
-        font-weight: 600;
+        // white-space: pre;
+        font-weight: 800;
       }
     }
   }
@@ -126,6 +129,11 @@
     widows: 100%;
     border-top: 1px solid #e4e4e4;
   }
+  sup {
+    vertical-align: super;
+    font-size: 12px;
+    margin-left: 4px;
+  }
   // big desktop
   @media (min-width: 1025px){
   }
@@ -163,8 +171,8 @@
 </style>
 
 <template>
-  <v-container fluid>
-    <div style="margin: -80px 8% -24px; 8%; padding-bottom: 40px;">
+  <v-container fluid style="padding: 0;">
+    <div style="margin: 0 8% -24px; 8%; padding-bottom: 60px;">
       <div class="content">
         <div class="text-center footnote">
           <a>BREADCRUMB 1</a> / <a>BREADCRUMB 2</a>
@@ -236,12 +244,13 @@
           <p style="margin-bottom: 20px;">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae risus
             scelerisque, malesuada leo quis, ultrices leo. Vivamus venenatis nec nunc
-            non convallis.
+            non convallis<sup><a href="#references" @click="refShown=true">[1]</a></sup>.
           </p>
 
+          <img class="" :src="pngs.placeholder" alt="" style="margin-bottom: 60px;">
           <img class="" :src="pngs.placeholder" alt="" style="">
         </div>
-        <div class="gray-box references">
+        <div class="gray-box references" id="references">
           <h3 class="" @click="refShown = !refShown">References <i class="fas" :class="[refShown ? 'fa-minus-circle' : 'fa-plus-circle']"></i></h3>
           <ol style="margin-top: 10px;" v-show="refShown">
             <li><a>Reference One</a></li>
@@ -262,7 +271,7 @@
         <div>
           <h2 class="article-sub-title" style="margin-bottom: 20px;">Related Articles</h2>
 
-          <p style="">
+          <p style="margin-bottom: 0;">
             <a>Bullet point 1</a><br>
             <a>Bullet point 2</a><br>
             <a>Bullet point 3</a><br>
