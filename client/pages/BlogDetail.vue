@@ -244,13 +244,13 @@
           <p style="margin-bottom: 20px;">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae risus
             scelerisque, malesuada leo quis, ultrices leo. Vivamus venenatis nec nunc
-            non convallis<sup><a href="#references" @click="refShown=true">[1]</a></sup>.
+            non convallis<sup><a @click="scrollMeTo('references'),refShown=true">[1]</a></sup>.
           </p>
 
           <img class="" :src="pngs.placeholder" alt="" style="margin-bottom: 60px;">
           <img class="" :src="pngs.placeholder" alt="" style="">
         </div>
-        <div class="gray-box references" id="references">
+        <div class="gray-box references" id="references" ref="references">
           <h3 class="" @click="refShown = !refShown">References <i class="fas" :class="[refShown ? 'fa-minus-circle' : 'fa-plus-circle']"></i></h3>
           <ol style="margin-top: 10px;" v-show="refShown">
             <li><a>Reference One</a></li>
@@ -300,6 +300,14 @@ export default {
       },
       refShown: false,
     };
+  },
+  methods: {
+    scrollMeTo(refName) {
+      var element = this.$refs[refName];
+      var top = element.offsetTop;
+
+      window.scrollTo(0, top);
+    },
   },
 };
 </script>
