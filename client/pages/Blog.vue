@@ -1,24 +1,22 @@
 <style lang="scss" scoped>
-  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i,800,800i;);
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i,800,800i);
   
   // overall
   .content {
     max-width: 500px;
     margin: 0 auto;
     font-family: 'Open Sans';
-    .logo {
+    img.logo {
+      height: 20px;
       margin: 46px auto;
-      width: fit-content;
-      > img {
-        height: 20px;
-      }
+      display: table;
     }
   }
   .category {
     margin-bottom: 40px;
     > img.cover-img {
       width: 100%;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     .sub-header {
       font-size: 24px;
@@ -52,6 +50,9 @@
       margin-bottom: 0;
     }
   }
+  .coming-soon * {
+    color: #aaaaaa !important;
+  }
   .divider {
     height: 0;
     widows: 100%;
@@ -64,6 +65,7 @@
     width: 100%;
     img.form-logo {
       height: 140px;
+      display: table;
     }
     .header {
       font-size: 28px;
@@ -168,9 +170,7 @@
   <v-container fluid style="padding: 0;">
     <div style="margin: 0 8% -40px; 8%; padding-bottom: 40px;">
       <div class="content">
-        <div class="logo">
-          <img class="" :src="pngs.logo" alt="">
-        </div>
+        <img class="logo" :src="pngs.logo" alt="">
 
         <div class="category">
           <img class="cover-img" :src="pngs.placeholder1" alt=""><br>
@@ -191,18 +191,16 @@
 
         <div class="divider" style="margin-bottom: 30px;"></div>
 
-        <div class="category">
+        <div class="category coming-soon">
           <div class="header">coming soon</div>
-          <div class="sub-header" style="color: #808080;">Lorem ipsum dolor sit amet consectetur</div>
+          <div class="sub-header">Lorem ipsum dolor sit amet consectetur</div>
           <div class="description">One-sentence catchy description.</div>
         </div>
       </div>
     </div>
     <div class="subscribe-content">
       <div style="max-width: 400px; margin: auto;">
-        <div class="mx-auto" style="width: fit-content;">
-          <img class="form-logo" :src="pngs.nightOwl" alt=""><br>
-        </div>
+        <img class="form-logo mx-auto" :src="pngs.nightOwl" alt=""><br>
         <div class="header">Get Exclusive Content That Will Up Your Game</div>
         <form style="margin-bottom: 10px;">
           <div class="" style="display: flex; justify-content: center; margin-bottom: 10px;">

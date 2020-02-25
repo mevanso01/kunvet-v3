@@ -222,10 +222,10 @@ const router = new VueRouter({
       path: '/blog',
       component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Blog'),
     },
-    {
-      path: '/blog/detail',
-      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/BlogDetail'),
-    },
+    // {
+    //   path: '/blog/detail',
+    //   component: () => import(/* webpackChunkName: "hiring" */ '@/pages/BlogDetail'),
+    // },
     // Debug pages
     {
       path: '/debug/triggerError',

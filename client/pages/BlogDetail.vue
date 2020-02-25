@@ -188,7 +188,7 @@
         <img class="banner-img" :src="pngs.placeholder" alt="" style="margin-bottom: 40px;">
 
         <div class="footnote" style="margin-bottom: 40px;">
-          LAST UPDATED DTATE BY AUTHOR
+          LAST UPDATED DATE BY AUTHOR
         </div>
         
         <div>
