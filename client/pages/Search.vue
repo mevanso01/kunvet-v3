@@ -544,7 +544,10 @@ export default {
   metaInfo: {
     title: 'Search for Jobs | Kunvet',
     meta: [
-      { name: 'description', content: 'Find all the new jobs hiring near you—from real employers who are looking to hire immediately.' },
+      {
+        name: 'description',
+        content: 'Searching for jobs, but getting nowhere? Find only the most recent, up-to-date jobs near you, posted by employers hiring immediately!',
+      },
     ],
   },
   components: {

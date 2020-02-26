@@ -19,7 +19,10 @@
     metaInfo: {
       title: 'Work at Kunvet | Kunvet',
       meta: [
-        { name: 'description', content: 'Kunvet will be the most fun and excitement you will have ever worked for. Become a member at Kunvet today!' },
+        {
+          name: 'description',
+          content: 'Looking for employment? Apply at Kunvet, and you could land your dream job working for the most professional, exciting company around. Apply today!',
+        },
       ],
     },
   };

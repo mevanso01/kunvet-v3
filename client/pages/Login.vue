@@ -12,7 +12,10 @@ export default {
   metaInfo: {
     title: 'Login | Kunvet',
     meta: [
-      { name: 'description', content: 'Whether you are an employer or applicant, log into your account from here.' },
+      {
+        name: 'description',
+        content: 'Log in and get started! Whether you\'re an employer looking to hire a star employee, or an applicant looking for that dream job, your journey begins here.',
+      },
     ],
   },
   data() {
