@@ -32,7 +32,10 @@
     metaInfo: {
       title: 'Contact Us | Kunvet',
       meta: [
-        { name: 'description', content: 'Get real help from real people through email. Get a response from us within a few hours. Find the correct email address for the issue you are having.' },
+        {
+          name: 'description',
+          content: 'Questions or concerns? Kunvet hears you loud and clear. Send a message to the email address most relevant to your issue, we\'ll get back to you ASAP.',
+        },
       ],
     },
   };

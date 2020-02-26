@@ -1093,9 +1093,12 @@ import JobSearch from '@/components/JobSearch';
 Vue.use(VueApollo);
 export default {
   metaInfo: {
-    title: 'Kunvet: All the New Jobs Hiring Near Me',
+    title: 'Kunvet: Explore new jobs and fresh talent near you!',
     meta: [
-      { name: 'description', content: 'Say goodbye to stale, unrelated or fake jobs! Say hello to fresh and relevant jobs hiring near you-from real employers who are looking to hire immediately.' },
+      {
+        name: 'description',
+        content: 'Sick of seeing spammy old jobs that have nothing to do with you or your amazing skills? See only the newest, freshest jobs from employers hiring near you!',
+      },
     ],
   },
   components: {

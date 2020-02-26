@@ -178,7 +178,10 @@ export default {
   metaInfo: {
     title: 'Get an Account | Kunvet',
     meta: [
-      { name: 'description', content: 'Get an account and start exploring all the new jobs or talents near you.' },
+      {
+        name: 'description',
+        content: 'What are you waiting for? Sign up for an account today and start exploring the latest, greatest local jobs or talent near you.',
+      },
     ],
   },
   props: {

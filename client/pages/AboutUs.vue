@@ -32,9 +32,15 @@
     </v-container>
 </template>
 <script>
-  export default {
-    metaInfo: {
-      title: 'About Us | Kunvet',
-    },
-  };
+export default {
+  metaInfo: {
+    title: 'About Us | Kunvet',
+    meta: [
+      {
+        name: 'description',
+        content: 'Kunvet is a professional, local job platform that connects hiring employers with qualified individuals looking for jobs in their local communities.',
+      },
+    ],
+  },
+};
 </script>
