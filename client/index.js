@@ -219,7 +219,7 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Choose'),
     },
     {
-      path: '/blog',
+      path: '/blog/',
       component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Blog'),
     },
     // {
