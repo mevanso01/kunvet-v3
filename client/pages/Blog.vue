@@ -180,7 +180,7 @@
         <div class="category">
           <img class="cover-img" :src="pngs.placeholder1" alt=""><br>
           <div class="header">category</div>
-          <div class="sub-header">Lorem ipsum dolor sit amet consectetur</div>
+          <div class="sub-header"><a class="temp-link mb-3" href="/blog/detail.html">Lorem ipsum dolor sit amet consectetur</a></div>
           <div class="description">One-sentence catchy description.</div>
           <div class="name">Firstname Lastname</div>
           <div class="date">Jan 1, 2020 9 min read</div>
@@ -188,7 +188,7 @@
         <div class="category">
           <img class="cover-img" :src="pngs.placeholder2" alt=""><br>
           <div class="header">category</div>
-          <div class="sub-header">Lorem ipsum dolor sit amet consectetur</div>
+          <div class="sub-header"><a class="temp-link mb-3" href="/blog/detail.html">Lorem ipsum dolor sit amet consectetur</a></div>
           <div class="description">One-sentence catchy description.</div>
           <div class="name">Firstname Lastname</div>
           <div class="date">Jan 1, 2020 9 min read</div>
