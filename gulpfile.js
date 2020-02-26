@@ -77,7 +77,7 @@ gulp.task('client-blog', () => {
 // Client Blog assets
 gulp.task('client-blog-asset', () => {
   return gulp.src('client/assets/blog/*')
-    .pipe(gulp.dest('dist/client/static/blog'));
+    .pipe(gulp.dest('dist/client/static/img/blog'));
 });
 
 // Client SPA
