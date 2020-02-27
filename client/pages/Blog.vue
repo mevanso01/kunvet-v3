@@ -201,8 +201,6 @@
           <div class="sub-header">Lorem ipsum dolor sit amet consectetur</div>
           <div class="description">One-sentence catchy description.</div>
         </div>
-
-        <a class="temp-link mb-3" href="/blog/detail.html" style="display: block;">Go to Article Detail</a>
       </div>
     </div>
     <div class="subscribe-content">
