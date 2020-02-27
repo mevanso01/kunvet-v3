@@ -616,9 +616,11 @@
             </k-btn>
           </div>
         </div>
-        <div>
-          <share :config="config"></share>
+        <div class="d-inline-flex">
+          <share v-if="findJob.title" :config="config"></share>
+          <share v-if="findJob.title" :config="configTwitter"></share>
         </div>
+        <div id="yandex-share"></div>
         <!--dialog for apply job flow-->
         <v-dialog class="other-dialog" v-model="applyDialog"
                   :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
@@ -931,7 +933,25 @@
           description: `Apply for ${this.findJob.title} in ${address}`,
           image: 'https://kunvet.com/banner-image.png',
           url: window.location.href,
-          sites: ['linkedin', 'facebook', 'twitter'],
+          sites: ['linkedin', 'facebook'],
+        };
+      },
+      configTwitter() {
+        let address = '';
+        if (this.findJob.city && this.findJob.state) {
+          address = `${this.findJob.city}, ${this.findJob.state}`;
+        } else {
+          address = this.findJob.address;
+          if (this.findJob.address2) {
+            address = `${address} ${this.findJob.address2}`;
+          }
+        }
+        return {
+          title: `Now hiring: ${this.findJob.title} in ${address}`,
+          description: `Now hiring: ${this.findJob.title} in ${address}`,
+          image: 'https://kunvet.com/banner-image.png',
+          url: window.location.href,
+          sites: ['twitter'],
         };
       },
     },
@@ -969,6 +989,7 @@
           { property: 'og:title', content: `Now hiring: ${this.findJob.title}` },
           { property: 'og:description', content: `Apply for ${this.findJob.title} in ${address}` },
           { property: 'og:image', content: 'https://kunvet.com/banner-image.png' },
+          { property: 'og:url', content: window.location.href },
         ],
       };
     },
