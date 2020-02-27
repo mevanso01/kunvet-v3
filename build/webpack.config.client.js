@@ -161,6 +161,9 @@ const wpconf = {
         from: './client/assets/favicon.png',
       },
       {
+        from: './client/assets/banner-image.png',
+      },
+      {
         from: './client/google90271f0211931bfa.html',
       },
     ]),

@@ -883,10 +883,6 @@
         message: null,
         stickToBottom: true,
         accountColor: '#3488fc',
-        config: {
-          url: window.location.href,
-          sites: ['linkedin', 'facebook', 'twitter'],
-        },
       };
     },
     computed: {
@@ -920,6 +916,24 @@
       fullAddress() {
         return JobHelper.getFullAddress(this.findJob);
       },
+      config() {
+        let address = '';
+        if (this.findJob.city && this.findJob.state) {
+          address = `${this.findJob.city}, ${this.findJob.state}`;
+        } else {
+          address = this.findJob.address;
+          if (this.findJob.address2) {
+            address = `${address} ${this.findJob.address2}`;
+          }
+        }
+        return {
+          title: `Now hiring: ${this.findJob.title}`,
+          description: `Apply for ${this.findJob.title} in ${address}`,
+          image: 'https://kunvet.com/banner-image.png',
+          url: window.location.href,
+          sites: ['linkedin', 'facebook', 'twitter'],
+        };
+      },
     },
     metaInfo () {
       TimeAgo.addLocale(en);
@@ -940,9 +954,21 @@
       }
       str += '… See this and similar jobs on Kunvet.';
       console.log(str);
+      let address = '';
+      if (this.findJob.city && this.findJob.state) {
+        address = `${this.findJob.city}, ${this.findJob.state}`;
+      } else {
+        address = this.findJob.address;
+        if (this.findJob.address2) {
+          address = `${address} ${this.findJob.address2}`;
+        }
+      }
       return {
         meta: [
           { name: 'description', content: str },
+          { property: 'og:title', content: `Now hiring: ${this.findJob.title}` },
+          { property: 'og:description', content: `Apply for ${this.findJob.title} in ${address}` },
+          { property: 'og:image', content: 'https://kunvet.com/banner-image.png' },
         ],
       };
     },
