@@ -54,7 +54,10 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
       const jobPoster = await Models.Account.find({ '_id': expiredJobs[i].user_id });
       if (jobPoster && jobPoster.length > 0) {
         console.log('------------------------------');
-        const applicants = await Models.Applicant.find({ 'job_id': expiredJobIds[i] });
+        const applicants = await Models.Applicant.find({
+          'job_id': expiredJobIds[i],
+          'date': { $gt: today - (daysToExpire * oneDay) },
+        });
         if (applicants) {
           console.log('------------------------------');
           const appsReceived = applicants.length;
