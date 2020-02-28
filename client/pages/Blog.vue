@@ -179,27 +179,25 @@
 
         <div class="category">
           <img class="cover-img" :src="pngs.placeholder1" alt=""><br>
-          <div class="header">category</div>
-          <div class="sub-header"><a class="temp-link mb-3" href="/blog/detail.html">Lorem ipsum dolor sit amet consectetur</a></div>
-          <div class="description">One-sentence catchy description.</div>
-          <div class="name">Firstname Lastname</div>
-          <div class="date">Jan 1, 2020 9 min read</div>
-        </div>
-        <div class="category">
-          <img class="cover-img" :src="pngs.placeholder2" alt=""><br>
-          <div class="header">category</div>
-          <div class="sub-header"><a class="temp-link mb-3" href="/blog/detail.html">Lorem ipsum dolor sit amet consectetur</a></div>
-          <div class="description">One-sentence catchy description.</div>
-          <div class="name">Firstname Lastname</div>
-          <div class="date">Jan 1, 2020 9 min read</div>
+          <div class="header">Careers</div>
+          <div class="sub-header">
+            <a class="temp-link mb-3" href="/blog/5-great-excuses-for-missing-work.html">
+              5 Great Excuses for Missing Work
+            </a>
+          </div>
+          <div class="description">
+            Need to recharge and don't know what to tell your boss? Here are my personal top 5 excuses that got me out of work every single time!
+          </div>
+          <div class="name">Shannon Serpette</div>
+          <div class="date">Mar 2, 2020 • 9 min read</div>
         </div>
 
         <div class="divider" style="margin-bottom: 30px;"></div>
 
         <div class="category coming-soon">
           <div class="header">coming soon</div>
-          <div class="sub-header">Lorem ipsum dolor sit amet consectetur</div>
-          <div class="description">One-sentence catchy description.</div>
+          <div class="sub-header">3 Interview Techniques That Will Up Your Game</div>
+          <div class="description">Today, I'm going to reveal to you 3 interview techniques that are used by current Google, Facebook employees.</div>
         </div>
       </div>
     </div>
