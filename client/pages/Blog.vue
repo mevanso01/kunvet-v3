@@ -249,7 +249,8 @@
               type="submit"
               block flat
               class="submit-button"
-              :working="form.loading">
+              :working="form.loading"
+              :disabled="form.loading">
               <span v-if="!form.loading">LET'S DO THIS!</span>
               <i v-if="form.loading" class="fas fa-circle-notch fa-spin" style="font-size: 30px;"></i>
             </v-btn>
