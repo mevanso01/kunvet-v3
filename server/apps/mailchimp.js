@@ -9,6 +9,7 @@ import Config from 'config';
 
 const mcListId = Config.get('mailchimp.mcListId');
 const mcEmployerListId = Config.get('mailchimp.mcEmployerListId');
+const mcBlogListId = Config.get('mailchimp.mcBlogListId');
 const mc = Config.get('mailchimp');
 
 // const mcAPIKey = Config.get('mailchimp.mcAPIKey');
@@ -44,23 +45,27 @@ router.post('/addMember', async (ctx) => {
     message: 'Failed posting on MailChimp',
   });
   const info = ctx.request.body;
-  const listId = info.type === 'student' ? mcListId : mcEmployerListId;
+  let listId = info.type === 'student' ? mcListId : mcEmployerListId;
+  if (info.type === 'blog') {
+    listId = mcBlogListId;
+  }
   console.log(info);
   console.log(listId);
-  mailchimp.post(`lists/${listId}`, {
-    members: [{
-      email_address: info.email_address,
-      status: 'subscribed',
-      merge_fields: {
-        'FNAME': info.fname,
-      },
-      tags: info.tags,
-    }],
-  }).then(m => {
+  try {
+    const m = await mailchimp.post(`lists/${listId}`, {
+      members: [{
+        email_address: info.email_address,
+        status: 'subscribed',
+        merge_fields: {
+          'FNAME': info.fname,
+        },
+        tags: info.tags,
+      }],
+    });
     if (m.errors && m.errors.length > 0) {
       console.log('Error adding new subscriber to MC', m.errors);
       if (m.statusCode == 200){
-        mailchimp.post(`lists/${listId}`, {
+        const mm = await mailchimp.post(`lists/${listId}`, {
           members: [{
             email_address: info.email_address,
             status: 'subscribed',
@@ -70,20 +75,16 @@ router.post('/addMember', async (ctx) => {
             tags: info.tags,
           }],
           update_existing: true,
-        }).then(m => {
-          if (m.errors && m.errors.length > 0) {
-            console.log('Error adding new subscriber to MC', m.errors);
-          }
-          return m;
-        }).catch(err => {
-          console.warn('Failed adding subscriber', ctx.request.body.email_address, err);
         });
+        if (mm.errors && mm.errors.length > 0) {
+          console.log('Error adding new subscriber to MC', mm.errors);
+        }
       }
     }
-    return m;
-  }).catch(err => {
+  } catch (err) {
     console.warn('Failed adding subscriber', ctx.request.body.email_address, err);
-  });
+    return;
+  }
   console.log('done');
   ctx.body = JSON.stringify({
     success: true,

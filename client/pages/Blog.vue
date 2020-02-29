@@ -130,6 +130,16 @@
       height: 48px;
       border-radius: 0 !important;
     }
+    .success-msg {
+      padding: 6px 10px;
+      margin-bottom: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      font-size: 16px;
+      color: #ffffff;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
   .temp-link {
     &:hover, &:active, &:focus {
@@ -205,13 +215,14 @@
       <div style="max-width: 400px; margin: auto;">
         <img class="form-logo mx-auto" :src="pngs.nightOwl" alt=""><br>
         <div class="header">Get Exclusive Content That Will Up Your Game</div>
-        <form style="margin-bottom: 10px;">
+        <form style="margin-bottom: 10px;" autocomplete="off" @submit.prevent="onClickBlogSubscribe">
+          <div v-if="form.success" class="success-msg">Awesome! See you soon!</div>
           <div class="" style="display: flex; justify-content: center; margin-bottom: 10px;">
-            <div class="_check-box" @click="isCareers = !isCareers" style="margin-right: 16px;">
-              <i class="fas" :class="[isCareers ? 'fa-check-square' : 'fa-square']"></i><span>Careers</span>
+            <div class="_check-box" @click="form.isCareers = !form.isCareers" style="margin-right: 16px;">
+              <i class="fas" :class="[form.isCareers ? 'fa-check-square' : 'fa-square']"></i><span>Careers</span>
             </div>
-            <div class="_check-box" @click="isBusiness = !isBusiness">
-              <i class="fas" :class="[isBusiness ? 'fa-check-square' : 'fa-square']"></i><span>Business</span>
+            <div class="_check-box" @click="form.isBusiness = !form.isBusiness">
+              <i class="fas" :class="[form.isBusiness ? 'fa-check-square' : 'fa-square']"></i><span>Business</span>
             </div>
           </div>
           <div style="margin-bottom: 2px;">
@@ -219,6 +230,7 @@
               solo flat hide-details
               label="First name"
               class="input-field"
+              v-model="form.fname"
               required
             ></v-text-field>
           </div>
@@ -228,6 +240,7 @@
               label="Email address"
               class="input-field"
               type="email"
+              v-model="form.email"
               required
             ></v-text-field>
           </div>
@@ -235,8 +248,10 @@
             <v-btn
               type="submit"
               block flat
-              class="submit-button">
-              LET'S DO THIS!
+              class="submit-button"
+              :working="form.loading">
+              <span v-if="!form.loading">LET'S DO THIS!</span>
+              <i v-if="form.loading" class="fas fa-circle-notch fa-spin" style="font-size: 30px;"></i>
             </v-btn>
           </div>
         </form>
@@ -250,6 +265,7 @@
 </template>
 
 <script>
+import Axios from 'axios';
 import logo from '@/assets/blog/logo.svg';
 import placeholder1 from '@/assets/blog/placeholder1.png';
 import placeholder2 from '@/assets/blog/placeholder2.png';
@@ -267,9 +283,47 @@ export default {
         placeholder2: placeholder2,
         nightOwl: nightOwl,
       },
-      isCareers: false,
-      isBusiness: false,
+      form: {
+        isCareers: false,
+        isBusiness: false,
+        fname: '',
+        email: '',
+        loading: false,
+        success: false,
+      },
     };
+  },
+  methods: {
+    onClickBlogSubscribe() {
+      this.form.loading = true;
+      this.form.success = false;
+      const postData = {
+        email_address: this.form.email,
+        fname: this.form.fname,
+        tags: [],
+        status: 'subscribed',
+        type: 'blog',
+      };
+      if (this.form.isBusiness) {
+        postData.tags.push('business');
+      }
+      if (this.form.isCareers) {
+        postData.tags.push('careers');
+      }
+      Axios.post('/mailchimp/addMember', postData).then(() => {
+        console.log('posted on mailchimp');
+        this.form.loading = false;
+        this.form.success = true;
+        this.form.fname = '';
+        this.form.email = '';
+        this.form.isCareers = false;
+        this.form.isBusiness = false;
+      }, (error) => {
+        this.$error(error);
+        this.form.loading = false;
+        this.form.success = false;
+      });
+    },
   },
 };
 </script>
