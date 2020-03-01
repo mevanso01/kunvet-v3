@@ -217,7 +217,7 @@
         <div class="header">Get Exclusive Content That Will Up Your Game</div>
         <form style="margin-bottom: 10px;" autocomplete="off" @submit.prevent="onClickBlogSubscribe">
           <div v-if="form.success" class="success-msg">Awesome! See you soon!</div>
-          <div class="" style="display: flex; justify-content: center; margin-bottom: 10px;">
+          <!-- <div class="" style="display: flex; justify-content: center; margin-bottom: 10px;">
             <div class="_check-box" @click="form.isCareers = !form.isCareers" style="margin-right: 16px;">
               <i class="fas" :class="[form.isCareers ? 'fa-check-square' : 'fa-square']"></i><span>Careers</span>
             </div>
@@ -229,7 +229,7 @@
             <div class="_check-box" @click="form.isBusiness = !form.isBusiness">
               <i class="fas" :class="[form.isBusiness ? 'fa-check-square' : 'fa-square']"></i><span>Business</span>
             </div>
-          </div>
+          </div> -->
           <div style="margin-bottom: 2px;">
             <v-text-field
               solo flat hide-details
@@ -290,13 +290,13 @@ export default {
         nightOwl: nightOwl,
       },
       form: {
-        isCareers: false,
-        isBusiness: false,
         fname: '',
         email: '',
         loading: false,
         success: false,
-        chkValidatorOn: false,
+        // isCareers: false,
+        // isBusiness: false,
+        // chkValidatorOn: false,
       },
     };
   },
@@ -307,16 +307,16 @@ export default {
       const postData = {
         email_address: this.form.email,
         fname: this.form.fname,
-        tags: [],
+        tags: ['careers'],
         status: 'subscribed',
         type: 'blog',
       };
-      if (this.form.isBusiness) {
-        postData.tags.push('business');
-      }
-      if (this.form.isCareers) {
-        postData.tags.push('careers');
-      }
+      // if (this.form.isBusiness) {
+      //   postData.tags.push('business');
+      // }
+      // if (this.form.isCareers) {
+      //   postData.tags.push('careers');
+      // }
       Axios.post('/mailchimp/addMember', postData).then(() => {
         console.log('posted on mailchimp');
         this.form.loading = false;
@@ -333,14 +333,14 @@ export default {
     },
   },
   watch: {
-    'form.isCareers'() {
-      this.form.chkValidatorOn = this.form.isCareers || this.form.isBusiness;
-      this.$refs.chk_validator.setCustomValidity(this.form.chkValidatorOn ? '' : 'Please check at least one of the boxes.');
-    },
-    'form.isBusiness'() {
-      this.form.chkValidatorOn = this.form.isCareers || this.form.isBusiness;
-      this.$refs.chk_validator.setCustomValidity(this.form.chkValidatorOn ? '' : 'Please check at least one of the boxes.');
-    },
+    // 'form.isCareers'() {
+    //   this.form.chkValidatorOn = this.form.isCareers || this.form.isBusiness;
+    //   this.$refs.chk_validator.setCustomValidity(this.form.chkValidatorOn ? '' : 'Please check at least one of the boxes.');
+    // },
+    // 'form.isBusiness'() {
+    //   this.form.chkValidatorOn = this.form.isCareers || this.form.isBusiness;
+    //   this.$refs.chk_validator.setCustomValidity(this.form.chkValidatorOn ? '' : 'Please check at least one of the boxes.');
+    // },
   },
   activated() {
   },
