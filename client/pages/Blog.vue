@@ -213,7 +213,7 @@
     </div>
     <div class="subscribe-content">
       <div style="max-width: 400px; margin: auto;">
-        <img class="form-logo mx-auto" :src="pngs.nightOwl" alt=""><br>
+        <img class="form-logo mx-auto" :src="pngs.nightOwl" alt="">
         <div class="header">Get Exclusive Content That Will Up Your Game</div>
         <form style="margin-bottom: 10px;" autocomplete="off" @submit.prevent="onClickBlogSubscribe">
           <div v-if="form.success" class="success-msg">Awesome! See you soon!</div>
@@ -221,6 +221,11 @@
             <div class="_check-box" @click="form.isCareers = !form.isCareers" style="margin-right: 16px;">
               <i class="fas" :class="[form.isCareers ? 'fa-check-square' : 'fa-square']"></i><span>Careers</span>
             </div>
+            <input type="checkbox" name="chk_validator" ref="chk_validator" v-model="form.chkValidatorOn"
+              oninvalid="this.setCustomValidity('Please check at least one of the boxes.')"
+              onchange="this.setCustomValidity('')"
+              required
+              style="position: absolute; opacity: 0;"/>
             <div class="_check-box" @click="form.isBusiness = !form.isBusiness">
               <i class="fas" :class="[form.isBusiness ? 'fa-check-square' : 'fa-square']"></i><span>Business</span>
             </div>
@@ -291,6 +296,7 @@ export default {
         email: '',
         loading: false,
         success: false,
+        chkValidatorOn: false,
       },
     };
   },
@@ -325,6 +331,18 @@ export default {
         this.form.success = false;
       });
     },
+  },
+  watch: {
+    'form.isCareers'() {
+      this.form.chkValidatorOn = this.form.isCareers || this.form.isBusiness;
+      this.$refs.chk_validator.setCustomValidity(this.form.chkValidatorOn ? '' : 'Please check at least one of the boxes.');
+    },
+    'form.isBusiness'() {
+      this.form.chkValidatorOn = this.form.isCareers || this.form.isBusiness;
+      this.$refs.chk_validator.setCustomValidity(this.form.chkValidatorOn ? '' : 'Please check at least one of the boxes.');
+    },
+  },
+  activated() {
   },
 };
 </script>

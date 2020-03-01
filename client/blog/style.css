@@ -150,6 +150,52 @@ h2.article-sub-title:hover > a {
 h2.article-sub-title > a:hover > i {
   color: #202020;
 }
+.note {
+  padding: 30px;
+  margin-bottom: 10px;
+}
+.note > .header {
+  font-weight: 700;
+}
+.note > p:not(.header) {
+  font-size: 18px;
+}
+.note.gray-note {
+  background-color: #f4f4f4;
+}
+.note.gray-note > * {
+  color: #505050;
+}
+.note.red-note {
+  background-color: #fff6f6;
+}
+.note.red-note > * {
+  color: #ff9999;
+}
+.note.blue-note {
+  background-color: #f6f8ff;
+}
+.note.blue-note > * {
+  color: #8ca0ff;
+}
+.note.green-note {
+  background-color: #f0fff0;
+}
+.note.green-note > * {
+  color: #46c894;
+}
+.note.yellow-note {
+  background-color: #fcf8ea;
+}
+.note.yellow-note > * {
+  color: #f8be16;
+}
+.note.purple-note {
+  background-color: #fbf4f9;
+}
+.note.purple-note > * {
+  color: #c295d8;
+}
 @media (max-width: 700px) {
   h1 {
       font-size: 40px;
@@ -165,5 +211,8 @@ h2.article-sub-title > a:hover > i {
   }
   p {
       font-size: 18px;
+  }
+  .note > p:not(.header) {
+    font-size: 16px;
   }
 }
