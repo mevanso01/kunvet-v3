@@ -928,11 +928,13 @@
             address = `${address} ${this.findJob.address2}`;
           }
         }
+        const title = `Now hiring: ${this.findJob.title}`;
+        const description = `Apply for ${this.findJob.title} in ${address}`;
         return {
-          title: `Now hiring: ${this.findJob.title}`,
-          description: `Apply for ${this.findJob.title} in ${address}`,
-          image: 'https://kunvet.com/banner-image.png',
-          url: window.location.href,
+          title: title,
+          description: description,
+          image: 'https://dev.kunvet.com/banner-image.png',
+          url: `http://devkunvetshare-env.eba-wvnadfzd.us-east-1.elasticbeanstalk.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
           sites: ['linkedin', 'facebook'],
         };
       },
@@ -946,11 +948,13 @@
             address = `${address} ${this.findJob.address2}`;
           }
         }
+        const title = `Now hiring: ${this.findJob.title} in ${address}`;
+        const description = `Now hiring: ${this.findJob.title} in ${address}`;
         return {
-          title: `Now hiring: ${this.findJob.title} in ${address}`,
-          description: `Now hiring: ${this.findJob.title} in ${address}`,
-          image: 'https://kunvet.com/banner-image.png',
-          url: window.location.href,
+          title: title,
+          description: description,
+          image: 'https://dev.kunvet.com/banner-image.png',
+          url: `http://devkunvetshare-env.eba-wvnadfzd.us-east-1.elasticbeanstalk.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
           sites: ['twitter'],
         };
       },
@@ -988,8 +992,8 @@
           { name: 'description', content: str },
           { property: 'og:title', content: `Now hiring: ${this.findJob.title}` },
           { property: 'og:description', content: `Apply for ${this.findJob.title} in ${address}` },
-          { property: 'og:image', content: 'https://kunvet.com/banner-image.png' },
-          { property: 'og:url', content: window.location.href },
+          { property: 'og:image', content: 'https://dev.kunvet.com/banner-image.png' },
+          { property: 'og:url', content: 'https://dev.kunvet.com/share/index.html' },
         ],
       };
     },
