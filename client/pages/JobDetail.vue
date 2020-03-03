@@ -934,7 +934,7 @@
           title: title,
           description: description,
           image: 'https://dev.kunvet.com/banner-image.png',
-          url: `http://devkunvetshare-env.eba-wvnadfzd.us-east-1.elasticbeanstalk.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
+          url: `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
           sites: ['linkedin', 'facebook'],
         };
       },
@@ -954,7 +954,7 @@
           title: title,
           description: description,
           image: 'https://dev.kunvet.com/banner-image.png',
-          url: `http://devkunvetshare-env.eba-wvnadfzd.us-east-1.elasticbeanstalk.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
+          url: `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
           sites: ['twitter'],
         };
       },
