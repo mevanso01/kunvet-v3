@@ -188,7 +188,7 @@
         <img class="logo" :src="pngs.logo" alt="">
 
         <div class="category">
-          <img class="cover-img" :src="pngs.5-great-excuses-for-missing-work-thumbnail" alt="5-great-excuses-for-missing-work"><br>
+          <img class="cover-img" :src="pngs.thumbnailMissingWork" alt="5-great-excuses-for-missing-work"><br>
           <div class="header">Careers</div>
           <div class="sub-header">
             <a class="temp-link mb-3" href="/blog/5-great-excuses-for-missing-work.html">
@@ -276,6 +276,7 @@ import logo from '@/assets/blog/logo.svg';
 import placeholder1 from '@/assets/blog/placeholder1.png';
 import placeholder2 from '@/assets/blog/placeholder2.png';
 import nightOwl from '@/assets/blog/night_owl.svg';
+import thumbnailMissingWork from '@/assets/blog/5-great-excuses-for-missing-work-thumbnail.png';
 
 export default {
   metaInfo: {
@@ -288,6 +289,7 @@ export default {
         placeholder1: placeholder1,
         placeholder2: placeholder2,
         nightOwl: nightOwl,
+        thumbnailMissingWork: thumbnailMissingWork,
       },
       form: {
         fname: '',
