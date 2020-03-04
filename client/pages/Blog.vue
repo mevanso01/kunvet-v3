@@ -188,7 +188,7 @@
         <img class="logo" :src="pngs.logo" alt="">
 
         <div class="category">
-          <img class="cover-img" :src="pngs.placeholder1" alt=""><br>
+          <img class="cover-img" :src="pngs.5-great-excuses-for-missing-work-thumbnail" alt="5-great-excuses-for-missing-work"><br>
           <div class="header">Careers</div>
           <div class="sub-header">
             <a class="temp-link mb-3" href="/blog/5-great-excuses-for-missing-work.html">
@@ -199,7 +199,7 @@
             Need to recharge and don't know what to tell your boss? Here are my personal top 5 excuses that got me out of work every single time!
           </div>
           <div class="name">Shannon Serpette</div>
-          <div class="date">Mar 2, 2020 • 9 min read</div>
+          <div class="date">Mar 7, 2020 • 9 min read</div>
         </div>
 
         <div class="divider" style="margin-bottom: 30px;"></div>
