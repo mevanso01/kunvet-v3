@@ -132,6 +132,10 @@
           </v-flex>
           <v-flex>
             <router-link
+              to="/career-guide"><p style="color: #b3b3b3">Career Guide</p></router-link>
+          </v-flex>
+          <v-flex>
+            <router-link
               to="/terms"><p style="color: #b3b3b3">Terms and Conditions</p></router-link>
           </v-flex>
           <!-- <v-flex>
@@ -236,11 +240,13 @@ export default {
         [
           { title: 'Login', href: '/login' },
           { title: 'Sign up', href: '/sign-up' },
+          { title: 'Learn', href: '/career-guide' },
         ],
         [
           { title: 'Search', href: '/jobs/search' },
           { title: 'Applied Jobs', href: '/jobs/applied' },
           { title: 'Saved Jobs', href: '/jobs/saved' },
+          { title: 'Learn', href: '/career-guide' },
         ],
         [
           { title: 'Search', href: '/jobs/search' },
@@ -284,7 +290,7 @@ export default {
       if (this.$route.path === '/' && this.$route.name === null) {
         return true;
       }
-      const jobBlogRoutes = ['/blog'];
+      const jobBlogRoutes = ['/career-guide'];
       return jobBlogRoutes.indexOf(this.$route.path) !== -1;
     },
     navHasBg() {

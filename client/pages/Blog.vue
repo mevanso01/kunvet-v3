@@ -7,7 +7,7 @@
     margin: 0 auto;
     font-family: 'Open Sans';
     img.logo {
-      height: 20px;
+      height: 40px;
       margin: 46px auto;
       display: table;
     }
@@ -185,7 +185,8 @@
   <v-container fluid style="padding: 0;">
     <div style="margin: 0 8% -40px; 8%; padding-bottom: 40px;">
       <div class="content">
-        <img class="logo" :src="pngs.logo" alt="">
+        <h1 class="wdn-text-hidden">Kunvet Career Guide</h1>
+        <img class="logo" :src="pngs.newLogo" alt="">
 
         <div class="category">
           <img class="cover-img" :src="pngs.thumbnailMissingWork" alt="5-great-excuses-for-missing-work"><br>
@@ -273,6 +274,7 @@
 <script>
 import Axios from 'axios';
 import logo from '@/assets/blog/logo.svg';
+import newLogo from '@/assets/blog/kunvet-career-guide-logo.svg';
 import placeholder1 from '@/assets/blog/placeholder1.png';
 import placeholder2 from '@/assets/blog/placeholder2.png';
 import nightOwl from '@/assets/blog/night_owl.svg';
@@ -280,12 +282,13 @@ import thumbnailMissingWork from '@/assets/blog/5-great-excuses-for-missing-work
 
 export default {
   metaInfo: {
-    title: 'Blog | Kunvet',
+    title: 'Kunvet Career Guide',
   },
   data() {
     return {
       pngs: {
         logo: logo,
+        newLogo: newLogo,
         placeholder1: placeholder1,
         placeholder2: placeholder2,
         nightOwl: nightOwl,
