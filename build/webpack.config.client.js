@@ -166,6 +166,9 @@ const wpconf = {
       {
         from: './client/google90271f0211931bfa.html',
       },
+      {
+        from: './client/robots.txt',
+      },
     ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
