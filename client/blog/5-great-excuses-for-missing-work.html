@@ -3,8 +3,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Language" content="en_US">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta property="og:title" content="Kunvet">
-    <meta property="og:image" content="https://kunvet.com/favicon.png">
+    <meta property="og:title" content="5 Great Excuses for Missing Work">
+    <meta property="og:description" content="Need to recharge and don't know what to tell your boss? Here are my personal top 5 excuses that got me out of work every single time.">
+    <meta property="og:image" content="https://dev.kunvet.com/static/img/blog/5-great-excuses-for-missing-work.png">
+    <meta property="og:url" content="https://dev.kunvet.com/blog/5-great-excuses-for-missing-work.html">
     <meta name="description" content="Need to recharge and don't know what to tell your boss? Here are my personal top 5 excuses that got me out of work every single time.">
     <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
     <link rel="shortcut icon" href="/icons-0a372a7fb2fd82556da7332a507b989a/favicon.ico">
@@ -51,9 +53,15 @@
         <h1 class="article-title text-center">5 Great Excuses for Missing Work</h1>
 
         <div class="social-buttons text-center" style="margin-bottom: 20px;">
-          <i class="fab fa-facebook-square"></i>
-          <i class="fab fa-linkedin"></i>
-          <i class="fab fa-twitter-square"></i>
+          <a class="share-facebook" target="_blank">
+            <i class="fab fa-facebook-square"></i>
+          </a>
+          <a class="share-linkedin" target="_blank">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a class="share-twitter" target="_blank">
+            <i class="fab fa-twitter-square"></i>
+          </a>
         </div>
 
         <img class="banner-img" src="/static/img/blog/5-great-excuses-for-missing-work.png" alt="5-great-excuses-for-missing-work" style="margin-bottom: 40px;">
@@ -414,15 +422,21 @@
 
         <h3 class="text-center" style="margin-bottom: 10px;">Share this article with someone!</h3>
         <div class="social-buttons text-center" style="margin-bottom: 60px;">
-          <i class="fab fa-facebook-square"></i>
-          <i class="fab fa-linkedin"></i>
-          <i class="fab fa-twitter-square"></i>
+          <a class="share-facebook" target="_blank">
+            <i class="fab fa-facebook-square"></i>
+          </a>
+          <a class="share-linkedin" target="_blank">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a class="share-twitter" target="_blank">
+            <i class="fab fa-twitter-square"></i>
+          </a>
         </div>
       </div>
     </div>
 
     <script type="text/javascript">
-      toggleReference = function (toShow) {
+      var toggleReference = function (toShow) {
         if (toShow == null) {
           toShow = !$("#references > ol").is(":visible");
         }
@@ -434,6 +448,34 @@
           $("#references > h3 > i").removeClass("fa-minus-circle").addClass("fa-plus-circle");
         }
       };
+      var getMeta = function (metaName) {
+        var metas = document.getElementsByTagName('meta');
+
+        for (let i = 0; i < metas.length; i++) {
+          if (metas[i].getAttribute('name') === metaName) {
+            return metas[i].getAttribute('content');
+          }
+        }
+
+        return '';
+      };
+
+      // Update social share links
+      var description = getMeta('description');
+      var via = "@" + window.location.protocol + "//" + window.location.host;
+      var fbBtns = document.querySelectorAll('.social-buttons .share-facebook');
+      fbBtns.forEach(function(elem, index) {
+        elem.href = "https://www.facebook.com/sharer/sharer.php?u=" + window.location.href;
+      });
+      var liBtns = document.querySelectorAll('.social-buttons .share-linkedin');
+      liBtns.forEach(function(elem, index) {
+        elem.href = "http://www.linkedin.com/shareArticle?mini=true&ro=true&title=Kunvet&url=" + window.location.href + "&summary=&source=Kunvet&armin=armin";
+      });
+      var twBtns = document.querySelectorAll('.social-buttons .share-twitter');
+      twBtns.forEach(function(elem, index) {
+        elem.href = "https://twitter.com/intent/tweet?text=" + description + "&url=" + window.location.href + "&via=" + via;
+      });
+
     </script>
   </body>
 </html>
