@@ -1157,11 +1157,20 @@ export default {
         this.selectedLat = job.latitude;
         this.selectedLong = job.longitude;
       } else {
-        this.selectedLong = Coordinates.uci.latitude;
+        this.selectedLat = Coordinates.uci.latitude;
         this.selectedLong = Coordinates.uci.longitude;
       }
       this.page = 0;
       this.$setTitle(this.query || 'Search for Jobs');
+      this.$router.replace({
+        path: '/jobs/search',
+        query: {
+          address: job.address || '',
+          latitude: this.selectedLat || '',
+          longitude: this.selectedLong || '',
+          q: query || '',
+        },
+      });
       this.rawSearch();
     },
   },
@@ -1199,22 +1208,35 @@ export default {
     // this.setSelectedLatlongs();
     if (this.$route.query.p != null) {
       // Do SearchForm Init && Job Search
-      this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
-      this.query = this.$route.query.q || '';
       this.selectedLat = this.$route.query.latitude || Coordinates.uci.latitude;
       this.selectedLong = this.$route.query.longitude || Coordinates.uci.longitude;
       this.page = 0;
+
+      if (this.$route.params.query) {
+        const [position, city, state] = this.$route.params.query.split('-');
+        if (position && city && state) {
+          const defaultValues = {
+            address: `${city.split('_').join(' ')} ${state}`,
+            q: position.split('_').join(' ') || '',
+          };
+          this.$refs.jobSearchForm.setDefaultValues(defaultValues);
+        }
+      } else {
+        this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
+        this.query = this.$route.query.q || '';
+
+        // Replace URL
+        this.$router.replace({
+          path: '/jobs/search',
+          query: {
+            address: this.$route.query.address || '',
+            latitude: this.$route.query.latitude || '',
+            longitude: this.$route.query.longitude || '',
+            q: this.query,
+          },
+        });
+      }
       this.rawSearch();
-      // Replace URL
-      this.$router.replace({
-        path: '/jobs/search',
-        query: {
-          address: this.$route.query.address || '',
-          latitude: this.$route.query.latitude || '',
-          longitude: this.$route.query.longitude || '',
-          q: this.$route.query.q || '',
-        },
-      });
     }
     // const oldQuery = this.query;
     // if (this.$route.query.q) {
