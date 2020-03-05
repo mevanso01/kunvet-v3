@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { promisify } from 'util';
 import path from 'path';
+import { uniq } from 'lodash';
 import Config from 'config';
 import Mongoose from 'mongoose';
 import Models from '../server/mongodb/Models';
@@ -29,7 +30,7 @@ const generateUrlsSitemap = (urls, priority = '0.9') => {
 };
 
 const buildJobsSitemap = async () => {
-  const jobs = await Models.Job.find();
+  const jobs = await Models.Job.find({ expired: false });
 
   const urls = [];
   jobs.forEach(({ _id }) => {
@@ -40,11 +41,50 @@ const buildJobsSitemap = async () => {
   await writeFile(path.resolve(SITEMAPS_PATH, 'client/sitemap-jobs.xml'), sitemap);
 };
 
+const buildExpiredJobsSitemap = async () => {
+  const jobs = await Models.Job.find({ expired: true });
+
+  const urls = [];
+  jobs.forEach(({ _id }) => {
+    urls.push(`https://kunvet.com/jobs/detail/${_id}`);
+  });
+
+  const sitemap = generateUrlsSitemap(urls);
+  await writeFile(path.resolve(SITEMAPS_PATH, 'client/sitemap-expired-jobs.xml'), sitemap);
+};
+
+const buildSearchSitemap = async () => {
+  const jobs = await Models.Job.find();
+  if (jobs.length) {
+    let queries = [];
+    jobs.forEach(job => {
+      job.position_tags.forEach(pos => {
+        const position = pos.split(' ').join('_');
+        const location = `${job.city.split(' ').join('_')}-${job.state}`;
+        queries.push(`${position}-${location}`.toLowerCase());
+      });
+    });
+    queries = uniq(queries);
+
+    if (queries.length) {
+      const urls = [];
+      queries.forEach(query => {
+        urls.push(`https://kunvet.com/jobs/search/${query}`);
+      });
+
+      const sitemap = generateUrlsSitemap(urls);
+      await writeFile(path.resolve(SITEMAPS_PATH, 'client/sitemap-search-jobs.xml'), sitemap);
+    }
+  }
+};
+
 // Initialization
 (async () => {
   await Mongoose.connect(Config.get('private.database'));
 
   await buildJobsSitemap();
+  await buildExpiredJobsSitemap();
+  await buildSearchSitemap();
 
   process.exit(0);
 })();
