@@ -72,7 +72,7 @@ function processWebpackConfig(task, config) {
 // Client Blog pages
 gulp.task('client-blog', () => {
   return gulp.src('client/blog/*')
-    .pipe(gulp.dest('dist/client/blog'));
+    .pipe(gulp.dest('dist/client/career-guide'));
 });
 // Client Blog assets
 gulp.task('client-blog-asset', () => {

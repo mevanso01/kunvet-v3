@@ -1,16 +1,12 @@
 <style lang="scss" scoped>
   @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i,800,800i);
-  
+  @import url(https://fonts.googleapis.com/css?family=Proxima+Nova);
+
   // overall
   .content {
     max-width: 500px;
     margin: 0 auto;
     font-family: 'Open Sans';
-    img.logo {
-      height: 40px;
-      margin: 46px auto;
-      display: table;
-    }
   }
   .category {
     margin-bottom: 40px;
@@ -146,6 +142,102 @@
       color: #888888 !important;
     }
   }
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 36px 8%;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #f0f0f0;
+    img.logo {
+      height: 40px;
+      margin: auto 0;
+    }
+  }
+  .subscribe_btn {
+    width: 160px;
+    height: 56px !important;
+    line-height: 56px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    user-select: none;
+    .subscribe_btn-text {
+      font-size: 16px;
+      font-weight: bold;
+      font-family: proxima nova;
+      color: #ffffff;
+      background-color: #ff6969;
+      line-height: 120%;
+    }
+  }
+  .side-toolbar {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: none;
+    .subscribe_btn {
+      display: none;
+      margin-bottom: 10px;
+    }
+    .toggler {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      background-color: #ff6969;
+      border-radius: 50%;
+      position: relative;
+      margin-left: auto;
+      cursor: pointer;
+      .dots {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: white;
+        margin: auto;
+        &::before {
+          content: ' ';
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: white;
+          position: absolute;
+          left: 12px;
+        }
+        &::after {
+          content: ' ';
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: white;
+          position: absolute;
+          right: 12px;
+        }
+      }
+    }
+    &.opened {
+      .subscribe_btn {
+        display: block;
+      }
+      .toggler {
+        .dots {
+          background-color: transparent;
+          &::before {
+            width: 30px;
+            height: 3px;
+            border-radius: 5px;
+            transform: translate(1px, 3px) rotate(-45deg);
+            transition: width .1s, transform .1s;
+          }
+          &::after {
+            width: 30px;
+            height: 3px;
+            border-radius: 5px;
+            transform: translate(-1px, 3px) rotate(45deg);
+            transition: width .1s, transform .1s;
+          }
+        }
+      }
+    }
+  }
   // big desktop
   @media (min-width: 1025px){
   }
@@ -157,9 +249,27 @@
   }
   // small
   @media (min-width: 451px) and (max-width: 600px) {
+    .nav-bar {
+      justify-content: center;
+      .subscribe_btn {
+        display: none;
+      }
+    }
+    .side-toolbar {
+      display: block;
+    }
   }
   // extra small
   @media (max-width: 450px) {
+    .nav-bar {
+      justify-content: center;
+      .subscribe_btn {
+        display: none;
+      }
+    }
+    .side-toolbar {
+      display: block;
+    }
   }
 </style>
 
@@ -183,16 +293,18 @@
 
 <template>
   <v-container fluid style="padding: 0;">
-    <div style="margin: 0 8% -40px; 8%; padding-bottom: 40px;">
+    <h1 class="wdn-text-hidden">Kunvet Career Guide</h1>
+    <div class="nav-bar">
+      <img class="logo" :src="pngs.newLogo" alt="">
+      <k-btn class="subscribe_btn" @click="onClickToolbarSubscribe"><span class="subscribe_btn-text">SUBSCRIBE</span></k-btn>
+    </div>
+    <div style="margin: 0 8% -40px; padding-bottom: 40px;">
       <div class="content">
-        <h1 class="wdn-text-hidden">Kunvet Career Guide</h1>
-        <img class="logo" :src="pngs.newLogo" alt="">
-
         <div class="category">
           <img class="cover-img" :src="pngs.thumbnailMissingWork" alt="5-great-excuses-for-missing-work"><br>
           <div class="header">Careers</div>
           <div class="sub-header">
-            <a class="temp-link mb-3" href="/blog/5-great-excuses-for-missing-work.html">
+            <a class="temp-link mb-3" href="/career-guide/5-great-excuses-for-missing-work.html">
               5 Great Excuses for Missing Work
             </a>
           </div>
@@ -212,7 +324,7 @@
         </div>
       </div>
     </div>
-    <div class="subscribe-content">
+    <div class="subscribe-content" ref="subscribeForm">
       <div style="max-width: 400px; margin: auto;">
         <img class="form-logo mx-auto" :src="pngs.nightOwl" alt="">
         <div class="header">Get Exclusive Content That Will Up Your Game</div>
@@ -268,6 +380,12 @@
         </div>
       </div>
     </div>
+    <div class="side-toolbar" :class="[toolbarOpened ? 'opened': '']">
+      <k-btn class="subscribe_btn" @click="onClickToolbarSubscribe"><span class="subscribe_btn-text">SUBSCRIBE</span></k-btn>
+      <div class="toggler" @click="toolbarOpened = !toolbarOpened">
+        <div class="dots"></div>
+      </div>
+    </div>
   </v-container>
 </template>
 
@@ -303,6 +421,7 @@ export default {
         // isBusiness: false,
         // chkValidatorOn: false,
       },
+      toolbarOpened: false,
     };
   },
   methods: {
@@ -335,6 +454,10 @@ export default {
         this.form.loading = false;
         this.form.success = false;
       });
+    },
+    onClickToolbarSubscribe() {
+      this.$refs.subscribeForm.scrollIntoView();
+      this.toolbarOpened = false;
     },
   },
   watch: {
