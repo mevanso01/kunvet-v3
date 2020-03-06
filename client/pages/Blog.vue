@@ -221,15 +221,15 @@
           background-color: transparent;
           &::before {
             width: 30px;
-            height: 3px;
-            border-radius: 5px;
+            height: 4px;
+            border-radius: 2px;
             transform: translate(1px, 3px) rotate(-45deg);
             transition: width .1s, transform .1s;
           }
           &::after {
             width: 30px;
-            height: 3px;
-            border-radius: 5px;
+            height: 4px;
+            border-radius: 2px;
             transform: translate(-1px, 3px) rotate(45deg);
             transition: width .1s, transform .1s;
           }
