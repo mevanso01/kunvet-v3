@@ -163,6 +163,7 @@ const wpconf = {
       { from: './client/robots.txt' },
       { from: './client/sitemap.xml' },
       { from: './client/sitemap-main.xml' },
+      { from: './client/sitemap-blog.xml' },
       { from: './client/sitemap-jobs.xml' },
       { from: './client/sitemap-expired-jobs.xml' },
       { from: './client/sitemap-search-jobs.xml' },
