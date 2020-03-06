@@ -205,6 +205,7 @@ export default {
           { title: 'Login', href: '/login' },
           { title: 'Sign up', href: '/sign-up' },
           { title: 'Post a Job', href: '/hire' },
+          { title: 'Learn', href: '/career-guide' },
         ],
         [
           { title: 'Search', href: '/jobs/search' },
@@ -216,6 +217,7 @@ export default {
             ],
           },
           { title: 'Notifications', href: '/account' },
+          { title: 'Learn', href: '/career-guide' },
           {
             title: 'Settings', href: '/account/settings',
             // subItems: [ // WILL IMPLEMENT LATER
