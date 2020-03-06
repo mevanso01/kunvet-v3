@@ -51,7 +51,7 @@
   .divider {
     height: 0;
     widows: 100%;
-    border-top: 1px solid #e4e4e4;
+    border-top: 1px dashed #e4e4e4;
   }
   .subscribe-content {
     font-family: 'Open Sans';
@@ -146,7 +146,7 @@
     justify-content: space-between;
     padding: 36px 8%;
     margin-bottom: 50px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px dashed #e4e4e4;
     img.logo {
       height: 40px;
       margin: auto 0;
