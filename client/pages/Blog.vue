@@ -1,6 +1,5 @@
 <style lang="scss" scoped>
   @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i,800,800i);
-  @import url(https://fonts.googleapis.com/css?family=Proxima+Nova);
 
   // overall
   .content {
@@ -163,7 +162,7 @@
     .subscribe_btn-text {
       font-size: 16px;
       font-weight: bold;
-      font-family: proxima nova;
+      font-family: proxima-nova;
       color: #ffffff;
       background-color: #ff6969;
       line-height: 120%;
