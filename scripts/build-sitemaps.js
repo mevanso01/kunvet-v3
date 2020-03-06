@@ -54,7 +54,11 @@ const buildExpiredJobsSitemap = async () => {
 };
 
 const buildSearchSitemap = async () => {
-  const jobs = await Models.Job.find();
+  const jobs = await Models.Job.find({
+    active: true,
+    expired: false,
+    is_deleted: false,
+  });
   if (jobs.length) {
     let queries = [];
     jobs.forEach(job => {
