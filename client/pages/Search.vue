@@ -1151,7 +1151,7 @@ export default {
         this.loadingJobs = false;
       }
     },
-    onClickJobSearch(job, query) {
+    onClickJobSearch(job, query, replaceUrl = true) {
       this.query = query;
       if (job.latitude && job.longitude) {
         this.selectedLat = job.latitude;
@@ -1162,15 +1162,17 @@ export default {
       }
       this.page = 0;
       this.$setTitle(this.query || 'Search for Jobs');
-      this.$router.replace({
-        path: '/jobs/search',
-        query: {
-          address: job.address || '',
-          latitude: this.selectedLat || '',
-          longitude: this.selectedLong || '',
-          q: query || '',
-        },
-      });
+      if (replaceUrl) {
+        this.$router.replace({
+          path: '/jobs/search',
+          query: {
+            address: job.address || '',
+            latitude: this.selectedLat || '',
+            longitude: this.selectedLong || '',
+            q: query || '',
+          },
+        });
+      }
       this.rawSearch();
     },
   },
@@ -1233,8 +1235,8 @@ export default {
             q: this.query,
           },
         });
+        this.rawSearch();
       }
-      this.rawSearch();
     }
     // const oldQuery = this.query;
     // if (this.$route.query.q) {
