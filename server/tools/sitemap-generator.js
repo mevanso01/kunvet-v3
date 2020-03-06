@@ -2,18 +2,16 @@ import fs from 'fs';
 import { promisify } from 'util';
 import path from 'path';
 import { uniq } from 'lodash';
-import Config from 'config';
-import Mongoose from 'mongoose';
-import Models from '../server/mongodb/Models';
+import Models from '../mongodb/Models';
 
-const SITEMAPS_PATH = path.resolve(__dirname, '..');
+const SITEMAPS_PATH = path.resolve(__dirname, '../..');
 
 const writeFile = async (filePath, str) => {
   const data = new Uint8Array(Buffer.from(str));
   return promisify(fs.writeFile)(filePath, data);
 };
 
-const generateUrlsSitemap = (urls, priority = '0.9') => {
+export const generateUrlsSitemap = (urls, priority = '0.9') => {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
@@ -29,7 +27,7 @@ const generateUrlsSitemap = (urls, priority = '0.9') => {
   return xml;
 };
 
-const buildJobsSitemap = async () => {
+export const buildJobsSitemap = async () => {
   const jobs = await Models.Job.find({ expired: false, is_deleted: false });
 
   const urls = [];
@@ -41,7 +39,7 @@ const buildJobsSitemap = async () => {
   await writeFile(path.resolve(SITEMAPS_PATH, 'client/sitemap-jobs.xml'), sitemap);
 };
 
-const buildExpiredJobsSitemap = async () => {
+export const buildExpiredJobsSitemap = async () => {
   const jobs = await Models.Job.find({ expired: true, is_deleted: false });
 
   const urls = [];
@@ -53,7 +51,7 @@ const buildExpiredJobsSitemap = async () => {
   await writeFile(path.resolve(SITEMAPS_PATH, 'client/sitemap-expired-jobs.xml'), sitemap);
 };
 
-const buildSearchSitemap = async () => {
+export const buildSearchSitemap = async () => {
   const jobs = await Models.Job.find({
     active: true,
     expired: false,
@@ -82,13 +80,8 @@ const buildSearchSitemap = async () => {
   }
 };
 
-// Initialization
-(async () => {
-  await Mongoose.connect(Config.get('private.database'));
-
+export const buildAllSitemaps = async () => {
   await buildJobsSitemap();
   await buildExpiredJobsSitemap();
   await buildSearchSitemap();
-
-  process.exit(0);
-})();
+};
