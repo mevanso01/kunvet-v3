@@ -505,6 +505,7 @@ section.search {
   </v-container>
 </template>
 <script>
+import { startCase, toLower } from 'lodash';
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
@@ -1161,7 +1162,11 @@ export default {
         this.selectedLong = Coordinates.uci.longitude;
       }
       this.page = 0;
-      this.$setTitle(this.query || 'Search for Jobs');
+      let title = 'Search for Jobs';
+      if (this.query && job.address) {
+        title = `${startCase(toLower(this.query))} Jobs in ${job.address}`;
+      }
+      this.$setTitle(title);
       if (replaceUrl) {
         this.$router.replace({
           path: '/jobs/search',
@@ -1215,8 +1220,8 @@ export default {
       this.page = 0;
 
       if (this.$route.params.query) {
-        const [position] = this.$route.params.query.split('-jobs-near-');
-        if (position) {
+        const [position, location] = this.$route.params.query.split('-jobs-near-');
+        if (position && location) {
           this.$refs.jobSearchForm.setDefaultValues({
             q: position.split('-').join(' '),
           });
