@@ -59,9 +59,9 @@ const buildSearchSitemap = async () => {
     let queries = [];
     jobs.forEach(job => {
       job.position_tags.forEach(pos => {
-        const position = pos.split(' ').join('_');
-        const location = `${job.city.split(' ').join('_')}-${job.state}`;
-        queries.push(`${position}-${location}`.toLowerCase());
+        const position = pos.split(' ').join('-');
+        const location = `${job.city.split(' ').join('-')}-${job.state}`;
+        queries.push(`${position}-jobs-near-${location}`.toLowerCase());
       });
     });
     queries = uniq(queries);

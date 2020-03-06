@@ -1213,13 +1213,11 @@ export default {
       this.page = 0;
 
       if (this.$route.params.query) {
-        const [position, city, state] = this.$route.params.query.split('-');
-        if (position && city && state) {
-          const defaultValues = {
-            address: `${city.split('_').join(' ')} ${state}`,
-            q: position.split('_').join(' ') || '',
-          };
-          this.$refs.jobSearchForm.setDefaultValues(defaultValues);
+        const [position] = this.$route.params.query.split('-jobs-near-');
+        if (position) {
+          this.$refs.jobSearchForm.setDefaultValues({
+            q: position.split('-').join(' '),
+          });
         }
       } else {
         this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
