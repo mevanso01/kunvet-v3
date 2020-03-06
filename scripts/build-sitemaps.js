@@ -30,7 +30,7 @@ const generateUrlsSitemap = (urls, priority = '0.9') => {
 };
 
 const buildJobsSitemap = async () => {
-  const jobs = await Models.Job.find({ expired: false });
+  const jobs = await Models.Job.find({ expired: false, is_deleted: false });
 
   const urls = [];
   jobs.forEach(({ _id }) => {
