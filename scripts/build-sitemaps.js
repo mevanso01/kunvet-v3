@@ -42,7 +42,7 @@ const buildJobsSitemap = async () => {
 };
 
 const buildExpiredJobsSitemap = async () => {
-  const jobs = await Models.Job.find({ expired: true });
+  const jobs = await Models.Job.find({ expired: true, is_deleted: false });
 
   const urls = [];
   jobs.forEach(({ _id }) => {
