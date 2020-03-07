@@ -618,7 +618,11 @@
         </div>
         <div class="d-inline-flex">
           <share v-if="findJob.title" :config="config"></share>
-          <share v-if="findJob.title" :config="configTwitter"></share>
+          <div class="social-share share-component">
+            <a class="social-share-icon icon-twitter" :href="configTwitter._href" target="_blank">
+            </a>
+          </div>
+          <!-- <share v-if="findJob.title" :config="configTwitter"></share> -->
         </div>
         <div id="yandex-share"></div>
         <!--dialog for apply job flow-->
@@ -950,11 +954,14 @@
         }
         const title = `Now hiring: ${this.findJob.title} in ${address}`;
         const description = `Now hiring: ${this.findJob.title} in ${address}`;
+        const url = `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`;
+        const host = `${window.location.protocol}//${window.location.host}`;
         return {
           title: title,
           description: description,
           image: 'https://dev.kunvet.com/banner-image.png',
-          url: `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
+          url: url,
+          _href: `https://twitter.com/intent/tweet?text=${title}. ${host}&url=${url}`,
           sites: ['twitter'],
         };
       },
