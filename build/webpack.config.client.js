@@ -157,16 +157,15 @@ const wpconf = {
     new webpack.HotModuleReplacementPlugin(),
     new FaviconsWebpackPlugin('./client/assets/favicon.png'),
     new CopyWebpackPlugin([
-      { from: './client/assets/favicon.png' },
-      { from: './client/assets/banner-image.png' },
-      { from: './client/google90271f0211931bfa.html' },
-      { from: './client/robots.txt' },
-      { from: './client/sitemap.xml' },
-      { from: './client/sitemap-main.xml' },
-      { from: './client/sitemap-blog.xml' },
-      { from: './client/sitemap-jobs.xml' },
-      { from: './client/sitemap-expired-jobs.xml' },
-      { from: './client/sitemap-search-jobs.xml' },
+      {
+        from: './client/assets/favicon.png',
+      },
+      {
+        from: './client/assets/banner-image.png',
+      },
+      {
+        from: './client/google90271f0211931bfa.html',
+      },
     ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',

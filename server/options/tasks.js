@@ -6,8 +6,6 @@ import AlgoliaSearch from 'algoliasearch';
 import Mailer from '@/utils/Mailer';
 import GAuth from '@/utils/GoogleAuth';
 import JobHelper from '@/../client/utils/JobHelper';
-import scheduler from 'node-schedule';
-import { buildAllSitemaps } from '../tools/sitemap-generator';
 
 const request = require('request');
 
@@ -162,6 +160,3 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
 });
 
 Scheduler.install();
-
-// Rebuild sitemaps everyday
-scheduler.scheduleJob('0 0 1 * * *', buildAllSitemaps);
