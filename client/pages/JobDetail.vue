@@ -955,13 +955,13 @@
         const title = `Now hiring: ${this.findJob.title} in ${address}`;
         const description = `Now hiring: ${this.findJob.title} in ${address}`;
         const url = `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`;
-        const host = `${window.location.protocol}//${window.location.host}`;
+        const jobUrl = `${window.location.protocol}//${window.location.host}/jobs/detail/${this.findJob._id}`;
         return {
           title: title,
           description: description,
           image: 'https://dev.kunvet.com/banner-image.png',
           url: url,
-          _href: `https://twitter.com/intent/tweet?text=${title}. ${host}&url=${url}`,
+          _href: `https://twitter.com/intent/tweet?text=${title}. ${jobUrl}&url=${url}`,
           sites: ['twitter'],
         };
       },
