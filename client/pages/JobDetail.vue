@@ -939,7 +939,7 @@
           title: title,
           description: description,
           image: `${host}/banner-image.png`,
-          url: `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
+          url: `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}&q4=dev`,
           sites: ['linkedin', 'facebook'],
         };
       },
@@ -955,7 +955,7 @@
         }
         const title = `Now hiring: ${this.findJob.title} in ${address}`;
         const description = `Now hiring: ${this.findJob.title} in ${address}`;
-        const url = `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`;
+        const url = `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}&q4=dev`;
         const host = `${window.location.protocol}//${window.location.host}`;
         const jobUrl = `${window.location.protocol}//${window.location.host}/jobs/detail/${this.findJob._id}`;
         return {
