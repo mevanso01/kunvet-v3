@@ -4508,8 +4508,14 @@ export default {
   metaInfo: {
     title: 'Post a Job | Kunvet',
     meta: [
-      { name: 'description', content: 'Save a ton of money on your hiring by using Kunvet now. Satisfaction guaranteed. Or money back.' },
-      { name: 'robots', content: 'noindex, nofollow' },
+      {
+        name: 'description',
+        content: 'Need to hire new talent but don\'t have a lot of money to spend? Save money with Kunvet as your hiring platform. Satisfaction guaranteed or your money back!',
+      },
+      {
+        name: 'robots',
+        content: 'noindex, nofollow',
+      },
     ],
   },
   props: {

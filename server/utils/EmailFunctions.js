@@ -2,6 +2,7 @@ import ErrorCode from '#/ErrorCode';
 import ApiResponse from '@/utils/ApiResponse';
 import Mailer from '@/utils/Mailer';
 import Logger from '@/Logger';
+import JobHelper from '@/../client/utils/JobHelper';
 
 
 /*
@@ -63,7 +64,7 @@ export default {
           fname: emailBody.user.firstname,
           name: emailBody.application.name,
           jobname: emailBody.job.title,
-          address: emailBody.job.address,
+          address: JobHelper.getFullAddress(emailBody.job),
           salary: emailBody.job.salary,
           posted_by: emailBody.job.posted_by,
           type: emailBody.job.type,

@@ -125,6 +125,15 @@ const JobSchema = Mongoose.Schema({
   address2: {
     type: String,
   },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  zip: {
+    type: String,
+  },
   university: {
     type: String,
   },

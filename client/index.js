@@ -8,6 +8,7 @@ import Vuex from 'vuex';
 import VueTimeago from 'vue-timeago';
 import TimeagoLocale from 'vue-timeago/locales/en-US.json';
 import InstantSearch from 'vue-instantsearch';
+import Share from 'vue-social-share';
 // import VueAnalytics from 'vue-analytics';
 
 import Client from '@/apollo/client';
@@ -45,6 +46,7 @@ Vue.use(VueTimeago, {
   },
 });
 Vue.use(InstantSearch);
+Vue.use(Share);
 // if (process.env.NODE_ENV === 'production') {
 //   Vue.use(VueAnalytics, {
 //     id: Config.get('analytics.trackingId') || 'UA-XXX-X',
@@ -236,6 +238,14 @@ const router = new VueRouter({
       path: '/choose',
       component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Choose'),
     },
+    {
+      path: '/career-guide',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/Blog'),
+    },
+    // {
+    //   path: '/blog/detail',
+    //   component: () => import(/* webpackChunkName: "hiring" */ '@/pages/BlogDetail'),
+    // },
     // Debug pages
     {
       path: '/debug/triggerError',

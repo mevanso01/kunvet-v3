@@ -11,6 +11,7 @@ import DateHelper from '@/../client/utils/DateHelper';
 import util from 'util';
 import Config from 'config';
 import GAuth from '@/utils/GoogleAuth';
+import JobHelper from '@/../client/utils/JobHelper';
 
 const request = require('request');
 
@@ -65,7 +66,7 @@ const ACTIONS = {
         fname: ctx.state.user.firstname,
         lname: ctx.state.user.lastname,
         postedby: job.posted_by,
-        address: job.address,
+        address: JobHelper.getFullAddress(job),
         type: job.type,
         salary: job.salary,
       };

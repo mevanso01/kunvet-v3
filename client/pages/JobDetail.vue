@@ -484,7 +484,9 @@
               <img class="job-info-icon" style="transform: translateY(2px);"
                    :src="svgs.building"></img>
               <span style="padding-top: 2px;">
-                <a class="location_link" @click="changeLocation()" target="_blank">{{ findJob.address }}</a><template v-if="findJob.address2"> {{ findJob.address2 }}</template>
+                <a class="location_link" @click="changeLocation()" target="_blank">
+                  {{ fullAddress }}
+                </a>
               </span>
             </p>
             <p v-if="findJob.university" style="margin-bottom: 0;">
@@ -614,6 +616,15 @@
             </k-btn>
           </div>
         </div>
+        <div class="d-inline-flex">
+          <share v-if="findJob.title" :config="config"></share>
+          <div class="social-share share-component">
+            <a class="social-share-icon icon-twitter" :href="configTwitter._href" target="_blank">
+            </a>
+          </div>
+          <!-- <share v-if="findJob.title" :config="configTwitter"></share> -->
+        </div>
+        <div id="yandex-share"></div>
         <!--dialog for apply job flow-->
         <v-dialog class="other-dialog" v-model="applyDialog"
                   :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500">
@@ -801,7 +812,8 @@
   import TimeAgo from 'javascript-time-ago';
   import en from 'javascript-time-ago/locale/en';
   import DateHelper from '@/utils/DateHelper';
-
+  import JobHelper from '@/utils/JobHelper';
+  
   export default {
     filters: {
       plural(amount) {
@@ -907,6 +919,52 @@
         }
         return selected;
       },
+      fullAddress() {
+        return JobHelper.getFullAddress(this.findJob);
+      },
+      config() {
+        let address = '';
+        if (this.findJob.city && this.findJob.state) {
+          address = `${this.findJob.city}, ${this.findJob.state}`;
+        } else {
+          address = this.findJob.address;
+          if (this.findJob.address2) {
+            address = `${address} ${this.findJob.address2}`;
+          }
+        }
+        const title = `Now hiring: ${this.findJob.title}`;
+        const description = `Apply for ${this.findJob.title} in ${address}`;
+        return {
+          title: title,
+          description: description,
+          image: 'https://dev.kunvet.com/banner-image.png',
+          url: `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
+          sites: ['linkedin', 'facebook'],
+        };
+      },
+      configTwitter() {
+        let address = '';
+        if (this.findJob.city && this.findJob.state) {
+          address = `${this.findJob.city}, ${this.findJob.state}`;
+        } else {
+          address = this.findJob.address;
+          if (this.findJob.address2) {
+            address = `${address} ${this.findJob.address2}`;
+          }
+        }
+        const title = `Now hiring: ${this.findJob.title} in ${address}`;
+        const description = `Now hiring: ${this.findJob.title} in ${address}`;
+        const url = `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`;
+        const jobUrl = `${window.location.protocol}//${window.location.host}/jobs/detail/${this.findJob._id}`;
+        return {
+          title: title,
+          description: description,
+          image: 'https://dev.kunvet.com/banner-image.png',
+          url: url,
+          _href: `https://twitter.com/intent/tweet?text=${title}. ${jobUrl}&url=${url}`,
+          sites: ['twitter'],
+        };
+      },
     },
     metaInfo () {
       TimeAgo.addLocale(en);
@@ -927,9 +985,22 @@
       }
       str += '… See this and similar jobs on Kunvet.';
       console.log(str);
+      let address = '';
+      if (this.findJob.city && this.findJob.state) {
+        address = `${this.findJob.city}, ${this.findJob.state}`;
+      } else {
+        address = this.findJob.address;
+        if (this.findJob.address2) {
+          address = `${address} ${this.findJob.address2}`;
+        }
+      }
       return {
         meta: [
           { name: 'description', content: str },
+          { property: 'og:title', content: `Now hiring: ${this.findJob.title}` },
+          { property: 'og:description', content: `Apply for ${this.findJob.title} in ${address}` },
+          { property: 'og:image', content: 'https://dev.kunvet.com/banner-image.png' },
+          { property: 'og:url', content: 'https://dev.kunvet.com/share/index.html' },
         ],
       };
     },
@@ -1057,9 +1128,9 @@
                             Node.js Developer at Kunvet in Irvine, CA
                           */
           this.$setTitle(this.findJob.title);
-          this.job_dest_url = 'https://maps.google.com/?q=';
-          this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
-          this.$debug(this.job_dest_url);
+          // this.job_dest_url = 'https://maps.google.com/?q=';
+          // this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
+          // this.$debug(this.job_dest_url);
           this.$debug(this.findJob.address);
           this.jobType = [];
           const employmentType = [];
@@ -1160,8 +1231,12 @@
                 'longitude': this.findJob.longitude,
               },
               'address': {
-                '@type': 'text',
-                'address': this.findJob.address,
+                '@type': 'PostalAddress',
+                'streetAddress': this.findJob.address,
+                'addressLocality': this.findJob.city || '',
+                'addressRegion': this.findJob.state || '',
+                'postalCode': this.findJob.zip || '',
+                'addressCountry': 'US',
               },
             },
             'validThrough': this.findJob.expiry_date || DateHelper.getExpiryDate(this.findJob.date, Config.get('daysToExpire')).toISOString(),
@@ -1210,7 +1285,10 @@
         });
       },
       changeLocation() {
-        window.open(this.job_dest_url, '__blank');
+        let jobDestUrl = 'https://maps.google.com/?q=';
+        jobDestUrl += String(this.fullAddress).replace(/\s+/g, '+');
+        this.$debug(jobDestUrl);
+        window.open(jobDestUrl, '__blank');
       },
       openApplyDialog() {
         this.applyDialog = true;

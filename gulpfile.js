@@ -69,8 +69,19 @@ function processWebpackConfig(task, config) {
   return newConfig;
 }
 
+// Client Blog pages
+gulp.task('client-blog', () => {
+  return gulp.src('client/blog/*')
+    .pipe(gulp.dest('dist/client/career-guide'));
+});
+// Client Blog assets
+gulp.task('client-blog-asset', () => {
+  return gulp.src('client/assets/blog/*')
+    .pipe(gulp.dest('dist/client/static/img/blog'));
+});
+
 // Client SPA
-gulp.task('client', () => {
+gulp.task('client', ['client-blog', 'client-blog-asset'], () => {
   const config = processWebpackConfig('client', clientConfig);
   return gulp.src('client/index.js')
     .pipe(webpackStream(config, webpack))

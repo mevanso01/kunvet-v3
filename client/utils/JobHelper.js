@@ -1,4 +1,4 @@
-import DateHelper from '@/utils/DateHelper';
+import DateHelper from './DateHelper';
 
 class JobHelper {
   static isJobActive({ expiry_date: expiryDate, active, is_deleted: isDeleted }) {
@@ -14,6 +14,23 @@ class JobHelper {
       return daysDiff <= 0 && !job.active; // daysDiff can be negative so this is good
     }
     return false;
+  }
+  static getFullAddress(job) {
+    if (!job) {
+      return '';
+    }
+    let address = '';
+    address = job.address;
+    if (job.address2) {
+      address = `${address} ${job.address2}`;
+    }
+    if (job.city) {
+      address = `${address}, ${job.city}`;
+    }
+    if (job.state) {
+      address = `${address}, ${job.state}`;
+    }
+    return address;
   }
 }
 

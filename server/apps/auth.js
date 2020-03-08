@@ -672,6 +672,9 @@ async function handleUpdatingUnverifiedUser(ctx, req) {
       job.latitude = req.jobInfo.lat;
       job.longitude = req.jobInfo.long;
       job.address2 = req.jobInfo.address2;
+      job.city = req.jobInfo.city;
+      job.state = req.jobInfo.state;
+      job.zip = req.jobInfo.zip;
       job.university = req.jobInfo.university;
       await job.save();
       jobId = job._id;
@@ -703,6 +706,9 @@ async function createNewJob(email, req, userId, orgId = null) {
     title: req.jobInfo.title,
     address: req.address,
     address2: req.jobInfo.address2,
+    city: req.jobInfo.city,
+    state: req.jobInfo.state,
+    zip: req.jobInfo.zip,
     latitude: req.jobInfo.lat,
     longitude: req.jobInfo.long,
     active: false,

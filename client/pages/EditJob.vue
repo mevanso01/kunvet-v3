@@ -60,7 +60,7 @@
               :rules="[(v) => !!(v) || 'Required']"
               required
             ></v-text-field>
-            <v-text-field
+            <!-- <v-text-field
               v-model="job.address"
               ref="addressField"
               label="Address"
@@ -68,6 +68,14 @@
               @change="setLatLongs"
               :rules="[() => !!(job.address) || !submitted || 'Required',
                        () => (!!(job.latitude) && !!(job.longitude)) || addressValid || 'Invalid address']"
+            ></v-text-field> -->
+            <v-text-field
+              v-model="job.address"
+              ref="addressField"
+              label="Address"
+              required
+              :rules="[() => !!(job.address) || !submitted || 'Required',
+                       () => (!!(job.latitude) && !!(job.longitude)) || addressValid || 'Invalid address. Please select a complete address from the dropdown']"
             ></v-text-field>
             <v-text-field
               class="optional"
@@ -76,6 +84,43 @@
               placeholder="Apt, Suite, Bldg. (Optional)"
               label="Address Line 2"
             ></v-text-field>
+            <v-layout class="additional-requirements" row wrap>
+              <v-flex xs12 sm6 md5>
+                <v-text-field
+                  class=""
+                  label="City"
+                  v-model="job.city"
+                  placeholder=""
+                  :rules="[
+                    () => !!(job.city) || 'Required',
+                  ]"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md3>
+                <v-select
+                  class=""
+                  label="State"
+                  v-model="job.state"
+                  :items="states"
+                  :rules="[
+                    () => !!(job.state) || 'Required',
+                  ]"
+                  >
+                </v-select>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-text-field
+                  class=""
+                  v-model="job.zip"
+                  name="preferred-major"
+                  label="ZIP"
+                  :rules="[
+                    () => !!(job.zip) || 'Required',
+                    v => /^\d*$/.test(v) || 'Invalid format',
+                  ]"
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
             <v-checkbox class="optional mt-1"
               label="Is this job on a school campus?"
               v-model="isUniversity"
@@ -322,8 +367,8 @@
 
         <br>
         <v-layout v-if="!job.active">
-          <k-btn style="margin-left: 0;" @click="saveForLater">Save for later</k-btn>
-          <k-btn @click="validateBeforePosting(true)">Save and Post</k-btn>
+          <k-btn class="mr-2 ml-0" :working="loading" @click="saveForLater">Save for later</k-btn>
+          <k-btn :working="loading" @click="validateBeforePosting(true)">Save and Post</k-btn>
         </v-layout>
         <v-layout v-else>
           <k-btn style="margin-left: 0;" :working="loading" @click="updateActiveJob">Save</k-btn>
@@ -402,6 +447,7 @@ import queries from '@/constants/queries';
 import difference from 'lodash/difference';
 import userDataProvider from '@/userDataProvider';
 import QuillEditor from '@/components/QuillEditor';
+import states from '@/constants/states';
 // import axios from 'axios';
 
 const createJobMutation = gql`
@@ -457,6 +503,9 @@ export default {
         posted_by: null,
         address: '',
         address2: null,
+        city: '',
+        state: '',
+        zip: '',
         latitude: null,
         longitude: null,
         university: null,
@@ -545,6 +594,9 @@ export default {
       }
       return 'Through Kunvet';
     },
+    states() {
+      return Object.keys(states);
+    },
   },
   methods: {
     _isNumber(val) {
@@ -599,20 +651,51 @@ export default {
       }
       this.addressValid = true;
       this.prevAutocompleteAddress = place.formatted_address;
-      this.job.address = place.formatted_address;
+      // this.job.address = place.formatted_address;
       this.job.latitude = place.geometry.location.lat();
       this.job.longitude = place.geometry.location.lng();
+      const address = [];
+      place.address_components.forEach((item) => {
+        if (item.types.indexOf('street_number') > -1 || item.types.indexOf('street_address') > -1 || item.types.indexOf('route') > -1) {
+          address.push(item.short_name);
+        }
+        if (item.types.indexOf('locality') > -1 || item.types.indexOf('administrative_area_level_3') > -1) {
+          this.job.city = item.short_name;
+        }
+        if (item.types.indexOf('administrative_area_level_1') > -1) {
+          this.job.state = item.short_name;
+        }
+        if (item.types.indexOf('postal_code') > -1) {
+          this.job.zip = item.short_name;
+        }
+      });
+      this.job.address = address.join(' ');
     },
     setLatLongs() {
       setTimeout(() => {
         if (this.geocoder && this.job.address !== this.prevAutocompleteAddress) {
           this.geocoder.geocode({ 'address': this.job.address }, (results, status) => {
             if (status === 'OK' && results.length === 1) {
-              // console.log('res', results);
               this.job.latitude = results[0].geometry.location.lat();
               this.job.longitude = results[0].geometry.location.lng();
               this.addressValid = true;
               this.$refs.addressField.validate();
+              const address = [];
+              results[0].address_components.forEach((item) => {
+                if (item.types.indexOf('street_number') > -1 || item.types.indexOf('street_address') > -1 || item.types.indexOf('route') > -1) {
+                  address.push(item.short_name);
+                }
+                if (item.types.indexOf('locality') > -1 || item.types.indexOf('administrative_area_level_3') > -1) {
+                  this.job.city = item.short_name;
+                }
+                if (item.types.indexOf('administrative_area_level_1') > -1) {
+                  this.job.state = item.short_name;
+                }
+                if (item.types.indexOf('postal_code') > -1) {
+                  this.job.zip = item.short_name;
+                }
+              });
+              this.job.address = address.join(' ');
             } else {
               // console.log('Geocode was not successful for the following reason:', status);
               this.job.latitude = null;
@@ -835,6 +918,9 @@ export default {
         date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
         address2: this.job.address2,
+        city: this.job.city,
+        state: this.job.state,
+        zip: this.job.zip,
         university: this.isUniversity ? this.university : null,
         latitude: this.job.latitude,
         longitude: this.job.longitude,
@@ -886,6 +972,9 @@ export default {
           this.job.date = job.date;
           this.job.address = job.address;
           this.job.address2 = job.address2;
+          this.job.city = job.city;
+          this.job.state = job.state;
+          this.job.zip = job.zip;
           this.job.university = job.university;
           if (job.university) {
             this.isUniversity = true;
@@ -1026,7 +1115,11 @@ export default {
     VueGoogleMaps.loaded.then(() => {
       const input = this.$refs.addressField.$el.getElementsByTagName('input')[0];
       input.setAttribute('placeholder', '');
-      this.autocomplete = new window.google.maps.places.Autocomplete(input);
+      const options = {
+        types: ['address'],
+        componentRestrictions: { country: 'us' },
+      };
+      this.autocomplete = new window.google.maps.places.Autocomplete(input, options);
       this.geocoder = new window.google.maps.Geocoder();
       // this.placeDetails =  new window.google.maps.places.details;
       this.autocomplete.addListener('place_changed', () => {

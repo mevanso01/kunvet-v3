@@ -47,7 +47,7 @@
                   <Distance :first="fromCoordinates" :second="getCoordinatesFromJob(job)" />
                 </span>
                 <span v-else>
-                  {{ job.address }}
+                  {{ fullAddress }}
                 </span>
               </p>
               <p v-if="job.university" style="margin-left: 23px;">
@@ -86,6 +86,7 @@ import GrayBookmarkSvg from '@/assets/icons/Asset(36).svg';
 import YellowBookmarkSvg from '@/assets/icons/Asset(37).svg';
 import Config from 'config';
 import ProfilePicHelper from '@/utils/GetProfilePic';
+import JobHelper from '@/utils/JobHelper';
 
 export default {
   props: ['job', 'saveJobFunc', 'isSaved', 'defaultFromUCI', 'fromCoordinates'],
@@ -119,6 +120,9 @@ export default {
     },
     isIndividualJob() {
       return !this.job.business_id;
+    },
+    fullAddress() {
+      return JobHelper.getFullAddress(this.job);
     },
   },
   methods: {
