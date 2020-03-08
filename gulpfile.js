@@ -138,6 +138,13 @@ gulp.task('server-jobalert', () => {
     .pipe(gulp.dest('dist/lambda1'));
 });
 
+// Install node_modules for server artifact
+gulp.task('lambda1-node-modules', ['server-jobalert'],
+  shell.task('npm install', {
+    cwd: 'dist/lambda1',
+  }),
+);
+
 // Copy email templates into lambda1 artifact
 gulp.task('lambda1-email-templates', ['server-jobalert'], () => {
   return gulp.src('email-templates/**/*')
@@ -145,7 +152,7 @@ gulp.task('lambda1-email-templates', ['server-jobalert'], () => {
 });
 
 // AWS Lambda Deployment Package
-gulp.task('lambda1', ['server-jobalert', 'lambda1-email-templates'], (callback) => {
+gulp.task('lambda1', ['server-jobalert', 'lambda1-node-modules', 'lambda1-email-templates'], (callback) => {
   const sourcePath = path.resolve(__dirname, 'dist/lambda1');
   const outputPath = path.resolve(__dirname, 'dist/lambda1.zip');
 
