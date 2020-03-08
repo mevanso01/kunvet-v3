@@ -934,10 +934,11 @@
         }
         const title = `Now hiring: ${this.findJob.title}`;
         const description = `Apply for ${this.findJob.title} in ${address}`;
+        const host = `${window.location.protocol}//${window.location.host}`;
         return {
           title: title,
           description: description,
-          image: 'https://dev.kunvet.com/banner-image.png',
+          image: `${host}/banner-image.png`,
           url: `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`,
           sites: ['linkedin', 'facebook'],
         };
@@ -955,11 +956,12 @@
         const title = `Now hiring: ${this.findJob.title} in ${address}`;
         const description = `Now hiring: ${this.findJob.title} in ${address}`;
         const url = `http://share.kunvet.com/share/job-detail.php?q1=${title}&q2=${description}&q3=${this.findJob._id}`;
+        const host = `${window.location.protocol}//${window.location.host}`;
         const jobUrl = `${window.location.protocol}//${window.location.host}/jobs/detail/${this.findJob._id}`;
         return {
           title: title,
           description: description,
-          image: 'https://dev.kunvet.com/banner-image.png',
+          image: `${host}/banner-image.png`,
           url: url,
           _href: `https://twitter.com/intent/tweet?text=${title}. ${jobUrl}&url=${url}`,
           sites: ['twitter'],
@@ -994,13 +996,14 @@
           address = `${address} ${this.findJob.address2}`;
         }
       }
+      const host = `${window.location.protocol}//${window.location.host}`;
       return {
         meta: [
           { name: 'description', content: str },
           { property: 'og:title', content: `Now hiring: ${this.findJob.title}` },
           { property: 'og:description', content: `Apply for ${this.findJob.title} in ${address}` },
-          { property: 'og:image', content: 'https://dev.kunvet.com/banner-image.png' },
-          { property: 'og:url', content: 'https://dev.kunvet.com/share/index.html' },
+          { property: 'og:image', content: `${host}/banner-image.png` },
+          { property: 'og:url', content: `${host}/share/index.html` },
         ],
       };
     },
