@@ -164,4 +164,4 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
 Scheduler.install();
 
 // Rebuild sitemaps everyday
-scheduler.scheduleJob('0 0 1 * * *', buildAllSitemaps);
+scheduler.scheduleJob('0 1 * * * *', buildAllSitemaps);
