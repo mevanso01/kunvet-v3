@@ -36,7 +36,7 @@ export const buildJobsSitemap = async () => {
   });
 
   const sitemap = generateUrlsSitemap(urls);
-  await writeFile(path.resolve(SITEMAPS_PATH, 'client/sitemap-jobs.xml'), sitemap);
+  await writeFile(path.resolve(SITEMAPS_PATH, 'dist/client/sitemap-jobs.xml'), sitemap);
 };
 
 export const buildExpiredJobsSitemap = async () => {
@@ -48,7 +48,7 @@ export const buildExpiredJobsSitemap = async () => {
   });
 
   const sitemap = generateUrlsSitemap(urls);
-  await writeFile(path.resolve(SITEMAPS_PATH, 'client/sitemap-expired-jobs.xml'), sitemap);
+  await writeFile(path.resolve(SITEMAPS_PATH, 'dist/client/sitemap-expired-jobs.xml'), sitemap);
 };
 
 export const buildSearchSitemap = async () => {
@@ -75,7 +75,7 @@ export const buildSearchSitemap = async () => {
       });
 
       const sitemap = generateUrlsSitemap(urls);
-      await writeFile(path.resolve(SITEMAPS_PATH, 'client/sitemap-search-jobs.xml'), sitemap);
+      await writeFile(path.resolve(SITEMAPS_PATH, 'dist/client/sitemap-search-jobs.xml'), sitemap);
     }
   }
 };

@@ -175,3 +175,4 @@ Scheduler.install();
 
 // Rebuild sitemaps everyday
 scheduler.scheduleJob('0 1 * * * *', buildAllSitemaps);
+buildAllSitemaps();
