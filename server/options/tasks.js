@@ -34,6 +34,7 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
   const toDeleteJobIds = [];
   const daysToExpire = Config.get('daysToExpire') || daysToExpireFallback;
 
+  // fetch expired jobs only
   jobsFound.forEach((job) => {
     const expiredDate = new Date(Date.parse(job.date) + (daysToExpire * oneDay));
     if (!job.is_deleted && !job.expired && today.getTime() > expiredDate.getTime()) {
@@ -44,83 +45,88 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
       toDeleteJobIds.push(job._id);
     }
   });
+  // store all promises
+  const promises = [];
+  // get google indexing api access token
+  let accessToken = null;
+  try {
+    const gauthHeaders = await GAuth.getAuthRequestHeaders();
+    accessToken = '';
+    if (gauthHeaders && gauthHeaders.Authorization) {
+      accessToken = gauthHeaders.Authorization.slice(7);
+    } else {
+      accessToken = GAuth.getAccessToken();
+    }
+  } catch (err) {
+    console.log('--------------- google indexing failure ---------------', err);
+  }
+  console.log(accessToken);
   for (let i = 0; i < expiredJobIds.length; ++i) {
     try {
-      await Models.Job.findOneAndUpdate(
+      const query0 = Models.Job.findOneAndUpdate(
         { '_id': expiredJobIds[i] },
         { $set: { 'expired': true } },
         { new: true },
       );
-      const jobPoster = await Models.Account.find({ '_id': expiredJobs[i].user_id });
-      if (jobPoster && jobPoster.length > 0) {
+      const query1 = Models.Account.find({ '_id': expiredJobs[i].user_id });
+      const query2 = Models.Applicant.find({ 'job_id': expiredJobIds[i] });
+      const [jobPoster, applicants] = await Promise.all([query1, query2, query0]);
+      if (jobPoster && jobPoster.length > 0 && applicants) {
         console.log('------------------------------');
-        const applicants = await Models.Applicant.find({ 'job_id': expiredJobIds[i] });
-        if (applicants) {
-          console.log('------------------------------');
-          const appsReceived = applicants.length;
-          const jobType = [];
-          for (const j in expiredJobs[i].type) {
-            if (typeof expiredJobs[i].type[j] === 'string') {
-              const type = expiredJobs[i].type[j];
-              if (type === 'fulltime') {
-                jobType.push('FULL TIME');
-              } else if (type === 'parttime') {
-                jobType.push('PART TIME');
-              } else {
-                jobType.push(type);
-              }
+        const appsReceived = applicants.length;
+        const jobType = [];
+        for (const j in expiredJobs[i].type) {
+          if (typeof expiredJobs[i].type[j] === 'string') {
+            const type = expiredJobs[i].type[j];
+            if (type === 'fulltime') {
+              jobType.push('FULL TIME');
+            } else if (type === 'parttime') {
+              jobType.push('PART TIME');
+            } else {
+              jobType.push(type);
             }
           }
-          let salary = '';
-          if (expiredJobs[i].pay_type === 'paid') {
-            const sal = expiredJobs[i].salary.toFixed(2);
-            let pdenom = ` ${expiredJobs[i].pay_denomination}`;
-            if (expiredJobs[i].pay_denomination === 'per hour') {
-              pdenom = '/hr';
-            }
-            salary = `${sal.toString()}${pdenom}`;
-          } else if (expiredJobs[i].pay_type === 'negotiable') {
-            expiredJobs[i].salary_min = expiredJobs[i].salary_min || 0;
-            expiredJobs[i].salary_max = expiredJobs[i].salary_max || 0;
-            const salMin = expiredJobs[i].salary_min.toFixed(2);
-            const salMax = expiredJobs[i].salary_max.toFixed(2);
-            let pdenom = ` ${expiredJobs[i].pay_denomination}`;
-            if (expiredJobs[i].pay_denomination === 'per hour') {
-              pdenom = '/hr';
-            }
-            salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
-          } else {
-            salary = expiredJobs[i].pay_type;
-          }
-          const mailer = new Mailer();
-          const mailOptions = {
-            fname: jobPoster[0].firstname,
-            jobname: expiredJobs[i].title,
-            daysToExpire,
-            fullAddress: JobHelper.getFullAddress(expiredJobs[i]),
-            jobtype: jobType.join(' / '),
-            salary,
-            appsReceived: appsReceived === 0 ? 'no' : appsReceived,
-          };
-          console.log(mailOptions);
-          await mailer.sendTemplate(
-            jobPoster[0].email,
-            'job-expired',
-            mailOptions,
-          );
-          console.log('--------------- expire mail success ---------------');
         }
+        let salary = '';
+        if (expiredJobs[i].pay_type === 'paid') {
+          const sal = expiredJobs[i].salary.toFixed(2);
+          let pdenom = ` ${expiredJobs[i].pay_denomination}`;
+          if (expiredJobs[i].pay_denomination === 'per hour') {
+            pdenom = '/hr';
+          }
+          salary = `${sal.toString()}${pdenom}`;
+        } else if (expiredJobs[i].pay_type === 'negotiable') {
+          expiredJobs[i].salary_min = expiredJobs[i].salary_min || 0;
+          expiredJobs[i].salary_max = expiredJobs[i].salary_max || 0;
+          const salMin = expiredJobs[i].salary_min.toFixed(2);
+          const salMax = expiredJobs[i].salary_max.toFixed(2);
+          let pdenom = ` ${expiredJobs[i].pay_denomination}`;
+          if (expiredJobs[i].pay_denomination === 'per hour') {
+            pdenom = '/hr';
+          }
+          salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
+        } else {
+          salary = expiredJobs[i].pay_type;
+        }
+        const mailer = new Mailer();
+        const mailOptions = {
+          fname: jobPoster[0].firstname,
+          jobname: expiredJobs[i].title,
+          daysToExpire,
+          fullAddress: JobHelper.getFullAddress(expiredJobs[i]),
+          jobtype: jobType.join(' / '),
+          salary,
+          appsReceived: appsReceived === 0 ? 'no' : appsReceived,
+        };
+        promises.push(mailer.sendTemplate(
+          jobPoster[0].email,
+          'job-expired',
+          mailOptions,
+        ));
       }
       if (process.env.NODE_ENV === 'production' && Config.get('googleIndexing')) {
         // Update Google indexing
-        try {
-          const value = await GAuth.getAuthRequestHeaders();
-          let accessToken = '';
-          if (value && value.Authorization) {
-            accessToken = value.Authorization.slice(7);
-          } else {
-            accessToken = GAuth.getAccessToken();
-          }
+        if (accessToken) {
           const options = {
             url: 'https://indexing.googleapis.com/v3/urlNotifications:publish',
             method: 'POST',
@@ -135,16 +141,20 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
               'type': 'URL_DELETED',
             },
           };
-          await request(options);
-          console.log('--------------- google indexing success ---------------');
-        } catch (err) {
-          console.log('--------------- google indexing failure ---------------', err);
+          promises.push(request(options));
         }
       }
-    } catch (err3) {
-      console.log('--------------- expire mail failure ---------------', err3);
+    } catch (err) {
+      console.log('--------------- expire mail failure ---------------', err);
     }
   }
+  // Await all promises
+  try {
+    await Promise.all(promises);
+  } catch (err) {
+    console.log('--------------- expire mail failure ---------------', err);
+  }
+  // Remove jobs from algolia
   const appId = Config.get('algolia.appId');
   const apiKey = Config.get('private.algolia.adminApiKey');
   if (toDeleteJobIds.length > 0 && appId && apiKey) {
