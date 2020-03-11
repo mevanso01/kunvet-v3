@@ -70,6 +70,7 @@ const HowDidYouHearSchema = Mongoose.Schema({
 const JobSchema = Mongoose.Schema({
   user_id: {
     type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Account',
     required: true,
   },
   business_id: Mongoose.Schema.Types.ObjectId,
@@ -224,10 +225,12 @@ const JobSchema = Mongoose.Schema({
 const ApplicantSchema = Mongoose.Schema({
   user_id: {
     type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Account',
     required: true,
   },
   job_id: {
     type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Job',
     required: true,
   },
   date: {

@@ -29,7 +29,7 @@
 
   <body style="height: 100%; margin: 0; padding: 0; width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #f4f4f4;">
 
-    <!--[if !gte mso 9]><!----><span style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">{{ fname }}, here're some new jobs I think you might like:</span><!--<![endif]-->
+    <!--[if !gte mso 9]><!----><span style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">*|FNAME|*, here're some new jobs I think you might like:</span><!--<![endif]-->
     <!--[if !gte mso 9]><!----><span style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">
     &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
     &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
@@ -84,31 +84,29 @@
 
             <tr>
               <td valign="top" style="background-color: #FFFFFF; padding: 0 26px 20px; word-break: break-word; font-family: 'Lato', Roboto, Helvetica; font-size: 16px; color: #000000; font-weight: normal; line-height: 150%; text-align: left; mso-line-height-rule: exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
-                Hi {{ fname }}, here're some new jobs I think you might like:
+                Hi *|FNAME|*, here're some new jobs I think you might like:
               </td>
             </tr>
             <!--end intro text-->
 
-            {{#each jobs}}
             <!--begin individual job-->
             <tr>
               <td valign="top" style="border: 0; padding: 0 26px 20px; font-weight: normal; background-color: #FFFFFF; mso-line-height-rule: exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
                 <table align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
                     <tr>
                       <td valign="top" style="border-left: 4px solid #ff6969; padding-left: 20px; mso-line-height-rule: exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; text-align: left; font-size: 14px; font-family: 'Lato', Roboto, Helvetica; line-height: 150%; color: #000000; word-break: break-word;">
-                        <a href="https://kunvet.com/jobs/detail/{{ _id }}?utm_source=job-recommendation&utm_medium=email&utm_campaign={{ ../date }}" target="_blank" rel="noopener" style="color: #ff6969; font-size: 16px; font-weight: bold;">{{ title }}</a><br>
+                        <a href="?utm_source=job-recommendation&utm_medium=email&utm_campaign=job-email-MONTH-DAY-YEAR" target="_blank" rel="noopener" style="color: #ff6969; font-size: 16px; font-weight: bold;">Job Title</a><br>
                         Company Name<br>
-                        @ {{ formattedAddress }}<br>
-                        {{ jobType }}{{#if formattedSalary }} • {{/if}}{{ formattedSalary }}<br>
-                        {{#if studentfriendly }}Student Friendly{{/if}}{{#if internship }} • {{/if}}{{ internship }}<br>
-                        {{ formattedShift }}
+                        @ City, State<br>
+                        Part Time • Salary<br>
+                        Student Friendly • Internship<br>
+                        Flexible Schedule
                       </td>
                     </tr>
                 </table>
               </td>
             </tr>
             <!--end individual job-->
-            {{/each}}
 
             <!--begin goodbye-->
             <tr>
