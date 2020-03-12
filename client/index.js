@@ -230,6 +230,10 @@ const router = new VueRouter({
     //   path: '/blog/detail',
     //   component: () => import(/* webpackChunkName: "hiring" */ '@/pages/BlogDetail'),
     // },
+    {
+      path: '/unsubscribe/job-recommendation',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/UnsubscribeJobRecommend'),
+    },
     // Debug pages
     {
       path: '/debug/triggerError',
