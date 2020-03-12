@@ -106,14 +106,14 @@ switch (process.env.TARGET) {
     // AWS Lambda
     wpconf.plugins.push(new webpack.DefinePlugin({
       'process.env.TARGET': '"lambda"',
-      'process.env.DISABLE_SERVER': 'false',
+      'process.env.DISABLE_SERVER': 'true',
     }));
     break;
   case 'gcf':
     // Google Cloud Functions
     wpconf.plugins.push(new webpack.DefinePlugin({
       'process.env.TARGET': '"gcf"',
-      'process.env.DISABLE_SERVER': 'false',
+      'process.env.DISABLE_SERVER': 'true',
     }));
     break;
   case 'normal':
