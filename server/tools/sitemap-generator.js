@@ -1,14 +1,22 @@
-import fs from 'fs';
-import { promisify } from 'util';
-import path from 'path';
+import Aws from 'aws-sdk';
+import Config from 'config';
 import { uniq } from 'lodash';
 import Models from '../mongodb/Models';
 
-const SITEMAPS_PATH = path.resolve(__dirname, '../..');
-
-const writeFile = async (filePath, str) => {
-  const data = new Uint8Array(Buffer.from(str));
-  return promisify(fs.writeFile)(filePath, data);
+const uploadFile = (str, fileName) => {
+  const s3 = new Aws.S3({
+    accessKeyId: Config.get('aws.accessKeyId'),
+    secretAccessKey: Config.get('aws.secretAccessKey'),
+  });
+  const bucket = Config.get('aws.s3.bucket') ||
+    process.env.NODE_ENV === 'production' ? 'kunvet-prod-client' : 'kunvet-dev-client';
+  const params = {
+    Bucket: bucket,
+    Key: fileName,
+    Body: str,
+    ContentType: 'application/xml',
+  };
+  return s3.putObject(params);
 };
 
 export const generateUrlsSitemap = (urls, priority = '0.9') => {
@@ -36,7 +44,7 @@ export const buildJobsSitemap = async () => {
   });
 
   const sitemap = generateUrlsSitemap(urls);
-  await writeFile(path.resolve(SITEMAPS_PATH, 'dist/client/sitemap-jobs.xml'), sitemap);
+  await uploadFile(sitemap, 'sitemap-jobs.xml');
 };
 
 export const buildExpiredJobsSitemap = async () => {
@@ -48,7 +56,7 @@ export const buildExpiredJobsSitemap = async () => {
   });
 
   const sitemap = generateUrlsSitemap(urls);
-  await writeFile(path.resolve(SITEMAPS_PATH, 'dist/client/sitemap-expired-jobs.xml'), sitemap);
+  await uploadFile(sitemap, 'sitemap-expired-jobs.xml');
 };
 
 export const buildSearchSitemap = async () => {
@@ -75,7 +83,7 @@ export const buildSearchSitemap = async () => {
       });
 
       const sitemap = generateUrlsSitemap(urls);
-      await writeFile(path.resolve(SITEMAPS_PATH, 'dist/client/sitemap-search-jobs.xml'), sitemap);
+      await uploadFile(sitemap, 'sitemap-search-jobs.xml');
     }
   }
 };
