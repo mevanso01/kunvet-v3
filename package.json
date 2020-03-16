@@ -106,6 +106,7 @@
     "graphql-disable-introspection": "^1.0.1",
     "graphql-tag": "^2.10.0",
     "handlebars": "^4.5.1",
+    "hashids": "^2.2.1",
     "intersection-observer": "^0.7.0",
     "javascript-time-ago": "^2.0.4",
     "js-md5": "^0.7.3",

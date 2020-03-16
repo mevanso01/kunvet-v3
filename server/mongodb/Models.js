@@ -518,6 +518,10 @@ const AccountSchema = Mongoose.Schema({
       // enum: ['None', 'Monthy', 'Weekly', 'Daily',],
       default: 'All',
     },
+    jobAlertUnsubscribed: {
+      type: Boolean,
+      default: false,
+    },
   },
   account_type: {
     type: String,
