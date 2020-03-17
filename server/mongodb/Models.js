@@ -484,6 +484,10 @@ const AccountSchema = Mongoose.Schema({
     resume: Mongoose.model('Resume', ResumeSchema),
   },
   saved_jobs: [],
+  search_history: [{
+    latitude: Number,
+    longitude: Number,
+  }],
   org_list: [],
   notifications: [{
     text: String,
