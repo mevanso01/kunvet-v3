@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+User-agent: 008
+Disallow: /
+
+User-agent: JobdiggerSpider
+Disallow: /
+
+#Sitemap: https://kunvet.com/sitemap.xml

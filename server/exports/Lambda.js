@@ -12,7 +12,10 @@ async function waitForLogger() {
 
 export default class Lambda {
   static get(app) {
-    const server = AwsServerlessExpress.createServer(app.callback());
+    let server = null;
+    if (app) {
+      server = AwsServerlessExpress.createServer(app.callback());
+    }
     return async (event) => {
       if (event.scheduler) {
         // Scheduler trigger
@@ -22,7 +25,10 @@ export default class Lambda {
           success: true,
         };
       }
-      const response = await AwsServerlessExpress.proxy(server, event, {}, 'PROMISE').promise;
+      let response = '';
+      if (server) {
+        response = await AwsServerlessExpress.proxy(server, event, {}, 'PROMISE').promise;
+      }
       /*
       try {
         await waitForLogger();

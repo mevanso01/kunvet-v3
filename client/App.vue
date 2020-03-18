@@ -4,7 +4,7 @@
       Development mode
     </div>
     <!--desktop version position: absolute; top: 0;  :class="{ 'white-bg': navHasBg }"     -->
-    <v-toolbar v-if="!isBlogRoute" flat fixed class="main-navbar mobile-hide white-bg" style="z-index: 1010; background-color: inherit;">
+    <v-toolbar v-if="!fullScreenMode" flat fixed class="main-navbar mobile-hide white-bg" style="z-index: 1010; background-color: inherit;">
       <router-link to="/jobs/search">
         <img v-if="navHasBg" src="./assets/logo/redlogo.svg" alt="" style="height: 26px; width: 128px;">
         <img v-else src="./assets/job_detail/whitelogo.svg" alt="" style="height: 26px; width: 128px;">
@@ -63,7 +63,7 @@
     </v-toolbar>
 
     <!-- mobile menu icon -->
-    <div v-if="!isBlogRoute" class="mobile-show mobile-navbar">
+    <div v-if="!fullScreenMode" class="mobile-show mobile-navbar">
       <div class="header-icon-container" :class="{ 'white-bg': navHasBg }" style="z-index: 1010;">
         <div style="padding: 12px 0 0 21px;">
           <router-link to="/jobs/search">
@@ -79,7 +79,7 @@
     </div>
 
 
-    <div v-if="!isBlogRoute" id="d-menu" class="d-menu mobile-show" v-show="drawer">
+    <div v-if="!fullScreenMode" id="d-menu" class="d-menu mobile-show" v-show="drawer">
       <div class="d-menu-inner">
         <div style="background-color: #fff">
           <div v-if="acct > 0" class="d-menu-item idx-0" @click="goToAccount()">
@@ -115,7 +115,7 @@
       </transition>
     </main>
 
-    <div v-if="!isBlogRoute" id="bottom">
+    <div v-if="!fullScreenMode" id="bottom">
       <div id="bottom-content">
         <v-layout row wrap>
           <v-flex class="footer-big-text">
@@ -287,6 +287,15 @@ export default {
       const jobPostRoutes = ['/jobs/posted', '/jobs/applicants', '/jobs/saved', '/jobs/applied', '/jobs/search', '/'];
       return jobPostRoutes.indexOf(this.$route.path) !== -1;
       // it is found
+    },
+    fullScreenMode() {
+      return this.isBlogRoute || this.isUnsubscribeRoute;
+    },
+    isUnsubscribeRoute() {
+      if (this.$route.path === '/' && this.$route.name === null) {
+        return true;
+      }
+      return this.$route.path.startsWith('/unsubscribe');
     },
     isBlogRoute() {
       if (this.$route.path === '/' && this.$route.name === null) {

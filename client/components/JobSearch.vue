@@ -232,7 +232,7 @@
           ref="addressField"
           class="search_bar_text_field"
           label="Address"
-          @input="onChangeAddressSearchInput"
+          @input="getAddressList"
           @focus="searchFocus = true"
         ></v-text-field>
       </div>
@@ -244,7 +244,7 @@
         <p class="search_bar_current">Use Current Location</p>
       </div>
       <v-list class="py-0">
-        <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="onClickAddressDropdownItem(i)">
+        <v-list-tile class="_v-list__tile" v-for="(item, i) in job.addressList" :key="i" @click="getGeoLocation(i)">
           <div class="search_result_item">
             <span class="search_result_item_main">{{item.structured_formatting.main_text}}</span>&nbsp;
             <span class="search_result_item_secondary">{{item.structured_formatting.secondary_text}}</span>
@@ -252,7 +252,7 @@
         </v-list-tile>
       </v-list>
     </div>
-    <k-btn class="search_btn" @click="onClickSearch"><span class="search_btn_text">SEARCH</span></k-btn>
+    <k-btn class="search_btn" @click="search"><span class="search_btn_text">SEARCH</span></k-btn>
     <div v-show="searchFocus===true" class="_dropdown-overlay" @click="searchFocus=false"></div>
   </div>
 </template>
@@ -294,6 +294,23 @@ export default {
   },
   components: {
   },
+  watch: {
+    autoCompleteService: {
+      immediate: true,
+      handler(value) {
+        if (this.$route.params.query) {
+          const [, location] = this.$route.params.query.split('-jobs-near-');
+          if (value && location) {
+            this.getAddressList(location, false, () => {
+              this.getGeoLocation(0, () => {
+                this.search(false);
+              });
+            });
+          }
+        }
+      },
+    },
+  },
   mounted() {
     // Initialize Google maps
     VueGoogleMaps.loaded.then(() => {
@@ -309,14 +326,14 @@ export default {
         this.geocoder = new window.google.maps.Geocoder();
         if (this.job.address) {
           this.isDefaultLoad = true;
-          this.onChangeAddressSearchInput(this.job.address);
+          this.getAddressList(this.job.address);
         }
       }
       // if (this.job.address) {
       //   this.setLatLongs();
       // }
     },
-    onChangeAddressSearchInput(value) {
+    getAddressList(value, showDropdown = true, callback) {
       if (value === '') {
         this.job.addressList = [];
         return;
@@ -324,16 +341,17 @@ export default {
       if (this.autoCompleteService) {
         this.autoCompleteService.getPlacePredictions({ input: value }, (results, status) => {
           if (status === 'OK') {
-            this.searchFocus = !this.isDefaultLoad || false;
+            this.searchFocus = (showDropdown && !this.isDefaultLoad) || false;
             this.isDefaultLoad = false;
             this.job.addressList = results;
           } else {
             this.job.addressList = [];
           }
+          if (callback) callback();
         });
       }
     },
-    onClickAddressDropdownItem(index) {
+    getGeoLocation(index, callback) {
       const addressItem = this.job.addressList[index];
       if (this.geocoder) {
         this.searchFocus = false;
@@ -351,6 +369,7 @@ export default {
             this.job.addressValid = false;
             this.$refs.addressField.validate();
           }
+          if (callback) callback();
         });
       }
     },
@@ -399,9 +418,9 @@ export default {
         });
       });
     },
-    onClickSearch() {
+    search(replaceUrl = true) {
       if (this.onClick) {
-        this.onClick(this.job, this.query);
+        this.onClick(this.job, this.query, replaceUrl);
       }
     },
     setDefaultValues(values) {

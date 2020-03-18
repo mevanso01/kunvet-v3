@@ -86,6 +86,10 @@ const router = new VueRouter({
 
     },
     {
+      path: '/jobs/search/:query',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
+    },
+    {
       path: '/newSearch',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/NewSearch'),
     },
@@ -246,6 +250,10 @@ const router = new VueRouter({
     //   path: '/blog/detail',
     //   component: () => import(/* webpackChunkName: "hiring" */ '@/pages/BlogDetail'),
     // },
+    {
+      path: '/unsubscribe/job-recommendation',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/UnsubscribeJobRecommend'),
+    },
     // Debug pages
     {
       path: '/debug/triggerError',

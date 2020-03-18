@@ -4,87 +4,37 @@
 
 // Source map support
 import 'source-map-support/register';
-// const fs = require("fs")
-// Koa
+
 import Koa from 'koa';
 import KoaMount from 'koa-mount';
 import KoaBodyParser from 'koa-bodyparser';
-import KoaSession from 'koa-session';
-import KoaPassport from 'koa-passport';
 
 import REPL from 'repl';
 
 import Logger from '@/Logger';
 
-// CORS
-import Cors from '@/Cors';
-
 // Options
-import '@/options/passport';
-import '@/options/tasks';
+import '@/options/job-alert';
 
 // Sub apps
-import AuthApp from '@/apps/auth';
-import AccountApp from '@/apps/account';
-import GraphQLApp from '@/apps/graphql';
 import DevToolsApp from '@/apps/devtools';
-import FileServerApp from '@/apps/fileserver';
-import ApplicationApp from '@/apps/application';
-import JobApp from '@/apps/job';
-import ProfilePicApp from '@/apps/profile_pic';
-import ResetPasswordApp from '@/apps/reset_password';
-import BillingApp from '@/apps/billing';
-import MailChimpApp from '@/apps/mailchimp';
 
 // Our stuff
 import Db from '@/mongodb/Db';
 import Models from '@/mongodb/Models';
 import Algolia from '@/utils/Algolia';
-import Config from 'config';
-
-// Google Auth
-import GAuth from '@/utils/GoogleAuth';
 
 // ========
 // | Main |
 // ========
 
-Logger.info(`Kunvet Server ${process.env.COMMIT} (${process.env.NODE_ENV})`);
-
-console.log('================== Kunvet Server CONFIG ==================');
-console.log(Config.get('private'));
-
-// const path = require('path');
-
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const app = new Koa();
 
 // Body parser
 app.use(KoaBodyParser());
 
-// Session
-app.keys = ['rua'];
-app.use(KoaSession({}, app));
-
-// CORS
-app.use(Cors);
-
-// Passport
-app.use(KoaPassport.initialize());
-app.use(KoaPassport.session());
-
 // Mount sub apps
-app.use(KoaMount('/data', GraphQLApp));
-app.use(KoaMount('/auth', AuthApp));
-app.use(KoaMount('/account', AccountApp));
-app.use(KoaMount('/file', FileServerApp));
-app.use(KoaMount('/application', ApplicationApp));
-app.use(KoaMount('/job', JobApp));
-app.use(KoaMount('/profile-pic', ProfilePicApp));
-app.use(KoaMount('/reset-password', ResetPasswordApp));
-app.use(KoaMount('/billing', BillingApp));
-app.use(KoaMount('/mailchimp', MailChimpApp));
-
 if (process.env.NODE_ENV !== 'production') {
   // Development goodies
   app.use(KoaMount('/', DevToolsApp));
@@ -115,11 +65,6 @@ if (!process.env.DISABLE_SERVER) {
   });
 }
 
-// Exports
-
-// Google Cloud Functions
-const gcf = app.callback();
-
 // AWS Lambda
 /* eslint-disable import/no-mutable-exports, global-require */
 let lambda = (event, context) => {
@@ -130,15 +75,11 @@ let lambda = (event, context) => {
 };
 if (process.env.TARGET === 'lambda') {
   const Lambda = require('@/exports/Lambda').default;
-  lambda = Lambda.get(app);
+  lambda = Lambda.get();
 } else if (process.env.LAMBDA_TASK_ROOT && process.env.AWS_EXECUTION_ENV) {
   Logger.warn('Running on AWS Lambda, but this server is not built for Lambda');
 }
 /* eslint-enable */
 
-// Initialize google auth tokens
-if (Config.get('googleIndexing')) {
-  GAuth.doAuth();
-}
-
-export { gcf, lambda };
+// Exports
+export default lambda;

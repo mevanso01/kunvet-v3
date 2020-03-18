@@ -21,7 +21,7 @@ export default class Scheduler {
       // eslint-disable-next-line global-require
       const NodeSchedule = require('node-schedule');
 
-      let schedule = '45 * * * * *';
+      let schedule = '* * 1 * * *';
       if (Config.has('private.scheduler.schedule')) {
         schedule = Config.get('private.scheduler.schedule');
       }

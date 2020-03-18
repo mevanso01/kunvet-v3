@@ -14,6 +14,7 @@ import SentryCliPlugin from '@sentry/webpack-plugin';
 
 import clientConfig from './build/webpack.config.client';
 import serverConfig from './build/webpack.config.server';
+import lambda1Config from './build/webpack.config.lambda1';
 
 const progress = {};
 
@@ -109,7 +110,6 @@ gulp.task('server-email-templates', ['server'], () => {
     .pipe(gulp.dest('dist/server/email-templates'));
 });
 
-
 // AWS Lambda Deployment Package
 gulp.task('lambda', ['server', 'server-node-modules', 'server-email-templates'], (callback) => {
   const sourcePath = path.resolve(__dirname, 'dist/server');
@@ -130,4 +130,45 @@ gulp.task('lambda', ['server', 'server-node-modules', 'server-email-templates'],
   archive.finalize();
 });
 
-gulp.task('default', ['client', 'server', 'lambda']);
+// Node.js Job Alert Server
+gulp.task('server-jobalert', () => {
+  const config = processWebpackConfig('server-jobalert', lambda1Config);
+  return gulp.src('server/index-job-alert.js')
+    .pipe(webpackStream(config, webpack))
+    .pipe(gulp.dest('dist/lambda1'));
+});
+
+// Install node_modules for server artifact
+gulp.task('lambda1-node-modules', ['server-jobalert'],
+  shell.task('npm install', {
+    cwd: 'dist/lambda1',
+  }),
+);
+
+// Copy email templates into lambda1 artifact
+gulp.task('lambda1-email-templates', ['server-jobalert'], () => {
+  return gulp.src('email-templates/**/*')
+    .pipe(gulp.dest('dist/lambda1/email-templates'));
+});
+
+// AWS Lambda Deployment Package
+gulp.task('lambda1', ['server-jobalert', 'lambda1-node-modules', 'lambda1-email-templates'], (callback) => {
+  const sourcePath = path.resolve(__dirname, 'dist/lambda1');
+  const outputPath = path.resolve(__dirname, 'dist/lambda1.zip');
+
+  const file = fs.createWriteStream(outputPath);
+  const archive = archiver('zip', {
+    zlib: { level: 9 },
+  });
+
+  file.on('close', callback);
+  archive.on('progress', (p) => {
+    const percent = Math.round((p.fs.processedBytes / p.fs.totalBytes) * 100);
+    setProgress('lambda1', percent, 'compressing');
+  });
+  archive.pipe(file);
+  archive.directory(sourcePath, false);
+  archive.finalize();
+});
+
+gulp.task('default', ['client', 'server', 'lambda', 'lambda1']);

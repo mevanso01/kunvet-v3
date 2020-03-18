@@ -775,7 +775,7 @@
         </v-dialog>
       </div>
     </div>
-    <script v-if="true || !findJob.expired" v-html="jsonld" type="application/ld+json"></script>
+    <script v-if="!findJob.expired" v-html="jsonld" type="application/ld+json"></script>
   </v-container>
 </template>
 <script>

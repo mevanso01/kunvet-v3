@@ -505,6 +505,7 @@ section.search {
   </v-container>
 </template>
 <script>
+import { startCase, toLower } from 'lodash';
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
@@ -575,6 +576,8 @@ export default {
       searchHasText: false,
       searchWidth: 0,
       uid: null,
+      account_type: null,
+      search_history: [],
       // findJobs: [],
       saved_jobs: [],
       filteredJobs: [],
@@ -1151,18 +1154,111 @@ export default {
         this.loadingJobs = false;
       }
     },
-    onClickJobSearch(job, query) {
+    onClickJobSearch(job, query, replaceUrl = true) {
       this.query = query;
       if (job.latitude && job.longitude) {
         this.selectedLat = job.latitude;
         this.selectedLong = job.longitude;
       } else {
-        this.selectedLong = Coordinates.uci.latitude;
+        this.selectedLat = Coordinates.uci.latitude;
         this.selectedLong = Coordinates.uci.longitude;
       }
       this.page = 0;
-      this.$setTitle(this.query || 'Search for Jobs');
+      let title = 'Search for Jobs';
+      if (this.query && job.address) {
+        title = `${startCase(toLower(this.query))} Jobs in ${job.address}`;
+      }
+      this.$setTitle(title);
+      if (replaceUrl) {
+        this.$router.replace({
+          path: '/jobs/search',
+          query: {
+            address: job.address || '',
+            latitude: this.selectedLat || '',
+            longitude: this.selectedLong || '',
+            q: query || '',
+          },
+        });
+      }
       this.rawSearch();
+      // save search location if logged in
+      if (job.latitude && job.longitude && this.uid && this.account_type === 'student') {
+        this.search_history.unshift({
+          'latitude': Number(job.latitude),
+          'longitude': Number(job.longitude),
+        });
+        if (this.search_history.length > 20) {
+          this.search_history.pop();
+        }
+        this.$apollo.mutate({
+          mutation: (gql`
+          mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
+        {
+          updateAccount (
+            filter: { _id: $uid },
+            record: $record,
+          ) {
+            recordId
+          }
+        }`),
+          variables: {
+            uid: this.uid,
+            record: {
+              search_history: this.search_history,
+            },
+          },
+          refetchQueries: [{
+            query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+              _id
+              search_history {
+                latitude
+                longitude
+              }
+            }
+          }`),
+            variables: {
+              uid: this.uid,
+            },
+          }],
+        }).then(() => {
+          this.$store.commit({
+            type: 'keepUserdata',
+            userdata: {
+              search_history: this.search_history,
+            },
+          });
+        }).catch((error) => {
+          this.$error(error);
+        });
+      }
+    },
+    getSearchHistory() {
+      this.$apollo.query({
+        query: (gql`query ($uid: MongoID) {
+        findAccount (filter: {
+          _id: $uid
+        }) {
+          _id
+          search_history {
+            latitude
+            longitude
+          }
+        }
+      }`),
+        variables: {
+          uid: this.uid,
+        },
+      }).then((data) => {
+        const res = data.data.findAccount;
+        if (res && res.search_history) {
+          this.search_history = res.search_history.concat([]);
+        }
+      }).catch((error) => {
+        this.$error(error);
+      });
     },
   },
   deactivated() {
@@ -1199,22 +1295,32 @@ export default {
     // this.setSelectedLatlongs();
     if (this.$route.query.p != null) {
       // Do SearchForm Init && Job Search
-      this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
-      this.query = this.$route.query.q || '';
       this.selectedLat = this.$route.query.latitude || Coordinates.uci.latitude;
       this.selectedLong = this.$route.query.longitude || Coordinates.uci.longitude;
       this.page = 0;
-      this.rawSearch();
-      // Replace URL
-      this.$router.replace({
-        path: '/jobs/search',
-        query: {
-          address: this.$route.query.address || '',
-          latitude: this.$route.query.latitude || '',
-          longitude: this.$route.query.longitude || '',
-          q: this.$route.query.q || '',
-        },
-      });
+
+      if (this.$route.params.query) {
+        const [position, location] = this.$route.params.query.split('-jobs-near-');
+        if (position && location) {
+          this.$refs.jobSearchForm.setDefaultValues({
+            q: position.split('-').join(' '),
+          });
+        }
+      } else {
+        this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
+        this.query = this.$route.query.q || '';
+        // Replace URL
+        this.$router.replace({
+          path: '/jobs/search',
+          query: {
+            address: this.$route.query.address || '',
+            latitude: this.$route.query.latitude || '',
+            longitude: this.$route.query.longitude || '',
+            q: this.query,
+          },
+        });
+        this.rawSearch();
+      }
     }
     // const oldQuery = this.query;
     // if (this.$route.query.q) {
@@ -1267,11 +1373,17 @@ export default {
         }
       }
       if (udata.uid && udata.acct !== 0) {
-        this.uid = data.uid;
+        this.uid = udata.uid;
+        this.account_type = data.userdata.account_type;
         if (udata.userdata.saved_jobs && udata.userdata.saved_jobs.length > 0) {
           this.saved_jobs = udata.userdata.saved_jobs.concat([]);
         } else {
           this.getSavedJobs();
+        }
+        if (udata.userdata.search_history && udata.userdata.search_history.length > 0) {
+          this.search_history = udata.userdata.search_history.concat([]);
+        } else {
+          this.getSearchHistory();
         }
       }
     });
