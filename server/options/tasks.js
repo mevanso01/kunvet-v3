@@ -70,8 +70,13 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
             { $set: { 'expired': true } },
             { new: true },
           );
-          const query1 = Models.Account.find({ '_id': expiredJob.user_id });
-          const query2 = Models.Applicant.find({ 'job_id': jobId });
+          const query1 = Models.Account.find({
+            '_id': expiredJob.user_id,
+          });
+          const query2 = Models.Applicant.find({
+            'job_id': jobId,
+            'date': { $gt: today - (daysToExpire * oneDay) },
+          });
           const queries = [query1, query2, query0];
           if (process.env.NODE_ENV === 'production' && Config.get('googleIndexing')) {
             // Update Google indexing
