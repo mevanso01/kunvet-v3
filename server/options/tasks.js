@@ -178,7 +178,7 @@ Scheduler.schedule(async () => { // filter all expired jobs and update attribute
 
 // Rebuild sitemaps everyday
 Scheduler.schedule(() => {
-  Logger.debug('Rebuilding sitemaps');
+  console.log('Rebuilding sitemaps');
   buildAllSitemaps();
 });
 
