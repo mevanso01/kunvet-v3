@@ -6,11 +6,11 @@ import Models from '../mongodb/Models';
 const uploadFile = (str, fileName) => {
   console.log('uploadFile - 1', str, fileName);
   const s3 = new Aws.S3({
-    accessKeyId: Config.get('aws.accessKeyId'),
-    secretAccessKey: Config.get('aws.secretAccessKey'),
+    accessKeyId: Config.get('private.aws.accessKeyId'),
+    secretAccessKey: Config.get('private.aws.secretAccessKey'),
   });
   console.log('uploadFile - 2', Config.get('aws.accessKeyId'), Config.get('aws.secretAccessKey'));
-  const bucket = Config.get('aws.s3.bucket') ||
+  const bucket = 'kunvet-dev-client' || Config.get('private.aws.s3.bucket') ||
     process.env.NODE_ENV === 'production' ? 'kunvet-prod-client' : 'kunvet-dev-client';
   console.log('uploadFile - 3', bucket);
   const params = {
