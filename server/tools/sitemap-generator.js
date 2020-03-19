@@ -4,21 +4,21 @@ import { uniq } from 'lodash';
 import Models from '../mongodb/Models';
 
 const uploadFile = (str, fileName) => {
-  console.log('uploadFile - 1', str, fileName);
+  console.log('uploadFile - 11', str, fileName);
   const s3 = new Aws.S3({
     accessKeyId: Config.get('private.aws.accessKeyId'),
     secretAccessKey: Config.get('private.aws.secretAccessKey'),
   });
-  console.log('uploadFile - 2', Config.get('private.aws.accessKeyId'), Config.get('private.aws.secretAccessKey'));
-  const bucket = 'kunvet-dev-client';
-  console.log('uploadFile - 3', bucket);
+  console.log('uploadFile - 22', Config.get('private.aws.accessKeyId'), Config.get('private.aws.secretAccessKey'));
+  const bucket = 'kunvet-dev-client' || Config.get('private.aws.s3.bucket');
+  console.log('uploadFile - 33', bucket);
   const params = {
     Bucket: bucket,
     Key: fileName,
     Body: str,
     ContentType: 'application/xml',
   };
-  console.log('uploadFile - 4', params);
+  console.log('uploadFile - 44', params);
   return s3.putObject(params, (err) => {
     if (err) console.error('uploadFile error:', err);
   });
