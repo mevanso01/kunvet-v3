@@ -15,7 +15,6 @@ const uploadFile = (str, fileName) => {
     Body: str,
     ContentType: 'application/xml',
   };
-  console.log('params', params);
   return s3.putObject(params, (err) => {
     if (err) console.error('uploadFile error:', err);
   });
