@@ -4,19 +4,25 @@ import { uniq } from 'lodash';
 import Models from '../mongodb/Models';
 
 const uploadFile = (str, fileName) => {
+  console.log('uploadFile - 1', str, fileName);
   const s3 = new Aws.S3({
     accessKeyId: Config.get('aws.accessKeyId'),
     secretAccessKey: Config.get('aws.secretAccessKey'),
   });
+  console.log('uploadFile - 2', Config.get('aws.accessKeyId'), Config.get('aws.secretAccessKey'));
   const bucket = Config.get('aws.s3.bucket') ||
     process.env.NODE_ENV === 'production' ? 'kunvet-prod-client' : 'kunvet-dev-client';
+  console.log('uploadFile - 3', bucket);
   const params = {
     Bucket: bucket,
     Key: fileName,
     Body: str,
     ContentType: 'application/xml',
   };
-  return s3.putObject(params);
+  console.log('uploadFile - 4', params);
+  return s3.putObject(params, (err) => {
+    if (err) console.error('uploadFile error:', err);
+  });
 };
 
 export const generateUrlsSitemap = (urls, priority = '0.9') => {
