@@ -69,9 +69,11 @@ export const buildSearchSitemap = async () => {
     let queries = [];
     jobs.forEach(job => {
       job.position_tags.forEach(pos => {
-        const position = pos.split(' ').join('-');
-        const location = `${job.city.split(' ').join('-')}-${job.state}`;
-        queries.push(`${position}-jobs-near-${location}`.toLowerCase());
+        if (pos && job.city) {
+          const position = pos.split(' ').join('-');
+          const location = `${job.city.split(' ').join('-')}-${job.state}`;
+          queries.push(`${position}-jobs-near-${location}`.toLowerCase());
+        }
       });
     });
     queries = uniq(queries);
@@ -89,7 +91,11 @@ export const buildSearchSitemap = async () => {
 };
 
 export const buildAllSitemaps = async () => {
-  await buildJobsSitemap();
-  await buildExpiredJobsSitemap();
-  await buildSearchSitemap();
+  try {
+    await buildJobsSitemap();
+    await buildExpiredJobsSitemap();
+    await buildSearchSitemap();
+  } catch (err) {
+    console.log(err);
+  }
 };

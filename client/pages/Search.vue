@@ -576,6 +576,8 @@ export default {
       searchHasText: false,
       searchWidth: 0,
       uid: null,
+      account_type: null,
+      search_history: [],
       // findJobs: [],
       saved_jobs: [],
       filteredJobs: [],
@@ -1179,6 +1181,84 @@ export default {
         });
       }
       this.rawSearch();
+      // save search location if logged in
+      if (job.latitude && job.longitude && this.uid && this.account_type === 'student') {
+        this.search_history.unshift({
+          'latitude': Number(job.latitude),
+          'longitude': Number(job.longitude),
+        });
+        if (this.search_history.length > 20) {
+          this.search_history.pop();
+        }
+        this.$apollo.mutate({
+          mutation: (gql`
+          mutation ($uid: MongoID, $record: UpdateOneAccountInput!)
+        {
+          updateAccount (
+            filter: { _id: $uid },
+            record: $record,
+          ) {
+            recordId
+          }
+        }`),
+          variables: {
+            uid: this.uid,
+            record: {
+              search_history: this.search_history,
+            },
+          },
+          refetchQueries: [{
+            query: (gql`query ($uid: MongoID) {
+            findAccount (filter: {
+              _id: $uid
+            }) {
+              _id
+              search_history {
+                latitude
+                longitude
+              }
+            }
+          }`),
+            variables: {
+              uid: this.uid,
+            },
+          }],
+        }).then(() => {
+          this.$store.commit({
+            type: 'keepUserdata',
+            userdata: {
+              search_history: this.search_history,
+            },
+          });
+        }).catch((error) => {
+          this.$error(error);
+        });
+      }
+    },
+    getSearchHistory() {
+      this.$apollo.query({
+        query: (gql`query ($uid: MongoID) {
+        findAccount (filter: {
+          _id: $uid
+        }) {
+          _id
+          search_history {
+            latitude
+            longitude
+          }
+        }
+      }`),
+        variables: {
+          uid: this.uid,
+        },
+      }).then((data) => {
+        const res = data.data.findAccount;
+        if (res && res.search_history) {
+          this.search_history = res.search_history.concat([]);
+        }
+      }).catch((error) => {
+        this.$error(error);
+      });
     },
   },
   deactivated() {
@@ -1293,11 +1373,17 @@ export default {
         }
       }
       if (udata.uid && udata.acct !== 0) {
-        this.uid = data.uid;
+        this.uid = udata.uid;
+        this.account_type = data.userdata.account_type;
         if (udata.userdata.saved_jobs && udata.userdata.saved_jobs.length > 0) {
           this.saved_jobs = udata.userdata.saved_jobs.concat([]);
         } else {
           this.getSavedJobs();
+        }
+        if (udata.userdata.search_history && udata.userdata.search_history.length > 0) {
+          this.search_history = udata.userdata.search_history.concat([]);
+        } else {
+          this.getSearchHistory();
         }
       }
     });

@@ -2,13 +2,14 @@
 import Scheduler from '@/Scheduler';
 import Mailer from '@/utils/Mailer';
 import Models from '@/mongodb/Models';
+import Hashids from 'hashids';
 
 // Test task
 Scheduler.schedule(() => {
   console.log('Job-Recommender scheduler works!');
 });
 
-const alertJobsLimit = 10;
+// const alertJobsLimit = 10;
 
 Scheduler.schedule(async () => {
   // TODO:
@@ -16,13 +17,19 @@ Scheduler.schedule(async () => {
   //    - get job position tags in already applied jobs
   //    - find jobs matching tags and user location, not already applied
   //    - send emails
+  const hashids = new Hashids();
   try {
-    const students = await Models.Account.find({ 'account_type': 'student' });
+    const students = await Models.Account.find({
+      'account_type': 'student',
+      'preferences.jobAlertUnsubscribed': {
+        '$ne': true,
+      },
+    });
     await Promise.all(students.map((student) =>
       new Promise(async (resolve) => {
         try {
           const applications = await Models.Applicant.find({ user_id: student._id }).populate('job_id');
-          let ids = [];
+          const ids = [];
           const positionTags = [];
           applications.forEach((application) => {
             const job = application.job_id;
@@ -33,24 +40,24 @@ Scheduler.schedule(async () => {
               }
             }
           });
-          let jobs = await Models.Job.find({
+          const jobs = await Models.Job.find({
             '_id': { '$not': { '$in': ids } },
             'position_tags': { '$elemMatch': { '$in': positionTags } },
             'expired': false,
             'active': true,
             'is_deleted': false,
-          }).limit(alertJobsLimit).sort({ 'date': 1 });
-          if (jobs.length < alertJobsLimit) {
-            ids = ids.concat(jobs.map((job) => job._id));
-            // console.log(ids);
-            const jobs1 = await Models.Job.find({
-              '_id': { '$not': { '$in': ids } },
-              'expired': false,
-              'active': true,
-              'is_deleted': false,
-            }).limit(alertJobsLimit - jobs.length).sort({ 'date': 1 });
-            jobs = jobs.concat(jobs1);
-          }
+          }).sort({ 'date': 1 }); /* .limit(alertJobsLimit) */
+          // if (jobs.length < alertJobsLimit) {
+          //   ids = ids.concat(jobs.map((job) => job._id));
+          //   // console.log(ids);
+          //   const jobs1 = await Models.Job.find({
+          //     '_id': { '$not': { '$in': ids } },
+          //     'expired': false,
+          //     'active': true,
+          //     'is_deleted': false,
+          //   }).limit(alertJobsLimit - jobs.length).sort({ 'date': 1 });
+          //   jobs = jobs.concat(jobs1);
+          // }
           // console.log(jobs);
           if (jobs.length > 0) {
             jobs.forEach((job) => {
@@ -60,9 +67,9 @@ Scheduler.schedule(async () => {
                 if (typeof job.type[j] === 'string') {
                   const type = job.type[j];
                   if (type === 'fulltime') {
-                    jobType.push('FULL TIME');
+                    jobType.push('Full-Time');
                   } else if (type === 'parttime') {
-                    jobType.push('PART TIME');
+                    jobType.push('Part-Time');
                   } else {
                     jobType.push(type);
                   }
@@ -114,6 +121,7 @@ Scheduler.schedule(async () => {
               fname: student.firstname,
               date: `${(new Date()).getMonth() + 1}-${(new Date()).getDate()}-${(new Date()).getFullYear()}`,
               jobs,
+              hashid: hashids.encodeHex(`${student._id}`),
             };
             await mailer.sendTemplate(
               student.email,

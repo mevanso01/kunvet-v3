@@ -484,6 +484,10 @@ const AccountSchema = Mongoose.Schema({
     resume: Mongoose.model('Resume', ResumeSchema),
   },
   saved_jobs: [],
+  search_history: [{
+    latitude: Number,
+    longitude: Number,
+  }],
   org_list: [],
   notifications: [{
     text: String,
@@ -517,6 +521,10 @@ const AccountSchema = Mongoose.Schema({
       enum: ['All', 'Off'],
       // enum: ['None', 'Monthy', 'Weekly', 'Daily',],
       default: 'All',
+    },
+    jobAlertUnsubscribed: {
+      type: Boolean,
+      default: false,
     },
   },
   account_type: {

@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import Axios from 'axios';
 import logo from '@/assets/unsubscribe/alligator.svg';
 
 export default {
@@ -95,6 +96,15 @@ export default {
   watch: {
   },
   activated() {
+    const postData = {
+      uid: this.$route.query.q,
+    };
+    console.log(postData);
+    Axios.post('/account/unsubscribe/job-recommendation', postData).then(() => {
+      console.log('unsubscribed');
+    }, (error) => {
+      this.$error(error);
+    });
   },
 };
 </script>

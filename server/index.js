@@ -25,6 +25,7 @@ import '@/options/tasks';
 
 // Sub apps
 import AuthApp from '@/apps/auth';
+import AccountApp from '@/apps/account';
 import GraphQLApp from '@/apps/graphql';
 import DevToolsApp from '@/apps/devtools';
 import FileServerApp from '@/apps/fileserver';
@@ -75,6 +76,7 @@ app.use(KoaPassport.session());
 // Mount sub apps
 app.use(KoaMount('/data', GraphQLApp));
 app.use(KoaMount('/auth', AuthApp));
+app.use(KoaMount('/account', AccountApp));
 app.use(KoaMount('/file', FileServerApp));
 app.use(KoaMount('/application', ApplicationApp));
 app.use(KoaMount('/job', JobApp));
