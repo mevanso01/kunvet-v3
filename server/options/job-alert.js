@@ -4,23 +4,15 @@ import Mailer from '@/utils/Mailer';
 import Models from '@/mongodb/Models';
 import Hashids from 'hashids';
 
-// Test task
-Scheduler.schedule(() => {
-  console.log('Job-Recommender scheduler works!');
-});
-
 // const alertJobsLimit = 10;
 
 Scheduler.schedule(async () => {
-  // TODO:
-  // for each student
-  //    - get job position tags in already applied jobs
-  //    - find jobs matching tags and user location, not already applied
-  //    - send emails
+  console.log('Job-Recommender scheduler works!');
   const hashids = new Hashids();
   try {
     const students = await Models.Account.find({
       'account_type': 'student',
+      'email_verified': true,
       'preferences.jobAlertUnsubscribed': {
         '$ne': true,
       },
@@ -29,8 +21,11 @@ Scheduler.schedule(async () => {
       new Promise(async (resolve) => {
         try {
           const applications = await Models.Applicant.find({ user_id: student._id }).populate('job_id');
-          const ids = [];
+          // Find ids & position tags & cities of already applied jobs.
+          let ids = [];
           const positionTags = [];
+          const cities = [];
+          const states = [];
           applications.forEach((application) => {
             const job = application.job_id;
             ids.push(job._id);
@@ -39,26 +34,98 @@ Scheduler.schedule(async () => {
                 positionTags.push(job.position_tags[i]);
               }
             }
+            if (application.city && cities.indexOf(application.city) === -1) {
+              cities.push(application.city);
+            }
+            if (application.state && states.indexOf(application.state) === -1) {
+              states.push(application.state);
+            }
           });
-          const jobs = await Models.Job.find({
+          // search by position tag, city, state
+          let jobs = await Models.Job.find({
             '_id': { '$not': { '$in': ids } },
-            'position_tags': { '$elemMatch': { '$in': positionTags } },
+            '$or': [{ 'position_tags': { '$elemMatch': { '$in': positionTags } } }, { 'city': { '$in': cities } }, { 'state': { '$in': states } }],
             'expired': false,
             'active': true,
             'is_deleted': false,
-          }).sort({ 'date': 1 }); /* .limit(alertJobsLimit) */
-          // if (jobs.length < alertJobsLimit) {
-          //   ids = ids.concat(jobs.map((job) => job._id));
-          //   // console.log(ids);
-          //   const jobs1 = await Models.Job.find({
-          //     '_id': { '$not': { '$in': ids } },
-          //     'expired': false,
-          //     'active': true,
-          //     'is_deleted': false,
-          //   }).limit(alertJobsLimit - jobs.length).sort({ 'date': 1 });
-          //   jobs = jobs.concat(jobs1);
-          // }
-          // console.log(jobs);
+          }).sort({ 'date': 1 });
+          ids = ids.concat(jobs.map((item) => item._id));
+          // search by search history: max 10 jobs only
+          const searchHistory = student.search_history;
+          if (searchHistory && searchHistory.length > 0) {
+            const center = {
+              latitude: 0,
+              longitude: 0,
+            };
+            searchHistory.forEach((value) => {
+              center.latitude += value.latitude;
+              center.longitude += value.longitude;
+            });
+            center.latitude /= searchHistory.length;
+            center.longitude /= searchHistory.length;
+            const jobs1 = await Models.Job.aggregate([
+              {
+                '$project': {
+                  '_id': 1,
+                  'active': 1,
+                  'expired': 1,
+                  'type': 1,
+                  'type2': 1,
+                  'shift': 1,
+                  'pay_type': 1,
+                  'is_deleted': 1,
+                  'posted_by': 1,
+                  'title': 1,
+                  'date': 1,
+                  'address': 1,
+                  'address2': 1,
+                  'studentfriendly': 1,
+                  'salary': 1,
+                  'pay_denomination': 1,
+                  'salary_max': 1,
+                  'salary_min': 1,
+                  'city': 1,
+                  'state': 1,
+                  'zip': 1,
+                  'distance': {
+                    '$add': [
+                      {
+                        '$pow': [
+                          {
+                            '$subtract': [
+                              '$latitude',
+                              center.latitude,
+                            ],
+                          },
+                          2,
+                        ],
+                      },
+                      {
+                        '$pow': [
+                          {
+                            '$subtract': [
+                              '$longitude',
+                              center.longitude,
+                            ],
+                          },
+                          2,
+                        ],
+                      },
+                    ],
+                  },
+                },
+              },
+            ]).match({
+              '_id': { '$not': { '$in': ids } },
+              'expired': false,
+              'active': true,
+              'is_deleted': false,
+            }).sort({
+              'distance': 1,
+            }).limit(10)
+              .exec();
+            jobs = jobs.concat(jobs1);
+          }
           if (jobs.length > 0) {
             jobs.forEach((job) => {
               // job type
