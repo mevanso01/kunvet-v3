@@ -1638,6 +1638,7 @@ export default {
         user_id: this.uid,
         business_id: this.orgId,
         posted_by: this.job.posted_by,
+        category: this.orgId ? 'business' : 'individual',
         title: this.job.title,
         date: doesJobActivelyExist ? this.job.date : Date.now(),
         address: this.job.address,
