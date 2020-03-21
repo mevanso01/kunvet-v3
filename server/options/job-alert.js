@@ -191,7 +191,7 @@ Scheduler.schedule(async () => {
               hashid: hashids.encodeHex(`${student._id}`),
             };
             await mailer.sendTemplate(
-              student.email,
+              `${student.firstname} <${student.email}>`,
               'job-alert',
               mailOptions,
             );
