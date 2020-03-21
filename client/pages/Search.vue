@@ -1082,6 +1082,7 @@ export default {
       // }
       for (const job of res.hits) {
         if (job.active && !job.expired && !job.is_deleted) {
+          job.date = new Date(Number(job.date) * 1000);
           const distance = this.computeDistance(job.latitude, job.longitude);
           if (distance < 10) {
             this.displayedJobs[0].push(job);
