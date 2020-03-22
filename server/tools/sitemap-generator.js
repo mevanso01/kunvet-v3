@@ -5,18 +5,19 @@ import Models from '../mongodb/Models';
 
 const uploadFile = (str, fileName) => {
   const s3 = new Aws.S3({
-    accessKeyId: Config.get('aws.accessKeyId'),
-    secretAccessKey: Config.get('aws.secretAccessKey'),
+    accessKeyId: Config.get('private.aws.accessKeyId'),
+    secretAccessKey: Config.get('private.aws.secretAccessKey'),
   });
-  const bucket = Config.get('aws.s3.bucket') ||
-    process.env.NODE_ENV === 'production' ? 'kunvet-prod-client' : 'kunvet-dev-client';
+  const bucket = Config.get('private.aws.s3.bucket');
   const params = {
     Bucket: bucket,
     Key: fileName,
     Body: str,
     ContentType: 'application/xml',
   };
-  return s3.putObject(params);
+  return s3.putObject(params, (err) => {
+    if (err) console.error('uploadFile error:', err);
+  });
 };
 
 export const generateUrlsSitemap = (urls, priority = '0.9') => {

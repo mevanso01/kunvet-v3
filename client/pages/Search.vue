@@ -1067,7 +1067,7 @@ export default {
       this.$debug(coordinates);
       const requests = [{
         params: {
-          query: `${query} AND expired = false`,
+          query: `${query}`,
           page: this.page,
           aroundLatLng: `${coordinates.latitude}, ${coordinates.longitude}`,
         },
@@ -1081,13 +1081,16 @@ export default {
       //   this.filteredJobs = this.filteredJobs.concat(res.hits);
       // }
       for (const job of res.hits) {
-        const distance = this.computeDistance(job.latitude, job.longitude);
-        if (distance < 10) {
-          this.displayedJobs[0].push(job);
-        } else if (distance > 10 && distance < 20) {
-          this.displayedJobs[1].push(job);
-        } else {
-          this.displayedJobs[2].push(job);
+        if (job.active && !job.expired && !job.is_deleted) {
+          job.date = new Date(Number(job.date) * 1000);
+          const distance = this.computeDistance(job.latitude, job.longitude);
+          if (distance < 10) {
+            this.displayedJobs[0].push(job);
+          } else if (distance > 10 && distance < 20) {
+            this.displayedJobs[1].push(job);
+          } else {
+            this.displayedJobs[2].push(job);
+          }
         }
       }
       this.loadingJobs = false;

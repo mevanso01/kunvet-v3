@@ -1,6 +1,7 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
 import uuidv1 from 'uuid/v1';
 import { GQC, Resolver } from 'graphql-compose';
+import Config from 'config';
 import Logger from '@/Logger';
 import Files from '@/utils/Files';
 import Mailer from '@/utils/Mailer';
@@ -81,8 +82,7 @@ async function sendNewApplicationNotification(req, next) {
     degree: degree,
     school: req.args.record.school,
     message: req.args.record.applicant_message,
-    trackingToken: req.args.record.tracking_token,
-    appId: results.record._id,
+    trackingUrl: `${Config.get('serverUrl')}/application/${results.record._id}/tracking/${req.args.record.tracking_token}`,
     rejectUrl: rejectUrl,
     replyUrl: replyUrl,
     attachments: [

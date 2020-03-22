@@ -355,7 +355,10 @@ export default {
       const addressItem = this.job.addressList[index];
       if (this.geocoder) {
         this.searchFocus = false;
-        this.job.address = `${addressItem.structured_formatting.main_text} ${addressItem.structured_formatting.secondary_text}`;
+        this.job.address = `${addressItem.structured_formatting.main_text}`;
+        if (addressItem.structured_formatting.secondary_text) {
+          this.job.address = `${this.job.address} ${addressItem.structured_formatting.secondary_text}`;
+        }
         this.geocoder.geocode({ 'placeId': addressItem.place_id }, (results, status) => {
           if (status === 'OK' && results.length === 1) {
             this.job.latitude = results[0].geometry.location.lat();
