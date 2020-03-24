@@ -487,6 +487,7 @@ const AccountSchema = Mongoose.Schema({
   search_history: [{
     latitude: Number,
     longitude: Number,
+    query: String,
   }],
   org_list: [],
   notifications: [{
