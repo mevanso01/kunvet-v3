@@ -46,6 +46,8 @@ button:focus {
 /*  ---- Transitions ---- */
 .fade-transition-leave-active {
   position: absolute;
+  left: 0;
+  right: 0;
 }
 
 /*  ---- Main navbar ----  */

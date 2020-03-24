@@ -73,6 +73,10 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
     },
     {
+      path: '/search',
+      redirect: '/',
+    },
+    {
       path: '/jobs/search',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
     },
@@ -83,10 +87,6 @@ const router = new VueRouter({
     {
       path: '/newSearch',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/NewSearch'),
-    },
-    {
-      path: '*',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
     },
     {
       path: '/login',
@@ -110,6 +110,10 @@ const router = new VueRouter({
       path: '/jobs/detail/:id',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
       props: true,
+    },
+    {
+      path: '/jobs/:id',
+      redirect: '/jobs/detail/:id',
     },
     {
       path: '/validate',
@@ -238,6 +242,10 @@ const router = new VueRouter({
     {
       path: '/debug/triggerError',
       component: () => import(/* webpackChunkName: "debug" */ '@/pages/TriggerError'),
+    },
+    {
+      path: '*',
+      component: () => import(/* webpackChunkName: "employee" */ '@/pages/PageNotFound'),
     },
   ],
 });

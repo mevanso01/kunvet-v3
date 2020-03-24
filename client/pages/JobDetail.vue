@@ -446,7 +446,7 @@
   }
 </style>
 <template>
-  <v-container fluid style="padding: 0" id="job-detail-container"
+  <v-container v-if="findJob.title" fluid style="padding: 0" id="job-detail-container"
                class=" page-height">
     <div class="header-splash mobile-hide">
       <div class="header-text-container">
@@ -482,7 +482,7 @@
           <div class="carditem blue-row">
             <p style="margin-bottom: 0">
               <img class="job-info-icon" style="transform: translateY(2px);"
-                   :src="svgs.building"></img>
+                   :src="svgs.building">
               <span style="padding-top: 2px;">
                 <a class="location_link" @click="changeLocation()" target="_blank">
                   {{ fullAddress }}
@@ -1112,20 +1112,22 @@
         }
         return true;
       },
-      getData() {
-        this.$apollo.query({
-          query: (gql`query ($JobId: MongoID) {
-          findJob (filter: {
-            _id: $JobId
-          }) {
-            ${queries.FindJobRecord}
-          }
-        }`),
-          variables: {
-            JobId: this.id,
-          },
-        }).then((data) => {
-          this.findJob = data.data.findJob;
+      async getData() {
+        try {
+          const { data } = await this.$apollo.query({
+            query: (gql`query ($JobId: MongoID) {
+            findJob (filter: {
+              _id: $JobId
+            }) {
+              ${queries.FindJobRecord}
+            }
+          }`),
+            variables: {
+              JobId: this.id,
+            },
+          });
+
+          this.findJob = data.findJob;
           /*
                             Or better, including more details for SEO:
                             Node.js Developer at Kunvet in Irvine, CA
@@ -1282,10 +1284,12 @@
             this.jsonld = null;
           }
           console.log(this.findJob);
-          this.fetchProfilePic();
-        }).catch((error) => {
+          await this.fetchProfilePic();
+          return this.findJob;
+        } catch (error) {
           console.log(error);
-        });
+        }
+        return null;
       },
       changeLocation() {
         let jobDestUrl = 'https://maps.google.com/?q=';
@@ -1686,9 +1690,11 @@
         return returned;
       },
     },
-    activated() {
+    async activated() {
       this.resetData();
-      this.getData();
+      if (!await this.getData()) {
+        this.$router.push('/');
+      }
       // this.getApplication();
       this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {
