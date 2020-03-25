@@ -177,6 +177,14 @@ const router = new VueRouter({
       props: { id: null },
     },
     {
+      path: '/jobs/applicants',
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/Applicants'),
+    },
+    {
+      path: '/jobs/:id',
+      redirect: '/jobs/detail/:id',
+    },
+    {
       path: '/view-applicant/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/ViewApplicant'),
       props: true,
@@ -189,10 +197,6 @@ const router = new VueRouter({
     {
       path: '/myorg',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/MyOrg'),
-    },
-    {
-      path: '/jobs/applicants',
-      component: () => import(/* webpackChunkName: "employer" */ '@/pages/Applicants'),
     },
     {
       path: '/about',
@@ -241,7 +245,7 @@ const router = new VueRouter({
     },
     {
       path: '*',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/PageNotFound'),
+      component: () => import(/* webpackChunkName: "404" */ '@/pages/PageNotFound'),
     },
   ],
 });
