@@ -14,7 +14,7 @@ if (algoliaConfig.appId) {
 }
 
 const geoSearchJobsLimit = 10;
-const mileLimit = Number((15 * 1.60934).toFixed(0)); // 15 miles
+const mileLimit = Number((15 * 1.60934 * 1000).toFixed(0)); // 15 miles
 const dateLimit = 7;  // jobs posted in last 7 days
 const oneDay = 24 * 60 * 60 * 1000;
 

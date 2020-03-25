@@ -73,10 +73,6 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
     },
     {
-      path: '/search',
-      redirect: '/',
-    },
-    {
       path: '/jobs/search',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
     },
@@ -110,10 +106,6 @@ const router = new VueRouter({
       path: '/jobs/detail/:id',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/JobDetail'),
       props: true,
-    },
-    {
-      path: '/jobs/:id',
-      redirect: '/jobs/detail/:id',
     },
     {
       path: '/validate',

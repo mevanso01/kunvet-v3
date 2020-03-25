@@ -1053,8 +1053,8 @@ export default {
         'tabId': 2,
         'tabTitle': 'Review and post',
       }, {
-        'tabId': 'billing',
-        'tabTitle': 'Billing',
+        'tabId': 'verify-email',
+        'tabTitle': 'Verify Email',
       }, {
         'tabId': 'success-tab',
         'tabTitle': 'Success',
@@ -1447,9 +1447,11 @@ export default {
       }
     },
     moveToBilling() {
-      this.$router.push('/jobs/create');
-      this.$refs.billing.show(this.jobId);
-      this.tab = 'billing';
+      // skip billing
+      this.onBillingSuccess();
+      // this.$router.push('/jobs/create');
+      // this.$refs.billing.show(this.jobId);
+      // this.tab = 'billing';
     },
     validateFullJob() {
       for (var i = 2; i >= 0; i--) {
@@ -1479,7 +1481,7 @@ export default {
       const validation = this.validateFullJob();
       if (validation[0]) {
         this.postJob();
-        this.moveToBilling();
+        // this.moveToBilling();
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }
@@ -2028,7 +2030,7 @@ export default {
     },
     onBillingSuccess() {
       this.tab = 'success-tab';
-      this.email_verified = true;
+      // this.email_verified = true;
       // if (this.$ga && this.newLoggedIn) {
       //   this.$ga.event('product', 'paid', 'job posting', 9);
       //   console.log('ga: product/paid/job posting/9');
@@ -2039,7 +2041,7 @@ export default {
       }
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;
-        udata.email_verified = true;
+        // udata.email_verified = true;
         this.$store.commit({ type: 'keepUserdata', userdata: udata });
       }
     },
