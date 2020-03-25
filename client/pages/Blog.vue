@@ -304,11 +304,11 @@
           <div class="header">Careers</div>
           <div class="sub-header">
             <a class="temp-link mb-3" href="/career-guide/5-great-excuses-for-missing-work.html">
-              5 Great Excuses for Missing Work
+              5 Great Excuses for Missing Work (with Examples)
             </a>
           </div>
           <div class="description">
-            Need to recharge and don't know what to tell your boss? Here are my personal top 5 excuses that got me out of work every single time!
+            Need a day-off but don't know what to tell your boss? Here are my personal top 5 excuses that got me out of work every single time!
           </div>
           <div class="name">Shannon Serpette</div>
           <div class="date">Mar 15, 2020 • 9 min read</div>
