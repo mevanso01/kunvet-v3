@@ -303,15 +303,15 @@
           <img class="cover-img" :src="pngs.thumbnailMissingWork" alt="5-great-excuses-for-missing-work"><br>
           <div class="header">Careers</div>
           <div class="sub-header">
-            <a class="temp-link mb-3" href="/career-guide/5-great-excuses-for-missing-work.html">
-              5 Great Excuses for Missing Work
+            <a class="temp-link mb-3" href="/career-guide/10-excuses-for-missing-work.html">
+              10 Excuses for Missing Work (with Examples)
             </a>
           </div>
           <div class="description">
-            Need to recharge and don't know what to tell your boss? Here are my personal top 5 excuses that got me out of work every single time!
+            Need to day-off but don't know how to tell your boss? Here are my favorite excuses that got me out of work every single time!
           </div>
           <div class="name">Shannon Serpette</div>
-          <div class="date">Mar 15, 2020 • 9 min read</div>
+          <div class="date">Mar 24, 2020 • 9 min read</div>
         </div>
 
         <div class="divider" style="margin-bottom: 30px;"></div>
