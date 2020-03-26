@@ -779,6 +779,7 @@
   </v-container>
 </template>
 <script>
+  import apolloClient from '@/apollo/client';
   import gql from 'graphql-tag';
   import BookSvg from '@/assets/job_detail/open-magazine.svg';
   import PushpinSvg from '@/assets/job_detail/pushpin.svg';
@@ -1112,26 +1113,12 @@
         }
         return true;
       },
-      async getData() {
+      performData() {
         try {
-          const { data } = await this.$apollo.query({
-            query: (gql`query ($JobId: MongoID) {
-            findJob (filter: {
-              _id: $JobId
-            }) {
-              ${queries.FindJobRecord}
-            }
-          }`),
-            variables: {
-              JobId: this.id,
-            },
-          });
-
-          this.findJob = data.findJob;
           /*
-                            Or better, including more details for SEO:
-                            Node.js Developer at Kunvet in Irvine, CA
-                          */
+            Or better, including more details for SEO:
+            Node.js Developer at Kunvet in Irvine, CA
+          */
           this.$setTitle(this.findJob.title);
           // this.job_dest_url = 'https://maps.google.com/?q=';
           // this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
@@ -1284,12 +1271,10 @@
             this.jsonld = null;
           }
           console.log(this.findJob);
-          await this.fetchProfilePic();
-          return this.findJob;
+          this.fetchProfilePic();
         } catch (error) {
           console.log(error);
         }
-        return null;
       },
       changeLocation() {
         let jobDestUrl = 'https://maps.google.com/?q=';
@@ -1690,11 +1675,30 @@
         return returned;
       },
     },
+    async beforeRouteEnter (to, from, next) {
+      try {
+        const { data } = await apolloClient.query({
+          query: (gql`query ($JobId: MongoID) {
+          findJob (filter: {
+            _id: $JobId
+          }) {
+            ${queries.FindJobRecord}
+          }
+        }`),
+          variables: {
+            JobId: to.params.id,
+          },
+        });
+        next(vm => {
+          vm.findJob = data.findJob;
+        });
+      } catch (error) {
+        next({ name: 'JobNotFound', params: [to.path], replace: true });
+      }
+    },
     async activated() {
       this.resetData();
-      if (!await this.getData()) {
-        this.$router.push('/');
-      }
+      this.performData();
       // this.getApplication();
       this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {

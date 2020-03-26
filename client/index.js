@@ -245,7 +245,13 @@ const router = new VueRouter({
     },
     {
       path: '*',
+      name: '404',
       component: () => import(/* webpackChunkName: "404" */ '@/pages/PageNotFound'),
+    },
+    {
+      path: '*',
+      name: 'JobNotFound',
+      component: () => import(/* webpackChunkName: "404" */ '@/pages/JobNotFound'),
     },
   ],
 });
