@@ -608,13 +608,13 @@
                 </v-flex> -->
                 <v-flex xs12 style="text-align: center;">
                   <v-btn flat class="prev-btn" @click="_moveToPrevTab">Previous Step</v-btn>
-                  <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid) || loading" @click="submitLastForm">
+                  <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid) || loading || activatingJob" @click="submitLastForm">
                     <span v-if="!job.active">Post my job</span>
                     <span v-else>Save Job</span>
                   </v-btn>
                   <p id="bottom-error-message" style="opacity: 0; color: red;" class="mt-2 center">Please select at least one position tag</p>
                 </v-flex>
-                <p v-if="loading">
+                <p v-if="loading || activatingJob">
                   <span style="padding: 0 4px;">
                     <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
                   </span>
@@ -674,8 +674,14 @@
               <br>
               <CodeVerification ref="codever" @verified="codeValidated" />
               <div style="text-align: center;">
-                <v-btn class="kunvet-red-bg" v-if="email_verified" @click="moveToBilling">Continue</v-btn>
+                <v-btn class="kunvet-red-bg" v-if="email_verified && false" @click="moveToBilling">Continue</v-btn>
               </div>
+              <p v-if="loading || activatingJob">
+                <span style="padding: 0 4px;">
+                  <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
+                </span>
+                Loading...
+              </p>
             </div>
           </v-tab-item>
           <v-tab-item id="success-tab">
@@ -1007,6 +1013,7 @@ export default {
       },
       email_verified: false,
       loading: false,
+      activatingJob: false,
       bdata: {
         business_name: null,
         address: null,
@@ -1436,22 +1443,49 @@ export default {
       if (!this.loading) {
         if (!this.email_verified) {
           this.setJobProgress(true); // set postOnOpen to true
-          // this.$refs.codever.init();
-          this.tab = 'verify-email';
           this.loading = true;
           this.saveJob();
+          this.tab = 'verify-email';
+          this.$refs.codever.init();
         } else {
           this.loading = true;
           this.saveJob();
+          this.moveToJobActivation();
         }
       }
     },
+    moveToJobActivation() {
+      // do fake billing & job activating
+      this.activatingJob = true;
+      const paymentData = {
+        actions: [{
+          name: 'activateJob',
+          jobId: this.jobId,
+          noBilling: true,
+        }],
+        paymentMethodNonce: {},
+      };
+      axios.post('/billing/createTransaction', paymentData).then((res => {
+        this.activatingJob = false;
+        if (res.data.success) {
+          this.onBillingSuccess();
+          console.log('true');
+        } else {
+          this.dialogs.errorOccured = true;
+          const errMsg = res.data.message;
+          console.log(errMsg);
+        }
+      })).catch(error => {
+        this.activatingJob = false;
+        this.dialogs.errorOccured = true;
+        const errMsg = error.response.data.message;
+        console.log(errMsg);
+      });
+    },
     moveToBilling() {
-      // skip billing
-      this.onBillingSuccess();
-      // this.$router.push('/jobs/create');
-      // this.$refs.billing.show(this.jobId);
-      // this.tab = 'billing';
+      this.$router.push('/jobs/create');
+      this.$refs.billing.show(this.jobId);
+      this.tab = 'billing';
     },
     validateFullJob() {
       for (var i = 2; i >= 0; i--) {

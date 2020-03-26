@@ -232,31 +232,33 @@ router.post('/createTransaction', async (ctx) => {
   // Charge
   // TODO: remove 'production' case when deploying to 'prod' branch
   if (!(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development')) {
-    try {
-      const sale = util.promisify(BraintreeGateway.transaction.sale).bind(BraintreeGateway.transaction);
-      const result = await sale({
-        amount: (credits / 100).toString(),
-        paymentMethodNonce: req.paymentMethodNonce,
-        customer: {
-          firstName: user.firstname,
-          lastName: user.lastname,
-          email: user.email,
-        },
-        options: {
-          submitForSettlement: true,
-        },
-      });
-      if (!result.success) {
-        throw new Error(result.message);
+    if (!req.noBilling) {
+      try {
+        const sale = util.promisify(BraintreeGateway.transaction.sale).bind(BraintreeGateway.transaction);
+        const result = await sale({
+          amount: (credits / 100).toString(),
+          paymentMethodNonce: req.paymentMethodNonce,
+          customer: {
+            firstName: user.firstname,
+            lastName: user.lastname,
+            email: user.email,
+          },
+          options: {
+            submitForSettlement: true,
+          },
+        });
+        if (!result.success) {
+          throw new Error(result.message);
+        }
+      } catch (e) {
+        ctx.status = 500;
+        ctx.body = new ApiResponse(
+          ErrorCode.PaymentError,
+          e.message,
+          ctx,
+        );
+        return;
       }
-    } catch (e) {
-      ctx.status = 500;
-      ctx.body = new ApiResponse(
-        ErrorCode.PaymentError,
-        e.message,
-        ctx,
-      );
-      return;
     }
   }
 
