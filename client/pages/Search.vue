@@ -1306,7 +1306,7 @@ export default {
       this.page = 0;
 
       if (this.$route.params.query) {
-        const [position, location] = this.$route.params.query.split('-jobs-near-');
+        const [position, location] = this.$route.params.query.split('-jobs-in-');
         if (position && location) {
           this.$refs.jobSearchForm.setDefaultValues({
             q: position.split('-').join(' '),
