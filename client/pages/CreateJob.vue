@@ -672,11 +672,11 @@
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <br>
-              <CodeVerification ref="codever" @verified="codeValidated" />
+              <CodeVerification ref="codever" v-show="!email_verified" @verified="codeValidated" />
               <div style="text-align: center;">
                 <v-btn class="kunvet-red-bg" v-if="email_verified && false" @click="moveToBilling">Continue</v-btn>
               </div>
-              <p v-if="loading || activatingJob">
+              <p v-if="activatingJob" style="text-align: center;">
                 <span style="padding: 0 4px;">
                   <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
                 </span>
@@ -1911,7 +1911,21 @@ export default {
       console.log('Resetting data');
       this.$store.commit('resetJobProgress');
       Object.assign(this.$data, this.$options.data.call(this), { autocomplete: this.autocomplete, geocoder: this.geocoder });
+      this.email_verified = false;
+      this.emailExists = false;
+      this.emailSent = false;
+      this.form1Valid = false;
+      this.form2Valid = false;
+      this.form3Valid = false;
+      this.submit1Pressed = false;
+      this.submit2Pressed = false;
+      this.submit3Pressed = false;
+      this.isUniversity = false;
+      this.newLoggedIn = false;
+      this.activatingJob = false;
+      this.addressValid = false;
       this.pageloading = false;
+      this.clearErrors();
     },
     fetchAndSetBusinessData(id) {
       this.$apollo.query({
@@ -2088,6 +2102,9 @@ export default {
     if (this.$store.state && this.$store.state.userdata) {
       this.email_verified = Boolean(this.$store.state.userdata.email_verified);
     }
+    console.log('--- activated ---');
+    console.log(this.$store.state);
+    console.log(this.email_verified);
     // Retrieve user data
     userDataProvider.getUserData().then(async res => {
       // See if job progress needs to be restored
@@ -2115,9 +2132,9 @@ export default {
         //   this.$store.commit('notNewUser');
         // }
       } else {
-        if (this.tab === '0') {
-          this.next(1);
-        }
+        // if (this.tab === '0') {
+        //   this.next(1);
+        // }
         this.email_verified = res.userdata.email_verified;
         this.email = res.userdata.email;
         this.fname = res.userdata.firstname;
@@ -2151,7 +2168,7 @@ export default {
         this.checkForUnpostedJobs();
         // See if user is returning user. Ideally should be if user has posted job or not.
         if (this.email_verified) {
-          this.furthest_tab = 2;
+          // this.furthest_tab = 2;
         }
       }
     });

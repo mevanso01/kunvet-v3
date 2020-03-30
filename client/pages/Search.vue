@@ -623,7 +623,7 @@ export default {
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
-      // pageSize: 12,
+      pageSize: 12,
       query: '',
       page: 0,
       displayedJobs: [[], [], []],
