@@ -54,7 +54,7 @@ const ACTIONS = {
       job.expiry_date = DateHelper.getExpiryDate(job.date, Config.get('daysToExpire'));
       job.expired = false;
       await job.save();
-      if (appId && apiKey) {
+      if (appId && apiKey && process.env.NODE_ENV !== 'development') {
         console.log('-------------- job algolia added --------------');
         await Algolia.uploadJob(job);
       }
