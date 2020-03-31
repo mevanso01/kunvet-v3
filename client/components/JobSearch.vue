@@ -299,7 +299,7 @@ export default {
       immediate: true,
       handler(value) {
         if (this.$route.params.query) {
-          const [, location] = this.$route.params.query.split('-jobs-near-');
+          const [, location] = this.$route.params.query.split('-jobs-in-');
           if (value && location) {
             this.getAddressList(location, false, () => {
               this.getGeoLocation(0, () => {
