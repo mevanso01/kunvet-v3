@@ -238,6 +238,10 @@ const router = new VueRouter({
       path: '/unsubscribe/job-recommendation',
       component: () => import(/* webpackChunkName: "hiring" */ '@/pages/UnsubscribeJobRecommend'),
     },
+    {
+      path: '/feedback/job-alert',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/FeedbackJobAlert'),
+    },
     // Debug pages
     {
       path: '/debug/triggerError',

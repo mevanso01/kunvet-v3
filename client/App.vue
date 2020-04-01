@@ -289,7 +289,13 @@ export default {
       // it is found
     },
     fullScreenMode() {
-      return this.isBlogRoute || this.isUnsubscribeRoute;
+      return this.isBlogRoute || this.isUnsubscribeRoute || this.isFeedbackRoute;
+    },
+    isFeedbackRoute() {
+      if (this.$route.path === '/' && this.$route.name === null) {
+        return true;
+      }
+      return this.$route.path.startsWith('/feedback');
     },
     isUnsubscribeRoute() {
       if (this.$route.path === '/' && this.$route.name === null) {

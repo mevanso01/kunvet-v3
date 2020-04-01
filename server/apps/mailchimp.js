@@ -45,7 +45,7 @@ router.post('/addMember', async (ctx) => {
     message: 'Failed posting on MailChimp',
   });
   const info = ctx.request.body;
-  let listId = info.type === 'student' ? mcListId : mcEmployerListId;
+  let listId = info.type === 'student' ? mcBlogListId : mcEmployerListId;
   if (info.type === 'blog') {
     listId = mcBlogListId;
   }

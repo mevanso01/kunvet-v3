@@ -2102,9 +2102,6 @@ export default {
     if (this.$store.state && this.$store.state.userdata) {
       this.email_verified = Boolean(this.$store.state.userdata.email_verified);
     }
-    console.log('--- activated ---');
-    console.log(this.$store.state);
-    console.log(this.email_verified);
     // Retrieve user data
     userDataProvider.getUserData().then(async res => {
       // See if job progress needs to be restored
