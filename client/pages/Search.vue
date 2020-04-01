@@ -1169,7 +1169,7 @@ export default {
       this.page = 0;
       let title = 'Search for Jobs';
       if (this.query && job.address) {
-        title = `${startCase(toLower(this.query))} Jobs in ${job.address}`;
+        title = `${startCase(toLower(this.query))} jobs near ${job.address}`;
       }
       this.$setTitle(title);
       if (replaceUrl) {
@@ -1306,7 +1306,7 @@ export default {
       this.page = 0;
 
       if (this.$route.params.query) {
-        const [position, location] = this.$route.params.query.split('-jobs-in-');
+        const [position, location] = this.$route.params.query.split('-jobs-near-');
         if (position && location) {
           this.$refs.jobSearchForm.setDefaultValues({
             q: position.split('-').join(' '),

@@ -79,7 +79,7 @@ export const buildSearchSitemap = async () => {
           let position = pos.split(' ').join('-');
           position = position.split('/').join('-');
           const location = `${job.city.split(' ').join('-')}-${job.state}`;
-          queries.push(`${position}-jobs-in-${location}`.toLowerCase());
+          queries.push(`${position}-jobs-near-${location}`.toLowerCase());
         }
       });
     });
