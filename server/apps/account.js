@@ -51,6 +51,43 @@ router.post('/unsubscribe/job-recommendation', async (ctx) => {
   });
 });
 
+router.post('/feedback/job-recommendation', async (ctx) => {
+  const hashids = new Hashids();
+  const req = ctx.request.body;
+  const uid = hashids.decodeHex(req.userHash);
+
+  try {
+    const user = await Models.Account.find({ '_id': uid });
+    if (!user || user.length === 0) {
+      ctx.body = JSON.stringify({
+        success: false,
+        message: 'Error occured!',
+      });
+      return;
+    }
+    const feedback = new Models.Feedback({
+      user_id: uid,
+      email: user[0].email,
+      type: req.type === 'yes' ? 'positive' : 'negative',
+      note: req.note,
+      jobs: req.jobs.split(','),
+      reason: req.reason,
+      alert_date: req.alert_date,
+    });
+    await feedback.save();
+  } catch (err) {
+    console.log(err);
+    ctx.body = JSON.stringify({
+      success: false,
+      message: 'Error occured!',
+    });
+    return;
+  }
+  ctx.body = JSON.stringify({
+    success: true,
+  });
+});
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 

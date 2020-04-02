@@ -52,6 +52,13 @@
       border: 1px solid white;
       margin: 0;
     }
+    .err-msg {
+      color: black;
+      font-family: proxima-nova !important;
+      line-height: 120%;
+      font-size: 16px;
+      margin-top: 20px;
+    }
   }
   // big desktop
   @media (min-width: 1025px){
@@ -89,6 +96,7 @@
   }
   .chk-white .v-input--selection-controls__input > .v-input--selection-controls__ripple {
     color: rgba(255,255,255,0.87) !important;
+    display: none;
   }
   .chk-white .v-input--selection-controls__input > i.v-icon {
     color: white !important;
@@ -97,50 +105,50 @@
 
 <template>
   <div class="content">
-    <div class="sub-content">
-      <div class="title">
-        Thank you for your feedback!
+    <form autocomplete="off" v-show="!form.success" @submit.prevent="onSendFeedback">
+      <div class="sub-content" v-if="type==='yes'">
+        <div class="title">
+          Thank you for your feedback!
+        </div>
+        <div class="sub-title" style="margin-top: 16px;">
+          What did you like about the job recommendation?
+        </div>
+        <textarea v-model="note" required style="margin-top: 10px;">
+        </textarea>
+        <div class="err-msg" v-if="form.error">Something went wrong! Please try again.</div>
+        <v-btn
+          type="submit"
+          class="btn-send"
+          style="margin-top: 20px;"
+          outline
+          :working="form.loading"
+          :disabled="form.loading">SEND</v-btn>
       </div>
-      <div class="sub-title" style="margin-top: 16px;">
-        What did you like about the job recommendation?
+      <div class="sub-content" v-if="type==='no'">
+        <div class="title">
+          We're sorry to hear that.
+        </div>
+        <div class="sub-title" style="margin-top: 16px;">
+          Please tell us what went wrong:
+        </div>
+        <v-checkbox v-for="(item, i) in reason" :key="i" class="chk-white" style="margin-top: 10px;"
+          :label="item.label"
+          v-model="item.checked"
+          hide-details
+        ></v-checkbox>
+        <textarea v-model="note" required v-if="reason[4].checked" style="margin-top: 10px;">
+        </textarea>
+        <div class="err-msg" v-if="form.error">Something went wrong! Please try again.</div>
+        <v-btn
+          type="submit"
+          class="btn-send"
+          style="margin-top: 20px;"
+          outline
+          :working="form.loading"
+          :disabled="form.loading">SEND<i v-if="form.loading" class="fas fa-circle-notch fa-spin" style="font-size: 20px;"></i></v-btn>
       </div>
-      <textarea style="margin-top: 10px;">
-      </textarea>
-      <v-btn class="btn-send" style="margin-top: 20px;" outline>SEND</v-btn>
-    </div>
-    <div class="sub-content">
-      <div class="title">
-        We're sorry to hear that.
-      </div>
-      <div class="sub-title" style="margin-top: 16px;">
-        Please tell us what went wrong:
-      </div>
-      <v-checkbox class="chk-white" style="margin-top: 10px;"
-        label="Jobs were above/below my experience level"
-        checked
-        hide-details
-      ></v-checkbox>
-      <v-checkbox class="chk-white" style="margin-top: 10px;"
-        label="Jobs didn’t match my preference"
-        hide-details
-      ></v-checkbox>
-      <v-checkbox class="chk-white" style="margin-top: 10px;"
-        label="Jobs were too far away"
-        hide-details
-      ></v-checkbox>
-      <v-checkbox class="chk-white" style="margin-top: 10px;"
-        label="I've already seen these jobs"
-        hide-details
-      ></v-checkbox>
-      <v-checkbox class="chk-white" style="margin-top: 10px;"
-        label="Other"
-        hide-details
-      ></v-checkbox>
-      <textarea style="margin-top: 10px;">
-      </textarea>
-      <v-btn class="btn-send" style="margin-top: 20px;" outline>SEND</v-btn>
-    </div>
-    <div class="sub-content">
+    </form>
+    <div class="sub-content" v-show="form.success">
       <div class="title">
         Your feedback was sent.
       </div>
@@ -148,7 +156,7 @@
         Thank you for your input. Your response helps us cultivate the best customer experience possible.
       </div>
     </div>
-    <div class="sub-content">
+    <div class="sub-content" v-show="unavailable">
       <div class="title">
         Feedback unavailable
       </div>
@@ -160,6 +168,7 @@
 </template>
 
 <script>
+import Axios from 'axios';
 
 export default {
   metaInfo: {
@@ -167,17 +176,84 @@ export default {
   },
   data() {
     return {
-      reason: {
-        value: null,
-        text: '',
+      unavailable: false,
+      reason: [
+        {
+          label: 'Jobs were above/below my experience level',
+          checked: false,
+        },
+        {
+          label: 'Jobs didn’t match my preference',
+          checked: false,
+        },
+        {
+          label: 'Jobs were too far away',
+          checked: false,
+        },
+        {
+          label: 'I\'ve already seen these jobs',
+          checked: false,
+        },
+        {
+          label: 'Other',
+          checked: false,
+        },
+      ],
+      form: {
+        loading: false,
+        success: false,
+        error: false,
       },
+      note: '',
+      type: '',
+      userHash: '',
+      jobIds: '',
+      alert_date: '',
     };
   },
   methods: {
+    onSendFeedback() {
+      this.form.loading = true;
+      this.form.success = false;
+      this.form.error = false;
+      const postData = {
+        userHash: this.userHash,
+        type: this.type,
+        note: this.note,
+        jobs: this.jobIds,
+        reason: this.reason.filter(item => item.checked).map(item => item.label),
+        alert_date: this.alert_date,
+      };
+      Axios.post('/account/feedback/job-recommendation', postData).then((res) => {
+        this.form.loading = false;
+        if (res.data.success) {
+          this.form.success = true;
+        } else {
+          this.form.error = true;
+        }
+      }, (error) => {
+        this.$error(error);
+        this.form.loading = false;
+        this.form.success = false;
+        this.form.error = true;
+      });
+    },
   },
   watch: {
   },
   activated() {
+    this.type = this.$route.query.q1;
+    this.userHash = this.$route.query.q2;
+    this.jobIds = this.$route.query.q3;
+    this.alert_date = this.$route.query.q4;
+    if (!this.type || !this.userHash || !this.jobIds || !this.alert_date) {
+      this.$router.push({
+        path: '/error',
+      });
+    }
+    this.$router.push({
+      path: '',
+    });
   },
 };
 </script>

@@ -538,6 +538,40 @@ const AvailableFiltersSchema = Mongoose.Schema({
   in_use_positions: [String],
   in_use_types: [String],
 });
+
+const FeedbackSchema = Mongoose.Schema({
+  user_id: {
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Account',
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    enum: ['positive', 'negative'],
+    default: 'positive',
+    required: true,
+  },
+  note: {
+    type: String,
+  },
+  reason: {
+    type: Array,
+  },
+  jobs: [{
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Job',
+  }],
+  alert_date: {
+    type: Date,
+  },
+}, {
+  timestamps: true,
+});
+
 AccountSchema.plugin(PassportLocalMongoose, {
   usernameField: 'email',
   usernameLowerCase: true,
@@ -549,6 +583,7 @@ export default {
   Account: Mongoose.model('Account', AccountSchema),
   PrivateAccountDetails: Mongoose.model('PrivateAccountDetails', PrivateAccountDetailsSchema),
   Applicant: Mongoose.model('Applicant', ApplicantSchema),
+  Feedback: Mongoose.model('Feedback', FeedbackSchema),
   TempAccount: Mongoose.model('TempAccount', TempAccountSchema),
   VerificationCode: Mongoose.model('VerificationCode', VerificationCodeSchema),
   PasswordResetInstance: Mongoose.model('PasswordResetInstance', PasswordResetInstance),
