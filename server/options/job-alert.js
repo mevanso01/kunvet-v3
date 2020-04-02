@@ -26,7 +26,6 @@ Scheduler.schedule(async () => {
     const students = await Models.Account.find({
       'account_type': 'student',
       'email_verified': true,
-      'email': 'upworksamir@gmail.com',
       'preferences.jobAlertUnsubscribed': {
         '$ne': true,
       },
@@ -58,7 +57,7 @@ Scheduler.schedule(async () => {
           // search by position tag, city, state
           let jobs = await Models.Job.find({
             '_id': { '$not': { '$in': ids } },
-            '$or': [{ 'position_tags': { '$elemMatch': { '$in': positionTags } } }, { 'city': { '$in': cities } }, { 'state': { '$in': states } }],
+            '$and': [{ 'position_tags': { '$elemMatch': { '$in': positionTags } } }, { 'city': { '$in': cities } }, { 'state': { '$in': states } }],
             'date': { $gt: today - (dateLimit * oneDay) },
             'expired': false,
             'active': true,
