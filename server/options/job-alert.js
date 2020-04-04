@@ -225,6 +225,7 @@ Scheduler.schedule(async () => {
             const mailOptions = {
               fname: student.firstname,
               date: `${(new Date()).getMonth() + 1}-${(new Date()).getDate()}-${(new Date()).getFullYear()}`,
+              timeDigits: (new Date()).getTime(),
               jobs,
               jobIds: jobs.map(item => item._id).join(','),
               hashid: hashids.encodeHex(`${student._id}`),

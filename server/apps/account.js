@@ -57,6 +57,14 @@ router.post('/feedback/job-recommendation', async (ctx) => {
   const uid = hashids.decodeHex(req.userHash);
 
   try {
+    const q1 = await Models.Feedback.find({ 'user_id': uid, 'alert_uid': req.alert_date });
+    if (q1.length > 0) {
+      ctx.body = JSON.stringify({
+        success: false,
+        message: 'duplicated',
+      });
+      return;
+    }
     const user = await Models.Account.find({ '_id': uid });
     if (!user || user.length === 0) {
       ctx.body = JSON.stringify({
@@ -72,7 +80,8 @@ router.post('/feedback/job-recommendation', async (ctx) => {
       note: req.note,
       jobs: req.jobs.split(','),
       reason: req.reason,
-      alert_date: req.alert_date,
+      alert_date: new Date(Number(req.alert_date)),
+      alert_uid: Number(req.alert_date),
     });
     await feedback.save();
   } catch (err) {

@@ -105,7 +105,7 @@
 
 <template>
   <div class="content">
-    <form autocomplete="off" v-show="!form.success" @submit.prevent="onSendFeedback">
+    <form autocomplete="off" v-show="!unavailable && !form.success" @submit.prevent="onSendFeedback">
       <div class="sub-content" v-if="type==='yes'">
         <div class="title">
           Thank you for your feedback!
@@ -148,7 +148,7 @@
           :disabled="form.loading">SEND<i v-if="form.loading" class="fas fa-circle-notch fa-spin" style="font-size: 20px;"></i></v-btn>
       </div>
     </form>
-    <div class="sub-content" v-show="form.success">
+    <div class="sub-content" v-show="!unavailable && form.success">
       <div class="title">
         Your feedback was sent.
       </div>
@@ -228,6 +228,8 @@ export default {
         this.form.loading = false;
         if (res.data.success) {
           this.form.success = true;
+        } else if (res.data.message === 'duplicated') {
+          this.unavailable = true;
         } else {
           this.form.error = true;
         }

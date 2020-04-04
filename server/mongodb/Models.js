@@ -568,6 +568,9 @@ const FeedbackSchema = Mongoose.Schema({
   alert_date: {
     type: Date,
   },
+  alert_uid: {
+    type: Number,
+  },
 }, {
   timestamps: true,
 });
