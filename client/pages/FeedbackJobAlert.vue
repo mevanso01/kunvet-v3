@@ -156,7 +156,7 @@
         Thank you for your input. Your response helps us cultivate the best customer experience possible.
       </div>
     </div>
-    <div class="sub-content" v-show="unavailable">
+    <div class="sub-content" v-show="unavailable && !checkingUnavailable">
       <div class="title">
         Feedback unavailable
       </div>
@@ -176,7 +176,8 @@ export default {
   },
   data() {
     return {
-      unavailable: false,
+      unavailable: true,
+      checkingUnavailable: true,
       reason: [
         {
           label: 'Jobs were above/below my experience level',
@@ -255,6 +256,25 @@ export default {
     }
     this.$router.push({
       path: '',
+    });
+    this.checkingUnavailable = true;
+    this.unavailable = true;
+    const postData = {
+      userHash: this.userHash,
+      alert_date: this.alert_date,
+    };
+    Axios.post('/account/feedback/job-recommendation-available', postData).then((res) => {
+      if (res.data.success && res.data.available) {
+        this.unavailable = false;
+        this.checkingUnavailable = false;
+      } else {
+        this.unavailable = true;
+        this.checkingUnavailable = false;
+      }
+    }, (error) => {
+      this.$error(error);
+      this.unavailable = true;
+      this.checkingUnavailable = false;
     });
   },
 };

@@ -51,6 +51,34 @@ router.post('/unsubscribe/job-recommendation', async (ctx) => {
   });
 });
 
+router.post('/feedback/job-recommendation-available', async (ctx) => {
+  const hashids = new Hashids();
+  const req = ctx.request.body;
+  const uid = hashids.decodeHex(req.userHash);
+
+  try {
+    const q1 = await Models.Feedback.find({ 'user_id': uid, 'alert_uid': req.alert_date });
+    if (q1.length > 0) {
+      ctx.body = JSON.stringify({
+        success: true,
+        available: false,
+      });
+      return;
+    }
+  } catch (err) {
+    console.log(err);
+    ctx.body = JSON.stringify({
+      success: false,
+      message: 'Error occured!',
+    });
+    return;
+  }
+  ctx.body = JSON.stringify({
+    success: true,
+    available: true,
+  });
+});
+
 router.post('/feedback/job-recommendation', async (ctx) => {
   const hashids = new Hashids();
   const req = ctx.request.body;
