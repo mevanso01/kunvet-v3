@@ -85,6 +85,7 @@ jobs:
       - run: aws s3 sync --exclude *.map --exclude index.html --cache-control max-age=604800,public dist/client s3://kunvet-prod-client/
       - run: aws s3 cp --cache-control max-age=0,no-cache,no-store,must-revalidate dist/client/index.html s3://kunvet-prod-client/
       - run: aws --region us-east-1 lambda update-function-code --function-name arn:aws:lambda:us-east-1:796927832678:function:kunvet-prod --zip-file fileb://dist/lambda.zip
+      - run: aws --region us-east-1 lambda update-function-code --function-name arn:aws:lambda:us-east-1:796927832678:function:kunvet-jobalert-prod --zip-file fileb://dist/lambda1.zip
 
 workflows:
   version: 2
