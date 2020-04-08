@@ -608,13 +608,13 @@
                 </v-flex> -->
                 <v-flex xs12 style="text-align: center;">
                   <v-btn flat class="prev-btn" @click="_moveToPrevTab">Previous Step</v-btn>
-                  <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid) || loading" @click="submitLastForm">
+                  <v-btn class="kunvet-red-bg" :disabled="!(form1Valid && form2Valid) || loading || activatingJob" @click="submitLastForm">
                     <span v-if="!job.active">Post my job</span>
                     <span v-else>Save Job</span>
                   </v-btn>
                   <p id="bottom-error-message" style="opacity: 0; color: red;" class="mt-2 center">Please select at least one position tag</p>
                 </v-flex>
-                <p v-if="loading">
+                <p v-if="loading || activatingJob">
                   <span style="padding: 0 4px;">
                     <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
                   </span>
@@ -672,10 +672,16 @@
             <div class="main-cont-large">
               <div class="cust-spacer"></div>
               <br>
-              <CodeVerification ref="codever" @verified="codeValidated" />
+              <CodeVerification ref="codever" v-show="!email_verified" @verified="codeValidated" />
               <div style="text-align: center;">
-                <v-btn class="kunvet-red-bg" v-if="email_verified" @click="moveToBilling">Continue</v-btn>
+                <v-btn class="kunvet-red-bg" v-if="email_verified && false" @click="moveToBilling">Continue</v-btn>
               </div>
+              <p v-if="activatingJob" style="text-align: center;">
+                <span style="padding: 0 4px;">
+                  <v-progress-circular indeterminate :size="16" :width="2" color="grey darken-1"></v-progress-circular>
+                </span>
+                Loading...
+              </p>
             </div>
           </v-tab-item>
           <v-tab-item id="success-tab">
@@ -1007,6 +1013,7 @@ export default {
       },
       email_verified: false,
       loading: false,
+      activatingJob: false,
       bdata: {
         business_name: null,
         address: null,
@@ -1053,8 +1060,8 @@ export default {
         'tabId': 2,
         'tabTitle': 'Review and post',
       }, {
-        'tabId': 'billing',
-        'tabTitle': 'Billing',
+        'tabId': 'verify-email',
+        'tabTitle': 'Verify Email',
       }, {
         'tabId': 'success-tab',
         'tabTitle': 'Success',
@@ -1436,15 +1443,44 @@ export default {
       if (!this.loading) {
         if (!this.email_verified) {
           this.setJobProgress(true); // set postOnOpen to true
-          // this.$refs.codever.init();
-          this.tab = 'verify-email';
           this.loading = true;
           this.saveJob();
+          this.tab = 'verify-email';
+          this.$refs.codever.init();
         } else {
           this.loading = true;
           this.saveJob();
+          this.moveToJobActivation();
         }
       }
+    },
+    moveToJobActivation() {
+      // do fake billing & job activating
+      this.activatingJob = true;
+      const paymentData = {
+        actions: [{
+          name: 'activateJob',
+          jobId: this.jobId,
+          noBilling: true,
+        }],
+        paymentMethodNonce: {},
+      };
+      axios.post('/billing/createTransaction', paymentData).then((res => {
+        this.activatingJob = false;
+        if (res.data.success) {
+          this.onBillingSuccess();
+          console.log('true');
+        } else {
+          this.dialogs.errorOccured = true;
+          const errMsg = res.data.message;
+          console.log(errMsg);
+        }
+      })).catch(error => {
+        this.activatingJob = false;
+        this.dialogs.errorOccured = true;
+        const errMsg = error.response.data.message;
+        console.log(errMsg);
+      });
     },
     moveToBilling() {
       this.$router.push('/jobs/create');
@@ -1479,7 +1515,7 @@ export default {
       const validation = this.validateFullJob();
       if (validation[0]) {
         this.postJob();
-        this.moveToBilling();
+        // this.moveToBilling();
       } else if (validation[1]) {
         this.form3Error = validation[1];
       }
@@ -1875,7 +1911,21 @@ export default {
       console.log('Resetting data');
       this.$store.commit('resetJobProgress');
       Object.assign(this.$data, this.$options.data.call(this), { autocomplete: this.autocomplete, geocoder: this.geocoder });
+      this.email_verified = false;
+      this.emailExists = false;
+      this.emailSent = false;
+      this.form1Valid = false;
+      this.form2Valid = false;
+      this.form3Valid = false;
+      this.submit1Pressed = false;
+      this.submit2Pressed = false;
+      this.submit3Pressed = false;
+      this.isUniversity = false;
+      this.newLoggedIn = false;
+      this.activatingJob = false;
+      this.addressValid = false;
       this.pageloading = false;
+      this.clearErrors();
     },
     fetchAndSetBusinessData(id) {
       this.$apollo.query({
@@ -2028,7 +2078,7 @@ export default {
     },
     onBillingSuccess() {
       this.tab = 'success-tab';
-      this.email_verified = true;
+      // this.email_verified = true;
       // if (this.$ga && this.newLoggedIn) {
       //   this.$ga.event('product', 'paid', 'job posting', 9);
       //   console.log('ga: product/paid/job posting/9');
@@ -2039,7 +2089,7 @@ export default {
       }
       if (this.$store.state.userID && this.$store.state.userdata) {
         const udata = this.$store.state.userdata;
-        udata.email_verified = true;
+        // udata.email_verified = true;
         this.$store.commit({ type: 'keepUserdata', userdata: udata });
       }
     },
@@ -2079,9 +2129,9 @@ export default {
         //   this.$store.commit('notNewUser');
         // }
       } else {
-        if (this.tab === '0') {
-          this.next(1);
-        }
+        // if (this.tab === '0') {
+        //   this.next(1);
+        // }
         this.email_verified = res.userdata.email_verified;
         this.email = res.userdata.email;
         this.fname = res.userdata.firstname;
@@ -2115,7 +2165,7 @@ export default {
         this.checkForUnpostedJobs();
         // See if user is returning user. Ideally should be if user has posted job or not.
         if (this.email_verified) {
-          this.furthest_tab = 2;
+          // this.furthest_tab = 2;
         }
       }
     });

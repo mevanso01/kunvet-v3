@@ -78,6 +78,10 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/search',
+      redirect: '/',
+    },
+    {
       path: '/jobs/search',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/Search'),
       meta: {
@@ -92,16 +96,6 @@ const router = new VueRouter({
     {
       path: '/newSearch',
       component: () => import(/* webpackChunkName: "employee" */ '@/pages/NewSearch'),
-    },
-    {
-      path: '*',
-      component: () => import(/* webpackChunkName: "employee" */ '@/pages/Index'),
-      meta: {
-        htmlMeta: {
-          description: 'Nani?',
-        },
-      },
-
     },
     {
       path: '/login',
@@ -197,6 +191,14 @@ const router = new VueRouter({
       props: { id: null },
     },
     {
+      path: '/jobs/applicants',
+      component: () => import(/* webpackChunkName: "employer" */ '@/pages/Applicants'),
+    },
+    {
+      path: '/jobs/:id',
+      redirect: '/jobs/detail/:id',
+    },
+    {
       path: '/view-applicant/:id',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/ViewApplicant'),
       props: true,
@@ -209,10 +211,6 @@ const router = new VueRouter({
     {
       path: '/myorg',
       component: () => import(/* webpackChunkName: "employer" */ '@/pages/MyOrg'),
-    },
-    {
-      path: '/jobs/applicants',
-      component: () => import(/* webpackChunkName: "employer" */ '@/pages/Applicants'),
     },
     {
       path: '/about',
@@ -254,10 +252,24 @@ const router = new VueRouter({
       path: '/unsubscribe/job-recommendation',
       component: () => import(/* webpackChunkName: "hiring" */ '@/pages/UnsubscribeJobRecommend'),
     },
+    {
+      path: '/feedback/job-recommendation',
+      component: () => import(/* webpackChunkName: "hiring" */ '@/pages/FeedbackJobAlert'),
+    },
     // Debug pages
     {
       path: '/debug/triggerError',
       component: () => import(/* webpackChunkName: "debug" */ '@/pages/TriggerError'),
+    },
+    {
+      path: '*',
+      name: '404',
+      component: () => import(/* webpackChunkName: "404" */ '@/pages/PageNotFound'),
+    },
+    {
+      path: '*',
+      name: 'JobNotFound',
+      component: () => import(/* webpackChunkName: "404" */ '@/pages/JobNotFound'),
     },
   ],
 });

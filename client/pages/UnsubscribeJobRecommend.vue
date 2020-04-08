@@ -96,15 +96,17 @@ export default {
   watch: {
   },
   activated() {
-    const postData = {
-      uid: this.$route.query.q,
-    };
-    console.log(postData);
-    Axios.post('/account/unsubscribe/job-recommendation', postData).then(() => {
-      console.log('unsubscribed');
-    }, (error) => {
-      this.$error(error);
-    });
+    if (this.$route.query.q) {
+      const postData = {
+        uid: this.$route.query.q,
+      };
+      console.log(postData);
+      Axios.post('/account/unsubscribe/job-recommendation', postData).then(() => {
+        console.log('unsubscribed');
+      }, (error) => {
+        this.$error(error);
+      });
+    }
   },
 };
 </script>

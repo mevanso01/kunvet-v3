@@ -3,12 +3,25 @@ import Scheduler from '@/Scheduler';
 import Mailer from '@/utils/Mailer';
 import Models from '@/mongodb/Models';
 import Hashids from 'hashids';
+import Config from 'config';
+import algoliasearch from 'algoliasearch';
 
-// const alertJobsLimit = 10;
+const algoliaConfig = Config.get('algolia');
+
+let algoliaClient = null;
+if (algoliaConfig.appId) {
+  algoliaClient = algoliasearch(algoliaConfig.appId, algoliaConfig.searchApiKey);
+}
+
+const geoSearchJobsLimit = 10;
+const mileLimit = Number((15 * 1.60934 * 1000).toFixed(0)); // 15 miles
+const dateLimit = 7;  // jobs posted in last 7 days
+const oneDay = 24 * 60 * 60 * 1000;
 
 Scheduler.schedule(async () => {
   console.log('Job-Recommender scheduler works!');
   const hashids = new Hashids();
+  const today = new Date();
   try {
     const students = await Models.Account.find({
       'account_type': 'student',
@@ -44,26 +57,51 @@ Scheduler.schedule(async () => {
           // search by position tag, city, state
           let jobs = await Models.Job.find({
             '_id': { '$not': { '$in': ids } },
-            '$or': [{ 'position_tags': { '$elemMatch': { '$in': positionTags } } }, { 'city': { '$in': cities } }, { 'state': { '$in': states } }],
+            '$and': [{ 'position_tags': { '$elemMatch': { '$in': positionTags } } }, { 'city': { '$in': cities } }, { 'state': { '$in': states } }],
+            'date': { $gt: today - (dateLimit * oneDay) },
             'expired': false,
             'active': true,
             'is_deleted': false,
           }).sort({ 'date': 1 });
           ids = ids.concat(jobs.map((item) => item._id));
-          // search by search history: max 10 jobs only
+          // do algolia search
           const searchHistory = student.search_history;
           if (searchHistory && searchHistory.length > 0) {
             const center = {
               latitude: 0,
               longitude: 0,
             };
-            searchHistory.forEach((value) => {
-              center.latitude += value.latitude;
-              center.longitude += value.longitude;
+            let geoCount = 0;
+            searchHistory.forEach((item) => {
+              if (!isNaN(item.latitude) && !isNaN(item.longitude) && (!!item.latitude || !!item.longitude)) {
+                center.latitude += item.latitude;
+                center.longitude += item.longitude;
+                geoCount += 1;
+              }
             });
-            center.latitude /= searchHistory.length;
-            center.longitude /= searchHistory.length;
-            const jobs1 = await Models.Job.aggregate([
+            center.latitude /= geoCount;
+            center.longitude /= geoCount;
+            const query = searchHistory.filter((item) => !!item.query).map((item) => item.query).join(' ');
+            let filters = `expired=0 AND active=1 AND is_deleted=0 AND date > ${Math.floor(today.setDate(today.getDate() - dateLimit) / 1000)}`;
+            ids.forEach((id) => {
+              filters = `${filters} AND NOT objectID:${id}`;
+            });
+            const requests = [{
+              params: {
+                query: query,
+                filters: filters,
+                hitsPerPage: geoSearchJobsLimit,
+              },
+              indexName: 'jobs',
+            }];
+            if (geoCount) {
+              requests[0].params.aroundLatLng = `${center.latitude}, ${center.longitude}`;
+              requests[0].params.aroundRadius = mileLimit;
+            }
+            const results = await algoliaClient.search(requests);
+            const res = results.results[0].hits;
+            jobs = jobs.concat(res);
+            /* const jobs1 = await Models.Job.aggregate([
               {
                 '$project': {
                   '_id': 1,
@@ -124,7 +162,7 @@ Scheduler.schedule(async () => {
               'distance': 1,
             }).limit(10)
               .exec();
-            jobs = jobs.concat(jobs1);
+            jobs = jobs.concat(jobs1); */
           }
           if (jobs.length > 0) {
             jobs.forEach((job) => {
@@ -187,7 +225,9 @@ Scheduler.schedule(async () => {
             const mailOptions = {
               fname: student.firstname,
               date: `${(new Date()).getMonth() + 1}-${(new Date()).getDate()}-${(new Date()).getFullYear()}`,
+              timeDigits: (new Date()).getTime(),
               jobs,
+              jobIds: jobs.map(item => item._id).join(','),
               hashid: hashids.encodeHex(`${student._id}`),
             };
             await mailer.sendTemplate(

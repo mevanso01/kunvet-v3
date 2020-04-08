@@ -446,7 +446,7 @@
   }
 </style>
 <template>
-  <v-container fluid style="padding: 0" id="job-detail-container"
+  <v-container v-if="findJob.title" fluid style="padding: 0" id="job-detail-container"
                class=" page-height">
     <div class="header-splash mobile-hide">
       <div class="header-text-container">
@@ -482,7 +482,7 @@
           <div class="carditem blue-row">
             <p style="margin-bottom: 0">
               <img class="job-info-icon" style="transform: translateY(2px);"
-                   :src="svgs.building"></img>
+                   :src="svgs.building">
               <span style="padding-top: 2px;">
                 <a class="location_link" @click="changeLocation()" target="_blank">
                   {{ fullAddress }}
@@ -779,6 +779,7 @@
   </v-container>
 </template>
 <script>
+  import apolloClient from '@/apollo/client';
   import gql from 'graphql-tag';
   import BookSvg from '@/assets/job_detail/open-magazine.svg';
   import PushpinSvg from '@/assets/job_detail/pushpin.svg';
@@ -1112,24 +1113,12 @@
         }
         return true;
       },
-      getData() {
-        this.$apollo.query({
-          query: (gql`query ($JobId: MongoID) {
-          findJob (filter: {
-            _id: $JobId
-          }) {
-            ${queries.FindJobRecord}
-          }
-        }`),
-          variables: {
-            JobId: this.id,
-          },
-        }).then((data) => {
-          this.findJob = data.data.findJob;
+      performData() {
+        try {
           /*
-                            Or better, including more details for SEO:
-                            Node.js Developer at Kunvet in Irvine, CA
-                          */
+            Or better, including more details for SEO:
+            Node.js Developer at Kunvet in Irvine, CA
+          */
           this.$setTitle(this.findJob.title);
           // this.job_dest_url = 'https://maps.google.com/?q=';
           // this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
@@ -1283,9 +1272,9 @@
           }
           console.log(this.findJob);
           this.fetchProfilePic();
-        }).catch((error) => {
+        } catch (error) {
           console.log(error);
-        });
+        }
       },
       changeLocation() {
         let jobDestUrl = 'https://maps.google.com/?q=';
@@ -1686,9 +1675,30 @@
         return returned;
       },
     },
-    activated() {
+    async beforeRouteEnter (to, from, next) {
+      try {
+        const { data } = await apolloClient.query({
+          query: (gql`query ($JobId: MongoID) {
+          findJob (filter: {
+            _id: $JobId
+          }) {
+            ${queries.FindJobRecord}
+          }
+        }`),
+          variables: {
+            JobId: to.params.id,
+          },
+        });
+        next(vm => {
+          vm.findJob = data.findJob;
+        });
+      } catch (error) {
+        next({ name: 'JobNotFound', params: [to.path], replace: true });
+      }
+    },
+    async activated() {
       this.resetData();
-      this.getData();
+      this.performData();
       // this.getApplication();
       this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {

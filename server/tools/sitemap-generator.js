@@ -15,6 +15,7 @@ const uploadFile = (str, fileName) => {
     Body: str,
     ContentType: 'application/xml',
   };
+  console.log('--------sitemap-params--------', params);
   return s3.putObject(params, (err) => {
     if (err) console.error('uploadFile error:', err);
   });
@@ -37,7 +38,11 @@ export const generateUrlsSitemap = (urls, priority = '0.9') => {
 };
 
 export const buildJobsSitemap = async () => {
-  const jobs = await Models.Job.find({ expired: false, is_deleted: false });
+  const jobs = await Models.Job.find({
+    active: true,
+    expired: false,
+    is_deleted: false,
+  });
 
   const urls = [];
   jobs.forEach(({ _id }) => {
@@ -71,7 +76,8 @@ export const buildSearchSitemap = async () => {
     jobs.forEach(job => {
       job.position_tags.forEach(pos => {
         if (pos && job.city) {
-          const position = pos.split(' ').join('-');
+          let position = pos.split(' ').join('-');
+          position = position.split('/').join('-');
           const location = `${job.city.split(' ').join('-')}-${job.state}`;
           queries.push(`${position}-jobs-near-${location}`.toLowerCase());
         }

@@ -623,7 +623,7 @@ export default {
       loadingJobs: false,
       inUsePositions: [],
       inUseTypes: [],
-      // pageSize: 12,
+      pageSize: 12,
       query: '',
       page: 0,
       displayedJobs: [[], [], []],
@@ -1169,7 +1169,7 @@ export default {
       this.page = 0;
       let title = 'Search for Jobs';
       if (this.query && job.address) {
-        title = `${startCase(toLower(this.query))} Jobs in ${job.address}`;
+        title = `${startCase(toLower(this.query))} jobs near ${job.address}`;
       }
       this.$setTitle(title);
       if (replaceUrl) {
@@ -1185,10 +1185,11 @@ export default {
       }
       this.rawSearch();
       // save search location if logged in
-      if (job.latitude && job.longitude && this.uid && this.account_type === 'student') {
+      if (((!isNaN(job.latitude) && !isNaN(job.longitude)) || query) && this.uid && this.account_type === 'student') {
         this.search_history.unshift({
-          'latitude': Number(job.latitude),
-          'longitude': Number(job.longitude),
+          'latitude': !isNaN(job.latitude) ? Number(job.latitude) : '',
+          'longitude': !isNaN(job.longitude) ? Number(job.longitude) : '',
+          'query': query || '',
         });
         if (this.search_history.length > 20) {
           this.search_history.pop();
@@ -1219,6 +1220,7 @@ export default {
               search_history {
                 latitude
                 longitude
+                query
               }
             }
           }`),
@@ -1248,6 +1250,7 @@ export default {
           search_history {
             latitude
             longitude
+            query
           }
         }
       }`),

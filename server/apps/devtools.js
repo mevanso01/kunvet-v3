@@ -9,6 +9,10 @@ import Mailer from '@/utils/Mailer';
 import Scheduler from '@/Scheduler';
 import Models from '@/mongodb/Models';
 
+import Config from 'config';
+import algoliasearch from 'algoliasearch';
+import fs from 'fs';
+
 const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
@@ -134,6 +138,26 @@ router.get('/preview_email', async (ctx) => {
 // Trigger scheduler
 router.get('/trigger_scheduler', async (ctx) => {
   Scheduler.trigger();
+  ctx.body = 'Triggered!';
+});
+
+// Trigger algolia backup
+router.get('/backup_algolia', async (ctx) => {
+  const appId = Config.get('algolia.appId');
+  const adminApiKey = Config.get('private.algolia.adminApiKey');
+  const algoliaClient = algoliasearch(appId, adminApiKey);
+  const index = algoliaClient.initIndex('jobs');
+  index.browse('').then((result) => {
+    const hits = result.hits;
+    console.log('Finished!');
+    console.log('We got %d hits', hits.length);
+    fs.writeFile('backup.json', JSON.stringify(hits, null, 2), 'utf-8', (err) => {
+      if (err) {
+        throw err;
+      }
+      console.log('Your index has been exported!');
+    });
+  });
   ctx.body = 'Triggered!';
 });
 
