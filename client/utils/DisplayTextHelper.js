@@ -11,6 +11,9 @@ class DisplayTextHelper {
   }
 
   static getSalaryString(job) {
+    if (job.pay_type === 'negotiable') {
+      return `$${job.salary_min}-${job.salary_max} ${job.pay_denomination}`;
+    }
     if (job.pay_type !== 'paid') {
       return job.pay_type;
     }
