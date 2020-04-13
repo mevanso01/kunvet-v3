@@ -2,9 +2,9 @@
   <div class="jp-card">
     <v-layout align-center row spacer slot="header" class="jp-head">
       <v-flex xs9>
-        <!-- <v-avatar size="36px" style="float: left; margin-right: 10px; background-color: #dedede">
+        <v-avatar size="36px" style="float: left; margin-right: 10px; background-color: #dedede">
           <img :src="profilePic" alt="">
-        </v-avatar> -->
+        </v-avatar>
         <div class="posted-by" style="color: #A7A7A7; line-height: 36px;">
           {{ job.posted_by }}
         </div>
