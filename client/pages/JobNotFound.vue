@@ -1,19 +1,14 @@
 <template>
-  <v-container class="job-not-found">
-    <div class="main-cont-small">
-      <h1>Job Not Found</h1>
-    </div>
-  </v-container>
+  <not-found message="Job Not Found" />
 </template>
 
 <script>
+import NotFound from '@/components/NotFound';
+
 export default {
   name: 'JobNotFound',
+  components: {
+    NotFound,
+  },
 };
 </script>
-
-<style lang="scss">
-.main-cont-small {
-  text-align: center;
-}
-</style>
