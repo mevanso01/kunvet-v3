@@ -11,9 +11,14 @@
       </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="acct > 0">
-        <template v-for="item in currentMenuItems">
+        <template v-for="(item, index) in currentMenuItems">
           <v-btn
-            flat @click="goTo(item.href)" style="background-color: inherit;" class="text-capitalize white--text">
+            :key="index"
+            flat
+            @click="goTo(item.href)"
+            style="background-color: inherit;"
+            class="text-capitalize white--text"
+          >
             {{ item.title }}
           </v-btn>
         </template>
@@ -240,6 +245,7 @@ export default {
       ],
       newMenuItems: [
         [
+          { title: 'Search', href: '/' },
           { title: 'Login', href: '/login' },
           { title: 'Sign up', href: '/sign-up' },
           { title: 'Learn', href: '/career-guide' },

@@ -116,6 +116,10 @@
     box-shadow: 0;
     font-size: 16px;
     display: flex;
+
+    &.error {
+      background: #fde2e2 !important;
+    }
   }
   ._dropdown-overlay {
     position: fixed;
@@ -210,20 +214,28 @@
 
 <template>
   <div :class="['search-root', inline_mode ? 'inline-mode' : '']">
-    <div class="search_bar_container">
+    <div
+      :class="{ error: showQueryError }"
+      class="search_bar_container"
+    >
       <div class="search_bar_head">FIND</div>
       <div class="search_bar_field">
         <v-text-field
+          :required="true"
           solo flat hide-details
           label="Part time web developer"
           v-model="query"
           class="search_bar_text_field"
           @click="onClickQuery"
-        ></v-text-field>
+        />
       </div>
       <v-icon class="search_bar_icon" @click="onClearQueryInput" v-if="query && query.length > 0">fas fa-times-circle</v-icon>
     </div>
-    <div class="search_bar_container" style="margin-top: 10px; margin-bottom: 10px;">
+    <div
+      :class="{ error: showAddressError }"
+      class="search_bar_container"
+      style="margin-top: 10px; margin-bottom: 10px;"
+    >
       <div class="search_bar_head">NEAR</div>
       <div class="search_bar_field">
         <v-text-field
@@ -288,6 +300,8 @@ export default {
       addressValid: true,
       prevAutocompleteAddress: null,
       isDefaultLoad: false,
+      showQueryError: false,
+      showAddressError: false,
     };
   },
   computed: {
@@ -303,6 +317,7 @@ export default {
           if (value && location) {
             this.getAddressList(location, false, () => {
               this.getGeoLocation(0, () => {
+                this.searchFocus = false;
                 this.search(false);
               });
             });
@@ -311,11 +326,10 @@ export default {
       },
     },
   },
-  mounted() {
+  async activated() {
     // Initialize Google maps
-    VueGoogleMaps.loaded.then(() => {
-      this.initGoogleMaps();
-    });
+    await VueGoogleMaps.loaded;
+    this.initGoogleMaps();
   },
   methods: {
     initGoogleMaps() {
@@ -353,6 +367,7 @@ export default {
     },
     getGeoLocation(index, callback) {
       const addressItem = this.job.addressList[index];
+      if (!addressItem) return this.$router.push('/');
       if (this.geocoder) {
         this.searchFocus = false;
         this.job.address = `${addressItem.structured_formatting.main_text}`;
@@ -375,6 +390,7 @@ export default {
           if (callback) callback();
         });
       }
+      return null;
     },
     onClearAddressSearchInput() {
       this.job.address = '';
@@ -422,9 +438,26 @@ export default {
       });
     },
     search(replaceUrl = true) {
+      this.showQueryError = false;
+      this.showAddressError = false;
+      if (!this.query) {
+        this.showQueryError = true;
+        return null;
+      }
+      if (!this.job.address) {
+        this.showAddressError = true;
+        return null;
+      }
+
       if (this.onClick) {
         this.onClick(this.job, this.query, replaceUrl);
       }
+
+      const address = this.job.address.split(',').join('').split(' ').join('-');
+      const newQuery = this.query.split('/').join('-').split(' ').join('-');
+      return this.$router.replace({
+        path: `/jobs/search/${newQuery}-jobs-near-${address}`.toLowerCase(),
+      });
     },
     setDefaultValues(values) {
       this.query = values.q || '';
@@ -432,8 +465,6 @@ export default {
       this.job.latitude = values.latitude || null;
       this.job.longitude = values.longitude || null;
     },
-  },
-  activated() {
   },
 };
 </script>

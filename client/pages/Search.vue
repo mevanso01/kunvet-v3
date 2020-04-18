@@ -344,7 +344,7 @@ section.search {
             <div class="custom-select-2-wrapper">
               <div class="custom-select-2" v-bind:class="{ 'active': openSelectField === 'city' }">
                 <div class="inner" @click="openSelect('city')">
-                  <span v-if="this.selectedCity">{{ selectedCity }}</span>
+                  <span v-if="selectedCity">{{ selectedCity }}</span>
                   <span v-else style="color: rgba(0,0,0,.54);">Select city or school</span>
                   <v-btn icon v-if="openSelectField === 'city'"><v-icon>keyboard_arrow_up</v-icon></v-btn>
                   <v-btn icon v-else><v-icon>keyboard_arrow_down</v-icon></v-btn>
@@ -358,7 +358,6 @@ section.search {
           </div>
           <div class="search-field-cont" id="dropdown-header">
             <v-text-field
-
               class="search-params-field"
               solo
               flat
@@ -375,9 +374,11 @@ section.search {
               <v-card-title>Try searching for...</v-card-title>
               <div style="padding: 0 0 20px 14px; max-width: 70%; position:
               absolute;">
-                <div v-for="job in suggestedJobs"
-                class="chip-container"
-                @mousedown="query=job">
+                <div v-for="(job, index) in suggestedJobs"
+                  :key="index"
+                  class="chip-container"
+                  @mousedown="query=job"
+                >
                   <p class="search-chip">{{job}}</p>
                 </div>
               </div>
@@ -419,7 +420,7 @@ section.search {
         <v-flex xs12 class="no-padding">
           <div v-if="displayedJobs[0].length > 0" style="clear: both;">
             <div class="job-distance-indicator">
-              Less than 10 miles away
+              5 miles away
             </div>
             <div class="main-cont-large">
               <div v-for="(job, idx) in displayedJobs[0]" :key="`1-${idx}`">
@@ -434,7 +435,7 @@ section.search {
           </div>
           <div v-if="displayedJobs[1].length > 0" style="clear: both;">
             <div class="job-distance-indicator">
-              10 to 20 miles away
+              10 miles away
             </div>
             <div class="main-cont-large">
               <div v-for="(job, idx) in displayedJobs[1]" :key="`2-${idx}`">
@@ -449,7 +450,7 @@ section.search {
           </div>
           <div v-if="displayedJobs[2].length > 0" style="clear: both;">
             <div class="job-distance-indicator">
-              20+ miles away
+              15 miles away
             </div>
             <div class="main-cont-large">
               <div v-for="(job, idx) in displayedJobs[2]" :key="`3-${idx}`">
@@ -462,8 +463,23 @@ section.search {
               </div>
             </div>
           </div>
+          <div v-if="displayedJobs[3].length > 0" style="clear: both;">
+            <div class="job-distance-indicator">
+              20+ miles away
+            </div>
+            <div class="main-cont-large">
+              <div v-for="(job, idx) in displayedJobs[3]" :key="`4-${idx}`">
+                <MainJobCard
+                  :job="job"
+                  :saveJobFunc="saveJob"
+                  :isSaved="isSaved(job._id)"
+                  :fromCoordinates="selectedCoordinates"
+                />
+              </div>
+            </div>
+          </div>
         </v-flex>
-        <div v-if="!loadingJobs && !hasJobsShown" class="no-jobs-found-box">
+        <div v-if="!loadingJobs && loadingJobs != null && !hasJobsShown" class="no-jobs-found-box">
           <h3 style="text-align: center; margin-top: 50px; color: #797979;">No matching jobs found. Please type in a different query or select a different location.</h3>
         </div>
         <div class="algoliaLogo" style="color: grey;">
@@ -506,6 +522,9 @@ section.search {
 </template>
 <script>
 import { startCase, toLower } from 'lodash';
+import apolloClient from '@/apollo/client';
+import store from '@/store';
+import Logger from '@/Logger';
 import gql from 'graphql-tag';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
@@ -620,13 +639,13 @@ export default {
         citySvg: vc,
       },
       selectedPositionsInital: 'All / Any',
-      loadingJobs: false,
+      loadingJobs: null,
       inUsePositions: [],
       inUseTypes: [],
       pageSize: 12,
       query: '',
       page: 0,
-      displayedJobs: [[], [], []],
+      displayedJobs: [[], [], [], []],
       searchPlaceholder: '',
       newsLetterSignedUp: false,
       newsLetterProcessFinished: false,
@@ -697,7 +716,7 @@ export default {
       return { latitude: this.selectedLat, longitude: this.selectedLong };
     },
     hasJobsShown() {
-      return this.displayedJobs[0].length > 0 || this.displayedJobs[1].length > 0 || this.displayedJobs[2].length > 0;
+      return !!this.displayedJobs.find(jobs => jobs.length);
     },
   },
   methods: {
@@ -807,7 +826,6 @@ export default {
           return fetchMoreResult;
         },
       }).then((res) => {
-        console.log(res);
         this.loadingJobs = false;
         const fetchedJobs = res.data.findJobs;
         this.page += 1;
@@ -821,12 +839,14 @@ export default {
             ) {
               // newFilteredJobs.push(job);
               const distance = this.computeDistance(job.latitude, job.longitude);
-              if (distance < 10) {
+              if (distance <= 5) {
                 this.displayedJobs[0].push(job);
-              } else if (distance > 10 && distance < 20) {
+              } else if (distance <= 10) {
                 this.displayedJobs[1].push(job);
-              } else {
+              } else if (distance <= 20) {
                 this.displayedJobs[2].push(job);
+              } else {
+                this.displayedJobs[3].push(job);
               }
             }
             for (var pos of job.position_tags) {
@@ -1020,47 +1040,6 @@ export default {
     isSaved(id) {
       return this.saved_jobs.indexOf(id) > -1;
     },
-    fetchAvailableFilters() {
-      this.$apollo.query({
-        query: gql`{
-          findAvailableFilters(filter: {}){
-            in_use_positions
-            in_use_types
-          }
-        }`,
-      }).then(data => {
-        if (data.data.findAvailableFilters) {
-          this.inUsePositions = data.data.findAvailableFilters.in_use_positions;
-          this.inUseTypes = data.data.findAvailableFilters.in_use_types;
-        }
-      });
-    },
-    async loadInitialJobs() {
-      if (this.filteredJobs.length === 0) {
-        this.loadingJobs = true;
-      }
-      const { data: { findJobs } } = await this.$apollo.query({
-        fetchPolicy: 'network-only',
-        query: gql`{
-          findJobs (filter: { active: true, is_deleted: false }){
-            _id
-            latitude
-            longitude
-            date
-            is_deleted
-          }
-        }`,
-      });
-      if (findJobs && this.findJobs.length !== findJobs.length) {
-        this.findJobs = findJobs;
-        this.filterJobs();
-        this.fetchAvailableFilters();
-      } else {
-        this.loadingJobs = false;
-        this.filterJobs();
-        this.fetchAvailableFilters();
-      }
-    },
     async algoliaSearch() {
       const coordinates = this.selectedCoordinates;
       const query = this.query || '';
@@ -1084,12 +1063,14 @@ export default {
         if (job.active && !job.expired && !job.is_deleted) {
           job.date = new Date(Number(job.date) * 1000);
           const distance = this.computeDistance(job.latitude, job.longitude);
-          if (distance < 10) {
+          if (distance <= 5) {
             this.displayedJobs[0].push(job);
-          } else if (distance > 10 && distance < 20) {
+          } else if (distance <= 10) {
             this.displayedJobs[1].push(job);
-          } else {
+          } else if (distance <= 20) {
             this.displayedJobs[2].push(job);
+          } else {
+            this.displayedJobs[3].push(job);
           }
         }
       }
@@ -1119,31 +1100,12 @@ export default {
       }
       this.$debug(this.filteredJobs);
     },
-    search() {
-      // this.page = 0;
-      // this.loadingJobs = true;
-      // if (this.query) {
-      //   this.$router.push({
-      //     path: '/jobs/search',
-      //     query: {
-      //       q: this.query,
-      //     },
-      //   });
-      //   this.$setTitle(`${this.query} | Kunvet`);
-      // } else {
-      //   this.$router.push({
-      //     path: '/jobs/search',
-      //   });
-      //   this.$setTitle('Kunvet');
-      // }
-      // this.rawSearch();
-    },
     rawSearch() {
       this.$debug('Started rawSearch');
       // this.setSelectedLatlongs();
       this.loadingJobs = true;
-      this.displayedJobs = [[], [], []];
-      // if (process.env.NODE_ENV === 'development') {
+      this.displayedJobs = [[], [], [], []];
+
       if (process.env.NODE_ENV === 'development') {
         // Local DB
         console.log('Loading jobs from local db'); // this is left as console.log on purpose
@@ -1157,7 +1119,9 @@ export default {
         this.loadingJobs = false;
       }
     },
-    onClickJobSearch(job, query, replaceUrl = true) {
+    onClickJobSearch(job, query) {
+      const isValidAddress = job.addressValid && job.address && job.addressList.length > 0;
+      if (!isValidAddress) return;
       this.query = query;
       if (job.latitude && job.longitude) {
         this.selectedLat = job.latitude;
@@ -1172,17 +1136,6 @@ export default {
         title = `${startCase(toLower(this.query))} jobs near ${job.address}`;
       }
       this.$setTitle(title);
-      if (replaceUrl) {
-        this.$router.replace({
-          path: '/jobs/search',
-          query: {
-            address: job.address || '',
-            latitude: this.selectedLat || '',
-            longitude: this.selectedLong || '',
-            q: query || '',
-          },
-        });
-      }
       this.rawSearch();
       // save search location if logged in
       if (((!isNaN(job.latitude) && !isNaN(job.longitude)) || query) && this.uid && this.account_type === 'student') {
@@ -1280,7 +1233,7 @@ export default {
         }
       }
       if (this.displayedJobs) {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
           const index = findIndex(this.displayedJobs[i], { '_id': id });
           if (index !== -1) {
             this.displayedJobs[i].splice(index, 1);
@@ -1289,111 +1242,123 @@ export default {
       }
     });
   },
-  watch: {
-    // '$route.query.q'() {
-    //   if (this.$route.query.q && this.$route.query.q !== this.query) {
-    //     this.query = this.$route.query.q;
-    //     this.rawSearch();
-    //   }
-    // },
-  },
   activated() {
     // this.setSelectedLatlongs();
-    if (this.$route.query.p != null) {
+    if (this.$route.params.query) {
       // Do SearchForm Init && Job Search
       this.selectedLat = this.$route.query.latitude || Coordinates.uci.latitude;
       this.selectedLong = this.$route.query.longitude || Coordinates.uci.longitude;
       this.page = 0;
 
-      if (this.$route.params.query) {
-        const [position, location] = this.$route.params.query.split('-jobs-near-');
-        if (position && location) {
-          this.$refs.jobSearchForm.setDefaultValues({
-            q: position.split('-').join(' '),
-          });
-        }
-      } else {
-        this.$refs.jobSearchForm.setDefaultValues(this.$route.query);
-        this.query = this.$route.query.q || '';
-        // Replace URL
-        this.$router.replace({
-          path: '/jobs/search',
-          query: {
-            address: this.$route.query.address || '',
-            latitude: this.$route.query.latitude || '',
-            longitude: this.$route.query.longitude || '',
-            q: this.query,
-          },
+      const [position, location] = this.$route.params.query.split('-jobs-near-');
+      if (position && location) {
+        this.$refs.jobSearchForm.setDefaultValues({
+          q: position.split('/').join('-').split('-').join(' '),
+          address: location.split(',').join('').split('-').join(' '),
         });
-        this.rawSearch();
       }
+      this.rawSearch();
     }
-    // const oldQuery = this.query;
-    // if (this.$route.query.q) {
-    //   this.query = this.$route.query.q;
-    // } else if (this.query && this.$route.query.q !== this.query) {
-    //   this.$router.push({
-    //     path: '/jobs/search',
-    //     query: {
-    //       q: this.query,
-    //     },
-    //   });
-    // }
-    // else if (this.$store.state && this.$store.state.prevSearchQuery) {
-    //   this.query = this.$store.state.prevSearchQuery;
-    //   this.$store.commit('setPrevQuery', '');
-    // } else {
-    //   this.query = '';
-    // }
-    // if (!hasJobsDisplayed || oldQuery !== this.query) {
-    //   this.rawSearch();
-    // }
     document.addEventListener('click', this.documentClick, { passive: true });
     this.searchPlaceholder = this.getSearchPlaceholderText();
+  },
+  async beforeRouteEnter (to, from, next) {
     userDataProvider.getUserData().then(udata => {
-      const data = this.$store.state;
-      if (data) {
-        console.log(data);
-        if (data.firstSearch) {
-          this.firstSearch = data.firstSearch;
-        }
-        if (data.selectedCity && data.selectedCity.length > 0) {
-          this.selectedCity = data.selectedCity;
-        }
-        if (data.selectedPositions) {
-          this.selectedPositions = data.selectedPositions;
-        }
-        if (data.selectedShifts) {
-          this.selectedShifts = data.selectedShifts;
-        }
-        if (data.selectedTypes) {
-          this.selectedTypes = data.selectedTypes;
-        }
-        if (data.selectedPositions && Array.isArray(data.selectedPositions)) {
-          this.selectedPositions = data.selectedPositions;
-        }
-        if (data.userdata.preferences.getNewsletters === true) {
-          this.newsLetterSignedUp = true;
-        } else {
-          this.newsLetterSignedUp = false;
-        }
+      if (!to.params.query) {
+        return next({ name: 'Homepage' });
       }
-      if (udata.uid && udata.acct !== 0) {
-        this.uid = udata.uid;
-        this.account_type = data.userdata.account_type;
+
+      const getSavedJobs = uid => apolloClient.query({
+        query: (gql`query ($uid: MongoID) {
+          findAccount (filter: {
+            _id: $uid
+          }) {
+            _id
+            saved_jobs
+          }
+        }`),
+        variables: { uid },
+      });
+
+      const getSearchHistory = uid => apolloClient.query({
+        query: (gql`query ($uid: MongoID) {
+        findAccount (filter: {
+          _id: $uid
+        }) {
+          _id
+          search_history {
+            latitude
+            longitude
+            query
+          }
+        }
+      }`),
+        variables: { uid },
+      });
+
+      next(async (vm) => {
+        const { state } = store;
+        console.log('state', state);
+        if (state) {
+          if (state.firstSearch) {
+            vm.firstSearch = state.firstSearch;
+          }
+          if (state.selectedCity && state.selectedCity.length > 0) {
+            vm.selectedCity = state.selectedCity;
+          }
+          if (state.selectedPositions) {
+            vm.selectedPositions = state.selectedPositions;
+          }
+          if (state.selectedShifts) {
+            vm.selectedShifts = state.selectedShifts;
+          }
+          if (state.selectedTypes) {
+            vm.selectedTypes = state.selectedTypes;
+          }
+          if (state.selectedPositions && Array.isArray(state.selectedPositions)) {
+            vm.selectedPositions = state.selectedPositions;
+          }
+          if (state.userdata && state.userdata.preferences && state.userdata.preferences.getNewsletters === true) {
+            vm.newsLetterSignedUp = true;
+          } else {
+            vm.newsLetterSignedUp = false;
+          }
+        }
+
+        vm.uid = udata.uid;
+        vm.account_type = state.userdata.account_type;
         if (udata.userdata.saved_jobs && udata.userdata.saved_jobs.length > 0) {
-          this.saved_jobs = udata.userdata.saved_jobs.concat([]);
+          vm.saved_jobs = udata.userdata.saved_jobs.concat([]);
         } else {
-          this.getSavedJobs();
+          try {
+            const { data } = await getSavedJobs(udata.uid);
+
+            const res = data.findAccount;
+            if (res.saved_jobs) {
+              vm.saved_jobs = res.saved_jobs.concat([]);
+            }
+          } catch (error) {
+            Logger.error(error);
+          }
         }
+
         if (udata.userdata.search_history && udata.userdata.search_history.length > 0) {
-          this.search_history = udata.userdata.search_history.concat([]);
+          vm.search_history = udata.userdata.search_history.concat([]);
         } else {
-          this.getSearchHistory();
+          try {
+            const { data } = await getSearchHistory(udata.uid);
+
+            const res = data.findAccount;
+            if (res && res.search_history) {
+              vm.search_history = res.search_history.concat([]);
+            }
+          } catch (error) {
+            Logger.error(error);
+          }
         }
-      }
+      });
+      return null;
     });
   },
 };
-
 </script>

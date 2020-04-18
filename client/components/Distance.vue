@@ -1,23 +1,16 @@
-<style>
-</style>
 <template>
-  <span>{{ distance }} miles away<span v-if="equalToUCICoordinates"> from UC Irvine</span></span>
+  <span>{{ distance }} miles away from you</span>
 </template>
+
 <script>
 import DistanceHelper from '@/utils/DistanceHelper';
-import Coordinates from '@/constants/coordinates';
 
 export default {
+  name: 'Distance',
   props: ['first', 'second'],
   computed: {
     distance() {
       return DistanceHelper.computeDistance(this.first, this.second);
-    },
-    equalToUCICoordinates() {
-      return (
-        this.first.latitude === Coordinates.uci.latitude &&
-        this.first.longitude === Coordinates.uci.longitude
-      );
     },
   },
 };

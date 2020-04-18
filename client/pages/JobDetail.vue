@@ -399,6 +399,12 @@
     padding: 0 18%
   }
 
+  .job-details {
+    .blue-row:last-child {
+      float: none;
+    }
+  }
+
   .dialog-button {
     color: white;
     box-shadow: 0 10px 12px -4px #eaeaf9;
@@ -495,23 +501,30 @@
             </p>
           </div>
 
-          <div>
-            <div v-if="findJob.type2 && computedType2"
-                 class="blue-row float-left pr-10">
+          <div class="job-details">
+            <div
+              v-if="findJob.type2 && computedType2"
+              class="blue-row float-left pr-10"
+            >
               <img class="job-info-icon" :src="svgs.Internship"/>
               <span> {{ computedType2 }}</span>
             </div>
-            <div v-if="findJob.studentfriendly"
-                 class="blue-row float-left pr-10">
+            <div
+              v-if="findJob.studentfriendly"
+              class="blue-row float-left pr-10"
+            >
               <img class="job-info-icon" :src="svgs.sfSvg"/>
               <span>student friendly</span>
             </div>
-            <div class="blue-row float-left pr-10">
+
+            <div v-if="jobType && jobType.length" class="blue-row float-left pr-10">
               <img class="job-info-icon" :src="svgs.Clock"/>
-              <span v-for="(type, index) in jobType"> {{ type }}<span
-                v-if="index + 1 < jobType.length">,</span></span>
+              <span v-for="(type, index) in jobType" :key="index"> {{ type }}
+                <span v-if="index + 1 < jobType.length">,</span>
+              </span>
             </div>
-            <div class="blue-row">
+
+            <div v-if="salary" class="blue-row">
               <img class="job-info-icon" :src="svgs.sSvg"/>
               <span>{{ salary }} </span>
             </div>
@@ -1114,167 +1127,163 @@
         return true;
       },
       performData() {
-        try {
-          /*
-            Or better, including more details for SEO:
-            Node.js Developer at Kunvet in Irvine, CA
-          */
-          this.$setTitle(this.findJob.title);
-          // this.job_dest_url = 'https://maps.google.com/?q=';
-          // this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
-          // this.$debug(this.job_dest_url);
-          this.$debug(this.findJob.address);
-          this.jobType = [];
-          const employmentType = [];
-          for (const i in this.findJob.type) {
-            if (typeof this.findJob.type[i] === 'string') {
-              const type = this.findJob.type[i];
-              if (type === 'fulltime') {
-                this.jobType.push('full time');
-                employmentType.push('FULL_TIME');
-              } else if (type === 'parttime') {
-                this.jobType.push('part time');
-                employmentType.push('PART_TIME');
-              } else {
-                this.jobType.push(type);
-              }
+        /*
+          Or better, including more details for SEO:
+          Node.js Developer at Kunvet in Irvine, CA
+        */
+        this.$setTitle(this.findJob.title);
+        // this.job_dest_url = 'https://maps.google.com/?q=';
+        // this.job_dest_url += String(this.findJob.address).replace(/\s+/g, '+');
+        // this.$debug(this.job_dest_url);
+        this.$debug(this.findJob.address);
+        this.jobType = [];
+        const employmentType = [];
+        for (const i in this.findJob.type) {
+          if (typeof this.findJob.type[i] === 'string') {
+            const type = this.findJob.type[i];
+            if (type === 'fulltime') {
+              this.jobType.push('full time');
+              employmentType.push('FULL_TIME');
+            } else if (type === 'parttime') {
+              this.jobType.push('part time');
+              employmentType.push('PART_TIME');
+            } else {
+              this.jobType.push(type);
             }
           }
-          if (this.findJob.pay_type === 'paid') {
-            const sal = this.findJob.salary.toFixed(2);
-            let pdenom = ` ${this.findJob.pay_denomination}`;
-            if (this.findJob.pay_denomination === 'per hour') {
-              pdenom = '/hr';
-            }
-            this.salary = `${sal.toString()}${pdenom}`;
-          } else if (this.findJob.pay_type === 'negotiable') {
-            this.findJob.salary_min = this.findJob.salary_min || 0;
-            this.findJob.salary_max = this.findJob.salary_max || 0;
-            const salMin = this.findJob.salary_min.toFixed(2);
-            const salMax = this.findJob.salary_max.toFixed(2);
-            let pdenom = ` ${this.findJob.pay_denomination}`;
-            if (this.findJob.pay_denomination === 'per hour') {
-              pdenom = '/hr';
-            }
-            this.salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
-          } else {
-            this.salary = this.findJob.pay_type;
-          }
-          let baseSalaryUnitText = '';
-          let baseSalaryValue = 0;
-          let baseSalaryMinValue = 0;
-          let baseSalaryMaxValue = 0;
-          if (this.findJob.pay_type === 'paid') {
-            baseSalaryValue = this.findJob.salary.toFixed(2);
-          } else if (this.findJob.pay_type === 'negotiable') {
-            baseSalaryMinValue = this.findJob.salary_min.toFixed(2);
-            baseSalaryMaxValue = this.findJob.salary_max.toFixed(2);
-          }
-          if (this.findJob.pay_denomination === 'per hour') {
-            baseSalaryUnitText = 'HOUR';
-          } else if (this.findJob.pay_denomination === 'per week') {
-            baseSalaryUnitText = 'WEEK';
-          } else if (this.findJob.pay_denomination === 'per month') {
-            baseSalaryUnitText = 'MONTH';
-          } else if (this.findJob.pay_denomination === 'per quarter') {
-            baseSalaryUnitText = 'YEAR';
-            if (this.findJob.pay_type === 'paid') {
-              baseSalaryValue *= 4;
-            } else if (this.findJob.pay_type === 'negotiable') {
-              baseSalaryMinValue *= 4;
-              baseSalaryMaxValue *= 4;
-            }
-          } else if (this.findJob.pay_denomination === 'per year') {
-            baseSalaryUnitText = 'YEAR';
-          } else {
-            baseSalaryUnitText = '';
-          }
-          // var parsed = this.parseAddress(this.findJob.address);
-          let description1 = this.findJob.description.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
-          let experience1 = this.findJob.experience.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
-          let responsibilities1 = this.findJob.responsibilities.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
-          if (!description1.endsWith('<br>')) {
-            description1 += '<br>';
-          }
-          if (!experience1.endsWith('<br>')) {
-            experience1 += '<br>';
-          }
-          if (!responsibilities1.endsWith('<br>')) {
-            responsibilities1 += '<br>';
-          }
-          this.jsonld = {
-            '@context': 'https://schema.org',
-            '@type': 'JobPosting',
-            'baseSalary': {
-              '@type': 'MonetaryAmount',
-              'currency': 'USD',
-              'value': {
-              },
-            },
-            'datePosted': this.findJob.date,
-            'description': `Job Overview:<br>${description1}<br>Experience Requirements:<br>${experience1}<br>Responsibilities:<br>${responsibilities1}`,
-            'employmentType': employmentType,
-            'title': this.findJob.title,
-            'jobLocation': {
-              '@type': 'Place',
-              'geo': {
-                '@type': 'GeoCoordinates',
-                'latitude': this.findJob.latitude,
-                'longitude': this.findJob.longitude,
-              },
-              'address': {
-                '@type': 'PostalAddress',
-                'streetAddress': this.findJob.address,
-                'addressLocality': this.findJob.city || '',
-                'addressRegion': this.findJob.state || '',
-                'postalCode': this.findJob.zip || '',
-                'addressCountry': 'US',
-              },
-            },
-            'validThrough': this.findJob.expiry_date || DateHelper.getExpiryDate(this.findJob.date, Config.get('daysToExpire')).toISOString(),
-          };
-          if (this.findJob.business_id != null) {
-            this.jsonld.hiringOrganization = this.findJob.posted_by;
-          }
-          if (this.findJob.pay_type === 'paid') {
-            this.jsonld.baseSalary.value = {
-              '@type': 'QuantitativeValue',
-              'unitText': baseSalaryUnitText,
-              'value': baseSalaryValue,
-            };
-          } else if (this.findJob.pay_type === 'negotiable') {
-            this.jsonld.baseSalary.value = {
-              '@type': 'QuantitativeValue',
-              'minValue': baseSalaryMinValue,
-              'maxValue': baseSalaryMaxValue,
-              'unitText': baseSalaryUnitText,
-            };
-          } else {
-            this.jsonld.baseSalary.value = {
-              '@type': 'QuantitativeValue',
-              'unitText': 'HOUR',
-              'value': 0,
-            };
-          }
-          if (this.findJob.category === 'business') {
-            this.jsonld.hiringOrganization = {
-              '@type': 'Organization',
-              'name': this.findJob.posted_by,
-            };
-          } else if (this.findJob.category === 'individual') {
-            this.jsonld.hiringOrganization = {
-              '@type': 'Organization',
-              'name': 'Kunvet',
-            };
-          }
-          if (this.findJob.expired) {
-            this.jsonld = null;
-          }
-          console.log(this.findJob);
-          this.fetchProfilePic();
-        } catch (error) {
-          console.log(error);
         }
+        if (this.findJob.pay_type === 'paid') {
+          const sal = this.findJob.salary.toFixed(2);
+          let pdenom = ` ${this.findJob.pay_denomination}`;
+          if (this.findJob.pay_denomination === 'per hour') {
+            pdenom = '/hr';
+          }
+          this.salary = `${sal.toString()}${pdenom}`;
+        } else if (this.findJob.pay_type === 'negotiable') {
+          this.findJob.salary_min = this.findJob.salary_min || 0;
+          this.findJob.salary_max = this.findJob.salary_max || 0;
+          const salMin = this.findJob.salary_min.toFixed(2);
+          const salMax = this.findJob.salary_max.toFixed(2);
+          let pdenom = ` ${this.findJob.pay_denomination}`;
+          if (this.findJob.pay_denomination === 'per hour') {
+            pdenom = '/hr';
+          }
+          this.salary = `${salMin.toString()} ~ ${salMax.toString()}${pdenom}`;
+        } else {
+          this.salary = this.findJob.pay_type;
+        }
+        let baseSalaryUnitText = '';
+        let baseSalaryValue = 0;
+        let baseSalaryMinValue = 0;
+        let baseSalaryMaxValue = 0;
+        if (this.findJob.pay_type === 'paid') {
+          baseSalaryValue = this.findJob.salary.toFixed(2);
+        } else if (this.findJob.pay_type === 'negotiable') {
+          baseSalaryMinValue = this.findJob.salary_min.toFixed(2);
+          baseSalaryMaxValue = this.findJob.salary_max.toFixed(2);
+        }
+        if (this.findJob.pay_denomination === 'per hour') {
+          baseSalaryUnitText = 'HOUR';
+        } else if (this.findJob.pay_denomination === 'per week') {
+          baseSalaryUnitText = 'WEEK';
+        } else if (this.findJob.pay_denomination === 'per month') {
+          baseSalaryUnitText = 'MONTH';
+        } else if (this.findJob.pay_denomination === 'per quarter') {
+          baseSalaryUnitText = 'YEAR';
+          if (this.findJob.pay_type === 'paid') {
+            baseSalaryValue *= 4;
+          } else if (this.findJob.pay_type === 'negotiable') {
+            baseSalaryMinValue *= 4;
+            baseSalaryMaxValue *= 4;
+          }
+        } else if (this.findJob.pay_denomination === 'per year') {
+          baseSalaryUnitText = 'YEAR';
+        } else {
+          baseSalaryUnitText = '';
+        }
+        // var parsed = this.parseAddress(this.findJob.address);
+        let description1 = this.findJob.description.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
+        let experience1 = this.findJob.experience.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
+        let responsibilities1 = this.findJob.responsibilities.replace(/<\/p>/ig, '<br>').replace(/<\/ul><p>/ig, '</ul>').replace(/<\/?\b(?!(ul|li|br)\b)\w+>/ig, '');
+        if (!description1.endsWith('<br>')) {
+          description1 += '<br>';
+        }
+        if (!experience1.endsWith('<br>')) {
+          experience1 += '<br>';
+        }
+        if (!responsibilities1.endsWith('<br>')) {
+          responsibilities1 += '<br>';
+        }
+        this.jsonld = {
+          '@context': 'https://schema.org',
+          '@type': 'JobPosting',
+          'baseSalary': {
+            '@type': 'MonetaryAmount',
+            'currency': 'USD',
+            'value': {
+            },
+          },
+          'datePosted': this.findJob.date,
+          'description': `Job Overview:<br>${description1}<br>Experience Requirements:<br>${experience1}<br>Responsibilities:<br>${responsibilities1}`,
+          'employmentType': employmentType,
+          'title': this.findJob.title,
+          'jobLocation': {
+            '@type': 'Place',
+            'geo': {
+              '@type': 'GeoCoordinates',
+              'latitude': this.findJob.latitude,
+              'longitude': this.findJob.longitude,
+            },
+            'address': {
+              '@type': 'PostalAddress',
+              'streetAddress': this.findJob.address,
+              'addressLocality': this.findJob.city || '',
+              'addressRegion': this.findJob.state || '',
+              'postalCode': this.findJob.zip || '',
+              'addressCountry': 'US',
+            },
+          },
+          'validThrough': this.findJob.expiry_date || DateHelper.getExpiryDate(this.findJob.date, Config.get('daysToExpire')).toISOString(),
+        };
+        if (this.findJob.business_id != null) {
+          this.jsonld.hiringOrganization = this.findJob.posted_by;
+        }
+        if (this.findJob.pay_type === 'paid') {
+          this.jsonld.baseSalary.value = {
+            '@type': 'QuantitativeValue',
+            'unitText': baseSalaryUnitText,
+            'value': baseSalaryValue,
+          };
+        } else if (this.findJob.pay_type === 'negotiable') {
+          this.jsonld.baseSalary.value = {
+            '@type': 'QuantitativeValue',
+            'minValue': baseSalaryMinValue,
+            'maxValue': baseSalaryMaxValue,
+            'unitText': baseSalaryUnitText,
+          };
+        } else {
+          this.jsonld.baseSalary.value = {
+            '@type': 'QuantitativeValue',
+            'unitText': 'HOUR',
+            'value': 0,
+          };
+        }
+        if (this.findJob.category === 'business') {
+          this.jsonld.hiringOrganization = {
+            '@type': 'Organization',
+            'name': this.findJob.posted_by,
+          };
+        } else if (this.findJob.category === 'individual') {
+          this.jsonld.hiringOrganization = {
+            '@type': 'Organization',
+            'name': 'Kunvet',
+          };
+        }
+        if (this.findJob.expired) {
+          this.jsonld = null;
+        }
+        console.log(this.findJob);
+        this.fetchProfilePic();
       },
       changeLocation() {
         let jobDestUrl = 'https://maps.google.com/?q=';
@@ -1681,6 +1690,16 @@
         return returned;
       },
     },
+    watch: {
+      findJob: {
+        immediate: true,
+        handler(job) {
+          if (job.title) {
+            this.performData();
+          }
+        },
+      },
+    },
     async beforeRouteEnter (to, from, next) {
       try {
         const { data } = await apolloClient.query({
@@ -1704,7 +1723,6 @@
     },
     async activated() {
       this.resetData();
-      this.performData();
       // this.getApplication();
       this._getUserData();
       if (document.documentElement.offsetWidth <= 600) {
