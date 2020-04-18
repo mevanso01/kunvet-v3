@@ -1454,8 +1454,16 @@
           this.loading = true;
 
           // Get recpatcha code
-          await this.$recaptchaLoaded();
-          const recaptchaToken = await this.$recaptcha('homepage');
+          let recaptchaToken = '';
+          try {
+            await this.$recaptchaLoaded();
+            recaptchaToken = await this.$recaptcha('homepage');
+          } catch (err) {
+            this.loading = false;
+            this.loginState = 'error';
+            this.$error(err);
+            return;
+          }
 
           // const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
           /* resume: this.resumes.length > 0 ? ({

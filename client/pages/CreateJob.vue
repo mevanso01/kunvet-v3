@@ -1584,8 +1584,17 @@ export default {
         });
       } else {
         // Get recpatcha code
-        await this.$recaptchaLoaded();
-        const recaptchaToken = await this.$recaptcha('homepage');
+        let recaptchaToken = '';
+        try {
+          await this.$recaptchaLoaded();
+          recaptchaToken = await this.$recaptcha('homepage');
+        } catch (err) {
+          this.loading = false;
+          this.dialogs.confirmPost = false;
+          this.dialogs.errorOccured = true;
+          this.$error(err);
+          return;
+        }
         // CREATE NEW JOB
         const job = this.createJobArray();
         this.$apollo.mutate({

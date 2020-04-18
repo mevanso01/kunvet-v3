@@ -262,8 +262,15 @@ export default {
         return;
       }
       this.loading = true;
-      await this.$recaptchaLoaded();
-      const recaptchaToken = await this.$recaptcha('homepage');
+      let recaptchaToken = '';
+      try {
+        await this.$recaptchaLoaded();
+        recaptchaToken = await this.$recaptcha('homepage');
+      } catch (err) {
+        this.state = 'error';
+        this.$error(err);
+        return;
+      }
       const headers = { emulateJSON: true };
       const data = {
         email: this.email,
