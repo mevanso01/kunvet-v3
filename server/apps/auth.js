@@ -10,6 +10,8 @@ import KoaRouter from 'koa-router';
 // Passport
 import KoaPassport from 'koa-passport';
 
+import Config from 'config';
+
 // Utils
 import Mailer from '@/utils/Mailer';
 import Models from '@/mongodb/Models';
@@ -22,6 +24,7 @@ import uuidv1 from 'uuid/v1';
 const app = new Koa();
 const router = new KoaRouter();
 
+const request = require('request');
 
 function generateCodeString(numDigits = 4) {
   var code = '';
@@ -470,6 +473,50 @@ router.post('/register', async (ctx) => {
   const req = ctx.request.body;
   const promiseRegister = promisify(Models.Account.register, Models.Account);
   const email = req.email.toLowerCase();
+  const recaptchaToken = req.recaptchaToken;
+
+  // Check if it's robot
+  if (!recaptchaToken) {
+    const response = {
+      success: false,
+      message: 'You\'re a bot',
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+  const options = {
+    url: `https://www.google.com/recaptcha/api/siteverify?secret=${Config.get('googleRecaptchaSECRET_KEY')}&response=${recaptchaToken}`,
+    method: 'GET',
+  };
+
+  const checkRecaptcha = () => new Promise((resolve, reject) => {
+    request(options, (error, res, body) => {
+      // eslint-disable-next-line
+      if (!error && res.statusCode == 200) {
+        resolve(JSON.parse(body));
+      } else {
+        reject(error);
+      }
+    });
+  });
+  try {
+    const recaptchaRes = await checkRecaptcha();
+    if (!recaptchaRes.success || recaptchaRes.score < 0.5) {
+      const response = {
+        success: false,
+        message: 'You\'re a bot',
+      };
+      ctx.body = JSON.stringify(response);
+      return;
+    }
+  } catch (err) {
+    const response = {
+      success: false,
+      message: err,
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
 
   let defaultOrg = null;
   let org = null;
@@ -590,6 +637,67 @@ router.post('/register', async (ctx) => {
   const response = {
     success: true,
     message: 'Check your mailbox!',
+  };
+  ctx.body = JSON.stringify(response);
+});
+
+router.post('/bot-check-v3', async (ctx) => {
+  // FIXME: Input sanitization
+  if (ctx.isAuthenticated()) {
+    const response = {
+      success: false,
+      message: 'Error occured!',
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+  const req = ctx.request.body;
+  const recaptchaToken = req.recaptchaToken;
+
+  // Check if it's robot
+  if (!recaptchaToken) {
+    const response = {
+      success: false,
+      message: 'You\'re a bot',
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+  const options = {
+    url: `https://www.google.com/recaptcha/api/siteverify?secret=${Config.get('googleRecaptchaSECRET_KEY')}&response=${recaptchaToken}`,
+    method: 'GET',
+  };
+
+  const checkRecaptcha = () => new Promise((resolve, reject) => {
+    request(options, (error, res, body) => {
+      // eslint-disable-next-line
+      if (!error && res.statusCode == 200) {
+        resolve(JSON.parse(body));
+      } else {
+        reject(error);
+      }
+    });
+  });
+  try {
+    const recaptchaRes = await checkRecaptcha();
+    if (!recaptchaRes.success || recaptchaRes.score < 0.5) {
+      const response = {
+        success: false,
+        message: 'You\'re a bot',
+      };
+      ctx.body = JSON.stringify(response);
+      return;
+    }
+  } catch (err) {
+    const response = {
+      success: false,
+      message: err,
+    };
+    ctx.body = JSON.stringify(response);
+    return;
+  }
+  const response = {
+    success: true,
   };
   ctx.body = JSON.stringify(response);
 });

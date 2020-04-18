@@ -7,6 +7,8 @@ import get from 'lodash/get';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 
+const request = require('request');
+
 export default {
   Debug: async (req, next) => {
     console.log(req);
@@ -67,6 +69,37 @@ export default {
   Verified: (req, next) => {
     if (!req.context.user.email_verified) {
       throw Error('You must verify your email to perform this action.');
+    }
+    return next(req);
+  },
+  RecaptchaPassed: async (req, next) => {
+    const recaptchaToken = req.args.record.recaptchaToken;
+    delete req.args.record.recaptchaToken;
+    // Check if it's a bot
+    if (!recaptchaToken) {
+      throw Error('You\'re a bot');
+    }
+    const options = {
+      url: `https://www.google.com/recaptcha/api/siteverify?secret=${Config.get('googleRecaptchaSECRET_KEY')}&response=${recaptchaToken}`,
+      method: 'GET',
+    };
+    const checkRecaptcha = () => new Promise((resolve, reject) => {
+      request(options, (error, res, body) => {
+        // eslint-disable-next-line
+        if (!error && res.statusCode == 200) {
+          resolve(JSON.parse(body));
+        } else {
+          reject(error);
+        }
+      });
+    });
+    try {
+      const recaptchaRes = await checkRecaptcha();
+      if (!recaptchaRes.success || recaptchaRes.score < 0.5) {
+        throw Error('You\'re a bot');
+      }
+    } catch (err) {
+      throw Error(err);
     }
     return next(req);
   },

@@ -146,6 +146,7 @@
     "vue-gtagjs": "^1.0.7",
     "vue-instantsearch": "^1.7.0",
     "vue-meta": "^2.3.1",
+    "vue-recaptcha-v3": "^1.9.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^2.7.0",
     "vue-scrollama": "^1.1.9",

@@ -195,6 +195,7 @@ GQC.rootMutation().addFields({
     ...wrapResolvers([
       Restrictions.getEnsureRecordHasUserId('user_id'),
       Restrictions.Verified,
+      Restrictions.RecaptchaPassed,
     ], {
       ...wrapResolvers(Restrictions.UploadJobToAlgolia, {
         createJob: Job.get('$createOne'),

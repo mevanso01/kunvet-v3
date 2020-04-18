@@ -9,6 +9,7 @@ import VueTimeago from 'vue-timeago';
 import TimeagoLocale from 'vue-timeago/locales/en-US.json';
 import InstantSearch from 'vue-instantsearch';
 import Share from 'vue-social-share';
+import { VueReCaptcha } from 'vue-recaptcha-v3';
 // import VueAnalytics from 'vue-analytics';
 
 import Client from '@/apollo/client';
@@ -57,6 +58,7 @@ Vue.component('k-btn', KButton);
 Vue.component('k-text-field', KTextField);
 Vue.component('home-text-field', homePageTextField);
 Vue.component('k-dropdown', KDropdownList);
+Vue.use(VueReCaptcha, { siteKey: Config.get('googleRecaptchaSITE_KEY') });
 
 const apolloProvider = new VueApollo({
   defaultClient: Client,

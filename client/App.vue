@@ -547,6 +547,9 @@ export default {
       }
     });
     window.addEventListener('scroll', this.handleScroll, { passive: true });
+    this.$recaptchaLoaded().then(() => {
+      this.$recaptchaInstance.hideBadge();
+    });
   },
 };
 </script>

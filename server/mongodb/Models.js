@@ -216,6 +216,7 @@ const JobSchema = Mongoose.Schema({
   gform_link: {
     type: String,
   },
+  recaptchaToken: String,
 }, {
   timestamps: {
     updatedAt: 'last_edited',
@@ -279,6 +280,7 @@ const ApplicantSchema = Mongoose.Schema({
     resumeid: String,
   }],
   applicant_message: String,
+  recaptchaToken: String,
 });
 
 // Currently Unused

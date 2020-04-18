@@ -1421,7 +1421,7 @@
           this.$error(error);
         });
       },
-      createApplication() {
+      async createApplication() {
         // verify email if it isnt verified at this point for some reason
         console.log('Hello from CreateApplication');
         console.log(this.email_verified);
@@ -1443,6 +1443,11 @@
         if (this.uid && this.userdata && !this.loading && !this.applied) {
           console.log('creating application');
           this.loading = true;
+
+          // Get recpatcha code
+          await this.$recaptchaLoaded();
+          const recaptchaToken = await this.$recaptcha('homepage');
+
           // const index = this.resumes.findIndex(resume => this.selectedResume === resume.filename);
           /* resume: this.resumes.length > 0 ? ({
                             filename: this.resumes[index].filename,
@@ -1464,6 +1469,7 @@
             resumes: _resumes,
             wechat_id: this.userdata.wechat_id,
             applicant_message: this.message,
+            recaptchaToken: recaptchaToken,
           };
           this.$apollo.mutate({
             mutation: (gql`mutation ($application: CreateOneApplicantInput!) {
