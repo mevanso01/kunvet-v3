@@ -1537,7 +1537,7 @@ export default {
         this.saveJob();
       }
     },
-    saveJob() {
+    async saveJob() {
       if (this.jobId) {
         // SAVE EXISTING JOB
         const job = this.createJobArray();
@@ -1583,12 +1583,27 @@ export default {
           this.$error(err);
         });
       } else {
+        // Get recpatcha code
+        let recaptchaToken = '';
+        try {
+          await this.$recaptchaLoaded();
+          recaptchaToken = await this.$recaptcha('homepage');
+        } catch (err) {
+          this.loading = false;
+          this.dialogs.confirmPost = false;
+          this.dialogs.errorOccured = true;
+          this.$error(err);
+          return;
+        }
         // CREATE NEW JOB
         const job = this.createJobArray();
         this.$apollo.mutate({
           mutation: createJobMutation,
           variables: {
-            job: job,
+            job: {
+              ...job,
+              recaptchaToken,
+            },
           },
           refetchQueries: [
             {

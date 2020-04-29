@@ -137,7 +137,7 @@
       </section>
 
       <section v-if="chosenForm === 'signup'">
-        <SignupComponent :type="signupType" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess" style="max-width: 420px; margin: auto;"></SignupComponent>
+        <SignupComponent :type="signupType" :fname="fname" :lname="lname" :email="email" :password="password" @success="onSuccess" @select="onBack" style="max-width: 420px; margin: auto;"></SignupComponent>
         <!-- <a style="text-align: center; margin: auto; display: block;" @click="chosenForm = ''">Choose a different kind of account</a> -->
       </section>
 
@@ -234,6 +234,11 @@ export default {
       this.chosenForm = 'signup';
       // this.$router.push(`/sign-up?type=${type}`);
       this.$router.push(`/sign-up/${type}`);
+    },
+    onBack() {
+      this.signupType = '';
+      this.chosenForm = '';
+      this.$router.push('/sign-up');
     },
     onSuccess() {
       // if (this.$ga) {

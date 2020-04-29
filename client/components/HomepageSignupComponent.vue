@@ -256,12 +256,21 @@ export default {
         this.$error(error);
       });
     },
-    signup() {
+    async signup() {
       if (!this.$refs.form.validate()) {
         this.$debug('Failed validation');
         return;
       }
       this.loading = true;
+      let recaptchaToken = '';
+      try {
+        await this.$recaptchaLoaded();
+        recaptchaToken = await this.$recaptcha('homepage');
+      } catch (err) {
+        this.state = 'error';
+        this.$error(err);
+        return;
+      }
       const headers = { emulateJSON: true };
       const data = {
         email: this.email,
@@ -275,6 +284,7 @@ export default {
       if (this.accountTypeInfo.requireBusinessName) {
         data.business_name = this.business_name;
       }
+      data.recaptchaToken = recaptchaToken;
       Axios.post('/auth/register', data, headers).then((res) => {
         if (res.data.success) {
           console.log('after success');

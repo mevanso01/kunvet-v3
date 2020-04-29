@@ -52,6 +52,8 @@ module.exports = {
   serverUrl: Credentials.serverUrl,
   googleMapsKey: Credentials.googleMapsKey,
   googleIndexing: Credentials.googleIndexing || false,
+  googleRecaptchaSITE_KEY: Credentials.googleRecaptchaSITE_KEY,
+  googleRecaptchaSECRET_KEY: Credentials.googleRecaptchaSECRET_KEY,
   sentry: {
     dsn: Credentials.sentryClientDsn,
   },

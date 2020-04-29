@@ -106,9 +106,6 @@ export default {
     };
   },
   computed: {
-    // jobId() {
-    //   return this.job._id.$oid ? this.job._id.$oid : this.job._id;
-    // },
     computeIsLoggedOut() {
       return this.$store.state.acct === 0;
     },
